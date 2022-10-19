@@ -7,7 +7,7 @@ import Tab from "react-bootstrap/Tab";
 import Breadcumb from "../UI/beadcumb";
 import {data1,data2} from '../Pages/data';
 import Accordion from 'react-bootstrap/Accordion';
-import Form from 'react-bootstrap/Form';
+import { Form, Button } from "react-bootstrap";
 import "../../CSS/style.css";
 
 const Checkout = (props) => {
@@ -526,13 +526,14 @@ const Checkout = (props) => {
                                 <div className="delivery-category">
                                   <div className="shipment-detail">
                                     <div className="form-check custom-form-check">
-                                      <input
+                                      {/* <input
                                         className="form-check-input"
                                         type="radio"
                                         name="standard"
                                         id="standard"
                                         checked
-                                      />
+                                      /> */}
+                                      <input className="form-check-input mt-0" type="radio" value="choice1" name="button" />
                                       <label
                                         className="form-check-label"
                                         for="standard"
@@ -598,12 +599,13 @@ const Checkout = (props) => {
                                 <div className="delivery-category">
                                   <div className="shipment-detail">
                                     <div className="form-check custom-form-check">
-                                      <input
+                                      {/* <input
                                         className="form-check-input"
                                         type="radio"
                                         name="standard"
                                         id="sameDay"
-                                      />
+                                      /> */}
+                                      <input className="form-check-input mt-0" type="radio" value="choice2" name="button" />
                                       <label
                                         className="form-check-label"
                                         for="sameDay"
@@ -669,12 +671,13 @@ const Checkout = (props) => {
                                 <div className="delivery-category">
                                   <div className="shipment-detail">
                                     <div className="form-check mb-0 custom-form-check">
-                                      <input
+                                      {/* <input
                                         className="form-check-input"
                                         type="radio"
                                         name="standard"
                                         id="future"
-                                      />
+                                      /> */}
+                                      <input className="form-check-input mt-0" type="radio" value="choice3" name="button" />
                                       <label
                                         className="form-check-label"
                                         for="future"
@@ -834,13 +837,14 @@ const Checkout = (props) => {
                                       for="credit"
                                     >
 
-                                       <input
+                                       {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="credit"
                                         checked
-                                      />
+                                      /> */}
+                                      <input className="form-check-input mt-0" type="radio" value="choice7" name="button" />
                                       Credit or Debit Card
                                     </label>
                                   </div> </Accordion.Header> 
@@ -1039,21 +1043,22 @@ const Checkout = (props) => {
                                       className="form-check-label"
                                       for="banking"
                                     >
-                                    <input
+                                    {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="banking"
-                                      />
+                                      /> */}
+                                      <input className="form-check-input mt-0" type="radio" value="choice8" name="button" />
                                       Net Banking
                                     </label>
                                   </div></Accordion.Header>
                                     <Accordion.Body>
-                                      <div
+                                      {/* <div
                                 id="flush-collapseTwo"
                                 className="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample"
-                              >
+                              > */}
                                 <div className="accordion-body">
                                   <h5 className="text-uppercase mb-4">
                                     Select Your Bank
@@ -1061,12 +1066,13 @@ const Checkout = (props) => {
                                   <div className="row g-2">
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank1"
-                                        />
+                                        /> */}
+                                        <input className="form-check-input mt-0" type="radio" value="choice1" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="bank1"
@@ -1078,12 +1084,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank2"
-                                        />
+                                        /> */}
+                                        <input className="form-check-input mt-0" type="radio" value="choice2" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="bank2"
@@ -1095,12 +1102,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank3"
-                                        />
+                                        /> */}
+                                         <input className="form-check-input mt-0" type="radio" value="choice3" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="bank3"
@@ -1112,12 +1120,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank4"
-                                        />
+                                        /> */}
+                                         <input className="form-check-input mt-0" type="radio" value="choice4" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="bank4"
@@ -1129,12 +1138,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank5"
-                                        />
+                                        /> */}
+                                         <input className="form-check-input mt-0" type="radio" value="choice5" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="bank5"
@@ -1146,12 +1156,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank6"
-                                        />
+                                        /> */}
+                                         <input className="form-check-input mt-0" type="radio" value="choice6" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="bank6"
@@ -1190,7 +1201,7 @@ const Checkout = (props) => {
                                     </div>
                                   </div>
                                 </div> 
-                              </div>
+                              {/* </div> */}
                               </Accordion.Body>
                               </Accordion.Item>
                               </Accordion>
@@ -1372,24 +1383,25 @@ const Checkout = (props) => {
                                       className="form-check-label"
                                       for="wallet"
                                     >
-                                      <input
+                                      {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="wallet"
-                                      />{" "}
+                                      />{" "} */}
+                                      <input className="form-check-input mt-0" type="radio" value="choice9" name="button" />
                                       My Wallet
                                     </label>
                                   </div>
                                   </Accordion.Header>
                                     <Accordion.Body>
-                                    <div
+                                    {/* <div
                                 id="flush-collapseThree"
                                 className="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample"
-                              >
+                              > */}
                                 
-                                {/* <div className="accordion-body">
+                              <div className="accordion-body">
                                   <h5 className="text-uppercase mb-4">
                                     Select Your Wallet
                                   </h5>
@@ -1400,12 +1412,13 @@ const Checkout = (props) => {
                                           className="form-check-label"
                                           for="amazon"
                                         >
-                                          <input
+                                          {/* <input
                                             className="form-check-input mt-0"
                                             type="radio"
                                             name="flexRadioDefault"
                                             id="amazon"
-                                          />{" "}
+                                          />{" "} */}
+                                          <input className="form-check-input mt-0" type="radio" value="choice10" name="button" />
                                           Amazon Pay
                                         </label>
                                       </div>
@@ -1413,12 +1426,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="gpay"
-                                        />
+                                        /> */}
+                                        <input className="form-check-input mt-0" type="radio" value="choice11" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="gpay"
@@ -1430,12 +1444,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="airtel"
-                                        />
+                                        /> */}
+                                        <input className="form-check-input mt-0" type="radio" value="choice12" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="airtel"
@@ -1447,12 +1462,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="paytm"
-                                        />
+                                        /> */}
+                                        <input className="form-check-input mt-0" type="radio" value="choice12" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="paytm"
@@ -1464,12 +1480,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="jio"
-                                        />
+                                        /> */}
+                                        <input className="form-check-input mt-0" type="radio" value="choice13" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="jio"
@@ -1481,12 +1498,13 @@ const Checkout = (props) => {
 
                                     <div className="col-md-6">
                                       <div className="custom-form-check form-check">
-                                        <input
+                                        {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="free"
-                                        />
+                                        /> */}
+                                        <input className="form-check-input mt-0" type="radio" value="choice14" name="button" />
                                         <label
                                           className="form-check-label"
                                           for="free"
@@ -1496,8 +1514,8 @@ const Checkout = (props) => {
                                       </div>
                                     </div>
                                   </div>
-                                </div> */}
-                              </div>
+                                </div> 
+                              {/* </div> */}
                                     </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
@@ -1644,27 +1662,28 @@ const Checkout = (props) => {
 
                             <div className="accordion-item">
                               <Accordion>
-                                <Accordion.Item>
+                                <Accordion.Item eventKey="2">
                                   <Accordion.Header><div className="custom-form-check form-check mb-0">
                                     <label
                                       className="form-check-label"
                                       for="cash"
                                     >
-                                      <input
+                                      {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="cash"
-                                      />{" "}
+                                      />{" "} */}
+                                      <input className="form-check-input mt-0" type="radio" value="choice15" name="button" />
                                       Cash On Delivery
                                     </label>
                                   </div></Accordion.Header>
                                   <Accordion.Body>
-                                  <div
+                                  {/* <div
                                 id="flush-collapseFour"
                                 className="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample"
-                              >
+                              > */}
                                 <div className="accordion-body">
                                   <h5 className="cod-review">
                                     Pay digitally with SMS Pay Link. Cash may
@@ -1672,7 +1691,7 @@ const Checkout = (props) => {
                                     <a href="javascript:void(0)">Know more.</a>
                                   </h5>
                                 </div>
-                              </div>
+                              {/* </div> */}
                                   </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>

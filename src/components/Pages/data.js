@@ -105,6 +105,36 @@ const data2={
 		// }
 	]
 }
+const data3={
+	product_details:[
+		{
+			"id":1,	
+			"off":"30%",
+			"product_name":"Creamy Chocolate Cake",
+			"mrp":"₹45",
+			"amrp":"₹55",
+			"offer":"8%",
+			"creview":"23",
+			"pdiscription":"",
+			//"weight":"",
+			"store_info":" We all have our own techniques, but one of the most effective techniques is to actually put some text where text goes and some pictures where pictures go to make sure everyone can see the vision you’ve created.",
+			//"product_info":"",	
+		}
+	]
+}
+const data4={
+	tranding_product:[
+		{
+			"id":1,
+			"pname":"Meatigo Premium Goat Curry",
+			"quat":"400g",
+			"price":"₹70.00",
+			"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIA…v55oEXawgqiiKoigWZgezANhrYM0rMgAAAABJRU5ErkJggg==",
+		},		
+	]
+}
 export {data1};
 export{data2};
+export{data3};
+export{data4};
 export default data;

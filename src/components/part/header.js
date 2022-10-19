@@ -374,7 +374,7 @@ const Header = () => {
               <div className="main-nav">
                 <div className="header-nav-left">
                   <button className="dropdown-category dropdown-category-2">
-                    <i className="fa-sharp fa-solid fa-bars"></i>
+                    <i className="fa-sharp fa-solid fa-bars pe-2 mt-1"></i>
                     <span>All Categories</span>
                   </button>
 

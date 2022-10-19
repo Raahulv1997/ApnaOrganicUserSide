@@ -7,10 +7,14 @@ import banner1 from '../../Photos/banner/14.jpg'
 import Tab from 'react-bootstrap/Tab';
 import Tabs from 'react-bootstrap/Tabs';
 import {FaStar} from 'react-icons/fa';
-import '../../CSS/style.css'
+import {data3,data4} from '../Pages/data';
+import Carousel from 'react-bootstrap/Carousel';
+import '../../CSS/style.css';
 import { NavLink } from 'react-router-dom'
 
-const ProductDetail=()=> {
+const ProductDetail=(props)=> {
+    var product_details=data3.product_details
+    var tranding_product=data4.tranding_product
     // render() {
     //     const settings = {
     //       dots: true,
@@ -51,9 +55,48 @@ const ProductDetail=()=> {
             <section className="product-section">
                 <div className="container-fluid-lg">
                     <div className="row">
-                        <div className="col-xxl-9 col-xl-8 col-lg-7 wow fadeInUp">
+                        <div className="col-xl-8 col-lg-7 wow fadeInUp">
                             <div className="row g-4">
-                                <div className="col-xl-6 wow fadeInUp">
+                            <Carousel className="col-xl-6 sm-2 col-lg-7 wow fadeInUp">
+      <Carousel.Item >
+        <img
+          className="d-block w-100"
+          src=" http://localhost:3000/static/media/2.41a56ef0.jpg"
+          alt="First slide"
+        />
+        <Carousel.Caption>
+          <h3 style={{color:"black"}}>First slide label</h3>
+          <p style={{color:"black"}}>Nulla vitae elit libero, a pharetra augue mollis interdum.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="http://localhost:3000/static/media/2.41a56ef0.jpg"
+          alt="Second slide"
+        />
+
+        <Carousel.Caption>
+          <h3 style={{color:"black"}}>Second slide label</h3>
+          <p style={{color:"black"}}>Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        </Carousel.Caption>
+      </Carousel.Item>
+      <Carousel.Item>
+        <img
+          className="d-block w-100"
+          src="http://localhost:3000/static/media/2.41a56ef0.jpg"
+          alt="Third slide"
+        />
+
+        <Carousel.Caption>
+          <h3 style={{color:"black"}}>Third slide label</h3>
+          <p style={{color:"black"}}>
+            Praesent commodo cursus magna, vel scelerisque nisl consectetur.
+          </p>
+        </Carousel.Caption>
+      </Carousel.Item>
+    </Carousel>
+                                 {/* <div className="col-xl-6 wow fadeInUp">
                                     <div className="product-left-box">
                                         <div className="row g-2">
                                             <div className="col-12">
@@ -63,10 +106,132 @@ const ProductDetail=()=> {
                                             </div>
                                         </div>
                                     </div>
-                                </div>
+                                </div>  */}
+                               
+                                <div className="col-12 col-md-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    {product_details.map((product_details)=>{
+                                        return(
+                                            <div key={product_details.id} className="right-box-contain">
+                                        <h6 className="offer-top">{product_details.off}</h6>
+                                        <h2 className="name">{product_details.product_name}</h2>
+                                        <div className="price-rating">
+                                            <h3 className="theme-color price">{product_details.mrp}<del className="text-content">{product_details.amrp}</del> <span
+                                                className="offer theme-color">{product_details.offer}</span></h3>
+                                            <div className="product-rating custom-rate">
+                                                <ul className="rating">
+                                                    <li>
+                                                        <i data-feather="star" className="fill"></i>
+                                                    </li>
+                                                    <li>
+                                                        <i data-feather="star" className="fill"></i>
+                                                    </li>
+                                                    <li>
+                                                        <i data-feather="star" className="fill"></i>
+                                                    </li>
+                                                    <li>
+                                                        <i data-feather="star" className="fill"></i>
+                                                    </li>
+                                                    <li>
+                                                        <i data-feather="star"></i>
+                                                    </li>
+                                                </ul>
+                                                <span className="review">{product_details.creview} Review</span>
+                                            </div>
+                                        </div>
 
-                                <div className="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
-                                    <div className="right-box-contain">
+                                        <div className="procuct-contain">
+                                            <p>{product_details.pdiscription}</p>
+                                        </div>
+
+                                        <div className="product-packege">
+                                            <div className="product-title">
+                                                <h4>Weight</h4>
+                                            </div>
+                                            <ul className="select-packege">
+                                                <li>
+                                                    <a href="javascript:void(0)" className="active">1/2 KG</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)">1 KG</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)">1.5 KG</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)">Red Roses</a>
+                                                </li>
+                                                <li>
+                                                    <a href="javascript:void(0)">With Pink Roses</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+
+                                       
+
+
+
+                                        <div className="note-box product-packege">
+                                            <div className="cart_qty qty-box product-qty">
+                                                <div className="input-group">
+                                                    <button type="button" className="qty-right-plus" data-type="plus" data-field="">
+                                                        <i className="fa fa-plus" aria-hidden="true"></i>
+                                                    </button>
+                                                    <input className="form-control input-number qty-input" type="text"
+                                                        name="quantity" value="0"/>
+                                                        <button type="button" className="qty-left-minus" data-type="minus"
+                                                            data-field="">
+                                                            <i className="fa fa-minus" aria-hidden="true"></i>
+                                                        </button>
+                                                </div>
+                                            </div>
+
+                                            <button onclick="location.href = 'cart.html';"
+                                                className="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                        </div>
+
+                                        <div className="buy-box">
+                                            <a href="wishlist.html">
+                                                <i data-feather="heart"></i>
+                                                <span>Add To Wishlist</span>
+                                            </a>
+
+                                            <a href="compare.html">
+                                                <i data-feather="shuffle"></i>
+                                                <span>Add To Compare</span>
+                                            </a>
+                                        </div>
+
+                                        <div className="pickup-box">
+                                            <div className="product-title">
+                                                <h4>Store Information</h4>
+                                            </div>
+
+                                            <div className="pickup-detail">
+                                                <h4 className="text-content">{product_details.store_info}</h4>
+                                            </div>
+
+                                            <div className="product-info">
+                                                <ul className="product-info-list product-info-list-2">
+                                                    <li>Type : <a href="javascript:void(0)">Black Forest</a></li>
+                                                    <li>SKU : <a href="javascript:void(0)">SDFVW65467</a></li>
+                                                    <li>MFG : <a href="javascript:void(0)">Jun 4, 2022</a></li>
+                                                    <li>Stock : <a href="javascript:void(0)">2 Items Left</a></li>
+                                                    <li>Tags : <a href="javascript:void(0)">Cake,</a> <a
+                                                        href="javascript:void(0)">Backery</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+
+                                        <div className="paymnet-option">
+                                            <div className="product-title">
+                                                <h4>Guaranteed Safe Checkout</h4>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                        )
+                                    })}
+                                    {/* <div className="right-box-contain">
                                         <h6 className="offer-top">30% Off</h6>
                                         <h2 className="name">Creamy Chocolate Cake</h2>
                                         <div className="price-rating">
@@ -188,7 +353,7 @@ const ProductDetail=()=> {
                                             </div>
                                             
                                         </div>
-                                    </div>
+                                    </div> */}
                                 </div>
                         
                                 <div className="col-12">
@@ -1209,23 +1374,25 @@ const ProductDetail=()=> {
                                 {/* <!-- Trending Product --> */}
                                 <div className="pt-25">
                                     <div className="category-menu">
-                                        <h3>Treanding Products</h3>
-
-                                        <ul className="product-list product-right-sidebar border-0 p-0">
+                                    <h3>Treanding Products</h3>
+                                        {tranding_product.map((tranding_product)=>{
+                                            return(
+                                                <>
+                                                   <ul key={tranding_product.id} className="product-list product-right-sidebar border-0 p-0">
                                             <li>
                                                 <div className="offer-product">
                                                     <a href="product-left.html" className="offer-image">
-                                                        <img src={Product2}
+                                                        <img src={tranding_product.img}
                                                             className="img-fluid  lazyload" alt=""/>
                                                     </a>
 
                                                     <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 className="name">Meatigo Premium Goat Curry</h6>
+                                                                <h6 className="name">{tranding_product.pname}</h6>
                                                             </a>
-                                                            <span>450 G</span>
-                                                            <h6 className="price theme-color">₹70.00</h6>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1241,10 +1408,10 @@ const ProductDetail=()=> {
                                                     <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 className="name">Dates Medjoul Premium Imported</h6>
+                                                                <h6 className="name">{tranding_product.pname}</h6>
                                                             </a>
-                                                            <span>450 G</span>
-                                                            <h6 className="price theme-color">₹40.00</h6>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1260,10 +1427,10 @@ const ProductDetail=()=> {
                                                     <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 className="name">Good Life Walnut Kernels</h6>
+                                                                <h6 className="name">{tranding_product.pname}</h6>
                                                             </a>
-                                                            <span>200 G</span>
-                                                            <h6 className="price theme-color">₹ 52.00</h6>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -1279,15 +1446,96 @@ const ProductDetail=()=> {
                                                     <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 className="name">Apple Red Premium Imported</h6>
+                                                                <h6 className="name">{tranding_product.pname}</h6>
                                                             </a>
-                                                            <span>1 KG</span>
-                                                            <h6 className="price theme-color">₹ 80.00</h6>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
                                         </ul>
+                                                </>
+                                            )
+                                        })}
+
+                                       {/* <ul key={tranding_product.id} className="product-list product-right-sidebar border-0 p-0">
+                                            <li>
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
+                                                        <img src={Product2}
+                                                            className="img-fluid  lazyload" alt=""/>
+                                                    </a>
+
+                                                    <div className="offer-detail">
+                                                        <div>
+                                                            <a href="product-left.html">
+                                                                <h6 className="name">{tranding_product.pname}</h6>
+                                                            </a>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
+                                                        <img src={Product2}
+                                                            className=" lazyload" alt=""/>
+                                                    </a>
+
+                                                    <div className="offer-detail">
+                                                        <div>
+                                                            <a href="product-left.html">
+                                                                <h6 className="name">{tranding_product.pname}</h6>
+                                                            </a>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li>
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
+                                                        <img src={Product2}
+                                                            className=" lazyload" alt=""/>
+                                                    </a>
+
+                                                    <div className="offer-detail">
+                                                        <div>
+                                                            <a href="product-left.html">
+                                                                <h6 className="name">{tranding_product.pname}</h6>
+                                                            </a>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li className="mb-0">
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
+                                                        <img src={Product2}
+                                                            className=" lazyload" alt=""/>
+                                                    </a>
+
+                                                    <div className="offer-detail">
+                                                        <div>
+                                                            <a href="product-left.html">
+                                                                <h6 className="name">{tranding_product.pname}</h6>
+                                                            </a>
+                                                            <span>{tranding_product.quat}</span>
+                                                            <h6 className="price theme-color">{tranding_product.price}</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul> */}
                                     </div>
                                 </div>
 

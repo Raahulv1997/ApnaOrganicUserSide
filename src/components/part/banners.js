@@ -114,11 +114,94 @@ const Benners = (props) => {
       </section>
 
       {/* <!-- Product Sction Start --> */}
-      <section className="product-section">
+      {/* <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Our Products</h2>
-            <ul className="nav nav-tabs tab-style-color" id="myTab">
+            <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
+            
+            <Tabs
+               defaultActiveKey="all"
+               id="uncontrolled-tab-example myTab"
+               className="nav nav-tabs tab-style-color  mb-3"
+            >
+            <Tab eventKey="all"  title="All">
+            <section className="product-section">
+              <div className="container-fluid-lg">
+                <div className="title title-flex">
+                  <h2 className="mb-lg-0 mb-2">Our Products</h2>
+                  </div>
+                  <div className="tab-content" id="myTabContent">
+                    <div className="tab-pane fade show active" id="all" role="tabpanel"aria-labelledby="all-tab">
+                      <div className="row g-8">
+                        {product.map((product)=>{
+                          return(
+                          <div key={product.id} className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
+                            <ProductBox
+                            image={product.image}
+                            name={product.name}
+                            productPrice={product.productPrice}
+                            productMRF={product.productMRF}
+                            />
+                            <ProductBox
+                            image={product.image}
+                            name={product.name}
+                            productPrice={product.productPrice}
+                            productMRF={product.productMRF}
+                            />
+                          </div>
+                          )
+                       })}      
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </section>  
+              <section className="banner-section">
+              <div className="container-fluid-lg">
+              <div className="row">
+                  <div className="col-12">
+                    <div className="banner-contain-3 section-b-space section-t-space hover-effect">
+                     <img src={Banner1} className="img-fluid bg-img w-100" alt="" />
+                       <div className="banner-detail p-center text-dark text-center p-0">
+                         <div>
+                            <h4 className="ls-expanded text-uppercase theme-color">
+                             Try Our New
+                            </h4>
+                            <h2 className="my-3">
+                            100% Organic Best Quality Best Price
+                            </h2>
+                            <h4 className="text-content fw-300">
+                             Best Apna Organic Food Quality
+                            </h4>
+                            <button
+                             className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
+                             onclick="location.href = 'shop-left-sidebar.html';"
+                            >
+                            Shop Now
+                            </button>
+                         </div>
+                       </div>
+                     </div>
+                   </div>
+                 </div>
+                </div>
+            </section>
+            </Tab>
+            <Tab eventKey="cooking" title="Cooking">
+                 
+            </Tab>
+            <Tab eventKey="fruits&vagitables" title="Fruits & Vagitables">
+       
+            </Tab>
+            <Tab eventKey="beverage" title="Baverage">
+       
+            </Tab>
+            <Tab eventKey="dairy" title="Dairy">
+       
+            </Tab>
+           
+          </Tabs>
+            {/* <ul className="nav nav-tabs tab-style-color" id="myTab">
               <li className="nav-item">
                 <button
                   className="nav-link btn active"
@@ -179,8 +262,8 @@ const Benners = (props) => {
                   Dairy
                 </button>
               </li>
-            </ul>
-          </div>
+            </ul> */}
+          {/* </div>
 
           <div className="tab-content" id="myTabContent">
             <div
@@ -212,11 +295,11 @@ const Benners = (props) => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* <!-- Product Sction End --> */}
 
       {/* <!-- Banner Section Start --> */}
-      <section className="banner-section">
+      {/* <section className="banner-section">
         <div className="container-fluid-lg">
           <div className="row">
             <div className="col-12">
@@ -245,9 +328,9 @@ const Benners = (props) => {
             </div>
           </div>
         </div>
-      </section>
+      </section> */}
       {/* <!-- Product Sction Start --> */}
-      <section className="product-section">
+       <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Top Products</h2>
@@ -267,12 +350,6 @@ const Benners = (props) => {
                 <ProductBox
                     image={product.image}
                    name={product.name}
-                    //SoldBy={product.SoldBy}
-                    //Quantity={product.Quantity}
-                    // Price={product.Price}
-                    // Saving={product.Saving}
-                    // Total={product.Total}
-                    // YouSave={product.YouSave}
                     productPrice={product.productPrice}
                     productMRF={product.productMRF}
                   />

@@ -6,6 +6,7 @@ import Breadcumb from '../UI/beadcumb'
 import {FaStar} from 'react-icons/fa';
 import data from '../Pages/data';
 import Accordion from 'react-bootstrap/Accordion';
+import Dropdown from 'react-bootstrap/Dropdown';
 import '../../CSS/style.css'
 // function Ab(){
 //     return(
@@ -421,7 +422,23 @@ const Shop=(props)=> {
                                 <div className="top-filter-menu">
                                     <div className="category-dropdown">
                                         <h5 className="text-content">Sort By :</h5>
-                                        <div className="dropdown">
+                                        <Dropdown>
+                                        <Dropdown.Toggle variant="white" id="dropdown-basic">
+                                        Most Popular
+                                        <i className="fa-solid fa-angle-down"></i>
+                                        </Dropdown.Toggle>
+                                        <Dropdown.Menu>
+                                          <Dropdown.Item href="javascript:void(0)">Popularity</Dropdown.Item>
+                                          <Dropdown.Item href="javascript:void(0)">Low - High Price</Dropdown.Item>
+                                          <Dropdown.Item href="javascript:void(0)">High - Low Price</Dropdown.Item>
+                                          <Dropdown.Item href="javascript:void(0)">Average Rating</Dropdown.Item>
+                                          <Dropdown.Item href="javascript:void(0)">A - Z Order</Dropdown.Item>
+                                          <Dropdown.Item href="javascript:void(0)">Z - A Order</Dropdown.Item>
+                                          <Dropdown.Item href="javascript:void(0)">% Off - Hight To
+                                                        Low</Dropdown.Item>
+                                        </Dropdown.Menu>
+                                       </Dropdown>
+                                        {/* <div className="dropdown">
                                             <button className="dropdown-toggle" type="button" id="dropdownMenuButton1"
                                                 data-bs-toggle="dropdown">
                                                 <span>Most Popular</span> <i className="fa-solid fa-angle-down"></i>
@@ -453,7 +470,7 @@ const Shop=(props)=> {
                                                         Low</a>
                                                 </li>
                                             </ul>
-                                        </div>
+                                        </div> */}
                                     </div>
 
 
