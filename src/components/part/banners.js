@@ -3,11 +3,17 @@ import BannerBox1 from "../../Photos/2.jpg";
 import BannerBox2 from "../../Photos/1.jpg";
 import Banner1 from "../../Photos/14.jpg";
 import ProductBox from "../UI/product-box";
+import data from '../Pages/data';
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
 // import 'bootstrap/dist/css/bootstrap.min.css';
 import "../../CSS/style.css";
 
-const Benners = () => {
+const Benners = (props) => {
+  var product=data.product
+  console.log(product)
   return (
+    
     <Fragment>
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
@@ -184,90 +190,24 @@ const Benners = () => {
               aria-labelledby="all-tab"
             >
               <div className="row g-8">
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
+                {product.map((product)=>{
+                  return(
+                    <div key={product.id} className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
+                      <ProductBox
+                       image={product.image}
+                       name={product.name}
+                       productPrice={product.productPrice}
+                       productMRF={product.productMRF}
+                       />
+                       <ProductBox
+                       image={product.image}
+                       name={product.name}
+                       productPrice={product.productPrice}
+                       productMRF={product.productMRF}
+                       />
                 </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
+                  )
+                })}      
               </div>
             </div>
           </div>
@@ -321,90 +261,25 @@ const Benners = () => {
               aria-labelledby="all-tab"
             >
               <div className="row g-8">
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
+              {product.map((product) => {
+                return (
+                <div key={product.id}className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
+                <ProductBox
+                    image={product.image}
+                   name={product.name}
+                    //SoldBy={product.SoldBy}
+                    //Quantity={product.Quantity}
+                    // Price={product.Price}
+                    // Saving={product.Saving}
+                    // Total={product.Total}
+                    // YouSave={product.YouSave}
+                    productPrice={product.productPrice}
+                    productMRF={product.productMRF}
                   />
+                
                 </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
-                <div className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                  <ProductBox
-                    productName={"Product Name"}
-                    productPrice={"136"}
-                    productMRF={"151"}
-                  />
-                </div>
+                )
+            })}
               </div>
             </div>
           </div>

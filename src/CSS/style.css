@@ -1349,7 +1349,8 @@ input[type=number]::-webkit-outer-spin-button {
 
 .theme-form-floating .form-control,
 .theme-form-floating .form-select {
-    height: calc(51px + (54 - 51) * ((100vw - 320px) / (1920 - 320)));
+    /* height: calc(51px + (54 - 51) * ((100vw - 320px) / (1920 - 320))); */
+    height: 0px;
     line-height: normal
 }
 
@@ -1408,7 +1409,7 @@ input[type=number]::-webkit-outer-spin-button {
     opacity: .95;
     top: -5px;
     left: 10px;
-    height: 31px;
+    /* height: 31px; */
     background-color: #fff;
     padding-top: 0;
     padding-bottom: 0;
@@ -1516,7 +1517,7 @@ input[type=number]::-webkit-outer-spin-button {
 
 .theme-form-floating-2>.form-control,
 .theme-form-floating-2>.form-select {
-    height: 46px
+    height: 0px !important
 }
 
 .theme-form-floating-2>label {
@@ -2693,13 +2694,18 @@ input[type=number]::-webkit-outer-spin-button {
     gap: 7px
 }
 
-.product-section-box .custom-tab .information-box ul li {
+ .information-box ul li {
     color: #4a5568;
     width: 100%;
-    display: list-item;
+    /* display: block !important; */
+    /* display: list-item !important; */
+    display: list-item !important;
     list-style-type: circle;
     margin-left: 35px;
     font-size: calc(14px + (15 - 14) * ((100vw - 320px) / (1920 - 320)))
+}
+.information-box ul li{
+    display: list-item !important;
 }
 
 .product-section-box .custom-tab .review-box .review-title {
@@ -4180,6 +4186,9 @@ input[type=number]::-webkit-outer-spin-button {
     top: 0;
     right: 0
 }
+.form-floating>label{
+    top: 4px !important; 
+}
 
 .title .product-tabs .nav-item {
     position: relative
@@ -4816,7 +4825,7 @@ span {
     margin-top: 13px
 }
 
-[class="dark"] .banner-contain .banner-details .coupon-code {
+[className="dark"] .banner-contain .banner-details .coupon-code {
     border: 2px dashed rgba(255, 255, 255, 0.5)
 }
 
@@ -23398,7 +23407,7 @@ header .offcanvas-backdrop {
     align-items: center;
     -webkit-box-pack: justify;
     -ms-flex-pack: justify;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     width: 100%;
     margin-left: 8px
 }
@@ -25321,5 +25330,4 @@ header .offcanvas-backdrop {
 [dir="rtl"] .slick-slide {
     float: left
 }
-
 /*# sourceMappingURL=style.css.map */

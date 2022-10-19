@@ -3,7 +3,8 @@ import Logo from "../../Photos/media/1.718c1ec8.png";
 import "../../CSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
-
+import Dropdown from 'react-bootstrap/Dropdown';
+import { Link } from "react-router-dom";
 const Header = () => {
   return (
     <Fragment>
@@ -22,7 +23,7 @@ const Header = () => {
                     <div className="input-group">
                       <span className="input-group-text">
                         {/* <i data-feather="search" className="font-light"></i> */}
-                        <i class="fa-regular fa-magnifying-glass"></i>
+                        <i className="fa-regular fa-magnifying-glass"></i>
                       </span>
                       <input
                         type="text"
@@ -31,7 +32,7 @@ const Header = () => {
                       />
                       <span className="input-group-text close-search">
                         {/* <i data-feather="x" className="font-light"></i> */}
-                        <i class="fa-regular fa-magnifying-glass"></i>
+                        <i className="fa-regular fa-magnifying-glass"></i>
                       </span>
                     </div>
                   </div>
@@ -46,35 +47,76 @@ const Header = () => {
                           placeholder="search for product, delivered to your door..."
                         />
                         <button className="btn search-button">
-                          <i class="fa-regular fa-magnifying-glass"></i>
+                          <i className="fa-regular fa-magnifying-glass"></i>
                         </button>
                       </div>
-                      <div className="location-box-2">
+                      {/* <div className="location-box-2">
                         <button
                           className="btn location-button"
                           data-bs-toggle="modal"
                           data-bs-target="#locationModal"
                         >
-                          <i class="fa-regular fa-location-dot"></i>
+                          <i className="fa-regular fa-location-dot"></i>
                           <span className="locat-name">Your Location</span>
                           <i className="fa-solid fa-angle-down"></i>
                         </button>
-                      </div>
+                      </div> */}
                     </div>
                   </div>
                   <div className="right-nav">
                     <div className="nav-number"></div>
 
-                    <NavLink
+                    {/* <NavLink
                       to="/login"
                       className="btn theme-bg-color ms-3 fire-button"
-                    >
-                      <span>Login</span>
-                    </NavLink>
+                    > */}
+                      <Link to="/login"><span>Login</span></Link>
+                      
+                    {/* </NavLink> */}
+                  </div>
+                  <div className="right-nav">
+                    <div className="nav-number"></div>
+
+                    {/* <NavLink
+                      to=""
+                      className="btn theme-bg-color ms-3 fire-button"
+                    > */}
+                      <Link to=""><span>Location</span></Link>
+                      <i className="fa-solid fa-angle-down"></i>
+                    {/* </NavLink> */}
                   </div>
                   <div className="rightside-menu">
                     <div className="dropdown-dollar">
-                      <div className="dropdown">
+                  <Dropdown>
+                    <Dropdown.Toggle variant="white" id="dropdown-basic">
+                    Language
+                    <i className="fa-solid fa-angle-down"></i>
+                    </Dropdown.Toggle>
+                    <Dropdown.Menu>
+                      <Dropdown.Item href="">English</Dropdown.Item>
+                      <Dropdown.Item href="">Hindi</Dropdown.Item>
+                      <Dropdown.Item href="">Gujarati</Dropdown.Item>
+                      <Dropdown.Item href="">Arbic</Dropdown.Item>
+                      <Dropdown.Item href="">Rusia</Dropdown.Item>
+                      <Dropdown.Item href="">Chinese</Dropdown.Item>
+                   </Dropdown.Menu>
+                 </Dropdown>
+                 <Dropdown>
+                          <Dropdown.Toggle variant="white" id="dropdown-basic">
+                          Dollar
+                          <i className="fa-solid fa-angle-down"></i>
+                          </Dropdown.Toggle>
+                          <Dropdown.Menu>
+                              <Dropdown.Item href="#/action-1">USD</Dropdown.Item>
+                              <Dropdown.Item href="#/action-2"> INR</Dropdown.Item>
+                              <Dropdown.Item href="#/action-3">EUR</Dropdown.Item>
+                              <Dropdown.Item href="#/action-3">AUD</Dropdown.Item>
+                          </Dropdown.Menu>
+                      </Dropdown> 
+                  {/* <div className="rightside-menu">
+                    <div className="dropdown-dollar"> */}
+                      
+                      {/* <div className="dropdown">
                         <button
                           className="dropdown-toggle"
                           type="button"
@@ -143,9 +185,8 @@ const Header = () => {
                             </a>
                           </li>
                         </ul>
-                      </div>
-
-                      <div className="dropdown">
+                      </div> */}
+                      {/* <div className="dropdown">
                         <button
                           className="dropdown-toggle m-0"
                           type="button"
@@ -197,7 +238,7 @@ const Header = () => {
                             </a>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                     </div>
 
                     <div className="option-list">
@@ -207,7 +248,7 @@ const Header = () => {
                             href="javascript:void(0)"
                             className="header-icon user-icon search-icon"
                           >
-                            <i class="fa-regular fa-cart-shopping icon_color"></i>
+                            <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </a>
                         </li>
 
@@ -216,7 +257,7 @@ const Header = () => {
                             href="javascript:void(0)"
                             className="header-icon search-box search-icon"
                           >
-                            <i class="fa-regular fa-magnifying-glass"></i>
+                            <i className="fa-regular fa-magnifying-glass"></i>
                           </a>
                         </li>
 
@@ -225,14 +266,14 @@ const Header = () => {
                             href="javascript:void(0)"
                             className="header-icon swap-icon"
                           >
-                            <i class="fa-regular fa-heart icon_color"></i>
+                            <i className="fa-regular fa-heart icon_color"></i>
                           </a>
                         </li>
 
                         <li className="onhover-dropdown">
                           <NavLink to="/cart" className="header-icon bag-icon ">
                             <small className="badge-number">2</small>
-                            <i class="fa-regular fa-cart-shopping icon_color"></i>
+                            <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">
                             <ul className="cart-list">
@@ -333,7 +374,7 @@ const Header = () => {
               <div className="main-nav">
                 <div className="header-nav-left">
                   <button className="dropdown-category dropdown-category-2">
-                    <i class="fa-sharp fa-solid fa-bars"></i>
+                    <i className="fa-sharp fa-solid fa-bars"></i>
                     <span>All Categories</span>
                   </button>
 
@@ -353,7 +394,7 @@ const Header = () => {
                         <a href="javascript:void(0)" className="category-name">
                           <img src="../public/svg/1/vegetable.svg" alt="" />
                           <h6>Vegetables & Fruit</h6>
-                          <i class="fa-solid fa-chevron-right"></i>
+                          <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
                         <div className="onhover-category-box">
@@ -433,7 +474,7 @@ const Header = () => {
                         <a href="javascript:void(0)" className="category-name">
                           <img src="../public/svg/1/cup.svg" alt="" />
                           <h6>Beverages</h6>
-                          <i class="fa-solid fa-chevron-right"></i>
+                          <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
                         <div className="onhover-category-box w-100">
@@ -480,7 +521,7 @@ const Header = () => {
                         <a href="javascript:void(0)" className="category-name">
                           <img src="../public/svg/1/meats.svg" alt="" />
                           <h6>Meats & Seafood</h6>
-                          <i class="fa-solid fa-chevron-right"></i>
+                          <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
                         <div className="onhover-category-box">
@@ -549,7 +590,7 @@ const Header = () => {
                         <a href="javascript:void(0)" className="category-name">
                           <img src="../public/svg/1/breakfast.svg" alt="" />
                           <h6>Breakfast & Dairy</h6>
-                          <i class="fa-solid fa-chevron-right"></i>
+                          <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
                         <div className="onhover-category-box">
@@ -641,7 +682,7 @@ const Header = () => {
                         <a href="javascript:void(0)" className="category-name">
                           <img src="../public/svg/1/frozen.svg" alt="" />
                           <h6>Frozen Foods</h6>
-                          <i class="fa-solid fa-chevron-right"></i>
+                          <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
                         <div className="onhover-category-box w-100">
@@ -674,7 +715,7 @@ const Header = () => {
                         <a href="javascript:void(0)" className="category-name">
                           <img src="../public/svg/1/biscuit.svg" alt="" />
                           <h6>Biscuits & Snacks</h6>
-                          <i class="fa-solid fa-chevron-right"></i>
+                          <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
                         <div className="onhover-category-box">
@@ -741,7 +782,7 @@ const Header = () => {
                         <a href="javascript:void(0)" className="category-name">
                           <img src="../public/svg/1/grocery.svg" alt="" />
                           <h6>Grocery & Staples</h6>
-                          <i class="fa-solid fa-chevron-right"></i>
+                          <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
                         <div className="onhover-category-box">
@@ -1330,11 +1371,11 @@ const Header = () => {
 
                 <div className="right-nav">
                   <div className="nav-number">
-                    <img
+                    {/* <img
                       src="../public/icon/music.png"
                       className="img-fluid lazyload"
                       alt=""
-                    />
+                    /> */}
                     <span>(123) 456 7890</span>
                   </div>
                   <a

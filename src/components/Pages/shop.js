@@ -4,25 +4,42 @@ import Footer from '../part/footer'
 import Header from '../part/header'
 import Breadcumb from '../UI/beadcumb'
 import {FaStar} from 'react-icons/fa';
+import data from '../Pages/data';
+import Accordion from 'react-bootstrap/Accordion';
 import '../../CSS/style.css'
-const Shop=()=> {
+// function Ab(){
+//     return(
+//         <>
+//           <Accordion defaultActiveKey="0">
+//             <Accordion.Item eventKey="0">
+//                 <Accordion.Header>Categories</Accordion.Header>
+//                 <Accordion.Body>
+//                     hellooohellooohellooohellooo
+//                 </Accordion.Body>
+//             </Accordion.Item>
+//           </Accordion>
+//         </>
+//     )
+// }
+const Shop=(props)=> {
+    var product=data.product
     return (
         <Fragment>
             <Header />
             <Breadcumb pageName={'Shop'} pageTitle={'Page Title'} />
             {/* <!-- Shop Section Start --> */}
-            <section class="section-b-space shop-section">
-                <div class="container-fluid-lg">
-                    <div class="row">
-                        <div class="col-xxl-3 col-lg-4 wow fadeInUp">
-                            <div class="left-box">
-                                <div class="shop-left-sidebar">
-                                    <div class="back-button">
-                                        <h3><i class="fa-solid fa-arrow-left"></i> Back</h3>
+            <section className="section-b-space shop-section">
+                <div className="container-fluid-lg">
+                    <div className="row">
+                        <div className="col-xxl-3 col-lg-4 wow fadeInUp">
+                            <div className="left-box">
+                                <div className="shop-left-sidebar">
+                                    <div className="back-button">
+                                        <h3><i className="fa-solid fa-arrow-left"></i> Back</h3>
                                     </div>
 
-                                    <div class="filter-category">
-                                        <div class="filter-title">
+                                    <div className="filter-category">
+                                        <div className="filter-title">
                                             <h2>Filters</h2>
                                             <a href="javascript:void(0)">Clear All</a>
                                         </div>
@@ -44,399 +61,395 @@ const Shop=()=> {
                                             </li>
                                         </ul>
                                     </div>
-
-                                    <div class="accordion custome-accordion" id="accordionExample">
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="panelsStayOpen-headingOne">
-                                                <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                                    data-bs-target="#collapseOne" aria-expanded="true"
-                                                    aria-controls="collapseOne">
-                                                    <span>Categories</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseOne" class="accordion-collapse collapse show"
+                                    <Accordion>
+                                        <Accordion.Item eventKey="2">
+                                            <Accordion.Header>Categories</Accordion.Header>
+                                            <Accordion.Body>
+                                            <div id="collapseOne" className="accordion-collapse collapse show"
                                                 aria-labelledby="panelsStayOpen-headingOne">
-                                                <div class="accordion-body">
-                                                    <div class="form-floating theme-form-floating-2 search-box">
-                                                        <input type="search" class="form-control" id="search"
+                                                <div className="accordion-body">
+                                                    <div className="form-floating theme-form-floating-2 search-box">
+                                                        <input type="search" className="form-control" id="search"
                                                             placeholder="Search .." />
                                                         <label for="search">Search</label>
                                                     </div>
 
-                                                    <ul class="category-list custom-padding custom-height">
+                                                    <ul className="category-list custom-padding custom-height">
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" id="fruit" />
-                                                                <label class="form-check-label" for="fruit">
-                                                                    <span class="name">Fruits & Vegetables</span>
-                                                                    <span class="number">(15)</span>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" id="fruit" />
+                                                                <label className="form-check-label" for="fruit">
+                                                                    <span className="name">Fruits & Vegetables</span>
+                                                                    <span className="number">(15)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" id="cake" />
-                                                                <label class="form-check-label" for="cake">
-                                                                    <span class="name">Bakery, Cake & Dairy</span>
-                                                                    <span class="number">(12)</span>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" id="cake" />
+                                                                <label className="form-check-label" for="cake">
+                                                                    <span className="name">Bakery, Cake & Dairy</span>
+                                                                    <span className="number">(12)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="panelsStayOpen-headingTwo">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseTwo"
-                                                    aria-expanded="false" aria-controls="collapseTwo">
-                                                    <span>Food Preference</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseTwo" class="accordion-collapse collapse show"
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion>
+                                    <br/>
+                                    <Accordion>
+                                        <Accordion.Item eventKey="2">
+                                        <Accordion.Header>Food Preference</Accordion.Header>
+                                        <Accordion.Body>
+                                        <div id="collapseTwo" className="accordion-collapse collapse show"
                                                 aria-labelledby="panelsStayOpen-headingTwo">
-                                                <div class="accordion-body">
-                                                    <ul class="category-list custom-padding">
+                                                <div className="accordion-body">
+                                                    <ul className="category-list custom-padding">
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" id="veget" />
-                                                                <label class="form-check-label" for="veget">
-                                                                    <span class="name">Vegetarian</span>
-                                                                    <span class="number">(08)</span>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" id="veget" />
+                                                                <label className="form-check-label" for="veget">
+                                                                    <span className="name">Vegetarian</span>
+                                                                    <span className="number">(08)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" id="non" />
-                                                                <label class="form-check-label" for="non">
-                                                                    <span class="name">Non Vegetarian</span>
-                                                                    <span class="number">(09)</span>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" id="non" />
+                                                                <label className="form-check-label" for="non">
+                                                                    <span className="name">Non Vegetarian</span>
+                                                                    <span className="number">(09)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="panelsStayOpen-headingThree">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseThree"
-                                                    aria-expanded="false" aria-controls="collapseThree">
-                                                    <span>Price</span>
-                                                </button>
-                                            </h2>
-                                            <div class="row">
-                                            <input type="text" class="js-range-slider" value="" placeholder='from' />
-                                            <input type="text" class="js-range-slider" value="" placeholder='to ' />
+                                        </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion><br/>
+                                    <Accordion>
+                                        <Accordion.Item eventKey="2">
+                                            <Accordion.Header>Price</Accordion.Header>
+                                            <Accordion.Body>
+                                            <div className="row">
+                                            <input type="text" className="js-range-slider" value="" placeholder='from' />&nbsp;
+                                            <input type="text" className="js-range-slider" value="" placeholder='to ' />
                                             </div>
-                                        </div>
-
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="panelsStayOpen-headingSix">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseSix"
-                                                    aria-expanded="false" aria-controls="collapseSix">
-                                                    <span>Rating</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseSix" class="accordion-collapse collapse show"
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion><br/>
+                                    <Accordion>
+                                        <Accordion.Item eventKey="2">
+                                            <Accordion.Header>Rating</Accordion.Header>
+                                            <Accordion.Body>
+                                            <div id="collapseSix" className="accordion-collapse collapse show"
                                                 aria-labelledby="panelsStayOpen-headingSix">
-                                                <div class="accordion-body">
-                                                    <ul class="category-list custom-padding">
+                                                <div className="accordion-body">
+                                                    <ul className="category-list custom-padding">
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" />
-                                                                <div class="form-check-label">
-                                                                <ul class="rating">
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li>
-                                                                    <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                    <FaStar className="feather fill" fill={'#ffb321'} />
 
                                                                     </li>
                                                                 </ul>
-                                                                    <span class="text-content">(5 Star)</span>
+                                                                    <span className="text-content">(5 Star)</span>
                                                                 </div>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" />
-                                                                <div class="form-check-label">
-                                                                <ul class="rating">
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                 </ul>
-                                                                    <span class="text-content">(4 Star)</span>
+                                                                    <span className="text-content">(4 Star)</span>
                                                                 </div>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" />
-                                                                <div class="form-check-label">
-                                                                <ul class="rating">
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                    <FaStar class="feather " />
+                                                                    <FaStar className="feather " />
                                                                     </li>
                                                                     <li>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                 </ul>
-                                                                    <span class="text-content">(3 Star)</span>
+                                                                    <span className="text-content">(3 Star)</span>
                                                                 </div>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" />
-                                                                <div class="form-check-label">
-                                                                <ul class="rating">
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                     <li>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                 </ul>
-                                                                    <span class="text-content">(2 Star)</span>
+                                                                    <span className="text-content">(2 Star)</span>
                                                                 </div>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox" />
-                                                                <div class="form-check-label">
-                                                                <ul class="rating">
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather fill" fill={'#ffb321'} />
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                     <li color='#ffb321'>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                     <li>
-                                                                        <FaStar class="feather " />
+                                                                        <FaStar className="feather " />
                                                                     </li>
                                                                 </ul>
-                                                                    <span class="text-content">(1 Star)</span>
+                                                                    <span className="text-content">(1 Star)</span>
                                                                 </div>
                                                             </div>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
-                                        </div>
-
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="panelsStayOpen-headingFour">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseFour"
-                                                    aria-expanded="false" aria-controls="collapseFour">
-                                                    <span>Discount</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseFour" class="accordion-collapse collapse show"
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion><br/>
+                                    <Accordion>
+                                        <Accordion.Item eventKey="2">
+                                            <Accordion.Header>Discount</Accordion.Header>
+                                            <Accordion.Body>
+                                            <div id="collapseFour" className="accordion-collapse collapse show"
                                                 aria-labelledby="panelsStayOpen-headingFour">
-                                                <div class="accordion-body">
-                                                    <ul class="category-list custom-padding">
+                                                <div className="accordion-body">
+                                                    <ul className="category-list custom-padding">
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox"
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox"
                                                                     id="flexCheckDefault" />
-                                                                <label class="form-check-label" for="flexCheckDefault">
-                                                                    <span class="name">upto 5%</span>
-                                                                    <span class="number">(06)</span>
+                                                                <label className="form-check-label" for="flexCheckDefault">
+                                                                    <span className="name">upto 5%</span>
+                                                                    <span className="number">(06)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox"
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox"
                                                                     id="flexCheckDefault1" />
-                                                                <label class="form-check-label" for="flexCheckDefault1">
-                                                                    <span class="name">5% - 10%</span>
-                                                                    <span class="number">(08)</span>
+                                                                <label className="form-check-label" for="flexCheckDefault1">
+                                                                    <span className="name">5% - 10%</span>
+                                                                    <span className="number">(08)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox"
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox"
                                                                     id="flexCheckDefault2" />
-                                                                <label class="form-check-label" for="flexCheckDefault2">
-                                                                    <span class="name">10% - 15%</span>
-                                                                    <span class="number">(10)</span>
+                                                                <label className="form-check-label" for="flexCheckDefault2">
+                                                                    <span className="name">10% - 15%</span>
+                                                                    <span className="number">(10)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox"
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox"
                                                                     id="flexCheckDefault3" />
-                                                                <label class="form-check-label" for="flexCheckDefault3">
-                                                                    <span class="name">15% - 25%</span>
-                                                                    <span class="number">(14)</span>
+                                                                <label className="form-check-label" for="flexCheckDefault3">
+                                                                    <span className="name">15% - 25%</span>
+                                                                    <span className="number">(14)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
 
                                                         <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox"
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox"
                                                                     id="flexCheckDefault4" />
-                                                                <label class="form-check-label" for="flexCheckDefault4">
-                                                                    <span class="name">More than 25%</span>
-                                                                    <span class="number">(13)</span>
+                                                                <label className="form-check-label" for="flexCheckDefault4">
+                                                                    <span className="name">More than 25%</span>
+                                                                    <span className="number">(13)</span>
                                                                 </label>
                                                             </div>
                                                         </li>
                                                     </ul>
                                                 </div>
                                             </div>
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion><br/>
+                                    <Accordion>
+                                        <Accordion.Item eventKey="2">
+                                            <Accordion.Header>Pack Size</Accordion.Header>
+                                            <Accordion.Body>
+                                            <div id="collapseFive" className="accordion-collapse collapse show"
+                                                aria-labelledby="panelsStayOpen-headingFive">
+                                                <div className="accordion-body">
+                                                    <ul className="category-list custom-padding custom-height">
+                                                        <li>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox"
+                                                                    id="flexCheckDefault5" />
+                                                                <label className="form-check-label" for="flexCheckDefault5">
+                                                                    <span className="name">400 to 500 g</span>
+                                                                    <span className="number">(05)</span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox"
+                                                                    id="flexCheckDefault6" />
+                                                                <label className="form-check-label" for="flexCheckDefault6">
+                                                                    <span className="name">500 to 700 g</span>
+                                                                    <span className="number">(02)</span>
+                                                                </label>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                            </Accordion.Body>
+                                        </Accordion.Item>
+                                    </Accordion>
+                                    <div className="accordion custome-accordion" id="accordionExample">
+                                        <div className="accordion-item">
+                                        </div>
+                                        <div className="accordion-item">
+            
                                         </div>
 
-                                        <div class="accordion-item">
-                                            <h2 class="accordion-header" id="panelsStayOpen-headingFive">
-                                                <button class="accordion-button collapsed" type="button"
-                                                    data-bs-toggle="collapse" data-bs-target="#collapseFive"
-                                                    aria-expanded="false" aria-controls="collapseFive">
-                                                    <span>Pack Size</span>
-                                                </button>
-                                            </h2>
-                                            <div id="collapseFive" class="accordion-collapse collapse show"
-                                                aria-labelledby="panelsStayOpen-headingFive">
-                                                <div class="accordion-body">
-                                                    <ul class="category-list custom-padding custom-height">
-                                                        <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox"
-                                                                    id="flexCheckDefault5" />
-                                                                <label class="form-check-label" for="flexCheckDefault5">
-                                                                    <span class="name">400 to 500 g</span>
-                                                                    <span class="number">(05)</span>
-                                                                </label>
-                                                            </div>
-                                                        </li>
+                                        <div className="accordion-item">
+                                           
+                                        </div>
 
-                                                        <li>
-                                                            <div class="form-check ps-0 m-0 category-list-box">
-                                                                <input class="checkbox_animated" type="checkbox"
-                                                                    id="flexCheckDefault6" />
-                                                                <label class="form-check-label" for="flexCheckDefault6">
-                                                                    <span class="name">500 to 700 g</span>
-                                                                    <span class="number">(02)</span>
-                                                                </label>
-                                                            </div>
-                                                        </li>
-                                                    </ul>
-                                                </div>
-                                            </div>
+                                        <div className="accordion-item">
+                                            
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="col-xxl-9 col-lg-8 wow fadeInUp">
-                            <div class="show-button">
-                                <div class="filter-button-group mt-0">
-                                    <div class="filter-button d-inline-block d-lg-none">
-                                        <a><i class="fa-solid fa-filter"></i> Filter Menu</a>
+                        <div className="col-xxl-9 col-lg-8 wow fadeInUp">
+                            <div className="show-button">
+                                <div className="filter-button-group mt-0">
+                                    <div className="filter-button d-inline-block d-lg-none">
+                                        <a><i className="fa-solid fa-filter"></i> Filter Menu</a>
                                     </div>
                                 </div>
 
-                                <div class="top-filter-menu">
-                                    <div class="category-dropdown">
-                                        <h5 class="text-content">Sort By :</h5>
-                                        <div class="dropdown">
-                                            <button class="dropdown-toggle" type="button" id="dropdownMenuButton1"
+                                <div className="top-filter-menu">
+                                    <div className="category-dropdown">
+                                        <h5 className="text-content">Sort By :</h5>
+                                        <div className="dropdown">
+                                            <button className="dropdown-toggle" type="button" id="dropdownMenuButton1"
                                                 data-bs-toggle="dropdown">
-                                                <span>Most Popular</span> <i class="fa-solid fa-angle-down"></i>
+                                                <span>Most Popular</span> <i className="fa-solid fa-angle-down"></i>
                                             </button>
-                                            <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton1">
+                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
                                                 <li>
-                                                    <a class="dropdown-item" id="pop" href="javascript:void(0)">Popularity</a>
+                                                    <a className="dropdown-item" id="pop" href="javascript:void(0)">Popularity</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" id="low" href="javascript:void(0)">Low - High
+                                                    <a className="dropdown-item" id="low" href="javascript:void(0)">Low - High
                                                         Price</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" id="high" href="javascript:void(0)">High - Low
+                                                    <a className="dropdown-item" id="high" href="javascript:void(0)">High - Low
                                                         Price</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" id="rating" href="javascript:void(0)">Average
+                                                    <a className="dropdown-item" id="rating" href="javascript:void(0)">Average
                                                         Rating</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" id="aToz" href="javascript:void(0)">A - Z Order</a>
+                                                    <a className="dropdown-item" id="aToz" href="javascript:void(0)">A - Z Order</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" id="zToa" href="javascript:void(0)">Z - A Order</a>
+                                                    <a className="dropdown-item" id="zToa" href="javascript:void(0)">Z - A Order</a>
                                                 </li>
                                                 <li>
-                                                    <a class="dropdown-item" id="off" href="javascript:void(0)">% Off - Hight To
+                                                    <a className="dropdown-item" id="off" href="javascript:void(0)">% Off - Hight To
                                                         Low</a>
                                                 </li>
                                             </ul>
@@ -447,40 +460,37 @@ const Shop=()=> {
                                 </div>
                             </div>
 
-                            <div class="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
-                                <div><ProductBox productName={'Product name here'} productMRF={'123'} productPrice={'112'} /></div>
+                            <div className="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                                {product.map((product)=>{
+                                    return(
+                                        <div key={product.id}><ProductBox  image={product.image} name={product.name} productMRF={product.productMRF} productPrice={product.productPrice} />
+                                        {/* <ProductBox productName={product.productName} productMRF={product.productMRF} productPrice={product.productPrice} /> */}
+                                        </div>
+                                        
+                                        
+                                    )
+                                })}
                             </div>
 
-                            <nav class="custome-pagination">
-                                <ul class="pagination justify-content-center">
-                                    <li class="page-item disabled">
-                                        <a class="page-link" href="javascript:void(0)" tabindex="-1" aria-disabled="true">
-                                            <i class="fa-solid fa-angles-left"></i>
+                            <nav className="custome-pagination">
+                                <ul className="pagination justify-content-center">
+                                    <li className="page-item disabled">
+                                        <a className="page-link" href="javascript:void(0)" tabindex="-1" aria-disabled="true">
+                                            <i className="fa-solid fa-angles-left"></i>
                                         </a>
                                     </li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="javascript:void(0)">1</a>
+                                    <li className="page-item active">
+                                        <a className="page-link" href="javascript:void(0)">1</a>
                                     </li>
-                                    <li class="page-item" aria-current="page">
-                                        <a class="page-link" href="javascript:void(0)">2</a>
+                                    <li className="page-item" aria-current="page">
+                                        <a className="page-link" href="javascript:void(0)">2</a>
                                     </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0)">3</a>
+                                    <li className="page-item">
+                                        <a className="page-link" href="javascript:void(0)">3</a>
                                     </li>
-                                    <li class="page-item">
-                                        <a class="page-link" href="javascript:void(0)">
-                                            <i class="fa-solid fa-angles-right"></i>
+                                    <li className="page-item">
+                                        <a className="page-link" href="javascript:void(0)">
+                                            <i className="fa-solid fa-angles-right"></i>
                                         </a>
                                     </li>
                                 </ul>
@@ -494,4 +504,5 @@ const Shop=()=> {
         </Fragment>
     )
 }
+// export {Ab};
 export default Shop;

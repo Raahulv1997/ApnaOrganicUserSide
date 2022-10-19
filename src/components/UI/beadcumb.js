@@ -1,4 +1,4 @@
-import { Fragment } from 'react';
+import React, { Fragment } from 'react';
 import { NavLink } from 'react-router-dom';
 
  const Breadcumb=({pageName, pageTitle,pageHref}) =>{
@@ -16,7 +16,7 @@ import { NavLink } from 'react-router-dom';
                                     <ol className="breadcrumb mb-0">
                                         <li className="breadcrumb-item">
                                             <NavLink to={pageHref}>
-                                            <i class="fa-solid fa-house"></i>
+                                            <i className="fa-solid fa-house"></i>
                                             </NavLink>
                                         </li>
                                         <li className="breadcrumb-item active" aria-current="page">{pageTitle}</li>

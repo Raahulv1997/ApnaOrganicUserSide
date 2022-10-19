@@ -1,19 +1,23 @@
 import React from 'react';
-import ProductImg1 from '../../Photos/media/1.08561f8e.jpg'
+//import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
 import {FaStar} from 'react-icons/fa';
-
-export default function ProductBox({productName, productPrice, productMRF}) {
+function AddCart(props){
+    return(
+        "pass"
+    )
+}
+function ProductBox({name,image,productPrice, productMRF}) {
     return (
         <div className="product-box-4">
             <div className="product-image">
                 <div className="label-flex">
                     <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-                    <i class="fa-regular fa-heart"></i>
+                    <i className="fa-regular fa-heart"></i>
                     </button>
                 </div>
 
                 <a href="./product-detail">
-                    <img src={ProductImg1} className="img-fluid" alt="" />
+                    <img src={image} className="img-fluid" alt="" />
                 </a>
 
                 {/* <ul className="option">
@@ -49,28 +53,36 @@ export default function ProductBox({productName, productPrice, productMRF}) {
                     </li>
                 </ul>
                 <a href="./product-detail">
-                    <h5 className="name">{productName}</h5>
+                    <h5 className="name">{name}</h5>
                 </a>
+                {/* /<p className="lead">SoldBy:-{SoldBy}</p> */}
+                {/* <p className="lead">Quantity:-{Quantity}</p> */}
+                {/* <p className="lead">Price:-{Price}</p>
+                <p className="lead">Saving:-{Saving}</p>
+                <p className="lead">Total:-{Total}</p>
+                <p className="lead">YouSave:-{YouSave}</p> */}
                 <h5 className="price theme-color">{"₹"+productPrice}<del>{"₹"+productMRF}</del></h5>
                 <div className="price-qty">
                     <div className="counter-number">
                         <div className="counter">
                             <div className="qty-left-minus" data-type="minus" data-field="">
-                                <i class="fa-regular fa-minus"></i>
+                                <i className="fa-regular fa-minus"></i>
                             </div>
                            <input className="form-control input-number qty-input" type="text"
                                name="quantity" value="0" />
                             <div className="qty-right-plus" data-type="plus" data-field="">
-                                <i class="fa-regular fa-plus"></i>
+                                <i className="fa-regular fa-plus"></i>
                             </div>
                         </div>
                     </div>
 
-                    <button className="buy-button buy-button-2 btn btn-cart">
-                    <i class="fa-regular fa-cart-shopping"></i>
+                    <button onClick={""} className="buy-button buy-button-2 btn btn-cart">
+                    <i className="fa-regular fa-cart-shopping"></i>
                     </button>
                 </div>
             </div>
         </div>
     )
 }
+export {AddCart};
+export default ProductBox;

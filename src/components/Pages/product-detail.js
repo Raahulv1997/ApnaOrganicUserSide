@@ -4,6 +4,9 @@ import Header from '../part/header'
 import Product1 from '../../Photos/banner/2.jpg'
 import Product2 from '../../Photos/product/2.png'
 import banner1 from '../../Photos/banner/14.jpg'
+import Tab from 'react-bootstrap/Tab';
+import Tabs from 'react-bootstrap/Tabs';
+import {FaStar} from 'react-icons/fa';
 import '../../CSS/style.css'
 import { NavLink } from 'react-router-dom'
 
@@ -20,21 +23,21 @@ const ProductDetail=()=> {
         <Fragment>
             <Header />
             {/* <!-- Breadcrumb Section Start --> */}
-            <section class="breadscrumb-section pt-0">
-                <div class="container-fluid-lg">
-                    <div class="row">
-                        <div class="col-12">
-                            <div class="breadscrumb-contain">
+            <section className="breadscrumb-section pt-0">
+                <div className="container-fluid-lg">
+                    <div className="row">
+                        <div className="col-12">
+                            <div className="breadscrumb-contain">
                                 <h2>Creamy Chocolate Cake</h2>
                                 <nav>
-                                    <ol class="breadcrumb mb-0">
-                                        <li class="breadcrumb-item">
+                                    <ol className="breadcrumb mb-0">
+                                        <li className="breadcrumb-item">
                                             <NavLink to="/">
-                                            <i class="fa-solid fa-house"></i>
+                                            <i className="fa-solid fa-house"></i>
                                             </NavLink>
                                         </li>
 
-                                        <li class="breadcrumb-item active">Creamy Chocolate Cake</li>
+                                        <li className="breadcrumb-item active">Creamy Chocolate Cake</li>
                                     </ol>
                                 </nav>
                             </div>
@@ -45,53 +48,53 @@ const ProductDetail=()=> {
             {/* <!-- Breadcrumb Section End --> */}
 
             {/* <!-- Product Left Sidebar Start --> */}
-            <section class="product-section">
-                <div class="container-fluid-lg">
-                    <div class="row">
-                        <div class="col-xxl-9 col-xl-8 col-lg-7 wow fadeInUp">
-                            <div class="row g-4">
-                                <div class="col-xl-6 wow fadeInUp">
-                                    <div class="product-left-box">
-                                        <div class="row g-2">
-                                            <div class="col-12">
-                                                <div class="sidebar-image">
-                                                    <img src={Product1} class="img-fluid  lazyload" alt=""/>
+            <section className="product-section">
+                <div className="container-fluid-lg">
+                    <div className="row">
+                        <div className="col-xxl-9 col-xl-8 col-lg-7 wow fadeInUp">
+                            <div className="row g-4">
+                                <div className="col-xl-6 wow fadeInUp">
+                                    <div className="product-left-box">
+                                        <div className="row g-2">
+                                            <div className="col-12">
+                                                <div className="sidebar-image">
+                                                    <img src={Product1} className="img-fluid  lazyload" alt=""/>
                                                 </div>
                                             </div>
                                         </div>
                                     </div>
                                 </div>
 
-                                <div class="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
-                                    <div class="right-box-contain">
-                                        <h6 class="offer-top">30% Off</h6>
-                                        <h2 class="name">Creamy Chocolate Cake</h2>
-                                        <div class="price-rating">
-                                            <h3 class="theme-color price">$49.50 <del class="text-content">$58.46</del> <span
-                                                class="offer theme-color">(8% off)</span></h3>
-                                            <div class="product-rating custom-rate">
-                                                <ul class="rating">
+                                <div className="col-xl-6 wow fadeInUp" data-wow-delay="0.1s">
+                                    <div className="right-box-contain">
+                                        <h6 className="offer-top">30% Off</h6>
+                                        <h2 className="name">Creamy Chocolate Cake</h2>
+                                        <div className="price-rating">
+                                            <h3 className="theme-color price">₹49.50 <del className="text-content">₹58.46</del> <span
+                                                className="offer theme-color">(8% off)</span></h3>
+                                            <div className="product-rating custom-rate">
+                                                <ul className="rating">
                                                     <li>
-                                                        <i data-feather="star" class="fill"></i>
+                                                        <i data-feather="star" className="fill"></i>
                                                     </li>
                                                     <li>
-                                                        <i data-feather="star" class="fill"></i>
+                                                        <i data-feather="star" className="fill"></i>
                                                     </li>
                                                     <li>
-                                                        <i data-feather="star" class="fill"></i>
+                                                        <i data-feather="star" className="fill"></i>
                                                     </li>
                                                     <li>
-                                                        <i data-feather="star" class="fill"></i>
+                                                        <i data-feather="star" className="fill"></i>
                                                     </li>
                                                     <li>
                                                         <i data-feather="star"></i>
                                                     </li>
                                                 </ul>
-                                                <span class="review">23 Customer Review</span>
+                                                <span className="review">23 Customer Review</span>
                                             </div>
                                         </div>
 
-                                        <div class="procuct-contain">
+                                        <div className="procuct-contain">
                                             <p>Lollipop cake chocolate chocolate cake dessert jujubes. Shortbread sugar plum
                                                 dessert
                                                 powder cookie sweet brownie. Cake cookie apple pie dessert sugar plum muffin
@@ -99,13 +102,13 @@ const ProductDetail=()=> {
                                             </p>
                                         </div>
 
-                                        <div class="product-packege">
-                                            <div class="product-title">
+                                        <div className="product-packege">
+                                            <div className="product-title">
                                                 <h4>Weight</h4>
                                             </div>
-                                            <ul class="select-packege">
+                                            <ul className="select-packege">
                                                 <li>
-                                                    <a href="javascript:void(0)" class="active">1/2 KG</a>
+                                                    <a href="javascript:void(0)" className="active">1/2 KG</a>
                                                 </li>
                                                 <li>
                                                     <a href="javascript:void(0)">1 KG</a>
@@ -126,26 +129,26 @@ const ProductDetail=()=> {
 
 
 
-                                        <div class="note-box product-packege">
-                                            <div class="cart_qty qty-box product-qty">
-                                                <div class="input-group">
-                                                    <button type="button" class="qty-right-plus" data-type="plus" data-field="">
-                                                        <i class="fa fa-plus" aria-hidden="true"></i>
+                                        <div className="note-box product-packege">
+                                            <div className="cart_qty qty-box product-qty">
+                                                <div className="input-group">
+                                                    <button type="button" className="qty-right-plus" data-type="plus" data-field="">
+                                                        <i className="fa fa-plus" aria-hidden="true"></i>
                                                     </button>
-                                                    <input class="form-control input-number qty-input" type="text"
+                                                    <input className="form-control input-number qty-input" type="text"
                                                         name="quantity" value="0"/>
-                                                        <button type="button" class="qty-left-minus" data-type="minus"
+                                                        <button type="button" className="qty-left-minus" data-type="minus"
                                                             data-field="">
-                                                            <i class="fa fa-minus" aria-hidden="true"></i>
+                                                            <i className="fa fa-minus" aria-hidden="true"></i>
                                                         </button>
                                                 </div>
                                             </div>
 
                                             <button onclick="location.href = 'cart.html';"
-                                                class="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
+                                                className="btn btn-md bg-dark cart-button text-white w-100">Add To Cart</button>
                                         </div>
 
-                                        <div class="buy-box">
+                                        <div className="buy-box">
                                             <a href="wishlist.html">
                                                 <i data-feather="heart"></i>
                                                 <span>Add To Wishlist</span>
@@ -157,18 +160,18 @@ const ProductDetail=()=> {
                                             </a>
                                         </div>
 
-                                        <div class="pickup-box">
-                                            <div class="product-title">
+                                        <div className="pickup-box">
+                                            <div className="product-title">
                                                 <h4>Store Information</h4>
                                             </div>
 
-                                            <div class="pickup-detail">
-                                                <h4 class="text-content">Lollipop cake chocolate chocolate cake dessert jujubes.
+                                            <div className="pickup-detail">
+                                                <h4 className="text-content">Lollipop cake chocolate chocolate cake dessert jujubes.
                                                     Shortbread sugar plum dessert powder cookie sweet brownie.</h4>
                                             </div>
 
-                                            <div class="product-info">
-                                                <ul class="product-info-list product-info-list-2">
+                                            <div className="product-info">
+                                                <ul className="product-info-list product-info-list-2">
                                                     <li>Type : <a href="javascript:void(0)">Black Forest</a></li>
                                                     <li>SKU : <a href="javascript:void(0)">SDFVW65467</a></li>
                                                     <li>MFG : <a href="javascript:void(0)">Jun 4, 2022</a></li>
@@ -179,48 +182,23 @@ const ProductDetail=()=> {
                                             </div>
                                         </div>
 
-                                        <div class="paymnet-option">
-                                            <div class="product-title">
+                                        <div className="paymnet-option">
+                                            <div className="product-title">
                                                 <h4>Guaranteed Safe Checkout</h4>
                                             </div>
                                             
                                         </div>
                                     </div>
                                 </div>
-
-                                <div class="col-12">
-                                    <div class="product-section-box">
-                                        <ul class="nav nav-tabs custom-nav" id="myTab" role="tablist">
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link active" id="description-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#description" type="button" role="tab"
-                                                    aria-controls="description" aria-selected="true">Description</button>
-                                            </li>
-
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="info-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#info" type="button" role="tab" aria-controls="info"
-                                                    aria-selected="false">Additional info</button>
-                                            </li>
-
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="care-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#care" type="button" role="tab" aria-controls="care"
-                                                    aria-selected="false">Care Instuctions</button>
-                                            </li>
-
-                                            <li class="nav-item" role="presentation">
-                                                <button class="nav-link" id="review-tab" data-bs-toggle="tab"
-                                                    data-bs-target="#review" type="button" role="tab" aria-controls="review"
-                                                    aria-selected="false">Review</button>
-                                            </li>
-                                        </ul>
-
-                                        <div class="tab-content custom-tab" id="myTabContent">
-                                            <div class="tab-pane fade show active" id="description" role="tabpanel"
-                                                aria-labelledby="description-tab">
-                                                <div class="product-description">
-                                                    <div class="nav-desh">
+                        
+                                <div className="col-12">
+                                    <div className="product-section-box">
+                                        <Tabs className="nav nav-tabs custom-nav mb-3" id="fill-tab-example" role="tablist" defaultActiveKey="Description">
+                                            <Tab className="nav-item" role="presentation" eventKey="Description" title="Description">
+                                            {/* <div className="tab-pane fade show active" id="description" role="tabpanel"
+                                                aria-labelledby="description-tab"> */}
+                                                {/* <div className="product-description"> */}
+                                                    <div className="nav-desh">
                                                         <p>Jelly beans carrot cake icing biscuit oat cake gummi bears tart.
                                                             Lemon drops carrot cake pudding sweet gummi bears. Chocolate cake
                                                             tart cupcake donut topping liquorice sugar plum chocolate bar. Jelly
@@ -231,8 +209,8 @@ const ProductDetail=()=> {
                                                             jelly beans candy canes marshmallow gingerbread pie.</p>
                                                     </div>
 
-                                                    <div class="nav-desh">
-                                                        <div class="desh-title">
+                                                    <div className="nav-desh">
+                                                        <div className="desh-title">
                                                             <h5>Organic:</h5>
                                                         </div>
                                                         <p>vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam
@@ -249,20 +227,20 @@ const ProductDetail=()=> {
                                                             vulputate enim nulla aliquet porttitor lacus luctus accumsan.</p>
                                                     </div>
 
-                                                    <div class="banner-contain nav-desh">
+                                                    <div className="banner-contain nav-desh">
                                                         <img src={banner1}
-                                                            class="bg-img  lazyload" alt=""/>
-                                                            <div class="banner-details p-center banner-b-space w-100 text-center">
+                                                            className="bg-img  lazyload" alt=""/>
+                                                            <div className="banner-details p-center banner-b-space w-100 text-center">
                                                                 <div >
-                                                                    <h6 class="ls-expanded theme-color mb-sm-3 mb-1">SUMMER</h6>
+                                                                    <h6 className="ls-expanded theme-color mb-sm-3 mb-1">SUMMER</h6>
                                                                     <h2>VEGETABLE</h2>
-                                                                    <p class="mx-auto mt-1">Save up to 5% OFF</p>
+                                                                    <p className="mx-auto mt-1">Save up to 5% OFF</p>
                                                                 </div>
                                                             </div>
                                                     </div>
 
-                                                    <div class="nav-desh">
-                                                        <div class="desh-title">
+                                                    <div className="nav-desh">
+                                                        <div className="desh-title">
                                                             <h5>From The Manufacturer:</h5>
                                                         </div>
                                                         <p>Jelly beans shortbread chupa chups carrot cake jelly-o halvah apple
@@ -283,12 +261,13 @@ const ProductDetail=()=> {
                                                             drops cookie muffin carrot cake chocolate marzipan gingerbread
                                                             topping chocolate bar. Soufflé tiramisu pastry sweet dessert.</p>
                                                     </div>
-                                                </div>
-                                            </div>
+                                                {/* </div> */}
+                                            {/* </div> */}
+                                            </Tab>
 
-                                            <div class="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
-                                                <div class="table-responsive">
-                                                    <table class="table info-table">
+                                            <Tab className="nav-item" role="presentation" eventKey="Additional info" title="Additional info">
+                                                <div className="table-responsive">
+                                                    <table className="table info-table">
                                                         <tbody>
                                                             <tr>
                                                                 <td>Specialty</td>
@@ -325,10 +304,548 @@ const ProductDetail=()=> {
                                                         </tbody>
                                                     </table>
                                                 </div>
-                                            </div>
+                                            </Tab>
 
-                                            <div class="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab">
-                                                <div class="information-box">
+                                            <Tab className="nav-item" role="presentation" eventKey="Care Instuctions" title="Care Instuctions">
+                                            {/* <div className="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab"> */}
+                                                <div className="information-box">
+                                                    <ul>
+                                                        <li >Store cream cakes in a refrigerator. Fondant cakes should be
+                                                            stored in an air conditioned environment.</li>
+
+                                                        <li >Slice and serve the cake at room temperature and make sure
+                                                            it is not exposed to heat.</li>
+
+                                                        <li >Use a serrated knife to cut a fondant cake.</li>
+
+                                                        <li >Sculptural elements and figurines may contain wire supports
+                                                            or toothpicks or wooden skewers for support.</li>
+
+                                                        <li >Please check the placement of these items before serving to
+                                                            small children.</li>
+
+                                                        <li >The cake should be consumed within 24 hours.</li>
+
+                                                        <li >Enjoy your cake!</li>
+                                                    </ul>
+                                                </div>
+                                            {/* </div> */}
+                                            </Tab>
+
+                                            <Tab className="nav-item" role="presentation" eventKey="Review" title="Review">
+                                            <div className="review-box">
+                                                    <div className="row g-4">
+                                                        <div className="col-xl-6">
+                                                            <div className="review-title">
+                                                                <h4 className="fw-500">Customer reviews</h4>
+                                                            </div>
+
+                                                            <div className="d-flex">
+                                                                <div className="product-rating">
+                                                                    <ul className="rating">
+                                                                        <li>
+                                                                            <i data-feather="star" className="fill"></i>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i data-feather="star" className="fill"></i>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i data-feather="star" className="fill"></i>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i data-feather="star"></i>
+                                                                        </li>
+                                                                        <li>
+                                                                            <i data-feather="star"></i>
+                                                                        </li>
+                                                                    </ul>
+                                                                </div>
+                                                                <h6 className="ms-3">4.2 Out Of 5</h6>
+                                                            </div>
+
+                                                            <div className="accordion-body">
+                                                    <ul className="category-list custom-padding">
+                                                        <li>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li>
+                                                                    <FaStar className="feather fill" fill={'#ffb321'} />
+
+                                                                    </li>
+                                                                </ul>
+                                                                    <span className="text-content ps-3">(5 Star)</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                </ul>
+                                                                    <span className="text-content ps-3">(4 Star)</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                    <FaStar className="feather " />
+                                                                    </li>
+                                                                    <li>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                </ul>
+                                                                    <span className="text-content ps-3">(3 Star)</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                    <li>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                </ul>
+                                                                    <span className="text-content ps-3">(2 Star)</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+
+                                                        <li>
+                                                            <div className="form-check ps-0 m-0 category-list-box">
+                                                                <input className="checkbox_animated" type="checkbox" />
+                                                                <div className="form-check-label">
+                                                                <ul className="rating p-0">
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather fill" fill={'#ffb321'} />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                    <li color='#ffb321'>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                    <li>
+                                                                        <FaStar className="feather " />
+                                                                    </li>
+                                                                </ul>
+                                                                    <span className="text-content ps-3">(1 Star)</span>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                      
+
+                                                        <div className="col-12">
+                                                            <div className="review-title">
+                                                                <h4 className="fw-500">Customer questions & answers</h4>
+                                                            </div>
+
+                                                            <div className="review-people">
+                                                                <ul className="review-list">
+                                                                    <li>
+                                                                        <div className="people-box">
+                                                                            <div>
+                                                                                <div className="people-image">
+                                                                                    <img src={Product2}
+                                                                                        className="img-fluid  lazyload"
+                                                                                        alt=""/>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div className="people-comment">
+                                                                                <a className="name"
+                                                                                    href="javascript:void(0)">Tracey</a>
+                                                                                <div className="date-time">
+                                                                                    <h6 className="text-content">14 Jan, 2022 at
+                                                                                        12.58 AM</h6>
+
+                                                                                    <div className="product-rating">
+                                                                                        <ul className="rating">
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"></i>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div className="reply">
+                                                                                    <p>Icing cookie carrot cake chocolate cake
+                                                                                        sugar plum jelly-o danish. Dragée dragée
+                                                                                        shortbread tootsie roll croissant muffin
+                                                                                        cake I love gummi bears. Candy canes ice
+                                                                                        cream caramels tiramisu marshmallow cake
+                                                                                        shortbread candy canes cookie.<a
+                                                                                            href="javascript:void(0)">Reply</a>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <div className="people-box">
+                                                                            <div>
+                                                                                <div className="people-image">
+                                                                                    <img src={Product2}
+                                                                                        className="img-fluid  lazyload"
+                                                                                        alt=""/>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div className="people-comment">
+                                                                                <a className="name"
+                                                                                    href="javascript:void(0)">Olivia</a>
+                                                                                <div className="date-time">
+                                                                                    <h6 className="text-content">01 May, 2022 at
+                                                                                        08.31 AM</h6>
+                                                                                    <div className="product-rating">
+                                                                                        <ul className="rating">
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"></i>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div className="reply">
+                                                                                    <p>Tootsie roll cake danish halvah powder
+                                                                                        Tootsie roll candy marshmallow cookie
+                                                                                        brownie apple pie pudding brownie
+                                                                                        chocolate bar. Jujubes gummi bears I
+                                                                                        love powder danish oat cake tart
+                                                                                        croissant.<a
+                                                                                            href="javascript:void(0)">Reply</a>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+
+                                                                    <li>
+                                                                        <div className="people-box">
+                                                                            <div>
+                                                                                <div className="people-image">
+                                                                                    <img src={Product2}
+                                                                                        className="img-fluid  lazyload"
+                                                                                        alt=""/>
+                                                                                </div>
+                                                                            </div>
+
+                                                                            <div className="people-comment">
+                                                                                <a className="name"
+                                                                                    href="javascript:void(0)">Gabrielle</a>
+                                                                                <div className="date-time">
+                                                                                    <h6 className="text-content">21 May, 2022 at
+                                                                                        05.52 PM</h6>
+
+                                                                                    <div className="product-rating">
+                                                                                        <ul className="rating">
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"
+                                                                                                    className="fill"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"></i>
+                                                                                            </li>
+                                                                                            <li>
+                                                                                                <i data-feather="star"></i>
+                                                                                            </li>
+                                                                                        </ul>
+                                                                                    </div>
+                                                                                </div>
+
+                                                                                <div className="reply">
+                                                                                    <p>Biscuit chupa chups gummies powder I love
+                                                                                        sweet pudding jelly beans. Lemon drops
+                                                                                        marzipan apple pie gingerbread macaroon
+                                                                                        croissant cotton candy pastry wafer.
+                                                                                        Carrot cake halvah I love tart caramels
+                                                                                        pudding icing chocolate gummi bears.
+                                                                                        Gummi bears danish cotton candy muffin
+                                                                                        marzipan caramels awesome feel. <a
+                                                                                            href="javascript:void(0)">Reply</a>
+                                                                                    </p>
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                    <div className="col-xl-6">
+                                                            <div className="review-title">
+                                                                <h4 className="fw-500">Add a review</h4>
+                                                            </div>
+
+                                                            <div className="row g-4">
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="text" className="form-control" id="name"
+                                                                            placeholder="Name"/>
+                                                                            <label for="name">Your Name</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="email" className="form-control" id="email"
+                                                                            placeholder="Email Address"/>
+                                                                            <label for="email">Email Address</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="url" className="form-control" id="website"
+                                                                            placeholder="Website"/>
+                                                                            <label for="website">Website</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="url" className="form-control" id="review1"
+                                                                            placeholder="Give your review a title"/>
+                                                                            <label for="review1">Review Title</label>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="col-12">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <textarea className="form-control"
+                                                                            placeholder="Leave a comment here"
+                                                                            id="floatingTextarea2"
+                                                                           ></textarea>
+                                                                        <label for="floatingTextarea2">Write Your
+                                                                            Comment</label>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+
+                                                </div>
+                                           </div> 
+                                            </Tab>
+                                        </Tabs>
+
+                                        <div className="tab-content custom-tab" id="myTabContent">
+                                            {/* <div className="tab-pane fade show active" id="description" role="tabpanel"
+                                                aria-labelledby="description-tab">
+                                                <div className="product-description">
+                                                    <div className="nav-desh">
+                                                        <p>Jelly beans carrot cake icing biscuit oat cake gummi bears tart.
+                                                            Lemon drops carrot cake pudding sweet gummi bears. Chocolate cake
+                                                            tart cupcake donut topping liquorice sugar plum chocolate bar. Jelly
+                                                            beans tiramisu caramels jujubes biscuit liquorice chocolate. Pudding
+                                                            toffee jujubes oat cake sweet roll. Lemon drops dessert croissant
+                                                            danish cake cupcake. Sweet roll candy chocolate toffee jelly sweet
+                                                            roll halvah brownie topping. Marshmallow powder candy sesame snaps
+                                                            jelly beans candy canes marshmallow gingerbread pie.</p>
+                                                    </div>
+
+                                                    <div className="nav-desh">
+                                                        <div className="desh-title">
+                                                            <h5>Organic:</h5>
+                                                        </div>
+                                                        <p>vitae et leo duis ut diam quam nulla porttitor massa id neque aliquam
+                                                            vestibulum morbi blandit cursus risus at ultrices mi tempus
+                                                            imperdiet nulla malesuada pellentesque elit eget gravida cum sociis
+                                                            natoque penatibus et magnis dis parturient montes nascetur ridiculus
+                                                            mus mauris vitae ultricies leo integer malesuada nunc vel risus
+                                                            commodo viverra maecenas accumsan lacus vel facilisis volutpat est
+                                                            velit egestas dui id ornare arcu odio ut sem nulla pharetra diam sit
+                                                            amet nisl suscipit adipiscing bibendum est ultricies integer quis
+                                                            auctor elit sed vulputate mi sit amet mauris commodo quis imperdiet
+                                                            massa tincidunt nunc pulvinar sapien et ligula ullamcorper malesuada
+                                                            proin libero nunc consequat interdum varius sit amet mattis
+                                                            vulputate enim nulla aliquet porttitor lacus luctus accumsan.</p>
+                                                    </div>
+
+                                                    <div className="banner-contain nav-desh">
+                                                        <img src={banner1}
+                                                            className="bg-img  lazyload" alt=""/>
+                                                            <div className="banner-details p-center banner-b-space w-100 text-center">
+                                                                <div >
+                                                                    <h6 className="ls-expanded theme-color mb-sm-3 mb-1">SUMMER</h6>
+                                                                    <h2>VEGETABLE</h2>
+                                                                    <p className="mx-auto mt-1">Save up to 5% OFF</p>
+                                                                </div>
+                                                            </div>
+                                                    </div>
+
+                                                    <div className="nav-desh">
+                                                        <div className="desh-title">
+                                                            <h5>From The Manufacturer:</h5>
+                                                        </div>
+                                                        <p>Jelly beans shortbread chupa chups carrot cake jelly-o halvah apple
+                                                            pie pudding gingerbread. Apple pie halvah cake tiramisu shortbread
+                                                            cotton candy croissant chocolate cake. Tart cupcake caramels gummi
+                                                            bears macaroon gingerbread fruitcake marzipan wafer. Marzipan
+                                                            dessert cupcake ice cream tootsie roll. Brownie chocolate cake
+                                                            pudding cake powder candy ice cream ice cream cake. Jujubes soufflé
+                                                            chupa chups cake candy halvah donut. Tart tart icing lemon drops
+                                                            fruitcake apple pie.</p>
+
+                                                        <p>Dessert liquorice tart soufflé chocolate bar apple pie pastry danish
+                                                            soufflé. Gummi bears halvah gingerbread jelly icing. Chocolate cake
+                                                            chocolate bar pudding chupa chups bear claw pie dragée donut halvah.
+                                                            Gummi bears cookie ice cream jelly-o jujubes sweet croissant.
+                                                            Marzipan cotton candy gummi bears lemon drops lollipop lollipop
+                                                            chocolate. Ice cream cookie dragée cake sweet roll sweet roll.Lemon
+                                                            drops cookie muffin carrot cake chocolate marzipan gingerbread
+                                                            topping chocolate bar. Soufflé tiramisu pastry sweet dessert.</p>
+                                                    </div>
+                                                </div>
+                                            </div> */}
+
+                                            {/* <div className="tab-pane fade" id="info" role="tabpanel" aria-labelledby="info-tab">
+                                                <div className="table-responsive">
+                                                    <table className="table info-table">
+                                                        <tbody>
+                                                            <tr>
+                                                                <td>Specialty</td>
+                                                                <td>Vegetarian</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Ingredient Type</td>
+                                                                <td>Vegetarian</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Brand</td>
+                                                                <td>Lavian Exotique</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Form</td>
+                                                                <td>Bar Brownie</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Package Information</td>
+                                                                <td>Box</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Manufacturer</td>
+                                                                <td>Prayagh Nutri Product Pvt Ltd</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Item part number</td>
+                                                                <td>LE 014 - 20pcs Crème Bakes (Pack of 2)</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td>Net Quantity</td>
+                                                                <td>40.00 count</td>
+                                                            </tr>
+                                                        </tbody>
+                                                    </table>
+                                                </div>
+                                            </div> */}
+
+                                            {/* <div className="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab">
+                                                <div className="information-box">
                                                     <ul>
                                                         <li>Store cream cakes in a refrigerator. Fondant cakes should be
                                                             stored in an air conditioned environment.</li>
@@ -349,27 +866,27 @@ const ProductDetail=()=> {
                                                         <li>Enjoy your cake!</li>
                                                     </ul>
                                                 </div>
-                                            </div>
+                                            </div> */}
 
-                                            <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                                                <div class="review-box">
-                                                    <div class="row g-4">
-                                                        <div class="col-xl-6">
-                                                            <div class="review-title">
-                                                                <h4 class="fw-500">Customer reviews</h4>
+                                            <div className="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
+                                                <div className="review-box">
+                                                    <div className="row g-4">
+                                                        <div className="col-xl-6">
+                                                            <div className="review-title">
+                                                                <h4 className="fw-500">Customer reviews</h4>
                                                             </div>
 
-                                                            <div class="d-flex">
-                                                                <div class="product-rating">
-                                                                    <ul class="rating">
+                                                            <div className="d-flex">
+                                                                <div className="product-rating">
+                                                                    <ul className="rating">
                                                                         <li>
-                                                                            <i data-feather="star" class="fill"></i>
+                                                                            <i data-feather="star" className="fill"></i>
                                                                         </li>
                                                                         <li>
-                                                                            <i data-feather="star" class="fill"></i>
+                                                                            <i data-feather="star" className="fill"></i>
                                                                         </li>
                                                                         <li>
-                                                                            <i data-feather="star" class="fill"></i>
+                                                                            <i data-feather="star" className="fill"></i>
                                                                         </li>
                                                                         <li>
                                                                             <i data-feather="star"></i>
@@ -379,16 +896,16 @@ const ProductDetail=()=> {
                                                                         </li>
                                                                     </ul>
                                                                 </div>
-                                                                <h6 class="ms-3">4.2 Out Of 5</h6>
+                                                                <h6 className="ms-3">4.2 Out Of 5</h6>
                                                             </div>
 
-                                                            <div class="rating-box">
+                                                            <div className="rating-box">
                                                                 <ul>
                                                                     <li>
-                                                                        <div class="rating-list">
+                                                                        <div className="rating-list">
                                                                             <h5>5 Star</h5>
-                                                                            {/* <div class="progress">
-                                                                                <div class="progress-bar" role="progressbar"
+                                                                            {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
                                                                                     style="width: 68%" aria-valuenow="100"
                                                                                     aria-valuemin="0" aria-valuemax="100">
                                                                                     68%
@@ -398,10 +915,10 @@ const ProductDetail=()=> {
                                                                     </li>
 
                                                                     <li>
-                                                                        <div class="rating-list">
+                                                                        <div className="rating-list">
                                                                             <h5>4 Star</h5>
-                                                                            {/* <div class="progress">
-                                                                                <div class="progress-bar" role="progressbar"
+                                                                            {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
                                                                                     style="width: 67%" aria-valuenow="100"
                                                                                     aria-valuemin="0" aria-valuemax="100">
                                                                                     67%
@@ -411,10 +928,10 @@ const ProductDetail=()=> {
                                                                     </li>
 
                                                                     <li>
-                                                                        <div class="rating-list">
+                                                                        <div className="rating-list">
                                                                             <h5>3 Star</h5>
-                                                                            {/* <div class="progress">
-                                                                                <div class="progress-bar" role="progressbar"
+                                                                            {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
                                                                                     style="width: 42%" aria-valuenow="100"
                                                                                     aria-valuemin="0" aria-valuemax="100">
                                                                                     42%
@@ -424,10 +941,10 @@ const ProductDetail=()=> {
                                                                     </li>
 
                                                                     <li>
-                                                                        <div class="rating-list">
+                                                                        <div className="rating-list">
                                                                             <h5>2 Star</h5>
-                                                                            {/* <div class="progress">
-                                                                                <div class="progress-bar" role="progressbar"
+                                                                            {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
                                                                                     style="width: 30%" aria-valuenow="100"
                                                                                     aria-valuemin="0" aria-valuemax="100">
                                                                                     30%
@@ -437,10 +954,10 @@ const ProductDetail=()=> {
                                                                     </li>
 
                                                                     <li>
-                                                                        <div class="rating-list">
+                                                                        <div className="rating-list">
                                                                             <h5>1 Star</h5>
-                                                                            {/* <div class="progress">
-                                                                                <div class="progress-bar" role="progressbar"
+                                                                            {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
                                                                                     style="width: 24%" aria-valuenow="100"
                                                                                     aria-valuemin="0" aria-valuemax="100">
                                                                                     24%
@@ -452,47 +969,47 @@ const ProductDetail=()=> {
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-xl-6">
-                                                            <div class="review-title">
-                                                                <h4 class="fw-500">Add a review</h4>
+                                                        <div className="col-xl-6">
+                                                            <div className="review-title">
+                                                                <h4 className="fw-500">Add a review</h4>
                                                             </div>
 
-                                                            <div class="row g-4">
-                                                                <div class="col-md-6">
-                                                                    <div class="form-floating theme-form-floating">
-                                                                        <input type="text" class="form-control" id="name"
+                                                            <div className="row g-4">
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="text" className="form-control" id="name"
                                                                             placeholder="Name"/>
                                                                             <label for="name">Your Name</label>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-6">
-                                                                    <div class="form-floating theme-form-floating">
-                                                                        <input type="email" class="form-control" id="email"
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="email" className="form-control" id="email"
                                                                             placeholder="Email Address"/>
                                                                             <label for="email">Email Address</label>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-6">
-                                                                    <div class="form-floating theme-form-floating">
-                                                                        <input type="url" class="form-control" id="website"
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="url" className="form-control" id="website"
                                                                             placeholder="Website"/>
                                                                             <label for="website">Website</label>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-md-6">
-                                                                    <div class="form-floating theme-form-floating">
-                                                                        <input type="url" class="form-control" id="review1"
+                                                                <div className="col-md-6">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <input type="url" className="form-control" id="review1"
                                                                             placeholder="Give your review a title"/>
                                                                             <label for="review1">Review Title</label>
                                                                     </div>
                                                                 </div>
 
-                                                                <div class="col-12">
-                                                                    <div class="form-floating theme-form-floating">
-                                                                        <textarea class="form-control"
+                                                                <div className="col-12">
+                                                                    <div className="form-floating theme-form-floating">
+                                                                        <textarea className="form-control"
                                                                             placeholder="Leave a comment here"
                                                                             id="floatingTextarea2"
                                                                            ></textarea>
@@ -503,43 +1020,43 @@ const ProductDetail=()=> {
                                                             </div>
                                                         </div>
 
-                                                        <div class="col-12">
-                                                            <div class="review-title">
-                                                                <h4 class="fw-500">Customer questions & answers</h4>
+                                                        <div className="col-12">
+                                                            <div className="review-title">
+                                                                <h4 className="fw-500">Customer questions & answers</h4>
                                                             </div>
 
-                                                            <div class="review-people">
-                                                                <ul class="review-list">
+                                                            <div className="review-people">
+                                                                <ul className="review-list">
                                                                     <li>
-                                                                        <div class="people-box">
+                                                                        <div className="people-box">
                                                                             <div>
-                                                                                <div class="people-image">
+                                                                                <div className="people-image">
                                                                                     <img src={Product2}
-                                                                                        class="img-fluid  lazyload"
+                                                                                        className="img-fluid  lazyload"
                                                                                         alt=""/>
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="people-comment">
-                                                                                <a class="name"
+                                                                            <div className="people-comment">
+                                                                                <a className="name"
                                                                                     href="javascript:void(0)">Tracey</a>
-                                                                                <div class="date-time">
-                                                                                    <h6 class="text-content">14 Jan, 2022 at
+                                                                                <div className="date-time">
+                                                                                    <h6 className="text-content">14 Jan, 2022 at
                                                                                         12.58 AM</h6>
 
-                                                                                    <div class="product-rating">
-                                                                                        <ul class="rating">
+                                                                                    <div className="product-rating">
+                                                                                        <ul className="rating">
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"></i>
@@ -551,7 +1068,7 @@ const ProductDetail=()=> {
                                                                                     </div>
                                                                                 </div>
 
-                                                                                <div class="reply">
+                                                                                <div className="reply">
                                                                                     <p>Icing cookie carrot cake chocolate cake
                                                                                         sugar plum jelly-o danish. Dragée dragée
                                                                                         shortbread tootsie roll croissant muffin
@@ -566,34 +1083,34 @@ const ProductDetail=()=> {
                                                                     </li>
 
                                                                     <li>
-                                                                        <div class="people-box">
+                                                                        <div className="people-box">
                                                                             <div>
-                                                                                <div class="people-image">
+                                                                                <div className="people-image">
                                                                                     <img src={Product2}
-                                                                                        class="img-fluid  lazyload"
+                                                                                        className="img-fluid  lazyload"
                                                                                         alt=""/>
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="people-comment">
-                                                                                <a class="name"
+                                                                            <div className="people-comment">
+                                                                                <a className="name"
                                                                                     href="javascript:void(0)">Olivia</a>
-                                                                                <div class="date-time">
-                                                                                    <h6 class="text-content">01 May, 2022 at
+                                                                                <div className="date-time">
+                                                                                    <h6 className="text-content">01 May, 2022 at
                                                                                         08.31 AM</h6>
-                                                                                    <div class="product-rating">
-                                                                                        <ul class="rating">
+                                                                                    <div className="product-rating">
+                                                                                        <ul className="rating">
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"></i>
@@ -605,7 +1122,7 @@ const ProductDetail=()=> {
                                                                                     </div>
                                                                                 </div>
 
-                                                                                <div class="reply">
+                                                                                <div className="reply">
                                                                                     <p>Tootsie roll cake danish halvah powder
                                                                                         Tootsie roll candy marshmallow cookie
                                                                                         brownie apple pie pudding brownie
@@ -620,35 +1137,35 @@ const ProductDetail=()=> {
                                                                     </li>
 
                                                                     <li>
-                                                                        <div class="people-box">
+                                                                        <div className="people-box">
                                                                             <div>
-                                                                                <div class="people-image">
+                                                                                <div className="people-image">
                                                                                     <img src={Product2}
-                                                                                        class="img-fluid  lazyload"
+                                                                                        className="img-fluid  lazyload"
                                                                                         alt=""/>
                                                                                 </div>
                                                                             </div>
 
-                                                                            <div class="people-comment">
-                                                                                <a class="name"
+                                                                            <div className="people-comment">
+                                                                                <a className="name"
                                                                                     href="javascript:void(0)">Gabrielle</a>
-                                                                                <div class="date-time">
-                                                                                    <h6 class="text-content">21 May, 2022 at
+                                                                                <div className="date-time">
+                                                                                    <h6 className="text-content">21 May, 2022 at
                                                                                         05.52 PM</h6>
 
-                                                                                    <div class="product-rating">
-                                                                                        <ul class="rating">
+                                                                                    <div className="product-rating">
+                                                                                        <ul className="rating">
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"
-                                                                                                    class="fill"></i>
+                                                                                                    className="fill"></i>
                                                                                             </li>
                                                                                             <li>
                                                                                                 <i data-feather="star"></i>
@@ -660,7 +1177,7 @@ const ProductDetail=()=> {
                                                                                     </div>
                                                                                 </div>
 
-                                                                                <div class="reply">
+                                                                                <div className="reply">
                                                                                     <p>Biscuit chupa chups gummies powder I love
                                                                                         sweet pudding jelly beans. Lemon drops
                                                                                         marzipan apple pie gingerbread macaroon
@@ -687,85 +1204,85 @@ const ProductDetail=()=> {
                             </div>
                         </div>
 
-                        <div class="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
-                            <div class="right-sidebar-box">
+                        <div className="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
+                            <div className="right-sidebar-box">
                                 {/* <!-- Trending Product --> */}
-                                <div class="pt-25">
-                                    <div class="category-menu">
+                                <div className="pt-25">
+                                    <div className="category-menu">
                                         <h3>Treanding Products</h3>
 
-                                        <ul class="product-list product-right-sidebar border-0 p-0">
+                                        <ul className="product-list product-right-sidebar border-0 p-0">
                                             <li>
-                                                <div class="offer-product">
-                                                    <a href="product-left.html" class="offer-image">
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
                                                         <img src={Product2}
-                                                            class="img-fluid  lazyload" alt=""/>
+                                                            className="img-fluid  lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 class="name">Meatigo Premium Goat Curry</h6>
+                                                                <h6 className="name">Meatigo Premium Goat Curry</h6>
                                                             </a>
                                                             <span>450 G</span>
-                                                            <h6 class="price theme-color">$ 70.00</h6>
+                                                            <h6 className="price theme-color">₹70.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
                                             <li>
-                                                <div class="offer-product">
-                                                    <a href="product-left.html" class="offer-image">
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
                                                         <img src={Product2}
-                                                            class=" lazyload" alt=""/>
+                                                            className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 class="name">Dates Medjoul Premium Imported</h6>
+                                                                <h6 className="name">Dates Medjoul Premium Imported</h6>
                                                             </a>
                                                             <span>450 G</span>
-                                                            <h6 class="price theme-color">$ 40.00</h6>
+                                                            <h6 className="price theme-color">₹40.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
                                             <li>
-                                                <div class="offer-product">
-                                                    <a href="product-left.html" class="offer-image">
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
                                                         <img src={Product2}
-                                                            class=" lazyload" alt=""/>
+                                                            className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 class="name">Good Life Walnut Kernels</h6>
+                                                                <h6 className="name">Good Life Walnut Kernels</h6>
                                                             </a>
                                                             <span>200 G</span>
-                                                            <h6 class="price theme-color">$ 52.00</h6>
+                                                            <h6 className="price theme-color">₹ 52.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
-                                            <li class="mb-0">
-                                                <div class="offer-product">
-                                                    <a href="product-left.html" class="offer-image">
+                                            <li className="mb-0">
+                                                <div className="offer-product">
+                                                    <a href="product-left.html" className="offer-image">
                                                         <img src={Product2}
-                                                            class=" lazyload" alt=""/>
+                                                            className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="product-left.html">
-                                                                <h6 class="name">Apple Red Premium Imported</h6>
+                                                                <h6 className="name">Apple Red Premium Imported</h6>
                                                             </a>
                                                             <span>1 KG</span>
-                                                            <h6 class="price theme-color">$ 80.00</h6>
+                                                            <h6 className="price theme-color">₹ 80.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -775,19 +1292,19 @@ const ProductDetail=()=> {
                                 </div>
 
                                 {/* <!-- Banner Section --> */}
-                                <div class="ratio_156 pt-25">
-                                    <div class="home-contain">
-                                        <img src="../assets/images/vegetable/banner/8.jpg" class="bg-img  lazyload"
+                                <div className="ratio_156 pt-25">
+                                    <div className="home-contain">
+                                        <img src="../assets/images/vegetable/banner/8.jpg" className="bg-img  lazyload"
                                             alt=""/>
-                                            <div class="home-detail p-top-left home-p-medium">
+                                            <div className="home-detail p-top-left home-p-medium">
                                                 <div>
-                                                    <h6 class="text-yellow home-banner">Seafood</h6>
-                                                    <h3 class="text-uppercase fw-normal"><span
-                                                        class="theme-color fw-bold">Freshes</span> Products</h3>
-                                                    <h3 class="fw-light">every hour</h3>
+                                                    <h6 className="text-yellow home-banner">Seafood</h6>
+                                                    <h3 className="text-uppercase fw-normal"><span
+                                                        className="theme-color fw-bold">Freshes</span> Products</h3>
+                                                    <h3 className="fw-light">every hour</h3>
                                                     <button onclick="location.href = 'shop-left-sidebar.html';"
-                                                        class="btn btn-animation btn-md fw-bold mend-auto">Shop Now <i
-                                                            class="fa-solid fa-arrow-right icon"></i></button>
+                                                        className="btn btn-animation btn-md fw-bold mend-auto">Shop Now <i
+                                                            className="fa-solid fa-arrow-right icon"></i></button>
                                                 </div>
                                             </div>
                                     </div>
