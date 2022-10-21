@@ -14,6 +14,10 @@ import Term_condition from './components/Pages/term_condition'
 import Product_Detail from "./components/Pages/product-detail";
 import {Route, BrowserRouter, Routes } from "react-router-dom";
 import Careers from "./components/Pages/careers";
+import Wishlist from './components/Pages/wishlist'
+import Tracking from "./components/Pages/order_tracking";
+import Orders from "./components/Pages/your_orders";
+import Account from "./components/Pages/your_account";
 
 
 function App() {
@@ -33,6 +37,12 @@ function App() {
         <Route path="/faq" element={<Faq/>} />
         <Route path="/term_condition" element={<Term_condition/>} />
         <Route path="/careers" element={<Careers/>} />
+        <Route path="/wishlist" element={<Wishlist/>} />
+        <Route path="/order_tracking" element={<Tracking/>} />
+        <Route path="/your_orders" element={<Orders/>} />
+        <Route path="/your_account" element={<Account/>} />
+
+
       </Routes>
     </BrowserRouter>
   );

@@ -22,6 +22,7 @@ const ProductDetail = (props) => {
   var product_details = data3.product_details;
   var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
+
   
    const incrementCount=()=> {
     count = count + 1;
