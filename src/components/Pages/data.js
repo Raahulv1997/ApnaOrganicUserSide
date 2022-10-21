@@ -126,11 +126,32 @@ const data4={
 	tranding_product:[
 		{
 			"id":1,
-			"pname":"Meatigo Premium Goat Curry",
+			"pname":"Apple",
 			"quat":"400g",
 			"price":"₹70.00",
-			"img":"data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMIA…v55oEXawgqiiKoigWZgezANhrYM0rMgAAAABJRU5ErkJggg==",
-		},		
+			"img":"https://media.istockphoto.com/photos/red-apple-with-leaf-isolated-on-white-background-picture-id185262648?k=20&m=185262648&s=170667a&w=0&h=s3mKXNLM2dhLS3m55HYNnuC4aHwcEK_NUd7N5GjBZZ0=",
+		},	
+		{
+			"id":2,
+			"pname":"Orange",
+			"quat":"400g",
+			"price":"₹70.00",
+			"img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQZ2hY9DJYiwlKiHvhcbGAWsaFju_LusGJGaddEhVW3HEMyC-D2PfoFPtIutsR7ZPbasY4&usqp=CAU",
+		},	
+		{
+			"id":3,
+			"pname":"Mango",
+			"quat":"400g",
+			"price":"₹70.00",
+			"img":"https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQUUcfEESorO0TjPmCsCN0D6rwnJ50CoT62manb1FFCIC8bYw_T_WekdK0z_kWkvvkFSTw&usqp=CAU",
+		},	
+		{
+			"id":4,
+			"pname":"Graps",
+			"quat":"400g",
+			"price":"₹70.00",
+			"img":"https://www.indianonshop.com/wp-content/uploads/2022/06/Graps.jpg",
+		},	
 	]
 }
 export {data1};

@@ -16575,7 +16575,7 @@ header .offcanvas-backdrop {
 
 .product-box-4:hover .product-detail a .name {
     color: var(--theme-color) !important;
-    font-weight: 600
+    /* font-weight: 600 */
 }
 
 .product-box-4-3 {
@@ -25329,5 +25329,9 @@ header .offcanvas-backdrop {
 
 [dir="rtl"] .slick-slide {
     float: left
+}
+.nav_item{
+    float:right ;
+    
 }
 /*# sourceMappingURL=style.css.map */

@@ -81,8 +81,8 @@ const Header = () => {
                       to=""
                       className="btn theme-bg-color ms-3 fire-button"
                     > */}
-                      <Link to=""><span>Location</span></Link>
-                      <i className="fa-solid fa-angle-down"></i>
+                      {/* <Link to=""><span>Location</span></Link>
+                      <i className="fa-solid fa-angle-down"></i> */}
                     {/* </NavLink> */}
                   </div>
                   <div className="rightside-menu">

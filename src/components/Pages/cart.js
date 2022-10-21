@@ -7,9 +7,18 @@ import Breadcumb from "../UI/beadcumb";
 import {data1} from '../Pages/data';
 import "../../CSS/style.css";
 import { NavLink } from "react-router-dom";
-
+import  {useState} from 'react';
 const Cart = (props) => {
-  var product1=data1.product1
+  var product1=data1.product1;
+  let [count, setCount] = useState(0);
+  function incrementCount() {
+    count = count + 1;
+    setCount(count);
+  }
+  function decrementCount() {
+    count = count - 1;
+    setCount(count);
+  }
   return (
     <Fragment>
       <Header />
@@ -56,14 +65,12 @@ const Cart = (props) => {
                                     <h5 className="text-content d-inline-block">
                                       Price:
                                     </h5>
-                                    <span>{product1.productPrice}}</span>
+                                    <span>{product1.productPrice}</span>
                                     <span className="text-content">{product1.productMRF}</span>
                                   </li>
   
                                   <li>
-                                    <h5 className="saving theme-color">
-                                      
-                                    </h5>
+                                    <h5 className="saving theme-color">{product1.saving}</h5>
                                   </li>
   
                                   <li className="quantity-price-box">
@@ -74,6 +81,7 @@ const Cart = (props) => {
                                           className="btn qty-left-minus"
                                           data-type="minus"
                                           data-field=""
+                                      
                                         >
                                           <i className="fa-regular fa-minus"></i>
                                         </button>
@@ -88,12 +96,13 @@ const Cart = (props) => {
                                           className="btn qty-right-plus"
                                           data-type="plus"
                                           data-field=""
+                                         
                                         >
                                           <i className="fa-regular fa-plus"></i>
                                         </button>
                                       </div>
                                     </div>
-                                  </li>
+                                  </li> 
                                 </ul>
                               </div>
                             </div>
@@ -117,6 +126,7 @@ const Cart = (props) => {
                                     className="btn qty-left-minus"
                                     data-type="minus"
                                     data-field=""
+                                    onClick={decrementCount}
                                   >
                                     <i className="fa-regular fa-minus"></i>
                                   </button>
@@ -124,13 +134,14 @@ const Cart = (props) => {
                                     className="form-control input-number qty-input"
                                     type="text"
                                     name="quantity"
-                                    value="1"
+                                    value={count}
                                   />
                                   <button
                                     type="button"
                                     className="btn qty-right-plus"
                                     data-type="plus"
                                     data-field=""
+                                    onClick={incrementCount}
                                   >
                                     <i className="fa-regular fa-plus"></i>
                                   </button>

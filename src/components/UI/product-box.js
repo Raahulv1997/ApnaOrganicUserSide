@@ -1,12 +1,24 @@
 import React from 'react';
 //import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
 import {FaStar} from 'react-icons/fa';
+import  {useState} from 'react';
+
 function AddCart(props){
+
     return(
         "pass"
     )
 }
 function ProductBox({name,image,productPrice, productMRF}) {
+    let [count, setCount] = useState(0);
+    function incrementCount() {
+        count = count + 1;
+        setCount(count);
+      }
+      function decrementCount() {
+        count = count - 1;
+        setCount(count);
+      }
     return (
         <div className="product-box-4">
             <div className="product-image">
@@ -35,7 +47,7 @@ function ProductBox({name,image,productPrice, productMRF}) {
             </div>
 
             <div className="product-detail">
-                <ul className="rating">
+                <ul className="rating ">
                     <li color='#ffb321'>
                         <FaStar icon="star" className="feather fill" fill={'#ffb321'} />
                     </li>
@@ -55,22 +67,17 @@ function ProductBox({name,image,productPrice, productMRF}) {
                 <a href="./product-detail">
                     <h5 className="name">{name}</h5>
                 </a>
-                {/* /<p className="lead">SoldBy:-{SoldBy}</p> */}
-                {/* <p className="lead">Quantity:-{Quantity}</p> */}
-                {/* <p className="lead">Price:-{Price}</p>
-                <p className="lead">Saving:-{Saving}</p>
-                <p className="lead">Total:-{Total}</p>
-                <p className="lead">YouSave:-{YouSave}</p> */}
                 <h5 className="price theme-color">{"₹"+productPrice}<del>{"₹"+productMRF}</del></h5>
                 <div className="price-qty">
                     <div className="counter-number">
                         <div className="counter">
-                            <div className="qty-left-minus" data-type="minus" data-field="">
+                            <div className="qty-left-minus" onClick={decrementCount}  data-type="minus" data-field="">
                                 <i className="fa-regular fa-minus"></i>
                             </div>
-                           <input className="form-control input-number qty-input" type="text"
-                               name="quantity" value="0" />
-                            <div className="qty-right-plus" data-type="plus" data-field="">
+                            {/* <div>{count}</div> */}
+                            <input className="form-control input-number qty-input" type="text"
+                               name="quantity" value={count} />
+                            <div className="qty-right-plus" onClick={incrementCount}  data-type="plus" data-field="">
                                 <i className="fa-regular fa-plus"></i>
                             </div>
                         </div>

@@ -8,20 +8,6 @@ import data from '../Pages/data';
 import Accordion from 'react-bootstrap/Accordion';
 import Dropdown from 'react-bootstrap/Dropdown';
 import '../../CSS/style.css'
-// function Ab(){
-//     return(
-//         <>
-//           <Accordion defaultActiveKey="0">
-//             <Accordion.Item eventKey="0">
-//                 <Accordion.Header>Categories</Accordion.Header>
-//                 <Accordion.Body>
-//                     hellooohellooohellooohellooo
-//                 </Accordion.Body>
-//             </Accordion.Item>
-//           </Accordion>
-//         </>
-//     )
-// }
 const Shop=(props)=> {
     var product=data.product
     return (
