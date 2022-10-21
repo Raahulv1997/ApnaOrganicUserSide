@@ -1285,9 +1285,9 @@ const Header = () => {
                               </a>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="about-us.html">
+                              <Link className="dropdown-item" to="/aboutus">
                                 About Us
-                              </a>
+                              </Link>
                             </li>
                             <li>
                               <a className="dropdown-item" href="./cart">
@@ -1313,9 +1313,9 @@ const Header = () => {
                               </a>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="faq.html">
+                              <Link className="dropdown-item" to="/faq">
                                 Faq
-                              </a>
+                              </Link>
                             </li>
                             <li>
                               <a

@@ -5554,7 +5554,9 @@ span {
 }
 
 .blog-section .blog-box .blog-image {
-    position: relative
+    position: relative;
+    margin: 10px;
+    padding: 10px;
 }
 
 .blog-section .blog-box .blog-image label {

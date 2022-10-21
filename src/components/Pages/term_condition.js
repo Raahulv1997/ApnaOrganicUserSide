@@ -1,0 +1,14 @@
+import React, { Fragment } from "react";
+import Breadcumb from '../UI/beadcumb';
+const Term_condition=()=>{
+    return(
+        <Fragment>
+            
+            <h1>Not Found</h1>
+<p>The requested URL was not found on this server.</p>
+<p>Additionally, a 404 Not Found
+error was encountered while trying to use an ErrorDocument to handle the request.</p>
+        </Fragment>
+    )
+}
+export default Term_condition;

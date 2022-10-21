@@ -2,7 +2,8 @@ import React, { Fragment } from 'react';
 import Logo from '../../Photos/1.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {FaFacebookF,FaGoogle,FaTwitter,FaInstagram, FaPinterestP} from 'react-icons/fa';
-import '../../CSS/style.css'
+import '../../CSS/style.css';
+import { Link } from "react-router-dom";
 const Footer=()=> {
   return (
     <Fragment>
@@ -67,20 +68,20 @@ const Footer=()=> {
                 </div>
                 <ul className="footer-list footer-contact mb-sm-0 mb-3">
                   <li>
-                    <a href="about-us.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>About Us</a>
+                    <Link to="/aboutus" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>About Us</Link>
                   </li>
                   <li>
-                    <a href="contact-us.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Contact Us</a>
+                    <Link to="/contactus" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Contact Us</Link>
                   </li>
                   <li>
-                    <a href="term_condition.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Terms & Coditions</a>
+                    <Link to="/term_condition" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Terms & Coditions</Link>
                   </li>
                   <li>
-                    <a href="careers.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Careers</a>
+                    <Link to="/careers" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Careers</Link>
                   </li>
                   <li>
                     <a href="blog-list.html" className="footer-contain-2">
@@ -111,8 +112,8 @@ const Footer=()=> {
                       <i className="fa-solid fa-chevron-right"></i>Your Wishlist</a>
                   </li>
                   <li>
-                    <a href="faq.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>FAQs</a>
+                    <Link to="/faq" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>FAQs</Link>
                   </li>
                 </ul>
               </div>
