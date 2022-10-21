@@ -3,6 +3,7 @@ import Logo from '../../Photos/1.png'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import {FaFacebookF,FaGoogle,FaTwitter,FaInstagram, FaPinterestP} from 'react-icons/fa';
 import '../../CSS/style.css'
+import { Link } from 'react-router-dom';
 const Footer=()=> {
   return (
     <Fragment>
@@ -95,20 +96,20 @@ const Footer=()=> {
                 </div>
                 <ul className="footer-list footer-contact mb-sm-0 mb-3">
                   <li>
-                    <a href="order-success.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Your Order</a>
+                    <Link to="/your_orders" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Your Order</Link>
                   </li>
                   <li>
-                    <a href="user-dashboard.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Your Account</a>
+                  <Link to="/your_account" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Your Account</Link>
                   </li>
                   <li>
-                    <a href="order-tracking.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Track Orders</a>
+                    <Link to="/order_tracking" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Track Orders</Link>
                   </li>
                   <li>
-                    <a href="wishlist.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Your Wishlist</a>
+                    <Link to="/wishlist" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Your Wishlist</Link>
                   </li>
                   <li>
                     <a href="faq.html" className="footer-contain-2">

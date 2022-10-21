@@ -262,12 +262,11 @@ const Header = () => {
                         </li>
 
                         <li className="onhover-dropdown">
-                          <a
-                            href="javascript:void(0)"
+                          <Link to="/wishlist"
                             className="header-icon swap-icon"
                           >
                             <i className="fa-regular fa-heart icon_color"></i>
-                          </a>
+                          </Link>
                         </li>
 
                         <li className="onhover-dropdown">

@@ -4707,14 +4707,14 @@ h2 {
 }
 
 h3 {
-    font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320)));
+    font-size: calc(16px + (20 - 16) * ((100vw - 320px) / (1920 - 320))) !important;
     font-weight: 500;
     line-height: 1.2;
     margin: 0
 }
 
 h4 {
-    font-size: calc(17px + (18 - 17) * ((100vw - 320px) / (1920 - 320)));
+    font-size: calc(17px + (18 - 17) * ((100vw - 320px) / (1920 - 320))) !important; 
     line-height: 1.2;
     margin: 0;
     font-weight: 400
@@ -16964,7 +16964,7 @@ header .offcanvas-backdrop {
 }
 
 .product-box-4 .product-detail .buy-button-2 {
-    width: 53px
+    width: auto;
 }
 
 .product-box-4 .product-detail .sold-box {
@@ -17035,7 +17035,7 @@ header .offcanvas-backdrop {
     -webkit-box-pack: center;
     -ms-flex-pack: center;
     justify-content: center;
-    padding: 6px 15px
+    padding: 6px 6px
 }
 
 [dir="rtl"] .product-box-4 .product-detail .price-qty .buy-button {

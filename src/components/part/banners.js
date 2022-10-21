@@ -147,7 +147,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                   role="tabpanel"
                   aria-labelledby="all-tab"
                 >
-                  <div className="row g-8">
+                  <div className="row w-100">
                     {product.map((product) => {
                       return (
                         <div

@@ -9,6 +9,10 @@ import Signup from './components/Pages/signup'
 import Shop from './components/Pages/shop'
 import Product_Detail from "./components/Pages/product-detail";
 import {Route, BrowserRouter, Routes } from "react-router-dom";
+import Wishlist from './components/Pages/wishlist'
+import Tracking from "./components/Pages/order_tracking";
+import Orders from "./components/Pages/your_orders";
+import Account from "./components/Pages/your_account";
 
 
 function App() {
@@ -23,6 +27,12 @@ function App() {
         <Route path="/forgot" element={<Forgot/>} />
         <Route path="/login" element={<Login/>} />
         <Route path="/signup" element={<Signup/>} />
+        <Route path="/wishlist" element={<Wishlist/>} />
+        <Route path="/order_tracking" element={<Tracking/>} />
+        <Route path="/your_orders" element={<Orders/>} />
+        <Route path="/your_account" element={<Account/>} />
+
+
       </Routes>
      
           </BrowserRouter>
