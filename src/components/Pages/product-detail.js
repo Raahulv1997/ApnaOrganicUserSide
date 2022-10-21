@@ -11,7 +11,7 @@ import { data3, data4 } from "../Pages/data";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
 import { NavLink } from "react-router-dom";
-//import { useState } from "react";
+import { useState } from "react";
 
 
 // function Validation(){
@@ -21,26 +21,17 @@ import { NavLink } from "react-router-dom";
 const ProductDetail = (props) => {
   var product_details = data3.product_details;
   var tranding_product = data4.tranding_product;
-  let button = document.querySelector(".button");
-  button.disabled = true;
-  input.addEventListener("change", stateHandle);
-  function stateHandle() {
-    if (document.querySelector(".input").value === "0") {
-        button.disabled = true; //button remains disabled
-    } else {
-        button.disabled = false; //button is enabled
-    }
-}
-  // let [count, setCount] = useState(0);
   
-  //  const incrementCount=()=> {
-  //   count = count + 1;
-  //   setCount(count);
-  // }
-  // const decrementCount=()=> {
-  //   count = count - 1;
-  //   setCount(count);
-  // }
+  let [count, setCount] = useState(0);
+  
+   const incrementCount=()=> {
+    count = count + 1;
+    setCount(count);
+  }
+  const decrementCount=()=> {
+    count = count - 1;
+    setCount(count);
+  }
   // render() {
   //     const settings = {
   //       dots: true,
@@ -225,7 +216,7 @@ const ProductDetail = (props) => {
                                 className="qty-right-plus"
                                 data-type="plus"
                                 data-field=""
-                                // onClick={incrementCount}
+                                onClick={incrementCount}
                               >
                                 <i
                                   className="fa fa-plus"
@@ -236,14 +227,14 @@ const ProductDetail = (props) => {
                                 className="form-control input-number qty-input"
                                 type="text"
                                 name="quantity"
-                                value={""}
+                                value={count}
                               />
                               <button
                                 type="button"
                                 className="qty-left-minus"
                                 data-type="minus"
                                 data-field=""
-                                // onClick={decrementCount}
+                                onClick={decrementCount}
                               >
                                 <i
                                   className="fa fa-minus"
