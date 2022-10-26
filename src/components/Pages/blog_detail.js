@@ -330,7 +330,7 @@ const BlogDetail = () => {
 
                 <div class="col-xxl-9 col-xl-8 col-lg-7 ratio_50">
                     <div class="blog-detail-image rounded-3 mb-4">
-                        <img src={blog1} class="bg-img  lazyload" alt=""/>
+                        <img src={blog1} class="bg-img w-100  lazyload" alt=""/>
                         <div class="blog-image-contain">
                             <ul class="contain-list">
                                 <li>backpack</li>
