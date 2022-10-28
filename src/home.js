@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import Benners from '../part/banners'
-import Header from '../part/header'
-import Footer from '../part/footer';
+import Benners from './components/common/banners'
+import Header from './components/common/header'
+import Footer from './components/common/footer';
 
 
 function Home() {

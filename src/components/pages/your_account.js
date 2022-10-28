@@ -1,13 +1,22 @@
 import React from "react";
-import Header from "../part/header";
-import Breadcumb from "../UI/beadcumb";
-import Footer from "../part/footer";
-import Col from "react-bootstrap/Col";
+import Header from "../common/header";
+import Breadcumb from "../common/beadcumb";
+import Footer from "../common/footer";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Profile from '../../Photos/product/user.jpg';
 import Product from '../../Photos/product/2.png';
+import {MdOutlineDashboard,MdOutlinePrivacyTip } from 'react-icons/md';
+import {BsHandbag,BsCheck2Square} from 'react-icons/bs';
+import {AiOutlineHeart,AiOutlineCreditCard} from 'react-icons/ai';
+import {GoLocation,GoMail} from 'react-icons/go';
+import {RiAccountCircleLine} from 'react-icons/ri';
+// import {CiMail} from 'react-icons/ci';
+
+
+
+
 
 function Account() {
   return (
@@ -64,7 +73,7 @@ function Account() {
                         <Nav.Link eventKey="first">
                           <li className="nav-item" role="presentation">
                             <button
-                              className="nav-link"
+                              className="nav-link p-0"
                               id="pills-order-tab"
                               data-bs-toggle="pill"
                               data-bs-target="#pills-order"
@@ -73,7 +82,7 @@ function Account() {
                               aria-controls="pills-order"
                               aria-selected="false"
                             >
-                              <i data-feather="shopping-bag"></i>DashBoard
+                              <MdOutlineDashboard className="mx-2"/>DashBoard
                             </button>
                           </li>
                         </Nav.Link>
@@ -83,7 +92,7 @@ function Account() {
                           {" "}
                           <li className="nav-item" role="presentation">
                             <button
-                              className="nav-link"
+                              className="nav-link p-0"
                               id="pills-order-tab"
                               data-bs-toggle="pill"
                               data-bs-target="#pills-order"
@@ -92,7 +101,7 @@ function Account() {
                               aria-controls="pills-order"
                               aria-selected="false"
                             >
-                              <i data-feather="shopping-bag"></i>Order
+                              <BsHandbag className="mx-2"/>Order
                             </button>
                           </li>
                         </Nav.Link>
@@ -102,7 +111,7 @@ function Account() {
                           {" "}
                           <li className="nav-item" role="presentation">
                             <button
-                              className="nav-link"
+                              className="nav-link p-0"
                               id="pills-wishlist-tab"
                               data-bs-toggle="pill"
                               data-bs-target="#pills-wishlist"
@@ -111,7 +120,7 @@ function Account() {
                               aria-controls="pills-wishlist"
                               aria-selected="false"
                             >
-                              <i data-feather="heart"></i>
+                              <AiOutlineHeart className="mx-2"/>
                               Wishlist
                             </button>
                           </li>
@@ -122,7 +131,7 @@ function Account() {
                           {" "}
                           <li className="nav-item" role="presentation">
                             <button
-                              className="nav-link"
+                              className="nav-link p-0"
                               id="pills-card-tab"
                               data-bs-toggle="pill"
                               data-bs-target="#pills-card"
@@ -131,7 +140,7 @@ function Account() {
                               aria-controls="pills-card"
                               aria-selected="false"
                             >
-                              <i data-feather="credit-card"></i> Saved Card
+                              <AiOutlineCreditCard className="mx-2"/> Saved Card
                             </button>
                           </li>
                         </Nav.Link>
@@ -141,7 +150,7 @@ function Account() {
                           {" "}
                           <li className="nav-item" role="presentation">
                             <button
-                              className="nav-link"
+                              className="nav-link p-0"
                               id="pills-address-tab"
                               data-bs-toggle="pill"
                               data-bs-target="#pills-address"
@@ -150,7 +159,7 @@ function Account() {
                               aria-controls="pills-address"
                               aria-selected="false"
                             >
-                              <i data-feather="map-pin"></i>
+                              <GoLocation className="mx-2"/>
                               Address
                             </button>
                           </li>
@@ -161,7 +170,7 @@ function Account() {
                           {" "}
                           <li className="nav-item" role="presentation">
                             <button
-                              className="nav-link"
+                              className="nav-link p-0"
                               id="pills-profile-tab"
                               data-bs-toggle="pill"
                               data-bs-target="#pills-profile"
@@ -170,7 +179,7 @@ function Account() {
                               aria-controls="pills-profile"
                               aria-selected="false"
                             >
-                              <i data-feather="user"></i>
+                              <RiAccountCircleLine className="mx-2"/>
                               Profile
                             </button>
                           </li>
@@ -181,7 +190,7 @@ function Account() {
                           {" "}
                           <li className="nav-item" role="presentation">
                             <button
-                              className="nav-link"
+                              className="nav-link p-0"
                               id="pills-security-tab"
                               data-bs-toggle="pill"
                               data-bs-target="#pills-security"
@@ -190,7 +199,7 @@ function Account() {
                               aria-controls="pills-security"
                               aria-selected="false"
                             >
-                              <i data-feather="shield"></i>
+                              <MdOutlinePrivacyTip className="mx-2"/>
                               Privacy
                             </button>
                           </li>
@@ -447,7 +456,7 @@ function Account() {
                                 >
                                   <img
                                     src={Product}
-                                    className=" lazyload"
+                                    className="lazyload"
                                     alt=""
                                   />
                                 </a>
@@ -2167,21 +2176,21 @@ function Account() {
                               <ul>
                                 <li>
                                   <div className="location-box">
-                                    <i data-feather="map-pin"></i>
+                                    <GoLocation/>
                                     <h6>Downers Grove, IL</h6>
                                   </div>
                                 </li>
 
                                 <li>
                                   <div className="location-box">
-                                    <i data-feather="mail"></i>
+                                    <GoMail/>
                                     <h6>vicki.pope@gmail.com</h6>
                                   </div>
                                 </li>
 
                                 <li>
                                   <div className="location-box">
-                                    <i data-feather="check-square"></i>
+                                    <BsCheck2Square/>
                                     <h6>Licensed for 2 years</h6>
                                   </div>
                                 </li>

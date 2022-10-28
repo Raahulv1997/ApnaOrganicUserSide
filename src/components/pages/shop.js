@@ -1,10 +1,10 @@
 import React, { Fragment } from 'react'
-import ProductBox from '../UI/product-box'
-import Footer from '../part/footer'
-import Header from '../part/header'
-import Breadcumb from '../UI/beadcumb'
+import ProductBox from '../common/product-box'
+import Footer from '../common/footer'
+import Header from '../common/header'
+import Breadcumb from '../common/beadcumb'
 import {FaStar} from 'react-icons/fa';
-import data from '../Pages/data';
+import data from './data';
 import Accordion from 'react-bootstrap/Accordion';
 import Dropdown from 'react-bootstrap/Dropdown';
 import '../../CSS/style.css'
