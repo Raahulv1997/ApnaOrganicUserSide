@@ -1,9 +1,9 @@
 import React from 'react'
-import Header from '../part/header'
-import Breadcumb from '../UI/beadcumb'
-import Footer from '../part/footer'
-import ProductBox from "../UI/product-box";
-import data from "../Pages/data";
+import Header from '../common/header'
+import Breadcumb from '../common/beadcumb'
+import Footer from '../common/footer'
+import ProductBox from "../common/product-box";
+import data from "./data";
 function wishlist() {
     var product = data.product;
     console.log(product);

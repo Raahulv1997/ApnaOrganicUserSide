@@ -1,13 +1,13 @@
 import React, { Fragment } from "react";
-import Footer from "../part/footer";
-import Header from "../part/header";
+import Footer from "../common/footer";
+import Header from "../common/header";
 import Product1 from "../../Photos/banner/2.jpg";
 import Product2 from "../../Photos/product/2.png";
 import banner1 from "../../Photos/banner/14.jpg";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
-import { data3, data4 } from "../Pages/data";
+import { data3, data4 } from "../pages/data";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
 import { NavLink } from "react-router-dom";

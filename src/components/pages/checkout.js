@@ -1,11 +1,11 @@
 import React, { Fragment } from "react";
-import Footer from "../part/footer";
-import Header from "../part/header";
+import Footer from "../common/footer";
+import Header from "../common/header";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-import Breadcumb from "../UI/beadcumb";
-import {data1,data2} from '../Pages/data';
+import Breadcumb from "../common/beadcumb";
+import {data1,data2} from './data';
 import Accordion from 'react-bootstrap/Accordion';
 import { Form, Button } from "react-bootstrap";
 import "../../CSS/style.css";

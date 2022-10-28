@@ -1,8 +1,13 @@
 import React from 'react'
-import Breadcumb from '../UI/beadcumb'
-import Footer from '../part/footer'
-import Header from '../part/header'
+import Breadcumb from '../common/beadcumb'
+import Footer from '../common/footer'
+import Header from '../common/header'
 import Tracking_img from "../../Photos/vegetable/product/6.png"
+import {BsBoxSeam,BsTruck,BsCalendar4} from 'react-icons/bs';
+import {AiOutlineInfoCircle} from 'react-icons/ai';
+import {MdLocationSearching} from 'react-icons/md';
+import {GoLocation} from 'react-icons/go';
+// import {BsCalendar} from 'react-icons/bs';
 
 function Tracking() {
   return (
@@ -24,7 +29,8 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <i data-feather="package" className="text-content"></i>
+                                <BsBoxSeam/>
+
                                 </div>
 
                                 <div className="order-details-name">
@@ -37,7 +43,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <i data-feather="truck" className="text-content"></i>
+                                    <BsTruck/>
                                 </div>
 
                                 <div className="order-details-name">
@@ -51,7 +57,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <i className="text-content" data-feather="info"></i>
+                                    <AiOutlineInfoCircle    />
                                 </div>
 
                                 <div className="order-details-name">
@@ -64,7 +70,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <i className="text-content" data-feather="crosshair"></i>
+                                <MdLocationSearching/>
                                 </div>
 
                                 <div className="order-details-name">
@@ -77,7 +83,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <i className="text-content" data-feather="map-pin"></i>
+                                    <GoLocation/>
                                 </div>
 
                                 <div className="order-details-name">
@@ -90,7 +96,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <i className="text-content" data-feather="calendar"></i>
+                                    <BsCalendar4/>
                                 </div>
 
                                 <div className="order-details-name">

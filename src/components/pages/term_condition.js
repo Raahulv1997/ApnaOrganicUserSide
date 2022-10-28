@@ -1,5 +1,5 @@
 import React, { Fragment } from "react";
-import Breadcumb from '../UI/beadcumb';
+import Breadcumb from '../common/beadcumb';
 const Term_condition=()=>{
     return(
         <Fragment>

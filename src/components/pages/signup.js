@@ -1,8 +1,8 @@
 import React, { Fragment } from "react";
 import Banner from "../../Photos/login.png";
-import Footer from "../part/footer";
-import Header from "../part/header";
-import Breadcumb from "../UI/beadcumb";
+import Footer from "../common/footer";
+import Header from "../common/header";
+import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
 
 const Singup = () => {
