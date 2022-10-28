@@ -1359,9 +1359,9 @@ const Header = () => {
                         </li>
 
                         <li className="nav-item">
-                          <a className="nav-link nav-link-2" href="#">
+                          <Link className="nav-link nav-link-2" to="/contactus">
                             Contact
-                          </a>
+                          </Link>
                         </li>
                       </ul>
                     </div>

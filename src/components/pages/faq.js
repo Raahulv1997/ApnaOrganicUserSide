@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import Footer from "../common/footer";
 import Header from '../common/header'
 import Breadcumb from '../common/beadcumb';
+import Accordion from 'react-bootstrap/Accordion';
+import Dropdown from 'react-bootstrap/Dropdown';
 const Faq=()=>{
     return(
         <Fragment>
@@ -21,7 +23,17 @@ const Faq=()=>{
                                 <i className="fa-solid fa-magnifying-glass"></i>
                                 <input type="search" className="form-control" id="exampleFormControlInput1"
                                     placeholder="name@example.com"/>
-                                <div class="dropdown">
+                                    <Dropdown>
+                                    <Dropdown.Toggle className="btn btn-light  text-success" >All
+                                        Product 
+                                    </Dropdown.Toggle>
+                                    <Dropdown.Menu>
+                                    <Dropdown.Item href="#">Action</Dropdown.Item>
+                                    <Dropdown.Item href="#">Another action</Dropdown.Item>
+                                    <Dropdown.Item href="#">Something else here</Dropdown.Item>
+                                    </Dropdown.Menu>
+                                    </Dropdown>
+                                {/* <div class="dropdown">
                                     <button className="btn btn-md faq-dropdown-button dropdown-toggle" type="button"
                                         id="dropdownMenuButton1" data-bs-toggle="dropdown">All
                                         Product <i className="fa-solid fa-angle-down ms-2"></i></button>
@@ -30,7 +42,7 @@ const Faq=()=>{
                                         <li><a className="dropdown-item" href="#">Another action</a></li>
                                         <li><a className="dropdown-item" href="#">Something else here</a></li>
                                     </ul>
-                                </div>
+                                </div> */}
                             </div>
                         </div>
                     </div>
@@ -105,7 +117,7 @@ const Faq=()=>{
     {/* <!-- Faq Question section End --> */}
     {/* <!-- Faq Section Start --> */}
     <section className="faq-box-contain section-b-space">
-        {/* <div className="container"> */}
+        <div className="container">
             <div className="row">
                 <div className="col-xxl-4">
                     <div className="faq-contain p-sticky">
@@ -118,9 +130,168 @@ const Faq=()=>{
                 </div>
 
                 <div className="col-xxl-7 ms-auto">
-                       <div className="faq-accordion">
-                        <div className="accordion" id="accordionExample">
-                            <div className="accordion-item">
+                <div className="faq-accordion">
+                <div className="accordion" id="accordionExample">
+                    <Accordion className="w-100">
+                        <Accordion.Item eventKey="2">
+                            <Accordion.Header>
+                           What is Fastkart and why was the name changed? 
+                            </Accordion.Header>
+                            <Accordion.Body>
+                            <div className="accordion-body">
+                                        <p>Fastkart is leading the charge in transforming India’s vast, unorganised
+                                            grocery landscape through cutting-edge technology and innovation. Blinkit is
+                                            India’s largest and most convenient hyper-local delivery company, which
+                                            enables you to order grocery, fruits & vegetables, and other daily essential
+                                            products, directly via your mobile or web browser.</p>
+
+                                        <p>To know the reason why we changed our brand name from Grofers to Fastkart,
+                                            read this <span className="fw-bold">blog post.</span></p>
+                                    </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                    </Accordion>
+                    <Accordion className="w-100">
+                     <Accordion.Item eventKey="2">
+                        <Accordion.Header>
+                            How to remove the impurities of Graphene oxide?
+                            </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div className="accordion-body">
+                                        <p>Discover, Explore & Understanding The Product Description Maecenas
+                                            ullamcorper eros libero, facilisis tempor mi dapibus vel. Sed ut felis
+                                            ligula. Pellentesque vestibulum, tellus id euismod aliquet, justo velit
+                                            tincidunt justo, nec pulvinar tortor elit vitae urna.</p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Accordion className="w-100">
+                                <Accordion.Item eventKey="2">
+                                    <Accordion.Header>
+                                        How long will delivery take?
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div className="accordion-body">
+                                        <p>Discover, Explore & Understanding The Product Description Maecenas
+                                            ullamcorper eros libero, facilisis tempor mi dapibus vel. Sed ut felis
+                                            ligula. Pellentesque vestibulum, tellus id euismod aliquet, justo velit
+                                            tincidunt justo, nec pulvinar tortor elit vitae urna.</p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Accordion className="w-100">
+                                <Accordion.Item eventKey="2">
+                                    <Accordion.Header>
+                                    How do I find my Windows Product key?
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div class="accordion-body">
+                                        <p>The product key is located inside the product packaging, on the
+                                            receipt or confirmation page for a digital purchase or in a
+                                            confirmation e-mail that shows you purchased Windows. If you
+                                            purchased a digital copy from Microsoft Store, you can locate your
+                                            product key in your Account under Digital Content.</p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Accordion className="w-100">
+                                <Accordion.Item eventKey="2">
+                                    <Accordion.Header>
+                                       I've downloaded an ISO file, now what?  
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div className="accordion-body">
+                                        <p>You can use the ISO file to create bootable media for installation
+                                            or recovery. You can also install Windows on your current device
+                                            by opening the ISO file, selecting the Setup and following the
+                                            instructions.</p>
+
+                                        <p>To create bootable media such as a bootable USB drive or DVD, you
+                                            will need an ISO burning or mounting software. We recommend always
+                                            using a blank USB or blank DVD because contents may be deleted
+                                            when creating a bootable image.</p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Accordion className="w-100">
+                                <Accordion.Item eventKey="2">
+                                    <Accordion.Header>
+                                        What's the difference between 32-bit and 64-bit versions of Windows?
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div className="accordion-body">
+                                        <p>The terms 32-bit and 64-bit refer to the way a computer's
+                                            processor (also called a CPU) handles information. The 64-bit
+                                            version of Windows handles large amounts of random access memory
+                                            (RAM) more effectively than a 32-bit system. Not all devices can
+                                            run the 64-bit versions of Windows.</p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Accordion className="w-100">
+                                <Accordion.Item eventKey="2">
+                                    <Accordion.Header>
+                                    Questionnaire on online shopping behavior during COVID-19.
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div className="accordion-body">
+                                        <p>Fastkart is leading the charge in transforming India’s vast, unorganised
+                                            grocery landscape through cutting-edge technology and innovation. Blinkit is
+                                            India’s largest and most convenient hyper-local delivery company, which
+                                            enables you to order grocery, fruits & vegetables, and other daily essential
+                                            products, directly via your mobile or web browser.</p>
+
+                                        <p>To know the reason why we changed our brand name from Grofers to Fastkart,
+                                            read this <span class="fw-bold">blog post.</span></p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Accordion className="w-100">
+                                <Accordion.Item eventKey="2">
+                                    <Accordion.Header>
+                                        How Can I Get More Attention From Customers? 
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div className="accordion-body">
+                                        <p>There are many variations of passages of Lorem Ipsum available, but the
+                                            majority have suffered alteration in some form, by injected humour, or
+                                            randomised words which don't look even slightly believable. If you are going
+                                            to use a passage of Lorem Ipsum, you need to be sure there isn't anything
+                                            embarrassing hidden in the middle of text. </p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                            <Accordion className="w-100">
+                                <Accordion.Item  eventKey="2">
+                                    <Accordion.Header>
+                                        What is payment method? 
+                                    </Accordion.Header>
+                                    <Accordion.Body>
+                                    <div class="accordion-body">
+                                        <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has
+                                            been the industry's standard dummy text ever since the 1500s, when an
+                                            unknown printer took a galley of type and scrambled it to make a type
+                                            specimen book. It has survived not only five centuries, but also the leap
+                                            into electronic typesetting, remaining essentially unchanged. It was
+                                            popularised in the 1960s with the release of Letraset sheets containing
+                                            Lorem Ipsum passages, and more recently with desktop publishing software
+                                            like Aldus PageMaker including versions of Lorem Ipsum</p>
+                                    </div>
+                                    </Accordion.Body>
+                                </Accordion.Item>
+                            </Accordion>
+                    </div>
+                    </div>
+                       {/* <div className="faq-accordion">
+                         <div className="accordion" id="accordionExample"> */}
+                             {/* <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingOne">
                                     <button className="accordion-button" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
@@ -141,9 +312,9 @@ const Faq=()=>{
                                             read this <span className="fw-bold">blog post.</span></p>
                                     </div>
                                 </div>
-                            </div>
-
-                            <div className="accordion-item">
+                            </div>  */}
+                            
+                            {/* <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingTwo">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -160,9 +331,9 @@ const Faq=()=>{
                                             tincidunt justo, nec pulvinar tortor elit vitae urna.</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="accordion-item">
+                            {/* <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingThree">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseThree" aria-expanded="false"
@@ -179,9 +350,9 @@ const Faq=()=>{
                                             tincidunt justo, nec pulvinar tortor elit vitae urna.</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="accordion-item">
+                            {/* <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingFour">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseFour" aria-expanded="true"
@@ -199,9 +370,9 @@ const Faq=()=>{
                                             product key in your Account under Digital Content.</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="accordion-item">
+                            {/* <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingFive">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseFive" aria-expanded="false"
@@ -223,9 +394,9 @@ const Faq=()=>{
                                             when creating a bootable image.</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="accordion-item">
+                            {/* <div className="accordion-item">
                                 <h2 class="accordion-header" id="headingSix">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseSix" aria-expanded="false" aria-controls="collapseSix">
@@ -243,9 +414,9 @@ const Faq=()=>{
                                             run the 64-bit versions of Windows.</p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div class="accordion-item">
+                            {/* <div class="accordion-item">
                                 <h2 class="accordion-header" id="headingSeven">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseSeven" aria-expanded="true"
@@ -267,9 +438,9 @@ const Faq=()=>{
                                             read this <span class="fw-bold">blog post.</span></p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="accordion-item">
+                            {/* <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingEight">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseEight" aria-expanded="false"
@@ -288,9 +459,9 @@ const Faq=()=>{
                                             embarrassing hidden in the middle of text. </p>
                                     </div>
                                 </div>
-                            </div>
+                            </div> */}
 
-                            <div className="accordion-item">
+                            {/* <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingNine">
                                     <button className="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                         data-bs-target="#collapseNine" aria-expanded="false"
@@ -311,12 +482,10 @@ const Faq=()=>{
                                             like Aldus PageMaker including versions of Lorem Ipsum</p>
                                     </div>
                                 </div>
-                            </div>
-                        {/* </div> */}
-                    </div>
+                            </div> */}
+                        </div> 
+                    </div> 
                 </div>
-            </div>
-        </div>
     </section>
     {/* <!-- Faq Section End --> */}
             <Footer/>

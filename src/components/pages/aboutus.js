@@ -4,6 +4,7 @@ import Header from '../common/header'
 import Breadcumb from '../common/beadcumb';
 import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
+import {FaStar} from 'react-icons/fa';
 const Aboutus=()=>{
     return(
         <Fragment>
@@ -56,7 +57,7 @@ const Aboutus=()=>{
                                     <li>
                                         <div className="delivery-box">
                                             <div className="delivery-icon">
-                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/delivery.svg" className="blur-up lazyload" alt=""/>
+                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/delivery.svg" className=" lazyload" alt=""/>
                                             </div>
 
                                             <div className="delivery-detail">
@@ -68,7 +69,7 @@ const Aboutus=()=>{
                                     <li>
                                         <div className="delivery-box">
                                             <div className="delivery-icon">
-                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/leaf.svg" className="blur-up lazyload" alt=""/>
+                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/leaf.svg" className=" lazyload" alt=""/>
                                             </div>
 
                                             <div className="delivery-detail">
@@ -80,7 +81,7 @@ const Aboutus=()=>{
                                     <li>
                                         <div className="delivery-box">
                                             <div className="delivery-icon">
-                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/delivery.svg" className="blur-up lazyload" alt=""/>
+                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/delivery.svg" className=" lazyload" alt=""/>
                                             </div>
 
                                             <div className="delivery-detail">
@@ -92,7 +93,7 @@ const Aboutus=()=>{
                                     <li>
                                         <div className="delivery-box">
                                             <div className="delivery-icon">
-                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/leaf.svg" className="blur-up lazyload" alt=""/>
+                                                <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/leaf.svg" className=" lazyload" alt=""/>
                                             </div>
 
                                             <div className="delivery-detail">
@@ -214,7 +215,7 @@ const Aboutus=()=>{
                         <div className="col-2">
                             <div className="team-box">
                                 <div className="team-iamge">
-                                    <img src="../assets/images/inner-page/user/2.jpg" className="img-fluid blur-up lazyload"
+                                    <img src="https://www.technewsworld.com/wp-content/uploads/sites/3/2022/02/office-worker.jpg" className="img-fluid blur-up lazyload"
                                         alt=""/>
                                 </div>
 
@@ -254,7 +255,7 @@ const Aboutus=()=>{
                         <div className="col-2">
                             <div class="team-box">
                                 <div class="team-iamge">
-                                    <img src="../assets/images/inner-page/user/3.jpg" className="img-fluid blur-up lazyload"
+                                    <img src="https://www.technewsworld.com/wp-content/uploads/sites/3/2022/02/office-worker.jpg" className="img-fluid blur-up lazyload"
                                         alt=""/>
                                 </div>
 
@@ -290,50 +291,10 @@ const Aboutus=()=>{
                                 </div>
                             </div>
                         </div>
-
-                        <div className="col-2">
-                            <div className="team-box">
-                                <div clasName="team-iamge">
-                                    <img src="../assets/images/inner-page/user/4.jpg" className="img-fluid blur-up lazyload"
-                                        alt=""/>
-                                </div>
-
-                                <div className="team-name">
-                                    <h3>Anna Baranov</h3>
-                                    <h5>Marketing</h5>
-                                    <p>Fondue stinking bishop goat. Macaroni cheese croque monsieur cottage cheese.</p>
-                                    <ul className="team-media">
-                                        <li>
-                                            <a href="https://www.facebook.com/" className="fb-bg">
-                                                <i className="fa-brands fa-facebook-f"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://in.pinterest.com/" className="pint-bg">
-                                                <i className="fa-brands fa-pinterest-p"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://twitter.com/" className="twitter-bg">
-                                                <i className="fa-brands fa-twitter"></i>
-                                            </a>
-                                        </li>
-
-                                        <li>
-                                            <a href="https://www.instagram.com/" className="insta-bg">
-                                                <i className="fa-brands fa-instagram"></i>
-                                            </a>
-                                        </li>
-                                    </ul>
-                                </div>
-                            </div>
-                        </div>
                         <div className="col-2">
                             <div className="team-box">
                                 <div className="team-iamge">
-                                    <img src="../assets/images/inner-page/user/1.jpg" className="img-fluid blur-up lazyload"
+                                    <img src="https://www.technewsworld.com/wp-content/uploads/sites/3/2022/02/office-worker.jpg" className="img-fluid blur-up lazyload"
                                         alt=""/>
                                 </div>
 
@@ -372,7 +333,7 @@ const Aboutus=()=>{
                         <div className="col-2">
                             <div className="team-box">
                                 <div className="team-iamge">
-                                    <img src="../assets/images/inner-page/user/1.jpg" className="img-fluid blur-up lazyload"
+                                    <img src="https://www.technewsworld.com/wp-content/uploads/sites/3/2022/02/office-worker.jpg" className="img-fluid blur-up lazyload"
                                         alt=""/>
                                 </div>
 
@@ -408,6 +369,45 @@ const Aboutus=()=>{
                                 </div>
                             </div>
                         </div>
+                        <div className="col-2">
+                            <div class="team-box">
+                                <div class="team-iamge">
+                                    <img src="https://www.technewsworld.com/wp-content/uploads/sites/3/2022/02/office-worker.jpg" className="img-fluid blur-up lazyload"
+                                        alt=""/>
+                                </div>
+
+                                <div className="team-name">
+                                    <h3>Anna Baranov</h3>
+                                    <h5>Marketing</h5>
+                                    <p>camembert de normandie. Bocconcini rubber cheese fromage frais port-salut.</p>
+                                    <ul className="team-media">
+                                        <li>
+                                            <a href="https://www.facebook.com/" className="fb-bg">
+                                                <i className="fa-brands fa-facebook-f"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://in.pinterest.com/" className="pint-bg">
+                                                <i className="fa-brands fa-pinterest-p"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://twitter.com/" className="twitter-bg">
+                                                <i className="fa-brands fa-twitter"></i>
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a href="https://www.instagram.com/" className="insta-bg">
+                                                <i className="fa-brands fa-instagram"></i>
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -429,20 +429,20 @@ const Aboutus=()=>{
                                 <i className="fa-solid fa-quote-right"></i>
                                 <div className="product-rating">
                                     <ul className="rating">
-                                        <li>
-                                            <i data-feather="star" class="fill"></i>
+                                        <li color='#ffb321'>
+                                           <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" class="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" class="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" class="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star"></i>
+                                        <li color='#'>
+                                            <FaStar className="#" />
                                         </li>
                                     </ul>
                                 </div>
@@ -472,20 +472,20 @@ const Aboutus=()=>{
                                 <i className="fa-solid fa-quote-right"></i>
                                 <div className="product-rating">
                                     <ul className="rating">
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                    <li color='#ffb321'>
+                                           <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star"></i>
+                                        <li color='#'>
+                                            <FaStar className="#" />
                                         </li>
                                     </ul>
                                 </div>
@@ -514,20 +514,20 @@ const Aboutus=()=>{
                                 <i className="fa-solid fa-quote-right"></i>
                                 <div className="product-rating">
                                     <ul className="rating">
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                    <li color='#ffb321'>
+                                           <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star" className="fill"></i>
+                                        <li color='#ffb321'>
+                                            <FaStar className="feather fill" fill={'#ffb321'} />
                                         </li>
-                                        <li>
-                                            <i data-feather="star"></i>
+                                        <li color='#'>
+                                            <FaStar className="#" />
                                         </li>
                                     </ul>
                                 </div>

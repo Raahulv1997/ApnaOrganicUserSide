@@ -76,7 +76,8 @@ const ProductDetail = (props) => {
           <div className="row">
             <div className="col-xl-8 col-lg-7 wow fadeInUp">
               <div className="row g-4">
-                <Carousel className="col-xl-6 sm-2 col-lg-7 wow fadeInUp">
+                <div className="col-xl-6 sm-2 col-lg-7" >
+                <Carousel variant="dark">
                   <Carousel.Item>
                     <img
                       className="d-block w-100"
@@ -121,6 +122,7 @@ const ProductDetail = (props) => {
                     </Carousel.Caption>
                   </Carousel.Item>
                 </Carousel>
+                </div>
                 {/* <div className="col-xl-6 wow fadeInUp">
                                     <div className="product-left-box">
                                         <div className="row g-2">

@@ -84,8 +84,8 @@ const Footer=()=> {
                       <i className="fa-solid fa-chevron-right"></i>Careers</Link>
                   </li>
                   <li>
-                    <a href="blog-list.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Latest Blog</a>
+                    <Link to="/blog_detail" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Latest Blog</Link>
                   </li>
                 </ul>
               </div>
