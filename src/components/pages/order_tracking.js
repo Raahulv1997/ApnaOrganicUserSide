@@ -29,7 +29,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                <BsBoxSeam/>
+                                <BsBoxSeam className='fs-4'/>
 
                                 </div>
 
@@ -43,7 +43,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <BsTruck/>
+                                    <BsTruck className='fs-4'/>
                                 </div>
 
                                 <div className="order-details-name">
@@ -57,7 +57,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <AiOutlineInfoCircle    />
+                                    <AiOutlineInfoCircle className='fs-4'/>
                                 </div>
 
                                 <div className="order-details-name">
@@ -70,7 +70,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                <MdLocationSearching/>
+                                <MdLocationSearching className='fs-4'/>
                                 </div>
 
                                 <div className="order-details-name">
@@ -83,7 +83,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <GoLocation/>
+                                    <GoLocation className='fs-4'/>
                                 </div>
 
                                 <div className="order-details-name">
@@ -96,7 +96,7 @@ function Tracking() {
                         <div className="col-xl-4 col-sm-6">
                             <div className="order-details-contain">
                                 <div className="order-tracking-icon">
-                                    <BsCalendar4/>
+                                    <BsCalendar4 className='fs-4'/>
                                 </div>
 
                                 <div className="order-details-name">

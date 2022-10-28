@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
-import Footer from '../part/footer';
-import Header from '../part/header';
-import Breadcumb from '../UI/beadcumb';
+import Footer from '../common/footer';
+import Header from '../common/header';
+import Breadcumb from '../common/beadcumb';
 import blog1 from '../../Photos/blog/1.jpg';
 import blog2 from '../../Photos/blog/2.jpg';
 import blog3 from '../../Photos/blog/3.jpg';

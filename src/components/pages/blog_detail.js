@@ -1,6 +1,6 @@
 import React, { Fragment } from "react";
-import Footer from "../part/footer";
-import Header from "../part/header";
+import Footer from "../common/footer";
+import Header from "../common/header";
 import { NavLink } from "react-router-dom";
 import blog1 from '../../Photos/blog/1.jpg';
 import blog2 from '../../Photos/blog/2.jpg';

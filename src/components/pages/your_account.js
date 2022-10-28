@@ -1,4 +1,8 @@
 import React from "react";
+import  { useState } from 'react';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
+import Form from "react-bootstrap/Form";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
 import Footer from "../common/footer";
@@ -19,6 +23,10 @@ import {RiAccountCircleLine} from 'react-icons/ri';
 
 
 function Account() {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   return (
     <React.Fragment>
       <Header />
@@ -320,6 +328,7 @@ function Account() {
                                       href="javascript:void(0)"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
+                                      onClick={handleShow}
                                     >
                                       Edit
                                     </a>
@@ -2427,6 +2436,62 @@ function Account() {
           </Tab.Container>
         </div>
       </section>
+      <Modal size="lg" show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Add New Vendor</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row p-3 m-0">
+            <div className="col-12">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+                <Form.Label>Full Name</Form.Label>
+                <Form.Control type="text" placeholder="Name" />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control type="text" placeholder="Email Address" />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+                <Form.Label>Mobile</Form.Label>
+                <Form.Control type="text" placeholder="Mobile" />
+              </Form.Group>
+                 </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+              <Form.Label>City</Form.Label>
+              <Form.Control type="text" placeholder="city" />
+              </Form.Group>
+            </div>
+            <div className="col-md-6">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+                <Form.Label>PIN Code</Form.Label>
+                <Form.Control type="text" placeholder="pin" />
+              </Form.Group>
+            </div>
+            <div className="col-12">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+                <Form.Label>Add Address</Form.Label>
+                <Form.Control type="location" placeholder="Add Address" />
+              </Form.Group>
+            </div>
+            <div className="col-12">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+                <Form.Label>Add Address2</Form.Label>
+                <Form.Control type="location" placeholder="Add Address2" />
+              </Form.Group>
+            </div>
+          
+          </div>
+        </Modal.Body>
+        <Modal.Footer>
+          <button className='button main_outline_button btn btn-animation ' onClick={handleClose}>Cancel</button>
+          <button className='button main_button btn theme-bg-color ms-3 fire-button' onClick={handleClose}>Save Change</button>
+        </Modal.Footer>
+      </Modal>
       <Footer />
     </React.Fragment>
   );

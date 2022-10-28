@@ -18,13 +18,9 @@ import Wishlist from './components/pages/wishlist'
 import Tracking from "./components/pages/order_tracking";
 import Orders from "./components/pages/your_orders";
 import Account from "./components/pages/your_account";
-import Careers from "./components/Pages/careers";
-import Wishlist from './components/Pages/wishlist'
-import Tracking from "./components/Pages/order_tracking";
-import Orders from "./components/Pages/your_orders";
-import Account from "./components/Pages/your_account";
-import BlogList from "./components/Pages/blog_list";
-import BlogDetail from "./components/Pages/blog_detail";
+import BlogList from "./components/pages/blog_list";
+import BlogDetail from "./components/pages/blog_detail";
+import Otp from "./components/pages/otp_verification";
 
 
 function App() {
@@ -50,6 +46,7 @@ function App() {
         <Route path="/your_account" element={<Account/>} />
         <Route path="/blog_list" element={<BlogList/>} />
         <Route path="/blog_detail" element={<BlogDetail/>} />
+        <Route path="/otp_verification" element={<Otp/>} />
 
 
 
