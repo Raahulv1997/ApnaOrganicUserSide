@@ -23,6 +23,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
   //   count = count - 1;
   //   setCount(count);
   // }
+  
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -61,7 +62,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                 <div>
                   <img
                     src={BannerBox2}
-                    className="img-fluid bg-img lazyload"
+                    className="img-fluid bg-img lazyload h-100"
                     alt=""
                   />
                 </div>

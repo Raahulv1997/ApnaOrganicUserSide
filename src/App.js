@@ -13,7 +13,6 @@ import Faq from './components/pages/faq';
 import Term_condition from './components/pages/term_condition'
 import Product_Detail from "./components/pages/product-detail";
 import {Route, BrowserRouter, Routes } from "react-router-dom";
-import Careers from "./components/pages/careers";
 import Wishlist from './components/pages/wishlist'
 import Tracking from "./components/pages/order_tracking";
 import Orders from "./components/pages/your_orders";
@@ -21,6 +20,9 @@ import Account from "./components/pages/your_account";
 import BlogList from "./components/pages/blog_list";
 import BlogDetail from "./components/pages/blog_detail";
 import Otp from "./components/pages/otp_verification";
+import Careers from "./components/pages/careers";
+
+
 
 
 function App() {

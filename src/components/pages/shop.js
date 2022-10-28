@@ -24,7 +24,6 @@ const Shop=(props)=> {
                                     <div className="back-button">
                                         <h3><i className="fa-solid fa-arrow-left"></i> Back</h3>
                                     </div>
-
                                     <div className="filter-category">
                                         <div className="filter-title">
                                             <h2>Filters</h2>

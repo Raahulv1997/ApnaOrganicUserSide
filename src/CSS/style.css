@@ -16940,7 +16940,7 @@ header .offcanvas-backdrop {
     right: 0;
     padding: 7px 11px;
     background-color: var(--theme-color);
-    color: #fff
+    color: #fff;
 }
 
 @media (max-width: 480px) {
