@@ -1243,12 +1243,12 @@ const Header = () => {
                           </a>
                           <ul className="dropdown-menu">
                             <li>
-                              <a
-                                className="dropdown-item"
-                                href="blog-detail.html"
-                              >
-                                Blog Detail
-                              </a>
+                             
+                               <NavLink
+                            to="/blog_detail"
+                            className="dropdown-item"
+                          >  Blog Detail</NavLink>
+                              
                             </li>
                             <li>
                               <a
@@ -1259,12 +1259,12 @@ const Header = () => {
                               </a>
                             </li>
                             <li>
-                              <a
-                                className="dropdown-item"
-                                href="blog-list.html"
-                              >
+                            <NavLink
+                            to="/blog_list"
+                            className="dropdown-item"
+                          > 
                                 Blog List
-                              </a>
+                             </NavLink>
                             </li>
                           </ul>
                         </li>
