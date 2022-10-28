@@ -105,7 +105,7 @@ const Faq=()=>{
     {/* <!-- Faq Question section End --> */}
     {/* <!-- Faq Section Start --> */}
     <section className="faq-box-contain section-b-space">
-        <div className="container">
+        {/* <div className="container"> */}
             <div className="row">
                 <div className="col-xxl-4">
                     <div className="faq-contain p-sticky">
@@ -118,7 +118,7 @@ const Faq=()=>{
                 </div>
 
                 <div className="col-xxl-7 ms-auto">
-                    <div className="faq-accordion">
+                       <div className="faq-accordion">
                         <div className="accordion" id="accordionExample">
                             <div className="accordion-item">
                                 <h2 className="accordion-header" id="headingOne">
@@ -312,7 +312,7 @@ const Faq=()=>{
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                        {/* </div> */}
                     </div>
                 </div>
             </div>
