@@ -1,11 +1,30 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Logo from "../../Photos/media/1.718c1ec8.png";
 import "../../CSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
-import Dropdown from 'react-bootstrap/Dropdown';
+import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
+import common_img from "../../Photos/media/vegetable.svg";
+import {
+  AiOutlineHome,
+  AiOutlineSearch,
+  AiOutlineHeart,
+  AiOutlineShoppingCart,
+  AiOutlineArrowRight
+} from "react-icons/ai";
+import { BiCategory } from "react-icons/bi";
+
 const Header = () => {
+  const [click, setclick] = useState(false);
+  const [cat_list, setcat_list] = useState(false);
+  const open_Category = () => {
+    setclick(true);
+  };
+  const Category_list = () => {
+    setcat_list(true);
+  };
+
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -70,8 +89,10 @@ const Header = () => {
                       to="/login"
                       className="btn theme-bg-color ms-3 fire-button"
                     > */}
-                      <Link to="/login"><span>Login</span></Link>
-                      
+                    <Link to="/login">
+                      <span>Login</span>
+                    </Link>
+
                     {/* </NavLink> */}
                   </div>
                   <div className="right-nav">
@@ -81,41 +102,41 @@ const Header = () => {
                       to=""
                       className="btn theme-bg-color ms-3 fire-button"
                     > */}
-                      {/* <Link to=""><span>Location</span></Link>
+                    {/* <Link to=""><span>Location</span></Link>
                       <i className="fa-solid fa-angle-down"></i> */}
                     {/* </NavLink> */}
                   </div>
                   <div className="rightside-menu">
                     <div className="dropdown-dollar">
-                  <Dropdown>
-                    <Dropdown.Toggle variant="white" id="dropdown-basic">
-                    Language
-                    <i className="fa-solid fa-angle-down"></i>
-                    </Dropdown.Toggle>
-                    <Dropdown.Menu>
-                      <Dropdown.Item href="">English</Dropdown.Item>
-                      <Dropdown.Item href="">Hindi</Dropdown.Item>
-                      <Dropdown.Item href="">Gujarati</Dropdown.Item>
-                      <Dropdown.Item href="">Arbic</Dropdown.Item>
-                      <Dropdown.Item href="">Rusia</Dropdown.Item>
-                      <Dropdown.Item href="">Chinese</Dropdown.Item>
-                   </Dropdown.Menu>
-                 </Dropdown>
-                 <Dropdown>
-                          <Dropdown.Toggle variant="white" id="dropdown-basic">
+                      <Dropdown>
+                        <Dropdown.Toggle variant="white" id="dropdown-basic">
+                          Language
+                          <i className="fa-solid fa-angle-down"></i>
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="">English</Dropdown.Item>
+                          <Dropdown.Item href="">Hindi</Dropdown.Item>
+                          <Dropdown.Item href="">Gujarati</Dropdown.Item>
+                          <Dropdown.Item href="">Arbic</Dropdown.Item>
+                          <Dropdown.Item href="">Rusia</Dropdown.Item>
+                          <Dropdown.Item href="">Chinese</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      <Dropdown>
+                        <Dropdown.Toggle variant="white" id="dropdown-basic">
                           Dollar
                           <i className="fa-solid fa-angle-down"></i>
-                          </Dropdown.Toggle>
-                          <Dropdown.Menu>
-                              <Dropdown.Item href="#/action-1">USD</Dropdown.Item>
-                              <Dropdown.Item href="#/action-2"> INR</Dropdown.Item>
-                              <Dropdown.Item href="#/action-3">EUR</Dropdown.Item>
-                              <Dropdown.Item href="#/action-3">AUD</Dropdown.Item>
-                          </Dropdown.Menu>
-                      </Dropdown> 
-                  {/* <div className="rightside-menu">
+                        </Dropdown.Toggle>
+                        <Dropdown.Menu>
+                          <Dropdown.Item href="#/action-1">USD</Dropdown.Item>
+                          <Dropdown.Item href="#/action-2"> INR</Dropdown.Item>
+                          <Dropdown.Item href="#/action-3">EUR</Dropdown.Item>
+                          <Dropdown.Item href="#/action-3">AUD</Dropdown.Item>
+                        </Dropdown.Menu>
+                      </Dropdown>
+                      {/* <div className="rightside-menu">
                     <div className="dropdown-dollar"> */}
-                      
+
                       {/* <div className="dropdown">
                         <button
                           className="dropdown-toggle"
@@ -262,7 +283,8 @@ const Header = () => {
                         </li>
 
                         <li className="onhover-dropdown">
-                          <Link to="/wishlist"
+                          <Link
+                            to="/wishlist"
                             className="header-icon swap-icon"
                           >
                             <i className="fa-regular fa-heart icon_color"></i>
@@ -377,37 +399,58 @@ const Header = () => {
                     <span>All Categories</span>
                   </button>
 
-                  <div className="category-dropdown">
+                  <div
+                    className={
+                      click == true
+                        ? "category-dropdown show"
+                        : "category-dropdown"
+                    }
+                  >
                     <div className="category-title">
                       <h5>Categories</h5>
                       <button
                         type="button"
                         className="btn p-0 close-button text-content"
                       >
-                        <i className="fa-solid fa-xmark"></i>
+                        <i
+                          className="fa-solid fa-xmark"
+                          onClick={() => setclick(false)}
+                        ></i>
                       </button>
                     </div>
 
                     <ul className="category-list">
                       <li className="onhover-category-list">
-                        <a href="javascript:void(0)" className="category-name">
-                          <img src="../public/svg/1/vegetable.svg" alt="" />
+                        <a
+                          href="javascript:void(0)"
+                          className="category-name"
+                          onClick={Category_list}
+                        >
+                          <img src={common_img} />
                           <h6>Vegetables & Fruit</h6>
                           <i className="fa-solid fa-chevron-right"></i>
+                          
                         </a>
 
-                        <div className="onhover-category-box">
+                        <div
+                          className={
+                            cat_list == true
+                              ? "onhover-category-box show_list"
+                              : "onhover-category-box"
+                          }
+                        >
                           <div className="list-1">
-                            <div className="category-title-box">
-                              <h5>Organic Vegetables</h5>
+                            <div className="category-title-box d-flex justify-content-between">
+                              <div><h5>Organic Vegetables</h5></div>
+                              <div className="fs-4 d-md-none" onClick={() => setcat_list  (false)}><span>&times;</span></div>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">Potato & Tomato</a>
                               </li>
                               <li>
                                 <a href="javascript:void(0)">
-                                  Cucumber & Capsicum
+                                  Cucumber & Capsicum 
                                 </a>
                               </li>
                               <li>
@@ -441,7 +484,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Fresh Fruit</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">Banana & Papaya</a>
                               </li>
@@ -470,18 +513,24 @@ const Header = () => {
                       </li>
 
                       <li className="onhover-category-list">
-                        <a href="javascript:void(0)" className="category-name">
-                          <img src="../public/svg/1/cup.svg" alt="" />
+                        <a href="javascript:void(0)" className="category-name"   onClick={Category_list}>
+                          <img src={common_img} />
                           <h6>Beverages</h6>
                           <i className="fa-solid fa-chevron-right"></i>
                         </a>
 
-                        <div className="onhover-category-box w-100">
+                        <div
+                          className={
+                            cat_list == true
+                              ? "onhover-category-box show_list"
+                              : "onhover-category-box"
+                          }
+                        >
                           <div className="list-1">
                             <div className="category-title-box">
                               <h5>Energy & Soft Drinks</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">
                                   Soda & Cocktail Mix
@@ -518,7 +567,7 @@ const Header = () => {
 
                       <li className="onhover-category-list">
                         <a href="javascript:void(0)" className="category-name">
-                          <img src="../public/svg/1/meats.svg" alt="" />
+                          <img src={common_img} />
                           <h6>Meats & Seafood</h6>
                           <i className="fa-solid fa-chevron-right"></i>
                         </a>
@@ -528,7 +577,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Meat</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">Fresh Meat</a>
                               </li>
@@ -550,7 +599,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Seafood</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">
                                   Fresh Water Fish
@@ -587,7 +636,7 @@ const Header = () => {
 
                       <li className="onhover-category-list">
                         <a href="javascript:void(0)" className="category-name">
-                          <img src="../public/svg/1/breakfast.svg" alt="" />
+                          <img src={common_img} />
                           <h6>Breakfast & Dairy</h6>
                           <i className="fa-solid fa-chevron-right"></i>
                         </a>
@@ -597,7 +646,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Breakfast Cereals</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">Oats & Porridge</a>
                               </li>
@@ -635,7 +684,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Dairy</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">Milk</a>
                               </li>
@@ -679,7 +728,7 @@ const Header = () => {
 
                       <li className="onhover-category-list">
                         <a href="javascript:void(0)" className="category-name">
-                          <img src="../public/svg/1/frozen.svg" alt="" />
+                          <img src={common_img} />
                           <h6>Frozen Foods</h6>
                           <i className="fa-solid fa-chevron-right"></i>
                         </a>
@@ -689,7 +738,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Noodle, Pasta</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">Instant Noodles</a>
                               </li>
@@ -712,7 +761,7 @@ const Header = () => {
 
                       <li className="onhover-category-list">
                         <a href="javascript:void(0)" className="category-name">
-                          <img src="../public/svg/1/biscuit.svg" alt="" />
+                          <img src={common_img} />
                           <h6>Biscuits & Snacks</h6>
                           <i className="fa-solid fa-chevron-right"></i>
                         </a>
@@ -722,7 +771,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Biscuits & Cookies</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">Salted Biscuits</a>
                               </li>
@@ -751,7 +800,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Bakery Snacks</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">
                                   Bread Sticks & Lavash
@@ -779,7 +828,7 @@ const Header = () => {
 
                       <li className="onhover-category-list">
                         <a href="javascript:void(0)" className="category-name">
-                          <img src="../public/svg/1/grocery.svg" alt="" />
+                          <img src={common_img} />
                           <h6>Grocery & Staples</h6>
                           <i className="fa-solid fa-chevron-right"></i>
                         </a>
@@ -789,7 +838,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Grocery</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">
                                   Lemon, Ginger & Garlic
@@ -815,7 +864,7 @@ const Header = () => {
                             <div className="category-title-box">
                               <h5>Organic Staples</h5>
                             </div>
-                            <ul>
+                            <ul className="p-0">
                               <li>
                                 <a href="javascript:void(0)">
                                   Organic Dry Fruits
@@ -1243,12 +1292,13 @@ const Header = () => {
                           </a>
                           <ul className="dropdown-menu">
                             <li>
-                             
-                               <NavLink
-                            to="/blog_detail"
-                            className="dropdown-item"
-                          >  Blog Detail</NavLink>
-                              
+                              <NavLink
+                                to="/blog_detail"
+                                className="dropdown-item"
+                              >
+                                {" "}
+                                Blog Detail
+                              </NavLink>
                             </li>
                             <li>
                               <a
@@ -1259,12 +1309,12 @@ const Header = () => {
                               </a>
                             </li>
                             <li>
-                            <NavLink
-                            to="/blog_list"
-                            className="dropdown-item"
-                          > 
+                              <NavLink
+                                to="/blog_list"
+                                className="dropdown-item"
+                              >
                                 Blog List
-                             </NavLink>
+                              </NavLink>
                             </li>
                           </ul>
                         </li>
@@ -1394,6 +1444,43 @@ const Header = () => {
           </div>
         </div>
       </header>
+      <div class="mobile-menu d-md-none d-block mobile-cart">
+        <ul className="p-0">
+          <li class="active">
+            <Link to="/">
+              <AiOutlineHome className="" />
+              <span>Home</span>
+            </Link>
+          </li>
+
+          <li class="mobile-category" onClick={open_Category}>
+            <Link to="">
+              <BiCategory />
+              <span>Category</span>
+            </Link>
+          </li>
+          <li>
+            <Link to="" class="search-box">
+              <AiOutlineSearch />
+              <span>Search</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/wishlist" class="notifi-wishlist">
+              <AiOutlineHeart />
+              <span>My Wish</span>
+            </Link>
+          </li>
+
+          <li>
+            <Link to="/cart">
+              <AiOutlineShoppingCart />
+              <span>Cart</span>
+            </Link>
+          </li>
+        </ul>
+      </div>
       {/* <!-- Header End --> */}
     </Fragment>
   );

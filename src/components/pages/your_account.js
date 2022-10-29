@@ -1,7 +1,7 @@
 import React from "react";
-import  { useState } from 'react';
-import Button from 'react-bootstrap/Button';
-import Modal from 'react-bootstrap/Modal';
+import { useState } from "react";
+import Button from "react-bootstrap/Button";
+import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
@@ -9,38 +9,49 @@ import Footer from "../common/footer";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-import Profile from '../../Photos/product/user.jpg';
-import Product from '../../Photos/product/2.png';
-import {MdOutlineDashboard,MdOutlinePrivacyTip } from 'react-icons/md';
-import {BsHandbag,BsCheck2Square} from 'react-icons/bs';
-import {AiOutlineHeart,AiOutlineCreditCard} from 'react-icons/ai';
-import {GoLocation,GoMail} from 'react-icons/go';
-import {RiAccountCircleLine} from 'react-icons/ri';
+import Profile from "../../Photos/product/user.jpg";
+import Product from "../../Photos/product/2.png";
+import { MdOutlineDashboard, MdOutlinePrivacyTip } from "react-icons/md";
+import { BsHandbag, BsCheck2Square } from "react-icons/bs";
+import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
+import { GoLocation, GoMail } from "react-icons/go";
+import { RiAccountCircleLine } from "react-icons/ri";
 // import {CiMail} from 'react-icons/ci';
-
-
-
-
 
 function Account() {
   const [show, setShow] = useState(false);
-
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const [click, setclick] = useState(false);
+  const side_bar = () => {
+    setclick(true);
+  };
   return (
     <React.Fragment>
       <Header />
-      <Breadcumb pageName={"Your Account"} pageTitle={"Your Account"} pageHref={"/"} />
+      <Breadcumb
+        pageName={"Your Account"}
+        pageTitle={"Your Account"}
+        pageHref={"/"}
+      />
 
       <section className="user-dashboard-section section-b-space">
         <div className="container-fluid-lg">
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <div className="row">
               <div className="col-xxl-3 col-lg-4">
-                <div className="dashboard-left-sidebar">
+              
+                <div
+                    className={
+                      click == true
+                        ? "dashboard-left-sidebar show"
+                        : "dashboard-left-sidebar"
+                    }
+                  >
                   <div className="close-button d-flex d-lg-none">
                     <button className="close-sidebar">
-                      <i className="fa-solid fa-xmark"></i>
+                      <span onClick={() => setclick(false)}>&times;</span>
                     </button>
                   </div>
                   <div className="profile-box">
@@ -89,8 +100,10 @@ function Account() {
                               role="tab"
                               aria-controls="pills-order"
                               aria-selected="false"
+                              onClick={() => setclick(false)}
                             >
-                              <MdOutlineDashboard className="mx-2"/>DashBoard
+                              <MdOutlineDashboard className="mx-2" />
+                              DashBoard
                             </button>
                           </li>
                         </Nav.Link>
@@ -108,8 +121,10 @@ function Account() {
                               role="tab"
                               aria-controls="pills-order"
                               aria-selected="false"
+                              onClick={() => setclick(false)}
                             >
-                              <BsHandbag className="mx-2"/>Order
+                              <BsHandbag className="mx-2" />
+                              Order
                             </button>
                           </li>
                         </Nav.Link>
@@ -127,8 +142,9 @@ function Account() {
                               role="tab"
                               aria-controls="pills-wishlist"
                               aria-selected="false"
+                              onClick={() => setclick(false)}
                             >
-                              <AiOutlineHeart className="mx-2"/>
+                              <AiOutlineHeart className="mx-2" />
                               Wishlist
                             </button>
                           </li>
@@ -147,8 +163,10 @@ function Account() {
                               role="tab"
                               aria-controls="pills-card"
                               aria-selected="false"
+                              onClick={() => setclick(false)}
                             >
-                              <AiOutlineCreditCard className="mx-2"/> Saved Card
+                              <AiOutlineCreditCard className="mx-2" /> Saved
+                              Card
                             </button>
                           </li>
                         </Nav.Link>
@@ -166,8 +184,9 @@ function Account() {
                               role="tab"
                               aria-controls="pills-address"
                               aria-selected="false"
+                              onClick={() => setclick(false)}
                             >
-                              <GoLocation className="mx-2"/>
+                              <GoLocation className="mx-2" />
                               Address
                             </button>
                           </li>
@@ -186,8 +205,9 @@ function Account() {
                               role="tab"
                               aria-controls="pills-profile"
                               aria-selected="false"
+                              onClick={() => setclick(false)}
                             >
-                              <RiAccountCircleLine className="mx-2"/>
+                              <RiAccountCircleLine className="mx-2" />
                               Profile
                             </button>
                           </li>
@@ -206,8 +226,9 @@ function Account() {
                               role="tab"
                               aria-controls="pills-security"
                               aria-selected="false"
+                              onClick={() => setclick(false)}
                             >
-                              <MdOutlinePrivacyTip className="mx-2"/>
+                              <MdOutlinePrivacyTip className="mx-2" />
                               Privacy
                             </button>
                           </li>
@@ -219,7 +240,7 @@ function Account() {
               </div>
 
               <div className="col-xxl-9 col-lg-8">
-                <button className="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none">
+                <button className="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none" onClick={side_bar}>
                   Show Menu
                 </button>
                 <div className="dashboard-right-sidebar">
@@ -394,6 +415,7 @@ function Account() {
                                         href="javascript:void(0)"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
+                                        onClick={handleShow}
                                       >
                                         Edit Address
                                       </a>
@@ -413,6 +435,7 @@ function Account() {
                                         href="javascript:void(0)"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
+                                        onClick={handleShow}
                                       >
                                         Edit Address
                                       </a>
@@ -1578,6 +1601,7 @@ function Account() {
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
                                     href="javascript:void(0)"
+                                    onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
                                   </a>
@@ -1597,6 +1621,7 @@ function Account() {
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
                                   href="javascript:void(0)"
+                                  onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
                                 </a>
@@ -1648,6 +1673,7 @@ function Account() {
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
                                     href="javascript:void(0)"
+                                    onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
                                   </a>
@@ -1667,6 +1693,7 @@ function Account() {
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
                                   href="javascript:void(0)"
+                                  onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
                                 </a>
@@ -1718,6 +1745,7 @@ function Account() {
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
                                     href="javascript:void(0)"
+                                    onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
                                   </a>
@@ -1737,6 +1765,7 @@ function Account() {
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
                                   href="javascript:void(0)"
+                                  onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
                                 </a>
@@ -1770,6 +1799,7 @@ function Account() {
                               className="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
                               data-bs-toggle="modal"
                               data-bs-target="#add-address"
+                              onClick={handleShow}
                             >
                               <i data-feather="plus" className="me-2"></i> Add
                               New Address
@@ -1830,6 +1860,7 @@ function Account() {
                                     className="btn btn-sm add-button w-100"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editProfile"
+                                    onClick={handleShow}
                                   >
                                     <i data-feather="edit"></i>
                                     Edit
@@ -1897,6 +1928,7 @@ function Account() {
                                     className="btn btn-sm add-button w-100"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editProfile"
+                                    onClick={handleShow}
                                   >
                                     <i data-feather="edit"></i>
                                     Edit
@@ -1965,6 +1997,7 @@ function Account() {
                                     className="btn btn-sm add-button w-100"
                                     data-bs-toggle="modal"
                                     data-bs-target="#editProfile"
+                                    onClick={handleShow}
                                   >
                                     <i data-feather="edit"></i>
                                     Edit
@@ -2185,21 +2218,21 @@ function Account() {
                               <ul>
                                 <li>
                                   <div className="location-box">
-                                    <GoLocation/>
+                                    <GoLocation />
                                     <h6>Downers Grove, IL</h6>
                                   </div>
                                 </li>
 
                                 <li>
                                   <div className="location-box">
-                                    <GoMail/>
+                                    <GoMail />
                                     <h6>vicki.pope@gmail.com</h6>
                                   </div>
                                 </li>
 
                                 <li>
                                   <div className="location-box">
-                                    <BsCheck2Square/>
+                                    <BsCheck2Square />
                                     <h6>Licensed for 2 years</h6>
                                   </div>
                                 </li>
@@ -2438,7 +2471,7 @@ function Account() {
       </section>
       <Modal size="lg" show={show} onHide={handleClose}>
         <Modal.Header closeButton>
-          <Modal.Title>Add New Vendor</Modal.Title>
+          <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row p-3 m-0">
@@ -2459,19 +2492,8 @@ function Account() {
                 <Form.Label>Mobile</Form.Label>
                 <Form.Control type="text" placeholder="Mobile" />
               </Form.Group>
-                 </div>
-            <div className="col-md-6">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
-              <Form.Label>City</Form.Label>
-              <Form.Control type="text" placeholder="city" />
-              </Form.Group>
             </div>
-            <div className="col-md-6">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
-                <Form.Label>PIN Code</Form.Label>
-                <Form.Control type="text" placeholder="pin" />
-              </Form.Group>
-            </div>
+
             <div className="col-12">
               <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
                 <Form.Label>Add Address</Form.Label>
@@ -2484,12 +2506,70 @@ function Account() {
                 <Form.Control type="location" placeholder="Add Address2" />
               </Form.Group>
             </div>
-          
+            <div className="col-4">
+              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+                <Form.Label>PIN Code</Form.Label>
+                <Form.Control type="text" placeholder="pin" />
+              </Form.Group>
+            </div>
+            <div className="col-4">
+            <Form.Label>Country</Form.Label>
+              <Form.Select
+                aria-label="Search by category"
+                className="adminselectbox"
+              >
+              
+                <option>-Status-</option>
+                <option selected>Choose Your Country</option>
+                <option value="kindom">United Kingdom</option>
+                <option value="states">United States</option>
+                <option value="fra">France</option>
+                <option value="china">China</option>
+                <option value="spain">Spain</option>
+                <option value="italy">Italy</option>
+                <option value="turkey">Turkey</option>
+                <option value="germany">Germany</option>
+                <option value="russian">Russian Federation</option>
+                <option value="malay">Malaysia</option>
+                <option value="mexico">Mexico</option>
+                <option value="austria">Austria</option>
+                <option value="hong">Hong Kong SAR, China</option>
+                <option value="ukraine">Ukraine</option>
+                <option value="thailand">Thailand</option>
+                <option value="saudi">Saudi Arabia</option>
+                <option value="canada">Canada</option>
+                <option value="singa">Singapore</option>
+              </Form.Select>
+            </div>
+            <div className="col-4">
+            <Form.Label>City</Form.Label>
+              <Form.Select
+                aria-label="Search by category"
+                className="adminselectbox"
+              >
+                <option selected>Choose Your City</option>
+                <option value="kindom">India</option>
+                <option value="states">Canada</option>
+                <option value="fra">Dubai</option>
+                <option value="china">Los Angeles</option>
+                <option value="spain">Thailand</option>
+              </Form.Select>
+            </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
-          <button className='button main_outline_button btn btn-animation ' onClick={handleClose}>Cancel</button>
-          <button className='button main_button btn theme-bg-color ms-3 fire-button' onClick={handleClose}>Save Change</button>
+          <button
+            className="button main_outline_button btn btn-animation "
+            onClick={handleClose}
+          >
+            Cancel
+          </button>
+          <button
+            className="button main_button btn theme-bg-color ms-3 fire-button"
+            onClick={handleClose}
+          >
+            Save Change
+          </button>
         </Modal.Footer>
       </Modal>
       <Footer />
