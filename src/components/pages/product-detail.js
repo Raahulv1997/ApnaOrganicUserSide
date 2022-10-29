@@ -75,7 +75,9 @@ const ProductDetail = (props) => {
         <div className="container-fluid-lg">
           <div className="row">
             <div className="col-xl-8 col-lg-7 wow fadeInUp">
-              <div className="row g-4">
+              
+            </div>
+            <div className="row g-6">
                 <div className="col-xl-6 sm-2 col-lg-7" >
                 <Carousel variant="dark">
                   <Carousel.Item>
@@ -253,17 +255,21 @@ const ProductDetail = (props) => {
                             Add To Cart
                           </button>
                         </div>
-
                         <div className="buy-box">
+                          <button className="btn btn-dark text-white">
                           <a href="wishlist.html">
                             <i data-feather="heart"></i>
                             <span>Add To Wishlist</span>
                           </a>
-
-                          <a href="compare.html">
+                          </button>
+                             
+                           <button className="btn btn-dark text-white">
+                           <a href="compare.html">
                             <i data-feather="shuffle"></i>
                             <span>Add To Compare</span>
                           </a>
+                           </button>
+                          
                         </div>
 
                         <div className="pickup-box">
@@ -307,6 +313,38 @@ const ProductDetail = (props) => {
                           <div className="product-title">
                             <h4>Guaranteed Safe Checkout</h4>
                           </div>
+                          <ul>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/1.svg" className=" lazyload"
+                                            alt=""/>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/2.svg" className=" lazyload"
+                                            alt=""/>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/3.svg" className=" lazyload"
+                                            alt=""/>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/4.svg" className=" lazyload"
+                                            alt=""/>
+                                    </a>
+                                </li>
+                                <li>
+                                    <a href="javascript:void(0)">
+                                        <img src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/5.svg" className=" lazyload"
+                                            alt=""/>
+                                    </a>
+                                </li>
+                            </ul>
                         </div>
                       </div>
                     );
@@ -435,9 +473,10 @@ const ProductDetail = (props) => {
                                         </div>
                                     </div> */}
                 </div>
-
+                
                 <div className="col-12">
                   <div className="product-section-box">
+                    
                     <Tabs
                       className="nav nav-tabs custom-nav mb-3"
                       id="fill-tab-example"
@@ -454,7 +493,7 @@ const ProductDetail = (props) => {
                          <div className="product-description">
                         <div className="nav-desh">
                         <div className="desh-title">
-                            <h5>Description:</h5>
+                            
                           </div>
                           <p>
                             Jelly beans carrot cake icing biscuit oat cake gummi
@@ -652,6 +691,171 @@ const ProductDetail = (props) => {
                               <div className="d-flex">
                                 <div className="product-rating">
                                   <ul className="rating">
+                                  <li color='#ffb321'>
+                                    <FaStar icon="star" className="feather fill" fill={'#ffb321'} />
+                                  </li>
+                                  <li color='#ffb321'>
+                                    <FaStar icon="star" className="feather fill" fill={'#ffb321'} />
+                                  </li>
+                                  <li color='#ffb321'>
+                                    <FaStar icon="star" className="feather fill" fill={'#ffb321'} />
+                                  </li>
+                                  <li>
+                                    <FaStar icon="star" className="feather " />
+                                  </li>
+                                  <li>
+                                    <FaStar icon="star" className="feather " />
+                                  </li>
+                                  </ul>
+                                </div>
+                                <h6 className="ms-3">4.2 Out Of 5</h6>
+                              </div>
+
+                              <div className="accordion-body">
+                                <ul className="category-list custom-padding">
+                                  <li>
+                                    <div className="form-check ps-0 m-0 category-list-box">
+                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
+                                      <div className="form-check-label">
+                                        <ul className="rating p-0">
+                                        <li>
+                                                        <div class="rating-list">
+                                                            <h5>5 Star</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" role="progressbar"
+                                                                    style={{width: "68%"}} aria-valuenow="100"
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                    68%
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                        </ul>
+                                        <span className="text-content ps-3">
+                                          (5 Star)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </li>
+
+                                  <li>
+                                    <div className="form-check ps-0 m-0 category-list-box">
+                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
+                                      <div className="form-check-label">
+                                        <ul className="rating p-0">
+                                        <li>
+                                                        <div class="rating-list">
+                                                            <h5>4 Star</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" role="progressbar"
+                                                                    style={{width: "67%"}}aria-valuenow="100"
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                    67%
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                        </ul>
+                                        <span className="text-content ps-3">
+                                          (4 Star)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </li>
+
+                                  <li>
+                                    <div className="form-check ps-0 m-0 category-list-box">
+                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
+                                      <div className="form-check-label">
+                                        <ul className="rating p-0">
+                                        <li>
+                                                        <div class="rating-list">
+                                                            <h5>3 Star</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" role="progressbar"
+                                                                    style={{width: "42%"}} aria-valuenow="100"
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                    42%
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                        </ul>
+                                        <span className="text-content ps-3">
+                                          (3 Star)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </li>
+
+                                  <li>
+                                    <div className="form-check ps-0 m-0 category-list-box">
+                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
+                                      <div className="form-check-label">
+                                        <ul className="rating p-0">
+                                          <li>
+                                          <div class="rating-list">
+                                                            <h5>2 Star</h5>
+                                                            <div class="progress">
+                                                                <div class="progress-bar" role="progressbar"
+                                                                    style={{width: "30%"}} aria-valuenow="100"
+                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                    30%
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                          </li>
+                                        </ul>
+                                        <span className="text-content ps-3">
+                                          (2 Star)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </li>
+
+                                  <li>
+                                    <div className="form-check ps-0 m-0 category-list-box">
+                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
+                                      <div className="form-check-label">
+                                        <ul className="rating p-0">
+                                        <li>
+                                          <div class="rating-list">
+                                                            <h5>1 Star</h5>
+                                                            <div className="progress">
+                                                                <div className="progress-bar" role="progressbar"
+                                                                    style={{width: "24%"}} aria-valuenow="100"
+                                                                    aria-valuemin="0" 
+                                                                    aria-valuemax="100">
+                                                                    24%
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                          </li>
+                                        </ul>
+                                        <span className="text-content ps-3">
+                                          (1 Star)
+                                        </span>
+                                      </div>
+                                    </div>
+                                  </li>
+                                </ul>
+                              </div>
+                              <div
+                        className="tab-pane fade"
+                        id="review"
+                        role="tabpanel"
+                        aria-labelledby="review-tab"
+                      >
+                        <div className="review-box">
+                          <div className="row g-4">
+                            <div className="col-xl-6">
+                              <div className="review-title">
+                                <h4 className="fw-500">Customer reviews</h4>
+                              </div>
+
+                              <div className="d-flex">
+                                <div className="product-rating">
+                                  <ul className="rating">
                                     <li>
                                       <i
                                         data-feather="star"
@@ -681,422 +885,150 @@ const ProductDetail = (props) => {
                                 <h6 className="ms-3">4.2 Out Of 5</h6>
                               </div>
 
-                              <div className="accordion-body">
-                                <ul className="category-list custom-padding">
+                              <div className="rating-box">
+                                <ul>
                                   <li>
-                                    <div className="form-check ps-0 m-0 category-list-box">
-                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
-                                      <div className="form-check-label">
-                                        <ul className="rating p-0">
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li>
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                        </ul>
-                                        <span className="text-content ps-3">
-                                          (5 Star)
-                                        </span>
-                                      </div>
+                                    <div className="rating-list">
+                                      <h5>5 Star</h5>
+                                      {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
+                                                                                    style="width: 68%" aria-valuenow="100"
+                                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                                    68%
+                                                                                </div>
+                                                                            </div> */}
                                     </div>
                                   </li>
 
                                   <li>
-                                    <div className="form-check ps-0 m-0 category-list-box">
-                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
-                                      <div className="form-check-label">
-                                        <ul className="rating p-0">
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li>
-                                            <FaStar className="feather " />
-                                          </li>
-                                        </ul>
-                                        <span className="text-content ps-3">
-                                          (4 Star)
-                                        </span>
-                                      </div>
+                                    <div className="rating-list">
+                                      <h5>4 Star</h5>
+                                      {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
+                                                                                    style="width: 67%" aria-valuenow="100"
+                                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                                    67%
+                                                                                </div>
+                                                                            </div> */}
                                     </div>
                                   </li>
 
                                   <li>
-                                    <div className="form-check ps-0 m-0 category-list-box">
-                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
-                                      <div className="form-check-label">
-                                        <ul className="rating p-0">
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar className="feather " />
-                                          </li>
-                                          <li>
-                                            <FaStar className="feather " />
-                                          </li>
-                                        </ul>
-                                        <span className="text-content ps-3">
-                                          (3 Star)
-                                        </span>
-                                      </div>
+                                    <div className="rating-list">
+                                      <h5>3 Star</h5>
+                                      {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
+                                                                                    style="width: 42%" aria-valuenow="100"
+                                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                                    42%
+                                                                                </div>
+                                                                            </div> */}
                                     </div>
                                   </li>
 
                                   <li>
-                                    <div className="form-check ps-0 m-0 category-list-box">
-                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
-                                      <div className="form-check-label">
-                                        <ul className="rating p-0">
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar className="feather " />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar className="feather " />
-                                          </li>
-                                          <li>
-                                            <FaStar className="feather " />
-                                          </li>
-                                        </ul>
-                                        <span className="text-content ps-3">
-                                          (2 Star)
-                                        </span>
-                                      </div>
+                                    <div className="rating-list">
+                                      <h5>2 Star</h5>
+                                      {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
+                                                                                    style="width: 30%" aria-valuenow="100"
+                                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                                    30%
+                                                                                </div>
+                                                                            </div> */}
                                     </div>
                                   </li>
 
                                   <li>
-                                    <div className="form-check ps-0 m-0 category-list-box">
-                                      {/* <input className="checkbox_animated" type="checkbox" /> */}
-                                      <div className="form-check-label">
-                                        <ul className="rating p-0">
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar className="feather " />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar className="feather " />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar className="feather " />
-                                          </li>
-                                          <li>
-                                            <FaStar className="feather " />
-                                          </li>
-                                        </ul>
-                                        <span className="text-content ps-3">
-                                          (1 Star)
-                                        </span>
-                                      </div>
+                                    <div className="rating-list">
+                                      <h5>1 Star</h5>
+                                      {/* <div className="progress">
+                                                                                <div className="progress-bar" role="progressbar"
+                                                                                    style="width: 24%" aria-valuenow="100"
+                                                                                    aria-valuemin="0" aria-valuemax="100">
+                                                                                    24%
+                                                                                </div>
+                                                                            </div> */}
                                     </div>
                                   </li>
                                 </ul>
                               </div>
-                              <div className="col-12">
-                                <div className="review-title">
-                                  <h4 className="fw-500">
-                                    Customer questions & answers
-                                  </h4>
+                            </div>
+
+                            <div className="col-xl-6">
+                              <div className="review-title">
+                                <h4 className="fw-500">Add a review</h4>
+                              </div>
+
+                              <div className="row g-4">
+                                <div className="col-md-6">
+                                  <div className="form-floating theme-form-floating">
+                                    <input
+                                      type="text"
+                                      className="form-control"
+                                      id="name"
+                                      placeholder="Name"
+                                    />
+                                    <label for="name">Your Name</label>
+                                  </div>
                                 </div>
 
-                                <div className="review-people">
-                                  <ul className="review-list">
-                                    <li>
-                                      <div className="people-box">
-                                        <div>
-                                          <div className="people-image">
-                                            <img
-                                              src={Product2}
-                                              className="img-fluid  lazyload"
-                                              alt=""
-                                            />
-                                          </div>
-                                        </div>
+                                <div className="col-md-6">
+                                  <div className="form-floating theme-form-floating">
+                                    <input
+                                      type="email"
+                                      className="form-control"
+                                      id="email"
+                                      placeholder="Email Address"
+                                    />
+                                    <label for="email">Email Address</label>
+                                  </div>
+                                </div>
 
-                                        <div className="people-comment">
-                                          <a
-                                            className="name"
-                                            href="javascript:void(0)"
-                                          >
-                                            Tracey
-                                          </a>
-                                          <div className="date-time">
-                                            <h6 className="text-content">
-                                              14 Jan, 2022 at 12.58 AM
-                                            </h6>
+                                <div className="col-md-6">
+                                  <div className="form-floating theme-form-floating">
+                                    <input
+                                      type="url"
+                                      className="form-control"
+                                      id="website"
+                                      placeholder="Website"
+                                    />
+                                    <label for="website">Website</label>
+                                  </div>
+                                </div>
 
-                                            <div className="product-rating">
-                                              <ul className="rating">
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                          </div>
+                                <div className="col-md-6">
+                                  <div className="form-floating theme-form-floating">
+                                    <input
+                                      type="url"
+                                      className="form-control"
+                                      id="review1"
+                                      placeholder="Give your review a title"
+                                    />
+                                    <label for="review1">Review Title</label>
+                                  </div>
+                                </div>
 
-                                          <div className="reply">
-                                            <p>
-                                              Icing cookie carrot cake chocolate
-                                              cake sugar plum jelly-o danish.
-                                              Dragée dragée shortbread tootsie
-                                              roll croissant muffin cake I love
-                                              gummi bears. Candy canes ice cream
-                                              caramels tiramisu marshmallow cake
-                                              shortbread candy canes cookie.
-                                              <a href="javascript:void(0)">
-                                                Reply
-                                              </a>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="people-box">
-                                        <div>
-                                          <div className="people-image">
-                                            <img
-                                              src={Product2}
-                                              className="img-fluid  lazyload"
-                                              alt=""
-                                            />
-                                          </div>
-                                        </div>
-
-                                        <div className="people-comment">
-                                          <a
-                                            className="name"
-                                            href="javascript:void(0)"
-                                          >
-                                            Olivia
-                                          </a>
-                                          <div className="date-time">
-                                            <h6 className="text-content">
-                                              01 May, 2022 at 08.31 AM
-                                            </h6>
-                                            <div className="product-rating">
-                                              <ul className="rating">
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                          </div>
-
-                                          <div className="reply">
-                                            <p>
-                                              Tootsie roll cake danish halvah
-                                              powder Tootsie roll candy
-                                              marshmallow cookie brownie apple
-                                              pie pudding brownie chocolate bar.
-                                              Jujubes gummi bears I love powder
-                                              danish oat cake tart croissant.
-                                              <a href="javascript:void(0)">
-                                                Reply
-                                              </a>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="people-box">
-                                        <div>
-                                          <div className="people-image">
-                                            <img
-                                              src={Product2}
-                                              className="img-fluid  lazyload"
-                                              alt=""
-                                            />
-                                          </div>
-                                        </div>
-
-                                        <div className="people-comment">
-                                          <a
-                                            className="name"
-                                            href="javascript:void(0)"
-                                          >
-                                            Gabrielle
-                                          </a>
-                                          <div className="date-time">
-                                            <h6 className="text-content">
-                                              21 May, 2022 at 05.52 PM
-                                            </h6>
-
-                                            <div className="product-rating">
-                                              <ul className="rating">
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                          </div>
-
-                                          <div className="reply">
-                                            <p>
-                                              Biscuit chupa chups gummies powder
-                                              I love sweet pudding jelly beans.
-                                              Lemon drops marzipan apple pie
-                                              gingerbread macaroon croissant
-                                              cotton candy pastry wafer. Carrot
-                                              cake halvah I love tart caramels
-                                              pudding icing chocolate gummi
-                                              bears. Gummi bears danish cotton
-                                              candy muffin marzipan caramels
-                                              awesome feel.{" "}
-                                              <a href="javascript:void(0)">
-                                                Reply
-                                              </a>
-                                            </p>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </li>
-                                  </ul>
+                                <div className="col-12">
+                                  <div className="form-floating theme-form-floating">
+                                    <textarea
+                                      className="form-control"
+                                      placeholder="Leave a comment here"
+                                      id="floatingTextarea2"
+                                    ></textarea>
+                                    <label for="floatingTextarea2">
+                                      Write Your Comment
+                                    </label>
+                                  </div>
                                 </div>
                               </div>
+                            </div>
+
+                            
+                          </div>
+                        </div>
+                      </div>
+
                             </div>
 
                             <div className="col-xl-6">
@@ -1169,10 +1101,165 @@ const ProductDetail = (props) => {
                             </div>
                           </div>
                         </div>
+                        <div className="col-12">
+                                            <div className="review-title">
+                                                <h4 className="fw-500">Customer questions & answers</h4>
+                                            </div>
+
+                                            <div className="review-people">
+                                                <ul className="review-list">
+                                                    <li>
+                                                        <div className="people-box">
+                                                            <div>
+                                                                <div className="people-image">
+                                                                    <img src="../assets/images/review/1.jpg"
+                                                                        className="img-fluid blur-up lazyload" alt=""/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="people-comment">
+                                                                <a className="name" href="javascript:void(0)">Tracey</a>
+                                                                <div className="date-time">
+                                                                    <h6 className="text-content">14 Jan, 2022 at 12.58 AM
+                                                                    </h6>
+
+                                                                    <div className="product-rating">
+                                                                        <ul className="rating">
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="reply">
+                                                                    <p>Icing cookie carrot cake chocolate cake sugar
+                                                                        plum jelly-o danish. Dragée dragée shortbread
+                                                                        tootsie roll croissant muffin cake I love gummi
+                                                                        bears. Candy canes ice cream caramels tiramisu
+                                                                        marshmallow cake shortbread candy canes
+                                                                        cookie.<a href="javascript:void(0)">Reply</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div className="people-box">
+                                                            <div>
+                                                                <div className="people-image">
+                                                                    <img src="../assets/images/review/1.jpg"
+                                                                        className="img-fluid blur-up lazyload" alt=""/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="people-comment">
+                                                                <a class="name" href="javascript:void(0)">Olivia</a>
+                                                                <div className="date-time">
+                                                                    <h6 className="text-content">01 May, 2022 at 08.31 AM
+                                                                    </h6>
+                                                                    <div className="product-rating">
+                                                                        <ul className="rating">
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="reply">
+                                                                    <p>Tootsie roll cake danish halvah powder cake.
+                                                                        Tootsie roll candy marshmallow cookie brownie
+                                                                        apple pie pudding brownie chocolate bar. Jujubes
+                                                                        gummi bears I love powder danish oat cake tart
+                                                                        croissant.<a href="javascript:void(0)">Reply</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+
+                                                    <li>
+                                                        <div className="people-box">
+                                                            <div>
+                                                                <div className="people-image">
+                                                                    <img src="../assets/images/review/1.jpg"
+                                                                        className="img-fluid blur-up lazyload" alt=""/>
+                                                                </div>
+                                                            </div>
+
+                                                            <div className="people-comment">
+                                                                <a className="name" href="javascript:void(0)">Gabrielle</a>
+                                                                <div className="date-time">
+                                                                    <h6 className="text-content">21 May, 2022 at 05.52 PM
+                                                                    </h6>
+
+                                                                    <div className="product-rating">
+                                                                        <ul className="rating">
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star" className="fill"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                            <li>
+                                                                                <i data-feather="star"></i>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+
+                                                                <div className="reply">
+                                                                    <p>Biscuit chupa chups gummies powder I love sweet
+                                                                        pudding jelly beans. Lemon drops marzipan apple
+                                                                        pie gingerbread macaroon croissant cotton candy
+                                                                        pastry wafer. Carrot cake halvah I love tart
+                                                                        caramels pudding icing chocolate gummi bears.
+                                                                        Gummi bears danish cotton candy muffin marzipan
+                                                                        caramels awesome feel. <a
+                                                                            href="javascript:void(0)">Reply</a>
+                                                                    </p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </div>
                       </Tab>
                     </Tabs>
-
-                    <div className="tab-content custom-tab" id="myTabContent">
+                    <div className="tab-content custom-tab" id="myTabContent"> 
                       {/* <div className="tab-pane fade show active" id="description" role="tabpanel"
                                                 aria-labelledby="description-tab">
                                                 <div className="product-description">
@@ -1422,7 +1509,7 @@ const ProductDetail = (props) => {
                               </div>
                             </div>
 
-                            <div className="col-xl-6">
+                            {/* <div className="col-xl-6">
                               <div className="review-title">
                                 <h4 className="fw-500">Add a review</h4>
                               </div>
@@ -1489,9 +1576,9 @@ const ProductDetail = (props) => {
                                   </div>
                                 </div>
                               </div>
-                            </div>
-
-                            <div className="col-12">
+                            </div> */}
+                           
+                            {/* <div className="col-12">
                               <div className="review-title">
                                 <h4 className="fw-500">
                                   Customer questions & answers
@@ -1718,7 +1805,7 @@ const ProductDetail = (props) => {
                                   </li>
                                 </ul>
                               </div>
-                            </div>
+                            </div> */}
                           </div>
                         </div>
                       </div>
@@ -1726,8 +1813,6 @@ const ProductDetail = (props) => {
                   </div>
                 </div>
               </div>
-            </div>
-
             <div className="col-xxl-3 col-xl-4 col-lg-5 d-none d-lg-block wow fadeInUp">
               <div className="right-sidebar-box">
                 {/* <!-- Trending Product --> */}

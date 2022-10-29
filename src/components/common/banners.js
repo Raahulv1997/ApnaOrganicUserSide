@@ -62,7 +62,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                 <div>
                   <img
                     src={BannerBox2}
-                    className="img-fluid bg-img lazyload h-100"
+                    className="img-fluid bg-img lazyload "
                     alt=""
                   />
                 </div>
@@ -129,7 +129,6 @@ const Benners = (props,productPrice,productMRF,name,image) => {
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
-
       <Tabs
         defaultActiveKey="all"
         id="uncontrolled-tab-example myTab"
@@ -184,7 +183,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                   <div className="banner-contain-3 section-b-space section-t-space hover-effect">
                     <img
                       src={Banner1}
-                      className="img-fluid bg-img w-100"
+                      className=" img-flud bg-img w-100"
                       alt=""
                     />
                     <div className="banner-detail p-center text-dark text-center p-0">
@@ -527,7 +526,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
           <div className="row">
             <div className="col-12">
               <div className="banner-contain-3 section-b-space section-t-space hover-effect">
-                <img src={Banner1} className="img-fluid bg-img" alt="" />
+                <img src={Banner1} className="img-fluid bg-img w-100" alt="" />
                 <div className="banner-detail p-center text-dark text-center p-0">
                   <div>
                     <h4 className="ls-expanded text-uppercase theme-color">

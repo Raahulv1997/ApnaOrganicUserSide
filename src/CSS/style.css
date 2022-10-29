@@ -16950,7 +16950,7 @@ header .offcanvas-backdrop {
         right: unset;
         width: 100%;
         margin-top: 12px;
-        color: var(--theme-color);
+        /* color: var(--theme-color); */
         border-radius: 5px;
         border: 1px solid var(--theme-color)
     }
@@ -24896,6 +24896,7 @@ header .offcanvas-backdrop {
 
 .product-section .right-box-contain .product-packege .select-packege {
     display: -webkit-box;
+    padding-left: 0px;
     display: -ms-flexbox;
     display: flex;
     -ms-flex-wrap: wrap;
@@ -25051,7 +25052,7 @@ header .offcanvas-backdrop {
     -webkit-box-align: center;
     -ms-flex-align: center;
     align-items: center;
-    color: #777
+    color: white
 }
 
 .product-section .right-box-contain .buy-box a .feather {
