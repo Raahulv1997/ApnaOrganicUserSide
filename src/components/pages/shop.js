@@ -406,11 +406,11 @@ const Shop=(props)=> {
 
                                 <div className="top-filter-menu">
                                     <div className="category-dropdown">
-                                        <h5 className="text-content">Sort By :</h5>
+                                        <h4 className="text-content">Sort By :</h4>
                                         <Dropdown>
-                                        <Dropdown.Toggle variant="white" id="dropdown-basic">
+                                        <Dropdown.Toggle variant="light" id="dropdown-basic">
                                         Most Popular
-                                        <i className="fa-solid fa-angle-down"></i>
+                                        {/* <i className="fa-solid fa-angle-down"></i> */}
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
                                           <Dropdown.Item href="javascript:void(0)">Popularity</Dropdown.Item>

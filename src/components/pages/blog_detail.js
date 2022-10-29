@@ -135,14 +135,14 @@ const BlogDetail = () => {
                                 Category
                                 </Accordion.Header>
                                 <Accordion.Body>
-                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse collapse show"
+                                <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingTwo">
-                                    <div class="accordion-body p-0">
-                                        <div class="category-list-box">
+                                    <div className="accordion-body p-0">
+                                        <div className="category-list-box">
                                             <ul>
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Latest Recipes</h5>
                                                             <span>10</span>
                                                         </div>
@@ -151,7 +151,7 @@ const BlogDetail = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Diet Food</h5>
                                                             <span>6</span>
                                                         </div>
@@ -160,7 +160,7 @@ const BlogDetail = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Low calorie Items</h5>
                                                             <span>8</span>
                                                         </div>
@@ -169,7 +169,7 @@ const BlogDetail = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Cooking Method</h5>
                                                             <span>9</span>
                                                         </div>
@@ -178,7 +178,7 @@ const BlogDetail = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Dairy Free</h5>
                                                             <span>12</span>
                                                         </div>
@@ -187,7 +187,7 @@ const BlogDetail = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Vegetarian Food</h5>
                                                             <span>10</span>
                                                         </div>
@@ -206,10 +206,10 @@ const BlogDetail = () => {
                                 Product Tags
                                 </Accordion.Header>
                                 <Accordion.Body>
-                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse collapse show"
+                                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingThree">
-                                    <div class="accordion-body pt-0">
-                                        <div class="product-tags-box">
+                                    <div className="accordion-body pt-0">
+                                        <div className="product-tags-box">
                                             <ul>
 
                                                 <li>
@@ -256,62 +256,62 @@ const BlogDetail = () => {
                                 Trending Products
                                 </Accordion.Header>
                                 <Accordion.Body>
-                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse collapse show"
+                                <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingFour">
-                                    <div class="accordion-body">
-                                        <ul class="product-list product-list-2 border-0 p-0">
+                                    <div className="accordion-body">
+                                        <ul className="product-list product-list-2 border-0 p-0">
                                             <li>
-                                                <div class="offer-product">
-                                                    <a href="shop-left-sidebar.html" class="offer-image">
+                                                <div className="offer-product">
+                                                    <a href="shop-left-sidebar.html" className="offer-image">
                                                         <img src={veg23}
-                                                          class=" lazyload" alt=""/>
+                                                          className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="shop-left-sidebar.html">
-                                                                <h6 class="name">Meatigo Premium Goat Curry</h6>
+                                                                <h6 className="name">Meatigo Premium Goat Curry</h6>
                                                             </a>
                                                             <span>450 G</span>
-                                                            <h6 class="price theme-color">$ 70.00</h6>
+                                                            <h6 className="price theme-color">$ 70.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
                                             <li>
-                                                <div class="offer-product">
-                                                    <a href="shop-left-sidebar.html" class="offer-image">
+                                                <div className="offer-product">
+                                                    <a href="shop-left-sidebar.html" className="offer-image">
                                                         <img src={veg24}
                                                             class=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="shop-left-sidebar.html">
-                                                                <h6 class="name">Dates Medjoul Premium Imported</h6>
+                                                                <h6 className="name">Dates Medjoul Premium Imported</h6>
                                                             </a>
                                                             <span>450 G</span>
-                                                            <h6 class="price theme-color">$ 40.00</h6>
+                                                            <h6 className="price theme-color">$ 40.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
-                                            <li class="mb-0">
-                                                <div class="offer-product">
-                                                    <a href="shop-left-sidebar.html" class="offer-image">
+                                            <li className="mb-0">
+                                                <div className="offer-product">
+                                                    <a href="shop-left-sidebar.html" className="offer-image">
                                                         <img src={veg26}
-                                                            class=" lazyload" alt=""/>
+                                                            className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="shop-left-sidebar.html">
-                                                                <h6 class="name">Apple Red Premium Imported</h6>
+                                                                <h6 className="name">Apple Red Premium Imported</h6>
                                                             </a>
                                                             <span>1 KG</span>
-                                                            <h6 class="price theme-color">$ 80.00</h6>
+                                                            <h6 className="price theme-color">$ 80.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -630,8 +630,8 @@ const BlogDetail = () => {
                         </div>
                     </div>
 
-                    <div class="blog-detail-contain">
-                        <p><span class="first">S</span> hotgun approach message the initiative so can I just chime in
+                    <div className="blog-detail-contain">
+                        <p><span className="first">S</span> hotgun approach message the initiative so can I just chime in
                             on that one. Make sure to include in your wheelhouse bells and whistles, and touch base
                             slow-walk our commitment nor what's the status on the deliverables for eow?. Create spaces
                             to explore whatâ€™s next commitment to the cause , or UI, for get buy-in but draw a line in
@@ -664,7 +664,7 @@ const BlogDetail = () => {
                             expectations,
                             on-brand but completeley fresh we can't hear you.</p>
 
-                        <div class="blog-details-quote">
+                        <div className="blog-details-quote">
                             <h3>Adipisicing elit Qui ipsam natus aspernatur quaerat impedit eveniet ipsum dolor</h3>
                             <h5>- Denny Dose</h5>
                         </div>
@@ -678,7 +678,7 @@ const BlogDetail = () => {
                             new version clean and sexy. Back of the net we need a recap by eod, cob or whatever comes
                             first for we need evergreen content.</p>
 
-                        <p class="mb-0">We need to harvest synergy effects land it in region nor time to open the
+                        <p className="mb-0">We need to harvest synergy effects land it in region nor time to open the
                             kimono, but we need to touch base off-line before we fire the new ux experience. Moving the
                             goalposts. Lean into that problem we need to get all stakeholders up to speed and in the
                             right place. Get all your ducks in a row this proposal is a win-win situation which will
@@ -690,29 +690,29 @@ const BlogDetail = () => {
                             meeting at 2:30 today.</p>
                     </div>
 
-                    <div class="comment-box overflow-hidden">
-                        <div class="leave-title">
+                    <div className="comment-box overflow-hidden">
+                        <div className="leave-title">
                             <h3>Comments</h3>
                         </div>
 
-                        <div class="user-comment-box">
+                        <div className="user-comment-box">
                             <ul>
                                 <li>
-                                    <div class="user-box border-color">
-                                        <div class="reply-button">
-                                            <i class="fa-solid fa-reply"></i>
-                                            <span class="theme-color">Reply</span>
+                                    <div className="user-box border-color">
+                                        <div className="reply-button">
+                                            <i className="fa-solid fa-reply"></i>
+                                            <span className="theme-color">Reply</span>
                                         </div>
-                                        <div class="user-iamge">
+                                        <div className="user-iamge">
                                             <img src={user1}
-                                                class="img-fluid  lazyload" alt=""/>
-                                            <div class="user-name">
+                                                className="img-fluid  lazyload" alt=""/>
+                                            <div className="user-name">
                                                 <h6>30 Jan, 2022</h6>
-                                                <h5 class="text-content">Glenn Greer</h5>
+                                                <h5 className="text-content">Glenn Greer</h5>
                                             </div>
                                         </div>
 
-                                        <div class="user-contain">
+                                        <div className="user-contain">
                                             <p>"This proposal is a win-win situation which will cause a stellar paradigm
                                                 shift, and produce a multi-fold increase in deliverables a better
                                                 understanding"</p>
@@ -721,21 +721,21 @@ const BlogDetail = () => {
                                 </li>
 
                                 <li>
-                                    <div class="user-box border-color">
-                                        <div class="reply-button">
-                                            <i class="fa-solid fa-reply"></i>
-                                            <span class="theme-color">Reply</span>
+                                    <div className="user-box border-color">
+                                        <div className="reply-button">
+                                            <i className="fa-solid fa-reply"></i>
+                                            <span className="theme-color">Reply</span>
                                         </div>
-                                        <div class="user-iamge">
+                                        <div className="user-iamge">
                                             <img src={user2}
-                                                class="img-fluid  lazyload" alt=""/>
-                                            <div class="user-name">
+                                                className="img-fluid  lazyload" alt=""/>
+                                            <div className="user-name">
                                                 <h6>30 Jan, 2022</h6>
-                                                <h5 class="text-content">Glenn Greer</h5>
+                                                <h5 className="text-content">Glenn Greer</h5>
                                             </div>
                                         </div>
 
-                                        <div class="user-contain">
+                                        <div className="user-contain">
                                             <p>"Yeah, I think maybe you do. Right, gimme a Pepsi free. Of course, the
                                                 Enchantment Under The Sea Dance they're supposed to go to this, that's
                                                 where they kiss for the first time. You'll find out. Are you sure about
@@ -744,22 +744,22 @@ const BlogDetail = () => {
                                     </div>
                                 </li>
 
-                                <li class="li-padding">
-                                    <div class="user-box">
-                                        <div class="reply-button">
-                                            <i class="fa-solid fa-reply"></i>
-                                            <span class="theme-color">Reply</span>
+                                <li>
+                                    <div className="user-box">
+                                        <div className="reply-button">
+                                            <i className="fa-solid fa-reply"></i>
+                                            <span className="theme-color">Reply</span>
                                         </div>
-                                        <div class="user-iamge">
+                                        <div className="user-iamge">
                                             <img src={user3}
-                                                class="img-fluid  lazyload" alt=""/>
-                                            <div class="user-name">
+                                                className="img-fluid  lazyload" alt=""/>
+                                            <div className="user-name">
                                                 <h6>30 Jan, 2022</h6>
-                                                <h5 class="text-content">Glenn Greer</h5>
+                                                <h5 className="text-content">Glenn Greer</h5>
                                             </div>
                                         </div>
 
-                                        <div class="user-contain">
+                                        <div className="user-contain">
                                             <p>"Cheese slices goat cottage cheese roquefort cream cheese pecorino cheesy
                                                 feet when the cheese comes out everybody's happy"</p>
                                         </div>
@@ -769,55 +769,55 @@ const BlogDetail = () => {
                         </div>
                     </div>
 
-                    <div class="leave-box">
-                        <div class="leave-title mt-0">
+                    <div className="leave-box">
+                        <div className="leave-title mt-0">
                             <h3>Leave Comment</h3>
                         </div>
 
-                        <div class="leave-comment">
-                            <div class="comment-notes">
-                                <p class="text-content mb-4">Your email address will not be published. Required fields
+                        <div className="leave-comment">
+                            <div className="comment-notes">
+                                <p className="text-content mb-4">Your email address will not be published. Required fields
                                     are marked</p>
                             </div>
-                            <div class="row g-3">
-                                <div class="col-xxl-4 col-lg-12 col-sm-6">
-                                    <div class="blog-input">
-                                        <input type="text" class="form-control" id="exampleFormControlInput1"
+                            <div className="row g-3">
+                                <div className="col-xxl-4 col-lg-12 col-sm-6">
+                                    <div className="blog-input">
+                                        <input type="text" className="form-control" id="exampleFormControlInput1"
                                             placeholder="Full Name"/>
                                     </div>
                                 </div>
 
-                                <div class="col-xxl-4 col-lg-12 col-sm-6">
-                                    <div class="blog-input">
-                                        <input type="email" class="form-control" id="exampleFormControlInput2"
+                                <div className="col-xxl-4 col-lg-12 col-sm-6">
+                                    <div className="blog-input">
+                                        <input type="email" className="form-control" id="exampleFormControlInput2"
                                             placeholder="Enter Email Address"/>
                                     </div>
                                 </div>
 
-                                <div class="col-xxl-4 col-lg-12 col-sm-6">
-                                    <div class="blog-input">
-                                        <input type="url" class="form-control" id="exampleFormControlInput3"
+                                <div className="col-xxl-4 col-lg-12 col-sm-6">
+                                    <div className="blog-input">
+                                        <input type="url" className="form-control" id="exampleFormControlInput3"
                                             placeholder="Enter URL"/>
                                     </div>
                                 </div>
 
-                                <div class="col-12">
-                                    <div class="blog-input">
-                                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="4"
+                                <div className="col-12">
+                                    <div className="blog-input">
+                                        <textarea className="form-control" id="exampleFormControlTextarea1" rows="4"
                                             placeholder="Comments"></textarea>
                                     </div>
                                 </div>
                             </div>
 
-                            <div class="form-check d-flex mt-4 p-0">
-                                <input class="checkbox_animated" type="checkbox" value="" id="flexCheckDefault"/>
-     /                           <label class="form-check-label text-content" for="flexCheckDefault">
-                                    <span class="color color-1"> Save my name, email, and website in this
+                            <div className="form-check d-flex mt-4 p-0">
+                                <input className="checkbox_animated" type="checkbox" value="" id="flexCheckDefault"/>
+     /                           <label className="form-check-label text-content" for="flexCheckDefault">
+                                    <span className="color color-1"> Save my name, email, and website in this
                                         browser for the next time I comment.</span>
                                 </label>
                             </div>
 
-                            <button class="btn btn-animation ms-xxl-auto mt-xxl-0 mt-3 btn-md fw-bold">Post
+                            <button className="btn btn-animation ms-xxl-auto mt-xxl-0 mt-3 btn-md fw-bold">Post
                                 Comment</button>
                         </div>
                     </div>
