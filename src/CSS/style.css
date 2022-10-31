@@ -2637,6 +2637,11 @@ input[type=number]::-webkit-outer-spin-button {
 .product-section-box .custom-tab .nav-desh .desh-title {
     margin-bottom: 8px
 }
+.product-section-box .nav-desh p{
+    line-height: 25px !important;
+    color: #000000a6 !important;
+    font-size: 18px !important;
+}
 
 .product-section-box .custom-tab .nav-desh .desh-title h5 {
     font-weight: 700
@@ -2713,7 +2718,7 @@ input[type=number]::-webkit-outer-spin-button {
     margin-bottom: calc(10px + (18 - 10) * ((100vw - 320px) / (1920 - 320)))
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list {
+ .review-people .review-list {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2731,7 +2736,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 100%
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box {
+ .review-people .review-list li .people-box {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2745,27 +2750,27 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 @media (max-width: 480px) {
-    .product-section-box .custom-tab .review-box .review-people .review-list li .people-box {
+     .review-people .review-list li .people-box {
         display: block
     }
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box:hover .reply a {
+ .review-people .review-list li .people-box:hover .reply a {
     opacity: 1
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-image {
+ .review-people .review-list li .people-box .people-image {
     width: 70px;
     height: 70px
 }
 
 @media (max-width: 480px) {
-    .product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-image {
+     .review-people .review-list li .people-box .people-image {
         margin: 0 auto
     }
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-image img {
+ .review-people .review-list li .people-box .people-image img {
     width: 100%;
     height: 100%;
     border-radius: 10px;
@@ -2776,40 +2781,50 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 @media (max-width: 575px) {
-    .product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-image img {
+     .review-people .review-list li .people-box .people-image img {
         border-radius: 8px
     }
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-comment {
+ .review-people .review-list li .people-box .people-comment {
     padding-left: 15px;
     width: calc(100% - 70px)
 }
+.review-people .review-list li .people-box .people-comment .reply a{
+    color: var(--theme-color);
+    position: absolute;
+    right: 0;
+}
+.review-people .review-list li .people-box .people-comment .reply p{
+    padding-right: 40px;
+}
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-comment .name {
+
+ .review-people .review-list li .people-box .people-comment .name {
     display: block;
     font-weight: 600;
-    font-size: 15px
+    font-size: 15px;
+    color:#0da487
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-comment .name:hover {
+ /* .review-people .review-list li .people-box .people-comment .name:hover {
     color: var(--theme-color)
-}
+} */
 
-[dir="rtl"] .product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-comment {
+[dir="rtl"]  .review-people .review-list li .people-box .people-comment {
     padding-left: unset;
     padding-right: 15px
 }
 
 @media (max-width: 480px) {
-    .product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-comment {
+     .review-people .review-list li .people-box .people-comment {
         padding: 0;
         width: 100%;
         margin-top: 16px
     }
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-comment .date-time {
+ .review-people .review-list li .people-box .people-comment .date-time {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2822,7 +2837,7 @@ input[type=number]::-webkit-outer-spin-button {
     width: 100%
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .people-comment .date-time h6 {
+  .people-box .people-comment .date-time h6 {
     font-size: 13px;
     color: #777;
     margin-top: 1px
@@ -2838,7 +2853,7 @@ input[type=number]::-webkit-outer-spin-button {
     }
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .reply {
+ .review-people .review-list li .people-box .reply {
     margin-top: 9px;
     line-height: 1.6;
     color: #4a5568;
@@ -2857,7 +2872,7 @@ input[type=number]::-webkit-outer-spin-button {
     }
 }
 
-.product-section-box .custom-tab .review-box .review-people .review-list li .people-box .reply a {
+.review-people .review-list li .people-box .reply a {
     position: absolute;
     top: 0;
     right: 0;
@@ -2906,10 +2921,10 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .product-section-box .custom-tab .review-box .rating-box ul li {
-    width: 100%
+    width: 100%;
 }
 
-.product-section-box .custom-tab .review-box .rating-box ul li .rating-list {
+ .rating-box ul li .rating-list {
     display: -webkit-box;
     display: -ms-flexbox;
     display: flex;
@@ -2922,7 +2937,8 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .product-section-box .custom-tab .review-box .rating-box ul li .rating-list h5 {
-    white-space: nowrap
+    white-space: nowrap;
+    
 }
 
 .product-section-box .custom-tab .review-box .rating-box ul li .rating-list .progress {
@@ -2930,8 +2946,9 @@ input[type=number]::-webkit-outer-spin-button {
     border-radius: 3px
 }
 
-.product-section-box .custom-tab .review-box .rating-box ul li .rating-list .progress .progress-bar {
-    background: var(--theme-color2)
+ .rating-list .progress .progress-bar {
+    background: #0da487;
+    
 }
 
 .product-section-box .custom-tab .info-table {
@@ -3297,7 +3314,8 @@ input[type=number]::-webkit-outer-spin-button {
 
     .arrow-slider-2 .slick-prev,
     .arrow-slider-2 .slick-next {
-        top: -37px
+        top: -37px;
+        
     }
 }
 
@@ -20292,6 +20310,10 @@ header .offcanvas-backdrop {
     -ms-flex-wrap: wrap;
     flex-wrap: wrap;
     gap: 20px
+} 
+.accordion-item .accordion-collapse .accordion-body .category-list-box .progress {
+   
+    --bs-progress-bar-bg: #28995f;
 }
 
 [dir="rtl"] .blog-section .left-sidebar-box .left-accordion-box .accordion-item .accordion-collapse .accordion-body .category-list-box ul {
@@ -25356,4 +25378,5 @@ header .offcanvas-backdrop {
     float:right ;
     
 }
+
 /*# sourceMappingURL=style.css.map */
