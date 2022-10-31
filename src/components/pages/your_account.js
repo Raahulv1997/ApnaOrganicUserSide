@@ -2474,7 +2474,7 @@ function Account() {
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row p-3 m-0">
+          <div className="row p-md-3 m-0">
             <div className="col-12">
               <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
                 <Form.Label>Full Name</Form.Label>

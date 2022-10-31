@@ -45,34 +45,19 @@ const Footer=()=> {
                     </a>
                   </li>
                 </ul>
-
-                <div className="social-app mt-sm-4 mt-3 mb-4">
-                  <ul>
-                    <li>
-                      <a href="https://play.google.com/store/apps" target="_blank">
-                        <img src="https://themes.pixelstrap.com/Apna Organic/assets/images/playstore.svg" className="lazyload" alt="" />
-                      </a>
-                    </li>
-                    <li>
-                      <a href="https://www.apple.com/in/app-store/" target="_blank">
-                        <img src="https://themes.pixelstrap.com/Apna Organic/assets/images/appstore.svg" className="lazyload" alt="" />
-                      </a>
-                    </li>
-                  </ul>
-                </div>
               </div>
 
               <div className="col-xxl-2 col-xl-4 col-sm-6">
                 <div className="footer-title">
                   <h4>About Apna Organic</h4>
                 </div>
-                <ul className="footer-list footer-contact mb-sm-0 mb-3">
+                <ul className="footer-list footer-contact mb-sm-0 mb-3 p-0">
                   <li>
                     <Link to="/aboutus" className="footer-contain-2">
                       <i className="fa-solid fa-chevron-right"></i>About Us</Link>
                   </li>
                   <li>
-                    <Link to="/contactus" className="footer-contain-2">
+                    <Link  to="/contactus" className="footer-contain-2">
                       <i className="fa-solid fa-chevron-right"></i>Contact Us</Link>
                   </li>
                   <li>
@@ -94,7 +79,7 @@ const Footer=()=> {
                 <div className="footer-title">
                   <h4>Useful Link</h4>
                 </div>
-                <ul className="footer-list footer-contact mb-sm-0 mb-3">
+                <ul className="footer-list footer-contact mb-sm-0 mb-3 p-0">
                   <li>
                     <Link to="/your_orders" className="footer-contain-2">
                       <i className="fa-solid fa-chevron-right"></i>Your Order</Link>
@@ -122,7 +107,7 @@ const Footer=()=> {
                 <div className="footer-title">
                   <h4>Categories</h4>
                 </div>
-                <ul className="footer-list footer-contact mb-sm-0 mb-3">
+                <ul className="footer-list footer-contact mb-sm-0 mb-3 p-0">
                   <li>
                     <a href="vegetables-demo.html" className="footer-contain-2">
                       <i className="fa-solid fa-chevron-right"></i>Fresh Vegetables</a>
@@ -150,7 +135,7 @@ const Footer=()=> {
                 <div className="footer-title">
                   <h4>Store infomation</h4>
                 </div>
-                <ul className="footer-address footer-contact">
+                <ul className="footer-address footer-contact p-0">
                   <li>
                     <a href="javascript:void(0)">
                       <div className="inform-box flex-start-box">
