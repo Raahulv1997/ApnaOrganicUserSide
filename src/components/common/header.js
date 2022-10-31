@@ -928,13 +928,13 @@ const Header = () => {
                     <div className="offcanvas-body">
                       <ul className="navbar-nav">
                         <li className="nav-item dropdown dropdown-mega">
-                          <a
+                          <Link
                             className="nav-link dropdown-toggle ps-xl-2 ps-0"
-                            href="javascript:void(0)"
+                            to="/"
                             data-bs-toggle="dropdown"
                           >
                             Home
-                          </a>
+                          </Link>
 
                           <div className="dropdown-menu dropdown-menu-2 dropdown-image dropdown-menu-left">
                             <div className="dropdown-column">

@@ -53,7 +53,7 @@ const Aboutus=()=>{
                                     over 100 new products dropping on the monhtly, bringing you the latest looks for
                                     less.</p>
 
-                                <ul className="delivery-box">
+                                <ul className="delivery-box p-0">
                                     <li>
                                         <div className="delivery-box">
                                             <div className="delivery-icon">
@@ -162,7 +162,7 @@ const Aboutus=()=>{
         </div>
     </section>
     {/* <!-- Client Section End --> */}
-    {/* <!-- Team Section Start --> */}
+    {/* <!-- Team Section Start --> 
     <section className="team-section section-lg-space">
         <div className="container-fluid-lg">
             <div className="about-us-title text-center">
@@ -413,6 +413,7 @@ const Aboutus=()=>{
             </div>
         </div>
     </section>
+    */}
     {/* <!-- Team Section End --> */}
     {/* <!-- Review Section Start --> */}
     <section className="review-section section-lg-space">

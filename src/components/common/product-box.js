@@ -19,7 +19,7 @@ function ProductBox({name,image,productPrice, productMRF}) {
         setCount(count);
       }
     return (
-        <div className="product-box-4">
+        <div className="product-box-4 mt-2">
             <div className="product-image">
                 <div className="label-flex">
                     <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
@@ -46,7 +46,7 @@ function ProductBox({name,image,productPrice, productMRF}) {
             </div>
 
             <div className="product-detail">
-                <ul className="rating ">
+                <ul className="rating p-0">
                     <li color='#ffb321'>
                         <FaStar icon="star" className="feather fill" fill={'#ffb321'} />
                     </li>
@@ -68,7 +68,7 @@ function ProductBox({name,image,productPrice, productMRF}) {
                 </a>
                 <h5 className="price theme-color">{"₹"+productPrice}<del>{"₹"+productMRF}</del></h5>
                 <div className="price-qty">
-                    <div className="counter-number d-md-block d-sm-none">
+                    <div className="counter-number d-md-block d-none">
                         <div className="counter">
                             <div className="qty-left-minus" onClick={decrementCount}  data-type="minus" data-field="">
                                 <i className="fa-regular fa-minus"></i>
