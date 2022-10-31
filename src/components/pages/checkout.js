@@ -25,7 +25,9 @@ const Checkout = (props) => {
               <Row>
                 <div className="col-xxl-3 col-lg-4">
                   <Nav className="flex-column custom-navtab">
-                    <Nav.Item>
+                    <div className="row">
+                      <div className="col-6 d-md-flex">
+                      <Nav.Item >
                       <Nav.Link eventKey="first">
                         <li className="nav-link" role="presentation">
                           <div
@@ -52,6 +54,9 @@ const Checkout = (props) => {
                         </li>
                       </Nav.Link>
                     </Nav.Item>
+                      </div>
+                    </div>
+                   
                     <Nav.Item>
                       <Nav.Link eventKey="second">
                         <li className="nav-link" role="presentation">
