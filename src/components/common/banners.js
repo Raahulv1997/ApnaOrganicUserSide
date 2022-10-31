@@ -147,7 +147,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                   role="tabpanel"
                   aria-labelledby="all-tab"
                 >
-                  <div className="row w-100">
+                  <div className="row w-100 ms-0">
                     {product.map((product) => {
                       return (
                         <div
@@ -225,7 +225,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               role="tabpanel"
               aria-labelledby="all-tab"
             >
-              <div className="row g-8 w-100">
+              <div className="row w-100 ms-0">
                 {product.map((product) => {
                   return (
                     <div
@@ -261,7 +261,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               role="tabpanel"
               aria-labelledby="all-tab"
             >
-              <div className="row g-8 w-100">
+              <div className="row w-100 ms-0">
                 {product.map((product) => {
                   return (
                     <div
@@ -297,7 +297,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               role="tabpanel"
               aria-labelledby="all-tab"
             >
-              <div className="row g-8 w-100">
+              <div className="row w-100 ms-0">
                 {product.map((product) => {
                   return (
                     <div
@@ -333,7 +333,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               role="tabpanel"
               aria-labelledby="all-tab"
             >
-              <div className="row g-8 w-100">
+              <div className="row w-100 ms-0">
                 {product.map((product) => {
                   return (
                     <div
@@ -427,7 +427,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               role="tabpanel"
               aria-labelledby="all-tab"
             >
-              <div className="row g-8 w-100">
+              <div className="row w-100 ms-0">
                 {product.map((product)=>{
                   return(
                     <div key={product.id} className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
@@ -498,7 +498,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               role="tabpanel"
               aria-labelledby="all-tab"
             >
-              <div className="row g-8 w-100">
+              <div className="row w-100 ms-0">
                 {product.map((product) => {
                   return (
                     <div
