@@ -16903,7 +16903,8 @@ header .offcanvas-backdrop {
 
 @media (max-width: 480px) {
     .product-box-4 .product-detail a .name {
-        width: 100%
+        width: 100%;
+        font-size: 14px;
     }
 }
 
@@ -16916,7 +16917,8 @@ header .offcanvas-backdrop {
     .product-box-4 .product-detail .price {
         display: -webkit-box;
         display: -ms-flexbox;
-        display: flex
+        display: flex;
+        font-size: 16px;
     }
 }
 

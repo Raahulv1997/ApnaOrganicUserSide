@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React, { Fragment,useState } from 'react'
 import ProductBox from '../common/product-box'
 import Footer from '../common/footer'
 import Header from '../common/header'
@@ -9,6 +9,11 @@ import Accordion from 'react-bootstrap/Accordion';
 import Dropdown from 'react-bootstrap/Dropdown';
 import '../../CSS/style.css'
 const Shop=(props)=> {
+    const [click, setclick] = useState(false);
+    const side_bar = () => {
+      setclick(true);
+    };
+
     var product=data.product
     return (
         <Fragment>
@@ -19,9 +24,16 @@ const Shop=(props)=> {
                 <div className="container-fluid-lg">
                     <div className="row">
                         <div className="col-xxl-3 col-lg-4 wow fadeInUp">
-                            <div className="left-box">
+                            
+                            <div
+                            className={
+                              click == true
+                                ? "left-box show"
+                                : "left-box"
+                            }
+                          >
                                 <div className="shop-left-sidebar">
-                                    <div className="back-button">
+                                    <div className="back-button" onClick={() => setclick(false)}>
                                         <h3><i className="fa-solid fa-arrow-left"></i> Back</h3>
                                     </div>
                                     <div className="filter-category">
@@ -399,7 +411,7 @@ const Shop=(props)=> {
                         <div className="col-xxl-9 col-lg-8 wow fadeInUp">
                             <div className="show-button">
                                 <div className="filter-button-group mt-0">
-                                    <div className="filter-button d-inline-block d-lg-none">
+                                    <div className="filter-button d-inline-block d-lg-none" onClick={side_bar}>
                                         <a><i className="fa-solid fa-filter"></i> Filter Menu</a>
                                     </div>
                                 </div>
