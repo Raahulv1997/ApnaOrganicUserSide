@@ -25332,6 +25332,16 @@ header .offcanvas-backdrop {
         -ms-flex-pack: center;
         justify-content: center
     }
+    .banner-section .banner-contain-3 img{
+        height: 200px;
+    }
+    .home-section-2 .ratio_medium img{
+        width: 100%;
+        height: 436px;
+    }
+    section{
+        padding-top: calc(4px + (50 - 30) * ((100vw - 320px) / (1920 - 320)));
+    }
 }
 
 [dir="rtl"] .product-section .right-box-contain .paymnet-option ul {
