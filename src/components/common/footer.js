@@ -12,13 +12,13 @@ const Footer=()=> {
         <div className="container-fluid-lg">
           <div className="main-footer">
             <div className="row g-md-4 gy-sm-5 gy-2">
-              <div className="col-xxl-3 col-xl-4 col-sm-6">
+              <div className="col-xxl-3 col-xl-12 col-sm-12">
                 <a href="index.html" className="foot-logo">
                   <img src={Logo} className="img-fluid" alt="" />
                 </a>
                 <p className="information-text">it is a long established fact that a reader will be distracted
                   by the readable content.</p>
-                <ul className="social-icon">
+                <ul className="social-icon p-0">
                   <li>
                     <a href="www.facebook.html">
                       <FaFacebookF/>
@@ -47,7 +47,7 @@ const Footer=()=> {
                 </ul>
               </div>
 
-              <div className="col-xxl-2 col-xl-4 col-sm-6">
+              <div className="col-xxl-2 col-xl-6 col-sm-6">
                 <div className="footer-title">
                   <h4>About Apna Organic</h4>
                 </div>
@@ -75,7 +75,7 @@ const Footer=()=> {
                 </ul>
               </div>
 
-              <div className="col-xxl-2 col-xl-4 col-sm-6">
+              <div className="col-xxl-2 col-xl-6 col-sm-6">
                 <div className="footer-title">
                   <h4>Useful Link</h4>
                 </div>
@@ -103,7 +103,7 @@ const Footer=()=> {
                 </ul>
               </div>
 
-              <div className="col-xxl-2 col-xl-4 col-sm-6">
+              <div className="col-xxl-2 col-xl-6 col-sm-6">
                 <div className="footer-title">
                   <h4>Categories</h4>
                 </div>
@@ -131,7 +131,7 @@ const Footer=()=> {
                 </ul>
               </div>
 
-              <div className="col-xxl-3 col-xl-4 col-sm-6">
+              <div className="col-xxl-3 col-xl-6 col-sm-6">
                 <div className="footer-title">
                   <h4>Store infomation</h4>
                 </div>
