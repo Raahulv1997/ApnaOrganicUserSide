@@ -25,7 +25,7 @@ const Checkout = (props) => {
               <Row>
                 <div className="col-xxl-3 col-lg-4">
                   <Nav className="flex-column custom-navtab">
-                    <div className="row my-md-0 my-4">
+                    <div className="row my-md-0 my-4 mx-0">
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
                           <Nav.Link eventKey="first">
@@ -335,7 +335,7 @@ const Checkout = (props) => {
                               href="./home"
                               className="btn btn-light shopping-button text-dark"
                             >
-                              <i className="fa-solid fa-arrow-left-long ms-0"></i>
+                              <i className="fa-solid fa-arrow-left-long me-3"></i>
                               Continue Shopping
                             </a>
                           </li>
