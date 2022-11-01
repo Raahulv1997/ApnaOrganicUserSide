@@ -240,9 +240,28 @@ const ProductDetail = (props) => {
                         >
                           Add To Cart
                         </button>
+                      </div> 
+                      <div className="row ">
+                      <div className="col-6">
+                      <button className="btn">
+                          <a href="wishlist.html">
+                            {/* <i data-feather="heart"></i> */}
+                            <span>Add To Wishlist</span>
+                          </a>
+                        </button>
                       </div>
-                      <div className="buy-box">
-                        <button className="btn btn-dark text-white">
+                      <div className="col-6">
+                      <button className="btn">
+                          <a href="compare.html">
+                            {/* <i data-feather="shuffle"></i> */}
+                            <span>Add To Compare</span>
+                          </a>
+                        </button>
+                      </div>
+                      </div>
+                     
+                      {/* <div className="buy-box">
+                        <button className="btn btn-dark text-white ">
                           <a href="wishlist.html">
                             <i data-feather="heart"></i>
                             <span>Add To Wishlist</span>
@@ -255,7 +274,7 @@ const ProductDetail = (props) => {
                             <span>Add To Compare</span>
                           </a>
                         </button>
-                      </div>
+                      </div> */}
 
                       <div className="pickup-box">
                         <div className="product-title">
