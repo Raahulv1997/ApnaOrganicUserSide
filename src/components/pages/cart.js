@@ -188,7 +188,7 @@ const Cart = (props) => {
                 <div className="summery-contain">
                   <div className="coupon-cart">
                     <h6 className="text-content mb-2">Coupon Apply</h6>
-                    <div className="mb-3 coupon-box input-group">
+                    <div className="mb-3  coupon-box input-group">
                       <input
                         type="email"
                         className="form-control"

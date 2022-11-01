@@ -10,7 +10,7 @@ const Login=()=>{
     return (
         <Fragment>
             <Header />
-            <Breadcumb pageName={'Login'} pageTitle={'Login'} />
+            <Breadcumb pageName={'Login'} pageTitle={'Login'} pageHref={"/"} />
             {/* <!-- log in section start --> */}
             <section className="log-in-section background-image-2 section-b-space">
                 <div className="container-fluid-lg w-100">
@@ -32,17 +32,64 @@ const Login=()=>{
                                     <form className="row g-4">
                                         <div className="col-12">
                                             <div className="form-floating theme-form-floating log-in-form">
-                                                <input type="email" className="form-control" id="email" placeholder="Email Address" />
-                                                <label for="email">Email Address</label>
+                                                <input type="email" className="form-control" id="email" placeholder="Your Phone Number" />
+                                                <label for="email">Phone Number</label>
                                             </div>
                                         </div>
 
                                         <div className="col-12">
-                                            <div className="form-floating theme-form-floating log-in-form">
+                                        <div
+                    id="otp"
+                    className="inputs d-flex flex-row justify-content-center"
+                  >
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="first"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="second"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="third"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="fourth"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="fifth"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="sixth"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                  </div>
+                                            {/* <div className="form-floating theme-form-floating log-in-form">
                                                 <input type="password" className="form-control" id="password"
                                                     placeholder="Password" />
                                                 <label for="password">Password</label>
-                                            </div>
+                                            </div> */}
                                         </div>
 
                                         <div className="col-12">

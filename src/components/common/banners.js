@@ -125,7 +125,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
       </section>
 
       {/* <!-- Product Sction Start --> */}
-      {/* <section className="product-section">
+       {/* <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
@@ -356,134 +356,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
       </section>
         </Tab>
       </Tabs>
-      {/* <ul className="nav nav-tabs tab-style-color" id="myTab">
-              <li className="nav-item">
-                <button
-                  className="nav-link btn active"
-                  id="all-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#all"
-                  type="button"
-                >
-                  All
-                </button>
-              </li>
-
-              <li className="nav-item">
-                <button
-                  className="nav-link btn"
-                  id="cooking-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#cooking"
-                  type="button"
-                >
-                  {" "}
-                  Cooking
-                </button>
-              </li>
-
-              <li className="nav-item">
-                <button
-                  className="nav-link btn"
-                  id="fruits-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#fruits"
-                  type="button"
-                >
-                  Fruits & Vegetables
-                </button>
-              </li>
-
-              <li className="nav-item">
-                <button
-                  className="nav-link btn"
-                  id="beverage-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#beverage"
-                  type="button"
-                >
-                  Beverage
-                </button>
-              </li>
-
-              <li className="nav-item">
-                <button
-                  className="nav-link btn"
-                  id="dairy-tab"
-                  data-bs-toggle="tab"
-                  data-bs-target="#dairy"
-                  type="button"
-                >
-                  Dairy
-                </button>
-              </li>
-            </ul> */}
-      {/* </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {product.map((product)=>{
-                  return(
-                    <div key={product.id} className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp">
-                      <ProductBox
-                       image={product.image}
-                       name={product.name}
-                       productPrice={product.productPrice}
-                       productMRF={product.productMRF}
-                       />
-                       <ProductBox
-                       image={product.image}
-                       name={product.name}
-                       productPrice={product.productPrice}
-                       productMRF={product.productMRF}
-                       />
-                </div>
-                  )
-                })}      
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
-      {/* <!-- Product Sction End --> */}
-
-      {/* <!-- Banner Section Start --> */}
-      {/* <section className="banner-section">
-        <div className="container-fluid-lg">
-          <div className="row">
-            <div className="col-12">
-              <div className="banner-contain-3 section-b-space section-t-space hover-effect">
-                <img src={Banner1} className="img-fluid bg-img w-100" alt="" />
-                <div className="banner-detail p-center text-dark text-center p-0">
-                  <div>
-                    <h4 className="ls-expanded text-uppercase theme-color">
-                      Try Our New
-                    </h4>
-                    <h2 className="my-3">
-                      100% Organic Best Quality Best Price
-                    </h2>
-                    <h4 className="text-content fw-300">
-                      Best Apna Organic Food Quality
-                    </h4>
-                    <button
-                      className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
-                      onclick="location.href = 'shop-left-sidebar.html';"
-                    >
-                      Shop Now
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section> */}
+      
       {/* <!-- Product Sction Start --> */}
       <section className="product-section">
         <div className="container-fluid-lg">

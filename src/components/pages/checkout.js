@@ -476,57 +476,6 @@ const Checkout = (props) => {
                           })}
                         </div>
                       </div>
-                      {/* <div className="col-xxl-6 col-lg-12 col-md-6">
-                          <div className="delivery-address-box">
-                            <div>
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="radio"
-                                  name="jack"
-                                  id="flexRadioDefault2"
-                                  checked="checked"
-                                />
-                              </div>
-
-                              <div className="label">
-                                <label>Office</label>
-                              </div>
-
-                              <ul className="delivery-address-detail">
-                                <li>
-                                  <h4 className="fw-500">Jack Jennas</h4>
-                                </li>
-
-                                <li>
-                                  <p className="text-content">
-                                    <span className="text-title">
-                                      Address :
-                                    </span>
-                                    Nakhimovskiy R-N / Lastovaya Ul., bld. 5/A,
-                                    appt. 12
-                                  </p>
-                                </li>
-
-                                <li>
-                                  <h6 className="text-content">
-                                    <span className="text-title">
-                                      Pin Code :
-                                    </span>
-                                    +380
-                                  </h6>
-                                </li>
-
-                                <li>
-                                  <h6 className="text-content mb-0">
-                                    <span className="text-title">Phone :</span>{" "}
-                                    + 380 (0564) 53 - 29 - 68
-                                  </h6>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>  */}
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
@@ -554,13 +503,6 @@ const Checkout = (props) => {
                                 <div className="delivery-category">
                                   <div className="shipment-detail">
                                     <div className="form-check custom-form-check">
-                                      {/* <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="standard"
-                                        id="standard"
-                                        checked
-                                      /> */}
                                       <input
                                         className="form-check-input mt-0"
                                         type="radio"
@@ -632,12 +574,6 @@ const Checkout = (props) => {
                                 <div className="delivery-category">
                                   <div className="shipment-detail">
                                     <div className="form-check custom-form-check">
-                                      {/* <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="standard"
-                                        id="sameDay"
-                                      /> */}
                                       <input
                                         className="form-check-input mt-0"
                                         type="radio"
@@ -709,12 +645,6 @@ const Checkout = (props) => {
                                 <div className="delivery-category">
                                   <div className="shipment-detail">
                                     <div className="form-check mb-0 custom-form-check">
-                                      {/* <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="standard"
-                                        id="future"
-                                      /> */}
                                       <input
                                         className="form-check-input mt-0"
                                         type="radio"
@@ -879,13 +809,6 @@ const Checkout = (props) => {
                                         className="form-check-label"
                                         for="credit"
                                       >
-                                        {/* <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="credit"
-                                        checked
-                                      /> */}
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
@@ -984,110 +907,6 @@ const Checkout = (props) => {
                                   </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
-                              {/* <div
-                                className="accordion-header"
-                                id="flush-headingOne"
-                              >
-                                <div
-                                  className="accordion-button collapsed"
-                                  data-bs-toggle="collapse"
-                                  data-bs-target="#flush-collapseOne"
-                                >
-                                  <div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="credit"
-                                    >
-
-                                       <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="credit"
-                                        checked
-                                      />{" "} 
-                                      Credit or Debit Card
-                                    </label>
-                                  </div>
-                                </div>
-                              </div>  */}
-                              {/* <div
-                                id="flush-collapseOne"
-                                className="accordion-collapse collapse show"
-                                data-bs-parent="#accordionFlushExample"
-                              >
-                                <div className="accordion-body">
-                                  <div className="row g-2">
-                                    <div className="col-12">
-                                      <div className="payment-method">
-                                        <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            id="credit2"
-                                            placeholder="Enter Credit & Debit Card Number"
-                                          />
-                                          <label for="credit2">
-                                            Enter Credit & Debit Card Number
-                                          </label>
-                                        </div>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-xxl-4">
-                                      <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          id="expiry"
-                                          placeholder="Enter Expiry Date"
-                                        />
-                                        <label for="expiry">Expiry Date</label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-xxl-4">
-                                      <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          id="cvv"
-                                          placeholder="Enter CVV Number"
-                                        />
-                                        <label for="cvv">CVV Number</label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-xxl-4">
-                                      <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                        <input
-                                          type="password"
-                                          className="form-control"
-                                          id="password"
-                                          placeholder="Enter Password"
-                                        />
-                                        <label for="password">Password</label>
-                                      </div>
-                                    </div>
-
-                                    <div className="button-group mt-0">
-                                      <ul>
-                                        <li>
-                                          <button className="btn btn-light shopping-button">
-                                            Cancel
-                                          </button>
-                                        </li>
-
-                                        <li>
-                                          <button className="btn btn-animation">
-                                            Use This Card
-                                          </button>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div> */}
                             </div>
 
                             <div className="accordion-item">
@@ -1100,12 +919,6 @@ const Checkout = (props) => {
                                         className="form-check-label"
                                         for="banking"
                                       >
-                                        {/* <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="banking"
-                                      /> */}
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
@@ -1117,11 +930,6 @@ const Checkout = (props) => {
                                     </div>
                                   </Accordion.Header>
                                   <Accordion.Body>
-                                    {/* <div
-                                id="flush-collapseTwo"
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample"
-                              > */}
                                     <div className="accordion-body">
                                       <h5 className="text-uppercase mb-4">
                                         Select Your Bank
@@ -1129,12 +937,6 @@ const Checkout = (props) => {
                                       <div className="row g-2">
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank1"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1152,12 +954,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank2"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1175,12 +971,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank3"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1198,12 +988,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank4"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1221,12 +1005,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank5"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1244,12 +1022,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank6"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1294,177 +1066,9 @@ const Checkout = (props) => {
                                         </div>
                                       </div>
                                     </div>
-                                    {/* </div> */}
                                   </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
-                              {/* <div
-                                className="accordion-header"
-                                id="flush-headingTwo"
-                              > */}
-                              {/* <div
-                                  className="accordion-button collapsed"
-                                  data-bs-toggle="collapse"
-                                  data-bs-target="#flush-collapseTwo"
-                                > */}
-                              {/* <div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="banking"
-                                    >
-                                    <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="banking"
-                                      />{" "}
-                                      Net Banking
-                                    </label>
-                                  </div> */}
-                              {/* </div>
-                              </div> */}
-                              {/* <div
-                                id="flush-collapseTwo"
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample"
-                              >
-                                <div className="accordion-body">
-                                  <h5 className="text-uppercase mb-4">
-                                    Select Your Bank
-                                  </h5>
-                                  <div className="row g-2">
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank1"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank1"
-                                        >
-                                          Industrial & Commercial Bank
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank2"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank2"
-                                        >
-                                          Agricultural Bank
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank3"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank3"
-                                        >
-                                          Bank of America
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank4"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank4"
-                                        >
-                                          Construction Bank Corp.
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank5"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank5"
-                                        >
-                                          HSBC Holdings
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="bank6"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank6"
-                                        >
-                                          JPMorgan Chase & Co.
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-12">
-                                      <div className="select-option">
-                                        <div className="form-floating theme-form-floating">
-                                          <select
-                                            className="form-select theme-form-select"
-                                            aria-label="Default select example"
-                                          >
-                                            <option value="hsbc">
-                                              HSBC Holdings
-                                            </option>
-                                            <option value="loyds">
-                                              Lloyds Banking Group
-                                            </option>
-                                            <option value="natwest">
-                                              Nat West Group
-                                            </option>
-                                            <option value="Barclays">
-                                              Barclays
-                                            </option>
-                                            <option value="other">
-                                              Others Bank
-                                            </option>
-                                          </select>
-                                          <label>Select Other Bank</label>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div> */}
                             </div>
 
                             <div className="accordion-item">
@@ -1476,12 +1080,6 @@ const Checkout = (props) => {
                                         className="form-check-label"
                                         for="wallet"
                                       >
-                                        {/* <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="wallet"
-                                      />{" "} */}
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
@@ -1493,12 +1091,6 @@ const Checkout = (props) => {
                                     </div>
                                   </Accordion.Header>
                                   <Accordion.Body>
-                                    {/* <div
-                                id="flush-collapseThree"
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample"
-                              > */}
-
                                     <div className="accordion-body">
                                       <h5 className="text-uppercase mb-4">
                                         Select Your Wallet
@@ -1510,12 +1102,6 @@ const Checkout = (props) => {
                                               className="form-check-label"
                                               for="amazon"
                                             >
-                                              {/* <input
-                                            className="form-check-input mt-0"
-                                            type="radio"
-                                            name="flexRadioDefault"
-                                            id="amazon"
-                                          />{" "} */}
                                               <input
                                                 className="form-check-input mt-0"
                                                 type="radio"
@@ -1529,12 +1115,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="gpay"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1552,12 +1132,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="airtel"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1575,12 +1149,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="paytm"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1598,12 +1166,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="jio"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1621,12 +1183,6 @@ const Checkout = (props) => {
 
                                         <div className="col-md-6">
                                           <div className="custom-form-check form-check">
-                                            {/* <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="free"
-                                        /> */}
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
@@ -1643,149 +1199,9 @@ const Checkout = (props) => {
                                         </div>
                                       </div>
                                     </div>
-                                    {/* </div> */}
                                   </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
-                              {/* <div
-                                className="accordion-header"
-                                id="flush-headingThree"
-                              > */}
-                              {/* <div
-                                  className="accordion-button collapsed"
-                                  data-bs-toggle="collapse"
-                                  data-bs-target="#flush-collapseThree"
-                                > */}
-                              {/* <div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="wallet"
-                                    >
-                                      <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="wallet"
-                                      />{" "}
-                                      My Wallet
-                                    </label>
-                                  </div> */}
-                              {/* </div>
-                              </div> */}
-                              {/* <div
-                                id="flush-collapseThree"
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample"
-                              >
-                                <div className="accordion-body">
-                                  <h5 className="text-uppercase mb-4">
-                                    Select Your Wallet
-                                  </h5>
-                                  <div className="row">
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <label
-                                          className="form-check-label"
-                                          for="amazon"
-                                        >
-                                          <input
-                                            className="form-check-input mt-0"
-                                            type="radio"
-                                            name="flexRadioDefault"
-                                            id="amazon"
-                                          />{" "}
-                                          Amazon Pay
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="gpay"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="gpay"
-                                        >
-                                          Google Pay
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="airtel"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="airtel"
-                                        >
-                                          Airtel Money
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="paytm"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="paytm"
-                                        >
-                                          Paytm Pay
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="jio"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="jio"
-                                        >
-                                          JIO Money
-                                        </label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <input
-                                          className="form-check-input mt-0"
-                                          type="radio"
-                                          name="flexRadioDefault"
-                                          id="free"
-                                        />
-                                        <label
-                                          className="form-check-label"
-                                          for="free"
-                                        >
-                                          Freecharge
-                                        </label>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div> */}
                             </div>
 
                             <div className="accordion-item">
@@ -1797,12 +1213,6 @@ const Checkout = (props) => {
                                         className="form-check-label"
                                         for="cash"
                                       >
-                                        {/* <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="cash"
-                                      />{" "} */}
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
@@ -1814,11 +1224,6 @@ const Checkout = (props) => {
                                     </div>
                                   </Accordion.Header>
                                   <Accordion.Body>
-                                    {/* <div
-                                id="flush-collapseFour"
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample"
-                              > */}
                                     <div className="accordion-body">
                                       <h5 className="cod-review">
                                         Pay digitally with SMS Pay Link. Cash
@@ -1829,48 +1234,9 @@ const Checkout = (props) => {
                                         </a>
                                       </h5>
                                     </div>
-                                    {/* </div> */}
                                   </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
-                              {/* <div
-                                className="accordion-header"
-                                id="flush-headingFour"
-                              > */}
-                              {/* <div
-                                  className="accordion-button collapsed"
-                                  data-bs-toggle="collapse"
-                                  data-bs-target="#flush-collapseFour"
-                                > */}
-                              {/* <div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="cash"
-                                    >
-                                      <input
-                                        className="form-check-input mt-0"
-                                        type="radio"
-                                        name="flexRadioDefault"
-                                        id="cash"
-                                      />{" "}
-                                      Cash On Delivery
-                                    </label>
-                                  </div> */}
-                              {/* </div>
-                              </div> */}
-                              {/* <div
-                                id="flush-collapseFour"
-                                className="accordion-collapse collapse"
-                                data-bs-parent="#accordionFlushExample"
-                              >
-                                <div className="accordion-body">
-                                  <h5 className="cod-review">
-                                    Pay digitally with SMS Pay Link. Cash may
-                                    not be accepted in COVID restricted areas.{" "}
-                                    <a href="javascript:void(0)">Know more.</a>
-                                  </h5>
-                                </div>
-                              </div> */}
                             </div>
                           </div>
                         </div>
