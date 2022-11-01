@@ -241,20 +241,20 @@ const ProductDetail = (props) => {
                           Add To Cart
                         </button>
                       </div> 
-                      <div className="row ">
-                      <div className="col-6">
-                      <button className="btn">
+                      <div className="row mt-4">
+                      <div className="col-3 w-50">
+                      <button className="btn btn-dark">
                           <a href="wishlist.html">
                             {/* <i data-feather="heart"></i> */}
-                            <span>Add To Wishlist</span>
+                            <span className="text-white">Add To Wishlist</span>
                           </a>
                         </button>
                       </div>
-                      <div className="col-6">
-                      <button className="btn">
+                      <div className="col-3">
+                      <button className="btn btn-dark ">
                           <a href="compare.html">
                             {/* <i data-feather="shuffle"></i> */}
-                            <span>Add To Compare</span>
+                            <span className="text-white ">Add To Compare</span>
                           </a>
                         </button>
                       </div>
