@@ -5,14 +5,14 @@ import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Breadcumb from "../common/beadcumb";
-import {data1,data2} from './data';
-import Accordion from 'react-bootstrap/Accordion';
+import { data1, data2 } from "./data";
+import Accordion from "react-bootstrap/Accordion";
 import { Form, Button } from "react-bootstrap";
 import "../../CSS/style.css";
 
 const Checkout = (props) => {
-  var product1=data1.product1
-  var address=data2.address
+  var product1 = data1.product1;
+  var address = data2.address;
   return (
     <Fragment>
       <Header />
@@ -25,121 +25,128 @@ const Checkout = (props) => {
               <Row>
                 <div className="col-xxl-3 col-lg-4">
                   <Nav className="flex-column custom-navtab">
-                    <div className="row">
-                      <div className="col-6 d-md-flex">
-                      <Nav.Item >
-                      <Nav.Link eventKey="first">
-                        <li className="nav-link" role="presentation">
-                          <div
-                            className="nav-item"
-                            id="shopping-cart"
-                            data-bs-toggle="tab"
-                            data-bs-target="#s-cart"
-                            role="tab"
-                          >
-                            <div className="nav-item-box">
-                              <div>
-                                <span>STEP 1</span>
-                                <h4>Shopping Cart</h4>
+                    <div className="row my-md-0 my-4">
+                      <div className="col-6 col-md-12 my-2">
+                        <Nav.Item>
+                          <Nav.Link eventKey="first">
+                            <li className="nav-link" role="presentation">
+                              <div
+                                className="nav-item"
+                                id="shopping-cart"
+                                data-bs-toggle="tab"
+                                data-bs-target="#s-cart"
+                                role="tab"
+                              >
+                                <div className="nav-item-box">
+                                  <div>
+                                    <span>STEP 1</span>
+                                    <h4>Shopping Cart</h4>
+                                  </div>
+                                  <lord-icon
+                                    target=".nav-item"
+                                    src="https://cdn.lordicon.com/ggihhudh.json"
+                                    trigger="loop-on-hover"
+                                    colors="primary:#121331,secondary:#646e78,tertiary:#0baf9a"
+                                    className="lord-icon"
+                                  ></lord-icon>
+                                </div>
                               </div>
-                              <lord-icon
-                                target=".nav-item"
-                                src="https://cdn.lordicon.com/ggihhudh.json"
-                                trigger="loop-on-hover"
-                                colors="primary:#121331,secondary:#646e78,tertiary:#0baf9a"
-                                className="lord-icon"
-                              ></lord-icon>
-                            </div>
-                          </div>
-                        </li>
-                      </Nav.Link>
-                    </Nav.Item>
+                            </li>
+                          </Nav.Link>
+                        </Nav.Item>
+                      </div>
+
+                      <div className="col-6 col-md-12 my-2">
+                        <Nav.Item>
+                          <Nav.Link eventKey="second">
+                            <li className="nav-link" role="presentation">
+                              <div
+                                className="nav-item"
+                                id="delivery-address"
+                                data-bs-toggle="tab"
+                                data-bs-target="#d-address"
+                                role="tab"
+                              >
+                                <div className="nav-item-box">
+                                  <div>
+                                    <span>STEP 2</span>
+                                    <h4>Delivery Address</h4>
+                                  </div>
+                                  <lord-icon
+                                    target=".nav-item"
+                                    src="https://cdn.lordicon.com/oaflahpk.json"
+                                    trigger="loop-on-hover"
+                                    colors="primary:#0baf9a"
+                                    className="lord-icon"
+                                  ></lord-icon>
+                                </div>
+                              </div>
+                            </li>
+                          </Nav.Link>
+                        </Nav.Item>
+                      </div>
+                      <div className="col-6 col-md-12 my-2">
+                        <Nav.Item>
+                          <Nav.Link eventKey="third">
+                            <li className="nav-link" role="presentation">
+                              <div
+                                className="nav-item"
+                                id="delivery-option"
+                                data-bs-toggle="tab"
+                                data-bs-target="#d-options"
+                                role="tab"
+                              >
+                                <div className="nav-item-box">
+                                  <div>
+                                    <span>STEP 3</span>
+                                    <h4>Delivery Options</h4>
+                                  </div>
+                                  <lord-icon
+                                    target=".nav-item"
+                                    src="https://cdn.lordicon.com/jyijxczt.json"
+                                    trigger="loop-on-hover"
+                                    colors="primary:#3a3347,secondary:#0baf9a,tertiary:#ebe6ef,quaternary:#646e78"
+                                    className="lord-icon"
+                                  ></lord-icon>
+                                </div>
+                              </div>
+                            </li>
+                          </Nav.Link>
+                        </Nav.Item>
+                      </div>
+                      <div className="col-6 col-md-12 my-2">
+                        <Nav.Item>
+                          <Nav.Link eventKey="fourth">
+                            <li className="nav-link" role="presentation">
+                              <div
+                                className="nav-item"
+                                id="payment-option"
+                                data-bs-toggle="tab"
+                                data-bs-target="#p-options"
+                                role="tab"
+                              >
+                                <div className="nav-item-box">
+                                  <div>
+                                    <span>STEP 4</span>
+                                    <h4>Payment Options</h4>
+                                  </div>
+                                  <lord-icon
+                                    target=".nav-item"
+                                    src="https://cdn.lordicon.com/qmcsqnle.json"
+                                    trigger="loop-on-hover"
+                                    colors="primary:#0baf9a,secondary:#0baf9a"
+                                    className="lord-icon"
+                                  ></lord-icon>
+                                </div>
+                              </div>
+                            </li>
+                          </Nav.Link>
+                        </Nav.Item>
                       </div>
                     </div>
-                   
-                    <Nav.Item>
-                      <Nav.Link eventKey="second">
-                        <li className="nav-link" role="presentation">
-                          <div
-                            className="nav-item"
-                            id="delivery-address"
-                            data-bs-toggle="tab"
-                            data-bs-target="#d-address"
-                            role="tab"
-                          >
-                            <div className="nav-item-box">
-                              <div>
-                                <span>STEP 2</span>
-                                <h4>Delivery Address</h4>
-                              </div>
-                              <lord-icon
-                                target=".nav-item"
-                                src="https://cdn.lordicon.com/oaflahpk.json"
-                                trigger="loop-on-hover"
-                                colors="primary:#0baf9a"
-                                className="lord-icon"
-                              ></lord-icon>
-                            </div>
-                          </div>
-                        </li>
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="third">
-                        <li className="nav-link" role="presentation">
-                          <div
-                            className="nav-item"
-                            id="delivery-option"
-                            data-bs-toggle="tab"
-                            data-bs-target="#d-options"
-                            role="tab"
-                          >
-                            <div className="nav-item-box">
-                              <div>
-                                <span>STEP 3</span>
-                                <h4>Delivery Options</h4>
-                              </div>
-                              <lord-icon
-                                target=".nav-item"
-                                src="https://cdn.lordicon.com/jyijxczt.json"
-                                trigger="loop-on-hover"
-                                colors="primary:#3a3347,secondary:#0baf9a,tertiary:#ebe6ef,quaternary:#646e78"
-                                className="lord-icon"
-                              ></lord-icon>
-                            </div>
-                          </div>
-                        </li>
-                      </Nav.Link>
-                    </Nav.Item>
-                    <Nav.Item>
-                      <Nav.Link eventKey="fourth">
-                        <li className="nav-link" role="presentation">
-                          <div
-                            className="nav-item"
-                            id="payment-option"
-                            data-bs-toggle="tab"
-                            data-bs-target="#p-options"
-                            role="tab"
-                          >
-                            <div className="nav-item-box">
-                              <div>
-                                <span>STEP 4</span>
-                                <h4>Payment Options</h4>
-                              </div>
-                              <lord-icon
-                                target=".nav-item"
-                                src="https://cdn.lordicon.com/qmcsqnle.json"
-                                trigger="loop-on-hover"
-                                colors="primary:#0baf9a,secondary:#0baf9a"
-                                className="lord-icon"
-                              ></lord-icon>
-                            </div>
-                          </div>
-                        </li>
-                      </Nav.Link>
-                    </Nav.Item>
                   </Nav>
                 </div>
+
                 <div className="col-xxl-9 col-lg-8">
                   <Tab.Content>
                     <Tab.Pane eventKey="first">
@@ -147,55 +154,119 @@ const Checkout = (props) => {
                       <div className="cart-table p-0">
                         <div className="table-responsive">
                           <table className="table">
-                            {product1.map((product1)=>{
-                              return(
+                            {product1.map((product1) => {
+                              return (
                                 <tbody>
-                                <tr key={product1.id} className="product-box-contain">
-                              <td className="product-detail">
-                                <div className="product border-0">
-                                  <a
-                                    href={product1.image}
-                                    className="product-image"
+                                  <tr
+                                    key={product1.id}
+                                    className="product-box-contain"
                                   >
-                                    <img
-                                      src={product1.image}
-                                      className="img-fluid lazyload"
-                                      alt=""
-                                    />
-                                  </a>
-                                  <div className="product-detail">
-                                    <ul>
-                                      <li className="name">
+                                    <td className="product-detail">
+                                      <div className="product border-0">
                                         <a
-                                          href="./product-detail"
-                                          className="text-title"
+                                          href={product1.image}
+                                          className="product-image"
                                         >
-                                          {product1.name}
+                                          <img
+                                            src={product1.image}
+                                            className="img-fluid lazyload"
+                                            alt=""
+                                          />
                                         </a>
-                                      </li>
+                                        <div className="product-detail">
+                                          <ul>
+                                            <li className="name">
+                                              <a
+                                                href="./product-detail"
+                                                className="text-title"
+                                              >
+                                                {product1.name}
+                                              </a>
+                                            </li>
 
-                                      <li className="text-content">
-                                        <span className="text-title">
-                                          Sold By :{product1.seller_detail}
-                                        </span>
-                                      </li>
+                                            <li className="text-content">
+                                              <span className="text-title">
+                                                Sold By :
+                                                {product1.seller_detail}
+                                              </span>
+                                            </li>
 
-                                      <li className="text-content">
-                                        <span className="text-title">
-                                          {product1.quantity}
-                                        </span>
-                                      </li>
+                                            <li className="text-content">
+                                              <span className="text-title">
+                                                {product1.quantity}
+                                              </span>
+                                            </li>
 
-                                      <li>
-                                        <h5 className="text-content d-inline-block">
-                                          Price :
-                                        </h5>
+                                            <li>
+                                              <h5 className="text-content d-inline-block">
+                                                Price :
+                                              </h5>
+                                              <span>
+                                                {product1.productPrice}
+                                              </span>
+                                              <span className="text-content">
+                                                {product1.productMRF}
+                                              </span>
+                                            </li>
+                                            <li className="quantity-price-box">
+                                              <div className="cart_qty">
+                                                <div className="input-group">
+                                                  <button
+                                                    type="button"
+                                                    className="qty-left-minus"
+                                                    data-type="minus"
+                                                    data-field=""
+                                                  >
+                                                    <i
+                                                      className="fa fa-minus"
+                                                      aria-hidden="true"
+                                                    ></i>
+                                                  </button>
+                                                  <input
+                                                    className="form-control input-number qty-input"
+                                                    type="text"
+                                                    name="quantity"
+                                                    value="1"
+                                                  />
+                                                  <button
+                                                    type="button"
+                                                    className="qty-right-plus"
+                                                    data-type="plus"
+                                                    data-field=""
+                                                  >
+                                                    <i
+                                                      className="fa fa-plus"
+                                                      aria-hidden="true"
+                                                    ></i>
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </td>
+
+                                    <td className="price">
+                                      <h4 className="table-title text-content">
+                                        Price
+                                      </h4>
+                                      <h5>
                                         <span>{product1.productPrice}</span>
-                                        <span className="text-content">
-                                        {product1.productMRF}
-                                        </span>
-                                      </li>
-                                      <li className="quantity-price-box">
+                                        <del className="text-content">
+                                          ₹45.68
+                                        </del>
+                                      </h5>
+                                      <h6 className="theme-color">
+                                        You Save :{product1.saving}
+                                      </h6>
+                                    </td>
+
+                                    <td className="quantity">
+                                      <h4 className="table-title text-content">
+                                        Qty
+                                      </h4>
+                                      <div className="quantity-price">
                                         <div className="cart_qty">
                                           <div className="input-group">
                                             <button
@@ -204,10 +275,7 @@ const Checkout = (props) => {
                                               data-type="minus"
                                               data-field=""
                                             >
-                                              <i
-                                                className="fa fa-minus"
-                                                aria-hidden="true"
-                                              ></i>
+                                              <i className="fa-regular fa-minus"></i>
                                             </button>
                                             <input
                                               className="form-control input-number qty-input"
@@ -221,97 +289,41 @@ const Checkout = (props) => {
                                               data-type="plus"
                                               data-field=""
                                             >
-                                              <i
-                                                className="fa fa-plus"
-                                                aria-hidden="true"
-                                              ></i>
+                                              <i className="fa-regular fa-plus"></i>
                                             </button>
                                           </div>
                                         </div>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
-                              </td>
+                                      </div>
+                                    </td>
 
-                              <td className="price">
-                                <h4 className="table-title text-content">
-                                  Price
-                                </h4>
-                                <h5>
-                                <span>{product1.productPrice}</span>
-                                <del className="text-content">₹45.68</del>
-                          
-                                  
-                                </h5>
-                                <h6 className="theme-color">
-                                  You Save :{product1.saving}
-                                </h6>
-                              </td>
+                                    <td className="subtotal">
+                                      <h4 className="table-title text-content">
+                                        Total
+                                      </h4>
+                                      <h5>{product1.total}</h5>
+                                    </td>
 
-                              <td className="quantity">
-                                <h4 className="table-title text-content">
-                                  Qty
-                                </h4>
-                                <div className="quantity-price">
-                                  <div className="cart_qty">
-                                    <div className="input-group">
-                                      <button
-                                        type="button"
-                                        className="qty-left-minus"
-                                        data-type="minus"
-                                        data-field=""
+                                    <td className="save-remove">
+                                      <h4 className="table-title text-content">
+                                        Action
+                                      </h4>
+                                      <a
+                                        className="save notifi-wishlist"
+                                        href="javascript:void(0)"
                                       >
-                                        <i className="fa-regular fa-minus"></i>
-                                      </button>
-                                      <input
-                                        className="form-control input-number qty-input"
-                                        type="text"
-                                        name="quantity"
-                                        value="1"
-                                      />
-                                      <button
-                                        type="button"
-                                        className="qty-right-plus"
-                                        data-type="plus"
-                                        data-field=""
+                                        Save for later
+                                      </a>
+                                      <a
+                                        className="remove close_button"
+                                        href="javascript:void(0)"
                                       >
-                                        <i className="fa-regular fa-plus"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-                              </td>
-
-                              <td className="subtotal">
-                                <h4 className="table-title text-content">
-                                  Total
-                                </h4>
-                                <h5>{product1.total}</h5>
-                              </td>
-
-                              <td className="save-remove">
-                                <h4 className="table-title text-content">
-                                  Action
-                                </h4>
-                                <a
-                                  className="save notifi-wishlist"
-                                  href="javascript:void(0)"
-                                >
-                                  Save for later
-                                </a>
-                                <a
-                                  className="remove close_button"
-                                  href="javascript:void(0)"
-                                >
-                                  Remove
-                                </a>
-                              </td>
-                            </tr>
-                            </tbody>
-                              )
+                                        Remove
+                                      </a>
+                                    </td>
+                                  </tr>
+                                </tbody>
+                              );
                             })}
-                           
                           </table>
                         </div>
                       </div>
@@ -341,7 +353,7 @@ const Checkout = (props) => {
                     </Tab.Pane>
                     <Tab.Pane eventKey="second">
                       <div className="d-flex align-items-center mb-3">
-                      <h2 className="tab-title mb-0">Delivery Address</h2>
+                        <h2 className="tab-title mb-0">Delivery Address</h2>
                         <button
                           className="btn btn-animation btn-sm fw-bold ms-auto"
                           type="button"
@@ -353,107 +365,118 @@ const Checkout = (props) => {
                         </button>
                       </div>
                       <div className="row">
+                        <div className="col-12 col-md-6">
+                          {address.map((address) => {
+                            return (
+                              <div className="">
+                                <div className="delivery-address-box">
+                                  <div>
+                                    <div className="form-check">
+                                      <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        name="jack"
+                                        id="flexRadioDefault1"
+                                      />
+                                    </div>
 
-                      <div className="col-6">
-                        {address.map((address)=>{
-                          return(
-                            <div className="">
-                          <div className="delivery-address-box">
-                            <div>
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="radio"
-                                  name="jack"
-                                  id="flexRadioDefault1"
-                                />
-                              </div>
-
-                              <div className="label">
-                                <label>Office</label>
-                              </div>
-                                      <ul key={address.id} className="delivery-address-detail">
-                                        <li>
-                                          <h4 className="fw-500">{address.name}</h4>
-                                        </li>
-                                        <li>
-                                          <p className="text-content">
+                                    <div className="label">
+                                      <label>Office</label>
+                                    </div>
+                                    <ul
+                                      key={address.id}
+                                      className="delivery-address-detail"
+                                    >
+                                      <li>
+                                        <h4 className="fw-500">
+                                          {address.name}
+                                        </h4>
+                                      </li>
+                                      <li>
+                                        <p className="text-content">
                                           <span className="text-title">
                                             Address:{address.address}
-                                          </span> 
-                                          </p>
-                                        </li>
-                                        <li>
-                                          <h6 className="text-content">
+                                          </span>
+                                        </p>
+                                      </li>
+                                      <li>
+                                        <h6 className="text-content">
                                           <span className="text-title">
                                             Pin Code :{address.pincode}
                                           </span>
-                                          </h6>
-                                        </li>
-                                        <li>
-                                          <h6 className="text-content mb-0">
-                                          <span className="text-title">Phone :{address.phone}</span>
-                                          </h6>
-                                        </li>
-                                      </ul>
-                                    </div>
-                            </div>
-                          </div>
-                             
-                           )
+                                        </h6>
+                                      </li>
+                                      <li>
+                                        <h6 className="text-content mb-0">
+                                          <span className="text-title">
+                                            Phone :{address.phone}
+                                          </span>
+                                        </h6>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            );
                           })}
                         </div>
-                        <div className="col-6">
-                        {address.map((address)=>{
-                          return(
-                            <div className="">
-                          <div className="delivery-address-box">
-                            <div>
-                              <div className="form-check">
-                                <input
-                                  className="form-check-input"
-                                  type="radio"
-                                  name="jack"
-                                  id="flexRadioDefault1"
-                                />
-                              </div>
+                        <div className="col-12 col-md-6">
+                          {address.map((address) => {
+                            return (
+                              <div className="">
+                                <div className="delivery-address-box">
+                                  <div>
+                                    <div className="form-check">
+                                      <input
+                                        className="form-check-input"
+                                        type="radio"
+                                        name="jack"
+                                        id="flexRadioDefault1"
+                                      />
+                                    </div>
 
-                              <div className="label">
-                                <label>Home</label>
-                              </div>
-                                      <ul key={address.id} className="delivery-address-detail">
-                                        <li>
-                                          <h4 className="fw-500">{address.name}</h4>
-                                        </li>
-                                        <li>
-                                          <p className="text-content">
+                                    <div className="label">
+                                      <label>Home</label>
+                                    </div>
+                                    <ul
+                                      key={address.id}
+                                      className="delivery-address-detail"
+                                    >
+                                      <li>
+                                        <h4 className="fw-500">
+                                          {address.name}
+                                        </h4>
+                                      </li>
+                                      <li>
+                                        <p className="text-content">
                                           <span className="text-title">
                                             Address:{address.address}
-                                          </span> 
-                                          </p>
-                                        </li>
-                                        <li>
-                                          <h6 className="text-content">
+                                          </span>
+                                        </p>
+                                      </li>
+                                      <li>
+                                        <h6 className="text-content">
                                           <span className="text-title">
                                             Pin Code :{address.pincode}
                                           </span>
-                                          </h6>
-                                        </li>
-                                        <li>
-                                          <h6 className="text-content mb-0">
-                                          <span className="text-title">Phone :{address.phone}</span>
-                                          </h6>
-                                        </li>
-                                      </ul>
-                                    </div>
-                            </div>
-                          </div>
-                             
-                           )
+                                        </h6>
+                                      </li>
+                                      <li>
+                                        <h6 className="text-content mb-0">
+                                          <span className="text-title">
+                                            Phone :{address.phone}
+                                          </span>
+                                        </h6>
+                                      </li>
+                                    </ul>
+                                  </div>
+                                </div>
+                              </div>
+                            );
                           })}
                         </div>
-                        </div>
-                        {/* <div className="col-xxl-6 col-lg-12 col-md-6">
+                      </div>
+                      {/* <div className="col-xxl-6 col-lg-12 col-md-6">
                           <div className="delivery-address-box">
                             <div>
                               <div className="form-check">
@@ -538,7 +561,12 @@ const Checkout = (props) => {
                                         id="standard"
                                         checked
                                       /> */}
-                                      <input className="form-check-input mt-0" type="radio" value="choice1" name="button" />
+                                      <input
+                                        className="form-check-input mt-0"
+                                        type="radio"
+                                        value="choice1"
+                                        name="button"
+                                      />
                                       <label
                                         className="form-check-label"
                                         for="standard"
@@ -610,7 +638,12 @@ const Checkout = (props) => {
                                         name="standard"
                                         id="sameDay"
                                       /> */}
-                                      <input className="form-check-input mt-0" type="radio" value="choice2" name="button" />
+                                      <input
+                                        className="form-check-input mt-0"
+                                        type="radio"
+                                        value="choice2"
+                                        name="button"
+                                      />
                                       <label
                                         className="form-check-label"
                                         for="sameDay"
@@ -682,7 +715,12 @@ const Checkout = (props) => {
                                         name="standard"
                                         id="future"
                                       /> */}
-                                      <input className="form-check-input mt-0" type="radio" value="choice3" name="button" />
+                                      <input
+                                        className="form-check-input mt-0"
+                                        type="radio"
+                                        value="choice3"
+                                        name="button"
+                                      />
                                       <label
                                         className="form-check-label"
                                         for="future"
@@ -745,8 +783,7 @@ const Checkout = (props) => {
                       </div>
                     </Tab.Pane>
                     <Tab.Pane eventKey="fourth">
-                     
-                       <h2 className="tab-title">Payment Option</h2>
+                      <h2 className="tab-title">Payment Option</h2>
                       <div className="row g-sm-4 g-2">
                         <div className="col-xxl-4 col-lg-12 col-md-5 order-xxl-2 order-lg-1 order-md-2">
                           <div className="summery-box">
@@ -827,7 +864,7 @@ const Checkout = (props) => {
                             </ul>
                           </div>
                         </div>
-                        
+
                         <div className="col-xxl-8 col-lg-12 col-md-7 order-xxl-1 order-lg-2 order-md-1">
                           <div
                             className="accordion accordion-flush custom-accordion"
@@ -836,105 +873,118 @@ const Checkout = (props) => {
                             <div className="accordion-item">
                               <Accordion>
                                 <Accordion.Item eventKey="2">
-                                   <Accordion.Header ><div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="credit"
-                                    >
-
-                                       {/* <input
+                                  <Accordion.Header>
+                                    <div className="custom-form-check form-check mb-0">
+                                      <label
+                                        className="form-check-label"
+                                        for="credit"
+                                      >
+                                        {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="credit"
                                         checked
                                       /> */}
-                                      <input className="form-check-input mt-0" type="radio" value="choice7" name="button" />
-                                      Credit or Debit Card
-                                    </label>
-                                  </div> </Accordion.Header> 
+                                        <input
+                                          className="form-check-input mt-0"
+                                          type="radio"
+                                          value="choice7"
+                                          name="button"
+                                        />
+                                        Credit or Debit Card
+                                      </label>
+                                    </div>{" "}
+                                  </Accordion.Header>
                                   <Accordion.Body>
-                                  <div
-                                id="flush-collapseOne"
-                                className="accordion-collapse collapse show"
-                                data-bs-parent="#accordionFlushExample"
-                              >
-                                <div className="accordion-body">
-                                  <div className="row g-2">
-                                    <div className="col-12">
-                                      <div className="payment-method">
-                                        <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                          <input
-                                            type="text"
-                                            className="form-control"
-                                            id="credit2"
-                                            placeholder="Enter Credit & Debit Card Number"
-                                          />
-                                          <label for="credit2">
-                                            Enter Credit & Debit Card Number
-                                          </label>
+                                    <div
+                                      id="flush-collapseOne"
+                                      className="accordion-collapse collapse show"
+                                      data-bs-parent="#accordionFlushExample"
+                                    >
+                                      <div className="accordion-body">
+                                        <div className="row g-2">
+                                          <div className="col-12">
+                                            <div className="payment-method">
+                                              <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                                <input
+                                                  type="text"
+                                                  className="form-control"
+                                                  id="credit2"
+                                                  placeholder="Enter Credit & Debit Card Number"
+                                                />
+                                                <label for="credit2">
+                                                  Enter Credit & Debit Card
+                                                  Number
+                                                </label>
+                                              </div>
+                                            </div>
+                                          </div>
+
+                                          <div className="col-xxl-4">
+                                            <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                              <input
+                                                type="text"
+                                                className="form-control"
+                                                id="expiry"
+                                                placeholder="Enter Expiry Date"
+                                              />
+                                              <label for="expiry">
+                                                Expiry Date
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div className="col-xxl-4">
+                                            <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                              <input
+                                                type="text"
+                                                className="form-control"
+                                                id="cvv"
+                                                placeholder="Enter CVV Number"
+                                              />
+                                              <label for="cvv">
+                                                CVV Number
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div className="col-xxl-4">
+                                            <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
+                                              <input
+                                                type="password"
+                                                className="form-control"
+                                                id="password"
+                                                placeholder="Enter Password"
+                                              />
+                                              <label for="password">
+                                                Password
+                                              </label>
+                                            </div>
+                                          </div>
+
+                                          <div className="button-group mt-0">
+                                            <ul>
+                                              <li>
+                                                <button className="btn btn-light shopping-button">
+                                                  Cancel
+                                                </button>
+                                              </li>
+
+                                              <li>
+                                                <button className="btn btn-animation">
+                                                  Use This Card
+                                                </button>
+                                              </li>
+                                            </ul>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-
-                                    <div className="col-xxl-4">
-                                      <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          id="expiry"
-                                          placeholder="Enter Expiry Date"
-                                        />
-                                        <label for="expiry">Expiry Date</label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-xxl-4">
-                                      <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                        <input
-                                          type="text"
-                                          className="form-control"
-                                          id="cvv"
-                                          placeholder="Enter CVV Number"
-                                        />
-                                        <label for="cvv">CVV Number</label>
-                                      </div>
-                                    </div>
-
-                                    <div className="col-xxl-4">
-                                      <div className="form-floating mb-lg-3 mb-2 theme-form-floating">
-                                        <input
-                                          type="password"
-                                          className="form-control"
-                                          id="password"
-                                          placeholder="Enter Password"
-                                        />
-                                        <label for="password">Password</label>
-                                      </div>
-                                    </div>
-
-                                    <div className="button-group mt-0">
-                                      <ul>
-                                        <li>
-                                          <button className="btn btn-light shopping-button">
-                                            Cancel
-                                          </button>
-                                        </li>
-
-                                        <li>
-                                          <button className="btn btn-animation">
-                                            Use This Card
-                                          </button>
-                                        </li>
-                                      </ul>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
                                   </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
-                               {/* <div
+                              {/* <div
                                 className="accordion-header"
                                 id="flush-headingOne"
                               >
@@ -1043,183 +1093,221 @@ const Checkout = (props) => {
                             <div className="accordion-item">
                               <Accordion>
                                 <Accordion.Item eventKey="2">
-                                  <Accordion.Header> <div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="banking"
-                                    >
-                                    {/* <input
+                                  <Accordion.Header>
+                                    {" "}
+                                    <div className="custom-form-check form-check mb-0">
+                                      <label
+                                        className="form-check-label"
+                                        for="banking"
+                                      >
+                                        {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="banking"
                                       /> */}
-                                      <input className="form-check-input mt-0" type="radio" value="choice8" name="button" />
-                                      Net Banking
-                                    </label>
-                                  </div></Accordion.Header>
-                                    <Accordion.Body>
-                                      {/* <div
+                                        <input
+                                          className="form-check-input mt-0"
+                                          type="radio"
+                                          value="choice8"
+                                          name="button"
+                                        />
+                                        Net Banking
+                                      </label>
+                                    </div>
+                                  </Accordion.Header>
+                                  <Accordion.Body>
+                                    {/* <div
                                 id="flush-collapseTwo"
                                 className="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample"
                               > */}
-                                <div className="accordion-body">
-                                  <h5 className="text-uppercase mb-4">
-                                    Select Your Bank
-                                  </h5>
-                                  <div className="row g-2">
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                    <div className="accordion-body">
+                                      <h5 className="text-uppercase mb-4">
+                                        Select Your Bank
+                                      </h5>
+                                      <div className="row g-2">
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank1"
                                         /> */}
-                                        <input className="form-check-input mt-0" type="radio" value="choice1" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank1"
-                                        >
-                                          Industrial & Commercial Bank
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice1"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="bank1"
+                                            >
+                                              Industrial & Commercial Bank
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank2"
                                         /> */}
-                                        <input className="form-check-input mt-0" type="radio" value="choice2" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank2"
-                                        >
-                                          Agricultural Bank
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice2"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="bank2"
+                                            >
+                                              Agricultural Bank
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank3"
                                         /> */}
-                                         <input className="form-check-input mt-0" type="radio" value="choice3" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank3"
-                                        >
-                                          Bank of America
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice3"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="bank3"
+                                            >
+                                              Bank of America
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank4"
                                         /> */}
-                                         <input className="form-check-input mt-0" type="radio" value="choice4" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank4"
-                                        >
-                                          Construction Bank Corp.
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice4"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="bank4"
+                                            >
+                                              Construction Bank Corp.
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank5"
                                         /> */}
-                                         <input className="form-check-input mt-0" type="radio" value="choice5" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank5"
-                                        >
-                                          HSBC Holdings
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice5"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="bank5"
+                                            >
+                                              HSBC Holdings
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="bank6"
                                         /> */}
-                                         <input className="form-check-input mt-0" type="radio" value="choice6" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="bank6"
-                                        >
-                                          JPMorgan Chase & Co.
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice6"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="bank6"
+                                            >
+                                              JPMorgan Chase & Co.
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-12">
-                                      <div className="select-option">
-                                        <div className="form-floating theme-form-floating">
-                                          <select
-                                            className="form-select theme-form-select"
-                                            aria-label="Default select example"
-                                          >
-                                            <option value="hsbc">
-                                              HSBC Holdings
-                                            </option>
-                                            <option value="loyds">
-                                              Lloyds Banking Group
-                                            </option>
-                                            <option value="natwest">
-                                              Nat West Group
-                                            </option>
-                                            <option value="Barclays">
-                                              Barclays
-                                            </option>
-                                            <option value="other">
-                                              Others Bank
-                                            </option>
-                                          </select>
-                                          <label>Select Other Bank</label>
+                                        <div className="col-12">
+                                          <div className="select-option">
+                                            <div className="form-floating theme-form-floating">
+                                              <select
+                                                className="form-select theme-form-select"
+                                                aria-label="Default select example"
+                                              >
+                                                <option value="hsbc">
+                                                  HSBC Holdings
+                                                </option>
+                                                <option value="loyds">
+                                                  Lloyds Banking Group
+                                                </option>
+                                                <option value="natwest">
+                                                  Nat West Group
+                                                </option>
+                                                <option value="Barclays">
+                                                  Barclays
+                                                </option>
+                                                <option value="other">
+                                                  Others Bank
+                                                </option>
+                                              </select>
+                                              <label>Select Other Bank</label>
+                                            </div>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </div> 
-                              {/* </div> */}
-                              </Accordion.Body>
-                              </Accordion.Item>
+                                    {/* </div> */}
+                                  </Accordion.Body>
+                                </Accordion.Item>
                               </Accordion>
                               {/* <div
                                 className="accordion-header"
                                 id="flush-headingTwo"
                               > */}
-                                {/* <div
+                              {/* <div
                                   className="accordion-button collapsed"
                                   data-bs-toggle="collapse"
                                   data-bs-target="#flush-collapseTwo"
                                 > */}
-                                  {/* <div className="custom-form-check form-check mb-0">
+                              {/* <div className="custom-form-check form-check mb-0">
                                     <label
                                       className="form-check-label"
                                       for="banking"
@@ -1233,7 +1321,7 @@ const Checkout = (props) => {
                                       Net Banking
                                     </label>
                                   </div> */}
-                                {/* </div>
+                              {/* </div>
                               </div> */}
                               {/* <div
                                 id="flush-collapseTwo"
@@ -1383,157 +1471,192 @@ const Checkout = (props) => {
                               <Accordion>
                                 <Accordion.Item eventKey="2">
                                   <Accordion.Header>
-                                  <div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="wallet"
-                                    >
-                                      {/* <input
+                                    <div className="custom-form-check form-check mb-0">
+                                      <label
+                                        className="form-check-label"
+                                        for="wallet"
+                                      >
+                                        {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="wallet"
                                       />{" "} */}
-                                      <input className="form-check-input mt-0" type="radio" value="choice9" name="button" />
-                                      My Wallet
-                                    </label>
-                                  </div>
+                                        <input
+                                          className="form-check-input mt-0"
+                                          type="radio"
+                                          value="choice9"
+                                          name="button"
+                                        />
+                                        My Wallet
+                                      </label>
+                                    </div>
                                   </Accordion.Header>
-                                    <Accordion.Body>
+                                  <Accordion.Body>
                                     {/* <div
                                 id="flush-collapseThree"
                                 className="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample"
                               > */}
-                                
-                              <div className="accordion-body">
-                                  <h5 className="text-uppercase mb-4">
-                                    Select Your Wallet
-                                  </h5>
-                                  <div className="row">
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        <label
-                                          className="form-check-label"
-                                          for="amazon"
-                                        >
-                                          {/* <input
+
+                                    <div className="accordion-body">
+                                      <h5 className="text-uppercase mb-4">
+                                        Select Your Wallet
+                                      </h5>
+                                      <div className="row">
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            <label
+                                              className="form-check-label"
+                                              for="amazon"
+                                            >
+                                              {/* <input
                                             className="form-check-input mt-0"
                                             type="radio"
                                             name="flexRadioDefault"
                                             id="amazon"
                                           />{" "} */}
-                                          <input className="form-check-input mt-0" type="radio" value="choice10" name="button" />
-                                          Amazon Pay
-                                        </label>
-                                      </div>
-                                    </div>
+                                              <input
+                                                className="form-check-input mt-0"
+                                                type="radio"
+                                                value="choice10"
+                                                name="button"
+                                              />
+                                              Amazon Pay
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="gpay"
                                         /> */}
-                                        <input className="form-check-input mt-0" type="radio" value="choice11" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="gpay"
-                                        >
-                                          Google Pay
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice11"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="gpay"
+                                            >
+                                              Google Pay
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="airtel"
                                         /> */}
-                                        <input className="form-check-input mt-0" type="radio" value="choice12" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="airtel"
-                                        >
-                                          Airtel Money
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice12"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="airtel"
+                                            >
+                                              Airtel Money
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="paytm"
                                         /> */}
-                                        <input className="form-check-input mt-0" type="radio" value="choice12" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="paytm"
-                                        >
-                                          Paytm Pay
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice12"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="paytm"
+                                            >
+                                              Paytm Pay
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="jio"
                                         /> */}
-                                        <input className="form-check-input mt-0" type="radio" value="choice13" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="jio"
-                                        >
-                                          JIO Money
-                                        </label>
-                                      </div>
-                                    </div>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice13"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="jio"
+                                            >
+                                              JIO Money
+                                            </label>
+                                          </div>
+                                        </div>
 
-                                    <div className="col-md-6">
-                                      <div className="custom-form-check form-check">
-                                        {/* <input
+                                        <div className="col-md-6">
+                                          <div className="custom-form-check form-check">
+                                            {/* <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           name="flexRadioDefault"
                                           id="free"
                                         /> */}
-                                        <input className="form-check-input mt-0" type="radio" value="choice14" name="button" />
-                                        <label
-                                          className="form-check-label"
-                                          for="free"
-                                        >
-                                          Freecharge
-                                        </label>
+                                            <input
+                                              className="form-check-input mt-0"
+                                              type="radio"
+                                              value="choice14"
+                                              name="button"
+                                            />
+                                            <label
+                                              className="form-check-label"
+                                              for="free"
+                                            >
+                                              Freecharge
+                                            </label>
+                                          </div>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-                                </div> 
-                              {/* </div> */}
-                                    </Accordion.Body>
+                                    {/* </div> */}
+                                  </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
                               {/* <div
                                 className="accordion-header"
                                 id="flush-headingThree"
                               > */}
-                                {/* <div
+                              {/* <div
                                   className="accordion-button collapsed"
                                   data-bs-toggle="collapse"
                                   data-bs-target="#flush-collapseThree"
                                 > */}
-                                  {/* <div className="custom-form-check form-check mb-0">
+                              {/* <div className="custom-form-check form-check mb-0">
                                     <label
                                       className="form-check-label"
                                       for="wallet"
@@ -1547,7 +1670,7 @@ const Checkout = (props) => {
                                       My Wallet
                                     </label>
                                   </div> */}
-                                {/* </div>
+                              {/* </div>
                               </div> */}
                               {/* <div
                                 id="flush-collapseThree"
@@ -1668,35 +1791,45 @@ const Checkout = (props) => {
                             <div className="accordion-item">
                               <Accordion>
                                 <Accordion.Item eventKey="2">
-                                  <Accordion.Header><div className="custom-form-check form-check mb-0">
-                                    <label
-                                      className="form-check-label"
-                                      for="cash"
-                                    >
-                                      {/* <input
+                                  <Accordion.Header>
+                                    <div className="custom-form-check form-check mb-0">
+                                      <label
+                                        className="form-check-label"
+                                        for="cash"
+                                      >
+                                        {/* <input
                                         className="form-check-input mt-0"
                                         type="radio"
                                         name="flexRadioDefault"
                                         id="cash"
                                       />{" "} */}
-                                      <input className="form-check-input mt-0" type="radio" value="choice15" name="button" />
-                                      Cash On Delivery
-                                    </label>
-                                  </div></Accordion.Header>
+                                        <input
+                                          className="form-check-input mt-0"
+                                          type="radio"
+                                          value="choice15"
+                                          name="button"
+                                        />
+                                        Cash On Delivery
+                                      </label>
+                                    </div>
+                                  </Accordion.Header>
                                   <Accordion.Body>
-                                  {/* <div
+                                    {/* <div
                                 id="flush-collapseFour"
                                 className="accordion-collapse collapse"
                                 data-bs-parent="#accordionFlushExample"
                               > */}
-                                <div className="accordion-body">
-                                  <h5 className="cod-review">
-                                    Pay digitally with SMS Pay Link. Cash may
-                                    not be accepted in COVID restricted areas.{" "}
-                                    <a href="javascript:void(0)">Know more.</a>
-                                  </h5>
-                                </div>
-                              {/* </div> */}
+                                    <div className="accordion-body">
+                                      <h5 className="cod-review">
+                                        Pay digitally with SMS Pay Link. Cash
+                                        may not be accepted in COVID restricted
+                                        areas.{" "}
+                                        <a href="javascript:void(0)">
+                                          Know more.
+                                        </a>
+                                      </h5>
+                                    </div>
+                                    {/* </div> */}
                                   </Accordion.Body>
                                 </Accordion.Item>
                               </Accordion>
@@ -1704,12 +1837,12 @@ const Checkout = (props) => {
                                 className="accordion-header"
                                 id="flush-headingFour"
                               > */}
-                                {/* <div
+                              {/* <div
                                   className="accordion-button collapsed"
                                   data-bs-toggle="collapse"
                                   data-bs-target="#flush-collapseFour"
                                 > */}
-                                  {/* <div className="custom-form-check form-check mb-0">
+                              {/* <div className="custom-form-check form-check mb-0">
                                     <label
                                       className="form-check-label"
                                       for="cash"
@@ -1723,7 +1856,7 @@ const Checkout = (props) => {
                                       Cash On Delivery
                                     </label>
                                   </div> */}
-                                {/* </div>
+                              {/* </div>
                               </div> */}
                               {/* <div
                                 id="flush-collapseFour"

@@ -121,7 +121,7 @@ const Aboutus=()=>{
                     </div>
 
                     <div className="slider-3_1 product-wrapper row">
-                        <div className="col-4">
+                        <div className="col-12 col-md-4">
                             <div className="clint-contain ">
                                 <div className="client-icon">
                                     <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/work.svg" className=" lazyload" alt=""/>
@@ -133,7 +133,7 @@ const Aboutus=()=>{
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col-12 col-md-4">
                             <div className="clint-contain">
                                 <div className="client-icon">
                                     <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/buy.svg" className=" lazyload" alt=""/>
@@ -145,7 +145,7 @@ const Aboutus=()=>{
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col-12 col-md-4">
                             <div className="clint-contain">
                                 <div className="client-icon">
                                     <img src="https://themes.pixelstrap.com/fastkart/assets/svg/3/user.svg" className=" lazyload" alt=""/>
@@ -425,7 +425,7 @@ const Aboutus=()=>{
             <div className="row">
             <div className="col-12">
                     <div className="slider-4-half product-wrapper row">
-                        <div className="col-4">
+                        <div className="col-12 col-md-4">
                             <div className="reviewer-box">
                                 <i className="fa-solid fa-quote-right"></i>
                                 <div className="product-rating">
@@ -468,7 +468,7 @@ const Aboutus=()=>{
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col-12 col-md-4">
                             <div className="reviewer-box">
                                 <i className="fa-solid fa-quote-right"></i>
                                 <div className="product-rating">
@@ -510,7 +510,7 @@ const Aboutus=()=>{
                             </div>
                         </div>
 
-                        <div className="col-4">
+                        <div className="col-12 col-md-4">
                             <div className="reviewer-box ">
                                 <i className="fa-solid fa-quote-right"></i>
                                 <div className="product-rating">
