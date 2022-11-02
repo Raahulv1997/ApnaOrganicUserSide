@@ -47,7 +47,7 @@ const Checkout = (props) => {
                                     src="https://cdn.lordicon.com/ggihhudh.json"
                                     trigger="loop-on-hover"
                                     colors="primary:#121331,secondary:#646e78,tertiary:#0baf9a"
-                                    className="lord-icon"
+                                      className="lord-icon"
                                   ></lord-icon>
                                 </div>
                               </div>

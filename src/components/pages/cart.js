@@ -198,7 +198,7 @@ const Cart = (props) => {
                       <button className="btn-apply">Apply</button>
                     </div>
                   </div>
-                  <ul>
+                  <ul className="p-0">
                     <li>
                       <h4>Subtotal</h4>
                       <h4 className="price">₹125.65</h4>
@@ -224,11 +224,11 @@ const Cart = (props) => {
                 </ul>
 
                 <div className="button-group cart-button">
-                  <ul>
-                    <li>
+                  <ul className="p-0">
+                    <li className="w-100">
                       <NavLink
                         to="/checkout"
-                        className="btn btn-animation proceed-btn fw-bold"
+                        className="btn btn-animation proceed-btn fw-bold w-100"
                       >
                         Process To Checkout
                       </NavLink>
@@ -237,9 +237,9 @@ const Cart = (props) => {
                     <li>
                       <NavLink
                         to="/"
-                        className="btn btn-light shopping-button text-dark"
+                        className="btn btn-light shopping-button text-dark w-100"
                       >
-                        <i className="fa-solid fa-arrow-left-long"></i>Return To
+                        <i className="fa-solid fa-arrow-left-long me-3"></i>Return To
                         Shopping
                       </NavLink>
                     </li>

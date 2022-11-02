@@ -129,6 +129,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
+            <div className="all_catagrey_tabs">
       <Tabs
         defaultActiveKey="all"
         id="uncontrolled-tab-example myTab"
@@ -356,6 +357,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
       </section>
         </Tab>
       </Tabs>
+      </div>
       {/* <ul className="nav nav-tabs tab-style-color" id="myTab">
               <li className="nav-item">
                 <button
