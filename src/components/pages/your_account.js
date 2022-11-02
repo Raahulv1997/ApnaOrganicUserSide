@@ -16,6 +16,10 @@ import { BsHandbag, BsCheck2Square } from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
 import { GoLocation, GoMail } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
+import Col from 'react-bootstrap/Col';
+
+import InputGroup from 'react-bootstrap/InputGroup';
+
 // import {CiMail} from 'react-icons/ci';
 
 function Account() {
@@ -26,6 +30,18 @@ function Account() {
   const [click, setclick] = useState(false);
   const side_bar = () => {
     setclick(true);
+  };
+
+  const [validated, setValidated] = useState(false);
+
+  const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setValidated(true);
   };
   return (
     <React.Fragment>
@@ -2209,6 +2225,7 @@ function Account() {
                                 href="javascript:void(0)"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editProfile"
+                                onClick={handleShow}
                               >
                                 Edit
                               </a>
@@ -2301,6 +2318,7 @@ function Account() {
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
+                                              onClick={handleShow}
                                             >
                                               Edit
                                             </span>
@@ -2315,6 +2333,7 @@ function Account() {
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
+                                              onClick={handleShow}
                                             >
                                               Edit
                                             </span>
@@ -2470,75 +2489,73 @@ function Account() {
         </div>
       </section>
       <Modal size="lg" show={show} onHide={handleClose}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+
         <Modal.Header closeButton>
           <Modal.Title>Edit Profile</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row p-md-3 m-0">
             <div className="col-12">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
+              <Form.Group className="mb-3 aos_input" controlId="validationCustom01">
                 <Form.Label>Full Name</Form.Label>
-                <Form.Control type="text" placeholder="Name" />
+                <Form.Control type="text" placeholder="Name"  required/>
+                <Form.Control.Feedback type="invalid"> Please Enter Your Name</Form.Control.Feedback>
               </Form.Group>
             </div>
             <div className="col-md-6">
               <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
                 <Form.Label>Email Address</Form.Label>
-                <Form.Control type="text" placeholder="Email Address" />
+                <Form.Control type="text" placeholder="Email Address" required/>
+                <Form.Control.Feedback type="invalid">
+                Please Enter valid Email
+              </Form.Control.Feedback>
               </Form.Group>
             </div>
             <div className="col-md-6">
               <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
                 <Form.Label>Mobile</Form.Label>
-                <Form.Control type="text" placeholder="Mobile" />
+                <Form.Control type="text" placeholder="Mobile" required/>
+                <Form.Control.Feedback type="invalid"> Please Enter Your Phone Number</Form.Control.Feedback>
+
               </Form.Group>
             </div>
 
             <div className="col-12">
               <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
                 <Form.Label>Add Address</Form.Label>
-                <Form.Control type="location" placeholder="Add Address" />
+                <Form.Control type="location" placeholder="Add Address" required/>
+                <Form.Control.Feedback type="invalid"> Please Enter Address</Form.Control.Feedback>
+
               </Form.Group>
             </div>
             <div className="col-12">
               <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
                 <Form.Label>Add Address2</Form.Label>
                 <Form.Control type="location" placeholder="Add Address2" />
+                
               </Form.Group>
             </div>
             <div className="col-4">
               <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
                 <Form.Label>PIN Code</Form.Label>
-                <Form.Control type="text" placeholder="pin" />
+                <Form.Control type="text" placeholder="pin" required/>
+                <Form.Control.Feedback type="invalid"> Please Enter PIN Code</Form.Control.Feedback>
+
               </Form.Group>
             </div>
             <div className="col-4">
-            <Form.Label>Country</Form.Label>
+            <Form.Label>Gender</Form.Label>
               <Form.Select
                 aria-label="Search by category"
                 className="adminselectbox"
+                required
               >
               
-                <option>-Status-</option>
-                <option selected>Choose Your Country</option>
-                <option value="kindom">United Kingdom</option>
-                <option value="states">United States</option>
-                <option value="fra">France</option>
-                <option value="china">China</option>
-                <option value="spain">Spain</option>
-                <option value="italy">Italy</option>
-                <option value="turkey">Turkey</option>
-                <option value="germany">Germany</option>
-                <option value="russian">Russian Federation</option>
-                <option value="malay">Malaysia</option>
-                <option value="mexico">Mexico</option>
-                <option value="austria">Austria</option>
-                <option value="hong">Hong Kong SAR, China</option>
-                <option value="ukraine">Ukraine</option>
-                <option value="thailand">Thailand</option>
-                <option value="saudi">Saudi Arabia</option>
-                <option value="canada">Canada</option>
-                <option value="singa">Singapore</option>
+                <option>Gender</option>
+                <option selected>Male</option>
+                <option value="kindom">Female</option>
+                <Form.Control.Feedback type="invalid"> Please Select Gender</Form.Control.Feedback>
               </Form.Select>
             </div>
             <div className="col-4">
@@ -2546,6 +2563,7 @@ function Account() {
               <Form.Select
                 aria-label="Search by category"
                 className="adminselectbox"
+              
               >
                 <option selected>Choose Your City</option>
                 <option value="kindom">India</option>
@@ -2554,10 +2572,13 @@ function Account() {
                 <option value="china">Los Angeles</option>
                 <option value="spain">Thailand</option>
               </Form.Select>
+
             </div>
           </div>
         </Modal.Body>
         <Modal.Footer>
+        
+
           <button
             className="button main_outline_button btn btn-animation "
             onClick={handleClose}
@@ -2566,11 +2587,13 @@ function Account() {
           </button>
           <button
             className="button main_button btn theme-bg-color ms-3 fire-button"
-            onClick={handleClose}
+            // onClick={handleClose}
+            type="submit"
           >
             Save Change
           </button>
         </Modal.Footer>
+        </Form>
       </Modal>
       <Footer />
     </React.Fragment>
