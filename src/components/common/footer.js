@@ -109,24 +109,24 @@ const Footer=()=> {
                 </div>
                 <ul className="footer-list footer-contact mb-sm-0 mb-3 p-0">
                   <li>
-                    <a href="vegetables-demo.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Fresh Vegetables</a>
+                    <Link to="/shop" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Fresh Vegetables</Link>
                   </li>
                   <li>
-                    <a href="spice-demo.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Hot Spice</a>
+                    <Link to="/shop" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Hot Spice</Link>
                   </li>
                   <li>
-                    <a href="bags-demo.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>Brand New Bags</a>
+                    <Link to="/shop" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>Brand New Bags</Link>
                   </li>
                   <li>
-                    <a href="bakery-demo.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>New Bakery</a>
+                    <Link to="/shop" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>New Bakery</Link>
                   </li>
                   <li>
-                    <a href="grocery-demo.html" className="footer-contain-2">
-                      <i className="fa-solid fa-chevron-right"></i>New Grocery</a>
+                    <Link to="/shop" className="footer-contain-2">
+                      <i className="fa-solid fa-chevron-right"></i>New Grocery</Link>
                   </li>
                 </ul>
               </div>

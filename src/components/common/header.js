@@ -1413,17 +1413,17 @@ const Header = () => {
                     /> */}
                     <span>(123) 456 7890</span>
                   </div>
-                  <a
+                  {/* <a
                     href="javascript:void(0)"
                     className="btn theme-bg-color ms-3 fire-button"
                     data-bs-toggle="modal"
                     data-bs-target="#deal-box"
                   >
-                    {/* <div className="fire">
+                    <div className="fire">
                                             <img src="../public/icon/hot-sale.png" className="img-fluid" />
-                                        </div> */}
+                                        </div> 
                     <span>Hot Deals</span>
-                  </a>
+                  </a> */}
                 </div>
               </div>
             </div>

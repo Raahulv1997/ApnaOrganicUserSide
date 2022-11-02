@@ -18,7 +18,7 @@ const Shop=(props)=> {
     return (
         <Fragment>
             <Header />
-            <Breadcumb pageName={'Shop'} pageTitle={'Page Title'} />
+            <Breadcumb pageName={'Shop'} pageTitle={'Page Title'} pageHref={"/"} />
             {/* <!-- Shop Section Start --> */}
             <section className="section-b-space shop-section">
                 <div className="container-fluid-lg">
@@ -435,39 +435,6 @@ const Shop=(props)=> {
                                                         Low</Dropdown.Item>
                                         </Dropdown.Menu>
                                        </Dropdown>
-                                        {/* <div className="dropdown">
-                                            <button className="dropdown-toggle" type="button" id="dropdownMenuButton1"
-                                                data-bs-toggle="dropdown">
-                                                <span>Most Popular</span> <i className="fa-solid fa-angle-down"></i>
-                                            </button>
-                                            <ul className="dropdown-menu" aria-labelledby="dropdownMenuButton1">
-                                                <li>
-                                                    <a className="dropdown-item" id="pop" href="javascript:void(0)">Popularity</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" id="low" href="javascript:void(0)">Low - High
-                                                        Price</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" id="high" href="javascript:void(0)">High - Low
-                                                        Price</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" id="rating" href="javascript:void(0)">Average
-                                                        Rating</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" id="aToz" href="javascript:void(0)">A - Z Order</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" id="zToa" href="javascript:void(0)">Z - A Order</a>
-                                                </li>
-                                                <li>
-                                                    <a className="dropdown-item" id="off" href="javascript:void(0)">% Off - Hight To
-                                                        Low</a>
-                                                </li>
-                                            </ul>
-                                        </div> */}
                                     </div>
 
 
@@ -478,7 +445,6 @@ const Shop=(props)=> {
                                 {product.map((product)=>{
                                     return(
                                         <div key={product.id}><ProductBox  image={product.image} name={product.name} productMRF={product.productMRF} productPrice={product.productPrice} />
-                                        {/* <ProductBox productName={product.productName} productMRF={product.productMRF} productPrice={product.productPrice} /> */}
                                         </div>
                                         
                                         

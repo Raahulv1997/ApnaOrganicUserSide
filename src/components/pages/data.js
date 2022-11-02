@@ -113,7 +113,7 @@ const data3={
 			"product_name":"Creamy Chocolate Cake",
 			"mrp":"₹45",
 			"amrp":"₹55",
-			"offer":"8%",
+			"offer":"(8%)",
 			"creview":"23",
 			"pdiscription":"",
 			//"weight":"",

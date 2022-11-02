@@ -676,6 +676,11 @@ i::before {
   margin: calc(18px + (35 - 18) * ((100vw - 320px) / (1920 - 320))) auto 0;
   width: 50%;
 }
+.faq-breadscrumb .breadscrumb-contain .faq-form-tag button{
+  color: var(--theme-color);
+  background-color:white;
+  border: white;;
+}
 
 @media (max-width: 1660px) {
   .faq-breadscrumb .breadscrumb-contain .faq-form-tag {
@@ -3182,6 +3187,10 @@ input[type="number"]::-webkit-outer-spin-button {
 .product-section-box .custom-tab .nav-desh .desh-title {
   margin-bottom: 8px;
 }
+.product-section-box .product-description .nav-desh .desh-title h5{
+  margin-top: 20px;
+  font-weight: 700;
+}
 .product-section-box .nav-desh p {
   line-height: 25px !important;
   color: #000000a6 !important;
@@ -3509,6 +3518,10 @@ input[type="number"]::-webkit-outer-spin-button {
 
 .product-section-box .custom-tab .review-box .rating-box {
   margin-top: 17px;
+}
+.your_comment .form-control{
+
+ height: 150px !important; 
 }
 
 .product-section-box .custom-tab .review-box .rating-box ul {
@@ -4891,9 +4904,9 @@ input[type="number"]::-webkit-outer-spin-button {
   top: 0;
   right: 0;
 }
-.form-floating > label {
+/* .form-floating > label {
   top: 4px !important;
-}
+} */
 
 .title .product-tabs .nav-item {
   position: relative;
@@ -20553,6 +20566,7 @@ header .offcanvas-backdrop {
   position: relative;
   overflow: hidden;
   border-radius: 4px;
+  
 }
 
 .summery-box .summery-contain .coupon-cart .coupon-box .btn-apply {
@@ -20566,6 +20580,9 @@ header .offcanvas-backdrop {
 .summery-box .summery-contain .coupon-cart .coupon-box .form-control {
   border: 2px solid var(--theme-color);
   padding: 10px;
+}
+.coupon-box input{
+  font-size: 13px;
 }
 
 [dir="rtl"] .summery-box .summery-contain ul {
@@ -20982,7 +20999,9 @@ header .offcanvas-backdrop {
   a:hover {
   color: var(--theme-color);
 }
-
+.form-check{
+  white-space: nowrap;
+}
 .checkout-section
   .custom-accordion
   .accordion-item
@@ -27629,6 +27648,7 @@ header .offcanvas-backdrop {
   justify-content: space-between;
   margin-bottom: 0;
   padding: 0 0 8px 0;
+  
 }
 
 .shop-section .left-box .shop-left-sidebar .filter-category .filter-title h2 {
@@ -27683,6 +27703,7 @@ header .offcanvas-backdrop {
   right: 13px;
   color: #777;
   cursor: pointer;
+  
 }
 
 .shop-section .left-box .shop-left-sidebar .filter-category ul li a {
@@ -28755,6 +28776,7 @@ header .offcanvas-backdrop {
 .product-section .right-box-contain .price-rating .custom-rate .review {
   font-size: 13px;
   margin-left: 12px;
+  margin-top: 5px;
 }
 
 [dir="rtl"]
