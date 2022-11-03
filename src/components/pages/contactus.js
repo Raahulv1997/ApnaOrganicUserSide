@@ -91,14 +91,16 @@ const Contactus=()=>{
                     <div className="title d-xxl-none d-block">
                         <h2>Contact Us</h2>
                     </div>
-                    <div className="right-sidebar-box">
-                        <div className="row">
+                    <div className="right-sidebar-box" >
+                        <div className="row" >
                             <div className="col-md-6">
-                                <div className="mb-md-4 mb-3 custom-form">
+                                <div className="mb-md-4 mb-3 custom-form" >
                                     <label for="exampleFormControlInput" className="form-label">First Name</label>
                                     <div className="custom-input">
-                                        <input type="text" className="form-control" id="exampleFormControlInput"
+                                        <input type="text" className="form-control" 
+                                       id="name"
                                             placeholder="Enter First Name"/>
+                                           
                                         <i className="fa-solid fa-user"></i>
                                     </div>
                                 </div>
@@ -108,8 +110,10 @@ const Contactus=()=>{
                                 <div className="mb-md-4 mb-3 custom-form">
                                     <label for="exampleFormControlInput1" className="form-label">Last Name</label>
                                     <div className="custom-input">
-                                        <input type="text" className="form-control" id="exampleFormControlInput1"
+                                        <input type="text" className="form-control" 
+                                        id="name"
                                             placeholder="Enter Last Name"/>
+                                            
                                         <i className="fa-solid fa-user"></i>
                                     </div>
                                 </div>
@@ -121,6 +125,7 @@ const Contactus=()=>{
                                     <div className="custom-input">
                                         <input type="email" className="form-control" id="exampleFormControlInput2"
                                             placeholder="Enter Email Address"/>
+                                            <div class="error" id="emailErr"></div>
                                         <i className="fa-solid fa-envelope"></i>
                                     </div>
                                 </div>
@@ -133,6 +138,7 @@ const Contactus=()=>{
                                         <input type="tel" class="form-control" id="exampleFormControlInput3"
                                             placeholder="Enter Your Phone Number" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value =
                                             this.value.slice(0, this.maxLength);"/>
+                                            
                                         <i className="fa-solid fa-mobile-screen-button"></i>
                                     </div>
                                 </div>
