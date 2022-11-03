@@ -977,7 +977,7 @@ const Header = () => {
                             Shop
                           </NavLink>
 
-                          <ul className="dropdown-menu">
+                          <ul className="dropdown-menu ps-4">
                             <li>
                               <a
                                 className="dropdown-item"
@@ -1045,7 +1045,7 @@ const Header = () => {
                             Product
                           </NavLink>
 
-                          <ul className="dropdown-menu">
+                          <ul className="dropdown-menu ps-4">
                             <li>
                               <a
                                 className="dropdown-item"
@@ -1273,7 +1273,7 @@ const Header = () => {
                           >
                             Blog
                           </a>
-                          <ul className="dropdown-menu">
+                          <ul className="dropdown-menu ps-4">
                             <li>
                               <NavLink
                                 to="/blog_detail"
@@ -1310,7 +1310,7 @@ const Header = () => {
                           >
                             Pages
                           </a>
-                          <ul className="dropdown-menu">
+                          <ul className="dropdown-menu ps-4">
                             <li>
                               <a className="dropdown-item" href="404.html">
                                 404

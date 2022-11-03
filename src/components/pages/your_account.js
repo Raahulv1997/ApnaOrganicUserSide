@@ -16,9 +16,9 @@ import { BsHandbag, BsCheck2Square } from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
 import { GoLocation, GoMail } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
-import Col from 'react-bootstrap/Col';
-
-import InputGroup from 'react-bootstrap/InputGroup';
+import Col from "react-bootstrap/Col";
+import profile_cover from "../../Photos/media/cover-img.jpg"
+import InputGroup from "react-bootstrap/InputGroup";
 
 // import {CiMail} from 'react-icons/ci';
 
@@ -27,22 +27,82 @@ function Account() {
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  const [Password, setPassword] = useState(false);
+    const ChangepassClose = () => setPassword(false);
+  const ChangepassShow = () => setPassword(true);
+  
+  let userjson= {
+    "firstName": "Isaac",
+    "lastName": "Brock",
+    "email": "isaac.brock@example.com",
+    "login": "isaac.brock@example.com",
+    "mobilePhone": "555-415-1337",
+    "address":"45 Universal Tower, 2nd Floor, Scheme 54 PU4, Indore",
+    "gender":"Male",
+    "DOB":"2022-11-09"
+
+    
+  }
+
   const [click, setclick] = useState(false);
   const side_bar = () => {
     setclick(true);
   };
 
+  const [userdata,setuserdata] = useState(userjson);
   const [validated, setValidated] = useState(false);
-
   const handleSubmit = (event) => {
-    const form = event.currentTarget;
+    event.preventDefault();
+
+    let form = event.currentTarget;
+    // const name = event.target.value;
+    console.log(userdata);
+    // console.log("+++++++++FORMDATA"+event.target.DOB.value);
+    // console.log("+++++++++FORMDATA"+event.target.email.value);
     if (form.checkValidity() === false) {
-      event.preventDefault();
+          event.preventDefault();
       event.stopPropagation();
     }
-
+    
     setValidated(true);
   };
+
+  const OnchangeFistname = (e) =>{
+    let name= e.target.value;
+    console.log(name)
+    setuserdata({
+      ...userdata,
+      [e.target.name]: e.target.value
+    });
+  };
+  
+
+  // change Password
+
+  const [changepass,setchangepass] = useState(0);
+  const [passvalidated, setpassValidated] = useState(false);
+  const handlePassSubmit = (event) => {
+    event.preventDefault();
+
+    let form = event.currentTarget;
+    console.log(changepass);
+      if (form.checkValidity() === false) {
+          event.preventDefault();
+      event.stopPropagation();
+    }
+    
+    setpassValidated(true);
+  };
+  
+  const OnchangePass = (e) =>{
+    let name= e.target.value;
+    console.log(name)
+    setchangepass({
+      ...changepass,
+      [e.target.name]: e.target.value
+    });
+  };
+  
   return (
     <React.Fragment>
       <Header />
@@ -57,14 +117,13 @@ function Account() {
           <Tab.Container id="left-tabs-example" defaultActiveKey="first">
             <div className="row">
               <div className="col-xxl-3 col-lg-4">
-              
                 <div
-                    className={
-                      click == true
-                        ? "dashboard-left-sidebar show"
-                        : "dashboard-left-sidebar"
-                    }
-                  >
+                  className={
+                    click == true
+                      ? "dashboard-left-sidebar show"
+                      : "dashboard-left-sidebar"
+                  }
+                >
                   <div className="close-button d-flex d-lg-none">
                     <button className="close-sidebar">
                       <span onClick={() => setclick(false)}>&times;</span>
@@ -73,7 +132,7 @@ function Account() {
                   <div className="profile-box">
                     <div className="cover-image">
                       <img
-                        src="../assets/images/inner-page/cover-img.jpg"
+                        src={profile_cover}
                         className="img-fluid  lazyload"
                         alt=""
                       />
@@ -89,15 +148,15 @@ function Account() {
                           />
                           <div className="cover-icon">
                             <i className="fa-solid fa-pen">
-                              <input type="file" onchange="readURL(this,0)" />
+                              <input type="file" onChange="readURL(this,0)" />
                             </i>
                           </div>
                         </div>
                       </div>
 
                       <div className="profile-name">
-                        <h3>Vicki E. Pope</h3>
-                        <h6 className="text-content">vicki.pope@gmail.com</h6>
+                        <h3>Rajaram Patidar</h3>
+                        <h6 className="text-content">rajwe2code@gmail.com</h6>
                       </div>
                     </div>
                   </div>
@@ -188,7 +247,7 @@ function Account() {
                         </Nav.Link>
                       </Nav.Item>
                       <Nav.Item>
-                        <Nav.Link eventKey="addresh">
+                        <Nav.Link eventKey="address">
                           {" "}
                           <li className="nav-item" role="presentation">
                             <button
@@ -256,7 +315,10 @@ function Account() {
               </div>
 
               <div className="col-xxl-9 col-lg-8">
-                <button className="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none" onClick={side_bar}>
+                <button
+                  className="btn left-dashboard-show btn-animation btn-md fw-bold d-block mb-4 d-lg-none"
+                  onClick={side_bar}
+                >
                   Show Menu
                 </button>
                 <div className="dashboard-right-sidebar">
@@ -362,7 +424,7 @@ function Account() {
                                   <h4>
                                     Contact Information{" "}
                                     <a
-                                      href="javascript:void(0)"
+                                      href="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                       onClick={handleShow}
@@ -376,7 +438,7 @@ function Account() {
                                   <h6 className="text-content">
                                     vicki.pope@gmail.com
                                   </h6>
-                                  <a href="javascript:void(0)">
+                                  <a href="javascript:void(0)" onClick={ChangepassShow}>
                                     Change Password
                                   </a>
                                 </div>
@@ -1795,7 +1857,7 @@ function Account() {
                         </div>
                       </div>
                     </Tab.Pane>
-                    <Tab.Pane eventKey="addresh">
+                    <Tab.Pane eventKey="address">
                       <div
                         className="tab-pane fade show"
                         id="pills-address"
@@ -1844,7 +1906,7 @@ function Account() {
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colspan="2">Jack Jennas</td>
+                                          <td colSpan="2">Jack Jennas</td>
                                         </tr>
 
                                         <tr>
@@ -1913,7 +1975,7 @@ function Account() {
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colspan="2">Terry S. Sutton</td>
+                                          <td colSpan="2">Terry S. Sutton</td>
                                         </tr>
 
                                         <tr>
@@ -1981,7 +2043,7 @@ function Account() {
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colspan="2">Juan M. McKeon</td>
+                                          <td colSpan="2">Juan M. McKeon</td>
                                         </tr>
 
                                         <tr>
@@ -2050,7 +2112,7 @@ function Account() {
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colspan="2">Gary M. Bailey</td>
+                                          <td colSpan="2">Gary M. Bailey</td>
                                         </tr>
 
                                         <tr>
@@ -2118,7 +2180,7 @@ function Account() {
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colspan="2">Gary M. Bailey</td>
+                                          <td colSpan="2">Gary M. Bailey</td>
                                         </tr>
 
                                         <tr>
@@ -2333,7 +2395,7 @@ function Account() {
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
-                                              onClick={handleShow}
+                                              onClick={ChangepassShow}
                                             >
                                               Edit
                                             </span>
@@ -2384,7 +2446,7 @@ function Account() {
                                   />
                                   <label
                                     className="form-check-label"
-                                    for="redio1"
+                                    htmlFor="redio1"
                                   ></label>
                                 </div>
                               </div>
@@ -2409,7 +2471,7 @@ function Account() {
                                   />
                                   <label
                                     className="form-check-label"
-                                    for="redio2"
+                                    htmlFor="redio2"
                                   ></label>
                                 </div>
                               </div>
@@ -2441,7 +2503,7 @@ function Account() {
                                   />
                                   <label
                                     className="form-check-label"
-                                    for="redio3"
+                                    htmlFor="redio3"
                                   ></label>
                                 </div>
                               </div>
@@ -2463,7 +2525,7 @@ function Account() {
                                   />
                                   <label
                                     className="form-check-label"
-                                    for="redio4"
+                                    htmlFor="redio4"
                                   ></label>
                                 </div>
                               </div>
@@ -2487,114 +2549,217 @@ function Account() {
             </div>
           </Tab.Container>
         </div>
+      
       </section>
+
+
       <Modal size="lg" show={show} onHide={handleClose}>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row p-md-3 m-0">
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>Full Name</Form.Label>
+                  <Form.Control type="text" placeholder="Name" value={userdata.firstName} name={'firstName'} onChange={OnchangeFistname} required />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your Name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Email Address"
+                    required
+                    value={userdata.email} name={'email'}
+                    onChange={OnchangeFistname}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please Enter valid Email
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Mobile</Form.Label>
+                  <Form.Control type="text" placeholder="Mobile" value={userdata.mobilePhone} name={'mobilePhone'} onChange={OnchangeFistname} required />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your Phone Number
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
 
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address</Form.Label>
+                  <Form.Control
+                    type="location"
+                    placeholder="Add Address"
+                    required
+                    value={userdata.address} name={'address'} onChange={OnchangeFistname}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Address
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address2</Form.Label>
+                  <Form.Control type="location" placeholder="Add Address2"  value={userdata.address} name={'address'} onChange={OnchangeFistname}/>
+                </Form.Group>
+              </div>
+
+              <div className="col-4">
+              <Form.Label className="inputlabelheading" column sm="12">
+                      Gender
+                    </Form.Label>
+              <Form.Select
+                        aria-label="Product Type"
+                        className="adminselectbox"
+                        required
+                        value={userdata.gender} name={'gender'} onChange={OnchangeFistname}
+                      >
+                        <option value={''}>Gender</option>
+                        <option value="Male">Male</option>
+                        <option value="Female">Female</option>
+                       
+                        </Form.Select>
+                      <Form.Control.Feedback type="invalid" className="h6">
+                        Please select producttype
+                      </Form.Control.Feedback>
+              </div>
+              <div className="col-4">
+              <Form.Group className="mx-3" controlId="validationCustom11">
+                    <Form.Label className="inputlabelheading" column sm="12">
+                      Date of Birth
+                    </Form.Label>
+                    <Col sm="12">
+                      <Form.Control type="date" placeholder="Product Quantity"  value={userdata.DOB} name={'DOB'} onChange={OnchangeFistname} required />
+                      <Form.Control.Feedback type="invalid">
+                        Please choose date of birth
+                      </Form.Control.Feedback>
+                    </Col>
+                  </Form.Group>
+              </div>
+               </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              className="button main_outline_button btn btn-animation "
+              onClick={handleClose}
+            >
+              Cancel
+            </button>
+            <button
+              className="button main_button btn theme-bg-color ms-3 fire-button"
+              // onClick={handleSubmit}
+              type="submit"
+            >
+              Save Change
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      <Modal size="md" show={Password} onHide={ChangepassClose}>
+      <Form noValidate validated={passvalidated} onSubmit={handlePassSubmit}>
         <Modal.Header closeButton>
-          <Modal.Title>Edit Profile</Modal.Title>
+          <Modal.Title>Change Password</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row p-md-3 m-0">
             <div className="col-12">
-              <Form.Group className="mb-3 aos_input" controlId="validationCustom01">
-                <Form.Label>Full Name</Form.Label>
-                <Form.Control type="text" placeholder="Name"  required/>
-                <Form.Control.Feedback type="invalid"> Please Enter Your Name</Form.Control.Feedback>
-              </Form.Group>
-            </div>
-            <div className="col-md-6">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control type="text" placeholder="Email Address" required/>
+              <Form.Group
+                className="mb-3 aos_input"
+                controlId="validationCustom01"
+              >
+                <Form.Label>Current Password</Form.Label>
+                <Form.Control type="text" placeholder="Current password" value={changepass.current_password} name={'currentpassword'} onChange={OnchangePass} required />
                 <Form.Control.Feedback type="invalid">
-                Please Enter valid Email
-              </Form.Control.Feedback>
-              </Form.Group>
-            </div>
-            <div className="col-md-6">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
-                <Form.Label>Mobile</Form.Label>
-                <Form.Control type="text" placeholder="Mobile" required/>
-                <Form.Control.Feedback type="invalid"> Please Enter Your Phone Number</Form.Control.Feedback>
-
-              </Form.Group>
-            </div>
-
-            <div className="col-12">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
-                <Form.Label>Add Address</Form.Label>
-                <Form.Control type="location" placeholder="Add Address" required/>
-                <Form.Control.Feedback type="invalid"> Please Enter Address</Form.Control.Feedback>
-
+                  {" "}
+                  Please Enter Current password
+                </Form.Control.Feedback>
               </Form.Group>
             </div>
             <div className="col-12">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
-                <Form.Label>Add Address2</Form.Label>
-                <Form.Control type="location" placeholder="Add Address2" />
-                
-              </Form.Group>
-            </div>
-            <div className="col-4">
-              <Form.Group className="mb-3 aos_input" controlId="formBasicEmail">
-                <Form.Label>PIN Code</Form.Label>
-                <Form.Control type="text" placeholder="pin" required/>
-                <Form.Control.Feedback type="invalid"> Please Enter PIN Code</Form.Control.Feedback>
-
-              </Form.Group>
-            </div>
-            <div className="col-4">
-            <Form.Label>Gender</Form.Label>
-              <Form.Select
-                aria-label="Search by category"
-                className="adminselectbox"
-                required
+              <Form.Group
+                className="mb-3 aos_input"
+                controlId="formBasicEmail"
               >
-              
-                <option>Gender</option>
-                <option selected>Male</option>
-                <option value="kindom">Female</option>
-                <Form.Control.Feedback type="invalid"> Please Select Gender</Form.Control.Feedback>
-              </Form.Select>
-            </div>
-            <div className="col-4">
-            <Form.Label>City</Form.Label>
-              <Form.Select
-                aria-label="Search by category"
-                className="adminselectbox"
-              
+                <Form.Label>New Password</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="New Password"
+                  required
+                  value={changepass.new_password} name={'newpassword'}
+                  onChange={OnchangePass}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please Enter valid Password
+                </Form.Control.Feedback>
+              </Form.Group>
+              <div className="col-12">
+              <Form.Group
+                className="mb-3 aos_input"
+                controlId="formBasicEmail"
               >
-                <option selected>Choose Your City</option>
-                <option value="kindom">India</option>
-                <option value="states">Canada</option>
-                <option value="fra">Dubai</option>
-                <option value="china">Los Angeles</option>
-                <option value="spain">Thailand</option>
-              </Form.Select>
-
-            </div>
-          </div>
+                <Form.Label>Confirm Password</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="Confirm Password"
+                  required
+                  value={changepass.confirm_password} name={'confirmpassword'}
+                  onChange={OnchangePass}
+                />
+                <Form.Control.Feedback type="invalid">
+                  Please Enter valid Confirm Password
+                </Form.Control.Feedback>
+              </Form.Group>
+            </div>    
+             </div>
+             </div>
         </Modal.Body>
         <Modal.Footer>
-        
-
           <button
             className="button main_outline_button btn btn-animation "
-            onClick={handleClose}
+            onClick={ChangepassClose}
           >
             Cancel
           </button>
           <button
             className="button main_button btn theme-bg-color ms-3 fire-button"
-            // onClick={handleClose}
+            // onClick={ChangepassClose}
             type="submit"
           >
             Save Change
           </button>
         </Modal.Footer>
-        </Form>
-      </Modal>
+      </Form>
+    </Modal>
       <Footer />
     </React.Fragment>
   );

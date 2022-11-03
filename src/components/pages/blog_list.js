@@ -18,28 +18,28 @@ const BlogList = () => {
         <Header />
         <Breadcumb pageName={'Blog List'} pageTitle={'Page Title'} />
   {/* <!-- Blog Section Start --> */}
-  <section class="blog-section section-b-space">
-      <div class="container-fluid-lg">
-        <div class="row g-4">
-          <div class="col-xxl-9 col-xl-8 col-lg-7 order-lg-2">
-            <div class="row g-4">
-              <div class="col-12">
-                <div class="blog-box blog-list wow fadeInUp">
-                  <div class="blog-image">
+  <section className="blog-section section-b-space">
+      <div className="container-fluid-lg">
+        <div className="row g-4">
+          <div className="col-xxl-9 col-xl-8 col-lg-7 order-lg-2">
+            <div className="row g-4">
+              <div className="col-12">
+                <div className="blog-box blog-list wow fadeInUp">
+                  <div className="blog-image">
                     <img
                       src={blog1}
-                      class="lazyload"
+                      className="lazyload"
                       alt=""
                     />
                   </div>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>Mark J. Speight</span></span
                       >
@@ -55,34 +55,34 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.05s"
                 >
-                  <div class="blog-image">
+                  <div className="blog-image">
                     <img
                       src={blog2}
-                      class="lazyload"
+                      className="lazyload"
                       alt=""
                     />
                   </div>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>rebeus hagrid</span></span
                       >
@@ -98,39 +98,39 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.1s"
                 >
-                  <div class="blog-image">
+                  <div className="blog-image">
                     <a href="blog-detail.html">
                       <img
                         src={blog3}
-                        class="lazyload"
+                        className="lazyload"
                         alt=""
                       />
                     </a>
                     <label
-                      ><i class="fa-solid fa-bolt-lightning"></i> popular</label
+                      ><i className="fa-solid fa-bolt-lightning"></i> popular</label
                     >
                   </div>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>Chris C. Hall</span></span
                       >
@@ -149,34 +149,34 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.15s"
                 >
-                  <a href="blog-detail.html" class="blog-image">
+                  <a href="blog-detail.html" className="blog-image">
                     <img
                       src={blog4}
-                      class="lazyload"
+                      className="lazyload"
                       alt=""
                     />
                   </a>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>James M. Martin</span></span
                       >
@@ -192,34 +192,34 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.2s"
                 >
-                  <a href="blog-detail.html" class="blog-image">
+                  <a href="blog-detail.html" className="blog-image">
                     <img
                       src={blog5}
-                      class="lazyload"
+                      className="lazyload"
                       alt=""
                     />
                   </a>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>Cecil M. Levis</span></span
                       >
@@ -237,34 +237,34 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.25s"
                 >
-                  <a href="blog-detail.html" class="blog-image">
+                  <a href="blog-detail.html" className="blog-image">
                     <img
                       src={blog1}
-                      class="lazyload"
+                      className="lazyload"
                       alt=""
                     />
                   </a>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>Mary R. Hernandez</span></span
                       >
@@ -283,34 +283,34 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.3s"
                 >
-                  <a href="blog-detail.html" class="blog-image">
+                  <a href="blog-detail.html" className="blog-image">
                     <img
                       src={blog2}
-                      class="lazyload"
+                      className="lazyload"
                       alt=""
                     />
                   </a>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>Cheryl D. Moser</span></span
                       >
@@ -329,34 +329,34 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.35s"
                 >
-                  <a href="blog-detail.html" class="blog-image">
+                  <a href="blog-detail.html" className="blog-image">
                     <img
                       src={blog3}
                       alt=""
-                      class="lazyload"
+                      className="lazyload"
                     />
                   </a>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>Mina M. Short</span></span
                       >
@@ -372,34 +372,34 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
 
-              <div class="col-12">
+              <div className="col-12">
                 <div
-                  class="blog-box blog-list wow fadeInUp"
+                  className="blog-box blog-list wow fadeInUp"
                   data-wow-delay="0.4s"
                 >
-                  <a href="blog-detail.html" class="blog-image">
+                  <a href="blog-detail.html" className="blog-image">
                     <img
                       src={blog4}
                       alt=""
-                      class="lazyload"
+                      className="lazyload"
                     />
                   </a>
 
-                  <div class="blog-contain blog-contain-2">
-                    <div class="blog-label">
-                      <span class="time"
+                  <div className="blog-contain blog-contain-2">
+                    <div className="blog-label">
+                      <span className="time"
                         ><i data-feather="clock"></i>
                         <span>25 Feg, 2022</span></span
                       >
-                      <span class="super"
+                      <span className="super"
                         ><i data-feather="user"></i>
                         <span>Marie S. Santiago</span></span
                       >
@@ -417,114 +417,114 @@ const BlogList = () => {
                     </p>
                     <button
                       onclick="location.href = 'blog-detail.html';"
-                      class="blog-button"
+                      className="blog-button"
                     >
-                      Read More <i class="fa-solid fa-right-long"></i>
+                      Read More <i className="fa-solid fa-right-long"></i>
                     </button>
                   </div>
                 </div>
               </div>
             </div>
 
-            <nav class="custome-pagination">
-              <ul class="pagination justify-content-center">
-                <li class="page-item disabled">
-                  <a class="page-link" href="javascript:void(0)" tabindex="-1">
-                    <i class="fa-solid fa-angles-left"></i>
+            <nav className="custome-pagination">
+              <ul className="pagination justify-content-center">
+                <li className="page-item disabled">
+                  <a className="page-link" href="#" tabindex="-1">
+                    <i className="fa-solid fa-angles-left"></i>
                   </a>
                 </li>
-                <li class="page-item active">
-                  <a class="page-link" href="javascript:void(0)">1</a>
+                <li className="page-item active">
+                  <a className="page-link" href="#">1</a>
                 </li>
-                <li class="page-item" aria-current="page">
-                  <a class="page-link" href="javascript:void(0)">2</a>
+                <li className="page-item" aria-current="page">
+                  <a className="page-link" href="#">2</a>
                 </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">3</a>
+                <li className="page-item">
+                  <a className="page-link" href="#">3</a>
                 </li>
-                <li class="page-item">
-                  <a class="page-link" href="javascript:void(0)">
-                    <i class="fa-solid fa-angles-right"></i>
+                <li className="page-item">
+                  <a className="page-link" href="#">
+                    <i className="fa-solid fa-angles-right"></i>
                   </a>
                 </li>
               </ul>
             </nav>
           </div>
 
-          <div class="col-xxl-3 col-xl-4 col-lg-5 order-lg-1">
-            <div class="left-sidebar-box wow fadeInUp">
-              <div class="left-search-box">
-                <div class="search-box">
+          <div className="col-xxl-3 col-xl-4 col-lg-5 order-lg-1">
+            <div className="left-sidebar-box wow fadeInUp">
+              <div className="left-search-box">
+                <div className="search-box">
                   <input
                     type="search"
-                    class="form-control"
+                    className="form-control"
                     id="exampleFormControlInput1"
                     placeholder="Search...."
                   />
                 </div>
               </div>
-              <div className="accordion left-accordion-box" id="accordionPanelsStayOpenExample">
+              <div classNameName="accordion left-accordion-box" id="accordionPanelsStayOpenExample">
               <Accordion>
                         <Accordion.Item eventKey="2">
                             <Accordion.Header>
                             Recent Post
                             </Accordion.Header>
                             <Accordion.Body>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                            <div id="panelsStayOpen-collapseOne" className="accordion-collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingOne">
-                            <div className="accordion-body pt-0">
-                                        <div className="recent-post-box">
-                                            <div className="recent-box">
-                                                <a href="blog-detail.html" className="recent-image">
+                            <div classNameName="accordion-body pt-0">
+                                        <div classNameName="recent-post-box">
+                                            <div classNameName="recent-box">
+                                                <a href="blog-detail.html" classNameName="recent-image">
                                                     <img src={blog1}
-                                                        className="img-fluid  lazyload" alt=""/>
+                                                        classNameName="img-fluid  lazyload" alt=""/>
                                                 </a>
 
-                                                <div className="recent-detail">
+                                                <div classNameName="recent-detail">
                                                     <a href="blog-detail.html">
-                                                        <h5 className="recent-name">Green onion knife and salad placed</h5>
+                                                        <h5 classNameName="recent-name">Green onion knife and salad placed</h5>
                                                     </a>
                                                     <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
                                                 </div>
                                             </div>
 
-                                            <div className="recent-box">
-                                                <a href="blog-detail.html" className="recent-image">
+                                            <div classNameName="recent-box">
+                                                <a href="blog-detail.html" classNameName="recent-image">
                                                     <img src={blog2}
-                                                        class="img-fluid  lazyload" alt=""/>
-                                                </a>
-
-                                                <div className="recent-detail">
-                                                    <a href="blog-detail.html">
-                                                        <h5 className="recent-name">Health and skin for your organic</h5>
-                                                    </a>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                                <a href="blog-detail.html" className="recent-image">
-                                                    <img src={blog3}
-                                                        class="img-fluid  lazyload" alt=""/>
-                                                </a>
-
-                                                <div className="recent-detail">
-                                                    <a href="blog-detail.html">
-                                                        <h5 className="recent-name">Organics mix masala fresh & soft</h5>
-                                                    </a>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                                <a href="blog-detail.html" class="recent-image">
-                                                    <img src={blog4}
                                                         className="img-fluid  lazyload" alt=""/>
                                                 </a>
 
-                                                <div className="recent-detail">
+                                                <div classNameName="recent-detail">
                                                     <a href="blog-detail.html">
-                                                        <h5 className="recent-name">Fresh organics brand and picnic</h5>
+                                                        <h5 classNameName="recent-name">Health and skin for your organic</h5>
+                                                    </a>
+                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
+                                                </div>
+                                            </div>
+
+                                            <div classNameName="recent-box">
+                                                <a href="blog-detail.html" classNameName="recent-image">
+                                                    <img src={blog3}
+                                                        className="img-fluid  lazyload" alt=""/>
+                                                </a>
+
+                                                <div classNameName="recent-detail">
+                                                    <a href="blog-detail.html">
+                                                        <h5 classNameName="recent-name">Organics mix masala fresh & soft</h5>
+                                                    </a>
+                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
+                                                </div>
+                                            </div>
+
+                                            <div classNameName="recent-box">
+                                                <a href="blog-detail.html" className="recent-image">
+                                                    <img src={blog4}
+                                                        classNameName="img-fluid  lazyload" alt=""/>
+                                                </a>
+
+                                                <div classNameName="recent-detail">
+                                                    <a href="blog-detail.html">
+                                                        <h5 classNameName="recent-name">Fresh organics brand and picnic</h5>
                                                     </a>
                                                     <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
                                                 </div>
@@ -541,14 +541,14 @@ const BlogList = () => {
                                 Category
                                 </Accordion.Header>
                                 <Accordion.Body>
-                                <div id="panelsStayOpen-collapseTwo" class="accordion-collapse collapse collapse show"
+                                <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingTwo">
-                                    <div class="accordion-body p-0">
-                                        <div class="category-list-box">
+                                    <div className="accordion-body p-0">
+                                        <div className="category-list-box">
                                             <ul>
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Latest Recipes</h5>
                                                             <span>10</span>
                                                         </div>
@@ -557,7 +557,7 @@ const BlogList = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Diet Food</h5>
                                                             <span>6</span>
                                                         </div>
@@ -566,7 +566,7 @@ const BlogList = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Low calorie Items</h5>
                                                             <span>8</span>
                                                         </div>
@@ -575,7 +575,7 @@ const BlogList = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Cooking Method</h5>
                                                             <span>9</span>
                                                         </div>
@@ -584,7 +584,7 @@ const BlogList = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Dairy Free</h5>
                                                             <span>12</span>
                                                         </div>
@@ -593,7 +593,7 @@ const BlogList = () => {
 
                                                 <li>
                                                     <a href="blog-list.html">
-                                                        <div class="category-name">
+                                                        <div className="category-name">
                                                             <h5>Vegetarian Food</h5>
                                                             <span>10</span>
                                                         </div>
@@ -612,42 +612,42 @@ const BlogList = () => {
                                 Product Tags
                                 </Accordion.Header>
                                 <Accordion.Body>
-                                <div id="panelsStayOpen-collapseThree" class="accordion-collapse collapse collapse show"
+                                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingThree">
-                                    <div class="accordion-body pt-0">
-                                        <div class="product-tags-box">
+                                    <div className="accordion-body pt-0">
+                                        <div className="product-tags-box">
                                             <ul>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">Fruit Cutting</a>
+                                                    <a href="#">Fruit Cutting</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">Meat</a>
+                                                    <a href="#">Meat</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">organic</a>
+                                                    <a href="#">organic</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">cake</a>
+                                                    <a href="#">cake</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">pick fruit</a>
+                                                    <a href="#">pick fruit</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">backery</a>
+                                                    <a href="#">backery</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">organix food</a>
+                                                    <a href="#">organix food</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">Most Expensive Fruit</a>
+                                                    <a href="#">Most Expensive Fruit</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -662,62 +662,62 @@ const BlogList = () => {
                                 Trending Products
                                 </Accordion.Header>
                                 <Accordion.Body>
-                                <div id="panelsStayOpen-collapseFour" class="accordion-collapse collapse collapse show"
+                                <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingFour">
-                                    <div class="accordion-body">
-                                        <ul class="product-list product-list-2 border-0 p-0">
+                                    <div className="accordion-body">
+                                        <ul className="product-list product-list-2 border-0 p-0">
                                             <li>
-                                                <div class="offer-product">
-                                                    <a href="shop-left-sidebar.html" class="offer-image">
+                                                <div className="offer-product">
+                                                    <a href="shop-left-sidebar.html" className="offer-image">
                                                         <img src={veg23}
-                                                          class=" lazyload" alt=""/>
+                                                          className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="shop-left-sidebar.html">
-                                                                <h6 class="name">Meatigo Premium Goat Curry</h6>
+                                                                <h6 className="name">Meatigo Premium Goat Curry</h6>
                                                             </a>
                                                             <span>450 G</span>
-                                                            <h6 class="price theme-color">$ 70.00</h6>
+                                                            <h6 className="price theme-color">$ 70.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
                                             <li>
-                                                <div class="offer-product">
-                                                    <a href="shop-left-sidebar.html" class="offer-image">
+                                                <div className="offer-product">
+                                                    <a href="shop-left-sidebar.html" className="offer-image">
                                                         <img src={veg24}
-                                                            class=" lazyload" alt=""/>
+                                                            className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="shop-left-sidebar.html">
-                                                                <h6 class="name">Dates Medjoul Premium Imported</h6>
+                                                                <h6 className="name">Dates Medjoul Premium Imported</h6>
                                                             </a>
                                                             <span>450 G</span>
-                                                            <h6 class="price theme-color">$ 40.00</h6>
+                                                            <h6 className="price theme-color">$ 40.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
                                             </li>
 
-                                            <li class="mb-0">
-                                                <div class="offer-product">
-                                                    <a href="shop-left-sidebar.html" class="offer-image">
+                                            <li className="mb-0">
+                                                <div className="offer-product">
+                                                    <a href="shop-left-sidebar.html" className="offer-image">
                                                         <img src={veg26}
-                                                            class=" lazyload" alt=""/>
+                                                            className=" lazyload" alt=""/>
                                                     </a>
 
-                                                    <div class="offer-detail">
+                                                    <div className="offer-detail">
                                                         <div>
                                                             <a href="shop-left-sidebar.html">
-                                                                <h6 class="name">Apple Red Premium Imported</h6>
+                                                                <h6 className="name">Apple Red Premium Imported</h6>
                                                             </a>
                                                             <span>1 KG</span>
-                                                            <h6 class="price theme-color">$ 80.00</h6>
+                                                            <h6 className="price theme-color">$ 80.00</h6>
                                                         </div>
                                                     </div>
                                                 </div>
