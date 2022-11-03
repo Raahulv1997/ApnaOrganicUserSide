@@ -426,16 +426,11 @@ const Header = () => {
                         <Accordion.Body>
                           <div className="onhover-category-box">
                             <div className="list-1">
-                              <div className="category-title-box d-flex justify-content-between">
+                              <div className="category-title-box">
                                 <div>
                                   <h5>Organic Vegetables</h5>
                                 </div>
-                                <div
-                                  className="fs-4 d-md-none"
-                                  // onClick={() => setcat_list(false)}
-                                >
-                                  <span>&times;</span>
-                                </div>
+                              
                               </div>
                               <ul className="p-0">
                                 <li>
@@ -516,6 +511,7 @@ const Header = () => {
                       <Accordion.Item eventKey="1">
                         <Accordion.Header>Beverages</Accordion.Header>
                         <Accordion.Body>
+                        <div className="onhover-category-box">
                           <div className="list-1 single_list">
                             <div className="category-title-box">
                               <h5>Energy & Soft Drinks</h5>
@@ -551,6 +547,7 @@ const Header = () => {
                                 <a href="javascript:void(0)">Flavoured Water</a>
                               </li>
                             </ul>
+                          </div>
                           </div>
                         </Accordion.Body>
                       </Accordion.Item>
