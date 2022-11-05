@@ -17,7 +17,7 @@ import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
 import { GoLocation, GoMail } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
 import Col from "react-bootstrap/Col";
-import profile_cover from "../../Photos/media/cover-img.jpg"
+import profile_cover from "../../Photos/media/cover-img.jpg";
 import InputGroup from "react-bootstrap/InputGroup";
 
 // import {CiMail} from 'react-icons/ci';
@@ -28,28 +28,32 @@ function Account() {
   const handleShow = () => setShow(true);
 
   const [Password, setPassword] = useState(false);
-    const ChangepassClose = () => setPassword(false);
+  const ChangepassClose = () => setPassword(false);
   const ChangepassShow = () => setPassword(true);
-  
-  let userjson= {
-    "firstName": "Isaac",
-    "lastName": "Brock",
-    "email": "isaac.brock@example.com",
-    "login": "isaac.brock@example.com",
-    "mobilePhone": "555-415-1337",
-    "address":"45 Universal Tower, 2nd Floor, Scheme 54 PU4, Indore",
-    "gender":"Male",
-    "DOB":"2022-11-09"
 
-    
-  }
+  const [addAdderss, setaddAdderss] = useState(false);
+  const addAdderssClose = () => setaddAdderss(false);
+  const addAdderssShow = () => setaddAdderss(true);
+
+  let userjson = {
+    firstName: "Isaac",
+    lastName: "Brock",
+    email: "isaac.brock@example.com",
+    login: "isaac.brock@example.com",
+    mobilePhone: "555-415-1337",
+    address: "45 Universal Tower, 2nd Floor, Scheme 54 PU4, Indore",
+    gender: "Male",
+    DOB: "2022-11-09",
+  };
 
   const [click, setclick] = useState(false);
   const side_bar = () => {
     setclick(true);
   };
 
-  const [userdata,setuserdata] = useState(userjson);
+  // edit Profile
+
+  const [userdata, setuserdata] = useState(userjson);
   const [validated, setValidated] = useState(false);
   const handleSubmit = (event) => {
     event.preventDefault();
@@ -58,51 +62,78 @@ function Account() {
     // const name = event.target.value;
     console.log(userdata);
     // console.log("+++++++++FORMDATA"+event.target.DOB.value);
-    // console.log("+++++++++FORMDATA"+event.target.email.value);
+
     if (form.checkValidity() === false) {
-          event.preventDefault();
+      event.preventDefault();
       event.stopPropagation();
+      console.log("aa");
     }
-    
+
     setValidated(true);
   };
 
-  const OnchangeFistname = (e) =>{
-    let name= e.target.value;
-    console.log(name)
+  const OnchangeFistname = (e) => {
+    let name = e.target.value;
+    console.log(name);
     setuserdata({
       ...userdata,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
-  
 
   // change Password
 
-  const [changepass,setchangepass] = useState(0);
+  const [changepass, setchangepass] = useState("");
   const [passvalidated, setpassValidated] = useState(false);
   const handlePassSubmit = (event) => {
     event.preventDefault();
 
     let form = event.currentTarget;
     console.log(changepass);
-      if (form.checkValidity() === false) {
-          event.preventDefault();
+    if (form.checkValidity() === false) {
+      event.preventDefault();
       event.stopPropagation();
+      console.log("aba");
     }
-    
+    setchangepass("");
+    // ChangepassClose();
     setpassValidated(true);
   };
-  
-  const OnchangePass = (e) =>{
-    let name= e.target.value;
-    console.log(name)
+
+  const OnchangePass = (e) => {
+    let name = e.target.value;
+    console.log(name);
     setchangepass({
       ...changepass,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
-  
+
+  //add address
+  const [addNewAdderss, setaddNewAdderss] = useState(0);
+  const [addAdderssvalidated, setaddAdderssValidated] = useState(false);
+  const addAdderssSubmit = (event) => {
+    event.preventDefault();
+
+    let form = event.currentTarget;
+    console.log(changepass);
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
+
+    setpassValidated(true);
+  };
+
+  const OnaddAdderss = (e) => {
+    let name = e.target.value;
+    console.log(name);
+    setchangepass({
+      ...changepass,
+      [e.target.name]: e.target.value,
+    });
+  };
+
   return (
     <React.Fragment>
       <Header />
@@ -438,7 +469,10 @@ function Account() {
                                   <h6 className="text-content">
                                     vicki.pope@gmail.com
                                   </h6>
-                                  <a href="javascript:void(0)" onClick={ChangepassShow}>
+                                  <a
+                                    href="javascript:void(0)"
+                                    onClick={ChangepassShow}
+                                  >
                                     Change Password
                                   </a>
                                 </div>
@@ -1877,7 +1911,7 @@ function Account() {
                               className="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
                               data-bs-toggle="modal"
                               data-bs-target="#add-address"
-                              onClick={handleShow}
+                              onClick={addAdderssShow}
                             >
                               <i data-feather="plus" className="me-2"></i> Add
                               New Address
@@ -2549,9 +2583,7 @@ function Account() {
             </div>
           </Tab.Container>
         </div>
-      
       </section>
-
 
       <Modal size="lg" show={show} onHide={handleClose}>
         <Form noValidate validated={validated} onSubmit={handleSubmit}>
@@ -2566,7 +2598,14 @@ function Account() {
                   controlId="validationCustom01"
                 >
                   <Form.Label>Full Name</Form.Label>
-                  <Form.Control type="text" placeholder="Name" value={userdata.firstName} name={'firstName'} onChange={OnchangeFistname} required />
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    value={userdata.firstName}
+                    name={"firstName"}
+                    onChange={OnchangeFistname}
+                    required
+                  />
                   <Form.Control.Feedback type="invalid">
                     {" "}
                     Please Enter Your Name
@@ -2583,7 +2622,8 @@ function Account() {
                     type="text"
                     placeholder="Email Address"
                     required
-                    value={userdata.email} name={'email'}
+                    value={userdata.email}
+                    name={"email"}
                     onChange={OnchangeFistname}
                   />
                   <Form.Control.Feedback type="invalid">
@@ -2597,7 +2637,14 @@ function Account() {
                   controlId="formBasicEmail"
                 >
                   <Form.Label>Mobile</Form.Label>
-                  <Form.Control type="text" placeholder="Mobile" value={userdata.mobilePhone} name={'mobilePhone'} onChange={OnchangeFistname} required />
+                  <Form.Control
+                    type="text"
+                    placeholder="Mobile"
+                    value={userdata.mobilePhone}
+                    name={"mobilePhone"}
+                    onChange={OnchangeFistname}
+                    required
+                  />
                   <Form.Control.Feedback type="invalid">
                     {" "}
                     Please Enter Your Phone Number
@@ -2615,7 +2662,9 @@ function Account() {
                     type="location"
                     placeholder="Add Address"
                     required
-                    value={userdata.address} name={'address'} onChange={OnchangeFistname}
+                    value={userdata.address}
+                    name={"address"}
+                    onChange={OnchangeFistname}
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -2629,43 +2678,57 @@ function Account() {
                   controlId="formBasicEmail"
                 >
                   <Form.Label>Add Address2</Form.Label>
-                  <Form.Control type="location" placeholder="Add Address2"  value={userdata.address} name={'address'} onChange={OnchangeFistname}/>
+                  <Form.Control
+                    type="location"
+                    placeholder="Add Address2"
+                    value={userdata.address}
+                    name={"address"}
+                    onChange={OnchangeFistname}
+                  />
                 </Form.Group>
               </div>
 
               <div className="col-4">
-              <Form.Label className="inputlabelheading" column sm="12">
-                      Gender
-                    </Form.Label>
-              <Form.Select
-                        aria-label="Product Type"
-                        className="adminselectbox"
-                        required
-                        value={userdata.gender} name={'gender'} onChange={OnchangeFistname}
-                      >
-                        <option value={''}>Gender</option>
-                        <option value="Male">Male</option>
-                        <option value="Female">Female</option>
-                       
-                        </Form.Select>
-                      <Form.Control.Feedback type="invalid" className="h6">
-                        Please select producttype
-                      </Form.Control.Feedback>
+                <Form.Label className="inputlabelheading" column sm="12">
+                  Gender
+                </Form.Label>
+                <Form.Select
+                  aria-label="Product Type"
+                  className="adminselectbox"
+                  required
+                  value={userdata.gender}
+                  name={"gender"}
+                  onChange={OnchangeFistname}
+                >
+                  <option value={""}>Gender</option>
+                  <option value="Male">Male</option>
+                  <option value="Female">Female</option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid" className="h6">
+                  Please select producttype
+                </Form.Control.Feedback>
               </div>
               <div className="col-4">
-              <Form.Group className="mx-3" controlId="validationCustom11">
-                    <Form.Label className="inputlabelheading" column sm="12">
-                      Date of Birth
-                    </Form.Label>
-                    <Col sm="12">
-                      <Form.Control type="date" placeholder="Product Quantity"  value={userdata.DOB} name={'DOB'} onChange={OnchangeFistname} required />
-                      <Form.Control.Feedback type="invalid">
-                        Please choose date of birth
-                      </Form.Control.Feedback>
-                    </Col>
-                  </Form.Group>
+                <Form.Group className="mx-3" controlId="validationCustom11">
+                  <Form.Label className="inputlabelheading" column sm="12">
+                    Date of Birth
+                  </Form.Label>
+                  <Col sm="12">
+                    <Form.Control
+                      type="date"
+                      placeholder="Product Quantity"
+                      value={userdata.DOB}
+                      name={"DOB"}
+                      onChange={OnchangeFistname}
+                      required
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please choose date of birth
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
               </div>
-               </div>
+            </div>
           </Modal.Body>
           <Modal.Footer>
             <button
@@ -2686,80 +2749,216 @@ function Account() {
       </Modal>
 
       <Modal size="md" show={Password} onHide={ChangepassClose}>
-      <Form noValidate validated={passvalidated} onSubmit={handlePassSubmit}>
-        <Modal.Header closeButton>
-          <Modal.Title>Change Password</Modal.Title>
-        </Modal.Header>
-        <Modal.Body>
-          <div className="row p-md-3 m-0">
-            <div className="col-12">
-              <Form.Group
-                className="mb-3 aos_input"
-                controlId="validationCustom01"
-              >
-                <Form.Label>Current Password</Form.Label>
-                <Form.Control type="text" placeholder="Current password" value={changepass.current_password} name={'currentpassword'} onChange={OnchangePass} required />
-                <Form.Control.Feedback type="invalid">
-                  {" "}
-                  Please Enter Current password
-                </Form.Control.Feedback>
-              </Form.Group>
-            </div>
-            <div className="col-12">
-              <Form.Group
-                className="mb-3 aos_input"
-                controlId="formBasicEmail"
-              >
-                <Form.Label>New Password</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="New Password"
-                  required
-                  value={changepass.new_password} name={'newpassword'}
-                  onChange={OnchangePass}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please Enter valid Password
-                </Form.Control.Feedback>
-              </Form.Group>
+        <Form noValidate validated={passvalidated} onSubmit={handlePassSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Change Password</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row p-md-3 m-0">
               <div className="col-12">
-              <Form.Group
-                className="mb-3 aos_input"
-                controlId="formBasicEmail"
-              >
-                <Form.Label>Confirm Password</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="Confirm Password"
-                  required
-                  value={changepass.confirm_password} name={'confirmpassword'}
-                  onChange={OnchangePass}
-                />
-                <Form.Control.Feedback type="invalid">
-                  Please Enter valid Confirm Password
-                </Form.Control.Feedback>
-              </Form.Group>
-            </div>    
-             </div>
-             </div>
-        </Modal.Body>
-        <Modal.Footer>
-          <button
-            className="button main_outline_button btn btn-animation "
-            onClick={ChangepassClose}
-          >
-            Cancel
-          </button>
-          <button
-            className="button main_button btn theme-bg-color ms-3 fire-button"
-            // onClick={ChangepassClose}
-            type="submit"
-          >
-            Save Change
-          </button>
-        </Modal.Footer>
-      </Form>
-    </Modal>
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>Current Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Current password"
+                    value={changepass.current_password}
+                    name={"currentpassword"}
+                    onChange={OnchangePass}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Current password
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>New Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="New Password"
+                    required
+                    value={changepass.new_password}
+                    name={"newpassword"}
+                    onChange={OnchangePass}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please Enter valid Password
+                  </Form.Control.Feedback>
+                </Form.Group>
+                <div className="col-12">
+                  <Form.Group
+                    className="mb-3 aos_input"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Confirm Password</Form.Label>
+                    <Form.Control
+                      type="password"
+                      placeholder="Confirm Password"
+                      required
+                      value={changepass.confirm_password}
+                      name={"confirmpassword"}
+                      onChange={OnchangePass}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please Enter valid Confirm Password
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </div>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              className="button main_outline_button btn btn-animation "
+              onClick={ChangepassClose}
+              type="button"
+            >
+              Cancel
+            </button>
+            <button
+              className="button main_button btn theme-bg-color ms-3 fire-button"
+              type="submit"
+              // onClick={ChangepassClose}
+              // type="submit"
+            >
+              Save Change
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+
+      <Modal size="md" show={addAdderss} onHide={addAdderssClose}>
+        <Form
+          noValidate
+          validated={addAdderssvalidated}
+          onSubmit={addAdderssSubmit}
+        >
+          <Modal.Header closeButton>
+            <Modal.Title>Add New Address</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row p-md-3 m-0">
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>Full Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Full Name"
+                    value={addNewAdderss.addAdderss_name}
+                    name={"addAdderss_name"}
+                    onChange={OnchangePass}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Add Address"
+                    required
+                    value={addNewAdderss.new_password}
+                    name={"addAdderss_first"}
+                    onChange={OnaddAdderss}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please Enter Address
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address2</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Add Address2"
+                    required
+                    value={addNewAdderss.new_password}
+                    name={"addAdderss_second"}
+                    onChange={OnaddAdderss}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please Enter Address2
+                  </Form.Control.Feedback>
+                </Form.Group>
+
+                <div className="col-12">
+                  <Form.Group
+                    className="mb-3 aos_input"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Phone Number</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Phone Number"
+                      required
+                      value={addNewAdderss.confirm_password}
+                      name={"addAdderss_phone"}
+                      onChange={OnaddAdderss}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please Enter valid Phone Number
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                  <Form.Group
+                    className="mb-3 aos_input"
+                    controlId="formBasicEmail"
+                  >
+                    <Form.Label>Pin Code</Form.Label>
+                    <Form.Control
+                      type="text"
+                      placeholder="Pin code"
+                      required
+                      value={addNewAdderss.new_password}
+                      name={"addAdderss_pin"}
+                      onChange={OnaddAdderss}
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please Enter Pin Code
+                    </Form.Control.Feedback>
+                  </Form.Group>
+                </div>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              className="button main_outline_button btn btn-animation "
+              onClick={addAdderssClose}
+            >
+              Cancel
+            </button>
+            <button
+              className="button main_button btn theme-bg-color ms-3 fire-button"
+              // onClick={ChangepassClose}
+              type="submit"
+            >
+              Add Address
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
       <Footer />
     </React.Fragment>
   );
