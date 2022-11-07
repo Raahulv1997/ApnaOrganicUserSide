@@ -2,7 +2,9 @@ import React, { Fragment } from "react";
 import Footer from "../common/footer";
 import Header from '../common/header'
 import Breadcumb from '../common/beadcumb';
+import { useState } from "react";
 const Contactus=()=>{
+   
     return(
         <Fragment>
             <Header/>
@@ -94,6 +96,7 @@ const Contactus=()=>{
                     <div className="right-sidebar-box" >
                         <div className="row" >
                             <div className="col-md-6">
+                                {/* <form onSubmit={formSubmit}></form> */}
                                 <div className="mb-md-4 mb-3 custom-form" >
                                     <label htmlFor="exampleFormControlInput" className="form-label">First Name</label>
                                     <div className="custom-input">
@@ -153,6 +156,7 @@ const Contactus=()=>{
                                     </div>
                                 </div>
                             </div>
+
                         </div>
                         <button className="btn btn-animation btn-md fw-bold ms-auto">Send Message</button>
                     </div>
