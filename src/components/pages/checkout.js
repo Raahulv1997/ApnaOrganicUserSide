@@ -7,12 +7,12 @@ import Tab from "react-bootstrap/Tab";
 import Breadcumb from "../common/beadcumb";
 import { data1, data2 } from "./data";
 import Accordion from "react-bootstrap/Accordion";
-import { Form, Button } from "react-bootstrap";
-import "../../CSS/style.css";
 
 const Checkout = (props) => {
   var product1 = data1.product1;
   var address = data2.address;
+  const func=()=>{}
+
   return (
     <Fragment>
       <Header />
@@ -156,9 +156,8 @@ const Checkout = (props) => {
                           <table className="table">
                             {product1.map((product1) => {
                               return (
-                                <tbody>
+                                <tbody key={product1.id}>
                                   <tr
-                                    key={product1.id}
                                     className="product-box-contain"
                                   >
                                     <td className="product-detail">
@@ -227,6 +226,7 @@ const Checkout = (props) => {
                                                     type="text"
                                                     name="quantity"
                                                     value="1"
+                                                    onChange={func}
                                                   />
                                                   <button
                                                     type="button"
@@ -282,6 +282,7 @@ const Checkout = (props) => {
                                               type="text"
                                               name="quantity"
                                               value="1"
+                                              onChange={func}
                                             />
                                             <button
                                               type="button"
@@ -309,13 +310,13 @@ const Checkout = (props) => {
                                       </h4>
                                       <a
                                         className="save notifi-wishlist"
-                                        href="javascript:void(0)"
+                                        href="#"
                                       >
                                         Save for later
                                       </a>
                                       <a
                                         className="remove close_button"
-                                        href="javascript:void(0)"
+                                        href="#"
                                       >
                                         Remove
                                       </a>
@@ -368,7 +369,7 @@ const Checkout = (props) => {
                         <div className="col-12 col-md-6">
                           {address.map((address) => {
                             return (
-                              <div className="">
+                              <div key={address.id} className="">
                                 <div className="delivery-address-box">
                                   <div>
                                     <div className="form-check">
@@ -423,7 +424,7 @@ const Checkout = (props) => {
                         <div className="col-12 col-md-6">
                           {address.map((address) => {
                             return (
-                              <div className="">
+                              <div key={address.id} className="">
                                 <div className="delivery-address-box">
                                   <div>
                                     <div className="form-check">
@@ -507,11 +508,12 @@ const Checkout = (props) => {
                                         className="form-check-input mt-0"
                                         type="radio"
                                         value="choice1"
+                                        onChange={func}
                                         name="button"
                                       />
                                       <label
                                         className="form-check-label"
-                                        for="standard"
+                                        htmlFor="standard"
                                       >
                                         Standard Delivery Option
                                       </label>
@@ -578,11 +580,12 @@ const Checkout = (props) => {
                                         className="form-check-input mt-0"
                                         type="radio"
                                         value="choice2"
+                                        onChange={func}
                                         name="button"
                                       />
                                       <label
                                         className="form-check-label"
-                                        for="sameDay"
+                                        htmlFor="sameDay"
                                       >
                                         Same Day Delivery Option
                                       </label>
@@ -648,12 +651,13 @@ const Checkout = (props) => {
                                       <input
                                         className="form-check-input mt-0"
                                         type="radio"
+                                        onChange={func}
                                         value="choice3"
                                         name="button"
                                       />
                                       <label
                                         className="form-check-label"
-                                        for="future"
+                                        htmlFor="future"
                                       >
                                         Future Delivery Option
                                       </label>
@@ -807,12 +811,13 @@ const Checkout = (props) => {
                                     <div className="custom-form-check form-check mb-0">
                                       <label
                                         className="form-check-label"
-                                        for="credit"
+                                        htmlFor="credit"
                                       >
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           value="choice7"
+                                           onChange={func} 
                                           name="button"
                                         />
                                         Credit or Debit Card
@@ -836,7 +841,7 @@ const Checkout = (props) => {
                                                   id="credit2"
                                                   placeholder="Enter Credit & Debit Card Number"
                                                 />
-                                                <label for="credit2">
+                                                <label htmlFor="credit2">
                                                   Enter Credit & Debit Card
                                                   Number
                                                 </label>
@@ -852,7 +857,7 @@ const Checkout = (props) => {
                                                 id="expiry"
                                                 placeholder="Enter Expiry Date"
                                               />
-                                              <label for="expiry">
+                                              <label htmlFor="expiry">
                                                 Expiry Date
                                               </label>
                                             </div>
@@ -866,7 +871,7 @@ const Checkout = (props) => {
                                                 id="cvv"
                                                 placeholder="Enter CVV Number"
                                               />
-                                              <label for="cvv">
+                                              <label htmlFor="cvv">
                                                 CVV Number
                                               </label>
                                             </div>
@@ -880,7 +885,7 @@ const Checkout = (props) => {
                                                 id="password"
                                                 placeholder="Enter Password"
                                               />
-                                              <label for="password">
+                                              <label htmlFor="password">
                                                 Password
                                               </label>
                                             </div>
@@ -917,13 +922,14 @@ const Checkout = (props) => {
                                     <div className="custom-form-check form-check mb-0">
                                       <label
                                         className="form-check-label"
-                                        for="banking"
+                                        htmlFor="banking"
                                       >
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           value="choice8"
                                           name="button"
+                                          onChange={func}
                                         />
                                         Net Banking
                                       </label>
@@ -941,11 +947,12 @@ const Checkout = (props) => {
                                               className="form-check-input mt-0"
                                               type="radio"
                                               value="choice1"
+                                              onChange={func}
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="bank1"
+                                              htmlFor="bank1"
                                             >
                                               Industrial & Commercial Bank
                                             </label>
@@ -957,12 +964,13 @@ const Checkout = (props) => {
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
+                                              onChange={func}
                                               value="choice2"
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="bank2"
+                                              htmlFor="bank2"
                                             >
                                               Agricultural Bank
                                             </label>
@@ -976,10 +984,11 @@ const Checkout = (props) => {
                                               type="radio"
                                               value="choice3"
                                               name="button"
+                                              onChange={func}
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="bank3"
+                                              htmlFor="bank3"
                                             >
                                               Bank of America
                                             </label>
@@ -992,11 +1001,12 @@ const Checkout = (props) => {
                                               className="form-check-input mt-0"
                                               type="radio"
                                               value="choice4"
+                                              onChange={func}
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="bank4"
+                                              htmlFor="bank4"
                                             >
                                               Construction Bank Corp.
                                             </label>
@@ -1010,10 +1020,11 @@ const Checkout = (props) => {
                                               type="radio"
                                               value="choice5"
                                               name="button"
+                                              onChange={func}
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="bank5"
+                                              htmlFor="bank5"
                                             >
                                               HSBC Holdings
                                             </label>
@@ -1027,10 +1038,11 @@ const Checkout = (props) => {
                                               type="radio"
                                               value="choice6"
                                               name="button"
+                                              onChange={func}
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="bank6"
+                                              htmlFor="bank6"
                                             >
                                               JPMorgan Chase & Co.
                                             </label>
@@ -1078,12 +1090,13 @@ const Checkout = (props) => {
                                     <div className="custom-form-check form-check mb-0">
                                       <label
                                         className="form-check-label"
-                                        for="wallet"
+                                        htmlFor="wallet"
                                       >
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           value="choice9"
+                                          onChange={func}
                                           name="button"
                                         />
                                         My Wallet
@@ -1100,12 +1113,13 @@ const Checkout = (props) => {
                                           <div className="custom-form-check form-check">
                                             <label
                                               className="form-check-label"
-                                              for="amazon"
+                                              htmlFor="amazon"
                                             >
                                               <input
                                                 className="form-check-input mt-0"
                                                 type="radio"
                                                 value="choice10"
+                                                onChange={func}
                                                 name="button"
                                               />
                                               Amazon Pay
@@ -1118,12 +1132,13 @@ const Checkout = (props) => {
                                             <input
                                               className="form-check-input mt-0"
                                               type="radio"
+                                              onChange={func}
                                               value="choice11"
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="gpay"
+                                              htmlFor="gpay"
                                             >
                                               Google Pay
                                             </label>
@@ -1136,11 +1151,12 @@ const Checkout = (props) => {
                                               className="form-check-input mt-0"
                                               type="radio"
                                               value="choice12"
+                                              onChange={func}
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="airtel"
+                                              htmlFor="airtel"
                                             >
                                               Airtel Money
                                             </label>
@@ -1153,11 +1169,12 @@ const Checkout = (props) => {
                                               className="form-check-input mt-0"
                                               type="radio"
                                               value="choice12"
+                                              onChange={func}
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="paytm"
+                                              htmlFor="paytm"
                                             >
                                               Paytm Pay
                                             </label>
@@ -1170,11 +1187,12 @@ const Checkout = (props) => {
                                               className="form-check-input mt-0"
                                               type="radio"
                                               value="choice13"
+                                              onChange={func}
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="jio"
+                                              htmlFor="jio"
                                             >
                                               JIO Money
                                             </label>
@@ -1187,11 +1205,12 @@ const Checkout = (props) => {
                                               className="form-check-input mt-0"
                                               type="radio"
                                               value="choice14"
+                                              onChange={func}
                                               name="button"
                                             />
                                             <label
                                               className="form-check-label"
-                                              for="free"
+                                              htmlFor="free"
                                             >
                                               Freecharge
                                             </label>
@@ -1211,12 +1230,13 @@ const Checkout = (props) => {
                                     <div className="custom-form-check form-check mb-0">
                                       <label
                                         className="form-check-label"
-                                        for="cash"
+                                        htmlFor="cash"
                                       >
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
                                           value="choice15"
+                                          onChange={func}
                                           name="button"
                                         />
                                         Cash On Delivery
@@ -1229,7 +1249,7 @@ const Checkout = (props) => {
                                         Pay digitally with SMS Pay Link. Cash
                                         may not be accepted in COVID restricted
                                         areas.{" "}
-                                        <a href="javascript:void(0)">
+                                        <a href="#">
                                           Know more.
                                         </a>
                                       </h5>
@@ -1253,7 +1273,7 @@ const Checkout = (props) => {
 
                           <li>
                             <button
-                              onclick="location.href = 'order-success.html';"
+                          
                               className="btn btn-animation"
                             >
                               Done

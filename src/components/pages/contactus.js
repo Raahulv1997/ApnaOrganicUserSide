@@ -95,7 +95,7 @@ const Contactus=()=>{
                         <div className="row" >
                             <div className="col-md-6">
                                 <div className="mb-md-4 mb-3 custom-form" >
-                                    <label for="exampleFormControlInput" className="form-label">First Name</label>
+                                    <label htmlFor="exampleFormControlInput" className="form-label">First Name</label>
                                     <div className="custom-input">
                                         <input type="text" className="form-control" 
                                        id="name"
@@ -108,7 +108,7 @@ const Contactus=()=>{
 
                             <div className="col-md-6">
                                 <div className="mb-md-4 mb-3 custom-form">
-                                    <label for="exampleFormControlInput1" className="form-label">Last Name</label>
+                                    <label htmlFor="exampleFormControlInput1" className="form-label">Last Name</label>
                                     <div className="custom-input">
                                         <input type="text" className="form-control" 
                                         id="name"
@@ -121,11 +121,11 @@ const Contactus=()=>{
 
                             <div className="col-xxl-12 col-md-6">
                                 <div className="mb-md-4 mb-3 custom-form">
-                                    <label for="exampleFormControlInput2" className="form-label">Email Address</label>
+                                    <label htmlFor="exampleFormControlInput2" className="form-label">Email Address</label>
                                     <div className="custom-input">
                                         <input type="email" className="form-control" id="exampleFormControlInput2"
                                             placeholder="Enter Email Address"/>
-                                            <div class="error" id="emailErr"></div>
+                                            <div className="error" id="emailErr"></div>
                                         <i className="fa-solid fa-envelope"></i>
                                     </div>
                                 </div>
@@ -133,11 +133,10 @@ const Contactus=()=>{
 
                             <div className="col-xxl-12 col-md-6">
                                 <div className="mb-md-4 mb-3 custom-form">
-                                    <label for="exampleFormControlInput3" className="form-label">Phone Number</label>
+                                    <label htmlFor="exampleFormControlInput3" className="form-label">Phone Number</label>
                                     <div className="custom-input">
-                                        <input type="tel" class="form-control" id="exampleFormControlInput3"
-                                            placeholder="Enter Your Phone Number" maxlength="10" oninput="javascript: if (this.value.length > this.maxLength) this.value =
-                                            this.value.slice(0, this.maxLength);"/>
+                                        <input type="tel"className="form-control" id="exampleFormControlInput3"
+                                            placeholder="Enter Your Phone Number" maxLength="10"/>
                                             
                                         <i className="fa-solid fa-mobile-screen-button"></i>
                                     </div>
@@ -146,7 +145,7 @@ const Contactus=()=>{
 
                             <div className="col-12">
                                 <div className="mb-md-4 mb-3 custom-form">
-                                    <label for="exampleFormControlTextarea" className="form-label">Message</label>
+                                    <label htmlFor="exampleFormControlTextarea" className="form-label">Message</label>
                                     <div className="custom-textarea">
                                         <textarea className="form-control" id="exampleFormControlTextarea"
                                             placeholder="Enter Your Message" rows="6"></textarea>

@@ -137,7 +137,7 @@ const Footer=()=> {
                 </div>
                 <ul className="footer-address footer-contact p-0">
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <div className="inform-box flex-start-box">
                         <i data-feather="map-pin"></i>
                         <p>Apna Organic Demo Store, Demo store india 345 - 659</p>
@@ -146,7 +146,7 @@ const Footer=()=> {
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <div className="inform-box">
                         <i data-feather="phone"></i>
                         <p>Call us: 123-456-7890</p>
@@ -155,7 +155,7 @@ const Footer=()=> {
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <div className="inform-box">
                         <i data-feather="mail"></i>
                         <p>Email Us: Support@Apna Organic.com</p>
@@ -164,7 +164,7 @@ const Footer=()=> {
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <div className="inform-box">
                         <i data-feather="printer"></i>
                         <p>Fax: 123456</p>

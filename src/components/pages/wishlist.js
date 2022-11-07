@@ -8,6 +8,7 @@ import data from "./data";
 function wishlist() {
   var product = data.product;
   console.log(product);
+  const func=()=>{}
   return (
     <React.Fragment>
       <Header />
@@ -51,7 +52,7 @@ function wishlist() {
       <div
         className="modal location-modal fade theme-modal"
         id="locationModal"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
@@ -80,6 +81,7 @@ function wishlist() {
                     type="search"
                     className="form-control"
                     placeholder="Search Your Area"
+                    onChange={undefined}
                   />
                   <i className="fa-solid fa-magnifying-glass"></i>
                 </div>
@@ -90,70 +92,70 @@ function wishlist() {
 
                 <ul className="location-select custom-height">
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Alabama</h6>
                       <span>Min: $130</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Arizona</h6>
                       <span>Min: $150</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>California</h6>
                       <span>Min: $110</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Colorado</h6>
                       <span>Min: $140</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Florida</h6>
                       <span>Min: $160</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Georgia</h6>
                       <span>Min: $120</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Kansas</h6>
                       <span>Min: $170</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Minnesota</h6>
                       <span>Min: $120</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>New York</h6>
                       <span>Min: $110</span>
                     </a>
                   </li>
 
                   <li>
-                    <a href="javascript:void(0)">
+                    <a href="#">
                       <h6>Washington</h6>
                       <span>Min: $130</span>
                     </a>
@@ -168,7 +170,7 @@ function wishlist() {
       <div
         className="modal fade theme-modal deal-modal"
         id="deal-box"
-        tabindex="-1"
+        tabIndex="-1"
         aria-labelledby="exampleModalLabel"
         aria-hidden="true"
       >
@@ -290,7 +292,7 @@ function wishlist() {
                   </div>
                   <div className="theme-setting-button color-picker">
                     <form className="form-control">
-                      <label for="colorPick" className="form-label mb-0">
+                      <label htmlFor="colorPick" className="form-label mb-0">
                         Theme Color
                       </label>
                       <input
@@ -299,6 +301,7 @@ function wishlist() {
                         id="colorPick"
                         value="#0da487"
                         title="Choose your color"
+                        onChange={func}
                       />
                     </form>
                   </div>

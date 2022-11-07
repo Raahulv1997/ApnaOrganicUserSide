@@ -253,8 +253,8 @@ const Aboutus=()=>{
                         </div>
 
                         <div className="col-2">
-                            <div class="team-box">
-                                <div class="team-iamge">
+                            <div className="team-box">
+                                <div className="team-iamge">
                                     <img src="https://www.technewsworld.com/wp-content/uploads/sites/3/2022/02/office-worker.jpg" className="img-fluid blur-up lazyload"
                                         alt=""/>
                                 </div>
@@ -355,7 +355,7 @@ const Aboutus=()=>{
                                         </li>
 
                                         <li>
-                                            <a href="https://twitter.com/" class="twitter-bg">
+                                            <a href="https://twitter.com/"className="twitter-bg">
                                                 <i className="fa-brands fa-twitter"></i>
                                             </a>
                                         </li>
@@ -370,8 +370,8 @@ const Aboutus=()=>{
                             </div>
                         </div>
                         <div className="col-2">
-                            <div class="team-box">
-                                <div class="team-iamge">
+                            <div className="team-box">
+                                <div className="team-iamge">
                                     <img src="https://www.technewsworld.com/wp-content/uploads/sites/3/2022/02/office-worker.jpg" className="img-fluid blur-up lazyload"
                                         alt=""/>
                                 </div>

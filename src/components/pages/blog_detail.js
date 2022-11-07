@@ -64,7 +64,7 @@ const BlogDetail = () => {
                             Recent Post
                             </Accordion.Header>
                             <Accordion.Body>
-                            <div id="panelsStayOpen-collapseOne" class="accordion-collapse collapse show"
+                            <div id="panelsStayOpen-collapseOne"className="accordion-collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingOne">
                             <div className="accordion-body pt-0">
                                         <div className="recent-post-box">
@@ -85,7 +85,7 @@ const BlogDetail = () => {
                                             <div className="recent-box">
                                                 <a href="blog-detail.html" className="recent-image">
                                                     <img src={blog2}
-                                                        class="img-fluid  lazyload" alt=""/>
+                                                       className="img-fluid  lazyload" alt=""/>
                                                 </a>
 
                                                 <div className="recent-detail">
@@ -99,7 +99,7 @@ const BlogDetail = () => {
                                             <div className="recent-box">
                                                 <a href="blog-detail.html" className="recent-image">
                                                     <img src={blog3}
-                                                        class="img-fluid  lazyload" alt=""/>
+                                                       className="img-fluid  lazyload" alt=""/>
                                                 </a>
 
                                                 <div className="recent-detail">
@@ -111,7 +111,7 @@ const BlogDetail = () => {
                                             </div>
 
                                             <div className="recent-box">
-                                                <a href="blog-detail.html" class="recent-image">
+                                                <a href="blog-detail.html"className="recent-image">
                                                     <img src={blog4}
                                                         className="img-fluid  lazyload" alt=""/>
                                                 </a>
@@ -213,35 +213,35 @@ const BlogDetail = () => {
                                             <ul>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">Fruit Cutting</a>
+                                                    <a href="#">Fruit Cutting</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">Meat</a>
+                                                    <a href="#">Meat</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">organic</a>
+                                                    <a href="#">organic</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">cake</a>
+                                                    <a href="#">cake</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">pick fruit</a>
+                                                    <a href="#">pick fruit</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">backery</a>
+                                                    <a href="#">backery</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">organix food</a>
+                                                    <a href="#">organix food</a>
                                                 </li>
 
                                                 <li>
-                                                    <a href="javascript:void(0)">Most Expensive Fruit</a>
+                                                    <a href="#">Most Expensive Fruit</a>
                                                 </li>
                                             </ul>
                                         </div>
@@ -283,7 +283,7 @@ const BlogDetail = () => {
                                                 <div className="offer-product">
                                                     <a href="shop-left-sidebar.html" className="offer-image">
                                                         <img src={veg24}
-                                                            class=" lazyload" alt=""/>
+                                                           className=" lazyload" alt=""/>
                                                     </a>
 
                                                     <div className="offer-detail">
@@ -327,33 +327,33 @@ const BlogDetail = () => {
                     </div>
                 </div>
 
-                <div class="col-xxl-9 col-xl-8 col-lg-7 ratio_50">
-                    <div class="blog-detail-image rounded-3 mb-4">
-                        <img src={blog1} class="bg-img w-100  lazyload" alt=""/>
-                        <div class="blog-image-contain">
-                            <ul class="contain-list">
+                <div className="col-xxl-9 col-xl-8 col-lg-7 ratio_50">
+                    <div className="blog-detail-image rounded-3 mb-4">
+                        <img src={blog1}className="bg-img w-100  lazyload" alt=""/>
+                        <div className="blog-image-contain">
+                            <ul className="contain-list">
                                 <li>backpack</li>
                                 <li>life style</li>
                                 <li>organic</li>
                             </ul>
                             <h2>Agriculture Conference Harvest 2022 in Paris</h2>
-                            <ul class="contain-comment-list">
+                            <ul className="contain-comment-list">
                                 <li>
-                                    <div class="user-list">
+                                    <div className="user-list">
                                         <i data-feather="user"></i>
                                         <span>Caroline</span>
                                     </div>
                                 </li>
 
                                 <li>
-                                    <div class="user-list">
+                                    <div className="user-list">
                                         <i data-feather="calendar"></i>
                                         <span>April 19, 2022</span>
                                     </div>
                                 </li>
 
                                 <li>
-                                    <div class="user-list">
+                                    <div className="user-list">
                                         <i data-feather="message-square"></i>
                                         <span>82 Comment</span>
                                     </div>
@@ -543,7 +543,7 @@ const BlogDetail = () => {
 
                             <div className="form-check d-flex mt-4 p-0">
                                 <input className="checkbox_animated" type="checkbox" value="" id="flexCheckDefault"/>
-     /                           <label className="form-check-label text-content" for="flexCheckDefault">
+     /                           <label className="form-check-label text-content" htmlFor="flexCheckDefault">
                                     <span className="color color-1"> Save my name, email, and website in this
                                         browser for the next time I comment.</span>
                                 </label>

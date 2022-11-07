@@ -175,7 +175,7 @@ const ProductDetail = (props) => {
                         </div>
                       </div>
                        
-                      <div class="procuct-contain">
+                      <div className="procuct-contain">
                             <p> {product_details.pdiscription}Lollipop cake chocolate chocolate cake dessert jujubes. Shortbread sugar plum dessert
                                 powder cookie sweet brownie. Cake cookie apple pie dessert sugar plum muffin cheesecake.
                             </p>
@@ -208,13 +208,13 @@ const ProductDetail = (props) => {
                           </li>
                         </ul>
                       </div>
-                      <div class="time deal-timer product-deal-timer mx-md-0 mx-auto">
-                            <div class="product-title">
+                      <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
+                            <div className="product-title">
                                 <h4>Hurry up! Sales Ends In</h4>
                             </div>
                             <ul>
                                 <li>
-                                    <div class="counter">
+                                    <div className="counter">
                                         <div>
                                             <h5 id="days2"></h5>
                                             <h6>Days</h6>
@@ -222,7 +222,7 @@ const ProductDetail = (props) => {
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="counter">
+                                    <div className="counter">
                                         <div>
                                             <h5 id="hours2"></h5>
                                             <h6>Hours</h6>
@@ -230,7 +230,7 @@ const ProductDetail = (props) => {
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="counter">
+                                    <div className="counter">
                                         <div>
                                             <h5 id="minutes2"></h5>
                                             <h6>Min</h6>
@@ -238,7 +238,7 @@ const ProductDetail = (props) => {
                                     </div>
                                 </li>
                                 <li>
-                                    <div class="counter">
+                                    <div className="counter">
                                         <div>
                                             <h5 id="seconds2"></h5>
                                             <h6>Sec</h6>
@@ -655,10 +655,10 @@ const ProductDetail = (props) => {
                                     <div className="form-check-label">
                                       <ul className="rating p-0 w-100">
                                         <li>
-                                          <div class="rating-list ">
-                                            <div class="progress ">
+                                          <div className="rating-list ">
+                                            <div className="progress ">
                                               <div
-                                                class="progress-bar "
+                                               className="progress-bar "
                                                 role="progressbar"
                                                 style={{ width: "68%" }}
                                                 aria-valuenow="100"
@@ -682,10 +682,10 @@ const ProductDetail = (props) => {
                                     <div className="form-check-label">
                                       <ul className="rating p-0 w-100">
                                         <li>
-                                          <div class="rating-list">
-                                            <div class="progress">
+                                          <div className="rating-list">
+                                            <div className="progress">
                                               <div
-                                                class="progress-bar"
+                                               className="progress-bar"
                                                 role="progressbar"
                                                 style={{ width: "67%" }}
                                                 aria-valuenow="100"
@@ -708,10 +708,10 @@ const ProductDetail = (props) => {
                                     <div className="form-check-label">
                                       <ul className="rating p-0 w-100">
                                         <li>
-                                          <div class="rating-list">
-                                            <div class="progress">
+                                          <div className="rating-list">
+                                            <div className="progress">
                                               <div
-                                                class="progress-bar"
+                                               className="progress-bar"
                                                 role="progressbar"
                                                 style={{ width: "42%" }}
                                                 aria-valuenow="100"
@@ -734,10 +734,10 @@ const ProductDetail = (props) => {
                                     <div className="form-check-label">
                                       <ul className="rating p-0 w-100">
                                         <li>
-                                          <div class="rating-list">
-                                            <div class="progress">
+                                          <div className="rating-list">
+                                            <div className="progress">
                                               <div
-                                                class="progress-bar"
+                                               className="progress-bar"
                                                 role="progressbar"
                                                 style={{ width: "30%" }}
                                                 aria-valuenow="100"
@@ -760,7 +760,7 @@ const ProductDetail = (props) => {
                                     <div className="form-check-label">
                                       <ul className="rating p-0 w-100">
                                         <li>
-                                          <div class="rating-list">
+                                          <div className="rating-list">
                                             <div className="progress">
                                               <div
                                                 className="progress-bar"
@@ -950,7 +950,7 @@ const ProductDetail = (props) => {
                                 </div>
 
                                 <div className="people-comment">
-                                  <a class="name" href="javascript:void(0)">
+                                  <a className="name" href="javascript:void(0)">
                                     Olivia
                                   </a>
                                   <div className="date-time">

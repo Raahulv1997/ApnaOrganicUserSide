@@ -2,7 +2,7 @@ import React from 'react';
 //import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
 import {FaStar} from 'react-icons/fa';
 import  {useState} from 'react';
-import { useNavigate } from "react-router-dom";
+
 
 function AddCart(props){
 
@@ -18,6 +18,9 @@ function ProductBox({name,image,productPrice, productMRF}) {
         count = count - 1;
         setCount(count);
       }
+      const func =()=>{
+        
+      }
     return (
         <div className="product-box-4 mt-2">
             <div className="product-image">
@@ -31,19 +34,7 @@ function ProductBox({name,image,productPrice, productMRF}) {
                     <img src={image} className="img-fluid" alt="" />
                 </a>
 
-                {/* <ul className="option">
-                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Quick View">
-                        <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#view">
-                        <AiFillApple icon="eye" />
-                        </a>
-                    </li>
-                    <li data-bs-toggle="tooltip" data-bs-placement="top" title="Compare">
-                        <a href="compare.html">
-                            <AiFillApple icon="repeat" />
-                        </a>
-                    </li>
-                </ul> */}
-            </div>
+              </div>
 
             <div className="product-detail">
                 <ul className="rating p-0">
@@ -75,14 +66,14 @@ function ProductBox({name,image,productPrice, productMRF}) {
                             </div>
                             {/* <div>{count}</div> */}
                             <input className="form-control input-number qty-input" type="text"
-                               name="quantity" value={count} />
+                               name="quantity" value={count} onChange={func}/>
                             <div className="qty-right-plus" onClick={incrementCount}  data-type="plus" data-field="">
                                 <i className="fa-regular fa-plus"></i>
                             </div>
                         </div>
                     </div> 
 
-                    <button onClick={""} className="buy-button buy-button-2 btn btn-cart">
+                    <button  className="buy-button buy-button-2 btn btn-cart">
                     <i className="fa-regular fa-cart-shopping"></i>
                     </button>
                 </div>

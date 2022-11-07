@@ -46,6 +46,7 @@ const Header = () => {
                         <i className="fa-regular fa-magnifying-glass"></i>
                       </span>
                       <input
+                      onChange={undefined}
                         type="text"
                         className="form-control search-type"
                         placeholder="Search here.."
@@ -61,6 +62,7 @@ const Header = () => {
                     <div className="center-box">
                       <div className="searchbar-box order-xl-1 d-none d-xl-block">
                         <input
+                        onChange={undefined}
                           type="search"
                           className="form-control"
                           id="exampleFormControlInput1"
@@ -157,7 +159,7 @@ const Header = () => {
                             <a
                               id="eng"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               English
                             </a>
@@ -166,7 +168,7 @@ const Header = () => {
                             <a
                               id="hin"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               Hindi
                             </a>
@@ -175,7 +177,7 @@ const Header = () => {
                             <a
                               id="guj"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               Gujarati
                             </a>
@@ -184,7 +186,7 @@ const Header = () => {
                             <a
                               id="arb"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               Arbic
                             </a>
@@ -193,7 +195,7 @@ const Header = () => {
                             <a
                               id="rus"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               Rusia
                             </a>
@@ -201,7 +203,7 @@ const Header = () => {
                           <li>
                             <a
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               Chinese
                             </a>
@@ -227,7 +229,7 @@ const Header = () => {
                             <a
                               id="usd"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               USD
                             </a>
@@ -236,7 +238,7 @@ const Header = () => {
                             <a
                               id="inr"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               INR
                             </a>
@@ -245,7 +247,7 @@ const Header = () => {
                             <a
                               id="eur"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               EUR
                             </a>
@@ -254,7 +256,7 @@ const Header = () => {
                             <a
                               id="aud"
                               className="dropdown-item"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               AUD
                             </a>
@@ -267,7 +269,7 @@ const Header = () => {
                       <ul>
                         <li>
                           <a
-                            href="javascript:void(0)"
+                            href="#"
                             className="header-icon user-icon search-icon"
                           >
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
@@ -276,7 +278,7 @@ const Header = () => {
 
                         <li>
                           <a
-                            href="javascript:void(0)"
+                            href="#"
                             className="header-icon search-box search-icon"
                           >
                             <i className="fa-regular fa-magnifying-glass"></i>
@@ -434,40 +436,40 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Potato & Tomato
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Cucumber & Capsicum
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Leafy Vegetables
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Root Vegetables
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Beans & Okra</a>
+                                  <a href="#">Beans & Okra</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Cabbage & Cauliflower
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Gourd & Drumstick
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Specialty</a>
+                                  <a href="#">Specialty</a>
                                 </li>
                               </ul>
                             </div>
@@ -477,30 +479,30 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Banana & Papaya
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Kiwi, Citrus Fruit
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Apples & Pomegranate
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Seasonal Fruits
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Mangoes</a>
+                                  <a href="#">Mangoes</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Fruit Baskets</a>
+                                  <a href="#">Fruit Baskets</a>
                                 </li>
                               </ul>
                             </div>
@@ -518,33 +520,33 @@ const Header = () => {
                             </div>
                             <ul className="p-0">
                               <li>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                   Soda & Cocktail Mix
                                 </a>
                               </li>
                               <li>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                   Soda & Cocktail Mix
                                 </a>
                               </li>
                               <li>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                   Sports & Energy Drinks
                                 </a>
                               </li>
                               <li>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                   Non Alcoholic Drinks
                                 </a>
                               </li>
                               <li>
-                                <a href="javascript:void(0)">Packaged Water</a>
+                                <a href="#">Packaged Water</a>
                               </li>
                               <li>
-                                <a href="javascript:void(0)">Spring Water</a>
+                                <a href="#">Spring Water</a>
                               </li>
                               <li>
-                                <a href="javascript:void(0)">Flavoured Water</a>
+                                <a href="#">Flavoured Water</a>
                               </li>
                             </ul>
                           </div>
@@ -561,18 +563,18 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">Fresh Meat</a>
+                                  <a href="#">Fresh Meat</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Frozen Meat</a>
+                                  <a href="#">Frozen Meat</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Marinated Meat
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Fresh & Frozen Meat
                                   </a>
                                 </li>
@@ -585,35 +587,35 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Fresh Water Fish
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Dry Fish</a>
+                                  <a href="#">Dry Fish</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Frozen Fish & Seafood
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Marine Water Fish
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Canned Seafood
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Prawans & Shrimps
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Other Seafood</a>
+                                  <a href="#">Other Seafood</a>
                                 </li>
                               </ul>
                             </div>
@@ -630,36 +632,36 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Oats & Porridge
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Kids Cereal</a>
+                                  <a href="#">Kids Cereal</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Muesli</a>
+                                  <a href="#">Muesli</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Flakes</a>
+                                  <a href="#">Flakes</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Granola & Cereal Bars
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Instant Noodles
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Pasta & Macaroni
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Frozen Non-Veg Snacks
                                   </a>
                                 </li>
@@ -672,38 +674,38 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">Milk</a>
+                                  <a href="#">Milk</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Curd</a>
+                                  <a href="#">Curd</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Paneer, Tofu & Cream
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Butter & Margarine
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Condensed, Powdered Milk
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Buttermilk & Lassi
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Yogurt & Shrikhand
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Flavoured, Soya Milk
                                   </a>
                                 </li>
@@ -722,21 +724,21 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Instant Noodles
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Hakka Noodles</a>
+                                  <a href="#">Hakka Noodles</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Cup Noodles</a>
+                                  <a href="#">Cup Noodles</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Vermicelli</a>
+                                  <a href="#">Vermicelli</a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Instant Pasta</a>
+                                  <a href="#">Instant Pasta</a>
                                 </li>
                               </ul>
                             </div>
@@ -753,27 +755,27 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Salted Biscuits
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Marie, Health, Digestive
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Cream Biscuits & Wafers
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Glucose & Milk Biscuits
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">Cookies</a>
+                                  <a href="#">Cookies</a>
                                 </li>
                               </ul>
                             </div>
@@ -784,22 +786,22 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Bread Sticks & Lavash
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Cheese & Garlic Bread
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Puffs, Patties, Sandwiches
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Breadcrumbs & Croutons
                                   </a>
                                 </li>
@@ -818,22 +820,22 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Lemon, Ginger & Garlic
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Indian & Exotic Herbs
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Vegetables
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Fruits
                                   </a>
                                 </li>
@@ -846,42 +848,42 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Dry Fruits
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Dals & Pulses
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Millet & Flours
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Sugar, Jaggery
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Masalas & Spices
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Rice, Other Rice
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Flours
                                   </a>
                                 </li>
                                 <li>
-                                  <a href="javascript:void(0)">
+                                  <a href="#">
                                     Organic Edible Oil, Ghee
                                   </a>
                                 </li>
@@ -1108,7 +1110,7 @@ const Header = () => {
                         <li className="nav-item dropdown dropdown-mega">
                           <a
                             className="nav-link dropdown-toggle ps-xl-2 ps-0"
-                            href="javascript:void(0)"
+                            href="#"
                             data-bs-toggle="dropdown"
                           >
                             Mega Menu
@@ -1268,7 +1270,7 @@ const Header = () => {
                         <li className="nav-item dropdown">
                           <a
                             className="nav-link dropdown-toggle"
-                            href="javascript:void(0)"
+                            href="#"
                             data-bs-toggle="dropdown"
                           >
                             Blog
@@ -1305,7 +1307,7 @@ const Header = () => {
                         <li className="nav-item dropdown">
                           <a
                             className="nav-link dropdown-toggle"
-                            href="javascript:void(0)"
+                            href="#"
                             data-bs-toggle="dropdown"
                           >
                             Pages
@@ -1411,7 +1413,7 @@ const Header = () => {
                     <span>(123) 456 7890</span>
                   </div>
                   {/* <a
-                    href="javascript:void(0)"
+                    href="#"
                     className="btn theme-bg-color ms-3 fire-button"
                     data-bs-toggle="modal"
                     data-bs-target="#deal-box"
@@ -1427,29 +1429,29 @@ const Header = () => {
           </div>
         </div>
       </header>
-      <div class="mobile-menu d-md-none d-block mobile-cart">
+      <div className="mobile-menu d-md-none d-block mobile-cart">
         <ul className="p-0">
-          <li class="mobile-category" onClick={open_Category}>
+          <li className="mobile-category" onClick={open_Category}>
             <Link to="">
               <BiCategory />
               <span>Category</span>
             </Link>
           </li>
-          <li class="active">
+          <li className="active">
             <Link to="/">
               <AiOutlineHome className="" />
               <span>Home</span>
             </Link>
           </li>
           <li>
-            <Link to="" class="search-box">
+            <Link to="" className="search-box">
               <AiOutlineSearch />
               <span>Search</span>
             </Link>
           </li>
 
           <li>
-            <Link to="/wishlist" class="notifi-wishlist">
+            <Link to="/wishlist" className="notifi-wishlist">
               <AiOutlineHeart />
               <span>My Wish</span>
             </Link>

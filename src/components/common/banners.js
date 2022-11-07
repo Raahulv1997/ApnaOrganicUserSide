@@ -6,8 +6,7 @@ import ProductBox from "./product-box";
 import data from "../pages/data";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-// import 'bootstrap/dist/css/bootstrap.min.css';
-import {FaStar} from 'react-icons/fa';
+
 import "../../CSS/style.css";
 
 const Benners = (props,productPrice,productMRF,name,image) => {
@@ -47,7 +46,6 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                       Free shipping on all your order. we deliver you enjoy
                     </p>
                     <button
-                      onclick="location.href = 'shop-left-sidebar.html';"
                       className="btn mt-sm-4 btn-2 theme-bg-color text-white mend-auto btn-2-animation"
                     >
                       Shop Now
@@ -72,7 +70,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                     <h5 className="text-center">famer's market</h5>
                     <button
                       className="btn bg-white theme-color mt-3 home-button mx-auto btn-2"
-                      onclick="location.href = 'shop-left-sidebar.html';"
+
                     >
                       Shop Now
                     </button>
@@ -200,7 +198,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                         </h4>
                         <button
                           className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
-                          onclick="location.href = 'shop-left-sidebar.html';"
+                          
                         >
                           Shop Now
                         </button>
@@ -415,7 +413,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                     </h4>
                     <button
                       className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
-                      onclick="location.href = 'shop-left-sidebar.html';"
+       
                     >
                       Shop Now
                     </button>

@@ -19,6 +19,9 @@ const Cart = (props) => {
     count = count - 1;
     setCount(count);
   }
+  const func=()=>{
+
+  }
   return (
     <Fragment>
       <Header />
@@ -33,8 +36,8 @@ const Cart = (props) => {
                   <table className="table">
                     {product1.map((product1)=>{
                        return(
-                        <tbody>
-                            <tr key={product1.id} className="product-box-contain">
+                        <tbody key={product1.id}>
+                            <tr  className="product-box-contain">
                           <td className="product-detail">
                             <div className="product border-0">
                               <a
@@ -90,6 +93,7 @@ const Cart = (props) => {
                                           type="text"
                                           name="quantity"
                                           value="1"
+                                          onChange={func}
                                         />
                                         <button
                                           type="button"
@@ -135,6 +139,7 @@ const Cart = (props) => {
                                     type="text"
                                     name="quantity"
                                     value={count}
+                                      onChange={func}  
                                   />
                                   <button
                                     type="button"
@@ -159,13 +164,13 @@ const Cart = (props) => {
                             <h4 className="table-title text-content">Action</h4>
                             <a
                               className="save notifi-wishlist"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               Save for later
                             </a>
                             <a
                               className="remove close_button"
-                              href="javascript:void(0)"
+                              href="#"
                             >
                               Remove
                             </a>
@@ -194,6 +199,7 @@ const Cart = (props) => {
                         className="form-control"
                         id="exampleFormControlInput1"
                         placeholder="Enter Coupon Code Here..."
+                        onChange={func}  
                       />
                       <button className="btn-apply">Apply</button>
                     </div>

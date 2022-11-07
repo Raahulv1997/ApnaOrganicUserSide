@@ -9,7 +9,7 @@ const Faq=()=>{
         <Fragment>
             <Header/>
             <Breadcumb  pageTitle={'Contact us'}  pageHref="/"/>
-            <section class="faq-breadscrumb pt-0">
+            <section className="faq-breadscrumb pt-0">
             <div className="container-fluid-lg">
             <div className="row">
                 <div className="col-12">
@@ -64,7 +64,7 @@ const Faq=()=>{
                         <div className="col md-3">
                             <div className="faq-top-box">
                                 <div className="faq-box-icon">
-                                    <img src="../assets/images/inner-page/faq/help.png" class="blur-up lazyload" alt=""/>
+                                    <img src="../assets/images/inner-page/faq/help.png"className="blur-up lazyload" alt=""/>
                                 </div>
 
                                 <div className="faq-box-contain">
@@ -177,7 +177,7 @@ const Faq=()=>{
                                     How do I find my Windows Product key?
                                     </Accordion.Header>
                                     <Accordion.Body>
-                                    <div class="accordion-body">
+                                    <div className="accordion-body">
                                         <p>The product key is located inside the product packaging, on the
                                             receipt or confirmation page for a digital purchase or in a
                                             confirmation e-mail that shows you purchased Windows. If you
@@ -237,7 +237,7 @@ const Faq=()=>{
                                             products, directly via your mobile or web browser.</p>
 
                                         <p>To know the reason why we changed our brand name from Grofers to Fastkart,
-                                            read this <span class="fw-bold">blog post.</span></p>
+                                            read this <span className="fw-bold">blog post.</span></p>
                                     </div>
                                     </Accordion.Body>
                                 </Accordion.Item>
@@ -264,7 +264,7 @@ const Faq=()=>{
                                         What is payment method? 
                                     </Accordion.Header>
                                     <Accordion.Body>
-                                    <div class="accordion-body">
+                                    <div className="accordion-body">
                                         <p>simply dummy text of the printing and typesetting industry. Lorem Ipsum has
                                             been the industry's standard dummy text ever since the 1500s, when an
                                             unknown printer took a galley of type and scrambled it to make a type

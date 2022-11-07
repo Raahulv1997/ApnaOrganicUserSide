@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useState } from "react";
 import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
@@ -23,6 +23,7 @@ import InputGroup from "react-bootstrap/InputGroup";
 // import {CiMail} from 'react-icons/ci';
 
 function Account() {
+  const func=()=>{}
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -85,19 +86,65 @@ function Account() {
 
   const [changepass, setchangepass] = useState("");
   const [passvalidated, setpassValidated] = useState(false);
+  const [formError, setFormError] = useState({
+    currentPass: "",
+    newPass: "",
+    confirmPass: "",
+    allPass: "",
+  });
   const handlePassSubmit = (event) => {
     event.preventDefault();
+    if (
+      changepass.confirmpassword == undefined &&
+      changepass.newPass == undefined &&
+      changepass.currentpassword == undefined
+    ) {
+      setFormError({
+        allPass: "All field are required",
+      });
 
-    let form = event.currentTarget;
-    console.log(changepass);
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-      console.log("aba");
+      return false;
     }
-    setchangepass("");
-    // ChangepassClose();
-    setpassValidated(true);
+    if (changepass.currentpassword == undefined) {
+      setFormError({
+        currentPass: "Please enter current password",
+      });
+
+      return false;
+    }
+    if (changepass.currentpassword !== "1234") {
+      setFormError({
+        currentPass: "Not match with current password",
+      });
+      return false;
+    }
+
+
+    if (changepass.newpassword == undefined) {
+      setFormError({
+        newPass: "Please enter New password",
+      });
+
+      return false;
+    }
+
+    if (changepass.confirmpassword == undefined) {
+      setFormError({
+        confirmPass: "Please enter confirm password",
+      });
+
+      return false;
+    }
+
+    if (changepass.confirmpassword != changepass.newpassword) {
+      setFormError({
+        confirmPass: "Password & Confirm password not match",
+      });
+      return false;
+    }
+    setFormError("");
+    console.log(changepass);
+    ChangepassClose();
   };
 
   const OnchangePass = (e) => {
@@ -121,12 +168,12 @@ function Account() {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setpassValidated(true);
   };
 
   const OnaddAdderss = (e) => {
     let name = e.target.value;
+
     console.log(name);
     setchangepass({
       ...changepass,
@@ -179,7 +226,7 @@ function Account() {
                           />
                           <div className="cover-icon">
                             <i className="fa-solid fa-pen">
-                              <input type="file" onChange="readURL(this,0)" />
+                              <input type="file" />
                             </i>
                           </div>
                         </div>
@@ -470,7 +517,7 @@ function Account() {
                                     vicki.pope@gmail.com
                                   </h6>
                                   <a
-                                    href="javascript:void(0)"
+                                    href="#"
                                     onClick={ChangepassShow}
                                   >
                                     Change Password
@@ -483,7 +530,7 @@ function Account() {
                                   <h4>
                                     Newsletters{" "}
                                     <a
-                                      href="javascript:void(0)"
+                                      href="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                     >
@@ -504,7 +551,7 @@ function Account() {
                                   <h4>
                                     Address Book{" "}
                                     <a
-                                      href="javascript:void(0)"
+                                      href="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                     >
@@ -524,7 +571,7 @@ function Account() {
                                         address.
                                       </h6>
                                       <a
-                                        href="javascript:void(0)"
+                                        href="#"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
                                         onClick={handleShow}
@@ -544,7 +591,7 @@ function Account() {
                                         address.
                                       </h6>
                                       <a
-                                        href="javascript:void(0)"
+                                        href="#"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
                                         onClick={handleShow}
@@ -1107,6 +1154,7 @@ function Account() {
                                             type="text"
                                             name="quantity"
                                             value="0"
+                                            onChange={func}
                                           />
                                           <button
                                             type="button"
@@ -1192,6 +1240,7 @@ function Account() {
                                             type="text"
                                             name="quantity"
                                             value="0"
+                                            onChange={func}
                                           />
                                           <button
                                             type="button"
@@ -1280,6 +1329,7 @@ function Account() {
                                             type="text"
                                             name="quantity"
                                             value="0"
+                                            onChange={func}
                                           />
                                           <button
                                             type="button"
@@ -1366,6 +1416,7 @@ function Account() {
                                             type="text"
                                             name="quantity"
                                             value="0"
+                                            onChange={func}
                                           />
                                           <button
                                             type="button"
@@ -1452,6 +1503,7 @@ function Account() {
                                             type="text"
                                             name="quantity"
                                             value="0"
+                                            onChange={func}
                                           />
                                           <button
                                             type="button"
@@ -1537,6 +1589,7 @@ function Account() {
                                             type="text"
                                             name="quantity"
                                             value="0"
+                                            onChange={func}
                                           />
                                           <button
                                             type="button"
@@ -1622,6 +1675,7 @@ function Account() {
                                             type="text"
                                             name="quantity"
                                             value="0"
+                                            onChange={func}
                                           />
                                           <button
                                             type="button"
@@ -1712,13 +1766,13 @@ function Account() {
                                   <a
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
-                                    href="javascript:void(0)"
+                                    href="#"
                                     onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
                                   </a>
                                   <a
-                                    href="javascript:void(0)"
+                                    href="#"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
@@ -1732,12 +1786,12 @@ function Account() {
                                 <a
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
-                                  href="javascript:void(0)"
+                                  href="#"
                                   onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
                                 </a>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                   <i className="far fa-minus-square"></i>
                                   delete
                                 </a>
@@ -1784,13 +1838,13 @@ function Account() {
                                   <a
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
-                                    href="javascript:void(0)"
+                                    href="#"
                                     onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
                                   </a>
                                   <a
-                                    href="javascript:void(0)"
+                                    href="#"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
@@ -1804,12 +1858,12 @@ function Account() {
                                 <a
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
-                                  href="javascript:void(0)"
+                                  href="#"
                                   onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
                                 </a>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                   <i className="far fa-minus-square"></i>
                                   delete
                                 </a>
@@ -1856,13 +1910,13 @@ function Account() {
                                   <a
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
-                                    href="javascript:void(0)"
+                                    href="#"
                                     onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
                                   </a>
                                   <a
-                                    href="javascript:void(0)"
+                                    href="#"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
@@ -1876,12 +1930,12 @@ function Account() {
                                 <a
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
-                                  href="javascript:void(0)"
+                                  href="#"
                                   onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
                                 </a>
-                                <a href="javascript:void(0)">
+                                <a href="#">
                                   <i className="far fa-minus-square"></i>
                                   delete
                                 </a>
@@ -1929,6 +1983,7 @@ function Account() {
                                       name="jack"
                                       id="flexRadioDefault2"
                                       checked
+                                      onChange={func}
                                     />
                                   </div>
 
@@ -2318,7 +2373,7 @@ function Account() {
                               </div>
 
                               <a
-                                href="javascript:void(0)"
+                                href="#"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editProfile"
                                 onClick={handleShow}
@@ -2383,7 +2438,7 @@ function Account() {
                                       <tr>
                                         <td>Phone Number :</td>
                                         <td>
-                                          <a href="javascript:void(0)">
+                                          <a href="#">
                                             {" "}
                                             +91 846 - 547 - 210
                                           </a>
@@ -2409,7 +2464,7 @@ function Account() {
                                       <tr>
                                         <td>Email :</td>
                                         <td>
-                                          <a href="javascript:void(0)">
+                                          <a href="#">
                                             vicki.pope@gmail.com
                                             <span
                                               data-bs-toggle="modal"
@@ -2424,7 +2479,7 @@ function Account() {
                                       <tr>
                                         <td>Password :</td>
                                         <td>
-                                          <a href="javascript:void(0)">
+                                          <a href="#">
                                             ●●●●●●
                                             <span
                                               data-bs-toggle="modal"
@@ -2700,9 +2755,9 @@ function Account() {
                   name={"gender"}
                   onChange={OnchangeFistname}
                 >
-                  <option value={""}>Gender</option>
-                  <option value="Male">Male</option>
-                  <option value="Female">Female</option>
+                  <option value={""} onChange={func}>Gender</option>
+                  <option value="Male" onChange={func}>Male</option>
+                  <option value="Female" onChange={func}>Female</option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid" className="h6">
                   Please select producttype
@@ -2748,10 +2803,12 @@ function Account() {
         </Form>
       </Modal>
 
-      <Modal size="md" show={Password} onHide={ChangepassClose}>
+      <Modal size="md" show={Password} onHide={ChangepassClose} className="changePass_modal">
         <Form noValidate validated={passvalidated} onSubmit={handlePassSubmit}>
+      
           <Modal.Header closeButton>
             <Modal.Title>Change Password</Modal.Title>
+            
           </Modal.Header>
           <Modal.Body>
             <div className="row p-md-3 m-0">
@@ -2760,6 +2817,7 @@ function Account() {
                   className="mb-3 aos_input"
                   controlId="validationCustom01"
                 >
+
                   <Form.Label>Current Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -2767,12 +2825,8 @@ function Account() {
                     value={changepass.current_password}
                     name={"currentpassword"}
                     onChange={OnchangePass}
-                    required
                   />
-                  <Form.Control.Feedback type="invalid">
-                    {" "}
-                    Please Enter Current password
-                  </Form.Control.Feedback>
+                  <p className="error-message">{formError.currentPass}</p>
                 </Form.Group>
               </div>
               <div className="col-12">
@@ -2784,15 +2838,13 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="New Password"
-                    required
                     value={changepass.new_password}
                     name={"newpassword"}
                     onChange={OnchangePass}
                   />
-                  <Form.Control.Feedback type="invalid">
-                    Please Enter valid Password
-                  </Form.Control.Feedback>
+                  <p className="error-message">{formError.newPass}</p>
                 </Form.Group>
+                </div>
                 <div className="col-12">
                   <Form.Group
                     className="mb-3 aos_input"
@@ -2802,19 +2854,17 @@ function Account() {
                     <Form.Control
                       type="password"
                       placeholder="Confirm Password"
-                      required
                       value={changepass.confirm_password}
                       name={"confirmpassword"}
                       onChange={OnchangePass}
                     />
-                    <Form.Control.Feedback type="invalid">
-                      Please Enter valid Confirm Password
-                    </Form.Control.Feedback>
-                  </Form.Group>
+                    </Form.Group>
+                    <p className="error-message">{formError.confirmPass}{formError.allPass}</p>
                 </div>
               </div>
-            </div>
+           
           </Modal.Body>
+
           <Modal.Footer>
             <button
               className="button main_outline_button btn btn-animation "
@@ -2913,7 +2963,7 @@ function Account() {
                       type="text"
                       placeholder="Phone Number"
                       required
-                      value={addNewAdderss.confirm_password}
+                      value={addNewAdderss.confirsdm_password}
                       name={"addAdderss_phone"}
                       onChange={OnaddAdderss}
                     />

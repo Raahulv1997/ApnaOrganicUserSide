@@ -127,7 +127,7 @@ const Singup = () => {
                 </div>
 
                 <div className="other-log-in">
-                  <h6></h6>
+                  
                 </div>
 
                 <div className="sign-up-box">
