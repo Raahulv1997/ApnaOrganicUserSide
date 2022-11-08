@@ -4,6 +4,7 @@ import Breadcumb from "../common/beadcumb";
 import Footer from "../common/footer";
 import ProductBox from "../common/product-box";
 import data from "./data";
+import { Link } from "react-router-dom";
 
 function wishlist() {
   var product = data.product;
@@ -92,73 +93,73 @@ function wishlist() {
 
                 <ul className="location-select custom-height">
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Alabama</h6>
                       <span>Min: $130</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Arizona</h6>
                       <span>Min: $150</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>California</h6>
                       <span>Min: $110</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Colorado</h6>
                       <span>Min: $140</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Florida</h6>
                       <span>Min: $160</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Georgia</h6>
                       <span>Min: $120</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Kansas</h6>
                       <span>Min: $170</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Minnesota</h6>
                       <span>Min: $120</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>New York</h6>
                       <span>Min: $110</span>
-                    </a>
+                    </Link>
                   </li>
 
                   <li>
-                    <a href="#">
+                    <Link to="#">
                       <h6>Washington</h6>
                       <span>Min: $130</span>
-                    </a>
+                    </Link>
                   </li>
                 </ul>
               </div>
@@ -197,77 +198,77 @@ function wishlist() {
                 <ul className="deal-offer-list">
                   <li className="list-1">
                     <div className="deal-offer-contain">
-                      <a href="shop-left-sidebar.html" className="deal-image">
+                      <Link to="shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/10.png"
                           className="blur-up lazyload"
                           alt=""
                         />
-                      </a>
+                      </Link>
 
-                      <a href="shop-left-sidebar.html" className="deal-contain">
+                      <Link to="shop-left-sidebar.html" className="deal-contain">
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>
                         </h6>
-                      </a>
+                      </Link>
                     </div>
                   </li>
 
                   <li className="list-2">
                     <div className="deal-offer-contain">
-                      <a href="shop-left-sidebar.html" className="deal-image">
+                      <Link to="shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/11.png"
                           className="blur-up lazyload"
                           alt=""
                         />
-                      </a>
+                      </Link>
 
-                      <a href="shop-left-sidebar.html" className="deal-contain">
+                      <Link to="shop-left-sidebar.html" className="deal-contain">
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>
                         </h6>
-                      </a>
+                      </Link>
                     </div>
                   </li>
 
                   <li className="list-3">
                     <div className="deal-offer-contain">
-                      <a href="shop-left-sidebar.html" className="deal-image">
+                      <Link to="shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/12.png"
                           className="blur-up lazyload"
                           alt=""
                         />
-                      </a>
+                      </Link>
 
-                      <a href="shop-left-sidebar.html" className="deal-contain">
+                      <Link to="shop-left-sidebar.html" className="deal-contain">
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>
                         </h6>
-                      </a>
+                      </Link>
                     </div>
                   </li>
 
                   <li className="list-1">
                     <div className="deal-offer-contain">
-                      <a href="shop-left-sidebar.html" className="deal-image">
+                      <Link to="shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/13.png"
                           className="blur-up lazyload"
                           alt=""
                         />
-                      </a>
+                      </Link>
 
-                      <a href="shop-left-sidebar.html" className="deal-contain">
+                      <Link to="shop-left-sidebar.html" className="deal-contain">
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>
                         </h6>
-                      </a>
+                      </Link>
                     </div>
                   </li>
                 </ul>
@@ -336,9 +337,9 @@ function wishlist() {
         </div>
 
         <div className="back-to-top">
-          <a id="back-to-top" href="#">
+          <Link id="back-to-top" to="#">
             <i className="fas fa-chevron-up"></i>
-          </a>
+          </Link>
         </div>
       </div>
       <Footer />

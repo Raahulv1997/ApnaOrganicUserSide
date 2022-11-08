@@ -2,7 +2,6 @@ import React, { Fragment } from "react";
 import Footer from "../common/footer";
 import Header from '../common/header'
 import Breadcumb from '../common/beadcumb';
-import Carousel from 'react-multi-carousel';
 import 'react-multi-carousel/lib/styles.css';
 import {FaStar} from 'react-icons/fa';
 const Aboutus=()=>{

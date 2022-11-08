@@ -37,7 +37,7 @@ const Singup = () => {
                           id="fullname"
                           placeholder="Full Name"
                         />
-                        <label for="fullname">Full Name</label>
+                        <label htmlFor="fullname">Full Name</label>
                       </div>
                     </div>
                     <div className="col-12">
@@ -48,7 +48,7 @@ const Singup = () => {
                           id="email"
                           placeholder="Email Address"
                         />
-                        <label for="email">Email Address</label>
+                        <label htmlFor="email">Email Address</label>
                       </div>
                     </div>
 
@@ -60,7 +60,7 @@ const Singup = () => {
                           id="password"
                           placeholder="Password"
                         />
-                        <label for="password">Password</label>
+                        <label htmlFor="password">Password</label>
                       </div>
                     </div>
 
@@ -74,7 +74,7 @@ const Singup = () => {
                           />
                           <label
                             className="form-check-label"
-                            for="flexCheckDefault"
+                            htmlFor="flexCheckDefault"
                           >
                             I agree with
                             <span>Terms</span> and <span>Privacy</span>

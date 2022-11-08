@@ -1,41 +1,33 @@
 import React, { Fragment } from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
-import Product1 from "../../Photos/banner/2.jpg";
-import Product2 from "../../Photos/product/2.png";
 import banner1 from "../../Photos/banner/14.jpg";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
-import { data3, data4 } from "../pages/data";
+import { data3} from "../pages/data";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
-import { NavLink } from "react-router-dom";
-import { useState } from "react";
+import {Link, NavLink } from "react-router-dom";
+
+
+
 
 // function Validation(){
 
 const ProductDetail = (props) => {
   var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
-  let [count, setCount] = useState(0);
+  // let [count, setCount] = useState(0);
 
-  const incrementCount = () => {
-    count = count + 1;
-    setCount(count);
-  };
-  const decrementCount = () => {
-    count = count - 1;
-    setCount(count);
-  };
-  // render() {
-  //     const settings = {
-  //       dots: true,
-  //       infinite: true,
-  //       speed: 500,
-  //       slidesToShow: 1,
-  //       slidesToScroll: 1
-  //     }
+  // const incrementCount = () => {
+  //   count = count + 1;
+  //   setCount(count);
+  // };
+  // const decrementCount = () => {
+  //   count = count - 1;
+  //   setCount(count);
+  // };
   return (
     <Fragment>
       <Header />
@@ -190,21 +182,21 @@ const ProductDetail = (props) => {
                         </div>
                         <ul className="select-packege">
                           <li>
-                            <a href="javascript:void(0)" className="active">
+                             <Link to="/"  className="active">
                               1/2 KG
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">1 KG</a>
+                             <Link to="/" >1 KG</Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">1.5 KG</a>
+                             <Link to="/" >1.5 KG</Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">Red Roses</a>
+                             <Link to="/" >Red Roses</Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">With Pink Roses</a>
+                             <Link to="/" >With Pink Roses</Link>
                           </li>
                         </ul>
                       </div>
@@ -216,7 +208,7 @@ const ProductDetail = (props) => {
                                 <li>
                                     <div className="counter">
                                         <div>
-                                            <h5 id="days2"></h5>
+                                          
                                             <h6>Days</h6>
                                         </div>
                                     </div>
@@ -224,7 +216,7 @@ const ProductDetail = (props) => {
                                 <li>
                                     <div className="counter">
                                         <div>
-                                            <h5 id="hours2"></h5>
+                                           
                                             <h6>Hours</h6>
                                         </div>
                                     </div>
@@ -232,7 +224,7 @@ const ProductDetail = (props) => {
                                 <li>
                                     <div className="counter">
                                         <div>
-                                            <h5 id="minutes2"></h5>
+                                            
                                             <h6>Min</h6>
                                         </div>
                                     </div>
@@ -240,7 +232,7 @@ const ProductDetail = (props) => {
                                 <li>
                                     <div className="counter">
                                         <div>
-                                            <h5 id="seconds2"></h5>
+                                          
                                             <h6>Sec</h6>
                                         </div>
                                     </div>
@@ -255,7 +247,7 @@ const ProductDetail = (props) => {
                               className="qty-right-plus"
                               data-type="plus"
                               data-field=""
-                              onClick={incrementCount}
+                              // onClick={incrementCount}
                             >
                               <i className="fa fa-plus" aria-hidden="true"></i>
                             </button>
@@ -263,14 +255,14 @@ const ProductDetail = (props) => {
                               className="form-control input-number qty-input"
                               type="text"
                               name="quantity"
-                              value={count}
+                              // value={count}
                             />
-                            <button
+                            <button  
                               type="button"
                               className="qty-left-minus"
                               data-type="minus"
                               data-field=""
-                              onClick={decrementCount}
+                              // onClick={decrementCount}
                             >
                               <i className="fa fa-minus" aria-hidden="true"></i>
                             </button>
@@ -278,7 +270,7 @@ const ProductDetail = (props) => {
                         </div>
 
                         <button
-                          onclick="location.href = 'cart.html';"
+                         
                           className="btn btn-md bg-dark cart-button text-white"
                         >
                           Add To Cart
@@ -287,18 +279,18 @@ const ProductDetail = (props) => {
                       <div className="row mt-4">
                       <div className="col-6 col-xl-3">
                       <button className="btn btn-dark">
-                          <a href="wishlist.html">
+                      <Link to="/">
                             {/* <i data-feather="heart"></i> */}
                             <span className="text-white">Add To Wishlist</span>
-                          </a>
+                          </Link>
                         </button>
                       </div>
                       <div className="col-6 col-xl-3">
                       <button className="btn btn-dark ">
-                          <a href="compare.html">
+                      <Link to="/" >
                             {/* <i data-feather="shuffle"></i> */}
                             <span className="text-white ">Add To Compare</span>
-                          </a>
+                          </Link>
                         </button>
                       </div>
                       </div>
@@ -317,21 +309,21 @@ const ProductDetail = (props) => {
                           <ul className="product-info-list product-info-list-2 ">
                             <li>
                               Type :{" "}
-                              <a href="javascript:void(0)">Black Forest</a>
+                               <Link to="/" >Black Forest</Link>
                             </li>
                             <li>
-                              SKU : <a href="javascript:void(0)">SDFVW65467</a>
+                              SKU :  <Link to="/" >SDFVW65467</Link>
                             </li>
                             <li>
-                              MFG : <a href="javascript:void(0)">Jun 4, 2022</a>
+                              MFG :  <Link to="/" >Jun 4, 2022</Link>
                             </li>
                             <li>
                               Stock :{" "}
-                              <a href="javascript:void(0)">2 Items Left</a>
+                               <Link to="/" >2 Items Left</Link>
                             </li>
                             <li>
-                              Tags : <a href="javascript:void(0)">Cake,</a>{" "}
-                              <a href="javascript:void(0)">Backery</a>
+                              Tags :  <Link to="/" >Cake,</Link>{" "}
+                               <Link to="/" >Backery</Link>
                             </li>
                           </ul>
                         </div>
@@ -343,49 +335,49 @@ const ProductDetail = (props) => {
                         </div>
                         <ul>
                           <li>
-                            <a href="javascript:void(0)">
+                             <Link to="/" >
                               <img
                                 src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/1.svg"
                                 className=" lazyload"
                                 alt=""
                               />
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">
+                             <Link to="/" >
                               <img
                                 src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/2.svg"
                                 className=" lazyload"
                                 alt=""
                               />
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">
+                             <Link to="/" >
                               <img
                                 src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/3.svg"
                                 className=" lazyload"
                                 alt=""
                               />
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">
+                             <Link to="/" >
                               <img
                                 src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/4.svg"
                                 className=" lazyload"
                                 alt=""
                               />
-                            </a>
+                            </Link>
                           </li>
                           <li>
-                            <a href="javascript:void(0)">
+                             <Link to="/" >
                               <img
                                 src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/5.svg"
                                 className=" lazyload"
                                 alt=""
                               />
-                            </a>
+                            </Link>
                           </li>
                         </ul>
                       </div>
@@ -797,7 +789,7 @@ const ProductDetail = (props) => {
                                     id="name"
                                     placeholder="Name"
                                   />
-                                  <label for="name">Your Name</label>
+                                  <label htmlFor="name">Your Name</label>
                                 </div>
                               </div>
 
@@ -809,7 +801,7 @@ const ProductDetail = (props) => {
                                     id="email"
                                     placeholder="Email Address"
                                   />
-                                  <label for="email">Email Address</label>
+                                  <label htmlFor="email">Email Address</label>
                                 </div>
                               </div>
 
@@ -821,7 +813,7 @@ const ProductDetail = (props) => {
                                     id="website"
                                     placeholder="Website"
                                   />
-                                  <label for="website">Website</label>
+                                  <label htmlFor="website">Website</label>
                                 </div>
                               </div>
 
@@ -833,7 +825,7 @@ const ProductDetail = (props) => {
                                     id="review1"
                                     placeholder="Give your review a title"
                                   />
-                                  <label for="review1">Review Title</label>
+                                  <label htmlFor="review1">Review Title</label>
                                 </div>
                               </div>
 
@@ -844,7 +836,7 @@ const ProductDetail = (props) => {
                                     placeholder="Leave a comment here"
                                     id="floatingTextarea2"
                                   ></textarea>
-                                  <label for="floatingTextarea2">
+                                  <label htmlFor="floatingTextarea2">
                                     Write Your Comment
                                   </label>
                                 </div>
@@ -875,9 +867,9 @@ const ProductDetail = (props) => {
                                 </div>
 
                                 <div className="people-comment">
-                                  <a className="name" href="javascript:void(0)">
+                                   <Link to="/" >
                                     Tracey
-                                  </a>
+                                  </Link>
                                   <div className="date-time d-flex d-flex justify-content-between">
                                     <h6 className="text-content">
                                       14 Jan, 2022 at 12.58 AM
@@ -930,7 +922,7 @@ const ProductDetail = (props) => {
                                       cake I love gummi bears. Candy canes ice
                                       cream caramels tiramisu marshmallow cake
                                       shortbread candy canes cookie.
-                                      <a href="javascript:void(0)">Reply</a>
+                                       <Link to="/" >Reply</Link>
                                     </p>
                                   </div>
                                 </div>
@@ -950,9 +942,9 @@ const ProductDetail = (props) => {
                                 </div>
 
                                 <div className="people-comment">
-                                  <a className="name" href="javascript:void(0)">
+                                   <Link to="/" >
                                     Olivia
-                                  </a>
+                                  </Link>
                                   <div className="date-time">
                                     <h6 className="text-content">
                                       01 May, 2022 at 08.31 AM
@@ -1003,7 +995,7 @@ const ProductDetail = (props) => {
                                       cookie brownie apple pie pudding brownie
                                       chocolate bar. Jujubes gummi bears I love
                                       powder danish oat cake tart croissant.
-                                      <a href="javascript:void(0)">Reply</a>
+                                       <Link to="/" >Reply</Link>
                                     </p>
                                   </div>
                                 </div>
@@ -1023,9 +1015,9 @@ const ProductDetail = (props) => {
                                 </div>
 
                                 <div className="people-comment">
-                                  <a className="name" href="javascript:void(0)">
+                                   <Link to="/" >
                                     Gabrielle
-                                  </a>
+                                  </Link>
                                   <div className="date-time">
                                     <h6 className="text-content">
                                       21 May, 2022 at 05.52 PM
@@ -1080,7 +1072,7 @@ const ProductDetail = (props) => {
                                       pudding icing chocolate gummi bears. Gummi
                                       bears danish cotton candy muffin marzipan
                                       caramels awesome feel.{" "}
-                                      <a href="javascript:void(0)">Reply</a>
+                                       <Link to="/" >Reply</Link>
                                     </p>
                                   </div>
                                 </div>

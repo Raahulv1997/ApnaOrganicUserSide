@@ -1,5 +1,4 @@
 import React, { Fragment } from "react";
-import Breadcumb from '../common/beadcumb';
 const Term_condition=()=>{
     return(
         <Fragment>

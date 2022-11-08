@@ -7,6 +7,7 @@ import Tab from "react-bootstrap/Tab";
 import Breadcumb from "../common/beadcumb";
 import { data1, data2 } from "./data";
 import Accordion from "react-bootstrap/Accordion";
+import { Link } from "react-router-dom";
 
 const Checkout = (props) => {
   var product1 = data1.product1;
@@ -162,8 +163,8 @@ const Checkout = (props) => {
                                   >
                                     <td className="product-detail">
                                       <div className="product border-0">
-                                        <a
-                                          href={product1.image}
+                                      <Link 
+                                          to={product1.image}
                                           className="product-image"
                                         >
                                           <img
@@ -171,16 +172,15 @@ const Checkout = (props) => {
                                             className="img-fluid lazyload"
                                             alt=""
                                           />
-                                        </a>
+                                        </Link>
                                         <div className="product-detail">
                                           <ul>
                                             <li className="name">
-                                              <a
-                                                href="./product-detail"
+                                   <Link to="/"
                                                 className="text-title"
                                               >
                                                 {product1.name}
-                                              </a>
+                                              </Link>
                                             </li>
 
                                             <li className="text-content">
@@ -308,18 +308,18 @@ const Checkout = (props) => {
                                       <h4 className="table-title text-content">
                                         Action
                                       </h4>
-                                      <a
+                                      <Link to="/"
                                         className="save notifi-wishlist"
-                                        href="#"
+                                      
                                       >
                                         Save for later
-                                      </a>
-                                      <a
+                                      </Link>
+                                      <Link to="/"
                                         className="remove close_button"
-                                        href="#"
+                                      
                                       >
                                         Remove
-                                      </a>
+                                      </Link>
                                     </td>
                                   </tr>
                                 </tbody>
@@ -332,19 +332,18 @@ const Checkout = (props) => {
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
-                            <a
-                              href="./home"
+                          <Link to="/"
                               className="btn btn-light shopping-button text-dark"
                             >
                               <i className="fa-solid fa-arrow-left-long me-3"></i>
                               Continue Shopping
-                            </a>
+                            </Link>
                           </li>
 
                           <li>
                             <button
                               className="btn btn-animation proceed-btn"
-                              eventKey="second"
+                              // eventKey ="second"
                             >
                               Continue Delivery Address
                             </button>
@@ -723,7 +722,7 @@ const Checkout = (props) => {
                           <div className="summery-box">
                             <div className="summery-header bg-white">
                               <h3>Order Summery</h3>
-                              <a href="./cart">Edit Cart</a>
+                              <Link to="./cart">Edit Cart</Link>
                             </div>
 
                             <ul className="summery-contain bg-white custom-height">
@@ -1249,9 +1248,9 @@ const Checkout = (props) => {
                                         Pay digitally with SMS Pay Link. Cash
                                         may not be accepted in COVID restricted
                                         areas.{" "}
-                                        <a href="#">
+                                        <Link to="/">
                                           Know more.
-                                        </a>
+                                        </Link>
                                       </h5>
                                     </div>
                                   </Accordion.Body>

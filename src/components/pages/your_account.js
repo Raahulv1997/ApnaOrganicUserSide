@@ -1,6 +1,6 @@
-import React, { useEffect } from "react";
+import React  from "react";
+import { Link} from "react-router-dom";
 import { useState } from "react";
-import Button from "react-bootstrap/Button";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
 import Header from "../common/header";
@@ -18,7 +18,6 @@ import { GoLocation, GoMail } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
 import Col from "react-bootstrap/Col";
 import profile_cover from "../../Photos/media/cover-img.jpg";
-import InputGroup from "react-bootstrap/InputGroup";
 
 // import {CiMail} from 'react-icons/ci';
 
@@ -85,7 +84,7 @@ function Account() {
   // change Password
 
   const [changepass, setchangepass] = useState("");
-  const [passvalidated, setpassValidated] = useState(false);
+ 
   const [formError, setFormError] = useState({
     currentPass: "",
     newPass: "",
@@ -95,9 +94,9 @@ function Account() {
   const handlePassSubmit = (event) => {
     event.preventDefault();
     if (
-      changepass.confirmpassword == undefined &&
-      changepass.newPass == undefined &&
-      changepass.currentpassword == undefined
+      changepass.confirmpassword === undefined &&
+      changepass.newPass === undefined &&
+      changepass.currentpassword === undefined
     ) {
       setFormError({
         allPass: "All field are required",
@@ -105,7 +104,7 @@ function Account() {
 
       return false;
     }
-    if (changepass.currentpassword == undefined) {
+    if (changepass.currentpassword === undefined) {
       setFormError({
         currentPass: "Please enter current password",
       });
@@ -120,7 +119,7 @@ function Account() {
     }
 
 
-    if (changepass.newpassword == undefined) {
+    if (changepass.newpassword === undefined) {
       setFormError({
         newPass: "Please enter New password",
       });
@@ -128,7 +127,7 @@ function Account() {
       return false;
     }
 
-    if (changepass.confirmpassword == undefined) {
+    if (changepass.confirmpassword === undefined) {
       setFormError({
         confirmPass: "Please enter confirm password",
       });
@@ -136,7 +135,7 @@ function Account() {
       return false;
     }
 
-    if (changepass.confirmpassword != changepass.newpassword) {
+    if (changepass.confirmpassword !== changepass.newpassword) {
       setFormError({
         confirmPass: "Password & Confirm password not match",
       });
@@ -168,14 +167,14 @@ function Account() {
       event.preventDefault();
       event.stopPropagation();
     }
-    setpassValidated(true);
+    setaddAdderssValidated(true);
   };
 
   const OnaddAdderss = (e) => {
     let name = e.target.value;
 
     console.log(name);
-    setchangepass({
+    setaddNewAdderss({
       ...changepass,
       [e.target.name]: e.target.value,
     });
@@ -187,7 +186,7 @@ function Account() {
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
-        pageHref={"/"}
+        pageto={"/"}
       />
 
       <section className="user-dashboard-section section-b-space">
@@ -197,7 +196,7 @@ function Account() {
               <div className="col-xxl-3 col-lg-4">
                 <div
                   className={
-                    click == true
+                    click === true
                       ? "dashboard-left-sidebar show"
                       : "dashboard-left-sidebar"
                   }
@@ -413,7 +412,7 @@ function Account() {
                             <div className="title">
                               <h2>My Dashboard</h2>
                               <span className="title-leaf">
-                                <svg className="icon-width bg-gray">//</svg>
+                                <svg className="icon-width bg-gray"></svg>
                               </span>
                             </div>
 
@@ -501,14 +500,14 @@ function Account() {
                                 <div className="dashboard-contant-title">
                                   <h4>
                                     Contact Information{" "}
-                                    <a
-                                      href="#"
+                                    <Link
+                                      to="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                       onClick={handleShow}
                                     >
                                       Edit
-                                    </a>
+                                    </Link>
                                   </h4>
                                 </div>
                                 <div className="dashboard-detail">
@@ -516,12 +515,12 @@ function Account() {
                                   <h6 className="text-content">
                                     vicki.pope@gmail.com
                                   </h6>
-                                  <a
-                                    href="#"
+                                  <Link
+                                    to="#"
                                     onClick={ChangepassShow}
                                   >
                                     Change Password
-                                  </a>
+                                  </Link>
                                 </div>
                               </div>
 
@@ -529,13 +528,13 @@ function Account() {
                                 <div className="dashboard-contant-title">
                                   <h4>
                                     Newsletters{" "}
-                                    <a
-                                      href="#"
+                                    <Link
+                                      to="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                     >
                                       Edit
-                                    </a>
+                                    </Link>
                                   </h4>
                                 </div>
                                 <div className="dashboard-detail">
@@ -550,13 +549,13 @@ function Account() {
                                 <div className="dashboard-contant-title">
                                   <h4>
                                     Address Book{" "}
-                                    <a
-                                      href="#"
+                                    <Link
+                                      to="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                     >
                                       Edit
-                                    </a>
+                                    </Link>
                                   </h4>
                                 </div>
 
@@ -570,14 +569,14 @@ function Account() {
                                         You have not set a default billing
                                         address.
                                       </h6>
-                                      <a
-                                        href="#"
+                                      <Link
+                                        to="#"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
                                         onClick={handleShow}
                                       >
                                         Edit Address
-                                      </a>
+                                      </Link>
                                     </div>
                                   </div>
 
@@ -590,14 +589,14 @@ function Account() {
                                         You have not set a default shipping
                                         address.
                                       </h6>
-                                      <a
-                                        href="#"
+                                      <Link
+                                        to="#"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
                                         onClick={handleShow}
                                       >
                                         Edit Address
-                                      </a>
+                                      </Link>
                                     </div>
                                   </div>
                                 </div>
@@ -641,8 +640,8 @@ function Account() {
                               </div>
 
                               <div className="product-order-detail">
-                                <a
-                                  href="product-left.html"
+                                <Link
+                                  to="product-left.html"
                                   className="order-image"
                                 >
                                   <img
@@ -650,12 +649,12 @@ function Account() {
                                     className="lazyload"
                                     alt=""
                                   />
-                                </a>
+                                </Link>
 
                                 <div className="order-wrap">
-                                  <a href="product-left.html">
+                                  <Link to="product-left.html">
                                     <h3>Fantasy Crunchy Choco Chip Cookies</h3>
-                                  </a>
+                                  </Link>
                                   <p className="text-content">
                                     Cheddar dolcelatte gouda. Macaroni cheese
                                     cheese strings feta halloumi cottage cheese
@@ -752,8 +751,8 @@ function Account() {
                               </div>
 
                               <div className="product-order-detail">
-                                <a
-                                  href="product-left.html"
+                                <Link
+                                  to="product-left.html"
                                   className="order-image"
                                 >
                                   <img
@@ -761,14 +760,14 @@ function Account() {
                                     alt=""
                                     className=" lazyload"
                                   />
-                                </a>
+                                </Link>
 
                                 <div className="order-wrap">
-                                  <a href="product-left.html">
+                                  <Link to="product-left.html">
                                     <h3>
                                       Cold Brew Coffee Instant Coffee 50 g
                                     </h3>
-                                  </a>
+                                  </Link>
                                   <p className="text-content">
                                     Pecorino paneer port-salut when the cheese
                                     comes out everybody's happy red leicester
@@ -864,8 +863,8 @@ function Account() {
                               </div>
 
                               <div className="product-order-detail">
-                                <a
-                                  href="product-left.html"
+                                <Link
+                                  to="product-left.html"
                                   className="order-image"
                                 >
                                   <img
@@ -873,15 +872,15 @@ function Account() {
                                     alt=""
                                     className=" lazyload"
                                   />
-                                </a>
+                                </Link>
 
                                 <div className="order-wrap">
-                                  <a href="product-left.html">
+                                  <Link to="product-left.html">
                                     <h3>
                                       Peanut Butter Bite Premium Butter Cookies
                                       600 g
                                     </h3>
-                                  </a>
+                                  </Link>
                                   <p className="text-content">
                                     Cow bavarian bergkase mascarpone paneer
                                     squirty cheese fromage frais cheese slices
@@ -978,8 +977,8 @@ function Account() {
                               </div>
 
                               <div className="product-order-detail">
-                                <a
-                                  href="product-left.html"
+                                <Link
+                                  to="product-left.html"
                                   className="order-image"
                                 >
                                   <img
@@ -987,15 +986,15 @@ function Account() {
                                     className=" lazyload"
                                     alt=""
                                   />
-                                </a>
+                                </Link>
 
                                 <div className="order-wrap">
-                                  <a href="product-left.html">
+                                  <Link to="product-left.html">
                                     <h3>
                                       SnackAmor Combo Pack of Jowar Stick and
                                       Jowar Chips
                                     </h3>
-                                  </a>
+                                  </Link>
                                   <p className="text-content">
                                     The big cheese cream cheese pepper jack
                                     cheese slices danish fontina everyone loves
@@ -1094,13 +1093,13 @@ function Account() {
                               <div className="product-box-3 theme-bg-white h-100">
                                 <div className="product-header">
                                   <div className="product-image">
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <img
                                         src={Product}
                                         className="img-fluid  lazyload"
                                         alt=""
                                       />
-                                    </a>
+                                    </Link>
 
                                     <div className="product-header-top">
                                       <button className="btn wishlist-button close_button">
@@ -1113,11 +1112,11 @@ function Account() {
                                 <div className="product-footer">
                                   <div className="product-detail">
                                     <span className="span-name">Vegetable</span>
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <h5 className="name">
                                         Fresh Bread and Pastry Flour 200 g
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <p className="text-content mt-1 mb-2 product-content">
                                       Cheesy feet cheesy grin brie. Mascarpone
                                       cheese and wine hard cheese the big cheese
@@ -1179,13 +1178,13 @@ function Account() {
                               <div className="product-box-3 theme-bg-white h-100">
                                 <div className="product-header">
                                   <div className="product-image">
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <img
                                         src={Product}
                                         className="img-fluid  lazyload"
                                         alt=""
                                       />
-                                    </a>
+                                    </Link>
 
                                     <div className="product-header-top">
                                       <button className="btn wishlist-button close_button">
@@ -1198,12 +1197,12 @@ function Account() {
                                 <div className="product-footer">
                                   <div className="product-detail">
                                     <span className="span-name">Vegetable</span>
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <h5 className="name">
                                         Peanut Butter Bite Premium Butter
                                         Cookies 600 g
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <p className="text-content mt-1 mb-2 product-content">
                                       Feta taleggio croque monsieur swiss
                                       manchego cheesecake dolcelatte jarlsberg.
@@ -1265,13 +1264,13 @@ function Account() {
                               <div className="product-box-3 theme-bg-white h-100">
                                 <div className="product-header">
                                   <div className="product-image">
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <img
                                         src={Product}
                                         className="img-fluid  lazyload"
                                         alt=""
                                       />
-                                    </a>
+                                    </Link>
 
                                     <div className="product-header-top">
                                       <button className="btn wishlist-button close_button">
@@ -1284,12 +1283,12 @@ function Account() {
                                 <div className="product-footer">
                                   <div className="product-detail">
                                     <span className="span-name">Snacks</span>
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <h5 className="name">
                                         SnackAmor Combo Pack of Jowar Stick and
                                         Jowar Chips
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <p className="text-content mt-1 mb-2 product-content">
                                       Lancashire hard cheese parmesan. Danish
                                       fontina mozzarella cream cheese smelly
@@ -1354,13 +1353,13 @@ function Account() {
                               <div className="product-box-3 theme-bg-white h-100">
                                 <div className="product-header">
                                   <div className="product-image">
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <img
                                         src={Product}
                                         className="img-fluid  lazyload"
                                         alt=""
                                       />
-                                    </a>
+                                    </Link>
 
                                     <div className="product-header-top">
                                       <button className="btn wishlist-button close_button">
@@ -1373,12 +1372,12 @@ function Account() {
                                 <div className="product-footer">
                                   <div className="product-detail">
                                     <span className="span-name">Snacks</span>
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <h5 className="name">
                                         Yumitos Chilli Sprinkled Potato Chips
                                         100 g
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <p className="text-content mt-1 mb-2 product-content">
                                       Cheddar cheddar pecorino hard cheese hard
                                       cheese cheese and biscuits bocconcini
@@ -1441,13 +1440,13 @@ function Account() {
                               <div className="product-box-3 theme-bg-white h-100">
                                 <div className="product-header">
                                   <div className="product-image">
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <img
                                         src={Product}
                                         className="img-fluid  lazyload"
                                         alt=""
                                       />
-                                    </a>
+                                    </Link>
 
                                     <div className="product-header-top">
                                       <button className="btn wishlist-button close_button">
@@ -1460,11 +1459,11 @@ function Account() {
                                 <div className="product-footer">
                                   <div className="product-detail">
                                     <span className="span-name">Vegetable</span>
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <h5 className="name">
                                         Fantasy Crunchy Choco Chip Cookies
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <p className="text-content mt-1 mb-2 product-content">
                                       Bavarian bergkase smelly cheese swiss cut
                                       the cheese lancashire who moved my cheese
@@ -1528,13 +1527,13 @@ function Account() {
                               <div className="product-box-3 theme-bg-white h-100">
                                 <div className="product-header">
                                   <div className="product-image">
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <img
                                         src={Product}
                                         className="img-fluid  lazyload"
                                         alt=""
                                       />
-                                    </a>
+                                    </Link>
 
                                     <div className="product-header-top">
                                       <button className="btn wishlist-button close_button">
@@ -1547,11 +1546,11 @@ function Account() {
                                 <div className="product-footer">
                                   <div className="product-detail">
                                     <span className="span-name">Vegetable</span>
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <h5 className="name">
                                         Fresh Bread and Pastry Flour 200 g
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <p className="text-content mt-1 mb-2 product-content">
                                       Melted cheese babybel chalk and cheese.
                                       Port-salut port-salut cream cheese when
@@ -1614,13 +1613,13 @@ function Account() {
                               <div className="product-box-3 theme-bg-white h-100">
                                 <div className="product-header">
                                   <div className="product-image">
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <img
                                         src={Product}
                                         className="img-fluid  lazyload"
                                         alt=""
                                       />
-                                    </a>
+                                    </Link>
 
                                     <div className="product-header-top">
                                       <button className="btn wishlist-button close_button">
@@ -1633,11 +1632,11 @@ function Account() {
                                 <div className="product-footer">
                                   <div className="product-detail">
                                     <span className="span-name">Vegetable</span>
-                                    <a href="product-left.html">
+                                    <Link to="product-left.html">
                                       <h5 className="name">
                                         Fresh Bread and Pastry Flour 200 g
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <p className="text-content mt-1 mb-2 product-content">
                                       Squirty cheese cottage cheese cheese
                                       strings. Red leicester paneer danish
@@ -1763,38 +1762,38 @@ function Account() {
                                 </div>
 
                                 <div className="edit-card">
-                                  <a
+                                  <Link
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
-                                    href="#"
+                                    to="#"
                                     onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
-                                  </a>
-                                  <a
-                                    href="#"
+                                  </Link>
+                                  <Link
+                                    to="#"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
                                     <i className="far fa-minus-square"></i>{" "}
                                     delete
-                                  </a>
+                                  </Link>
                                 </div>
                               </div>
 
                               <div className="edit-card-mobile">
-                                <a
+                                <Link
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
-                                  href="#"
+                                  to="#"
                                   onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
-                                </a>
-                                <a href="#">
+                                </Link>
+                                <Link to="#">
                                   <i className="far fa-minus-square"></i>
                                   delete
-                                </a>
+                                </Link>
                               </div>
                             </div>
 
@@ -1835,38 +1834,38 @@ function Account() {
                                 </div>
 
                                 <div className="edit-card">
-                                  <a
+                                  <Link
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
-                                    href="#"
+                                    to="#"
                                     onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
-                                  </a>
-                                  <a
-                                    href="#"
+                                  </Link>
+                                  <Link
+                                    to="#"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
                                     <i className="far fa-minus-square"></i>{" "}
                                     delete
-                                  </a>
+                                  </Link>
                                 </div>
                               </div>
 
                               <div className="edit-card-mobile">
-                                <a
+                                <Link
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
-                                  href="#"
+                                  to="#"
                                   onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
-                                </a>
-                                <a href="#">
+                                </Link>
+                                <Link to="#">
                                   <i className="far fa-minus-square"></i>
                                   delete
-                                </a>
+                                </Link>
                               </div>
                             </div>
 
@@ -1907,38 +1906,38 @@ function Account() {
                                 </div>
 
                                 <div className="edit-card">
-                                  <a
+                                  <Link
                                     data-bs-toggle="modal"
                                     data-bs-target="#editCard"
-                                    href="#"
+                                    to="#"
                                     onClick={handleShow}
                                   >
                                     <i className="far fa-edit"></i> edit
-                                  </a>
-                                  <a
-                                    href="#"
+                                  </Link>
+                                  <Link
+                                    to="#"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
                                     <i className="far fa-minus-square"></i>{" "}
                                     delete
-                                  </a>
+                                  </Link>
                                 </div>
                               </div>
 
                               <div className="edit-card-mobile">
-                                <a
+                                <Link
                                   data-bs-toggle="modal"
                                   data-bs-target="#editCard"
-                                  href="#"
+                                  to="#"
                                   onClick={handleShow}
                                 >
                                   <i className="far fa-edit"></i> edit
-                                </a>
-                                <a href="#">
+                                </Link>
+                                <Link to="#">
                                   <i className="far fa-minus-square"></i>
                                   delete
-                                </a>
+                                </Link>
                               </div>
                             </div>
                           </div>
@@ -2372,14 +2371,14 @@ function Account() {
                                 </div>
                               </div>
 
-                              <a
-                                href="#"
+                              <Link
+                                to="#"
                                 data-bs-toggle="modal"
                                 data-bs-target="#editProfile"
                                 onClick={handleShow}
                               >
                                 Edit
-                              </a>
+                              </Link>
                             </div>
 
                             <div className="location-profile">
@@ -2438,10 +2437,10 @@ function Account() {
                                       <tr>
                                         <td>Phone Number :</td>
                                         <td>
-                                          <a href="#">
+                                          <Link to="#">
                                             {" "}
                                             +91 846 - 547 - 210
-                                          </a>
+                                          </Link>
                                         </td>
                                       </tr>
                                       <tr>
@@ -2464,7 +2463,7 @@ function Account() {
                                       <tr>
                                         <td>Email :</td>
                                         <td>
-                                          <a href="#">
+                                          <Link to="#">
                                             vicki.pope@gmail.com
                                             <span
                                               data-bs-toggle="modal"
@@ -2473,13 +2472,13 @@ function Account() {
                                             >
                                               Edit
                                             </span>
-                                          </a>
+                                          </Link>
                                         </td>
                                       </tr>
                                       <tr>
                                         <td>Password :</td>
                                         <td>
-                                          <a href="#">
+                                          <Link to="#">
                                             ●●●●●●
                                             <span
                                               data-bs-toggle="modal"
@@ -2488,7 +2487,7 @@ function Account() {
                                             >
                                               Edit
                                             </span>
-                                          </a>
+                                          </Link>
                                         </td>
                                       </tr>
                                     </tbody>
@@ -2530,7 +2529,7 @@ function Account() {
                                   <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    role="switch"
+                             
                                     id="redio1"
                                   />
                                   <label
@@ -2555,7 +2554,7 @@ function Account() {
                                   <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    role="switch"
+                                    // role="switch"
                                     id="redio2"
                                   />
                                   <label
@@ -2587,7 +2586,7 @@ function Account() {
                                   <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    role="switch"
+                                    // role="switch"
                                     id="redio3"
                                   />
                                   <label
@@ -2609,7 +2608,7 @@ function Account() {
                                   <input
                                     className="form-check-input"
                                     type="checkbox"
-                                    role="switch"
+                                    // role="switch"
                                     id="redio4"
                                   />
                                   <label
@@ -2674,7 +2673,7 @@ function Account() {
                 >
                   <Form.Label>Email Address</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="email"
                     placeholder="Email Address"
                     required
                     value={userdata.email}
@@ -2698,6 +2697,7 @@ function Account() {
                     value={userdata.mobilePhone}
                     name={"mobilePhone"}
                     onChange={OnchangeFistname}
+                  
                     required
                   />
                   <Form.Control.Feedback type="invalid">
@@ -2804,7 +2804,7 @@ function Account() {
       </Modal>
 
       <Modal size="md" show={Password} onHide={ChangepassClose} className="changePass_modal">
-        <Form noValidate validated={passvalidated} onSubmit={handlePassSubmit}>
+        <Form noValidate onSubmit={handlePassSubmit}>
       
           <Modal.Header closeButton>
             <Modal.Title>Change Password</Modal.Title>

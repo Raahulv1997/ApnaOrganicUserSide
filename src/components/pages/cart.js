@@ -6,7 +6,7 @@ import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
 import {data1} from './data';
 import "../../CSS/style.css";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import  {useState} from 'react';
 const Cart = (props) => {
   var product1=data1.product1;
@@ -40,8 +40,7 @@ const Cart = (props) => {
                             <tr  className="product-box-contain">
                           <td className="product-detail">
                             <div className="product border-0">
-                              <a
-                                href="./product-detail"
+                         <Link to="/"
                                 className="product-image"
                               >
                                 <img
@@ -49,11 +48,11 @@ const Cart = (props) => {
                                   className="img-fluid lazyload"
                                   alt=""
                                 />
-                              </a>
+                              </Link>
                               <div className="product-detail">
                                 <ul>
                                   <li className="name">
-                                    <a href="./product-detail">{product1.name}</a>
+                                  <Link to="/">{product1.name}</Link>
                                   </li>
   
                                   <li className="text-content">
@@ -162,18 +161,18 @@ const Cart = (props) => {
   
                           <td className="save-remove">
                             <h4 className="table-title text-content">Action</h4>
-                            <a
+                            <Link to="/"
                               className="save notifi-wishlist"
-                              href="#"
+                          
                             >
                               Save for later
-                            </a>
-                            <a
+                            </Link>
+                            <Link to="/"
                               className="remove close_button"
-                              href="#"
+                              
                             >
                               Remove
-                            </a>
+                            </Link>
                           </td>
                         </tr>
                         </tbody>

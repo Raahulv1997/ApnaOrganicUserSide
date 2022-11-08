@@ -8,9 +8,10 @@ import data from './data';
 import Accordion from 'react-bootstrap/Accordion';
 import Dropdown from 'react-bootstrap/Dropdown';
 import '../../CSS/style.css'
+import { Link } from 'react-router-dom'
 const Shop=(props)=> {
     const [click, setclick] = useState(false);
-    const side_bar = () => {
+    const sidebar = () => {
       setclick(true);
     };
 
@@ -27,7 +28,7 @@ const Shop=(props)=> {
                             
                             <div
                             className={
-                              click == true
+                              click === true
                                 ? "left-box show"
                                 : "left-box"
                             }
@@ -39,23 +40,23 @@ const Shop=(props)=> {
                                     <div className="filter-category">
                                         <div className="filter-title">
                                             <h2>Filters</h2>
-                                            <a href="#">Clear All</a>
+                                            <Link to="">Clear All</Link>
                                         </div>
                                         <ul>
                                             <li>
-                                                <a href="#">Vegetable</a>
+                                                 <Link to="">Vegetable </Link>
                                             </li>
                                             <li>
-                                                <a href="#">Fruit</a>
+                                                <Link to="">Fruit</Link>
                                             </li>
                                             <li>
-                                                <a href="#">Fresh</a>
+                                                <Link to="">Fresh</Link>
                                             </li>
                                             <li>
-                                                <a href="#">Milk</a>
+                                                <Link to="">Milk</Link>
                                             </li>
                                             <li>
-                                                <a href="#">Meat</a>
+                                                <Link to="">Meat</Link>
                                             </li>
                                         </ul>
                                     </div>
@@ -411,8 +412,8 @@ const Shop=(props)=> {
                         <div className="col-xxl-9 col-lg-8 wow fadeInUp">
                             <div className="show-button">
                                 <div className="filter-button-group mt-0">
-                                    <div className="filter-button d-inline-block d-lg-none" onClick={side_bar}>
-                                        <a><i className="fa-solid fa-filter"></i> Filter Menu</a>
+                                    <div className="filter-button d-inline-block d-lg-none" onClick={sidebar}>
+                                        <Link><i className="fa-solid fa-filter"></i> Filter Menu</Link>
                                     </div>
                                 </div>
 
@@ -425,13 +426,13 @@ const Shop=(props)=> {
                                         {/* <i className="fa-solid fa-angle-down"></i> */}
                                         </Dropdown.Toggle>
                                         <Dropdown.Menu>
-                                          <Dropdown.Item href="#">Popularity</Dropdown.Item>
-                                          <Dropdown.Item href="#">Low - High Price</Dropdown.Item>
-                                          <Dropdown.Item href="#">High - Low Price</Dropdown.Item>
-                                          <Dropdown.Item href="#">Average Rating</Dropdown.Item>
-                                          <Dropdown.Item href="#">A - Z Order</Dropdown.Item>
-                                          <Dropdown.Item href="#">Z - A Order</Dropdown.Item>
-                                          <Dropdown.Item href="#">% Off - Hight To
+                                          <Dropdown.Item >Popularity</Dropdown.Item>
+                                          <Dropdown.Item >Low - High Price</Dropdown.Item>
+                                          <Dropdown.Item >High - Low Price</Dropdown.Item>
+                                          <Dropdown.Item >Average Rating</Dropdown.Item>
+                                          <Dropdown.Item >A - Z Order</Dropdown.Item>
+                                          <Dropdown.Item >Z - A Order</Dropdown.Item>
+                                          <Dropdown.Item >% Off - Hight To
                                                         Low</Dropdown.Item>
                                         </Dropdown.Menu>
                                        </Dropdown>
@@ -455,23 +456,23 @@ const Shop=(props)=> {
                             <nav className="custome-pagination">
                                 <ul className="pagination justify-content-center">
                                     <li className="page-item disabled">
-                                        <a className="page-link" href="#" tabIndex="-1" aria-disabled="true">
+                                        <Link to=""className="page-link"  tabIndex="-1" aria-disabled="true">
                                             <i className="fa-solid fa-angles-left"></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                     <li className="page-item active">
-                                        <a className="page-link" href="#">1</a>
+                                        <Link to=""className="page-link" >1</Link>
                                     </li>
                                     <li className="page-item" aria-current="page">
-                                        <a className="page-link" href="#">2</a>
+                                        <Link to=""className="page-link" >2</Link>
                                     </li>
                                     <li className="page-item">
-                                        <a className="page-link" href="#">3</a>
+                                        <Link to=""className="page-link" >3</Link>
                                     </li>
                                     <li className="page-item">
-                                        <a className="page-link" href="#">
+                                        <Link to=""className="page-link" >
                                             <i className="fa-solid fa-angles-right"></i>
-                                        </a>
+                                        </Link>
                                     </li>
                                 </ul>
                             </nav>

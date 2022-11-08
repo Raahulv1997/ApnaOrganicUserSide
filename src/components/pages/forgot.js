@@ -37,7 +37,7 @@ const Forgot = () => {
                             id="email"
                             placeholder="Email Address"
                           />
-                          <label for="email">Email Address</label>
+                          <label htmlFor="email">Email Address</label>
                         </div>
                       </div>
 

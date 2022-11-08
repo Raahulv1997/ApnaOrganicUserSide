@@ -2,6 +2,7 @@ import React from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import Banner from '../../Photos/login.png'
+import { Link } from "react-router-dom";
 
 function otp_verification() {
   return (
@@ -84,12 +85,11 @@ function otp_verification() {
                   <div className="send-box pt-4">
                     <h5>
                       Didn't get the code?{" "}
-                      <a
-                        href="javascript:void(0)"
+                      <Link to="/"
                         className="theme-color fw-bold"
                       >
                         Resend It
-                      </a>
+                      </Link>
                     </h5>
                   </div>
 

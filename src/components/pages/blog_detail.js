@@ -1,7 +1,7 @@
 import React, { Fragment } from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import blog1 from '../../Photos/blog/1.jpg';
 import blog2 from '../../Photos/blog/2.jpg';
 import blog3 from '../../Photos/blog/3.jpg';
@@ -69,57 +69,57 @@ const BlogDetail = () => {
                             <div className="accordion-body pt-0">
                                         <div className="recent-post-box">
                                             <div className="recent-box">
-                                                <a href="blog-detail.html" className="recent-image">
+                                                <Link to="/" className="recent-image">
                                                     <img src={blog1}
                                                         className="img-fluid  lazyload" alt=""/>
-                                                </a>
+                                                </Link>
 
                                                 <div className="recent-detail">
-                                                    <a href="blog-detail.html">
+                                                <Link to="/">
                                                         <h5 className="recent-name">Green onion knife and salad placed</h5>
-                                                    </a>
+                                                    </Link>
                                                     <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
                                                 </div>
                                             </div>
 
                                             <div className="recent-box">
-                                                <a href="blog-detail.html" className="recent-image">
+                                            <Link to="/" className="recent-image">
                                                     <img src={blog2}
                                                        className="img-fluid  lazyload" alt=""/>
-                                                </a>
+                                                </Link>
 
                                                 <div className="recent-detail">
-                                                    <a href="blog-detail.html">
+                                                <Link to="/">
                                                         <h5 className="recent-name">Health and skin for your organic</h5>
-                                                    </a>
+                                                    </Link>
                                                     <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
                                                 </div>
                                             </div>
 
                                             <div className="recent-box">
-                                                <a href="blog-detail.html" className="recent-image">
+                                            <Link to="/" className="recent-image">
                                                     <img src={blog3}
                                                        className="img-fluid  lazyload" alt=""/>
-                                                </a>
+                                                </Link>
 
                                                 <div className="recent-detail">
-                                                    <a href="blog-detail.html">
+                                                <Link to="/">
                                                         <h5 className="recent-name">Organics mix masala fresh & soft</h5>
-                                                    </a>
+                                                    </Link>
                                                     <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
                                                 </div>
                                             </div>
 
                                             <div className="recent-box">
-                                                <a href="blog-detail.html"className="recent-image">
+                                            <Link to="/" className="recent-image">
                                                     <img src={blog4}
                                                         className="img-fluid  lazyload" alt=""/>
-                                                </a>
+                                                </Link>
 
                                                 <div className="recent-detail">
-                                                    <a href="blog-detail.html">
+                                                <Link to="/" >
                                                         <h5 className="recent-name">Fresh organics brand and picnic</h5>
-                                                    </a>
+                                                    </Link>
                                                     <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
                                                 </div>
                                             </div>
@@ -141,57 +141,57 @@ const BlogDetail = () => {
                                         <div className="category-list-box">
                                             <ul>
                                                 <li>
-                                                    <a href="blog-list.html">
+                                                <Link to="/" >
                                                         <div className="category-name">
                                                             <h5>Latest Recipes</h5>
                                                             <span>10</span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="blog-list.html">
+                                                <Link to="/" >
                                                         <div className="category-name">
                                                             <h5>Diet Food</h5>
                                                             <span>6</span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="blog-list.html">
+                                                    <Link to="/" >
                                                         <div className="category-name">
                                                             <h5>Low calorie Items</h5>
                                                             <span>8</span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="blog-list.html">
+                                                    <Link to="/" >
                                                         <div className="category-name">
                                                             <h5>Cooking Method</h5>
                                                             <span>9</span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="blog-list.html">
+                                                    <Link to="/" >
                                                         <div className="category-name">
                                                             <h5>Dairy Free</h5>
                                                             <span>12</span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="blog-list.html">
+                                                    <Link to="/" >
                                                         <div className="category-name">
                                                             <h5>Vegetarian Food</h5>
                                                             <span>10</span>
                                                         </div>
-                                                    </a>
+                                                    </Link>
                                                 </li>
                                             </ul>
                                         </div>
@@ -213,35 +213,35 @@ const BlogDetail = () => {
                                             <ul>
 
                                                 <li>
-                                                    <a href="#">Fruit Cutting</a>
+                                                <Link to="/" >Fruit Cutting</Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">Meat</a>
+                                                   <Link to="/" >Meat</Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">organic</a>
+                                                   <Link to="/" >organic</Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">cake</a>
+                                                   <Link to="/" >cake</Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">pick fruit</a>
+                                                   <Link to="/" >pick fruit</Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">backery</a>
+                                                   <Link to="/" >backery</Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">organix food</a>
+                                                   <Link to="/" >organix food</Link>
                                                 </li>
 
                                                 <li>
-                                                    <a href="#">Most Expensive Fruit</a>
+                                                   <Link to="/" >Most Expensive Fruit</Link>
                                                 </li>
                                             </ul>
                                         </div>
@@ -262,16 +262,16 @@ const BlogDetail = () => {
                                         <ul className="product-list product-list-2 border-0 p-0">
                                             <li>
                                                 <div className="offer-product">
-                                                    <a href="shop-left-sidebar.html" className="offer-image">
+                                                <Link to="/"  className="offer-image">
                                                         <img src={veg23}
                                                           className=" lazyload" alt=""/>
-                                                    </a>
+                                                    </Link>
 
                                                     <div className="offer-detail">
                                                         <div>
-                                                            <a href="shop-left-sidebar.html">
+                                                        <Link to="/" >
                                                                 <h6 className="name">Meatigo Premium Goat Curry</h6>
-                                                            </a>
+                                                            </Link>
                                                             <span>450 G</span>
                                                             <h6 className="price theme-color">$ 70.00</h6>
                                                         </div>
@@ -281,16 +281,16 @@ const BlogDetail = () => {
 
                                             <li>
                                                 <div className="offer-product">
-                                                    <a href="shop-left-sidebar.html" className="offer-image">
+                                                    <Link to="/"  className="offer-image">
                                                         <img src={veg24}
                                                            className=" lazyload" alt=""/>
-                                                    </a>
+                                                    </Link>
 
                                                     <div className="offer-detail">
                                                         <div>
-                                                            <a href="shop-left-sidebar.html">
+                                                            <Link to="/" >
                                                                 <h6 className="name">Dates Medjoul Premium Imported</h6>
-                                                            </a>
+                                                            </Link>
                                                             <span>450 G</span>
                                                             <h6 className="price theme-color">$ 40.00</h6>
                                                         </div>
@@ -300,16 +300,16 @@ const BlogDetail = () => {
 
                                             <li className="mb-0">
                                                 <div className="offer-product">
-                                                    <a href="shop-left-sidebar.html" className="offer-image">
+                                                    <Link to="/"  className="offer-image">
                                                         <img src={veg26}
                                                             className=" lazyload" alt=""/>
-                                                    </a>
+                                                    </Link>
 
                                                     <div className="offer-detail">
                                                         <div>
-                                                            <a href="shop-left-sidebar.html">
+                                                            <Link to="/" >
                                                                 <h6 className="name">Apple Red Premium Imported</h6>
-                                                            </a>
+                                                            </Link>
                                                             <span>1 KG</span>
                                                             <h6 className="price theme-color">$ 80.00</h6>
                                                         </div>

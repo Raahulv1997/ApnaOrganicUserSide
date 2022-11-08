@@ -6,13 +6,11 @@ import { NavLink } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
 import Accordion from "react-bootstrap/Accordion";
-import common_img from "../../Photos/media/vegetable.svg";
 import {
   AiOutlineHome,
   AiOutlineSearch,
   AiOutlineHeart,
   AiOutlineShoppingCart,
-  AiOutlineArrowRight,
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 
@@ -117,12 +115,12 @@ const Header = () => {
                           <i className="fa-solid fa-angle-down"></i>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item href="">English</Dropdown.Item>
-                          <Dropdown.Item href="">Hindi</Dropdown.Item>
-                          <Dropdown.Item href="">Gujarati</Dropdown.Item>
-                          <Dropdown.Item href="">Arbic</Dropdown.Item>
-                          <Dropdown.Item href="">Rusia</Dropdown.Item>
-                          <Dropdown.Item href="">Chinese</Dropdown.Item>
+                          <Dropdown.Item>English</Dropdown.Item>
+                          <Dropdown.Item>Hindi</Dropdown.Item>
+                          <Dropdown.Item>Gujarati</Dropdown.Item>
+                          <Dropdown.Item>Arbic</Dropdown.Item>
+                          <Dropdown.Item>Rusia</Dropdown.Item>
+                          <Dropdown.Item>Chinese</Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
                       <Dropdown>
@@ -131,158 +129,31 @@ const Header = () => {
                           <i className="fa-solid fa-angle-down"></i>
                         </Dropdown.Toggle>
                         <Dropdown.Menu>
-                          <Dropdown.Item href="#/action-1">USD</Dropdown.Item>
-                          <Dropdown.Item href="#/action-2"> INR</Dropdown.Item>
-                          <Dropdown.Item href="#/action-3">EUR</Dropdown.Item>
-                          <Dropdown.Item href="#/action-3">AUD</Dropdown.Item>
+                          <Dropdown.Item>USD</Dropdown.Item>
+                          <Dropdown.Item> INR</Dropdown.Item>
+                          <Dropdown.Item>EUR</Dropdown.Item>
+                          <Dropdown.Item>AUD</Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                      {/* <div className="rightside-menu">
-                    <div className="dropdown-dollar"> */}
-
-                      {/* <div className="dropdown">
-                        <button
-                          className="dropdown-toggle"
-                          type="button"
-                          id="dropdownMenuButton1"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <span>Language</span>
-                          <i className="fa-solid fa-angle-down"></i>
-                        </button>
-                        <ul
-                          className="dropdown-menu"
-                          aria-labelledby="dropdownMenuButton1"
-                        >
-                          <li>
-                            <a
-                              id="eng"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              English
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              id="hin"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              Hindi
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              id="guj"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              Gujarati
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              id="arb"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              Arbic
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              id="rus"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              Rusia
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              Chinese
-                            </a>
-                          </li>
-                        </ul>
-                      </div> */}
-                      {/* <div className="dropdown">
-                        <button
-                          className="dropdown-toggle m-0"
-                          type="button"
-                          id="dropdownMenuButton1"
-                          data-bs-toggle="dropdown"
-                          aria-expanded="false"
-                        >
-                          <span>Dollar</span>
-                          <i className="fa-solid fa-angle-down"></i>
-                        </button>
-                        <ul
-                          className="dropdown-menu"
-                          aria-labelledby="dropdownMenuButton1"
-                        >
-                          <li>
-                            <a
-                              id="usd"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              USD
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              id="inr"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              INR
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              id="eur"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              EUR
-                            </a>
-                          </li>
-                          <li>
-                            <a
-                              id="aud"
-                              className="dropdown-item"
-                              href="#"
-                            >
-                              AUD
-                            </a>
-                          </li>
-                        </ul>
-                      </div> */}
+                  
                     </div>
 
                     <div className="option-list">
                       <ul>
-                        <li>
-                          <a
-                            href="#"
+                        <li> 
+                        <Link to="/"
                             className="header-icon user-icon search-icon"
                           >
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
-                          </a>
+                          </Link>
                         </li>
 
                         <li>
-                          <a
-                            href="#"
+                        <Link to="/"
                             className="header-icon search-box search-icon"
                           >
                             <i className="fa-regular fa-magnifying-glass"></i>
-                          </a>
+                          </Link>
                         </li>
 
                         <li className="onhover-dropdown">
@@ -303,8 +174,7 @@ const Header = () => {
                             <ul className="cart-list">
                               <li>
                                 <div className="drop-cart">
-                                  <a
-                                    href="./product-detail"
+                                <Link to="/"
                                     className="drop-image"
                                   >
                                     <img
@@ -312,14 +182,14 @@ const Header = () => {
                                       className="lazyload"
                                       alt=""
                                     />
-                                  </a>
+                                  </Link>
 
                                   <div className="drop-contain">
-                                    <a href="./product-detail">
+                                  <Link to="/">
                                       <h5>
                                         Fantasy Crunchy Choco Chip Cookies
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <h6>
                                       <span>1 x</span> $80.58
                                     </h6>
@@ -332,8 +202,7 @@ const Header = () => {
 
                               <li>
                                 <div className="drop-cart">
-                                  <a
-                                    href="./product-detail"
+                                <Link to="/"
                                     className="drop-image"
                                   >
                                     <img
@@ -341,15 +210,15 @@ const Header = () => {
                                       className="lazyload"
                                       alt=""
                                     />
-                                  </a>
+                                  </Link>
 
                                   <div className="drop-contain">
-                                    <a href="./product-detail">
+                                  <Link to="/">
                                       <h5>
                                         Peanut Butter Bite Premium Butter
                                         Cookies 600 g
                                       </h5>
-                                    </a>
+                                    </Link>
                                     <h6>
                                       <span>1 x</span> $25.68
                                     </h6>
@@ -404,7 +273,7 @@ const Header = () => {
 
                   <div
                     className={
-                      click == true
+                      click === true
                         ? "category-dropdown show"
                         : "category-dropdown"
                     }
@@ -436,40 +305,40 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Potato & Tomato
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Cucumber & Capsicum
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Leafy Vegetables
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Root Vegetables
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Beans & Okra</a>
+                                  <Link to="/">Beans & Okra</Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Cabbage & Cauliflower
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Gourd & Drumstick
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Specialty</a>
+                                  <Link to="/">Specialty</Link>
                                 </li>
                               </ul>
                             </div>
@@ -479,30 +348,30 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Banana & Papaya
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Kiwi, Citrus Fruit
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Apples & Pomegranate
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Seasonal Fruits
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Mangoes</a>
+                                  <Link to="/">Mangoes</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Fruit Baskets</a>
+                                  <Link to="/">Fruit Baskets</Link>
                                 </li>
                               </ul>
                             </div>
@@ -520,33 +389,33 @@ const Header = () => {
                             </div>
                             <ul className="p-0">
                               <li>
-                                <a href="#">
+                                <Link to="/">
                                   Soda & Cocktail Mix
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a href="#">
+                                <Link to="/">
                                   Soda & Cocktail Mix
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a href="#">
+                                <Link to="/">
                                   Sports & Energy Drinks
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a href="#">
+                                <Link to="/">
                                   Non Alcoholic Drinks
-                                </a>
+                                </Link>
                               </li>
                               <li>
-                                <a href="#">Packaged Water</a>
+                                <Link to="/">Packaged Water</Link>
                               </li>
                               <li>
-                                <a href="#">Spring Water</a>
+                                <Link to="/">Spring Water</Link>
                               </li>
                               <li>
-                                <a href="#">Flavoured Water</a>
+                                <Link to="/">Flavoured Water</Link>
                               </li>
                             </ul>
                           </div>
@@ -563,20 +432,20 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">Fresh Meat</a>
+                                  <Link to="/">Fresh Meat</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Frozen Meat</a>
+                                  <Link to="/">Frozen Meat</Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Marinated Meat
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Fresh & Frozen Meat
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -587,35 +456,35 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Fresh Water Fish
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Dry Fish</a>
+                                  <Link to="/">Dry Fish</Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Frozen Fish & Seafood
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Marine Water Fish
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Canned Seafood
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Prawans & Shrimps
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Other Seafood</a>
+                                  <Link to="/">Other Seafood</Link>
                                 </li>
                               </ul>
                             </div>
@@ -632,38 +501,38 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Oats & Porridge
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Kids Cereal</a>
+                                  <Link to="/">Kids Cereal</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Muesli</a>
+                                  <Link to="/">Muesli</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Flakes</a>
+                                  <Link to="/">Flakes</Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Granola & Cereal Bars
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Instant Noodles
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Pasta & Macaroni
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Frozen Non-Veg Snacks
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -674,40 +543,40 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">Milk</a>
+                                  <Link to="/">Milk</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Curd</a>
+                                  <Link to="/">Curd</Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Paneer, Tofu & Cream
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Butter & Margarine
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Condensed, Powdered Milk
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Buttermilk & Lassi
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Yogurt & Shrikhand
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Flavoured, Soya Milk
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -724,21 +593,21 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Instant Noodles
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Hakka Noodles</a>
+                                  <Link to="/">Hakka Noodles</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Cup Noodles</a>
+                                  <Link to="/">Cup Noodles</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Vermicelli</a>
+                                  <Link to="/">Vermicelli</Link>
                                 </li>
                                 <li>
-                                  <a href="#">Instant Pasta</a>
+                                  <Link to="/">Instant Pasta</Link>
                                 </li>
                               </ul>
                             </div>
@@ -755,27 +624,27 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Salted Biscuits
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Marie, Health, Digestive
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Cream Biscuits & Wafers
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Glucose & Milk Biscuits
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">Cookies</a>
+                                  <Link to="/">Cookies</Link>
                                 </li>
                               </ul>
                             </div>
@@ -786,24 +655,24 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Bread Sticks & Lavash
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Cheese & Garlic Bread
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Puffs, Patties, Sandwiches
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Breadcrumbs & Croutons
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -820,24 +689,24 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Lemon, Ginger & Garlic
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Indian & Exotic Herbs
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Vegetables
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Fruits
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -848,44 +717,44 @@ const Header = () => {
                               </div>
                               <ul className="p-0">
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Dry Fruits
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Dals & Pulses
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Millet & Flours
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Sugar, Jaggery
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Masalas & Spices
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Rice, Other Rice
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Flours
-                                  </a>
+                                  </Link>
                                 </li>
                                 <li>
-                                  <a href="#">
+                                  <Link to="/">
                                     Organic Edible Oil, Ghee
-                                  </a>
+                                  </Link>
                                 </li>
                               </ul>
                             </div>
@@ -923,50 +792,49 @@ const Header = () => {
 
                           <div className="dropdown-menu dropdown-menu-2 dropdown-image dropdown-menu-left">
                             <div className="dropdown-column">
-                              <a className="dropdown-item" href="index.html">
+                            <Link to="/" className="dropdown-item">
                                 <img
                                   src="../public/theme/1.jpg"
                                   className="img-fluid"
                                   alt=""
                                 />
                                 <span>Kartshop</span>
-                              </a>
+                              </Link>
 
-                              <a className="dropdown-item" href="index-2.html">
+                              <Link to="/" className="dropdown-item">
                                 <img
                                   src="../public/theme/2.jpg"
                                   className="img-fluid"
                                   alt=""
                                 />
                                 <span>Sweetshop</span>
-                              </a>
+                              </Link>
 
-                              <a className="dropdown-item" href="index-3.html">
-                                <img
+                              <Link to="/" className="dropdown-item">                                <img
                                   src="../public/theme/3.jpg"
                                   className="img-fluid"
                                   alt=""
                                 />
                                 <span>Organic</span>
-                              </a>
+                              </Link>
 
-                              <a className="dropdown-item" href="index-4.html">
+                              <Link to="/" className="dropdown-item">
                                 <img
                                   src="../public/theme/4.jpg"
                                   className="img-fluid"
                                   alt=""
                                 />
                                 <span>Supershop</span>
-                              </a>
+                              </Link>
 
-                              <a className="dropdown-item" href="index-5.html">
+                              <Link to="/" className="dropdown-item">
                                 <img
                                   src="../public/theme/5.jpg"
                                   className="img-fluid"
                                   alt=""
                                 />
                                 <span>Slicktech</span>
-                              </a>
+                              </Link>
                             </div>
                           </div>
                         </li>
@@ -981,60 +849,59 @@ const Header = () => {
 
                           <ul className="dropdown-menu ps-4">
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="shop-category-slider.html"
-                              >
+                                                            >
                                 Shop Category Slider
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="shop-category.html"
+                            
                               >
                                 Shop Category Sidebar
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="shop-banner.html"
+                                
                               >
                                 Shop Banner
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Shop Left Sidebar
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="shop-list.html"
+                         
                               >
                                 Shop List
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="shop-right-sidebar.html"
+                             
                               >
                                 Shop Right Sidebar
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="shop-top-filter.html"
+                         
                               >
                                 Shop Top Filter
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </li>
@@ -1049,218 +916,213 @@ const Header = () => {
 
                           <ul className="dropdown-menu ps-4">
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="product-4-image.html"
+                          
                               >
                                 Product 4 Image
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
-                                href="product-bottom-thumbnail.html"
+                            <Link to="/"
+                              
                                 className="dropdown-item"
                               >
                                 Product Bottom Thumbnail
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
-                                href="product-left-thumbnail.html"
+                            <Link to="/"                               
                                 className="dropdown-item"
                               >
                                 Product Left Thumbnail
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
-                                href="./product-detail"
+                            <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Left
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
-                                href="product-right-thumbnail.html"
+                            <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Right Thumbnail
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
-                                href="product-slider.html"
+                            <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Slider
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
-                                href="product-sticky.html"
+                            <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Sticky
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </li>
 
                         <li className="nav-item dropdown dropdown-mega">
-                          <a
+                        <Link to="/"
                             className="nav-link dropdown-toggle ps-xl-2 ps-0"
-                            href="#"
+                         
                             data-bs-toggle="dropdown"
                           >
                             Mega Menu
-                          </a>
+                          </Link>
 
                           <div className="dropdown-menu dropdown-menu-2 row g-3">
                             <div className="dropdown-column col-xl-3">
                               <h5 className="dropdown-header">
                                 Daily Vegetables
                               </h5>
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Beans & Brinjals
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Broccoli & Cauliflower
-                              </a>
+                              </Link>
 
-                              <a
-                                href="shop-left-sidebar.html"
+                              <Link to="/"
+                              
                                 className="dropdown-item"
                               >
                                 Chilies, Garlic
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Vegetables & Salads
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Gourd, Cucumber
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Herbs & Sprouts
-                              </a>
+                              </Link>
 
-                              <a
-                                href="demo-personal-portfolio.html"
+                              <Link to="/"
+                            
                                 className="dropdown-item"
                               >
                                 Lettuce & Leafy
-                              </a>
+                              </Link>
                             </div>
 
                             <div className="dropdown-column col-xl-3">
                               <h5 className="dropdown-header">Baby Tender</h5>
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Beans & Brinjals
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Broccoli & Cauliflower
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Chilies, Garlic
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Vegetables & Salads
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Gourd, Cucumber
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Potatoes & Tomatoes
-                              </a>
+                              </Link>
 
-                              <a
-                                href="shop-left-sidebar.html"
+                              <Link to="/"
+                              
                                 className="dropdown-item"
                               >
                                 Peas & Corn
-                              </a>
+                              </Link>
                             </div>
 
                             <div className="dropdown-column col-xl-3">
                               <h5 className="dropdown-header">
                                 Exotic Vegetables
                               </h5>
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Asparagus & Artichokes
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Avocados & Peppers
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Broccoli & Zucchini
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Celery, Fennel & Leeks
-                              </a>
+                              </Link>
 
-                              <a
+                              <Link to="/"
                                 className="dropdown-item"
-                                href="shop-left-sidebar.html"
+                              
                               >
                                 Chilies & Lime
-                              </a>
+                              </Link>
                             </div>
 
                             <div className="dropdown-column dropdown-column-img col-3"></div>
@@ -1268,13 +1130,13 @@ const Header = () => {
                         </li>
 
                         <li className="nav-item dropdown">
-                          <a
+                        <Link to="/"
                             className="nav-link dropdown-toggle"
-                            href="#"
+                            
                             data-bs-toggle="dropdown"
                           >
                             Blog
-                          </a>
+                          </Link>
                           <ul className="dropdown-menu ps-4">
                             <li>
                               <NavLink
@@ -1286,12 +1148,12 @@ const Header = () => {
                               </NavLink>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="blog-grid.html"
+                             
                               >
                                 Blog Grid
-                              </a>
+                              </Link>
                             </li>
                             <li>
                               <NavLink
@@ -1305,18 +1167,18 @@ const Header = () => {
                         </li>
 
                         <li className="nav-item dropdown">
-                          <a
+                        <Link to="/"
                             className="nav-link dropdown-toggle"
-                            href="#"
+                        
                             data-bs-toggle="dropdown"
                           >
                             Pages
-                          </a>
+                          </Link>
                           <ul className="dropdown-menu ps-4">
                             <li>
-                              <a className="dropdown-item" href="404.html">
+                            <Link to="/"className="dropdown-item" >
                                 404
-                              </a>
+                              </Link>
                             </li>
                             <li>
                               <Link className="dropdown-item" to="/aboutus">
@@ -1324,27 +1186,27 @@ const Header = () => {
                               </Link>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="./cart">
+                            <Link className="dropdown-item" to="/cart">
                                 Cart
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="checkout.html">
+                            <Link className="dropdown-item">
                                 Checkout
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="coming-soon.html"
+                       
                               >
                                 Coming Soon
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="compare.html">
+                            <Link to="/" className="dropdown-item">
                                 Compare
-                              </a>
+                              </Link>
                             </li>
                             <li>
                               <Link className="dropdown-item" to="/faq">
@@ -1352,43 +1214,43 @@ const Header = () => {
                               </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="order-success.html"
+                              
                               >
                                 Order Success
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="order-tracking.html"
+                               
                               >
                                 Order Tracking
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="otp.html">
+                            <Link to="/otp_verification" className="dropdown-item">
                                 OTP
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="search.html">
+                            <Link to="/" className="dropdown-item">
                                 Search
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a
+                            <Link to="/"
                                 className="dropdown-item"
-                                href="user-dashboard.html"
+                              
                               >
                                 User Dashboard
-                              </a>
+                              </Link>
                             </li>
                             <li>
-                              <a className="dropdown-item" href="wishlist.html">
+                            <Link to="/"className="dropdown-item">
                                 Wishlist
-                              </a>
+                              </Link>
                             </li>
                           </ul>
                         </li>
@@ -1422,7 +1284,7 @@ const Header = () => {
                                             <img src="../public/icon/hot-sale.png" className="img-fluid" />
                                         </div> 
                     <span>Hot Deals</span>
-                  </a> */}
+                  </Link> */}
                 </div>
               </div>
             </div>

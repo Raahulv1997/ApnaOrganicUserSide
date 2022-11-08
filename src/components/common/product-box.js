@@ -14,10 +14,12 @@ function ProductBox({name,image,productPrice, productMRF}) {
         count = count + 1;
         setCount(count);
       }
-      function decrementCount() {
-        count = count - 1;
-        setCount(count);
-      }
+      const decrementCount = () => {
+        if (count > 0) {
+          setCount(count => count - 1);
+        }
+      };
+
       const func =()=>{
         
       }
@@ -66,7 +68,7 @@ function ProductBox({name,image,productPrice, productMRF}) {
                             </div>
                             {/* <div>{count}</div> */}
                             <input className="form-control input-number qty-input" type="text"
-                               name="quantity" value={count} onChange={func}/>
+                               name="quantity" value={count} onChange={func} max="10"/>
                             <div className="qty-right-plus" onClick={incrementCount}  data-type="plus" data-field="">
                                 <i className="fa-regular fa-plus"></i>
                             </div>
