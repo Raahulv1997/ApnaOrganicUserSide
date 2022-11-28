@@ -8,12 +8,16 @@ import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 
 import "../../CSS/style.css";
+import { useEffect } from "react";
+import axios from "axios";
+import { useState } from "react";
 
-const Benners = (props,productPrice,productMRF,name,image) => {
-  
+const HomePage = (props, productPrice, productMRF, name, image) => {
+  const [productdata, setproductdata] = useState([]);
+
   //let [count, setCount] = useState(0);
-  var product = data.product;
-  console.log(product);
+  // var product = data.product;
+  // console.log(product);
   // function incrementCount() {
   //   count = count + 1;
   //   setCount(count);
@@ -22,7 +26,18 @@ const Benners = (props,productPrice,productMRF,name,image) => {
   //   count = count - 1;
   //   setCount(count);
   // }
-  
+  useEffect(() => {        
+    axios.post(`http://192.168.29.108:5000/products_search?page=0&per_page=12`, {
+            "product_search": {
+                "search": ``
+            }
+        })
+            .then(response => {
+                setproductdata(response.data.results)
+            }).catch(error => {
+                console.log(error.response.data.error)
+            })
+    }, [])
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -123,240 +138,93 @@ const Benners = (props,productPrice,productMRF,name,image) => {
       </section>
 
       {/* <!-- Product Sction Start --> */}
-       {/* <section className="product-section">
+      {/* <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
-            <div className="all_catagrey_tabs">
-      <Tabs
-        defaultActiveKey="all"
-        id="uncontrolled-tab-example myTab"
-        className="nav nav-tabs tab-style-color mb-3 nav_item pt-5  pe-0 pe-md-5 border-0 justify-content-center"
-      >
-        <Tab eventKey="all" className="nav-item" title="All">
-          <section className="product-section">
-            <div className="container-fluid-lg">
-              <div className="title title">
-                <h2 className="mb-lg-0 mb-2">Our Products</h2>
-              </div>
-              <div className="tab-content" id="myTabContent">
-                <div
-                  className="tab-pane fade show active"
-                  id="all"
-                  role="tabpanel"
-                  aria-labelledby="all-tab"
-                >
-                  <div className="row w-100 ms-0">
-                    {product.map((product) => {
-                      return (
-                        <div
-                          key={product.id}
-                          className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                        >
-                          <ProductBox
-                            image={product.image}
-                            name={product.name}
-                            productPrice={product.productPrice}
-                            productMRF={product.productMRF}
-                            
-                          />
-                          <ProductBox
-                            image={product.image}
-                            name={product.name}
-                            productPrice={product.productPrice}
-                            productMRF={product.productMRF}
+      <div className="all_catagrey_tabs">
 
-                          />
-                        </div>
-                      );
-                    })}
+        <section className="product-section">
+          <div className="container-fluid-lg">
+            <Tabs
+              defaultActiveKey="all"
+              id="uncontrolled-tab-example myTab"
+              className="nav nav-tabs tab-style-color mb-3 nav_item pe-0 border-0 justify-content-center"
+            >
+              <Tab eventKey="all" className="nav-item" title="All">
+                <div className="title title">
+                  <h2 className="mb-lg-0 mb-2">Our Products</h2>
+                </div>
+                <div className="tab-content" id="myTabContent">
+                  <div
+                    className="tab-pane fade show active"
+                    id="all"
+                    role="tabpanel"
+                    aria-labelledby="all-tab"
+                  >
+                    <div className="row w-100 ms-0">
+                      {productdata.map((product) => {
+                        return (
+                          <div
+                            key={product.id}
+                            className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
+                          >
+                            <ProductBox
+                                image={product.image}
+                                name={product.product_title_name}
+                                productMRF={product.mrp}
+                                productPrice={product.product_price}
+                                seotag={product.seo_tag}
+                                discount={product.discount}
+                                specialOffer={product.special_offer}
+                            />
+                          </div>
+                        );
+                      })}
+                    </div>
+                  </div>
+                </div>
+              </Tab>            
+            </Tabs>
+
+          </div>
+        </section>
+        <section className="banner-section">
+          <div className="container-fluid-lg">
+            <div className="row">
+              <div className="col-12">
+                <div className="banner-contain-3 section-b-space section-t-space hover-effect">
+                  <img
+                    src={Banner1}
+                    className=" img-flud bg-img w-100"
+                    alt=""
+                  />
+                  <div className="banner-detail p-center text-dark text-center p-0">
+                    <div>
+                      <h4 className="ls-expanded text-uppercase theme-color">
+                        Try Our New
+                      </h4>
+                      <h2 className="my-3">
+                        100% Organic Best Quality Best Price
+                      </h2>
+                      <h4 className="text-content fw-300">
+                        Best Apna Organic Food Quality
+                      </h4>
+                      <button
+                        className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
+
+                      >
+                        Shop Now
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
-          </section>
-          <section className="banner-section">
-            <div className="container-fluid-lg">
-              <div className="row">
-                <div className="col-12">
-                  <div className="banner-contain-3 section-b-space section-t-space hover-effect">
-                    <img
-                      src={Banner1}
-                      className=" img-flud bg-img w-100"
-                      alt=""
-                    />
-                    <div className="banner-detail p-center text-dark text-center p-0">
-                      <div>
-                        <h4 className="ls-expanded text-uppercase theme-color">
-                          Try Our New
-                        </h4>
-                        <h2 className="my-3">
-                          100% Organic Best Quality Best Price
-                        </h2>
-                        <h4 className="text-content fw-300">
-                          Best Apna Organic Food Quality
-                        </h4>
-                        <button
-                          className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
-                          
-                        >
-                          Shop Now
-                        </button>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </section>
-        </Tab>
-        <Tab eventKey="cooking" className="nav-item" title="Cooking">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Cooking</h2>
           </div>
+        </section>
+      </div>
 
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {product.map((product) => {
-                  return (
-                    <div
-                      key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </Tab>
-        <Tab eventKey="fruits&vagitables" className="nav-item" title="Fruits & Vagitables">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Fruits & Vagitables</h2>
-          </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {product.map((product) => {
-                  return (
-                    <div
-                      key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </Tab>
-        <Tab eventKey="beverage" className="nav-item" title="Baverage">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Baverage</h2>
-          </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {product.map((product) => {
-                  return (
-                    <div
-                      key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </Tab>
-        <Tab eventKey="dairy" className="nav-item" title="Dairy">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Dairy</h2>
-          </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {product.map((product) => {
-                  return (
-                    <div
-                      key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </Tab>
-      </Tabs>
-    </div>
-      
       {/* <!-- Product Sction Start --> */}
       <section className="product-section">
         <div className="container-fluid-lg">
@@ -372,17 +240,20 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {product.map((product) => {
+                {productdata.map((product) => {
                   return (
                     <div
                       key={product.id}
                       className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                     >
                       <ProductBox
-                        image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
+                          image={product.image}
+                          name={product.product_title_name}
+                          productMRF={product.mrp}
+                          productPrice={product.product_price}
+                          seotag={product.seo_tag}
+                          discount={product.discount}
+                          specialOffer={product.special_offer}
                       />
                     </div>
                   );
@@ -413,7 +284,6 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                     </h4>
                     <button
                       className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
-       
                     >
                       Shop Now
                     </button>
@@ -427,4 +297,4 @@ const Benners = (props,productPrice,productMRF,name,image) => {
     </Fragment>
   );
 };
-export default Benners;
+export default HomePage;

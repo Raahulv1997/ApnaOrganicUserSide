@@ -18,6 +18,8 @@ import { GoLocation, GoMail } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
 import Col from "react-bootstrap/Col";
 import profile_cover from "../../Photos/media/cover-img.jpg";
+import { useEffect } from "react";
+import axios from "axios";
 
 // import {CiMail} from 'react-icons/ci';
 
@@ -34,17 +36,20 @@ function Account() {
   const [addAdderss, setaddAdderss] = useState(false);
   const addAdderssClose = () => setaddAdderss(false);
   const addAdderssShow = () => setaddAdderss(true);
-
-  let userjson = {
-    firstName: "Isaac",
-    lastName: "Brock",
-    email: "isaac.brock@example.com",
-    login: "isaac.brock@example.com",
-    mobilePhone: "555-415-1337",
-    address: "45 Universal Tower, 2nd Floor, Scheme 54 PU4, Indore",
-    gender: "Male",
-    DOB: "2022-11-09",
-  };
+  const [userjson, setuserjson] = useState([]);
+  
+ useEffect(()=>{
+  axios.get("http://192.168.29.108:5000/user_register")
+  .then(response => {
+    console.log("___--------save------"+JSON.stringify(response.data));
+    setuserjson(response.data)
+    // navigate('/your_account')
+    // return response;
+  }).catch(error => {
+    console.log(error.response.data.error)
+  })
+ },[])
+  
 
   const [click, setclick] = useState(false);
   const side_bar = () => {
@@ -60,7 +65,6 @@ function Account() {
 
     let form = event.currentTarget;
     // const name = event.target.value;
-    console.log(userdata);
     // console.log("+++++++++FORMDATA"+event.target.DOB.value);
 
     if (form.checkValidity() === false) {
@@ -68,7 +72,15 @@ function Account() {
       event.stopPropagation();
       console.log("aa");
     }
-
+    // eslint-disable-next-line no-undef
+    axios.post("http://192.168.29.108:5000/user_register",userdata)
+    .then(response => {
+      console.log("___--------save------"+JSON.stringify(response.data));
+      // navigate('/your_account')
+      // return response;
+    }).catch(error => {
+      console.log(error.response.data.error)
+    })
     setValidated(true);
   };
 
@@ -162,7 +174,6 @@ function Account() {
     event.preventDefault();
 
     let form = event.currentTarget;
-    console.log(changepass);
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();

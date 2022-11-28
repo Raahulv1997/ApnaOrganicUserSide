@@ -29435,5 +29435,33 @@ header .offcanvas-backdrop {
   padding-bottom:0px ;
 }
 
-/*# sourceMappingURL=style.css.map */
-/*# sourceMappingURL=style.css.map */
+
+/* shop page */
+.product_box .ribbon_div 
+{position: absolute;
+  left: 0;
+  top: 5px;
+  display: block;
+}
+.product_box .ribbon_div span {
+  display: table;
+  border-bottom-right-radius: 5px;
+  border-top-right-radius: 5px;
+  font-size: 12px;
+  padding: 0px 5px;
+  color: #fff;
+} 
+.product_box .ribbon_div .discount_ribbon{
+  background: red;
+}
+.product_box .ribbon_div .special_offer{
+  background: green;
+}
+.label-flex{
+  top: -2px;
+  left: unset;
+  right: 5px;
+  width: unset;
+  display: block;
+  align-items: center;
+}
