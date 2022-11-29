@@ -14,6 +14,9 @@ import { useState } from "react";
 
 const HomePage = (props, productPrice, productMRF, name, image) => {
   const [productdata, setproductdata] = useState([]);
+  const [catArray, setcatArray] = useState([]);
+  const [unCatArr, setunCatArr] = useState([]);
+  const [productType, setproductType] = useState('');
 
   //let [count, setCount] = useState(0);
   // var product = data.product;
@@ -26,18 +29,35 @@ const HomePage = (props, productPrice, productMRF, name, image) => {
   //   count = count - 1;
   //   setCount(count);
   // }
-  useEffect(() => {        
+  useEffect(() => {
     axios.post(`http://192.168.29.108:5000/products_search?page=0&per_page=12`, {
-            "product_search": {
-                "search": ``
-            }
-        })
-            .then(response => {
-                setproductdata(response.data.results)
-            }).catch(error => {
-                console.log(error.response.data.error)
-            })
-    }, [])
+      "product_search": {
+        "search": ``,
+        "product_type":`${productType}`
+      }
+    })
+      .then(response => {
+        setproductdata(response.data.results);
+        // eslint-disable-next-line no-lone-blocks
+        {
+          response.data.results.map((product) => {
+            return setcatArray(catArray => [...catArray, product.product_type]);
+          })
+        }
+
+      }).catch(error => {
+        console.log(error.response.data.error)
+      })
+  }, [productType])
+  useEffect(() => {
+    const result = catArray.filter((thing, index, self) =>
+      index === self.findIndex((t) => (
+        t === thing
+      )))
+      setunCatArr(result)
+
+  }, [catArray])
+  console.log("------------"+JSON.stringify(productType))
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -146,47 +166,46 @@ const HomePage = (props, productPrice, productMRF, name, image) => {
 
         <section className="product-section">
           <div className="container-fluid-lg">
-            <Tabs
-              defaultActiveKey="all"
-              id="uncontrolled-tab-example myTab"
-              className="nav nav-tabs tab-style-color mb-3 nav_item pe-0 border-0 justify-content-center"
-            >
-              <Tab eventKey="all" className="nav-item" title="All">
-                <div className="title title">
-                  <h2 className="mb-lg-0 mb-2">Our Products</h2>
+            <div className="title title">
+              <h2 className="mb-lg-0 mb-2">Our Products</h2>
+              <div className="cat_div">
+              <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setproductType('')}>All</button>
+              {unCatArr.map((catArr, i) => {
+                return(
+                  <button key={i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setproductType(catArr)}>{catArr}</button>
+                )              
+              })}
+              </div>
+            </div>
+            <div className="tab-content" id="myTabContent">
+              <div
+                className="tab-pane fade show active"
+                id="all"
+                role="tabpanel"
+                aria-labelledby="all-tab"
+              >
+                <div className="row w-100 ms-0">
+                  {productdata.map((product) => {
+                    return (
+                      <div
+                        key={product.id}
+                        className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
+                      >
+                        <ProductBox
+                          image={product.image}
+                          name={product.product_title_name}
+                          productMRF={product.mrp}
+                          productPrice={product.product_price}
+                          seotag={product.seo_tag}
+                          discount={product.discount}
+                          specialOffer={product.special_offer}
+                        />
+                      </div>
+                    );
+                  })}
                 </div>
-                <div className="tab-content" id="myTabContent">
-                  <div
-                    className="tab-pane fade show active"
-                    id="all"
-                    role="tabpanel"
-                    aria-labelledby="all-tab"
-                  >
-                    <div className="row w-100 ms-0">
-                      {productdata.map((product) => {
-                        return (
-                          <div
-                            key={product.id}
-                            className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                          >
-                            <ProductBox
-                                image={product.image}
-                                name={product.product_title_name}
-                                productMRF={product.mrp}
-                                productPrice={product.product_price}
-                                seotag={product.seo_tag}
-                                discount={product.discount}
-                                specialOffer={product.special_offer}
-                            />
-                          </div>
-                        );
-                      })}
-                    </div>
-                  </div>
-                </div>
-              </Tab>            
-            </Tabs>
-
+              </div>
+            </div>
           </div>
         </section>
         <section className="banner-section">
@@ -247,13 +266,13 @@ const HomePage = (props, productPrice, productMRF, name, image) => {
                       className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                     >
                       <ProductBox
-                          image={product.image}
-                          name={product.product_title_name}
-                          productMRF={product.mrp}
-                          productPrice={product.product_price}
-                          seotag={product.seo_tag}
-                          discount={product.discount}
-                          specialOffer={product.special_offer}
+                        image={product.image}
+                        name={product.product_title_name}
+                        productMRF={product.mrp}
+                        productPrice={product.product_price}
+                        seotag={product.seo_tag}
+                        discount={product.discount}
+                        specialOffer={product.special_offer}
                       />
                     </div>
                   );
