@@ -32,24 +32,36 @@ function Account() {
   const [Password, setPassword] = useState(false);
   const ChangepassClose = () => setPassword(false);
   const ChangepassShow = () => setPassword(true);
-
+  const [validated, setValidated] = useState(false);
   const [addAdderss, setaddAdderss] = useState(false);
   const addAdderssClose = () => setaddAdderss(false);
   const addAdderssShow = () => setaddAdderss(true);
   const [userjson, setuserjson] = useState([]);
-  
+  const useridd = localStorage.getItem("userid")
  useEffect(()=>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/user_register`)
+  axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
   .then(response => {
     console.log("___--------save------"+JSON.stringify(response.data));
-    setuserjson(response.data)
+    setuserdata(response.data[0])
     // navigate('/your_account')
     // return response;
   }).catch(error => {
     console.log(error.response.data.error)
   })
  },[])
-  
+ const [userdata, setuserdata] = useState(
+  {
+  user_id:useridd,
+  name:"",
+  last_name:"",
+  password:"",
+  email:"",
+  phone_no:"",
+  gender:"",
+  date_of_birth:"",
+  address:"",
+  address2:""
+  });
 
   const [click, setclick] = useState(false);
   const side_bar = () => {
@@ -58,11 +70,9 @@ function Account() {
 
   // edit Profile
 
-  const [userdata, setuserdata] = useState(userjson);
-  const [validated, setValidated] = useState(false);
+
   const handleSubmit = (event) => {
     event.preventDefault();
-
     let form = event.currentTarget;
     // const name = event.target.value;
     // console.log("+++++++++FORMDATA"+event.target.DOB.value);
@@ -85,13 +95,12 @@ function Account() {
   };
 
   const OnchangeFistname = (e) => {
-    let name = e.target.value;
-    console.log(name);
     setuserdata({
       ...userdata,
       [e.target.name]: e.target.value,
     });
   };
+  console.log("-----userdata"+JSON.stringify(userdata));
 
   // change Password
 
@@ -243,8 +252,8 @@ function Account() {
                       </div>
 
                       <div className="profile-name">
-                        <h3>Rajaram Patidar</h3>
-                        <h6 className="text-content">rajwe2code@gmail.com</h6>
+                        <h3>{userdata.first_name} {userdata.last_name}</h3>
+                        <h6 className="text-content">{userjson.email}</h6>
                       </div>
                     </div>
                   </div>
@@ -2657,23 +2666,43 @@ function Account() {
           </Modal.Header>
           <Modal.Body>
             <div className="row p-md-3 m-0">
-              <div className="col-12">
+              <div className="col-6">
                 <Form.Group
                   className="mb-3 aos_input"
                   controlId="validationCustom01"
                 >
-                  <Form.Label>Full Name</Form.Label>
+                  <Form.Label>First Name</Form.Label>
                   <Form.Control
                     type="text"
                     placeholder="Name"
-                    value={userdata.firstName}
-                    name={"firstName"}
+                    value={userdata.name}
+                    name={"name"}
                     onChange={OnchangeFistname}
                     required
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
-                    Please Enter Your Name
+                    Please Enter Your First Name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    value={userdata.last_name}
+                    name={"last_name"}
+                    onChange={OnchangeFistname}
+                    required
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your Last Name
                   </Form.Control.Feedback>
                 </Form.Group>
               </div>
@@ -2687,9 +2716,9 @@ function Account() {
                     type="email"
                     placeholder="Email Address"
                     required
-                    value={userdata.email}
+                    value={userjson.email}
                     name={"email"}
-                    onChange={OnchangeFistname}
+                    // onChange={OnchangeFistname}
                   />
                   <Form.Control.Feedback type="invalid">
                     Please Enter valid Email
@@ -2701,14 +2730,32 @@ function Account() {
                   className="mb-3 aos_input"
                   controlId="formBasicEmail"
                 >
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Password"
+                    required
+                    value={userdata.password}
+                    name={"password"}
+                    onChange={OnchangeFistname}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please Enter valid Password
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
                   <Form.Label>Mobile</Form.Label>
                   <Form.Control
-                    type="text"
+                    type="number"
                     placeholder="Mobile"
-                    value={userdata.mobilePhone}
-                    name={"mobilePhone"}
+                    value={userdata.phone_no}
+                    name={"phone_no"}
                     onChange={OnchangeFistname}
-                  
                     required
                   />
                   <Form.Control.Feedback type="invalid">
@@ -2747,8 +2794,8 @@ function Account() {
                   <Form.Control
                     type="location"
                     placeholder="Add Address2"
-                    value={userdata.address}
-                    name={"address"}
+                    value={userdata.address2}
+                    name={"address2"}
                     onChange={OnchangeFistname}
                   />
                 </Form.Group>
@@ -2783,8 +2830,8 @@ function Account() {
                     <Form.Control
                       type="date"
                       placeholder="Product Quantity"
-                      value={userdata.DOB}
-                      name={"DOB"}
+                      value={userdata.date_of_birth}
+                      name={"date_of_birth"}
                       onChange={OnchangeFistname}
                       required
                     />
