@@ -1,0 +1,30 @@
+[
+  {
+    "id": 9,
+    "user_id": "6",
+    "product_id": "193",
+    "product_title_name": "retnig_vendore_chek",
+    "product_slug": "bade78",
+    "store_name": "w2c_store_mumbasa",
+    "product_description": "<ul><li>dsc</li><li>fgdf</li></ul>",
+    "product_type": "Foods",
+    "brand": "mamaearth",
+    "category": "Drinks",
+    "parent_category": "Fresh",
+    "seo_tag": "kloik",
+    "other_introduction": "<p>hey guddu rangeel</p>",
+    "add_custom_input": "[\"jj\"]",
+    "wholesale_sales_tax": "11",
+    "manufacturers_sales_tax": "10",
+    "retails_sales_tax": "11",
+    "gst": "2",
+    "value_added_tax": "22",
+    "created_on": "2022-12-06T05:41:27.000Z",
+    "updated_on": "2022-12-06T05:41:27.000Z",
+    "is_active": 1,
+    "variety": 1,
+    "vendor_id": "803082",
+    "shop": "my shop",
+    "rating": null
+  }
+]

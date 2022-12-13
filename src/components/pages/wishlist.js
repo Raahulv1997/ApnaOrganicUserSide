@@ -1,15 +1,33 @@
-import React from "react";
+import React, { useState,useEffect } from "react";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
 import Footer from "../common/footer";
 import ProductBox from "../common/product-box";
 import data from "./data";
 import { Link } from "react-router-dom";
-
+import axios from "axios";
 function wishlist() {
+  const[wishlist,setWishList]=useState([]);
   var product = data.product;
   console.log(product);
   const func=()=>{}
+  useEffect(() => {
+    function getWishList() {
+      try {
+        axios
+          .get(`http://192.168.29.108:5000/wishlist?user_id=6`)
+          .then((response) => {
+            let data = response.data;
+            setWishList(data);
+            console.log("GETWWWWWW-------------------"+JSON.stringify(data))
+            // setapicall(false);
+          });
+      } catch (err) {}
+    }
+
+    getWishList();
+  }, []);
+ 
   return (
     <React.Fragment>
       <Header />
@@ -24,24 +42,26 @@ function wishlist() {
             aria-labelledby="all-tab"
           >
             <div className="row w-100">
-              {product.map((product) => {
+              {wishlist.map((wlist) => {
                 return (
                   <div
-                    key={product.id}
+                    key={wlist.id}
                     className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                   >
                     <ProductBox
                       image={product.image}
-                      name={product.name}
-                      productPrice={product.productPrice}
-                      productMRF={product.productMRF}
+                      name={wlist.product_title_name}
+                      productPrice={wlist.product_price}
+                      productMRF={wlist.sale_price}
+                      productid={wlist.product_id}
+                     
                     />
-                    <ProductBox
+                    {/* <ProductBox
                       image={product.image}
                       name={product.name}
                       productPrice={product.productPrice}
                       productMRF={product.productMRF}
-                    />
+                    /> */}
                   </div>
                 );
               })}

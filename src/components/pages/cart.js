@@ -5,23 +5,127 @@ import Header from "../common/header";
 //import ProductImg1 from "../../Photos/product/1.png";
 import Breadcumb from "../common/beadcumb";
 import {data1} from './data';
+import { Button } from "bootstrap";
 import "../../CSS/style.css";
 import { Link, NavLink } from "react-router-dom";
-import  {useState} from 'react';
+import  {useState,useEffect} from 'react';
+import axios from "axios";
 const Cart = (props) => {
+  // const[pdata,setPdata]=useState([]);
+  const [apicall, setapicall] = useState(false);
+  const[cartdata,setCartData]=useState([]);
+  const[quantity,setQuantity]=useState([]);
   var product1=data1.product1;
-  let [count, setCount] = useState(0);
-  function incrementCount() {
-    count = count + 1;
-    setCount(count);
-  }
-  function decrementCount() {
-    count = count - 1;
-    setCount(count);
-  }
-  const func=()=>{
+  // let [count, setCount] = useState(0);
 
+
+
+  const incrementCount=(id,quantity)=> {
+    let inc=quantity+1
+    console.log("quentityyyyyyy--------- "+inc)
+    axios.put(`http://192.168.29.108:5000/cart_update`, {
+      id:id,
+      quantity:inc
+  }).then((response) => {
+    let data = response.data;
+    setapicall(true);
+    console.log("-------------------"+JSON.stringify(data))
+    // quantity = quantity + 1;
+    console.log("updateeeeeeeDATAAAA-------------------"+JSON.stringify(quantity + 1))
+
+    setQuantity(quantity=quantity+1)
+ })
+   
   }
+  const decrementCount=(id,quantity)=> {
+    let dec;
+    if(quantity>0){
+
+       dec=quantity-1;
+    }
+    else{
+      return(false);
+    }
+
+    axios
+    .put(`http://192.168.29.108:5000/cart_update`,{
+      id:id,
+      quantity:dec
+    })
+    .then((response) => {
+      setapicall(true)
+      let data = response.data;
+      // setCartData(data);
+      console.log("DDDDDDDDDDDDDDDDDDDDDD-------------------"+JSON.stringify(data))
+      // quantity = quantity- 1;
+      setQuantity(quantity=quantity-1)
+    });
+  }
+  // const func=()=>{
+
+  // }
+  // let [count, setCount] = useState(0);
+  // const incrementCount=(id,qty)=> {
+  //   let v = qty+1;
+  //   setInc(v)
+  //   // qty + 1;
+  //   setCount(inc);
+  // }
+  // console.log("id_________-"+'----'+count)
+
+  // const decrementCount = (id,qty) => {
+  // console.log("id_________-"+'----'+qty+1)
+
+  //   if (qty > 0) {
+  //     setCount(qty => qty - 1);
+  //   }
+  // };
+
+  const func =()=>{
+    
+  }
+  useEffect(() => {
+    function getCartData() {
+      try {
+        axios
+          .get("http://192.168.29.108:5000/cart?user_id=6")
+          .then((response) => {
+            let data = response.data;
+            setCartData(data);
+            setapicall(false);
+            console.log("setCartDataaaaaaaa-------------------"+JSON.stringify(data))
+            // setapicall(false);
+          });
+      } catch (err) {}
+    }
+
+    getCartData();
+  }, [apicall]);
+  const deleteCart=(id,user_id)=>{
+    console.log("id++++++++++++++++"+   id  )
+    console.log("user_id++++++++++++++++"+ user_id  )
+    axios
+    .put(`http://192.168.29.108:5000/remove_product_from_cart`,{
+      id:id,
+      user_id:user_id
+    })
+    .then((response) => {
+      let data = response.data;
+      console.log("setDELETEEEEEEECartDataaaaaaaa-------------------"+JSON.stringify(data))
+      setapicall(true);
+    });
+  }
+  // const dataMapped = apiData.map(() => {
+  //   return (
+    
+  //     setCount(prevState => (prevState+1))
+    
+  //   )
+  // })
+  // // Do not store React elements inside state
+  // setData(prevState => ([...prevState, ...dataMapped]))
+
+
   return (
     <Fragment>
       <Header />
@@ -34,9 +138,9 @@ const Cart = (props) => {
               <div className="cart-table">
                 <div className="table-responsive-xl">
                   <table className="table">
-                    {product1.map((product1)=>{
+                    {cartdata.map((cdata)=>{
                        return(
-                        <tbody key={product1.id}>
+                        <tbody key={cdata.id}>
                             <tr  className="product-box-contain">
                           <td className="product-detail">
                             <div className="product border-0">
@@ -52,7 +156,7 @@ const Cart = (props) => {
                               <div className="product-detail">
                                 <ul>
                                   <li className="name">
-                                  <Link to="/">{product1.name}</Link>
+                                  <Link to="/">{cdata.product_title_name}</Link>
                                   </li>
   
                                   <li className="text-content">
@@ -60,19 +164,19 @@ const Cart = (props) => {
                                   </li>
   
                                   <li className="text-content">
-                                    <span className="text-title">Quality:{product1.quantity}</span>
+                                    <span className="text-title">Quality:{cdata.quantity}</span>
                                   </li>
   
                                   <li>
                                     <h5 className="text-content d-inline-block">
                                       Price:
                                     </h5>
-                                    <span>{product1.productPrice}</span>
-                                    <span className="text-content">{product1.productMRF}</span>
+                                    <span>{cdata.price}</span>
+                                    <span className="text-content">{"₹"+cdata.price+cdata.discount}</span>
                                   </li>
   
                                   <li>
-                                    <h5 className="saving theme-color">{product1.saving}</h5>
+                                    <h5 className="saving theme-color">{cdata.discount}</h5>
                                   </li>
   
                                   <li className="quantity-price-box">
@@ -92,7 +196,7 @@ const Cart = (props) => {
                                           type="text"
                                           name="quantity"
                                           value="1"
-                                          onChange={func}
+                                          // onChange={func}
                                         />
                                         <button
                                           type="button"
@@ -114,9 +218,9 @@ const Cart = (props) => {
                           <td className="price">
                             <h4 className="table-title text-content">Price</h4>
                             <h5>
-                              {product1.productPrice} <del className="text-content">{product1.productMRF}</del>
+                              {cdata.price} <del className="text-content">{cdata.price+cdata.discount}</del>
                             </h5>
-                            <h6 className="theme-color">You Save : {product1.saving}</h6>
+                            <h6 className="theme-color">You Save:{cdata.discount}</h6>
                           </td>
   
                           <td className="quantity">
@@ -129,7 +233,7 @@ const Cart = (props) => {
                                     className="btn qty-left-minus"
                                     data-type="minus"
                                     data-field=""
-                                    onClick={decrementCount}
+                                    onClick={()=>decrementCount(cdata.id,cdata.quantity)}
                                   >
                                     <i className="fa-regular fa-minus"></i>
                                   </button>
@@ -137,7 +241,7 @@ const Cart = (props) => {
                                     className="form-control input-number qty-input"
                                     type="text"
                                     name="quantity"
-                                    value={count}
+                                    value={cdata.quantity}
                                       onChange={func}  
                                   />
                                   <button
@@ -145,9 +249,9 @@ const Cart = (props) => {
                                     className="btn qty-right-plus"
                                     data-type="plus"
                                     data-field=""
-                                    onClick={incrementCount}
+                                    onClick={()=>incrementCount(cdata.id,cdata.quantity)}
                                   >
-                                    <i className="fa-regular fa-plus"></i>
+                                    <i className="fa-regular fa-plus" ></i>
                                   </button>
                                 </div>
                               </div>
@@ -167,12 +271,15 @@ const Cart = (props) => {
                             >
                               Save for later
                             </Link>
-                            <Link to="/"
+                             <button type="button" className="remove close_button btn" onClick={()=> deleteCart(cdata.id,cdata.user_id)}>
+                              remove
+                             </button>
+                            {/* <Link to="/"
                               className="remove close_button"
                               
-                            >
-                              Remove
-                            </Link>
+                            >remove
+                             {deleteCart}
+                            </Link> */}
                           </td>
                         </tr>
                         </tbody>
@@ -198,7 +305,7 @@ const Cart = (props) => {
                         className="form-control"
                         id="exampleFormControlInput1"
                         placeholder="Enter Coupon Code Here..."
-                        onChange={func}  
+                        // onChange={func}  
                       />
                       <button className="btn-apply">Apply</button>
                     </div>

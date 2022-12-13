@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import BannerBox1 from "../../Photos/2.jpg";
 import BannerBox2 from "../../Photos/1.jpg";
 import Banner1 from "../../Photos/14.jpg";
@@ -6,14 +6,15 @@ import ProductBox from "./product-box";
 import data from "../pages/data";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
-
+import { useEffect } from "react";
 import "../../CSS/style.css";
+import axios from "axios";
 
 const Benners = (props,productPrice,productMRF,name,image) => {
-  
+const[productData,setProductData]=useState([]);
   //let [count, setCount] = useState(0);
   var product = data.product;
-  console.log(product);
+  // console.log(product);
   // function incrementCount() {
   //   count = count + 1;
   //   setCount(count);
@@ -22,7 +23,34 @@ const Benners = (props,productPrice,productMRF,name,image) => {
   //   count = count - 1;
   //   setCount(count);
   // }
+   // useEffect(() => {
+ 
+    useEffect(() => {
+      function getProductData() {
+        try {
+          axios
+            .post(`http://192.168.29.108:5000/apna_organic_home?page=0&per_page=4`,{
+              "product_search":{
+                "search":"",
+                "colors":"",
+                "size":"",
+                "category": "",
+                "product_type": ""
+                }
+            })
+            .then((response) => {
+              let data = response.data;
+              setProductData(data.results);
+              // console.log("producttttttttTTTTTT-------------------"+JSON.stringify(data))
+              // setapicall(false);
+            });
+        } catch (err) {}
+      }
   
+      getProductData();
+    }, []);
+    // console.log("-ulloo---"+JSON.stringify(productData));
+
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -147,7 +175,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                   aria-labelledby="all-tab"
                 >
                   <div className="row w-100 ms-0">
-                    {product.map((product) => {
+                    {(productData).map((product) => {
                       return (
                         <div
                           key={product.id}
@@ -155,18 +183,18 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                         >
                           <ProductBox
                             image={product.image}
-                            name={product.name}
-                            productPrice={product.productPrice}
-                            productMRF={product.productMRF}
-                            
+                            name={product.product_title_name}
+                            productPrice={product.product_price}
+                            productMRF={product.sale_price}
+                            productid={product.product_id}
                           />
-                          <ProductBox
+                          {/* <ProductBox
                             image={product.image}
                             name={product.name}
                             productPrice={product.productPrice}
                             productMRF={product.productMRF}
 
-                          />
+                          /> */}
                         </div>
                       );
                     })}
@@ -225,7 +253,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {product.map((product) => {
+                {productData.map((product) => {
                   return (
                     <div
                       key={product.id}
@@ -233,9 +261,9 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                     >
                       <ProductBox
                         image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
+                        name={product.product_title_name}
+                        productPrice={product.product_price}
+                        productMRF={product.sale_price}
                       />
                     </div>
                   );
@@ -261,7 +289,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {product.map((product) => {
+                {productData.map((product) => {
                   return (
                     <div
                       key={product.id}
@@ -269,9 +297,9 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                     >
                       <ProductBox
                         image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
+                        name={product.product_title_name}
+                        productPrice={product.product_price}
+                        productMRF={product.sale_price}
                       />
                     </div>
                   );
@@ -297,7 +325,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {product.map((product) => {
+                {productData.map((product) => {
                   return (
                     <div
                       key={product.id}
@@ -305,9 +333,9 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                     >
                       <ProductBox
                         image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
+                        name={product.product_title_name}
+                        productPrice={product.product_price}
+                        productMRF={product.sale_price}
                       />
                     </div>
                   );
@@ -333,7 +361,7 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {product.map((product) => {
+                {productData.map((product) => {
                   return (
                     <div
                       key={product.id}
@@ -341,9 +369,9 @@ const Benners = (props,productPrice,productMRF,name,image) => {
                     >
                       <ProductBox
                         image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
+                        name={product.product_title_name}
+                        productPrice={product.product_price}
+                        productMRF={product.sale_price}
                       />
                     </div>
                   );
@@ -372,18 +400,18 @@ const Benners = (props,productPrice,productMRF,name,image) => {
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {product.map((product) => {
+                {productData.map((product) => {
                   return (
                     <div
                       key={product.id}
                       className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                     >
-                      <ProductBox
+                      {/* <ProductBox
                         image={product.image}
-                        name={product.name}
-                        productPrice={product.productPrice}
-                        productMRF={product.productMRF}
-                      />
+                        name={product.product_title_name}
+                        productPrice={product.product_price}
+                        productMRF={product.sale_price}
+                      /> */}
                     </div>
                   );
                 })}

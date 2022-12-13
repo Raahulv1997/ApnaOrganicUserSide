@@ -1,10 +1,11 @@
-import React, { Fragment, useState } from "react";
+import React, { Fragment} from "react";
 import Logo from "../../Photos/media/1.718c1ec8.png";
 import "../../CSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
+import {useState,useEffect} from "react";
 import Accordion from "react-bootstrap/Accordion";
 import {
   AiOutlineHome,
@@ -13,8 +14,9 @@ import {
   AiOutlineShoppingCart,
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
-
+import axios from "axios";
 const Header = () => {
+  const[categorydata,setCategoryData]=useState([]);
   const [click, setclick] = useState(false);
   // const [cat_list, setcat_list] = useState(false);
   const open_Category = () => {
@@ -23,7 +25,28 @@ const Header = () => {
   // const Category_list = () => {
   //   setcat_list(true);
   // };
+  useEffect(() => {
+    function getCategoryData() {
+      try {
+        axios
+          .get("http://192.168.29.108:5000/get_all_category")
+          .then((response) => {
+            let data = response.data;
+            // console.log("category---------------"+JSON.stringify(data))
+            setCategoryData(data)
+            // setsearchData(data);
 
+          });
+      } catch (err) {}
+    }
+
+    getCategoryData();
+  }, []);
+  const result = categorydata.filter((thing, index, self) =>
+        index === self.findIndex((t) => (
+          t.root_category_name == thing.root_category_name
+        //   x.down1_category_name==thing.down1_category_name
+        )))
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -290,26 +313,29 @@ const Header = () => {
                         ></i>
                       </button>
                     </div>
-
                     <Accordion>
+                       
+                        {result.map((catdata)=>{
+                      return(
+                        <>
                       <Accordion.Item eventKey="0">
-                        <Accordion.Header>Vegetables & Fruit</Accordion.Header>
+                        <Accordion.Header>{catdata.root_category_name}</Accordion.Header>
                         <Accordion.Body>
                           <div className="onhover-category-box">
                             <div className="list-1">
                               <div className="category-title-box">
                                 <div>
-                                  <h5>Organic Vegetables</h5>
+                                  <h5>{catdata.down1_category_name}</h5>
                                 </div>
                               
                               </div>
                               <ul className="p-0">
                                 <li>
                                   <Link to="/">
-                                    Potato & Tomato
+                                  {catdata.down2_category_name}
                                   </Link>
                                 </li>
-                                <li>
+                                {/* <li>
                                   <Link to="/">
                                     Cucumber & Capsicum
                                   </Link>
@@ -339,10 +365,10 @@ const Header = () => {
                                 </li>
                                 <li>
                                   <Link to="/">Specialty</Link>
-                                </li>
+                                </li> */}
                               </ul>
                             </div>
-                            <div className="list-2">
+                            {/* <div className="list-2">
                               <div className="category-title-box">
                                 <h5>Fresh Fruit</h5>
                               </div>
@@ -374,12 +400,14 @@ const Header = () => {
                                   <Link to="/">Fruit Baskets</Link>
                                 </li>
                               </ul>
-                            </div>
+                            </div> */}
                           </div>
                         </Accordion.Body>
                       </Accordion.Item>
-
-                      <Accordion.Item eventKey="1">
+                      </>
+ )})}
+   </Accordion>
+                      {/* <Accordion.Item eventKey="1">
                         <Accordion.Header>Beverages</Accordion.Header>
                         <Accordion.Body>
                         <div className="onhover-category-box">
@@ -760,8 +788,11 @@ const Header = () => {
                             </div>
                           </div>
                         </Accordion.Body>
-                      </Accordion.Item>
-                    </Accordion>
+                      </Accordion.Item> */}
+                     
+                     
+                  
+                    
                   </div>
                 </div>
 

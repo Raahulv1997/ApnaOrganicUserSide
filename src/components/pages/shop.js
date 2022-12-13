@@ -8,14 +8,37 @@ import data from './data';
 import Accordion from 'react-bootstrap/Accordion';
 import Dropdown from 'react-bootstrap/Dropdown';
 import '../../CSS/style.css'
+import { useEffect } from 'react'
+import axios from 'axios'
 import { Link } from 'react-router-dom'
 const Shop=(props)=> {
+    const[prodData,setProdData]=useState([]);
     const [click, setclick] = useState(false);
     const sidebar = () => {
       setclick(true);
     };
 
     var product=data.product
+    useEffect(() => {
+        function getProductData() {
+          try {
+            axios
+              .post(`http://192.168.29.108:5000/home?page=0&per_page=400&user_id=6`,{
+                "product_search":{
+                    "search":"",
+                    }
+              })
+              .then((response) => {
+                let data = response.data;
+                setProdData(data.results);
+            //    console.log("PRODUCT============"+data)
+                // setapicall(false);
+              });
+          } catch (err) {}
+        }
+    
+        getProductData();
+      }, []);
     return (
         <Fragment>
             <Header />
@@ -443,12 +466,15 @@ const Shop=(props)=> {
                             </div>
 
                             <div className="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
-                                {product.map((product)=>{
+                                {prodData.map((product)=>{
                                     return(
-                                        <div key={product.id}><ProductBox  image={product.image} name={product.name} productMRF={product.productMRF} productPrice={product.productPrice} />
+                                        <div key={product.id}><ProductBox 
+                                         image={product.image} 
+                                         name={product.product_title_name}
+                                         productMRF={product.sale_price} 
+                                         productPrice={product.product_price}
+                                         productid={product.product_id} />
                                         </div>
-                                        
-                                        
                                     )
                                 })}
                             </div>
