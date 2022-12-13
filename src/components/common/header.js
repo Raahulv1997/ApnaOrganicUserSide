@@ -259,10 +259,6 @@ const Header = () => {
                                       <i className="fa-solid fa-xmark"></i>
                                     </button>
                                   </div>
-                                  
-                                   
-                                
-                                  
                                 </div>
                               </li>
                               )
