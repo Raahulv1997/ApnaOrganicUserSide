@@ -151,7 +151,7 @@ const[productData,setProductData]=useState([]);
       </section>
 
       {/* <!-- Product Sction Start --> */}
-       {/* <section className="product-section">
+      {/* <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
@@ -187,6 +187,10 @@ const[productData,setProductData]=useState([]);
                             productPrice={product.product_price}
                             productMRF={product.sale_price}
                             productid={product.product_id}
+                            discount={product.discount}
+                            special_offer={product.special_offer}
+                            rating={product.rating}
+
                           />
                           {/* <ProductBox
                             image={product.image}
@@ -202,37 +206,32 @@ const[productData,setProductData]=useState([]);
                 </div>
               </div>
             </div>
-          </section>
-          <section className="banner-section">
-            <div className="container-fluid-lg">
-              <div className="row">
-                <div className="col-12">
-                  <div className="banner-contain-3 section-b-space section-t-space hover-effect">
-                    <img
-                      src={Banner1}
-                      className=" img-flud bg-img w-100"
-                      alt=""
-                    />
-                    <div className="banner-detail p-center text-dark text-center p-0">
-                      <div>
-                        <h4 className="ls-expanded text-uppercase theme-color">
-                          Try Our New
-                        </h4>
-                        <h2 className="my-3">
-                          100% Organic Best Quality Best Price
-                        </h2>
-                        <h4 className="text-content fw-300">
-                          Best Apna Organic Food Quality
-                        </h4>
-                        <button
-                          className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
-                          
-                        >
-                          Shop Now
-                        </button>
+            <div className="tab-content" id="myTabContent">
+              <div
+                className="tab-pane fade show active"
+                id="all"
+                role="tabpanel"
+                aria-labelledby="all-tab"
+              >
+                <div className="row w-100 ms-0">
+                  {productData.map((product) => {
+                    return (
+                      <div
+                        key={product.id}
+                        className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
+                      >
+                        {/* <ProductBox
+                          image={product.image}
+                          name={product.product_title_name}
+                          productMRF={product.mrp}
+                          productPrice={product.product_price}
+                          seotag={product.seo_tag}
+                          discount={product.discount}
+                          specialOffer={product.special_offer}
+                        /> */}
                       </div>
-                    </div>
-                  </div>
+                    );
+                  })}
                 </div>
               </div>
             </div>
@@ -310,47 +309,11 @@ const[productData,setProductData]=useState([]);
         </div>
       </section>
         </Tab>
-        <Tab eventKey="beverage" className="nav-item" title="Baverage">
+        <Tab eventKey="baverage" className="nav-item" title="Baverage">
         <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Baverage</h2>
-          </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {productData.map((product) => {
-                  return (
-                    <div
-                      key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.product_title_name}
-                        productPrice={product.product_price}
-                        productMRF={product.sale_price}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </Tab>
-        <Tab eventKey="dairy" className="nav-item" title="Dairy">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Dairy</h2>
           </div>
 
           <div className="tab-content" id="myTabContent">
@@ -441,7 +404,6 @@ const[productData,setProductData]=useState([]);
                     </h4>
                     <button
                       className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold"
-       
                     >
                       Shop Now
                     </button>

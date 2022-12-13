@@ -2,7 +2,7 @@ import React, { Fragment} from "react";
 import Logo from "../../Photos/media/1.718c1ec8.png";
 import "../../CSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
 import {useState,useEffect} from "react";
@@ -17,7 +17,10 @@ import { BiCategory } from "react-icons/bi";
 import axios from "axios";
 const Header = () => {
   const[categorydata,setCategoryData]=useState([]);
+  const[pdata,setPdata]=useState([]);
+  const navigate= useNavigate()
   const [click, setclick] = useState(false);
+  const [search, setsearch] = useState('');
   // const [cat_list, setcat_list] = useState(false);
   const open_Category = () => {
     setclick(true);
@@ -47,6 +50,36 @@ const Header = () => {
           t.root_category_name == thing.root_category_name
         //   x.down1_category_name==thing.down1_category_name
         )))
+  const searchProduct=(e)=>{
+    e.preventDefault();
+    // let search=e.target.formSearchInputBox.value;
+    // console.log("------->>>"+search=`${search}`)
+    navigate(`/shop?search=${search}`)
+  }
+  useEffect(() => {
+    function getProductData() {
+      try {
+        axios
+          .post(`http://192.168.29.108:5000/apna_organic_home?page=0&per_page=4`,{
+            "product_search":{
+              "search":"",
+              "colors":"",
+              "size":"",
+              "category": "",
+              "product_type": ""
+              }
+          })
+          .then((response) => {
+            let data = response.data;
+            setPdata(data.results);
+            // console.log("producttttttttTTTTTT-------------------"+JSON.stringify(data))
+            // setapicall(false);
+          });
+      } catch (err) {}
+    }
+
+    getProductData();
+  }, []);
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -60,51 +93,58 @@ const Header = () => {
                     <img src={Logo} className="img-fluid lazyload" alt="" />
                   </NavLink>
 
-                  <div className="search-full">
+                  {/* <div className="search-full">
                     <div className="input-group">
                       <span className="input-group-text">
-                        {/* <i data-feather="search" className="font-light"></i> */}
                         <i className="fa-regular fa-magnifying-glass"></i>
                       </span>
                       <input
-                      onChange={undefined}
+                        onChange={(e)=>{setsearch(e.target.value)}}
                         type="text"
                         className="form-control search-type"
                         placeholder="Search here.."
+                        value={search}
                       />
                       <span className="input-group-text close-search">
-                        {/* <i data-feather="x" className="font-light"></i> */}
                         <i className="fa-regular fa-magnifying-glass"></i>
                       </span>
                     </div>
-                  </div>
+                  </div> */}
 
                   <div className="middle-box">
-                    <div className="center-box">
-                      <div className="searchbar-box order-xl-1 d-none d-xl-block">
-                        <input
-                        onChange={undefined}
-                          type="search"
-                          className="form-control"
-                          id="exampleFormControlInput1"
-                          placeholder="search for product, delivered to your door..."
-                        />
-                        <button className="btn search-button">
-                          <i className="fa-regular fa-magnifying-glass"></i>
-                        </button>
+                    <form onSubmit={searchProduct}>
+                      <div className="center-box">
+                        <div className="searchbar-box order-xl-1 d-none d-xl-block">
+                          <input
+                            onChange={(e)=>{setsearch(e.target.value)}}
+                            type="search"
+                            className="form-control"
+                            // id="formSearchInputBox"
+                            name="formSearchInputBox"
+                            placeholder="search for product, delivered to your door..."
+                            value={search}
+                            onKeyPress={event => {
+                              if (event.key === "Enter") {
+                                searchProduct(event)
+                              }}}
+                          />
+                          <button className="btn search-button" onClick={searchProduct}>
+                            <i className="fa-regular fa-magnifying-glass"></i>
+                          </button>
+                        </div>
+                        {/* <div className="location-box-2">
+                          <button
+                            className="btn location-button"
+                            data-bs-toggle="modal"
+                            data-bs-target="#locationModal"
+                          >
+                            <i className="fa-regular fa-location-dot"></i>
+                            <span className="locat-name">Your Location</span>
+                            <i className="fa-solid fa-angle-down"></i>
+                          </button>
+                        </div> */}
                       </div>
-                      {/* <div className="location-box-2">
-                        <button
-                          className="btn location-button"
-                          data-bs-toggle="modal"
-                          data-bs-target="#locationModal"
-                        >
-                          <i className="fa-regular fa-location-dot"></i>
-                          <span className="locat-name">Your Location</span>
-                          <i className="fa-solid fa-angle-down"></i>
-                        </button>
-                      </div> */}
-                    </div>
+                    </form>
                   </div>
                   <div className="right-nav">
                     <div className="nav-number"></div>
@@ -158,27 +198,23 @@ const Header = () => {
                           <Dropdown.Item>AUD</Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                  
                     </div>
-
                     <div className="option-list">
-                      <ul>
-                        <li> 
-                        <Link to="/"
+                      <ul className="m-0">
+                        <li>
+                          <Link to="/"
                             className="header-icon user-icon search-icon"
                           >
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </Link>
                         </li>
-
                         <li>
-                        <Link to="/"
+                          <Link to="/"
                             className="header-icon search-box search-icon"
                           >
                             <i className="fa-regular fa-magnifying-glass"></i>
                           </Link>
                         </li>
-
                         <li className="onhover-dropdown">
                           <Link
                             to="/wishlist"
@@ -187,17 +223,18 @@ const Header = () => {
                             <i className="fa-regular fa-heart icon_color"></i>
                           </Link>
                         </li>
-
-                        <li className="onhover-dropdown">
+                        <li className="onhover-dropdown ">
                           <NavLink to="/cart" className="header-icon bag-icon ">
-                            <small className="badge-number">2</small>
+                            <small className="badge-number">{pdata.length}</small>
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">
-                            <ul className="cart-list">
-                              <li>
-                                <div className="drop-cart">
-                                <Link to="/"
+                            <ul className="cart-list " style={{flexDirection: "column"}}>
+                            {pdata.map((data)=>{
+                                 return(
+                              <li >
+                                <div className="drop-cart ">
+                                    <Link to="/"
                                     className="drop-image"
                                   >
                                     <img
@@ -208,56 +245,33 @@ const Header = () => {
                                   </Link>
 
                                   <div className="drop-contain">
-                                  <Link to="/">
+                                   
+                                    <Link to="/">
                                       <h5>
-                                        Fantasy Crunchy Choco Chip Cookies
+                                        {data.product_title_name}
                                       </h5>
                                     </Link>
                                     <h6>
-                                      <span>1 x</span> $80.58
+                                      <span className="im=block">{data.quantity}x</span>₹{data.product_price}
+                                      {/* <span>{data.sale_price}</span> */}
                                     </h6>
                                     <button className="close-button">
                                       <i className="fa-solid fa-xmark"></i>
                                     </button>
                                   </div>
+                                  
+                                   
+                                
+                                  
                                 </div>
                               </li>
-
-                              <li>
-                                <div className="drop-cart">
-                                <Link to="/"
-                                    className="drop-image"
-                                  >
-                                    <img
-                                      src="../public/vegetable/product/2.png"
-                                      className="lazyload"
-                                      alt=""
-                                    />
-                                  </Link>
-
-                                  <div className="drop-contain">
-                                  <Link to="/">
-                                      <h5>
-                                        Peanut Butter Bite Premium Butter
-                                        Cookies 600 g
-                                      </h5>
-                                    </Link>
-                                    <h6>
-                                      <span>1 x</span> $25.68
-                                    </h6>
-                                    <button className="close-button">
-                                      <i className="fa-solid fa-xmark"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
-
+                              )
+                            })}
+                              </ul>
                             <div className="price-box">
                               <h5>Price :</h5>
                               <h4 className="theme-color fw-bold">$106.58</h4>
                             </div>
-
                             <div className="button-group">
                               <NavLink
                                 to="/cart"
@@ -267,8 +281,7 @@ const Header = () => {
                               </NavLink>
                               <NavLink
                                 to="/checkout"
-                                className="btn btn-sm cart-button theme-bg-color
-                                                    text-white"
+                                className="btn btn-sm cart-button theme-bg-color text-white"
                               >
                                 Checkout
                               </NavLink>
@@ -327,7 +340,7 @@ const Header = () => {
                                 <div>
                                   <h5>{catdata.down1_category_name}</h5>
                                 </div>
-                              
+
                               </div>
                               <ul className="p-0">
                                 <li>
@@ -410,43 +423,43 @@ const Header = () => {
                       {/* <Accordion.Item eventKey="1">
                         <Accordion.Header>Beverages</Accordion.Header>
                         <Accordion.Body>
-                        <div className="onhover-category-box">
-                          <div className="list-1 single_list">
-                            <div className="category-title-box">
-                              <h5>Energy & Soft Drinks</h5>
+                          <div className="onhover-category-box">
+                            <div className="list-1 single_list">
+                              <div className="category-title-box">
+                                <h5>Energy & Soft Drinks</h5>
+                              </div>
+                              <ul className="p-0">
+                                <li>
+                                  <Link to="/">
+                                    Soda & Cocktail Mix
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link to="/">
+                                    Soda & Cocktail Mix
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link to="/">
+                                    Sports & Energy Drinks
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link to="/">
+                                    Non Alcoholic Drinks
+                                  </Link>
+                                </li>
+                                <li>
+                                  <Link to="/">Packaged Water</Link>
+                                </li>
+                                <li>
+                                  <Link to="/">Spring Water</Link>
+                                </li>
+                                <li>
+                                  <Link to="/">Flavoured Water</Link>
+                                </li>
+                              </ul>
                             </div>
-                            <ul className="p-0">
-                              <li>
-                                <Link to="/">
-                                  Soda & Cocktail Mix
-                                </Link>
-                              </li>
-                              <li>
-                                <Link to="/">
-                                  Soda & Cocktail Mix
-                                </Link>
-                              </li>
-                              <li>
-                                <Link to="/">
-                                  Sports & Energy Drinks
-                                </Link>
-                              </li>
-                              <li>
-                                <Link to="/">
-                                  Non Alcoholic Drinks
-                                </Link>
-                              </li>
-                              <li>
-                                <Link to="/">Packaged Water</Link>
-                              </li>
-                              <li>
-                                <Link to="/">Spring Water</Link>
-                              </li>
-                              <li>
-                                <Link to="/">Flavoured Water</Link>
-                              </li>
-                            </ul>
-                          </div>
                           </div>
                         </Accordion.Body>
                       </Accordion.Item>
@@ -823,7 +836,7 @@ const Header = () => {
 
                           <div className="dropdown-menu dropdown-menu-2 dropdown-image dropdown-menu-left">
                             <div className="dropdown-column">
-                            <Link to="/" className="dropdown-item">
+                              <Link to="/" className="dropdown-item">
                                 <img
                                   src="../public/theme/1.jpg"
                                   className="img-fluid"
@@ -842,10 +855,10 @@ const Header = () => {
                               </Link>
 
                               <Link to="/" className="dropdown-item">                                <img
-                                  src="../public/theme/3.jpg"
-                                  className="img-fluid"
-                                  alt=""
-                                />
+                                src="../public/theme/3.jpg"
+                                className="img-fluid"
+                                alt=""
+                              />
                                 <span>Organic</span>
                               </Link>
 
@@ -880,56 +893,56 @@ const Header = () => {
 
                           <ul className="dropdown-menu ps-4">
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                                                            >
+                              >
                                 Shop Category Slider
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                            
+
                               >
                                 Shop Category Sidebar
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                                
+
                               >
                                 Shop Banner
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Shop Left Sidebar
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                         
+
                               >
                                 Shop List
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                             
+
                               >
                                 Shop Right Sidebar
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                         
+
                               >
                                 Shop Top Filter
                               </Link>
@@ -947,51 +960,51 @@ const Header = () => {
 
                           <ul className="dropdown-menu ps-4">
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                          
+
                               >
                                 Product 4 Image
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
-                              
+                              <Link to="/"
+
                                 className="dropdown-item"
                               >
                                 Product Bottom Thumbnail
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"                               
+                              <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Left Thumbnail
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Left
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Right Thumbnail
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Slider
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
                               >
                                 Product Sticky
@@ -1001,9 +1014,9 @@ const Header = () => {
                         </li>
 
                         <li className="nav-item dropdown dropdown-mega">
-                        <Link to="/"
+                          <Link to="/"
                             className="nav-link dropdown-toggle ps-xl-2 ps-0"
-                         
+
                             data-bs-toggle="dropdown"
                           >
                             Mega Menu
@@ -1016,20 +1029,20 @@ const Header = () => {
                               </h5>
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Beans & Brinjals
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Broccoli & Cauliflower
                               </Link>
 
                               <Link to="/"
-                              
+
                                 className="dropdown-item"
                               >
                                 Chilies, Garlic
@@ -1037,27 +1050,27 @@ const Header = () => {
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Vegetables & Salads
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Gourd, Cucumber
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Herbs & Sprouts
                               </Link>
 
                               <Link to="/"
-                            
+
                                 className="dropdown-item"
                               >
                                 Lettuce & Leafy
@@ -1068,48 +1081,48 @@ const Header = () => {
                               <h5 className="dropdown-header">Baby Tender</h5>
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Beans & Brinjals
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Broccoli & Cauliflower
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Chilies, Garlic
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Vegetables & Salads
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Gourd, Cucumber
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Potatoes & Tomatoes
                               </Link>
 
                               <Link to="/"
-                              
+
                                 className="dropdown-item"
                               >
                                 Peas & Corn
@@ -1122,35 +1135,35 @@ const Header = () => {
                               </h5>
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Asparagus & Artichokes
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Avocados & Peppers
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Broccoli & Zucchini
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Celery, Fennel & Leeks
                               </Link>
 
                               <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Chilies & Lime
                               </Link>
@@ -1161,9 +1174,9 @@ const Header = () => {
                         </li>
 
                         <li className="nav-item dropdown">
-                        <Link to="/"
+                          <Link to="/"
                             className="nav-link dropdown-toggle"
-                            
+
                             data-bs-toggle="dropdown"
                           >
                             Blog
@@ -1179,9 +1192,9 @@ const Header = () => {
                               </NavLink>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                             
+
                               >
                                 Blog Grid
                               </Link>
@@ -1198,16 +1211,16 @@ const Header = () => {
                         </li>
 
                         <li className="nav-item dropdown">
-                        <Link to="/"
+                          <Link to="/"
                             className="nav-link dropdown-toggle"
-                        
+
                             data-bs-toggle="dropdown"
                           >
                             Pages
                           </Link>
                           <ul className="dropdown-menu ps-4">
                             <li>
-                            <Link to="/"className="dropdown-item" >
+                              <Link to="/" className="dropdown-item" >
                                 404
                               </Link>
                             </li>
@@ -1217,25 +1230,25 @@ const Header = () => {
                               </Link>
                             </li>
                             <li>
-                            <Link className="dropdown-item" to="/cart">
+                              <Link className="dropdown-item" to="/cart">
                                 Cart
                               </Link>
                             </li>
                             <li>
-                            <Link className="dropdown-item">
+                              <Link className="dropdown-item">
                                 Checkout
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                       
+
                               >
                                 Coming Soon
                               </Link>
                             </li>
                             <li>
-                            <Link to="/" className="dropdown-item">
+                              <Link to="/" className="dropdown-item">
                                 Compare
                               </Link>
                             </li>
@@ -1245,41 +1258,41 @@ const Header = () => {
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 Order Success
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                               
+
                               >
                                 Order Tracking
                               </Link>
                             </li>
                             <li>
-                            <Link to="/otp_verification" className="dropdown-item">
+                              <Link to="/otp_verification" className="dropdown-item">
                                 OTP
                               </Link>
                             </li>
                             <li>
-                            <Link to="/" className="dropdown-item">
+                              <Link to="/" className="dropdown-item">
                                 Search
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"
+                              <Link to="/"
                                 className="dropdown-item"
-                              
+
                               >
                                 User Dashboard
                               </Link>
                             </li>
                             <li>
-                            <Link to="/"className="dropdown-item">
+                              <Link to="/" className="dropdown-item">
                                 Wishlist
                               </Link>
                             </li>

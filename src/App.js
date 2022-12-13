@@ -21,10 +21,6 @@ import BlogList from "./components/pages/blog_list";
 import BlogDetail from "./components/pages/blog_detail";
 import Otp from "./components/pages/otp_verification";
 import Careers from "./components/pages/careers";
-
-
-
-
 function App() {
   return (
     <BrowserRouter>

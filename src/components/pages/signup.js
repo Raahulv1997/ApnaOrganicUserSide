@@ -2,14 +2,56 @@ import React, { Fragment } from "react";
 import Banner from "../../Photos/login.png";
 import Footer from "../common/footer";
 import Header from "../common/header";
-import Breadcumb from "../common/beadcumb";
+import axios from "axios";
+// import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
-
+import { useState } from "react";
+import {  useNavigate } from "react-router-dom";
 const Singup = () => {
+const [otp, setotp]= useState(0);
+const [email, setemail]= useState('');
+
+const [otperror, setOtperror]= useState(false);
+const navigate = useNavigate()
+
+  const SignUpUser= (e) =>{
+    e.preventDefault();
+    setemail(e.target.email.value);
+    // alert("SINGNNN"+email)
+    axios.post("http://192.168.29.108:5000/sign_up",{'email':e.target.email.value})
+    .then(response => {
+      console.log("___--------------"+JSON.stringify(response.data));
+      setotp(response.data);
+      // return response;
+    }).catch(error => {
+      console.log(error.response.data.error)
+      
+    })
+  }
+  const VerifyOTP = (e)=>{
+    // alert(e.target.otpinput.value)
+    console.log("___--------------"+otp+'---------------' +e.target.otpinput.value);
+
+    e.preventDefault();
+    // if(e.target.otpinput.value == otp){
+      axios.post(`http://192.168.29.108:5000/otp_verfication`,{"email":email, "otp":otp})
+      .then(response => {
+        console.log("___--------------"+JSON.stringify(response.data));
+        // navigate('/your_account')
+        // return response;
+      }).catch(error => {
+        console.log(error.response.data.error)
+      })
+    // }
+    // else{
+    //   console.log("invalid otp")
+    //   setOtperror(true)
+    // }
+  }
   return (
     <Fragment>
       <Header />
-      <Breadcumb pageName={"Register"} pageTitle={"Register"} />
+      {/* <Breadcumb pageName={"Register"} pageTitle={"Register"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space">
         <div className="container-fluid-lg w-100">
@@ -28,8 +70,8 @@ const Singup = () => {
                 </div>
 
                 <div className="input-box">
-                  <form className="row g-4">
-                    <div className="col-12">
+                  <form className="row g-4" onSubmit={otp===0? SignUpUser:VerifyOTP} >
+                    {/* <div className="col-12">
                       <div className="form-floating theme-form-floating">
                         <input
                           type="text"
@@ -39,20 +81,32 @@ const Singup = () => {
                         />
                         <label htmlFor="fullname">Full Name</label>
                       </div>
-                    </div>
+                    </div> */}
                     <div className="col-12">
                       <div className="form-floating theme-form-floating">
-                        <input
+                        <input                        
                           type="email"
-                          className="form-control"
+                          className={otp===0?"form-control":"form-control d-none"}
                           id="email"
                           placeholder="Email Address"
+                          name='emailid'
+                          required
                         />
-                        <label htmlFor="email">Email Address</label>
+                        <input                        
+                          type="number"
+                          className={otp===0?"form-control d-none":"form-control"}
+                          id="otp"
+                          placeholder="Enter OTP"
+                          name="otpinput"
+                          
+                        />
+                        <label className="text-start" htmlFor="email">{otp===0?'Email Address' : 'Enter OTP'}</label>
+
                       </div>
+                      {otperror ? <p className="text-danger">{'Invalid Otp'}</p> : null}
                     </div>
 
-                    <div className="col-12">
+                    {/* <div className="col-12">
                       <div className="form-floating theme-form-floating">
                         <input
                           type="password"
@@ -62,15 +116,16 @@ const Singup = () => {
                         />
                         <label htmlFor="password">Password</label>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="col-12">
+                    <div className={otp===0?"col-12":"col-12 d-none"}>
                       <div className="forgot-box">
                         <div className="form-check ps-0 m-0 remember-box">
                           <input
                             className="checkbox_animated check-box"
                             type="checkbox"
                             id="flexCheckDefault"
+                            name="termscheck"
                           />
                           <label
                             className="form-check-label"
@@ -85,17 +140,18 @@ const Singup = () => {
 
                     <div className="col-12">
                       <button className="btn btn-animation w-100" type="submit">
-                        Sign Up
+                      {otp===0?"Sign Up":"Verify Otp"}
                       </button>
                     </div>
                   </form>
+                  
                 </div>
 
-                <div className="other-log-in">
+                <div className={otp===0?"other-log-in":"other-log-in d-none"}>
                   <h6>or</h6>
                 </div>
 
-                <div className="log-in-button">
+                <div className={otp===0?"log-in-button":"log-in-button d-none"}>
                   <ul>
                     <li>
                       <a
