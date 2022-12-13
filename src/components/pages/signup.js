@@ -18,7 +18,7 @@ const navigate = useNavigate()
     e.preventDefault();
     setemail(e.target.email.value);
     // alert("SINGNNN"+email)
-    axios.post("http://192.168.29.108:5000/sign_up",{'email':e.target.email.value})
+    axios.post(`${process.env.REACT_APP_BASEURL}/sign_up`,{'email':e.target.email.value})
     .then(response => {
       console.log("___--------------"+JSON.stringify(response.data));
       setotp(response.data);
@@ -34,7 +34,7 @@ const navigate = useNavigate()
 
     e.preventDefault();
     // if(e.target.otpinput.value == otp){
-      axios.post(`http://192.168.29.108:5000/otp_verfication`,{"email":email, "otp":otp})
+      axios.post(`${process.env.REACT_APP_BASEURL}/otp_verfication`,{"email":email, "otp":otp})
       .then(response => {
         console.log("___--------------"+JSON.stringify(response.data));
         // navigate('/your_account')

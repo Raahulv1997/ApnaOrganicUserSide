@@ -23,7 +23,7 @@ const Cart = (props) => {
   const incrementCount=(id,quantity)=> {
     let inc=quantity+1
     console.log("quentityyyyyyy--------- "+inc)
-    axios.put(`http://192.168.29.108:5000/cart_update`, {
+    axios.put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
       id:id,
       quantity:inc
   }).then((response) => {
@@ -48,7 +48,7 @@ const Cart = (props) => {
     }
 
     axios
-    .put(`http://192.168.29.108:5000/cart_update`,{
+    .put(`${process.env.REACT_APP_BASEURL}/cart_update`,{
       id:id,
       quantity:dec
     })
@@ -88,7 +88,7 @@ const Cart = (props) => {
     function getCartData() {
       try {
         axios
-          .get("http://192.168.29.108:5000/cart?user_id=6")
+          .get("${process.env.REACT_APP_BASEURL}/cart?user_id=6")
           .then((response) => {
             let data = response.data;
             setCartData(data);
@@ -105,7 +105,7 @@ const Cart = (props) => {
     console.log("id++++++++++++++++"+   id  )
     console.log("user_id++++++++++++++++"+ user_id  )
     axios
-    .put(`http://192.168.29.108:5000/remove_product_from_cart`,{
+    .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
       id:id,
       user_id:user_id
     })

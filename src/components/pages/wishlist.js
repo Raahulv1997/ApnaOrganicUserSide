@@ -6,7 +6,7 @@ import ProductBox from "../common/product-box";
 import data from "./data";
 import { Link } from "react-router-dom";
 import axios from "axios";
-function wishlist() {
+function Wishlist() {
   const[wishlist,setWishList]=useState([]);
   var product = data.product;
   console.log(product);
@@ -15,7 +15,7 @@ function wishlist() {
     function getWishList() {
       try {
         axios
-          .get(`http://192.168.29.108:5000/wishlist?user_id=6`)
+          .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=6`)
           .then((response) => {
             let data = response.data;
             setWishList(data);
@@ -367,4 +367,4 @@ function wishlist() {
   );
 }
 
-export default wishlist;
+export default Wishlist;

@@ -39,7 +39,7 @@ function Account() {
   const [userjson, setuserjson] = useState([]);
   
  useEffect(()=>{
-  axios.get("http://192.168.29.108:5000/user_register")
+  axios.get(`${process.env.REACT_APP_BASEURL}/user_register`)
   .then(response => {
     console.log("___--------save------"+JSON.stringify(response.data));
     setuserjson(response.data)
@@ -73,7 +73,7 @@ function Account() {
       console.log("aa");
     }
     // eslint-disable-next-line no-undef
-    axios.post("http://192.168.29.108:5000/user_register",userdata)
+    axios.post(`${process.env.REACT_APP_BASEURL}/user_register`,userdata)
     .then(response => {
       console.log("___--------save------"+JSON.stringify(response.data));
       // navigate('/your_account')

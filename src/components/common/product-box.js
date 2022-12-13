@@ -24,7 +24,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
       }
     //   console.log("dataaaaaaaa"+JSON.stringify(productData))
       const AddToCart=()=>{
-        axios.post(`http://192.168.29.108:5000/add_to_cart`,{
+        axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
             user_id:6,
             product_id:`${productid}`,
             price:`${productPrice}`,
@@ -42,7 +42,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
 //   const hendalClick=()=>{}
     const AddToWishList= () =>{
             axios
-        .post(`http://192.168.29.108:5000/add_product_wishlist`,{
+        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
             user_id:6,
             product_id:`${productid}`,
             price:`${productPrice}`,
@@ -63,7 +63,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
       useEffect(() => {
           try {
             axios
-              .post(`http://192.168.29.108:5000/apna_organic_home?page=0&per_page=4`,{
+              .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,{
                 "product_search":{
                 "search":"",
                 "colors":"",

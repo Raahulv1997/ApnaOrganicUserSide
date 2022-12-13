@@ -32,7 +32,7 @@ const Header = () => {
     function getCategoryData() {
       try {
         axios
-          .get("http://192.168.29.108:5000/get_all_category")
+          .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
             // console.log("category---------------"+JSON.stringify(data))
@@ -60,7 +60,7 @@ const Header = () => {
     function getProductData() {
       try {
         axios
-          .post(`http://192.168.29.108:5000/apna_organic_home?page=0&per_page=4`,{
+          .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,{
             "product_search":{
               "search":"",
               "colors":"",

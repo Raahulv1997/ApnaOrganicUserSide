@@ -25,7 +25,7 @@ const Shop=(props)=> {
         function getProductData() {
           try {
             axios
-              .post(`http://192.168.29.108:5000/home?page=0&per_page=400&user_id=6`,{
+              .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=6`,{
                 "product_search":{
                     "search":"",
                     }

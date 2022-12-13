@@ -29,7 +29,7 @@ const[productData,setProductData]=useState([]);
       function getProductData() {
         try {
           axios
-            .post(`http://192.168.29.108:5000/apna_organic_home?page=0&per_page=4`,{
+            .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,{
               "product_search":{
                 "search":"",
                 "colors":"",
