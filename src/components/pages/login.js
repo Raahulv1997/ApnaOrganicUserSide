@@ -1,12 +1,33 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import Banner from "../../Photos/login.png";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
+import axios from "axios";
 
 const Login = () => {
+  const [credentailval , setcredentailval] = useState({
+    user_email:"",
+    user_password:""
+  })
+  const onCredentialChange= (e)=>{
+    setcredentailval({...credentailval, [e.target.name]:e.target.value})
+  }
+  const onSubmitClick = (e) =>{
+    console.log("credentailval=====--->   "+credentailval)
+    e.prevantDefault();
+    axios.post(`${process.env.REACT_APP_BASEURL}/user_login`,credentailval)
+    .then(response => {
+      console.log("___--------save------"+JSON.stringify(response.data));
+      // navigate('/your_account')
+      // return response;
+    }).catch(error => {
+      console.log(error.response.data.error)
+    })
+  }
+  console.log("---user"+JSON.stringify(credentailval))
   return (
     <Fragment>
       <Header />
@@ -29,21 +50,24 @@ const Login = () => {
                 </div>
 
                 <div className="input-box">
-                  <form className="row g-4">
+                  <form className="row g-4" >
                     <div className="col-12">
                       <div className="form-floating theme-form-floating log-in-form">
                         <input
                           type="email"
                           className="form-control"
                           id="email"
-                          placeholder="Your Phone Number"
+                          placeholder="Your Email"
+                          name='user_email'
+                          onChange={(e)=>onCredentialChange(e)}
+                          value={credentailval.user_email}
                         />
-                        <label htmlFor="email">Phone Number</label>
+                        <label htmlFor="email">Email</label>
                       </div>
                     </div>
 
                     <div className="col-12">
-                      <div
+                      {/* <div
                         id="otp"
                         className="inputs d-flex flex-row justify-content-center"
                       >
@@ -89,6 +113,19 @@ const Login = () => {
                           maxLength="1"
                           placeholder="0"
                         />
+                      </div> */}
+                       <div className="form-floating theme-form-floating log-in-form">
+                        <input
+                          type="password"
+                          className="form-control"
+                          id="password"
+                          name="user_password"
+                          placeholder="Your Password"
+                          onChange={(e)=>onCredentialChange(e)}
+                        value={credentailval.user_password}
+
+                        />
+                        <label htmlFor="password">Password</label>
                       </div>
                     </div>
 
@@ -116,7 +153,8 @@ const Login = () => {
                     <div className="col-12">
                       <button
                         className="btn btn-animation w-100 justify-content-center"
-                        type="submit"
+                        // type="submit"
+                        onClick={onSubmitClick}
                       >
                         Log In
                       </button>

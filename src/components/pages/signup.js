@@ -20,16 +20,16 @@ const navigate = useNavigate()
     // alert("SINGNNN"+email)
     axios.post(`${process.env.REACT_APP_BASEURL}/sign_up`,{'email':e.target.email.value})
     .then(response => {
-      // if(response.data =`{"message":"User Already Exist. Please Login"}`){
-      //   console.log("___--------------"+JSON.stringify(response.data));
-      //   setemailerror('already');
-      //   e.target.email.value = '';
-      // }
-      // else{
+      if(response.data === false){
+        console.log("___--------------"+JSON.stringify(response.data));
+        setemailerror('already');
+        e.target.email.value = '';
+      }
+      else{
         setotp(response.data);
         console.log("___--------------"+JSON.stringify(response.data));
-      // }
-      // return response;
+      }
+      return response;
     }).catch(error => {
       console.log(error.response.error)
       
@@ -40,8 +40,6 @@ const navigate = useNavigate()
     if(e.target.otpinput.value == otp){
       axios.post(`${process.env.REACT_APP_BASEURL}/otp_verification`,{"email":email, "otp":otp})
       .then(response => {
-        console.log("___--------------"+JSON.stringify(response.data));
-        console.log("___--------------"+(response.data.insertId));
         localStorage.setItem("userid",response.data.insertId)
         navigate('/your_account')
         // return response;
@@ -195,7 +193,7 @@ const navigate = useNavigate()
 
                 <div className="sign-up-box">
                   <h4>Already have an account?</h4>
-                  <a href="log-in.html">Log In</a>
+                  <button onClick={()=>{navigate('/login')}} className='btn btn-success my-1'> Log In</button>
                 </div>
               </div>
             </div>

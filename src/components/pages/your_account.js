@@ -20,57 +20,65 @@ import Col from "react-bootstrap/Col";
 import profile_cover from "../../Photos/media/cover-img.jpg";
 import { useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 
 // import {CiMail} from 'react-icons/ci';
 
 function Account() {
+  const useridd = localStorage.getItem("userid")
   const func=()=>{}
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
-
   const [Password, setPassword] = useState(false);
-  const ChangepassClose = () => setPassword(false);
-  const ChangepassShow = () => setPassword(true);
   const [validated, setValidated] = useState(false);
   const [addAdderss, setaddAdderss] = useState(false);
   const addAdderssClose = () => setaddAdderss(false);
   const addAdderssShow = () => setaddAdderss(true);
-  const [userjson, setuserjson] = useState([]);
-  const useridd = localStorage.getItem("userid")
+  const [wishlistdata, setwishlistdata] = useState([]);
+  const [userdata, setuserdata] = useState(
+    {
+    user_id:useridd,
+    first_name:"",
+    last_name:"",
+    password:"",
+    email:"",
+    phone_no:"",
+    gender:"",
+    date_of_birth:"",
+    address:"",
+    address2:""
+    });
  useEffect(()=>{
   axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
   .then(response => {
-    console.log("___--------save------"+JSON.stringify(response.data));
     setuserdata(response.data[0])
     // navigate('/your_account')
     // return response;
   }).catch(error => {
-    console.log(error.response.data.error)
+    console.log(error.response.error)
   })
- },[])
- const [userdata, setuserdata] = useState(
-  {
-  user_id:useridd,
-  name:"",
-  last_name:"",
-  password:"",
-  email:"",
-  phone_no:"",
-  gender:"",
-  date_of_birth:"",
-  address:"",
-  address2:""
-  });
 
-  const [click, setclick] = useState(false);
-  const side_bar = () => {
-    setclick(true);
-  };
+ },[])
+ 
+// wishlist
+
+const setwishlistclick = () =>{
+  axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
+  .then(response => {
+    setwishlistdata(response.data)
+    // console.log("----whisijd"+JSON.stringify(response.data))
+    // navigate('/your_account')
+    // return response;
+  }).catch(error => {
+    console.log(error.response.error)
+  })
+  setclick(false)
+
+}
+console.log("----whisijd"+JSON.stringify(wishlistdata))
 
   // edit Profile
-
-
   const handleSubmit = (event) => {
     event.preventDefault();
     let form = event.currentTarget;
@@ -100,81 +108,98 @@ function Account() {
       [e.target.name]: e.target.value,
     });
   };
-  console.log("-----userdata"+JSON.stringify(userdata));
+  // console.log("-----userdata"+JSON.stringify(userdata));
 
   // change Password
 
-  const [changepass, setchangepass] = useState("");
- 
-  const [formError, setFormError] = useState({
-    currentPass: "",
-    newPass: "",
-    confirmPass: "",
-    allPass: "",
+  const [changepass, setchangepass] = useState({
+    email:`${userdata.email}`,
+    password:userdata.password,
+    new_password:""
   });
-  const handlePassSubmit = (event) => {
-    event.preventDefault();
-    if (
-      changepass.confirmpassword === undefined &&
-      changepass.newPass === undefined &&
-      changepass.currentpassword === undefined
-    ) {
-      setFormError({
-        allPass: "All field are required",
-      });
+ const ChangepassShow = () => {
+  // setchangepass(userdata)
+  setPassword(true);
+}
+const OnchangePass = (e) => {
+  setchangepass({
+    ...changepass,
+    [e.target.name]: e.target.value,
+  });
+};
+console.log(JSON.stringify(changepass));
 
-      return false;
-    }
-    if (changepass.currentpassword === undefined) {
-      setFormError({
-        currentPass: "Please enter current password",
-      });
-
-      return false;
-    }
-    if (changepass.currentpassword !== "1234") {
-      setFormError({
-        currentPass: "Not match with current password",
-      });
-      return false;
-    }
-
-
-    if (changepass.newpassword === undefined) {
-      setFormError({
-        newPass: "Please enter New password",
-      });
-
-      return false;
-    }
-
-    if (changepass.confirmpassword === undefined) {
-      setFormError({
-        confirmPass: "Please enter confirm password",
-      });
-
-      return false;
-    }
-
-    if (changepass.confirmpassword !== changepass.newpassword) {
-      setFormError({
-        confirmPass: "Password & Confirm password not match",
-      });
-      return false;
-    }
-    setFormError("");
-    console.log(changepass);
-    ChangepassClose();
-  };
-
-  const OnchangePass = (e) => {
-    let name = e.target.value;
-    console.log(name);
-    setchangepass({
-      ...changepass,
-      [e.target.name]: e.target.value,
+const [formError, setFormError] = useState({
+  currentPass: "",
+  newPass: "",
+  confirmPass: "",
+  allPass: "",
+});
+const handlePassSubmit = (event) => {
+  event.preventDefault();
+  if (
+    changepass.confirmpassword === undefined &&
+    changepass.newPass === undefined &&
+    changepass.currentpassword === undefined
+  ) {
+    setFormError({
+      allPass: "All field are required",
     });
-  };
+
+    return false;
+  }
+  if (changepass.currentpassword === undefined) {
+    setFormError({
+      currentPass: "Please enter current password",
+    });
+
+    return false;
+  }
+  if (changepass.currentpassword !== "1234") {
+    setFormError({
+      currentPass: "Not match with current password",
+    });
+    return false;
+  }
+
+
+  if (changepass.newpassword === undefined) {
+    setFormError({
+      newPass: "Please enter New password",
+    });
+
+    return false;
+  }
+
+  if (changepass.confirmpassword === undefined) {
+    setFormError({
+      confirmPass: "Please enter confirm password",
+    });
+
+    return false;
+  }
+
+  if (changepass.confirmpassword !== changepass.newpassword) {
+    setFormError({
+      confirmPass: "Password & Confirm password not match",
+    });
+    return false;
+  }
+  setFormError("");
+  console.log(changepass);
+  ChangepassClose();
+};
+const ChangepassClose = () => setPassword(false);
+
+// end change paassword
+const [click, setclick] = useState(false);
+const side_bar = () => {
+  setclick(true);
+
+};
+  
+
+  
 
   //add address
   const [addNewAdderss, setaddNewAdderss] = useState(0);
@@ -199,7 +224,26 @@ function Account() {
       [e.target.name]: e.target.value,
     });
   };
+// add to cart
+const AddToCart = (id , discount , product_price , quantity ) =>{
+  // e.preventDefault();
+  axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
+    "user_id":useridd,
+    "product_id":id,
+    "price":product_price,
+    "discount":discount,
+    "quantity":1,
+    "is_active":1
+  })
+  .then(response => {
+    console.log("----adddd"+JSON.stringify(response.data))
+    // navigate('/your_account')
+  }).catch(error => {
+    console.log(error.response.error)
+  })
+}
 
+// end add to cart
   return (
     <React.Fragment>
       <Header />
@@ -227,16 +271,16 @@ function Account() {
                     </button>
                   </div>
                   <div className="profile-box">
-                    <div className="cover-image">
+                    {/* <div className="cover-image">
                       <img
                         src={profile_cover}
                         className="img-fluid  lazyload"
                         alt=""
                       />
-                    </div>
+                    </div> */}
 
                     <div className="profile-contain">
-                      <div className="profile-image">
+                      {/* <div className="profile-image">
                         <div className="position-relative">
                           <img
                             src={Profile}
@@ -249,11 +293,11 @@ function Account() {
                             </i>
                           </div>
                         </div>
-                      </div>
+                      </div> */}
 
                       <div className="profile-name">
                         <h3>{userdata.first_name} {userdata.last_name}</h3>
-                        <h6 className="text-content">{userjson.email}</h6>
+                        <h6 className="text-content">{userdata.email}</h6>
                       </div>
                     </div>
                   </div>
@@ -314,7 +358,7 @@ function Account() {
                               role="tab"
                               aria-controls="pills-wishlist"
                               aria-selected="false"
-                              onClick={() => setclick(false)}
+                              onClick={() => setwishlistclick()}
                             >
                               <AiOutlineHeart className="mx-2" />
                               Wishlist
@@ -439,7 +483,7 @@ function Account() {
                             <div className="dashboard-user-name">
                               <h6 className="text-content">
                                 Hello,{" "}
-                                <b className="text-title">Vicki E. Pope</b>
+                                <b className="text-title">{userdata.first_name} {userdata.last_name}</b>
                               </h6>
                               <p className="text-content">
                                 From your My Account Dashboard you have the
@@ -531,9 +575,9 @@ function Account() {
                                   </h4>
                                 </div>
                                 <div className="dashboard-detail">
-                                  <h6 className="text-content">MARK JECNO</h6>
+                                  <h6 className="text-content"> {userdata.first_name} {userdata.last_name}</h6>
                                   <h6 className="text-content">
-                                    vicki.pope@gmail.com
+                                    {userdata.email}
                                   </h6>
                                   <Link
                                     to="#"
@@ -545,7 +589,7 @@ function Account() {
                               </div>
 
                               <div className="col-xxl-6">
-                                <div className="dashboard-contant-title">
+                                {/* <div className="dashboard-contant-title">
                                   <h4>
                                     Newsletters{" "}
                                     <Link
@@ -562,7 +606,7 @@ function Account() {
                                     You are currently not subscribed to any
                                     newsletter
                                   </h6>
-                                </div>
+                                </div> */}
                               </div>
 
                               <div className="col-12">
@@ -586,8 +630,7 @@ function Account() {
                                         Default Billing Address
                                       </h6>
                                       <h6 className="text-content">
-                                        You have not set a default billing
-                                        address.
+                                      {userdata.address}
                                       </h6>
                                       <Link
                                         to="#"
@@ -606,8 +649,7 @@ function Account() {
                                         Default Shipping Address
                                       </h6>
                                       <h6 className="text-content">
-                                        You have not set a default shipping
-                                        address.
+                                      {userdata.address2}
                                       </h6>
                                       <Link
                                         to="#"
@@ -626,6 +668,7 @@ function Account() {
                         </div>
                       </div>
                     </Tab.Pane>
+                    {/* order history */}
                     <Tab.Pane eventKey="second">
                       <div
                         className="tab-pane fade show"
@@ -1094,6 +1137,9 @@ function Account() {
                         </div>
                       </div>
                     </Tab.Pane>
+                    {/* end order history */}
+                    {/* wishlist history */}
+
                     <Tab.Pane eventKey="wishlist">
                       <div
                         className="tab-pane fade show"
@@ -1109,615 +1155,102 @@ function Account() {
                             </span>
                           </div>
                           <div className="row g-sm-4 g-3">
+                          {(wishlistdata || []).map((wdata) =>{
+                                return(
                             <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              <div className="product-box-3 theme-bg-white h-100">
-                                <div className="product-header">
-                                  <div className="product-image">
-                                    <Link to="product-left.html">
-                                      <img
-                                        src={Product}
-                                        className="img-fluid  lazyload"
-                                        alt=""
-                                      />
-                                    </Link>
-
-                                    <div className="product-header-top">
-                                      <button className="btn wishlist-button close_button">
-                                        <i data-feather="x"></i>
-                                      </button>
+                              
+                                  <div className="product-box-3 theme-bg-white h-100">
+                                  <div className="product-header">
+                                    <div className="product-image">
+                                      <Link to="product-left.html">
+                                        <img
+                                          src={Product}
+                                          className="img-fluid  lazyload"
+                                          alt=""
+                                        />
+                                      </Link>
+  
+                                      <div className="product-header-top">
+                                        <button className="btn wishlist-button close_button">
+                                          <i data-feather="x"></i>
+                                        </button>
+                                      </div>
                                     </div>
                                   </div>
-                                </div>
-
-                                <div className="product-footer">
-                                  <div className="product-detail">
-                                    <span className="span-name">Vegetable</span>
-                                    <Link to="product-left.html">
-                                      <h5 className="name">
-                                        Fresh Bread and Pastry Flour 200 g
+  
+                                  <div className="product-footer">
+                                    <div className="product-detail">
+                                      <span className="span-name">{wdata.product_title_name}</span>
+                                      <Link to="/order_detail">
+                                        <h5 className="name">
+                                         {wdata.product_description}
+                                        </h5>
+                                      </Link>
+                                      <p className="text-content mt-1 mb-2 product-content">
+                                       {wdata.other_introduction}
+                                      </p>
+                                      <h6 className="unit mt-1">250 ml</h6>
+                                      <h5 className="price">
+                                        <span className="theme-color">
+                                        {wdata.product_price}₹
+                                        </span>
+                                        <del>{wdata.mrp}₹</del>
                                       </h5>
-                                    </Link>
-                                    <p className="text-content mt-1 mb-2 product-content">
-                                      Cheesy feet cheesy grin brie. Mascarpone
-                                      cheese and wine hard cheese the big cheese
-                                      everyone loves smelly cheese macaroni
-                                      cheese croque monsieur.
-                                    </p>
-                                    <h6 className="unit mt-1">250 ml</h6>
-                                    <h5 className="price">
-                                      <span className="theme-color">
-                                        $08.02
-                                      </span>
-                                      <del>$15.15</del>
-                                    </h5>
-                                    <div className="add-to-cart-box mt-2">
-                                      <button className="btn btn-add-cart addcart-button">
-                                        Add
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <div className="cart_qty qty-box">
-                                        <div className="input-group">
-                                          <button
-                                            type="button"
-                                            className="qty-left-minus"
-                                            data-type="minus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-minus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                          <input
-                                            className="form-control input-number qty-input"
-                                            type="text"
-                                            name="quantity"
-                                            value="0"
-                                            onChange={func}
-                                          />
-                                          <button
-                                            type="button"
-                                            className="qty-right-plus"
-                                            data-type="plus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
+                                      <div className="add-to-cart-box mt-2">
+                                        <button className="btn btn-add-cart addcart-button" onClick={(e)=>AddToCart(wdata.id , wdata.discount , wdata.product_price , wdata.quantity , wdata.is_active)}>
+                                          Add
+                                          <i className="fa-solid fa-plus"></i>
+                                        </button>
+                                        <div className="cart_qty qty-box">
+                                          <div className="input-group">
+                                            <button
+                                              type="button"
+                                              className="qty-left-minus"
+                                              data-type="minus"
+                                              data-field=""
+                                            >
+                                              <i
+                                                className="fa fa-minus"
+                                                aria-hidden="true"
+                                              ></i>
+                                            </button>
+                                            <input
+                                              className="form-control input-number qty-input"
+                                              type="text"
+                                              name="quantity"
+                                              value="0"
+                                              onChange={func}
+                                            />
+                                            <button
+                                              type="button"
+                                              className="qty-right-plus"
+                                              data-type="plus"
+                                              data-field=""
+                                            >
+                                              <i
+                                                className="fa fa-plus"
+                                                aria-hidden="true"
+                                              ></i>
+                                            </button>
+                                          </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                              </div>
+                                
+                             
                             </div>
-
-                            <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              <div className="product-box-3 theme-bg-white h-100">
-                                <div className="product-header">
-                                  <div className="product-image">
-                                    <Link to="product-left.html">
-                                      <img
-                                        src={Product}
-                                        className="img-fluid  lazyload"
-                                        alt=""
-                                      />
-                                    </Link>
-
-                                    <div className="product-header-top">
-                                      <button className="btn wishlist-button close_button">
-                                        <i data-feather="x"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="product-footer">
-                                  <div className="product-detail">
-                                    <span className="span-name">Vegetable</span>
-                                    <Link to="product-left.html">
-                                      <h5 className="name">
-                                        Peanut Butter Bite Premium Butter
-                                        Cookies 600 g
-                                      </h5>
-                                    </Link>
-                                    <p className="text-content mt-1 mb-2 product-content">
-                                      Feta taleggio croque monsieur swiss
-                                      manchego cheesecake dolcelatte jarlsberg.
-                                      Hard cheese danish fontina boursin melted
-                                      cheese fondue.
-                                    </p>
-                                    <h6 className="unit mt-1">350 G</h6>
-                                    <h5 className="price">
-                                      <span className="theme-color">
-                                        $04.33
-                                      </span>
-                                      <del>$10.36</del>
-                                    </h5>
-                                    <div className="add-to-cart-box mt-2">
-                                      <button className="btn btn-add-cart addcart-button">
-                                        Add
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <div className="cart_qty qty-box">
-                                        <div className="input-group">
-                                          <button
-                                            type="button"
-                                            className="qty-left-minus"
-                                            data-type="minus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-minus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                          <input
-                                            className="form-control input-number qty-input"
-                                            type="text"
-                                            name="quantity"
-                                            value="0"
-                                            onChange={func}
-                                          />
-                                          <button
-                                            type="button"
-                                            className="qty-right-plus"
-                                            data-type="plus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              <div className="product-box-3 theme-bg-white h-100">
-                                <div className="product-header">
-                                  <div className="product-image">
-                                    <Link to="product-left.html">
-                                      <img
-                                        src={Product}
-                                        className="img-fluid  lazyload"
-                                        alt=""
-                                      />
-                                    </Link>
-
-                                    <div className="product-header-top">
-                                      <button className="btn wishlist-button close_button">
-                                        <i data-feather="x"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="product-footer">
-                                  <div className="product-detail">
-                                    <span className="span-name">Snacks</span>
-                                    <Link to="product-left.html">
-                                      <h5 className="name">
-                                        SnackAmor Combo Pack of Jowar Stick and
-                                        Jowar Chips
-                                      </h5>
-                                    </Link>
-                                    <p className="text-content mt-1 mb-2 product-content">
-                                      Lancashire hard cheese parmesan. Danish
-                                      fontina mozzarella cream cheese smelly
-                                      cheese cheese and wine cheesecake
-                                      dolcelatte stilton. Cream cheese parmesan
-                                      who moved my cheese when the cheese comes
-                                      out everybody's happy cream cheese red
-                                      leicester ricotta edam.
-                                    </p>
-                                    <h6 className="unit mt-1">570 G</h6>
-                                    <h5 className="price">
-                                      <span className="theme-color">
-                                        $12.52
-                                      </span>
-                                      <del>$13.62</del>
-                                    </h5>
-                                    <div className="add-to-cart-box mt-2">
-                                      <button className="btn btn-add-cart addcart-button">
-                                        Add
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <div className="cart_qty qty-box">
-                                        <div className="input-group">
-                                          <button
-                                            type="button"
-                                            className="qty-left-minus"
-                                            data-type="minus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-minus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                          <input
-                                            className="form-control input-number qty-input"
-                                            type="text"
-                                            name="quantity"
-                                            value="0"
-                                            onChange={func}
-                                          />
-                                          <button
-                                            type="button"
-                                            className="qty-right-plus"
-                                            data-type="plus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              <div className="product-box-3 theme-bg-white h-100">
-                                <div className="product-header">
-                                  <div className="product-image">
-                                    <Link to="product-left.html">
-                                      <img
-                                        src={Product}
-                                        className="img-fluid  lazyload"
-                                        alt=""
-                                      />
-                                    </Link>
-
-                                    <div className="product-header-top">
-                                      <button className="btn wishlist-button close_button">
-                                        <i data-feather="x"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="product-footer">
-                                  <div className="product-detail">
-                                    <span className="span-name">Snacks</span>
-                                    <Link to="product-left.html">
-                                      <h5 className="name">
-                                        Yumitos Chilli Sprinkled Potato Chips
-                                        100 g
-                                      </h5>
-                                    </Link>
-                                    <p className="text-content mt-1 mb-2 product-content">
-                                      Cheddar cheddar pecorino hard cheese hard
-                                      cheese cheese and biscuits bocconcini
-                                      babybel. Cow goat paneer cream cheese
-                                      fromage cottage cheese cauliflower cheese
-                                      jarlsberg.
-                                    </p>
-                                    <h6 className="unit mt-1">100 G</h6>
-                                    <h5 className="price">
-                                      <span className="theme-color">
-                                        $10.25
-                                      </span>
-                                      <del>$12.36</del>
-                                    </h5>
-                                    <div className="add-to-cart-box mt-2">
-                                      <button className="btn btn-add-cart addcart-button">
-                                        Add
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <div className="cart_qty qty-box">
-                                        <div className="input-group">
-                                          <button
-                                            type="button"
-                                            className="qty-left-minus"
-                                            data-type="minus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-minus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                          <input
-                                            className="form-control input-number qty-input"
-                                            type="text"
-                                            name="quantity"
-                                            value="0"
-                                            onChange={func}
-                                          />
-                                          <button
-                                            type="button"
-                                            className="qty-right-plus"
-                                            data-type="plus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              <div className="product-box-3 theme-bg-white h-100">
-                                <div className="product-header">
-                                  <div className="product-image">
-                                    <Link to="product-left.html">
-                                      <img
-                                        src={Product}
-                                        className="img-fluid  lazyload"
-                                        alt=""
-                                      />
-                                    </Link>
-
-                                    <div className="product-header-top">
-                                      <button className="btn wishlist-button close_button">
-                                        <i data-feather="x"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="product-footer">
-                                  <div className="product-detail">
-                                    <span className="span-name">Vegetable</span>
-                                    <Link to="product-left.html">
-                                      <h5 className="name">
-                                        Fantasy Crunchy Choco Chip Cookies
-                                      </h5>
-                                    </Link>
-                                    <p className="text-content mt-1 mb-2 product-content">
-                                      Bavarian bergkase smelly cheese swiss cut
-                                      the cheese lancashire who moved my cheese
-                                      manchego melted cheese. Red leicester
-                                      paneer cow when the cheese comes out
-                                      everybody's happy croque monsieur goat
-                                      melted cheese port-salut.
-                                    </p>
-                                    <h6 className="unit mt-1">550 G</h6>
-                                    <h5 className="price">
-                                      <span className="theme-color">
-                                        $14.25
-                                      </span>
-                                      <del>$16.57</del>
-                                    </h5>
-                                    <div className="add-to-cart-box mt-2">
-                                      <button className="btn btn-add-cart addcart-button">
-                                        Add
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <div className="cart_qty qty-box">
-                                        <div className="input-group">
-                                          <button
-                                            type="button"
-                                            className="qty-left-minus"
-                                            data-type="minus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-minus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                          <input
-                                            className="form-control input-number qty-input"
-                                            type="text"
-                                            name="quantity"
-                                            value="0"
-                                            onChange={func}
-                                          />
-                                          <button
-                                            type="button"
-                                            className="qty-right-plus"
-                                            data-type="plus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              <div className="product-box-3 theme-bg-white h-100">
-                                <div className="product-header">
-                                  <div className="product-image">
-                                    <Link to="product-left.html">
-                                      <img
-                                        src={Product}
-                                        className="img-fluid  lazyload"
-                                        alt=""
-                                      />
-                                    </Link>
-
-                                    <div className="product-header-top">
-                                      <button className="btn wishlist-button close_button">
-                                        <i data-feather="x"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="product-footer">
-                                  <div className="product-detail">
-                                    <span className="span-name">Vegetable</span>
-                                    <Link to="product-left.html">
-                                      <h5 className="name">
-                                        Fresh Bread and Pastry Flour 200 g
-                                      </h5>
-                                    </Link>
-                                    <p className="text-content mt-1 mb-2 product-content">
-                                      Melted cheese babybel chalk and cheese.
-                                      Port-salut port-salut cream cheese when
-                                      the cheese comes out everybody's happy
-                                      cream cheese hard cheese cream cheese red
-                                      leicester.
-                                    </p>
-                                    <h6 className="unit mt-1">1 Kg</h6>
-                                    <h5 className="price">
-                                      <span className="theme-color">
-                                        $12.68
-                                      </span>
-                                      <del>$14.69</del>
-                                    </h5>
-                                    <div className="add-to-cart-box mt-2">
-                                      <button className="btn btn-add-cart addcart-button">
-                                        Add
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <div className="cart_qty qty-box">
-                                        <div className="input-group">
-                                          <button
-                                            type="button"
-                                            className="qty-left-minus"
-                                            data-type="minus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-minus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                          <input
-                                            className="form-control input-number qty-input"
-                                            type="text"
-                                            name="quantity"
-                                            value="0"
-                                            onChange={func}
-                                          />
-                                          <button
-                                            type="button"
-                                            className="qty-right-plus"
-                                            data-type="plus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              <div className="product-box-3 theme-bg-white h-100">
-                                <div className="product-header">
-                                  <div className="product-image">
-                                    <Link to="product-left.html">
-                                      <img
-                                        src={Product}
-                                        className="img-fluid  lazyload"
-                                        alt=""
-                                      />
-                                    </Link>
-
-                                    <div className="product-header-top">
-                                      <button className="btn wishlist-button close_button">
-                                        <i data-feather="x"></i>
-                                      </button>
-                                    </div>
-                                  </div>
-                                </div>
-
-                                <div className="product-footer">
-                                  <div className="product-detail">
-                                    <span className="span-name">Vegetable</span>
-                                    <Link to="product-left.html">
-                                      <h5 className="name">
-                                        Fresh Bread and Pastry Flour 200 g
-                                      </h5>
-                                    </Link>
-                                    <p className="text-content mt-1 mb-2 product-content">
-                                      Squirty cheese cottage cheese cheese
-                                      strings. Red leicester paneer danish
-                                      fontina queso lancashire when the cheese
-                                      comes out everybody's happy cottage cheese
-                                      paneer.
-                                    </p>
-                                    <h6 className="unit mt-1">250 ml</h6>
-                                    <h5 className="price">
-                                      <span className="theme-color">
-                                        $08.02
-                                      </span>
-                                      <del>$15.15</del>
-                                    </h5>
-                                    <div className="add-to-cart-box mt-2">
-                                      <button className="btn btn-add-cart addcart-button">
-                                        Add
-                                        <i className="fa-solid fa-plus"></i>
-                                      </button>
-                                      <div className="cart_qty qty-box">
-                                        <div className="input-group">
-                                          <button
-                                            type="button"
-                                            className="qty-left-minus"
-                                            data-type="minus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-minus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                          <input
-                                            className="form-control input-number qty-input"
-                                            type="text"
-                                            name="quantity"
-                                            value="0"
-                                            onChange={func}
-                                          />
-                                          <button
-                                            type="button"
-                                            className="qty-right-plus"
-                                            data-type="plus"
-                                            data-field=""
-                                          >
-                                            <i
-                                              className="fa fa-plus"
-                                              aria-hidden="true"
-                                            ></i>
-                                          </button>
-                                        </div>
-                                      </div>
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
+)
+})}
+                            
                           </div>
                         </div>
                       </div>
                     </Tab.Pane>
+                    {/* end history */}
+                    {/* card history */}
+
                     <Tab.Pane eventKey="card">
                       <div
                         className="tab-pane fade show"
@@ -1964,6 +1497,9 @@ function Account() {
                         </div>
                       </div>
                     </Tab.Pane>
+                    {/* end card history */}
+                    {/* address history */}
+
                     <Tab.Pane eventKey="address">
                       <div
                         className="tab-pane fade show"
@@ -1980,7 +1516,7 @@ function Account() {
                               </span>
                             </div>
 
-                            <button
+                            {/* <button
                               className="btn theme-bg-color text-white btn-sm fw-bold mt-lg-0 mt-3"
                               data-bs-toggle="modal"
                               data-bs-target="#add-address"
@@ -1988,7 +1524,7 @@ function Account() {
                             >
                               <i data-feather="plus" className="me-2"></i> Add
                               New Address
-                            </button>
+                            </button> */}
                           </div>
 
                           <div className="row g-sm-4 g-3">
@@ -2014,27 +1550,26 @@ function Account() {
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colSpan="2">Jack Jennas</td>
+                                          <td colSpan="2">{userdata.first_name} {userdata.last_name}</td>
                                         </tr>
 
                                         <tr>
                                           <td>Address :</td>
                                           <td>
                                             <p>
-                                              8424 James Lane South San
-                                              Francisco, CA 94080
+                                             {userdata.address}
                                             </p>
                                           </td>
                                         </tr>
 
-                                        <tr>
+                                        {/* <tr>
                                           <td>Pin Code :</td>
                                           <td>+380</td>
-                                        </tr>
+                                        </tr> */}
 
                                         <tr>
                                           <td>Phone :</td>
-                                          <td>+ 812-710-3798</td>
+                                          <td>+ {userdata.phone_no}</td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -2051,19 +1586,19 @@ function Account() {
                                     <i data-feather="edit"></i>
                                     Edit
                                   </button>
-                                  <button
+                                  {/* <button
                                     className="btn btn-sm add-button w-100"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
                                     <i data-feather="trash-2"></i>
                                     Remove
-                                  </button>
+                                  </button> */}
                                 </div>
                               </div>
                             </div>
 
-                            <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                             <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
                               <div className="address-box">
                                 <div>
                                   <div className="form-check">
@@ -2083,26 +1618,27 @@ function Account() {
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colSpan="2">Terry S. Sutton</td>
+                                          <td colSpan="2">{userdata.first_name} {userdata.last_name}</td>
                                         </tr>
 
                                         <tr>
                                           <td>Address :</td>
                                           <td>
                                             <p>
-                                              2280 Rose Avenue Kenner, LA 70062
+                                              {userdata.address2}
                                             </p>
                                           </td>
                                         </tr>
 
-                                        <tr>
+                                        {/* <tr>
                                           <td>Pin Code :</td>
                                           <td>+25</td>
-                                        </tr>
+                                        </tr> */}
 
                                         <tr>
                                           <td>Phone :</td>
-                                          <td>+ 504-228-0969</td>
+                                          <td>+{userdata.phone_no}
+</td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -2131,214 +1667,14 @@ function Account() {
                               </div>
                             </div>
 
-                            <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                              <div className="address-box">
-                                <div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="radio"
-                                      name="jack"
-                                      id="flexRadioDefault4"
-                                    />
-                                  </div>
-
-                                  <div className="label">
-                                    <label>Neighbour</label>
-                                  </div>
-
-                                  <div className="table-responsive address-table">
-                                    <table className="table">
-                                      <tbody>
-                                        <tr>
-                                          <td colSpan="2">Juan M. McKeon</td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Address :</td>
-                                          <td>
-                                            <p>
-                                              1703 Carson Street Lexington, KY
-                                              40593
-                                            </p>
-                                          </td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Pin Code :</td>
-                                          <td>+78</td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Phone :</td>
-                                          <td>+ 859-257-0509</td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </div>
-
-                                <div className="button-group">
-                                  <button
-                                    className="btn btn-sm add-button w-100"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editProfile"
-                                    onClick={handleShow}
-                                  >
-                                    <i data-feather="edit"></i>
-                                    Edit
-                                  </button>
-                                  <button
-                                    className="btn btn-sm add-button w-100"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#removeProfile"
-                                  >
-                                    <i data-feather="trash-2"></i>
-                                    Remove
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                              <div className="address-box">
-                                <div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="radio"
-                                      name="jack"
-                                      id="flexRadioDefault5"
-                                    />
-                                  </div>
-
-                                  <div className="label">
-                                    <label>Home 2</label>
-                                  </div>
-
-                                  <div className="table-responsive address-table">
-                                    <table className="table">
-                                      <tbody>
-                                        <tr>
-                                          <td colSpan="2">Gary M. Bailey</td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Address :</td>
-                                          <td>
-                                            <p>
-                                              2135 Burning Memory Lane
-                                              Philadelphia, PA 19135
-                                            </p>
-                                          </td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Pin Code :</td>
-                                          <td>+26</td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Phone :</td>
-                                          <td>+ 215-335-9916</td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </div>
-
-                                <div className="button-group">
-                                  <button
-                                    className="btn btn-sm add-button w-100"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editProfile"
-                                  >
-                                    <i data-feather="edit"></i>
-                                    Edit
-                                  </button>
-                                  <button
-                                    className="btn btn-sm add-button w-100"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#removeProfile"
-                                  >
-                                    <i data-feather="trash-2"></i>
-                                    Remove
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
-                              <div className="address-box">
-                                <div>
-                                  <div className="form-check">
-                                    <input
-                                      className="form-check-input"
-                                      type="radio"
-                                      name="jack"
-                                      id="flexRadioDefault1"
-                                    />
-                                  </div>
-
-                                  <div className="label">
-                                    <label>Home 2</label>
-                                  </div>
-
-                                  <div className="table-responsive address-table">
-                                    <table className="table">
-                                      <tbody>
-                                        <tr>
-                                          <td colSpan="2">Gary M. Bailey</td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Address :</td>
-                                          <td>
-                                            <p>
-                                              2135 Burning Memory Lane
-                                              Philadelphia, PA 19135
-                                            </p>
-                                          </td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Pin Code :</td>
-                                          <td>+26</td>
-                                        </tr>
-
-                                        <tr>
-                                          <td>Phone :</td>
-                                          <td>+ 215-335-9916</td>
-                                        </tr>
-                                      </tbody>
-                                    </table>
-                                  </div>
-                                </div>
-
-                                <div className="button-group">
-                                  <button
-                                    className="btn btn-sm add-button w-100"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#editProfile"
-                                  >
-                                    <i data-feather="edit"></i>
-                                    Edit
-                                  </button>
-                                  <button
-                                    className="btn btn-sm add-button w-100"
-                                    data-bs-toggle="modal"
-                                    data-bs-target="#removeProfile"
-                                  >
-                                    <i data-feather="trash-2"></i>
-                                    Remove
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
+                          
                           </div>
                         </div>
                       </div>
                     </Tab.Pane>
+                    {/* end address history */}
+                    {/* profile history */}
+
                     <Tab.Pane eventKey="profile">
                       <div
                         className="tab-pane fade show"
@@ -2360,7 +1696,7 @@ function Account() {
                             </div>
                             <div className="profile-name-detail">
                               <div className="d-sm-flex align-items-center d-block">
-                                <h3>Vicki E. Pope</h3>
+                                <h3>{userdata.first_name} {userdata.last_name}</h3>
                                 <div className="product-rating profile-rating">
                                   <ul className="rating">
                                     <li>
@@ -2406,14 +1742,14 @@ function Account() {
                                 <li>
                                   <div className="location-box">
                                     <GoLocation />
-                                    <h6>Downers Grove, IL</h6>
+                                    <h6>{userdata.address}</h6>
                                   </div>
                                 </li>
 
                                 <li>
                                   <div className="location-box">
                                     <GoMail />
-                                    <h6>vicki.pope@gmail.com</h6>
+                                    <h6>{userdata.email}</h6>
                                   </div>
                                 </li>
 
@@ -2448,25 +1784,25 @@ function Account() {
                                     <tbody>
                                       <tr>
                                         <td>Gender :</td>
-                                        <td>Female</td>
+                                        <td>{userdata.gender}</td>
                                       </tr>
                                       <tr>
                                         <td>Birthday :</td>
-                                        <td>21/05/1997</td>
+                                        <td>{userdata.date_of_birth}</td>
                                       </tr>
                                       <tr>
                                         <td>Phone Number :</td>
                                         <td>
                                           <Link to="#">
                                             {" "}
-                                            +91 846 - 547 - 210
+                                            +{userdata.phone_no}
                                           </Link>
                                         </td>
                                       </tr>
                                       <tr>
                                         <td>Address :</td>
                                         <td>
-                                          549 Sulphur Springs Road, Downers, IL
+                                        {userdata.address}
                                         </td>
                                       </tr>
                                     </tbody>
@@ -2484,7 +1820,7 @@ function Account() {
                                         <td>Email :</td>
                                         <td>
                                           <Link to="#">
-                                            vicki.pope@gmail.com
+                                          {userdata.email}
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
@@ -2499,7 +1835,7 @@ function Account() {
                                         <td>Password :</td>
                                         <td>
                                           <Link to="#">
-                                            ●●●●●●
+                                          {userdata.password}
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
@@ -2529,6 +1865,9 @@ function Account() {
                         </div>
                       </div>
                     </Tab.Pane>
+                    {/* end profile history */}
+                    {/* privacy history */}
+
                     <Tab.Pane eventKey="privacy">
                       <div
                         className="tab-pane fade show"
@@ -2651,6 +1990,8 @@ function Account() {
                         </div>
                       </div>
                     </Tab.Pane>
+                    {/* end privacy history */}
+                    
                   </Tab.Content>
                 </div>
               </div>
@@ -2675,8 +2016,8 @@ function Account() {
                   <Form.Control
                     type="text"
                     placeholder="Name"
-                    value={userdata.name}
-                    name={"name"}
+                    value={userdata.first_name}
+                    name={"first_name"}
                     onChange={OnchangeFistname}
                     required
                   />
@@ -2716,7 +2057,7 @@ function Account() {
                     type="email"
                     placeholder="Email Address"
                     required
-                    value={userjson.email}
+                    value={userdata.email}
                     name={"email"}
                     // onChange={OnchangeFistname}
                   />
@@ -2830,7 +2171,7 @@ function Account() {
                     <Form.Control
                       type="date"
                       placeholder="Product Quantity"
-                      value={userdata.date_of_birth}
+                      value={moment(userdata.date_of_birth).format('yyyy-MM-DD')}
                       name={"date_of_birth"}
                       onChange={OnchangeFistname}
                       required
@@ -2870,6 +2211,22 @@ function Account() {
           </Modal.Header>
           <Modal.Body>
             <div className="row p-md-3 m-0">
+            <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+
+                  <Form.Label>Email</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email"
+                    value={changepass.email}
+                    name={"email"}
+                  />
+                  <p className="error-message">{formError.currentPass}</p>
+                </Form.Group>
+              </div>
               <div className="col-12">
                 <Form.Group
                   className="mb-3 aos_input"
@@ -2880,9 +2237,8 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="Current password"
-                    value={changepass.current_password}
-                    name={"currentpassword"}
-                    onChange={OnchangePass}
+                    value={changepass.password}
+                    name={"password"}
                   />
                   <p className="error-message">{formError.currentPass}</p>
                 </Form.Group>
@@ -2897,7 +2253,7 @@ function Account() {
                     type="password"
                     placeholder="New Password"
                     value={changepass.new_password}
-                    name={"newpassword"}
+                    name={"new_password"}
                     onChange={OnchangePass}
                   />
                   <p className="error-message">{formError.newPass}</p>
