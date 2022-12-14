@@ -9,15 +9,51 @@ import { data1, data2 } from "./data";
 import Accordion from "react-bootstrap/Accordion";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
+import moment from "moment";
 
 const Checkout = (props) => {
   const navigate = useNavigate();
   var product1 = data1.product1;
 const useridd = localStorage.getItem("userid")
+let currentdate = moment().format()
   const [apicall, setapicall] = useState(false);
+  const [navtab, setnavtab] = useState(false);
   const[cartdata,setCartData]=useState([]);
   const[quantity,setQuantity]=useState([]);
-  const [userdata, setuserdata] = useState('');
+  const [userdata, setuserdata] = useState([]);
+  const [singlorder, setsinglorder] = useState( 
+    {
+    order_id:"1",
+    product_id:"2",
+    price:"3",
+    quantity:"4",
+    gst:"6",
+    cgst:"7",
+    sgst:"8",
+    offer_id:"9",
+    discount:"10%",
+    product_total_price:"5000"}
+    );
+
+  const [orderadd, setorderadd] = useState( {
+  user_id:useridd,
+  status:"pending",
+  total_quantity:"3",
+  ref_no:"12345678",
+  payment_mode:"upi",
+  delivery_date:"2022-12-15",
+  invoice_date:currentdate,
+  order_date:currentdate,
+  total_amount:"11000",
+  total_gst:"76",
+  total_cgst:"36",
+  total_sgst:"36",
+  taxable_value:"10000",
+  discount_coupon:"0",
+  vendor_id:"23",
+  order_product:[]
+  });
+
 
   var address = data2.address;
   const func=()=>{}
@@ -68,7 +104,7 @@ const useridd = localStorage.getItem("userid")
     function getCartData() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=6`)
+          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
             setCartData(data);
@@ -101,16 +137,41 @@ const useridd = localStorage.getItem("userid")
   const DeliveryClick = () =>{
     axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
     .then(response => {
-      setuserdata(response.data[0])
+      setuserdata(response.data)
+      console.log("--userdata"+JSON.stringify(userdata))
       // navigate('/your_account')
       // return response;
     }).catch(error => {
       console.log(error.response.error)
     })
-navigate('/')
+
+  }
+  // end delivery address
+
+  // payment
+
+  const getPaymentData = () =>{
+setapicall(true)
+
+  }
+  // end payment
+
+  // order add
+useEffect(()=>{
+  setorderadd((orderadd) =>{ return {...orderadd,  order_product : singlorder}});
+},[])
+  const onOrderAdd = () =>{
+    axios.post(`${process.env.REACT_APP_BASEURL}/orders` ,orderadd)
+    .then(response => {
+      console.log("--userdata"+JSON.stringify(response.data))
+      // navigate('/your_account')
+      // return response;
+    }).catch(error => {
+      console.log(error.response.error)
+    })
   }
 
-  // end delivery address
+  // end order add
   return (
     <Fragment>
       <Header />
@@ -119,7 +180,7 @@ navigate('/')
       <section className="checkout-section section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-sm-4 g-3 checkout-section">
-            <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+            <Tab.Container id="left-tabs-example" defaultActiveKey={"first"}>
               <Row>
                 <div className="col-xxl-3 col-lg-4">
                   <Nav className="flex-column custom-navtab">
@@ -156,9 +217,10 @@ navigate('/')
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey="second">
+                          <Nav.Link eventKey="second" >
                             <li className="nav-link" role="presentation">
                               <div
+                              onClick={()=>DeliveryClick()}
                                 className="nav-item"
                                 id="delivery-address"
                                 data-bs-toggle="tab"
@@ -222,6 +284,7 @@ navigate('/')
                                 data-bs-toggle="tab"
                                 data-bs-target="#p-options"
                                 role="tab"
+                                onClick={()=>getPaymentData()}
                               >
                                 <div className="nav-item-box">
                                   <div>
@@ -609,7 +672,8 @@ navigate('/')
                       </div>
                       <div className="row">
                         <div className="col-12 col-md-6">
-                          {userdata.map((address) => {
+                          {userdata ? 
+                          userdata.map((address) => {
                             return (
                               <div key={address.id} className="">
                                 <div className="delivery-address-box">
@@ -661,10 +725,11 @@ navigate('/')
                                 </div>
                               </div>
                             );
-                          })}
+                          })
+                        : null}
                         </div>
                         <div className="col-12 col-md-6">
-                          {address.map((address) => {
+                          {userdata.map((address) => {
                             return (
                               <div key={address.id} className="">
                                 <div className="delivery-address-box">
@@ -970,47 +1035,16 @@ navigate('/')
                             </div>
 
                             <ul className="summery-contain bg-white custom-height">
-                              <li>
-                                <h4>
-                                  Bell pepper <span>X 1</span>
-                                </h4>
-                                <h4 className="price">₹32.34</h4>
-                              </li>
-
-                              <li>
-                                <h4>
-                                  Eggplant <span>X 3</span>
-                                </h4>
-                                <h4 className="price">₹12.23</h4>
-                              </li>
-
-                              <li>
-                                <h4>
-                                  Onion <span>X 2</span>
-                                </h4>
-                                <h4 className="price">₹18.27</h4>
-                              </li>
-
-                              <li>
-                                <h4>
-                                  Potato <span>X 1</span>
-                                </h4>
-                                <h4 className="price">₹26.90</h4>
-                              </li>
-
-                              <li>
-                                <h4>
-                                  Baby Chili <span>X 1</span>
-                                </h4>
-                                <h4 className="price">₹19.28</h4>
-                              </li>
-
-                              <li>
-                                <h4>
-                                  Broccoli <span>X 2</span>
-                                </h4>
-                                <h4 className="price">₹29.69</h4>
-                              </li>
+                              {(cartdata || []) .map((data)=>{
+                                return(
+                                  <li>
+                                  <h4>
+                                    {data.price} <span>X {data.quantity}</span>
+                                  </h4>
+                                  <h4 className="price">₹{data.price * data.quantity}</h4>
+                                </li>
+                                )
+                              })}
                             </ul>
 
                             <ul className="summery-total bg-white">
@@ -1021,17 +1055,17 @@ navigate('/')
 
                               <li>
                                 <h4>Shipping</h4>
-                                <h4 className="price">₹8.90</h4>
+                                <h4 className="price">₹0.00</h4>
                               </li>
 
                               <li>
                                 <h4>Tax</h4>
-                                <h4 className="price">₹29.498</h4>
+                                <h4 className="price">₹+00.00</h4>
                               </li>
 
                               <li>
                                 <h4>Coupon/Code</h4>
-                                <h4 className="price">₹-23.10</h4>
+                                <h4 className="price">₹-00.10</h4>
                               </li>
 
                               <li className="list-total">
@@ -1516,7 +1550,7 @@ navigate('/')
 
                           <li>
                             <button
-                          
+                          onClick={()=>onOrderAdd()}
                               className="btn btn-animation"
                             >
                               Done
