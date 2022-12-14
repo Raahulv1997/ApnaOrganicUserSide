@@ -88,7 +88,7 @@ const Cart = (props) => {
     function getCartData() {
       try {
         axios
-          .get("${process.env.REACT_APP_BASEURL}/cart?user_id=6")
+          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=6`)
           .then((response) => {
             let data = response.data;
             setCartData(data);

@@ -14,10 +14,16 @@ import axios from "axios";
 
 // function Validation(){
 
-const ProductDetail = (product_id,product_price,discount,quantity) => {
+const ProductDetail = () => {
  
   const[productDetails,setProductDetails]=useState([]);
-  var product_details = data3.product_details;
+  // const[productprice,setproductprice]=useState();
+  const[productprice,setProductprice]=useState();
+  const[mrp,setMrp]=useState();
+  const[size,setSize]=useState();
+  const[discount,setDiscount]=useState();
+
+  // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
   function incrementCount() {
@@ -42,19 +48,21 @@ const decrementCount = () => {
 //         setCount(count => count - 1);
 //     }
 // };
+
+let proid=localStorage.getItem("proid")
+
+console.log("pidddddddd"+proid)
   useEffect(() => {
     function getProductDetails() {
       try {
         axios
-          .post(`http://192.168.29.108:5000/products_search`,{
-              "product_search":{
-              "search":"",
-              "product_id": 60
-              }
-          })
+          .get(`http://192.168.29.108:5000/product_details?id=${proid}`)
           .then((response) => {
             let data = response.data;
-            setProductDetails(data.results);
+            setProductDetails(data);
+            setProductprice(data.product_verient[0].product_price);
+            setMrp(data.product_verient[0].mrp)
+            setDiscount(data.product_verient[0].discount)
             console.log("detailssssssssss-------------------"+JSON.stringify(data))
             // setapicall(false);
           });
@@ -63,13 +71,14 @@ const decrementCount = () => {
 
     getProductDetails();
   }, []);
+
   const AddToCart=()=>{
-    axios.post(`http://192.168.29.108:5000/add_to_cart`,{
+    axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:6,
-        product_id:`${product_id}`,
-        price:`${product_price}`,
-        discount:`${discount}`,
-        quantity:`${quantity}`,
+        product_id:`${productDetails.product_verient[0].product_id}`,
+        price:`${productDetails.product_verient[0].product_price}`,
+        discount:`${productDetails.product_verient[0].discount}`,
+        quantity:`${count}`,
         is_active:1
     })
     .then((response) => {
@@ -78,20 +87,49 @@ const decrementCount = () => {
         setProductDetails(data.results);
       });
   }
-  
+  let product_id=localStorage.getItem(product_id)
+  console.log("product------id________"+product_id)
+  const AddToWishList= () =>{
+    axios
+.post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
+    user_id:33,
+    product_id:`${productDetails.product_verient[0].product_id}`,
+    price:`${productDetails.product_verient[0].product_price}`,
+    discount:`${productDetails.product_verient[0].discount}`,
+
+  })
+.then((response) => {
+    let data = response.data;
+console.log("detailsssWISHLISTTTTTT----------   " + JSON.stringify(data));
+setProductDetails(data.results)
+//   setapicall(false);
+})
+.catch(function(error) {
+  console.log(error);
+});
+
+}
+// console.log("_____ulluu)______--> "+productDetails.product_verient)
+console.log("eeeeee---"+productprice)
+
+const setproductprice = (e,f,g)=>{
+  setProductprice(e)
+  setMrp(f)
+  setSize(g)
+console.log("eeeeee---"+e+f)
+
+
+}
   return (
     <Fragment>
       <Header />
       {/* <!-- Breadcrumb Section Start --> */}
-      {productDetails.map((pdetails)=>{
-        return(
-          <>
           <section className="breadscrumb-section pt-0">
           <div className="container-fluid-lg">
             <div className="row">
               <div className="col-12">
                 <div className="breadscrumb-contain">
-                  <h2>{pdetails.product_title_name}</h2>
+                  <h2>{productDetails.product_title_name}</h2>
                   <nav>
                     <ol className="breadcrumb mb-0">
                       <li className="breadcrumb-item">
@@ -101,7 +139,7 @@ const decrementCount = () => {
                       </li>
   
                       <li className="breadcrumb-item active">
-                      {pdetails.product_title_name}
+                      {productDetails.product_title_name}
                       </li>
                     </ol>
                   </nav>
@@ -163,24 +201,21 @@ const decrementCount = () => {
                     </Carousel.Item>
                   </Carousel>
                 </div>
-                <div
-                  className="col-12 col-md-6 wow fadeInUp"
-                  data-wow-delay="0.1s"
-                >
-                  {pdetails.product_id}
-                  {product_details.map((product_details) => {
-                    return (
-                      <div key={pdetails.id} className="right-box-contain">
-                        <h6 className="offer-top">{pdetails.discount}%</h6>
-                        <h2 className="name">{pdetails.product_title_name}</h2>
+                <div className="col-12 col-md-6 wow fadeInUp"
+                  data-wow-delay="0.1s">
+                  {/* {(productDetails).map((details) => {
+                    return ( */}
+                      <div className="right-box-contain">
+                        <h6 className="offer-top">{discount}%</h6>
+                        <h2 className="name">{productDetails.product_title_name}</h2>
                         <div className="price-rating">
                           <h3 className="theme-color price">
-                            {pdetails.product_price}
+                            {productprice}
                             <del className="text-content">
-                              {pdetails.sale_price}
-                            </del>{" "}
-                            <span className="offer theme-color">
-                              {pdetails.discount}%off
+                              {mrp}
+                            </del>{""}
+                            <span className="offer theme-color">  
+                              {discount}%off
                             </span>
                           </h3>
                           <div className="product-rating custom-rate">
@@ -213,31 +248,45 @@ const decrementCount = () => {
                                       <FaStar icon="star" className="feather " />
                                     </li>
                             </ul>
-                            <span className="review">
+                            {/* <span className="review">
                               {product_details.creview} Costumer Review
-                            </span>
+                            </span> */}
                           </div>
                         </div>
                          
                         <div className="procuct-contain">
-                              <p> {pdetails.product_description}
+                              <p> {productDetails.product_description}
                               </p>
                           </div>
                         {/* <div className="procuct-contain">
                           <p>{product_details.pdiscription}</p>
                         </div> */}
-  
+
+                   {productDetails.product_verient ? 
                         <div className="product-packege">
-                          <div className="product-title">
-                            <h4>Weight</h4>
+                          <div className="product-title"> 
+                            
+                          {/* {(productDetails.product_verient).map((details) => {
+                    return (  */}
+                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : null}</h4>
+                  {/* //   );
+                  // })} */}
                           </div>
+                           
                           <ul className="select-packege">
-                            <li>
-                               <Link to="/"  className="active">
-                                1/2 KG
+                          {(productDetails.product_verient).map((details) => {
+                           
+                    return ( <li>
+                          
+                               <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size)}}
+                              className={size == details.size ? "active" : null}
+                                >
+                                {details.size}
                               </Link>
                             </li>
-                            <li>
+                            );
+                          })}
+                            {/* <li>
                                <Link to="/" >1 KG</Link>
                             </li>
                             <li>
@@ -248,9 +297,10 @@ const decrementCount = () => {
                             </li>
                             <li>
                                <Link to="/" >With Pink Roses</Link>
-                            </li>
+                            </li> */}
                           </ul>
-                        </div>
+                     
+                        </div> : null }
                         <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                               <div className="product-title">
                                   <h4>Hurry up! Sales Ends In</h4>
@@ -330,9 +380,9 @@ const decrementCount = () => {
                         <div className="row mt-4">
                         <div className="col-6 col-xl-3">
                         <button className="btn btn-dark">
-                        <Link to="/">
+                        <Link to="/wishlist">
                               {/* <i data-feather="heart"></i> */}
-                              <span className="text-white">Add To Wishlist</span>
+                              <span className="text-white" onClick={()=>AddToWishList()}>Add To Wishlist</span>
                             </Link>
                           </button>
                         </div>
@@ -352,7 +402,7 @@ const decrementCount = () => {
   
                           <div className="pickup-detail">
                             <h4 className="text-content">
-                              {product_details.store_info}
+                              {"product_details.store_info"}
                             </h4>
                           </div>
   
@@ -360,7 +410,7 @@ const decrementCount = () => {
                             <ul className="product-info-list product-info-list-2 ">
                               <li>
                                 Type :{" "}
-                                 <Link to="/" >{pdetails.product_type}</Link>
+                                 <Link to="/" >{productDetails.product_type}</Link>
                               </li>
                               <li>
                                 SKU :  <Link to="/" >SDFVW65467</Link>
@@ -433,8 +483,8 @@ const decrementCount = () => {
                           </ul>
                         </div>
                       </div>
-                    );
-                  })}
+                    {/* );
+                  })} */}
                 </div>
   
                 <div className="col-12">
@@ -1139,11 +1189,7 @@ const decrementCount = () => {
               </div>
             </div>
           </div>
-        </section>
-          </>
-        )
-      })}
-    
+        </section>  
       {/* <!-- Product Left Sidebar End --> */}
 
       <Footer />

@@ -9,7 +9,6 @@ import Tabs from "react-bootstrap/Tabs";
 import { useEffect } from "react";
 import "../../CSS/style.css";
 import axios from "axios";
-
 const Benners = (props,productPrice,productMRF,name,image) => {
 const[productData,setProductData]=useState([]);
   //let [count, setCount] = useState(0);
@@ -41,16 +40,15 @@ const[productData,setProductData]=useState([]);
             .then((response) => {
               let data = response.data;
               setProductData(data.results);
-              // console.log("producttttttttTTTTTT-------------------"+JSON.stringify(data))
+              console.log("producttttttttTTTTTT-------------------"+JSON.stringify(data))
               // setapicall(false);
             });
         } catch (err) {}
       }
-  
       getProductData();
     }, []);
     // console.log("-ulloo---"+JSON.stringify(productData));
-
+   
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -182,6 +180,7 @@ const[productData,setProductData]=useState([]);
                           className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                         >
                           <ProductBox
+                            id={product.id}
                             image={product.image}
                             name={product.product_title_name}
                             productPrice={product.product_price}
@@ -327,7 +326,7 @@ const[productData,setProductData]=useState([]);
                 {productData.map((product) => {
                   return (
                     <div
-                      key={product.id}
+                      // key={product.id}
                       className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                     >
                       <ProductBox
@@ -337,8 +336,8 @@ const[productData,setProductData]=useState([]);
                         productMRF={product.sale_price}
                       />
                     </div>
-                  );
-                })}
+                 );
+                 })}
               </div>
             </div>
           </div>
@@ -363,10 +362,10 @@ const[productData,setProductData]=useState([]);
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {productData.map((product) => {
-                  return (
+                {/* {productData.map((product) => {
+                  return ( */}
                     <div
-                      key={product.id}
+                      // key={product.id}
                       className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                     >
                       {/* <ProductBox
@@ -376,8 +375,8 @@ const[productData,setProductData]=useState([]);
                         productMRF={product.sale_price}
                       /> */}
                     </div>
-                  );
-                })}
+                {/* //   );
+                // })} */}
               </div>
             </div>
           </div>
