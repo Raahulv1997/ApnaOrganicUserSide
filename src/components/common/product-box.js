@@ -76,7 +76,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
                 let data = response.data;
                 setData(data.results.product_id);
                 // setProductId(data);
-               console.log("PRODUCT============"+JSON.stringify(data))
+            //    console.log("PRODUCT============"+JSON.stringify(data))
                 // setapicall(false);
               });
           } catch (err) {}
@@ -108,7 +108,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
 
             <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
                 <ul className="rating p-0 m-0 mb-2" >
-                    
+
                     <li color='#ffb321'>
                         <FaStar icon="star" className="feather fill" fill={'#ffb321'} />
                     </li>

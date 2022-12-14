@@ -14,7 +14,7 @@ import axios from "axios";
 
 // function Validation(){
 
-const ProductDetail = (product_id,product_price,discount,quantity) => {
+const ProductDetail = () => {
  
   const[productDetails,setProductDetails]=useState([]);
   var product_details = data3.product_details;
@@ -46,15 +46,10 @@ const decrementCount = () => {
     function getProductDetails() {
       try {
         axios
-          .post(`http://192.168.29.108:5000/products_search`,{
-              "product_search":{
-              "search":"",
-              "product_id": 60
-              }
-          })
+          .get(`http://192.168.29.108:5000/product_details?id=62`)
           .then((response) => {
             let data = response.data;
-            setProductDetails(data.results);
+            setProductDetails(data);
             console.log("detailssssssssss-------------------"+JSON.stringify(data))
             // setapicall(false);
           });
@@ -63,13 +58,14 @@ const decrementCount = () => {
 
     getProductDetails();
   }, []);
+
   const AddToCart=()=>{
-    axios.post(`http://192.168.29.108:5000/add_to_cart`,{
+    axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:6,
-        product_id:`${product_id}`,
-        price:`${product_price}`,
-        discount:`${discount}`,
-        quantity:`${quantity}`,
+        product_id:`${productDetails.product_id}`,
+        price:`${productDetails.product_price}`,
+        discount:`${productDetails.discount}`,
+        quantity:`${count}`,
         is_active:1
     })
     .then((response) => {
@@ -78,20 +74,36 @@ const decrementCount = () => {
         setProductDetails(data.results);
       });
   }
-  
+  const AddToWishList= () =>{
+    axios
+.post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
+    user_id:6,
+    product_id:`${productDetails.product_id}`,
+    price:`${productDetails.product_price}`,
+    discount:`${productDetails.discount}`,
+
+  })
+.then((response) => {
+    let data = response.data;
+console.log("detailsssWISHLISTTTTTT----------   " + JSON.stringify(data));
+setProductDetails(data.results)
+//   setapicall(false);
+})
+.catch(function(error) {
+  console.log(error);
+});
+
+}
   return (
     <Fragment>
       <Header />
       {/* <!-- Breadcrumb Section Start --> */}
-      {productDetails.map((pdetails)=>{
-        return(
-          <>
           <section className="breadscrumb-section pt-0">
           <div className="container-fluid-lg">
             <div className="row">
               <div className="col-12">
                 <div className="breadscrumb-contain">
-                  <h2>{pdetails.product_title_name}</h2>
+                  <h2>{productDetails.product_title_name}</h2>
                   <nav>
                     <ol className="breadcrumb mb-0">
                       <li className="breadcrumb-item">
@@ -101,7 +113,7 @@ const decrementCount = () => {
                       </li>
   
                       <li className="breadcrumb-item active">
-                      {pdetails.product_title_name}
+                      {productDetails.product_title_name}
                       </li>
                     </ol>
                   </nav>
@@ -167,20 +179,19 @@ const decrementCount = () => {
                   className="col-12 col-md-6 wow fadeInUp"
                   data-wow-delay="0.1s"
                 >
-                  {pdetails.product_id}
-                  {product_details.map((product_details) => {
+                  {(productDetails.product_verient).map((details) => {
                     return (
-                      <div key={pdetails.id} className="right-box-contain">
-                        <h6 className="offer-top">{pdetails.discount}%</h6>
-                        <h2 className="name">{pdetails.product_title_name}</h2>
+                      <div key={details.id} className="right-box-contain">
+                        <h6 className="offer-top">{details.discount}%</h6>
+                        <h2 className="name">{productDetails.product_title_name}</h2>
                         <div className="price-rating">
                           <h3 className="theme-color price">
-                            {pdetails.product_price}
+                            {details.product_price}
                             <del className="text-content">
-                              {pdetails.sale_price}
-                            </del>{" "}
+                              {details.sale_price}
+                            </del>{""}
                             <span className="offer theme-color">
-                              {pdetails.discount}%off
+                              {details.discount}%off
                             </span>
                           </h3>
                           <div className="product-rating custom-rate">
@@ -213,14 +224,14 @@ const decrementCount = () => {
                                       <FaStar icon="star" className="feather " />
                                     </li>
                             </ul>
-                            <span className="review">
+                            {/* <span className="review">
                               {product_details.creview} Costumer Review
-                            </span>
+                            </span> */}
                           </div>
                         </div>
                          
                         <div className="procuct-contain">
-                              <p> {pdetails.product_description}
+                              <p> {productDetails.product_description}
                               </p>
                           </div>
                         {/* <div className="procuct-contain">
@@ -229,7 +240,7 @@ const decrementCount = () => {
   
                         <div className="product-packege">
                           <div className="product-title">
-                            <h4>Weight</h4>
+                            <h4>{details.unit === 'gms'?'Weight' :details.unit === 'pcs' ? 'Piece' : null} </h4>
                           </div>
                           <ul className="select-packege">
                             <li>
@@ -330,9 +341,9 @@ const decrementCount = () => {
                         <div className="row mt-4">
                         <div className="col-6 col-xl-3">
                         <button className="btn btn-dark">
-                        <Link to="/">
+                        <Link to="/wishlist">
                               {/* <i data-feather="heart"></i> */}
-                              <span className="text-white">Add To Wishlist</span>
+                              <span className="text-white" onClick={()=>AddToWishList()}>Add To Wishlist</span>
                             </Link>
                           </button>
                         </div>
@@ -360,7 +371,7 @@ const decrementCount = () => {
                             <ul className="product-info-list product-info-list-2 ">
                               <li>
                                 Type :{" "}
-                                 <Link to="/" >{pdetails.product_type}</Link>
+                                 <Link to="/" >{productDetails.product_type}</Link>
                               </li>
                               <li>
                                 SKU :  <Link to="/" >SDFVW65467</Link>
@@ -1139,11 +1150,7 @@ const decrementCount = () => {
               </div>
             </div>
           </div>
-        </section>
-          </>
-        )
-      })}
-    
+        </section>  
       {/* <!-- Product Left Sidebar End --> */}
 
       <Footer />
