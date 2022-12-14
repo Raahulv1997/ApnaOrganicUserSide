@@ -59,19 +59,10 @@ const Header = () => {
     function getProductData() {
       try {
         axios
-          .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,{
-            "product_search":{
-              "search":"",
-              "colors":"",
-              "size":"",
-              "category": "",
-              "product_type": ""
-              }
-          })
-          .then((response) => {
+        .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
+        .then((response) => {
             let data = response.data;
-            setPdata(data.results);
-            // console.log("producttttttttTTTTTT-------------------"+JSON.stringify(data))
+            setPdata(data);
             // setapicall(false);
           });
       } catch (err) {}
@@ -79,6 +70,7 @@ const Header = () => {
 
     getProductData();
   }, []);
+
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -224,12 +216,12 @@ const Header = () => {
                         </li>
                         <li className="onhover-dropdown ">
                           <NavLink to="/cart" className="header-icon bag-icon ">
-                            <small className="badge-number">{pdata.length}</small>
+                            <small className="badge-number">{pdata.length === 0 || pdata.length === '' || pdata.length === '0' ? '0' :pdata.length}</small>
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">
                             <ul className="cart-list " style={{flexDirection: "column"}}>
-                            {pdata.map((data)=>{
+                            {(pdata || []).map((data)=>{
                                  return(
                               <li >
                                 <div className="drop-cart ">
@@ -251,7 +243,9 @@ const Header = () => {
                                       </h5>
                                     </Link>
                                     <h6>
-                                      <span className="im=block">{data.quantity}x</span>₹{data.product_price}
+                                      <span className="im=block">{data.quantity}x</span> <span>
+                                      ₹{data.product_price}
+                                        </span>
                                       {/* <span>{data.sale_price}</span> */}
                                     </h6>
                                     <button className="close-button">
@@ -265,7 +259,7 @@ const Header = () => {
                               </ul>
                             <div className="price-box">
                               <h5>Price :</h5>
-                              <h4 className="theme-color fw-bold">$106.58</h4>
+                              <h4 className="theme-color fw-bold">₹106.58</h4>
                             </div>
                             <div className="button-group">
                               <NavLink
