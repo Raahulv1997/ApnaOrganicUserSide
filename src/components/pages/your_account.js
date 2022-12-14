@@ -1181,13 +1181,16 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                     <div className="product-detail">
                                       <span className="span-name">{wdata.product_title_name}</span>
                                       <Link to="/order_detail">
-                                        <h5 className="name">
-                                         {wdata.product_description}
-                                        </h5>
+                                        <h5 className="name mb-0"
+                                dangerouslySetInnerHTML={{__html:  wdata.product_description}}
+    
+                                        />
                                       </Link>
-                                      <p className="text-content mt-1 mb-2 product-content">
-                                       {wdata.other_introduction}
-                                      </p>
+                                      <p className="text-content  mb-2"
+                                       dangerouslySetInnerHTML={{__html:  wdata.other_introduction}}
+                                      />
+                                       
+                                     
                                       <h6 className="unit mt-1">250 ml</h6>
                                       <h5 className="price">
                                         <span className="theme-color">

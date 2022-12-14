@@ -16,6 +16,8 @@ import {
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
 const Header = () => {
+  const useridd = localStorage.getItem("userid")
+
   const[categorydata,setCategoryData]=useState([]);
   const[pdata,setPdata]=useState([]);
   const navigate= useNavigate()
