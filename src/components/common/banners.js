@@ -11,19 +11,10 @@ import "../../CSS/style.css";
 import axios from "axios";
 const Benners = (props,productPrice,productMRF,name,image) => {
 const[productData,setProductData]=useState([]);
+const useridd = localStorage.getItem("userid")
+
   //let [count, setCount] = useState(0);
   var product = data.product;
-  // console.log(product);
-  // function incrementCount() {
-  //   count = count + 1;
-  //   setCount(count);
-  // }
-  // function decrementCount() {
-  //   count = count - 1;
-  //   setCount(count);
-  // }
-   // useEffect(() => {
- 
     useEffect(() => {
       function getProductData() {
         try {
