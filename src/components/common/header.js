@@ -27,9 +27,6 @@ const Header = () => {
   const open_Category = () => {
     setclick(true);
   };
-  // const Category_list = () => {
-  //   setcat_list(true);
-  // };
   useEffect(() => {
     function getCategoryData() {
       try {

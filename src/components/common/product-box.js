@@ -9,8 +9,10 @@ import { useNavigate } from 'react-router-dom';
 // }
 
 const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offer,discount})=> {
+  const useridd = localStorage.getItem("userid")
+
     const navigate = useNavigate();
-    const[wlistData,setWlistData]=useState([]);
+    const[wlistData,setWlistData]=useState('');
     const[data,setData]=useState([]);
     let [count, setCount] = useState(0);
     function incrementCount() {
@@ -29,8 +31,8 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
     //   console.log("dataaaaaaaa"+JSON.stringify(productData))
       const AddToCart=()=>{
         axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
-            user_id:6,
-            product_id:`${productid}`,
+            user_id:useridd,
+            product_id:`${id}`,
             price:`${productPrice}`,
             discount:`${productMRF}`,
             quantity:count,
@@ -46,10 +48,11 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
     //  
 //   const hendalClick=()=>{}
     const AddToWishList= () =>{
-        // if(a=="add"){
+        console.log("ADD______WISHLIST"+wlistData);
+        if(wlistData==="add"){
             axios
             .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-                user_id:33,
+                user_id:useridd,
                 product_id:`${id}`,
                 price:`${productPrice}`,
                 discount:`${productMRF}`,
@@ -59,6 +62,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
                 let data = response.data;
             console.log("wishlistttttt----------   " + JSON.stringify(data));
             setData(response.data);
+            setWlistData('remove')
             //   setapicall(false);
             })
             .catch(function(error) {
@@ -66,22 +70,25 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
             });
             // setWlistData(a);
         }
-    //   const RemoveWishList=(,wlistData)=>{
-    //     axios.post(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
-    //         id:`${id}`,
-    //         user_id:33
-    //     })
-    //     .then((response) => {
-    //         let data = response.data;
-    //     console.log("REMOVEEEEEEEEEwishlistttttt----------" + JSON.stringify(data));
-    //     setData(response.data);
-    //     //   setapicall(false);
-    //     })
-    //     .catch(function(error) {
-    //       console.log(error);
-    //     });
-    //     setWlistData(a)
-    //   }
+        else if(wlistData==="remove"){
+            console.log("remove______WISHLIST"+wlistData);
+            axios.post(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+                        id:`${id}`,
+                        user_id:useridd
+                    })
+                    .then((response) => {
+                        let data = response.data;
+                    console.log("REMOVEEEEEEEEEwishlistttttt----------" + JSON.stringify(data));
+                    setData(response.data);
+                    setWlistData('add')
+
+                    //   setapicall(false);
+                    })
+                    .catch(function(error) {
+                      console.log(error);
+                    });
+        }
+    }
       useEffect(() => {
           try {
             axios
@@ -106,6 +113,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
       , []);
       const clickProduct=(productid)=>{
         console.log("product_iddddddd"+productid)
+
         localStorage.setItem("proid",productid)
         navigate('/product-detail')
       }

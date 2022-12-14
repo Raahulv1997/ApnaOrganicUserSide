@@ -12,9 +12,8 @@ import {Link, NavLink } from "react-router-dom";
 import {useEffect } from "react";
 import axios from "axios";
 
-// function Validation(){
-
 const ProductDetail = () => {
+  const useridd = localStorage.getItem("userid")
  
   const[productDetails,setProductDetails]=useState([]);
   // const[productprice,setproductprice]=useState();
@@ -39,15 +38,6 @@ const decrementCount = () => {
   const func =()=>{
     
   }
-//   function incrementCount() {
-//     count = count + 1;
-//     setCount(count);
-// }
-// const decrementCount = () => {
-//     if (count > 0) {
-//         setCount(count => count - 1);
-//     }
-// };
 
 let proid=localStorage.getItem("proid")
 
@@ -74,8 +64,8 @@ console.log("dddddddd"+proid)
 
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
-        user_id:6,
-        product_id:`${productDetails.product_verient[0].product_id}`,
+        user_id:useridd,
+        product_id:`${productDetails.product_verient[0].id}`,
         price:`${productDetails.product_verient[0].product_price}`,
         discount:`${productDetails.product_verient[0].discount}`,
         quantity:`${count}`,
@@ -90,8 +80,8 @@ console.log("dddddddd"+proid)
   const AddToWishList= () =>{
     axios
 .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-    user_id:33,
-    product_id:`${productDetails.product_verient[0].product_id}`,
+    user_id:useridd,
+    product_id:`${productDetails.product_verient[0].id}`,
     price:`${productDetails.product_verient[0].product_price}`,
     discount:`${productDetails.product_verient[0].discount}`,
 
@@ -253,8 +243,10 @@ console.log("eeeeee---"+e+f)
                         </div>
                          
                         <div className="procuct-contain">
-                              <p> {productDetails.product_description}
-                              </p>
+                              <p dangerouslySetInnerHTML={{__html:  productDetails.product_description}}
+
+/>
+                              
                           </div>
                         {/* <div className="procuct-contain">
                           <p>{product_details.pdiscription}</p>
@@ -274,7 +266,7 @@ console.log("eeeeee---"+e+f)
                           <ul className="select-packege">
                           {(productDetails.product_verient).map((details) => {
                            
-                    return ( <li>
+                    return ( <li className={size == details.size ? "active" : null}>
                           
                                <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size)}}
                               className={size == details.size ? "active" : null}

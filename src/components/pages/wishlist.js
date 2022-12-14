@@ -7,6 +7,8 @@ import data from "./data";
 import { Link } from "react-router-dom";
 import axios from "axios";
 function Wishlist() {
+  const useridd = localStorage.getItem("userid")
+
   const[wishlist,setWishList]=useState([]);
   var product = data.product;
   console.log(product);
@@ -15,7 +17,7 @@ function Wishlist() {
     function getWishList() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=33`)
+          .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
             setWishList(data);
