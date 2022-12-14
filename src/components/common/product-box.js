@@ -7,7 +7,7 @@ import {useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 // function AddCart(props){
 // }
-
+let wlist;
 const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offer,discount})=> {
   const useridd = localStorage.getItem("userid")
 
@@ -45,11 +45,12 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
           });
        
         }
-    //  
-//   const hendalClick=()=>{}
+        console.log('current Pathname 👉️', window.location.pathname);
+         wlist = window.location.pathname
     const AddToWishList= () =>{
-        console.log("ADD______WISHLIST"+wlistData);
-        if(wlistData==="add"){
+
+        if(wlist === "/"){
+            console.log("ADD______WISHLIST");
             axios
             .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
                 user_id:`${useridd}`,
@@ -65,14 +66,11 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
             setWlistData('remove')
             //   setapicall(false);
             })
-            .catch(function(error) {
-              console.log(error);
-            });
             // setWlistData(a);
         }
-        else if(wlistData==="remove"){
-            console.log("remove______WISHLIST"+wlistData);
-            axios.post(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+        else if(wlist === "/wishlist"){
+            console.log("id---------"+id);
+            axios.put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
                         id:`${id}`,
                         user_id:`${useridd}`
                     })
@@ -84,9 +82,6 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
 
                     //   setapicall(false);
                     })
-                    .catch(function(error) {
-                      console.log(error);
-                    });
         }
     }
       useEffect(() => {
@@ -132,7 +127,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
 
                 <div className="label-flex">
                     <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-                    <i className="fa-regular fa-heart" onClick={()=>AddToWishList()}></i>
+                    <i className="fa-regular fa-heart"  onClick={AddToWishList}></i>
                     </button>
                 </div>
                 <a onClick={()=>clickProduct(productid)}>
