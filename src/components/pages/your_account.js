@@ -21,7 +21,6 @@ import profile_cover from "../../Photos/media/cover-img.jpg";
 import { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-
 // import {CiMail} from 'react-icons/ci';
 
 function Account() {

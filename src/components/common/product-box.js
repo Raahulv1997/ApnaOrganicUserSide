@@ -8,9 +8,10 @@ import { useNavigate } from 'react-router-dom';
 // function AddCart(props){
 // }
 
-const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,discount})=> {
+const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offer,discount})=> {
     const navigate = useNavigate();
-    const[data,setData]=useState([]);;
+    const[wlistData,setWlistData]=useState([]);
+    const[data,setData]=useState([]);
     let [count, setCount] = useState(0);
     function incrementCount() {
         count = count + 1;
@@ -45,40 +46,42 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
     //  
 //   const hendalClick=()=>{}
     const AddToWishList= () =>{
+        // if(a=="add"){
             axios
-        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-            user_id:33,
-            product_id:`${productid}`,
-            price:`${productPrice}`,
-            discount:`${productMRF}`,
-
-          })
-        .then((response) => {
-            let data = response.data;
-        console.log("wishlistttttt----------   " + JSON.stringify(data));
-        setData(response.data);
-        //   setapicall(false);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-        
-      }
-      const RemoveWishList=()=>{
-        axios.post(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
-            id:12,
-            user_id:33
-        })
-        .then((response) => {
-            let data = response.data;
-        console.log("REMOVEEEEEEEEEwishlistttttt----------" + JSON.stringify(data));
-        setData(response.data);
-        //   setapicall(false);
-        })
-        .catch(function(error) {
-          console.log(error);
-        });
-      }
+            .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
+                user_id:33,
+                product_id:`${id}`,
+                price:`${productPrice}`,
+                discount:`${productMRF}`,
+    
+              })
+            .then((response) => {
+                let data = response.data;
+            console.log("wishlistttttt----------   " + JSON.stringify(data));
+            setData(response.data);
+            //   setapicall(false);
+            })
+            .catch(function(error) {
+              console.log(error);
+            });
+            // setWlistData(a);
+        }
+    //   const RemoveWishList=(,wlistData)=>{
+    //     axios.post(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+    //         id:`${id}`,
+    //         user_id:33
+    //     })
+    //     .then((response) => {
+    //         let data = response.data;
+    //     console.log("REMOVEEEEEEEEEwishlistttttt----------" + JSON.stringify(data));
+    //     setData(response.data);
+    //     //   setapicall(false);
+    //     })
+    //     .catch(function(error) {
+    //       console.log(error);
+    //     });
+    //     setWlistData(a)
+    //   }
       useEffect(() => {
           try {
             axios
@@ -102,7 +105,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
       }
       , []);
       const clickProduct=(productid)=>{
-        console.log("product_iddddddd"+JSON.stringify(productid))
+        console.log("product_iddddddd"+productid)
         localStorage.setItem("proid",productid)
         navigate('/product-detail')
       }
@@ -124,7 +127,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
                     <i className="fa-regular fa-heart" onClick={()=>AddToWishList()}></i>
                     </button>
                 </div>
-                <a onClick={clickProduct}>
+                <a onClick={()=>clickProduct(productid)}>
                     <img src={'https://www.shutterstock.com/image-photo/man-hands-holding-global-network-260nw-1801568002.jpg'} className="img-fluid" alt="" />
                 </a>
 
@@ -149,7 +152,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
                         <FaStar icon="star" className="feather " />
                     </li>
                 </ul>
-                <a className='m-0 mb-2' onClick={clickProduct} >
+                <a className='m-0 mb-2' onClick={()=>clickProduct(productid)} >
                     <h5 className="name m-0">{name}</h5>
                 </a>
                 <h5 className="price theme-color m-0 mb-2">{"₹" + productPrice} <del className='text-muted small'>{"₹" + productMRF}</del></h5>

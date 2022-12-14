@@ -51,7 +51,7 @@ const decrementCount = () => {
 
 let proid=localStorage.getItem("proid")
 
-console.log("pidddddddd"+proid)
+console.log("dddddddd"+proid)
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -87,8 +87,6 @@ console.log("pidddddddd"+proid)
         setProductDetails(data.results);
       });
   }
-  let product_id=localStorage.getItem(product_id)
-  console.log("product------id________"+product_id)
   const AddToWishList= () =>{
     axios
 .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
@@ -343,22 +341,7 @@ console.log("eeeeee---"+e+f)
                         <div className="note-box product-packege">
                           <div className="cart_qty qty-box product-qty">
                             <div className="input-group">
-                              <button
-                                type="button"
-                                className="qty-right-plus"
-                                data-type="plus"
-                                data-field=""
-                                onClick={incrementCount}
-                              >
-                                <i className="fa fa-plus" aria-hidden="true"></i>
-                              </button>
-                              <input
-                                className="form-control input-number qty-input"
-                                type="text"
-                                name="quantity"
-                                value={count} onChange={func}
-                              />
-                              <button  
+                            <button  
                                 type="button"
                                 className="qty-left-minus"
                                 data-type="minus"
@@ -367,14 +350,30 @@ console.log("eeeeee---"+e+f)
                               >
                                 <i className="fa fa-minus" aria-hidden="true"></i>
                               </button>
+                              <input
+                                className="form-control input-number qty-input"
+                                type="text"
+                                name="quantity"
+                                value={count} onChange={func}
+                              />
+                               <button
+                                type="button"
+                                className="qty-right-plus"
+                                data-type="plus"
+                                data-field=""
+                                onClick={incrementCount}
+                              >
+                                <i className="fa fa-plus" aria-hidden="true"></i>
+                              </button>
+                              
                             </div>
                           </div>
   
-                          <button
-                           
-                            className="btn btn-md bg-dark cart-button text-white"
-                            onClick={()=>AddToCart()}>
-                            Add To Cart
+                          <button className="btn btn-dark">
+                        <Link to="/cart">
+                              {/* <i data-feather="heart"></i> */}
+                              <span className="text-white" onClick={()=>AddToCart()}> Add To Cart</span>
+                            </Link>
                           </button>
                         </div> 
                         <div className="row mt-4">
