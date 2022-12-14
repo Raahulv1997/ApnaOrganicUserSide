@@ -4,9 +4,12 @@ import {FaStar} from 'react-icons/fa';
 import  {useState} from 'react';
 import axios from 'axios';
 import {useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 // function AddCart(props){
 // }
+
 const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,discount})=> {
+    const navigate = useNavigate();
     const[data,setData]=useState([]);;
     let [count, setCount] = useState(0);
     function incrementCount() {
@@ -37,13 +40,14 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
             console.log("ADD CARTTT-------------------"+JSON.stringify(data))
             setData(data);
           });
-      }
+       
+        }
     //  
 //   const hendalClick=()=>{}
     const AddToWishList= () =>{
             axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-            user_id:6,
+            user_id:33,
             product_id:`${productid}`,
             price:`${productPrice}`,
             discount:`${productMRF}`,
@@ -60,10 +64,25 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
         });
         
       }
+      const RemoveWishList=()=>{
+        axios.post(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+            id:12,
+            user_id:33
+        })
+        .then((response) => {
+            let data = response.data;
+        console.log("REMOVEEEEEEEEEwishlistttttt----------" + JSON.stringify(data));
+        setData(response.data);
+        //   setapicall(false);
+        })
+        .catch(function(error) {
+          console.log(error);
+        });
+      }
       useEffect(() => {
           try {
             axios
-              .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,{
+              .get(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,{
                 "product_search":{
                 "search":"",
                 "colors":"",
@@ -74,7 +93,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
                 })
               .then((response) => {
                 let data = response.data;
-                setData(data.results.product_id);
+                setData(data.results);
                 // setProductId(data);
             //    console.log("PRODUCT============"+JSON.stringify(data))
                 // setapicall(false);
@@ -82,6 +101,11 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
           } catch (err) {}
       }
       , []);
+      const clickProduct=(productid)=>{
+        console.log("product_iddddddd"+productid)
+        localStorage.setItem("proid",productid)
+        navigate('/product-detail')
+      }
     return (
         <div className="product-box-3 p-0 mt-3 product_box overflow-hidden">
             <div className="product-image">
@@ -100,7 +124,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
                     <i className="fa-regular fa-heart" onClick={()=>AddToWishList()}></i>
                     </button>
                 </div>
-                <a href="./product-detail">
+                <a onClick={clickProduct}>
                     <img src={'https://www.shutterstock.com/image-photo/man-hands-holding-global-network-260nw-1801568002.jpg'} className="img-fluid" alt="" />
                 </a>
 
@@ -125,7 +149,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
                         <FaStar icon="star" className="feather " />
                     </li>
                 </ul>
-                <a className='m-0 mb-2' href="./product-detail">
+                <a className='m-0 mb-2' onClick={clickProduct} >
                     <h5 className="name m-0">{name}</h5>
                 </a>
                 <h5 className="price theme-color m-0 mb-2">{"₹" + productPrice} <del className='text-muted small'>{"₹" + productMRF}</del></h5>
@@ -152,5 +176,4 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
         </div>
     )
 }
-// export {AddCart};
 export default ProductBox;

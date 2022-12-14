@@ -15,7 +15,7 @@ function Wishlist() {
     function getWishList() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=6`)
+          .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=33`)
           .then((response) => {
             let data = response.data;
             setWishList(data);

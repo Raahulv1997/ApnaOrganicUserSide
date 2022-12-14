@@ -17,7 +17,13 @@ import axios from "axios";
 const ProductDetail = () => {
  
   const[productDetails,setProductDetails]=useState([]);
-  var product_details = data3.product_details;
+  // const[productprice,setproductprice]=useState();
+  const[productprice,setProductprice]=useState();
+  const[mrp,setMrp]=useState();
+  const[size,setSize]=useState();
+  const[discount,setDiscount]=useState();
+
+  // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
   function incrementCount() {
@@ -42,14 +48,21 @@ const decrementCount = () => {
 //         setCount(count => count - 1);
 //     }
 // };
+
+let proid=localStorage.getItem("proid")
+
+console.log("pidddddddd"+proid)
   useEffect(() => {
     function getProductDetails() {
       try {
         axios
-          .get(`http://192.168.29.108:5000/product_details?id=62`)
+          .get(`http://192.168.29.108:5000/product_details?id=${proid}`)
           .then((response) => {
             let data = response.data;
             setProductDetails(data);
+            setProductprice(data.product_verient[0].product_price);
+            setMrp(data.product_verient[0].mrp)
+            setDiscount(data.product_verient[0].discount)
             console.log("detailssssssssss-------------------"+JSON.stringify(data))
             // setapicall(false);
           });
@@ -62,9 +75,9 @@ const decrementCount = () => {
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:6,
-        product_id:`${productDetails.product_id}`,
-        price:`${productDetails.product_price}`,
-        discount:`${productDetails.discount}`,
+        product_id:`${productDetails.product_verient[0].product_id}`,
+        price:`${productDetails.product_verient[0].product_price}`,
+        discount:`${productDetails.product_verient[0].discount}`,
         quantity:`${count}`,
         is_active:1
     })
@@ -74,13 +87,15 @@ const decrementCount = () => {
         setProductDetails(data.results);
       });
   }
+  let product_id=localStorage.getItem(product_id)
+  console.log("product------id________"+product_id)
   const AddToWishList= () =>{
     axios
 .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-    user_id:6,
-    product_id:`${productDetails.product_id}`,
-    price:`${productDetails.product_price}`,
-    discount:`${productDetails.discount}`,
+    user_id:33,
+    product_id:`${productDetails.product_verient[0].product_id}`,
+    price:`${productDetails.product_verient[0].product_price}`,
+    discount:`${productDetails.product_verient[0].discount}`,
 
   })
 .then((response) => {
@@ -92,6 +107,17 @@ setProductDetails(data.results)
 .catch(function(error) {
   console.log(error);
 });
+
+}
+// console.log("_____ulluu)______--> "+productDetails.product_verient)
+console.log("eeeeee---"+productprice)
+
+const setproductprice = (e,f,g)=>{
+  setProductprice(e)
+  setMrp(f)
+  setSize(g)
+console.log("eeeeee---"+e+f)
+
 
 }
   return (
@@ -175,23 +201,21 @@ setProductDetails(data.results)
                     </Carousel.Item>
                   </Carousel>
                 </div>
-                <div
-                  className="col-12 col-md-6 wow fadeInUp"
-                  data-wow-delay="0.1s"
-                >
-                  {(productDetails.product_verient).map((details) => {
-                    return (
-                      <div key={details.id} className="right-box-contain">
-                        <h6 className="offer-top">{details.discount}%</h6>
+                <div className="col-12 col-md-6 wow fadeInUp"
+                  data-wow-delay="0.1s">
+                  {/* {(productDetails).map((details) => {
+                    return ( */}
+                      <div className="right-box-contain">
+                        <h6 className="offer-top">{discount}%</h6>
                         <h2 className="name">{productDetails.product_title_name}</h2>
                         <div className="price-rating">
                           <h3 className="theme-color price">
-                            {details.product_price}
+                            {productprice}
                             <del className="text-content">
-                              {details.sale_price}
+                              {mrp}
                             </del>{""}
-                            <span className="offer theme-color">
-                              {details.discount}%off
+                            <span className="offer theme-color">  
+                              {discount}%off
                             </span>
                           </h3>
                           <div className="product-rating custom-rate">
@@ -237,18 +261,32 @@ setProductDetails(data.results)
                         {/* <div className="procuct-contain">
                           <p>{product_details.pdiscription}</p>
                         </div> */}
-  
+
+                   {productDetails.product_verient ? 
                         <div className="product-packege">
-                          <div className="product-title">
-                            <h4>{details.unit === 'gms'?'Weight' :details.unit === 'pcs' ? 'Piece' : null} </h4>
+                          <div className="product-title"> 
+                            
+                          {/* {(productDetails.product_verient).map((details) => {
+                    return (  */}
+                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : null}</h4>
+                  {/* //   );
+                  // })} */}
                           </div>
+                           
                           <ul className="select-packege">
-                            <li>
-                               <Link to="/"  className="active">
-                                1/2 KG
+                          {(productDetails.product_verient).map((details) => {
+                           
+                    return ( <li>
+                          
+                               <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size)}}
+                              className={size == details.size ? "active" : null}
+                                >
+                                {details.size}
                               </Link>
                             </li>
-                            <li>
+                            );
+                          })}
+                            {/* <li>
                                <Link to="/" >1 KG</Link>
                             </li>
                             <li>
@@ -259,9 +297,10 @@ setProductDetails(data.results)
                             </li>
                             <li>
                                <Link to="/" >With Pink Roses</Link>
-                            </li>
+                            </li> */}
                           </ul>
-                        </div>
+                     
+                        </div> : null }
                         <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                               <div className="product-title">
                                   <h4>Hurry up! Sales Ends In</h4>
@@ -363,7 +402,7 @@ setProductDetails(data.results)
   
                           <div className="pickup-detail">
                             <h4 className="text-content">
-                              {product_details.store_info}
+                              {"product_details.store_info"}
                             </h4>
                           </div>
   
@@ -444,8 +483,8 @@ setProductDetails(data.results)
                           </ul>
                         </div>
                       </div>
-                    );
-                  })}
+                    {/* );
+                  })} */}
                 </div>
   
                 <div className="col-12">

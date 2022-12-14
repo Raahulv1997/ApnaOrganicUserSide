@@ -9,10 +9,8 @@ import Tabs from "react-bootstrap/Tabs";
 import { useEffect } from "react";
 import "../../CSS/style.css";
 import axios from "axios";
-
 const Benners = (props,productPrice,productMRF,name,image) => {
 const[productData,setProductData]=useState([]);
-const[pid,setPid]=useState([]);
   //let [count, setCount] = useState(0);
   var product = data.product;
   // console.log(product);
@@ -47,11 +45,10 @@ const[pid,setPid]=useState([]);
             });
         } catch (err) {}
       }
-  
       getProductData();
     }, []);
     // console.log("-ulloo---"+JSON.stringify(productData));
-
+   
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -183,6 +180,7 @@ const[pid,setPid]=useState([]);
                           className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                         >
                           <ProductBox
+                            id={product.id}
                             image={product.image}
                             name={product.product_title_name}
                             productPrice={product.product_price}
@@ -325,8 +323,8 @@ const[pid,setPid]=useState([]);
               aria-labelledby="all-tab"
             >
               <div className="row w-100 ms-0">
-                {/* {productData.map((product) => {
-                  return ( */}
+                {productData.map((product) => {
+                  return (
                     <div
                       // key={product.id}
                       className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
@@ -338,8 +336,8 @@ const[pid,setPid]=useState([]);
                         productMRF={product.sale_price}
                       />
                     </div>
-                {/* //   );
-                // })} */}
+                 );
+                 })}
               </div>
             </div>
           </div>
