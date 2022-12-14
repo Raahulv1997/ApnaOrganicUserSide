@@ -102,7 +102,7 @@ const ProductBox=({name,image,productPrice, productMRF,productid,special_offer,d
       }
       , []);
       const clickProduct=(productid)=>{
-        console.log("product_iddddddd"+productid)
+        console.log("product_iddddddd"+JSON.stringify(productid))
         localStorage.setItem("proid",productid)
         navigate('/product-detail')
       }
