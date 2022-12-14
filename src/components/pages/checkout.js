@@ -7,15 +7,18 @@ import Tab from "react-bootstrap/Tab";
 import Breadcumb from "../common/beadcumb";
 import { data1, data2 } from "./data";
 import Accordion from "react-bootstrap/Accordion";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 
 const Checkout = (props) => {
+  const navigate = useNavigate();
   var product1 = data1.product1;
 const useridd = localStorage.getItem("userid")
   const [apicall, setapicall] = useState(false);
   const[cartdata,setCartData]=useState([]);
   const[quantity,setQuantity]=useState([]);
+  const [userdata, setuserdata] = useState('');
+
   var address = data2.address;
   const func=()=>{}
   const incrementCount=(id,quantity)=> {
@@ -92,8 +95,22 @@ const useridd = localStorage.getItem("userid")
       setapicall(true);
     });
   }
-
   // end add remove cart
+
+  // delivery address
+  const DeliveryClick = () =>{
+    axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
+    .then(response => {
+      setuserdata(response.data[0])
+      // navigate('/your_account')
+      // return response;
+    }).catch(error => {
+      console.log(error.response.error)
+    })
+navigate('/')
+  }
+
+  // end delivery address
   return (
     <Fragment>
       <Header />
@@ -557,12 +574,13 @@ const useridd = localStorage.getItem("userid")
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
-                          <Link to="/"
+                          <butoon 
                               className="btn btn-light shopping-button text-dark"
+                              onClick={()=>DeliveryClick()}
                             >
                               <i className="fa-solid fa-arrow-left-long me-3"></i>
                               Continue Shopping
-                            </Link>
+                            </butoon>
                           </li>
 
                           <li>
@@ -591,7 +609,7 @@ const useridd = localStorage.getItem("userid")
                       </div>
                       <div className="row">
                         <div className="col-12 col-md-6">
-                          {address.map((address) => {
+                          {userdata.map((address) => {
                             return (
                               <div key={address.id} className="">
                                 <div className="delivery-address-box">
@@ -614,7 +632,7 @@ const useridd = localStorage.getItem("userid")
                                     >
                                       <li>
                                         <h4 className="fw-500">
-                                          {address.name}
+                                          {address.first_name} {address.last_name} 
                                         </h4>
                                       </li>
                                       <li>
@@ -624,17 +642,17 @@ const useridd = localStorage.getItem("userid")
                                           </span>
                                         </p>
                                       </li>
-                                      <li>
+                                      {/* <li>
                                         <h6 className="text-content">
                                           <span className="text-title">
                                             Pin Code :{address.pincode}
                                           </span>
                                         </h6>
-                                      </li>
+                                      </li> */}
                                       <li>
                                         <h6 className="text-content mb-0">
                                           <span className="text-title">
-                                            Phone :{address.phone}
+                                            Phone :{address.phone_no}
                                           </span>
                                         </h6>
                                       </li>
@@ -669,27 +687,28 @@ const useridd = localStorage.getItem("userid")
                                     >
                                       <li>
                                         <h4 className="fw-500">
-                                          {address.name}
+                                        {address.first_name} {address.last_name} 
+
                                         </h4>
                                       </li>
                                       <li>
                                         <p className="text-content">
                                           <span className="text-title">
-                                            Address:{address.address}
+                                            Address:{address.address2}
                                           </span>
                                         </p>
                                       </li>
-                                      <li>
+                                      {/* <li>
                                         <h6 className="text-content">
                                           <span className="text-title">
                                             Pin Code :{address.pincode}
                                           </span>
                                         </h6>
-                                      </li>
+                                      </li> */}
                                       <li>
                                         <h6 className="text-content mb-0">
                                           <span className="text-title">
-                                            Phone :{address.phone}
+                                            Phone :{address.phone_no}
                                           </span>
                                         </h6>
                                       </li>

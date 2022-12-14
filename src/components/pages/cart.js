@@ -11,6 +11,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import  {useState,useEffect} from 'react';
 import axios from "axios";
 const Cart = (props) => {
+
   const navigate = useNavigate();
   // const[pdata,setPdata]=useState([]);
   const [apicall, setapicall] = useState(false);
@@ -90,7 +91,7 @@ const Cart = (props) => {
     function getCartData() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=6`)
+          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
             setCartData(data);
@@ -127,10 +128,9 @@ const Cart = (props) => {
   // // Do not store React elements inside state
   // setData(prevState => ([...prevState, ...dataMapped]))
   var ProductPriceTotal = 0;
-
   // payement 
   const onProccedClick =() =>{
-navigate('/checkout')
+      navigate('/checkout')
   }
   // end payment
 
