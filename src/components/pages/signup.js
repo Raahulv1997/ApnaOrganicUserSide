@@ -10,43 +10,49 @@ import {  useNavigate } from "react-router-dom";
 const Singup = () => {
 const [otp, setotp]= useState(0);
 const [email, setemail]= useState('');
+const [emailerror, setemailerror]= useState('');
 
 const [otperror, setOtperror]= useState(false);
 const navigate = useNavigate()
-
   const SignUpUser= (e) =>{
     e.preventDefault();
     setemail(e.target.email.value);
     // alert("SINGNNN"+email)
     axios.post(`${process.env.REACT_APP_BASEURL}/sign_up`,{'email':e.target.email.value})
     .then(response => {
-      console.log("___--------------"+JSON.stringify(response.data));
-      setotp(response.data);
+      // if(response.data =`{"message":"User Already Exist. Please Login"}`){
+      //   console.log("___--------------"+JSON.stringify(response.data));
+      //   setemailerror('already');
+      //   e.target.email.value = '';
+      // }
+      // else{
+        setotp(response.data);
+        console.log("___--------------"+JSON.stringify(response.data));
+      // }
       // return response;
     }).catch(error => {
-      console.log(error.response.data.error)
+      console.log(error.response.error)
       
     })
   }
   const VerifyOTP = (e)=>{
-    // alert(e.target.otpinput.value)
-    console.log("___--------------"+otp+'---------------' +e.target.otpinput.value);
-
     e.preventDefault();
-    // if(e.target.otpinput.value == otp){
-      axios.post(`${process.env.REACT_APP_BASEURL}/otp_verfication`,{"email":email, "otp":otp})
+    if(e.target.otpinput.value == otp){
+      axios.post(`${process.env.REACT_APP_BASEURL}/otp_verification`,{"email":email, "otp":otp})
       .then(response => {
         console.log("___--------------"+JSON.stringify(response.data));
-        // navigate('/your_account')
+        console.log("___--------------"+(response.data.insertId));
+        localStorage.setItem("userid",response.data.insertId)
+        navigate('/your_account')
         // return response;
       }).catch(error => {
-        console.log(error.response.data.error)
+        console.log(error.response.error)
       })
-    // }
-    // else{
-    //   console.log("invalid otp")
-    //   setOtperror(true)
-    // }
+    }
+    else{
+      console.log("invalid otp")
+      setOtperror(true)
+    }
   }
   return (
     <Fragment>
@@ -92,6 +98,7 @@ const navigate = useNavigate()
                           name='emailid'
                           required
                         />
+                         {emailerror==='already' ? <p className="text-danger">{'User Already Exist. Please Login'}</p> : null}
                         <input                        
                           type="number"
                           className={otp===0?"form-control d-none":"form-control"}
