@@ -64,7 +64,7 @@ console.log("dddddddd"+proid)
 
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
-        user_id:useridd,
+        user_id:`${useridd}`,
         product_id:`${productDetails.product_verient[0].id}`,
         price:`${productDetails.product_verient[0].product_price}`,
         discount:`${productDetails.product_verient[0].discount}`,
@@ -80,7 +80,7 @@ console.log("dddddddd"+proid)
   const AddToWishList= () =>{
     axios
 .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-    user_id:useridd,
+    user_id:`${useridd}`,
     product_id:`${productDetails.product_verient[0].id}`,
     price:`${productDetails.product_verient[0].product_price}`,
     discount:`${productDetails.product_verient[0].discount}`,

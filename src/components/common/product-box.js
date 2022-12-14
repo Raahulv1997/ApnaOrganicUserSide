@@ -31,7 +31,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
     //   console.log("dataaaaaaaa"+JSON.stringify(productData))
       const AddToCart=()=>{
         axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
-            user_id:useridd,
+            user_id:`${useridd}`,
             product_id:`${id}`,
             price:`${productPrice}`,
             discount:`${productMRF}`,
@@ -52,7 +52,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
         if(wlistData==="add"){
             axios
             .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-                user_id:useridd,
+                user_id:`${useridd}`,
                 product_id:`${id}`,
                 price:`${productPrice}`,
                 discount:`${productMRF}`,
@@ -74,7 +74,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
             console.log("remove______WISHLIST"+wlistData);
             axios.post(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
                         id:`${id}`,
-                        user_id:useridd
+                        user_id:`${useridd}`
                     })
                     .then((response) => {
                         let data = response.data;
