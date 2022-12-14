@@ -7,16 +7,18 @@ import Breadcumb from "../common/beadcumb";
 import {data1} from './data';
 import { Button } from "bootstrap";
 import "../../CSS/style.css";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import  {useState,useEffect} from 'react';
 import axios from "axios";
 const Cart = (props) => {
+  const navigate = useNavigate();
   // const[pdata,setPdata]=useState([]);
   const [apicall, setapicall] = useState(false);
   const[cartdata,setCartData]=useState([]);
   const[quantity,setQuantity]=useState([]);
   var product1=data1.product1;
   // let [count, setCount] = useState(0);
+  const useridd = localStorage.getItem("userid")
 
 
 
@@ -124,7 +126,13 @@ const Cart = (props) => {
   // })
   // // Do not store React elements inside state
   // setData(prevState => ([...prevState, ...dataMapped]))
+  var ProductPriceTotal = 0;
 
+  // payement 
+  const onProccedClick =() =>{
+navigate('/checkout')
+  }
+  // end payment
 
   return (
     <Fragment>
@@ -139,6 +147,9 @@ const Cart = (props) => {
                 <div className="table-responsive-xl">
                   <table className="table">
                     {cartdata.map((cdata)=>{
+                       for (let i = 0; i < cdata.length; i++) {
+                        ProductPriceTotal += cdata[i].quantity * cdata[i].price;
+                      }
                        return(
                         <tbody key={cdata.id}>
                             <tr  className="product-box-contain">
@@ -260,7 +271,7 @@ const Cart = (props) => {
   
                           <td className="subtotal">
                             <h4 className="table-title text-content">Total</h4>
-                            <h5>{product1.total}</h5>
+                            <h5>{cdata.quantity * cdata.price}</h5>
                           </td>
   
                           <td className="save-remove">
@@ -282,6 +293,7 @@ const Cart = (props) => {
                             </Link> */}
                           </td>
                         </tr>
+
                         </tbody>
                       )                       
                     })}
@@ -313,7 +325,8 @@ const Cart = (props) => {
                   <ul className="p-0">
                     <li>
                       <h4>Subtotal</h4>
-                      <h4 className="price">₹125.65</h4>
+                     
+                      <h4 className="price">₹ {ProductPriceTotal}</h4>
                     </li>
 
                     <li>
@@ -323,7 +336,7 @@ const Cart = (props) => {
 
                     <li className="align-items-start">
                       <h4>Shipping</h4>
-                      <h4 className="price text-end">₹6.90</h4>
+                      <h4 className="price text-end">₹0.00</h4>
                     </li>
                   </ul>
                 </div>
@@ -331,19 +344,20 @@ const Cart = (props) => {
                 <ul className="summery-total">
                   <li className="list-total border-top-0">
                     <h4>Total (USD)</h4>
-                    <h4 className="price theme-color">₹132.58</h4>
+                    <h4 className="price theme-color">₹{}</h4>
                   </li>
                 </ul>
 
                 <div className="button-group cart-button">
                   <ul className="p-0">
                     <li className="w-100">
-                      <NavLink
-                        to="/checkout"
+                      <button
+                        // to="/checkout"
                         className="btn btn-animation proceed-btn fw-bold w-100"
+                        onClick={()=>onProccedClick()}
                       >
                         Process To Checkout
-                      </NavLink>
+                      </button>
                     </li>
 
                     <li>
