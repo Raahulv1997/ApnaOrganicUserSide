@@ -20,6 +20,7 @@ let currentdate = moment().format()
   const [navtab, setnavtab] = useState(false);
   const[cartdata,setCartData]=useState([]);
   const[quantity,setQuantity]=useState([]);
+  const[DeliveryMethod,setDeliveryMethod]=useState('');
   const [userdata, setuserdata] = useState([]);
   const [singlorder, setsinglorder] = useState( 
     {
@@ -38,9 +39,9 @@ let currentdate = moment().format()
   const [orderadd, setorderadd] = useState( {
   user_id:useridd,
   status:"pending",
-  total_quantity:"3",
+  total_quantity:'',
   ref_no:"12345678",
-  payment_mode:"upi",
+  payment_mode:"cod",
   delivery_date:"2022-12-15",
   invoice_date:currentdate,
   order_date:currentdate,
@@ -50,13 +51,15 @@ let currentdate = moment().format()
   total_sgst:"36",
   taxable_value:"10000",
   discount_coupon:"0",
-  vendor_id:"23",
+  vendor_id:"1",
   order_product:[]
   });
 
 
   var address = data2.address;
-  const func=()=>{}
+  const func=(e)=>{
+    setDeliveryMethod(e.target.value)
+  }
   const incrementCount=(id,quantity)=> {
     let inc=quantity+1
     console.log("quentityyyyyyy--------- "+inc)
@@ -152,7 +155,7 @@ let currentdate = moment().format()
 
   const getPaymentData = () =>{
 setapicall(true)
-
+setorderadd({...orderadd, total_quantity:cartdata.length})
   }
   // end payment
 
@@ -161,14 +164,15 @@ useEffect(()=>{
   setorderadd((orderadd) =>{ return {...orderadd,  order_product : singlorder}});
 },[])
   const onOrderAdd = () =>{
-    axios.post(`${process.env.REACT_APP_BASEURL}/orders` ,orderadd)
-    .then(response => {
-      console.log("--userdata"+JSON.stringify(response.data))
-      // navigate('/your_account')
-      // return response;
-    }).catch(error => {
-      console.log(error.response.error)
-    })
+    console.log("--userdata"+JSON.stringify(orderadd))
+    // axios.post(`${process.env.REACT_APP_BASEURL}/orders` ,orderadd)
+    // .then(response => {
+    //   console.log("--userdata"+JSON.stringify(response.data))
+    //   // navigate('/your_account')
+    //   // return response;
+    // }).catch(error => {
+    //   console.log(error.response.error)
+    // })
   }
 
   // end order add
@@ -504,19 +508,19 @@ useEffect(()=>{
                                   </li>
   
                                   <li className="text-content">
-                                    <span className="text-title">Sold By:{product1.seller_detail}</span>
+                                    <span className="text-title">Sold By:{cdata.vendor_id}</span>
                                   </li>
   
                                   <li className="text-content">
-                                    <span className="text-title">Quality:{cdata.quantity}</span>
+                                    <span className="text-title">Quatity:{cdata.quantity}</span>
                                   </li>
   
                                   <li>
                                     <h5 className="text-content d-inline-block">
                                       Price:
                                     </h5>
-                                    <span>{cdata.price}</span>
-                                    <span className="text-content">{"₹"+cdata.price+cdata.discount}</span>
+                                    <span>{cdata.product_price}</span>
+                                    <span className="text-content">{"₹"+cdata.mrp}</span>
                                   </li>
   
                                   <li>
@@ -562,7 +566,7 @@ useEffect(()=>{
                           <td className="price">
                             <h4 className="table-title text-content">Price</h4>
                             <h5>
-                              {cdata.price} <del className="text-content">{cdata.price+cdata.discount}</del>
+                              {cdata.product_price} <del className="text-content">{cdata.mrp}</del>
                             </h5>
                             <h6 className="theme-color">You Save:{cdata.discount}</h6>
                           </td>
@@ -604,7 +608,10 @@ useEffect(()=>{
   
                           <td className="subtotal">
                             <h4 className="table-title text-content">Total</h4>
-                            <h5>{cdata.quantity * cdata.price}</h5>
+                            {cdata.sgst===null  ? cdata.sgst = '0' : cdata.sgst === cdata.sgst}
+                            {cdata.cgst === null ?cdata.cgst = '0': cdata.cgst === cdata.cgst}
+                             
+                            <h5>{(parseInt(cdata.quantity)) * ((parseInt(cdata.product_price)) + (parseInt(cdata.gst)) +( parseInt(cdata.cgst)) +(parseInt(cdata.sgst)))}</h5>
                           </td>
   
                           <td className="save-remove">
@@ -1031,7 +1038,7 @@ useEffect(()=>{
                           <div className="summery-box">
                             <div className="summery-header bg-white">
                               <h3>Order Summery</h3>
-                              <Link to="./cart">Edit Cart</Link>
+                              {/* <button to="./cart">Edit Cart</button> */}
                             </div>
 
                             <ul className="summery-contain bg-white custom-height">
@@ -1039,9 +1046,9 @@ useEffect(()=>{
                                 return(
                                   <li>
                                   <h4>
-                                    {data.price} <span>X {data.quantity}</span>
+                                    {data.product_price} <span>X {data.quantity}</span>
                                   </h4>
-                                  <h4 className="price">₹{data.price * data.quantity}</h4>
+                                  <h4 className="price">₹{data.product_price * data.quantity}</h4>
                                 </li>
                                 )
                               })}
@@ -1050,7 +1057,7 @@ useEffect(()=>{
                             <ul className="summery-total bg-white">
                               <li>
                                 <h4>Subtotal</h4>
-                                <h4 className="price">₹111.81</h4>
+                                <h4 className="price">₹00.00</h4>
                               </li>
 
                               <li>
@@ -1512,9 +1519,9 @@ useEffect(()=>{
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
-                                          value="choice15"
-                                          onChange={func}
-                                          name="button"
+                                          value="cod"
+                                          onChange={(e)=>func(e)}
+                                          name="cod"
                                         />
                                         Cash On Delivery
                                       </label>

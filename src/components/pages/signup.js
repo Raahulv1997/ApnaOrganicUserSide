@@ -13,6 +13,8 @@ const [email, setemail]= useState('');
 const [emailerror, setemailerror]= useState('');
 
 const [otperror, setOtperror]= useState(false);
+const [passval, setpassval]= useState('');
+
 const navigate = useNavigate()
   const SignUpUser= (e) =>{
     e.preventDefault();
@@ -35,12 +37,18 @@ const navigate = useNavigate()
       
     })
   }
+  const onPasswordChange = (e)=>{
+    setpassval(e.target.value)
+    console.log(e.target.value+"---valuee")
+  }
   const VerifyOTP = (e)=>{
     e.preventDefault();
     if(e.target.otpinput.value == otp){
-      axios.post(`${process.env.REACT_APP_BASEURL}/otp_verification`,{"email":email, "otp":otp})
+      axios.post(`${process.env.REACT_APP_BASEURL}/otp_verification`,{"email":email, "otp":otp, "password":passval})
       .then(response => {
         localStorage.setItem("userid",response.data.insertId)
+        localStorage.setItem("upassword",passval)
+
         navigate('/your_account')
         // return response;
       }).catch(error => {
@@ -111,17 +119,19 @@ const navigate = useNavigate()
                       {otperror ? <p className="text-danger">{'Invalid Otp'}</p> : null}
                     </div>
 
-                    {/* <div className="col-12">
+                    <div className="col-12">
                       <div className="form-floating theme-form-floating">
                         <input
                           type="password"
-                          className="form-control"
+                          name="password"
+                          className={otp===0?"form-control d-none":"form-control"}
                           id="password"
                           placeholder="Password"
+                          onChange={(e)=>onPasswordChange(e)}
                         />
                         <label htmlFor="password">Password</label>
                       </div>
-                    </div> */}
+                    </div>
 
                     <div className={otp===0?"col-12":"col-12 d-none"}>
                       <div className="forgot-box">
