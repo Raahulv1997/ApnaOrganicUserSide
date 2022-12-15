@@ -56,7 +56,7 @@ function Wishlist() {
                       productPrice={wlist.product_price}
                       productMRF={wlist.sale_price}
                       productid={wlist.product_id}
-                     
+                      id={wlist.id}
                     />
                     {/* <ProductBox
                       image={product.image}

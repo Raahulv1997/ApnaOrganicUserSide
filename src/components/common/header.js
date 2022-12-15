@@ -46,8 +46,8 @@ const Header = () => {
   }, []);
   const result = categorydata.filter((thing, index, self) =>
         index === self.findIndex((t,x) => (
-          t.root_category_name == thing.root_category_name,
-        x.down1_category_name==thing.down1_category_name
+          t.root_category_name == thing.root_category_name
+        // x.down1_category_name==thing.down1_category_name
         )))
   const searchProduct=(e)=>{
     e.preventDefault();
