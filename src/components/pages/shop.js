@@ -19,7 +19,22 @@ const Shop=(props)=> {
     const sidebar = () => {
         setclick(true);
     };
-
+    const useridd = localStorage.getItem("userid")
+    // let [count, setCount] = useState(0);
+    // function incrementCount() {
+    //     count = count + 1;
+    //     setCount(count);
+    // }
+    // const decrementCount = () => {
+    //     if (count > 0) {
+    //         setCount(count => count - 1);
+    //     }
+    // };
+    
+    //   const func =()=>{
+        
+    //   }
+    
     var product=data.product
     useEffect(() => {
         function getProductData() {
@@ -27,7 +42,7 @@ const Shop=(props)=> {
             axios
               .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=6`,{
                 "product_search":{
-                    "search":"",
+                "search":"",
                     }
               })
               .then((response) => {
@@ -467,6 +482,7 @@ const Shop=(props)=> {
                                     return(
                                         <div key={product.id}><ProductBox 
                                          image={product.image} 
+                                         id={product.id}
                                          name={product.product_title_name}
                                          productMRF={product.sale_price} 
                                          productPrice={product.product_price}

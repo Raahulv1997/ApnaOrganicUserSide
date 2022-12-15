@@ -59,26 +59,6 @@ const Cart = (props) => {
       setQuantity(quantity=quantity-1)
     });
   }
-  // const func=()=>{
-
-  // }
-  // let [count, setCount] = useState(0);
-  // const incrementCount=(id,qty)=> {
-  //   let v = qty+1;
-  //   setInc(v)
-  //   // qty + 1;
-  //   setCount(inc);
-  // }
-  // console.log("id_________-"+'----'+count)
-
-  // const decrementCount = (id,qty) => {
-  // console.log("id_________-"+'----'+qty+1)
-
-  //   if (qty > 0) {
-  //     setCount(qty => qty - 1);
-  //   }
-  // };
-
   const func =()=>{
     
   }

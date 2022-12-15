@@ -19,19 +19,15 @@ const useridd = localStorage.getItem("userid")
       function getProductData() {
         try {
           axios
-            .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,{
-              "product_search":{
-                "search":"",
-                "colors":"",
-                "size":"",
-                "category": "",
-                "product_type": ""
+          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=6`,{
+            "product_search":{
+            "search":"",
                 }
-            })
+          })
             .then((response) => {
               let data = response.data;
               setProductData(data.results);
-              console.log("producttttttttTTTTTT-------------------"+JSON.stringify(data))
+              console.log("productttttttt-------------------"+JSON.stringify(data))
               // setapicall(false);
             });
         } catch (err) {}

@@ -16,12 +16,14 @@ const ProductDetail = () => {
   const useridd = localStorage.getItem("userid")
  
   const[productDetails,setProductDetails]=useState([]);
-  // const[productprice,setproductprice]=useState();
+  const[storeInfo,setStoreInfo]=useState();
   const[productprice,setProductprice]=useState();
   const[mrp,setMrp]=useState();
   const[size,setSize]=useState();
-  const[discount,setDiscount]=useState();
+  const[colors,setColors]=useState('');
 
+  const[discount,setDiscount]=useState();
+  
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
@@ -41,7 +43,7 @@ const decrementCount = () => {
 
 let proid=localStorage.getItem("proid")
 
-console.log("dddddddd"+proid)
+// console.log("dddddddd"+proid)
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -51,8 +53,9 @@ console.log("dddddddd"+proid)
             let data = response.data;
             setProductDetails(data);
             setProductprice(data.product_verient[0].product_price);
-            setMrp(data.product_verient[0].mrp)
-            setDiscount(data.product_verient[0].discount)
+            setMrp(data.product_verient[0].mrp);
+            setColors(data.product_verient[0].colors);
+            setDiscount(data.product_verient[0].discount);
             console.log("detailssssssssss-------------------"+JSON.stringify(data))
             // setapicall(false);
           });
@@ -61,10 +64,25 @@ console.log("dddddddd"+proid)
 
     getProductDetails();
   }, []);
+  // useEffect(() => {
+  //   function getStoreDetails() {
+  //     try {
+  //       axios
+  //         .get(`${process.env.REACT_APP_BASEURL}/vendors?id=2`)
+  //         .then((response) => {
+  //           let data = response.data;
+  //           console.log("stroreDETAILS-------------------"+JSON.stringify(data))
+  //           setStoreInfo(data);
+  //           // setapicall(false);
+  //         });
+  //     } catch (err) {}
+  //   }
 
+  //   getStoreDetails();
+  // }, []);
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
-        user_id:useridd,
+        user_id:`${useridd}`,
         product_id:`${productDetails.product_verient[0].id}`,
         price:`${productDetails.product_verient[0].product_price}`,
         discount:`${productDetails.product_verient[0].discount}`,
@@ -80,8 +98,8 @@ console.log("dddddddd"+proid)
   const AddToWishList= () =>{
     axios
 .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-    user_id:useridd,
-    product_id:`${productDetails.product_verient[0].id}`,
+    user_id:`${useridd}`,
+    product_view_id:`${productDetails.product_verient[0].id}`,
     price:`${productDetails.product_verient[0].product_price}`,
     discount:`${productDetails.product_verient[0].discount}`,
 
@@ -98,19 +116,20 @@ setProductDetails(data.results)
 
 }
 // console.log("_____ulluu)______--> "+productDetails.product_verient)
-console.log("eeeeee---"+productprice)
+// console.log("eeeeee---"+productprice)
 
-const setproductprice = (e,f,g)=>{
+const setproductprice = (e,f,g,c)=>{
   setProductprice(e)
   setMrp(f)
   setSize(g)
-console.log("eeeeee---"+e+f)
+  setColors(c)
+console.log("eeeeee---"+c)
 
 
 }
   return (
     <Fragment>
-      <Header />
+      <Header/>
       {/* <!-- Breadcrumb Section Start --> */}
           <section className="breadscrumb-section pt-0">
           <div className="container-fluid-lg">
@@ -205,8 +224,10 @@ console.log("eeeeee---"+e+f)
                             <span className="offer theme-color">  
                               {discount}%off
                             </span>
+                           
                           </h3>
                           <div className="product-rating custom-rate">
+                            
                             <ul className="rating pt-3">
                             <li color="#ffb321">
                                       <FaStar
@@ -236,12 +257,14 @@ console.log("eeeeee---"+e+f)
                                       <FaStar icon="star" className="feather " />
                                     </li>
                             </ul>
+                          
                             {/* <span className="review">
                               {product_details.creview} Costumer Review
                             </span> */}
                           </div>
                         </div>
-                         
+                        <button style={{backgroundColor:colors}}>{colors}</button>
+                         {/*&nbsp;<button className="btn btn-danger">text</button>&nbsp;<button className="btn btn-info">text</button> */}
                         <div className="procuct-contain">
                               <p dangerouslySetInnerHTML={{__html:  productDetails.product_description}}
 
@@ -255,41 +278,36 @@ console.log("eeeeee---"+e+f)
                    {productDetails.product_verient ? 
                         <div className="product-packege">
                           <div className="product-title"> 
-                            
-                          {/* {(productDetails.product_verient).map((details) => {
-                    return (  */}
-                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : null}</h4>
-                  {/* //   );
-                  // })} */}
+                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
                           </div>
-                           
-                          <ul className="select-packege">
                           {(productDetails.product_verient).map((details) => {
                            
-                    return ( <li className={size == details.size ? "active" : null}>
+                           return (
+                          <ul className="select-packege">
+                         
+                            <>
+                       <li className={size == details.size ? "active": null}>
                           
-                               <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size)}}
-                              className={size == details.size ? "active" : null}
-                                >
-                                {details.size}
-                              </Link>
-                            </li>
-                            );
-                          })}
-                            {/* <li>
-                               <Link to="/" >1 KG</Link>
-                            </li>
-                            <li>
-                               <Link to="/" >1.5 KG</Link>
-                            </li>
-                            <li>
-                               <Link to="/" >Red Roses</Link>
-                            </li>
-                            <li>
-                               <Link to="/" >With Pink Roses</Link>
-                            </li> */}
-                          </ul>
-                     
+                          <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.colors)}}
+                         className={size == details.size ? "active" : null} 
+                           >
+                           {details.size}
+                         </Link>
+                         </li>
+                          <li className={colors == details.colors ?"active": null}>
+                          <Link  onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.colors)}}
+                          className={colors == details.colors ? "active " : null }
+                            >
+                            {details.colors}
+                          </Link>
+                       </li>
+                      
+                       </>
+                        
+                       </ul>
+                       );
+                      })}
+                         
                         </div> : null }
                         <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                               <div className="product-title">
@@ -390,10 +408,9 @@ console.log("eeeeee---"+e+f)
                           <div className="product-title">
                             <h4>Store Information</h4>
                           </div>
-  
                           <div className="pickup-detail">
                             <h4 className="text-content">
-                              {"product_details.store_info"}
+                              {/* {storeInfo.shop_name} */}
                             </h4>
                           </div>
   
@@ -407,7 +424,10 @@ console.log("eeeeee---"+e+f)
                                 SKU :  <Link to="/" >SDFVW65467</Link>
                               </li>
                               <li>
-                                MFG :  <Link to="/" >Jun 4, 2022</Link>
+                                MFG :  <Link to="/" >{productDetails.manufacturing_date}</Link>
+                              </li>
+                              <li>
+                                EXP :  <Link to="/" >{productDetails.expire_date}</Link>
                               </li>
                               <li>
                                 Stock :{" "}
