@@ -739,8 +739,7 @@ return(
                                     Delivery <span>{data.status}</span>
                                   </h4>
                                   <h6 className="text-content">
-                                    Gouda parmesan caerphilly mozzarella cottage
-                                    cheese cauliflower cheese taleggio gouda.
+                                  {data.product_description}
                                   </h6>
                                 </div>
                                    
@@ -760,12 +759,10 @@ return(
 
                                 <div className="order-wrap">
                                   <Link to="product-left.html">
-                                    <h3>Fantasy Crunchy Choco Chip Cookies</h3>
+                                    <h3>{data.product_title_name}</h3>
                                   </Link>
                                   <p className="text-content">
-                                    Cheddar dolcelatte gouda. Macaroni cheese
-                                    cheese strings feta halloumi cottage cheese
-                                    jarlsberg cheese triangles say cheese.
+                                  {data.product_description}
                                   </p>
                                   <ul className="product-size p-0">
                                     <li>
@@ -773,14 +770,14 @@ return(
                                         <h6 className="text-content">
                                           Price :{" "}
                                         </h6>
-                                        <h5>{data.price}</h5>
+                                        <h5>{data.mrp}</h5>
                                       </div>
                                     </li>
 
                                     <li>
                                       <div className="size-box">
                                         <h6 className="text-content">
-                                          Rate :{" "}
+                                          Rate :{data.rating}
                                         </h6>
                                         <div className="product-rating ms-2">
                                           <ul className="rating">
@@ -821,7 +818,7 @@ return(
                                         <h6 className="text-content">
                                           Sold By :{" "}
                                         </h6>
-                                        <h5>{data.vendor_id}</h5>
+                                        <h5>{data.store_name}</h5>
                                       </div>
                                     </li>
                                     <li>
@@ -853,7 +850,12 @@ return(
                                         <h6 className="text-content">
                                           Quantity :{" "}
                                         </h6>
-                                        <h5>250 G</h5>
+                                        {data.unit === 'gms' || data.unit === 'l' || data.unit === 'pcs'? 
+                                        <h5>{data.unit_quantity}{data.unit}</h5>
+                                        :  <h5>{data.size}{data.unit}
+                                         </h5>
+                                        }
+
                                       </div>
                                     </li>
                                   </ul>
