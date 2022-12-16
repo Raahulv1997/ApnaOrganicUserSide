@@ -46,7 +46,6 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
           });
        
         }
-        console.log('', window.location.pathname);
          wlist = window.location.pathname
     const AddToWishList= () =>{
 

@@ -11,6 +11,7 @@ import { useEffect } from 'react'
 import axios from 'axios'
 import data from './data'
 import { Link } from 'react-router-dom'
+import { useSearchParams } from 'react-router-dom';
 const Shop=(props)=> {
     const[prodData,setProdData]=useState([]);
     const [click, setclick] = useState(false);
@@ -20,29 +21,25 @@ const Shop=(props)=> {
         setclick(true);
     };
     const useridd = localStorage.getItem("userid")
-    // let [count, setCount] = useState(0);
-    // function incrementCount() {
-    //     count = count + 1;
-    //     setCount(count);
-    // }
-    // const decrementCount = () => {
-    //     if (count > 0) {
-    //         setCount(count => count - 1);
-    //     }
-    // };
-    
-    //   const func =()=>{
-        
-    //   }
-    
+    const [searchparams] = useSearchParams();
+   
+    useEffect(() => {
+    if(searchparams.get('search') === null ||searchparams.get('search') === '' ||searchparams.get('search') === undefined ){
+        setsearchText('')
+    }
+    else{
+        setsearchText(searchparams.get('search'))
+
+    }
+}, [searchText]);
     var product=data.product
     useEffect(() => {
         function getProductData() {
           try {
             axios
-              .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=6`,{
+              .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,{
                 "product_search":{
-                "search":"",
+                "search":`${searchText}`,
                     }
               })
               .then((response) => {
@@ -56,6 +53,25 @@ const Shop=(props)=> {
     
         getProductData();
       }, []);
+
+    //   category
+
+
+    useEffect(() => {
+        axios
+        .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,{
+          "product_search":{
+          "search":`${searchText}`,
+              }
+        })
+        .then((response) => {
+          let data = response.data;
+          setProdData(data.results);
+      //    console.log("PRODUCT============"+data)
+          // setapicall(false);
+        });
+    }, [searchText]);
+    // end category
     return (
         <Fragment>
             <Header />

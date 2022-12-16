@@ -41,15 +41,16 @@ let currentdate = moment().format()
   status:"pending",
   total_quantity:'',
   ref_no:"12345678",
+  shipping_charges:"400",
   payment_mode:"cod",
   delivery_date:"2022-12-15",
   invoice_date:currentdate,
   order_date:currentdate,
-  total_amount:"11000",
-  total_gst:"76",
-  total_cgst:"36",
-  total_sgst:"36",
-  taxable_value:"10000",
+  total_amount:"",
+  total_gst:"",
+  total_cgst:"",
+  total_sgst:"",
+  taxable_value:"",
   discount_coupon:"0",
   vendor_id:"1",
   order_product:[]
@@ -161,18 +162,19 @@ setorderadd({...orderadd, total_quantity:cartdata.length})
 
   // order add
 useEffect(()=>{
-  setorderadd((orderadd) =>{ return {...orderadd,  order_product : singlorder}});
-},[])
+  setorderadd((orderadd) =>{ return {...orderadd,  order_product : cartdata}});
+},[apicall])
+console.log("order00000000"+ JSON.stringify(orderadd))
   const onOrderAdd = () =>{
     console.log("--userdata"+JSON.stringify(orderadd))
-    // axios.post(`${process.env.REACT_APP_BASEURL}/orders` ,orderadd)
-    // .then(response => {
-    //   console.log("--userdata"+JSON.stringify(response.data))
-    //   // navigate('/your_account')
-    //   // return response;
-    // }).catch(error => {
-    //   console.log(error.response.error)
-    // })
+    axios.post(`${process.env.REACT_APP_BASEURL}/orders` ,orderadd)
+    .then(response => {
+      console.log("--userdata"+JSON.stringify(response.data))
+      // navigate('/your_account')
+      // return response;
+    }).catch(error => {
+      console.log(error.response.error)
+    })
   }
 
   // end order add
