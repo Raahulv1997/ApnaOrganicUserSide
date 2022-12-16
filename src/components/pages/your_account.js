@@ -1,5 +1,5 @@
 import React  from "react";
-import { Link} from "react-router-dom";
+import { Link, Navigate, useNavigate} from "react-router-dom";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -26,7 +26,7 @@ import moment from "moment";
 function Account() {
   const useridd = localStorage.getItem("userid")
   const userpass =localStorage.getItem("upassword")
-
+const navigate = useNavigate();
   const func=()=>{}
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -258,8 +258,9 @@ const side_bar = () => {
     });
   };
 // add to cart
-const AddToCart = (id , discount , product_price , quantity ) =>{
+const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
   // e.preventDefault();
+  console.log("------d"+id)
   axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
     "user_id":useridd,
     "product_view_id":id,
@@ -269,17 +270,22 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
     "is_active":1
   })
   .then(response => {
-    console.log("----adddd"+JSON.stringify(response.data))
+    console.log("----adddd-------"+JSON.stringify(response.data))
     // navigate('/your_account')
   }).catch(error => {
     console.log(error.response.error)
   })
 }
-
 // end add to cart
+
+
+const onProductClick = (id) =>{
+  localStorage.setItem("orderid" , id)
+  navigate('/product_detail')
+}
   return (
     <React.Fragment>
-      <Header  addcart={()=>AddToCart()}/>
+      <Header addcart={AddToCart}/>
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
@@ -742,7 +748,7 @@ return(
                               
                               <div className="product-order-detail">
                                 <Link
-                                  to="product-left.html"
+                                onClick={()=>onProductClick(data.id)}
                                   className="order-image"
                                 >
                                   <img
@@ -926,7 +932,7 @@ return(
                                         <del>{wdata.mrp}₹</del>
                                       </h5>
                                       <div className="add-to-cart-box mt-2">
-                                        <button className="btn btn-add-cart addcart-button" onClick={(e)=>AddToCart(wdata.id , wdata.discount , wdata.product_price , wdata.quantity , wdata.is_active)}>
+                                        <button className="btn btn-add-cart addcart-button" onClick={(e)=>AddToCart(wdata.id , wdata.discount , wdata.product_price , wdata.quantity , wdata.is_active, wdata.product_id)}>
                                           Add
                                           <i className="fa-solid fa-plus"></i>
                                         </button>

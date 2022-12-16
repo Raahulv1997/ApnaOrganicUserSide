@@ -1,11 +1,11 @@
-import React, { Fragment} from "react";
+import React, { Fragment } from "react";
 import Logo from "../../Photos/media/1.718c1ec8.png";
 import "../../CSS/style.css";
 import "bootstrap/dist/css/bootstrap.min.css";
 import { NavLink, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
-import {useState,useEffect} from "react";
+import { useState, useEffect } from "react";
 import Accordion from "react-bootstrap/Accordion";
 import {
   AiOutlineHome,
@@ -16,18 +16,19 @@ import {
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
 const Header = (props) => {
-  const useridd = localStorage.getItem("userid")
-const [ProductPriceTotal,setProductPriceTotal] = useState(0)
-const [apicall, setapicall] = useState(false);
-  const[categorydata,setCategoryData]=useState([]);
-  const[pdata,setPdata]=useState([]);
-  const navigate= useNavigate()
+  const useridd = localStorage.getItem("userid");
+  const [ProductPriceTotal, setProductPriceTotal] = useState(0);
+  const [apicall, setapicall] = useState(false);
+  const [categorydata, setCategoryData] = useState([]);
+  const [pdata, setPdata] = useState([]);
+  const navigate = useNavigate();
   const [click, setclick] = useState(false);
-  const [search, setsearch] = useState('');
+  const [search, setsearch] = useState("");
   // const [cat_list, setcat_list] = useState(false);
   const open_Category = () => {
     setclick(true);
   };
+
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -35,33 +36,57 @@ const [apicall, setapicall] = useState(false);
           .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
-            // console.log("category---------------"+JSON.stringify(data))
-            setCategoryData(data)
+            setCategoryData(data);
             // setsearchData(data);
-
           });
       } catch (err) {}
     }
 
     getCategoryData();
   }, []);
-  const result = categorydata.filter((thing, index, self) =>
-        index === self.findIndex((t,x) => (
+  const result = categorydata.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex(
+        (t, x) =>
           t.root_category_name == thing.root_category_name
-        // x.down1_category_name==thing.down1_category_name
-        )))
-  const searchProduct=(e)=>{
+          // x.down1_category_name==thing.down1_category_name
+      )
+  );
+
+  const level1category = categorydata.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex(
+        (t, x) =>
+          t.down1_category_name == thing.down1_category_name
+          // x.down1_category_name==thing.down1_category_name
+      )
+  );
+
+  const level2category = categorydata.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex(
+        (t, x) =>
+          t.down2_category_name == thing.down2_category_name
+          // x.down1_category_name==thing.down1_category_name
+      )
+  );
+  
+
+  const searchProduct = (e) => {
     e.preventDefault();
     // let search=e.target.formSearchInputBox.value;
     // console.log("------->>>"+search=`${search}`)
-    navigate(`/shop?search=${search}`)
-  }
+    navigate(`/shop?search=${search}`);
+  };
   useEffect(() => {
     function getProductData() {
       try {
         axios
-        .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
-        .then((response) => {
+          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
+          .then((response) => {
             let data = response.data;
             setPdata(data);
             setapicall(false);
@@ -70,21 +95,19 @@ const [apicall, setapicall] = useState(false);
     }
 
     getProductData();
-  }, [apicall,props.addcart]);
-  const deleteCart=(id,user_id)=>{
-    console.log("id++++++++++++++++"+   id  )
-    console.log("user_id++++++++++++++++"+ user_id  )
+  }, [apicall, props.addcart]);
+  const deleteCart = (id, user_id) => {
     axios
-    .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
-      id:id,
-      user_id:user_id
-    })
-    .then((response) => {
-      let data = response.data;
-      console.log("setDELETEEEEEEECartDataaaaaaaa-------------------"+JSON.stringify(data))
-      setapicall(true);
-    });
-  }
+      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
+        id: id,
+        user_id: user_id,
+      })
+      .then((response) => {
+        let data = response.data;
+        setapicall(true);
+      });
+  };
+
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -121,19 +144,25 @@ const [apicall, setapicall] = useState(false);
                       <div className="center-box">
                         <div className="searchbar-box order-xl-1 d-none d-xl-block">
                           <input
-                            onChange={(e)=>{setsearch(e.target.value)}}
+                            onChange={(e) => {
+                              setsearch(e.target.value);
+                            }}
                             type="search"
                             className="form-control"
                             // id="formSearchInputBox"
                             name="formSearchInputBox"
                             placeholder="search for product, delivered to your door..."
                             value={search}
-                            onKeyPress={event => {
+                            onKeyPress={(event) => {
                               if (event.key === "Enter") {
-                                searchProduct(event)
-                              }}}
+                                searchProduct(event);
+                              }
+                            }}
                           />
-                          <button className="btn search-button" onClick={searchProduct}>
+                          <button
+                            className="btn search-button"
+                            onClick={searchProduct}
+                          >
                             <i className="fa-regular fa-magnifying-glass"></i>
                           </button>
                         </div>
@@ -159,13 +188,18 @@ const [apicall, setapicall] = useState(false);
                       className="btn theme-bg-color ms-3 fire-button"
                     > */}
 
-                    {useridd ? 
-                    <Link to="/login" onClick={()=> localStorage.removeItem("userid")}>
-                      <span>Login Out</span>
-                    </Link> :
-                    <Link to="/login">
-                      <span>Login </span>
-                    </Link>}
+                    {useridd ? (
+                      <Link
+                        to="/login"
+                        onClick={() => localStorage.removeItem("userid")}
+                      >
+                        <span>Login Out</span>
+                      </Link>
+                    ) : (
+                      <Link to="/login">
+                        <span>Login </span>
+                      </Link>
+                    )}
                     {/* </NavLink> */}
                   </div>
                   <div className="right-nav">
@@ -180,7 +214,7 @@ const [apicall, setapicall] = useState(false);
                     {/* </NavLink> */}
                   </div>
                   <div className="rightside-menu">
-                    <div className="dropdown-dollar">
+                    {/* <div className="dropdown-dollar">
                       <Dropdown>
                         <Dropdown.Toggle variant="white" id="dropdown-basic">
                           Language
@@ -207,18 +241,20 @@ const [apicall, setapicall] = useState(false);
                           <Dropdown.Item>AUD</Dropdown.Item>
                         </Dropdown.Menu>
                       </Dropdown>
-                    </div>
+                    </div> */}
                     <div className="option-list">
                       <ul className="m-0">
                         <li>
-                          <Link to="/"
+                          <Link
+                            to="/"
                             className="header-icon user-icon search-icon"
                           >
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </Link>
                         </li>
                         <li>
-                          <Link to="/"
+                          <Link
+                            to="/"
                             className="header-icon search-box search-icon"
                           >
                             <i className="fa-regular fa-magnifying-glass"></i>
@@ -232,58 +268,72 @@ const [apicall, setapicall] = useState(false);
                             <i className="fa-regular fa-heart icon_color"></i>
                           </Link>
                         </li>
+
+                        {/* cart view */}
                         <li className="onhover-dropdown ">
                           <NavLink to="/cart" className="header-icon bag-icon ">
-                            <small className="badge-number">{pdata.length === 0 || pdata.length === '' || pdata.length === '0' ? '0' :pdata.length}</small>
+                            <small className="badge-number">
+                              {pdata.length === 0 ||
+                              pdata.length === "" ||
+                              pdata.length === "0"
+                                ? "0"
+                                : pdata.length}
+                            </small>
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">
-                            <ul className="cart-list " style={{flexDirection: "column"}}>
-                            {(pdata || []).map((data)=>{
-                               for (let i = 0; i < data.length; i++) {
-                                var Total = 0;
-                                Total += data[i].quantity * data[i].price;
-                              setProductPriceTotal(Total)
-                              }
+                            <ul
+                              className="cart-list "
+                              style={{ flexDirection: "column" }}
+                            >
+                              {(pdata || []).map((data) => {
+                                for (let i = 0; i < data.length; i++) {
+                                  var Total = 0;
+                                  Total += data[i].quantity * data[i].price;
+                                  setProductPriceTotal(Total);
+                                }
 
-                                 return(
-                              <li >
-                                <div className="drop-cart ">
-                                    <Link to="/"
-                                    className="drop-image"
-                                  >
-                                    <img
-                                      src="../public/vegetable/product/1.png"
-                                      className="lazyload"
-                                      alt=""
-                                    />
-                                  </Link>
+                                return (
+                                  <li>
+                                    <div className="drop-cart ">
+                                      <Link to="/" className="drop-image">
+                                        <img
+                                          src="../public/vegetable/product/1.png"
+                                          className="lazyload"
+                                          alt=""
+                                        />
+                                      </Link>
 
-                                  <div className="drop-contain">
-                                   
-                                    <Link to="/">
-                                      <h5>
-                                        {data.product_title_name}
-                                      </h5>
-                                    </Link>
-                                    <h6>
-                                      <span className="im=block">{data.quantity}x</span> <span>
-                                      ₹{data.product_price}
-                                        </span>
-                                      {/* <span>{data.sale_price}</span> */}
-                                    </h6>
-                                    <button className="close-button" onClick={()=> deleteCart(data.id,data.user_id)}>
-                                      <i className="fa-solid fa-xmark"></i>
-                                    </button>
-                                  </div>
-                                </div>
-                              </li>
-                              )
-                            })}
-                              </ul>
+                                      <div className="drop-contain">
+                                        <Link to="/">
+                                          <h5>{data.product_title_name}</h5>
+                                        </Link>
+                                        <h6>
+                                          <span className="im=block">
+                                            {data.quantity}x
+                                          </span>{" "}
+                                          <span>₹{data.product_price}</span>
+                                          {/* <span>{data.sale_price}</span> */}
+                                        </h6>
+                                        <button
+                                          className="close-button"
+                                          onClick={() =>
+                                            deleteCart(data.id, data.user_id)
+                                          }
+                                        >
+                                          <i className="fa-solid fa-xmark"></i>
+                                        </button>
+                                      </div>
+                                    </div>
+                                  </li>
+                                );
+                              })}
+                            </ul>
                             <div className="price-box">
                               <h5>Price :</h5>
-                              <h4 className="theme-color fw-bold">₹{ProductPriceTotal}</h4>
+                              <h4 className="theme-color fw-bold">
+                                ₹{ProductPriceTotal}
+                              </h4>
                             </div>
                             <div className="button-group">
                               <NavLink
@@ -301,6 +351,7 @@ const [apicall, setapicall] = useState(false);
                             </div>
                           </div>
                         </li>
+                        {/* end cart view */}
                       </ul>
                     </div>
                   </div>
@@ -309,7 +360,7 @@ const [apicall, setapicall] = useState(false);
             </div>
           </div>
         </div>
-
+        {/* category */}
         <div className="container-fluid-lg">
           <div className="row">
             <div className="col-12">
@@ -340,485 +391,62 @@ const [apicall, setapicall] = useState(false);
                       </button>
                     </div>
                     <Accordion>
-                       
-                        {result.map((catdata)=>{
-                      return(
-                        <>
-                      <Accordion.Item eventKey="0">
-                        <Accordion.Header>{catdata.root_category_name}</Accordion.Header>
-                        <Accordion.Body>
-                          <div className="onhover-category-box">
-                            <div className="list-1">
-                              <div className="category-title-box">
-                                <div>
-                                  <h5>{catdata.down1_category_name}</h5>
+                      {result.map((catdata, i) => {
+                        return (
+                          <>
+                            <Accordion.Item eventKey={catdata.root_id}>
+                              <Accordion.Header>
+                                {catdata.root_category_name}
+                              </Accordion.Header>
+
+                              <Accordion.Body>
+                                <div className="onhover-category-box">
+                                  {(level1category || []).map((data) => {
+                                    return (catdata.root_category_name ===
+                                      data.root_category_name  &&  data.down1_category_name !== null) ? (
+                                      <div className="list-1">
+                                        <div className="category-title-box">
+                                          <div>
+                                            <h5>{data.down1_category_name}</h5>
+                                          </div>
+                                        </div>
+                                        <ul className="p-0">
+                                          {(level2category || []).map(
+                                            (data1) => {
+                                              return data.down1_category_name ===
+                                                data1.down1_category_name  &&  data.down2_category_name !== null ? (
+                                                <li className="w-100">
+                                                    {data1.down2_category_name}
+                                                    <ul>
+                                                      {(categorydata || []).map((data2)=>{
+                                                        return(
+                                                          data1.down2_category_name ===
+                                                          data2.down2_category_name &&  data.down3_category_name !== null ? 
+                                                  <li className="w-100">
+                                                      {data2.down3_category_name}
+                                                      </li>
+                                                      : null
+                                                        )
+                                                      })}
+                                                      
+                                                    </ul>
+                                                </li>
+                                              ) : null;
+                                            }
+                                          )}
+                                        </ul>
+                                      </div>
+                                    ) : null;
+                                  })}
+                                 
                                 </div>
-
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                  {catdata.down2_category_name}
-                                  </Link>
-                                </li>
-                                {/* <li>
-                                  <Link to="/">
-                                    Cucumber & Capsicum
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Leafy Vegetables
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Root Vegetables
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Beans & Okra</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Cabbage & Cauliflower
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Gourd & Drumstick
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Specialty</Link>
-                                </li> */}
-                              </ul>
-                            </div>
-                            {/* <div className="list-2">
-                              <div className="category-title-box">
-                                <h5>Fresh Fruit</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Banana & Papaya
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Kiwi, Citrus Fruit
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Apples & Pomegranate
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Seasonal Fruits
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Mangoes</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Fruit Baskets</Link>
-                                </li>
-                              </ul>
-                            </div> */}
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      </>
- )})}
-   </Accordion>
-                      {/* <Accordion.Item eventKey="1">
-                        <Accordion.Header>Beverages</Accordion.Header>
-                        <Accordion.Body>
-                          <div className="onhover-category-box">
-                            <div className="list-1 single_list">
-                              <div className="category-title-box">
-                                <h5>Energy & Soft Drinks</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Soda & Cocktail Mix
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Soda & Cocktail Mix
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Sports & Energy Drinks
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Non Alcoholic Drinks
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Packaged Water</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Spring Water</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Flavoured Water</Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="2">
-                        <Accordion.Header>Meats & Seafood</Accordion.Header>
-                        <Accordion.Body>
-                          <div className="onhover-category-box">
-                            <div className="list-1">
-                              <div className="category-title-box">
-                                <h5>Meat</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">Fresh Meat</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Frozen Meat</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Marinated Meat
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Fresh & Frozen Meat
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-
-                            <div className="list-2">
-                              <div className="category-title-box">
-                                <h5>Seafood</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Fresh Water Fish
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Dry Fish</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Frozen Fish & Seafood
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Marine Water Fish
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Canned Seafood
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Prawans & Shrimps
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Other Seafood</Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="3">
-                        <Accordion.Header>Breakfast & Dairy</Accordion.Header>
-                        <Accordion.Body>
-                          <div className="onhover-category-box">
-                            <div className="list-1">
-                              <div className="category-title-box">
-                                <h5>Breakfast Cereals</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Oats & Porridge
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Kids Cereal</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Muesli</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Flakes</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Granola & Cereal Bars
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Instant Noodles
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Pasta & Macaroni
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Frozen Non-Veg Snacks
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-
-                            <div className="list-2">
-                              <div className="category-title-box">
-                                <h5>Dairy</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">Milk</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Curd</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Paneer, Tofu & Cream
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Butter & Margarine
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Condensed, Powdered Milk
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Buttermilk & Lassi
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Yogurt & Shrikhand
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Flavoured, Soya Milk
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="4">
-                        <Accordion.Header>Frozen Foods</Accordion.Header>
-                        <Accordion.Body>
-                          <div className="onhover-category-box w-100">
-                            <div className="list-1 single_list">
-                              <div className="category-title-box">
-                                <h5>Noodle, Pasta</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Instant Noodles
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Hakka Noodles</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Cup Noodles</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Vermicelli</Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Instant Pasta</Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="5">
-                        <Accordion.Header>Biscuits & Snacks</Accordion.Header>
-                        <Accordion.Body>
-                          <div className="onhover-category-box">
-                            <div className="list-1">
-                              <div className="category-title-box">
-                                <h5>Biscuits & Cookies</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Salted Biscuits
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Marie, Health, Digestive
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Cream Biscuits & Wafers
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Glucose & Milk Biscuits
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">Cookies</Link>
-                                </li>
-                              </ul>
-                            </div>
-
-                            <div className="list-2">
-                              <div className="category-title-box">
-                                <h5>Bakery Snacks</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Bread Sticks & Lavash
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Cheese & Garlic Bread
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Puffs, Patties, Sandwiches
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Breadcrumbs & Croutons
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item>
-                      <Accordion.Item eventKey="6">
-                        <Accordion.Header>Grocery & Staples</Accordion.Header>
-                        <Accordion.Body>
-                          <div className="onhover-category-box">
-                            <div className="list-1">
-                              <div className="category-title-box">
-                                <h5>Grocery</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Lemon, Ginger & Garlic
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Indian & Exotic Herbs
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Vegetables
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Fruits
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-
-                            <div className="list-2">
-                              <div className="category-title-box">
-                                <h5>Organic Staples</h5>
-                              </div>
-                              <ul className="p-0">
-                                <li>
-                                  <Link to="/">
-                                    Organic Dry Fruits
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Dals & Pulses
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Millet & Flours
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Sugar, Jaggery
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Masalas & Spices
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Rice, Other Rice
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Flours
-                                  </Link>
-                                </li>
-                                <li>
-                                  <Link to="/">
-                                    Organic Edible Oil, Ghee
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </Accordion.Body>
-                      </Accordion.Item> */}
-                     
-                     
-                  
-                    
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </>
+                        );
+                      })}
+                    </Accordion>
+                   
                   </div>
                 </div>
 
@@ -867,11 +495,13 @@ const [apicall, setapicall] = useState(false);
                                 <span>Sweetshop</span>
                               </Link>
 
-                              <Link to="/" className="dropdown-item">                                <img
-                                src="../public/theme/3.jpg"
-                                className="img-fluid"
-                                alt=""
-                              />
+                              <Link to="/" className="dropdown-item">
+                                {" "}
+                                <img
+                                  src="../public/theme/3.jpg"
+                                  className="img-fluid"
+                                  alt=""
+                                />
                                 <span>Organic</span>
                               </Link>
 
@@ -906,57 +536,37 @@ const [apicall, setapicall] = useState(false);
 
                           <ul className="dropdown-menu ps-4">
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Shop Category Slider
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Shop Category Sidebar
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Shop Banner
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Shop Left Sidebar
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Shop List
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Shop Right Sidebar
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Shop Top Filter
                               </Link>
                             </li>
@@ -973,53 +583,37 @@ const [apicall, setapicall] = useState(false);
 
                           <ul className="dropdown-menu ps-4">
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Product 4 Image
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Product Bottom Thumbnail
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Product Left Thumbnail
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Product Left
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Product Right Thumbnail
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Product Slider
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Product Sticky
                               </Link>
                             </li>
@@ -1027,9 +621,9 @@ const [apicall, setapicall] = useState(false);
                         </li>
 
                         <li className="nav-item dropdown dropdown-mega">
-                          <Link to="/"
+                          <Link
+                            to="/"
                             className="nav-link dropdown-toggle ps-xl-2 ps-0"
-
                             data-bs-toggle="dropdown"
                           >
                             Mega Menu
@@ -1040,104 +634,62 @@ const [apicall, setapicall] = useState(false);
                               <h5 className="dropdown-header">
                                 Daily Vegetables
                               </h5>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Beans & Brinjals
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Broccoli & Cauliflower
                               </Link>
 
-                              <Link to="/"
-
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Chilies, Garlic
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Vegetables & Salads
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Gourd, Cucumber
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Herbs & Sprouts
                               </Link>
 
-                              <Link to="/"
-
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Lettuce & Leafy
                               </Link>
                             </div>
 
                             <div className="dropdown-column col-xl-3">
                               <h5 className="dropdown-header">Baby Tender</h5>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Beans & Brinjals
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Broccoli & Cauliflower
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Chilies, Garlic
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Vegetables & Salads
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Gourd, Cucumber
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Potatoes & Tomatoes
                               </Link>
 
-                              <Link to="/"
-
-                                className="dropdown-item"
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Peas & Corn
                               </Link>
                             </div>
@@ -1146,38 +698,23 @@ const [apicall, setapicall] = useState(false);
                               <h5 className="dropdown-header">
                                 Exotic Vegetables
                               </h5>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Asparagus & Artichokes
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Avocados & Peppers
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Broccoli & Zucchini
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Celery, Fennel & Leeks
                               </Link>
 
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Chilies & Lime
                               </Link>
                             </div>
@@ -1187,9 +724,9 @@ const [apicall, setapicall] = useState(false);
                         </li>
 
                         <li className="nav-item dropdown">
-                          <Link to="/"
+                          <Link
+                            to="/"
                             className="nav-link dropdown-toggle"
-
                             data-bs-toggle="dropdown"
                           >
                             Blog
@@ -1205,10 +742,7 @@ const [apicall, setapicall] = useState(false);
                               </NavLink>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Blog Grid
                               </Link>
                             </li>
@@ -1224,16 +758,16 @@ const [apicall, setapicall] = useState(false);
                         </li>
 
                         <li className="nav-item dropdown">
-                          <Link to="/"
+                          <Link
+                            to="/"
                             className="nav-link dropdown-toggle"
-
                             data-bs-toggle="dropdown"
                           >
                             Pages
                           </Link>
                           <ul className="dropdown-menu ps-4">
                             <li>
-                              <Link to="/" className="dropdown-item" >
+                              <Link to="/" className="dropdown-item">
                                 404
                               </Link>
                             </li>
@@ -1248,15 +782,10 @@ const [apicall, setapicall] = useState(false);
                               </Link>
                             </li>
                             <li>
-                              <Link className="dropdown-item">
-                                Checkout
-                              </Link>
+                              <Link className="dropdown-item">Checkout</Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Coming Soon
                               </Link>
                             </li>
@@ -1271,23 +800,20 @@ const [apicall, setapicall] = useState(false);
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Order Success
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 Order Tracking
                               </Link>
                             </li>
                             <li>
-                              <Link to="/otp_verification" className="dropdown-item">
+                              <Link
+                                to="/otp_verification"
+                                className="dropdown-item"
+                              >
                                 OTP
                               </Link>
                             </li>
@@ -1297,10 +823,7 @@ const [apicall, setapicall] = useState(false);
                               </Link>
                             </li>
                             <li>
-                              <Link to="/"
-                                className="dropdown-item"
-
-                              >
+                              <Link to="/" className="dropdown-item">
                                 User Dashboard
                               </Link>
                             </li>
@@ -1347,6 +870,7 @@ const [apicall, setapicall] = useState(false);
             </div>
           </div>
         </div>
+        {/* end category */}
       </header>
       <div className="mobile-menu d-md-none d-block mobile-cart">
         <ul className="p-0">

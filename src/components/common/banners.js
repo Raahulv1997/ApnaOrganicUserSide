@@ -19,7 +19,7 @@ const useridd = localStorage.getItem("userid")
       function getProductData() {
         try {
           axios
-          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=6`,{
+          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,{
             "product_search":{
             "search":"",
                 }
