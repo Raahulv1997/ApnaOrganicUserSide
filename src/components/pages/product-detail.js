@@ -280,33 +280,35 @@ console.log("eeeeee---"+c)
                           <div className="product-title"> 
                        <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
                           </div>
+                          
+                          <ul className="select-packege">
                           {(productDetails.product_verient).map((details) => {
                            
                            return (
-                          <ul className="select-packege">
-                         
                             <>
-                       <li className={size == details.size ? "active": null}>
+                             <li>
                           
                           <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.colors)}}
                          className={size == details.size ? "active" : null} 
                            >
                            {details.size}
                          </Link>
-                         </li>
-                          <li className={colors == details.colors ?"active": null}>
+                        </li>
+                        <li>
                           <Link  onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.colors)}}
                           className={colors == details.colors ? "active " : null }
                             >
                             {details.colors}
                           </Link>
                        </li>
+                            </>
                       
-                       </>
-                        
-                       </ul>
+                      
                        );
                       })}
+                        
+                       </ul>
+                     
                          
                         </div> : null }
                         <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
