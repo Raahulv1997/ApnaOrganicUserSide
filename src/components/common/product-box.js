@@ -46,6 +46,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
           });
        
         }
+        // console.log('', window.location.pathname);
          wlist = window.location.pathname
     const AddToWishList= () =>{
 
@@ -60,7 +61,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
               })
             .then((response) => {
                 let data = response.data;
-            console.log("wishlistttttt----------   " + JSON.stringify(data));
+            console.log("wishlistttttt----------" + JSON.stringify(data));
             setData(response.data);
             setWlistData('remove')
             //   setapicall(true);
@@ -99,7 +100,7 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
                 let data = response.data;
                 setData(data.results);
                 // setProductId(data);
-            //    console.log("PRODUCT============"+JSON.stringify(data))
+            //console.log("PRODUCT============"+JSON.stringify(data))
                 setapicall(false);
               });
           } catch (err) {}
@@ -122,8 +123,6 @@ const ProductBox=({id,name,image,productPrice, productMRF,productid,special_offe
                     <span className='discount_ribbon mb-1'>{discount}</span>
                     }
                 </div>
-
-
                 <div className="label-flex">
                     <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
                     <i className="fa-regular fa-heart"  onClick={AddToWishList}></i>
