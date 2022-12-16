@@ -33,9 +33,6 @@ const Cart = (props) => {
     let data = response.data;
     setapicall(true);
     console.log("-------------------"+JSON.stringify(data))
-    // quantity = quantity + 1;
-    console.log("updateeeeeeeDATAAAA-------------------"+JSON.stringify(quantity + 1))
-
     setQuantity(quantity=quantity+1)
  })
    
@@ -43,13 +40,11 @@ const Cart = (props) => {
   const decrementCount=(id,quantity)=> {
     let dec;
     if(quantity>0){
-
        dec=quantity-1;
     }
     else{
       return(false);
     }
-
     axios
     .put(`${process.env.REACT_APP_BASEURL}/cart_update`,{
       id:id,
@@ -98,15 +93,6 @@ const Cart = (props) => {
       setapicall(true);
     });
   }
-  // const dataMapped = apiData.map(() => {
-  //   return (
-    
-  //     setCount(prevState => (prevState+1))
-    
-  //   )
-  // })
-  // // Do not store React elements inside state
-  // setData(prevState => ([...prevState, ...dataMapped]))
   var ProductPriceTotal = 0;
   // payement 
   const onProccedClick =() =>{
@@ -116,7 +102,7 @@ const Cart = (props) => {
 
   return (
     <Fragment>
-      <Header />
+      <Header/>
       <Breadcumb pageName={"Cart"} pageTitle={"Cart page"} pageHref={"/"} />
       {/* <!-- Cart Section Start --> */}
       <section className="cart-section section-b-space">
@@ -127,9 +113,9 @@ const Cart = (props) => {
                 <div className="table-responsive-xl">
                   <table className="table">
                     {cartdata.map((cdata)=>{
-                       for (let i = 0; i < cdata.length; i++) {
-                        ProductPriceTotal += cdata[i].quantity * cdata[i].price;
-                      }
+                      //  for (let i = 0; i < cdata.length; i++) {
+                      //   ProductPriceTotal += cdata[i].quantity * cdata[i].price;
+                      // }
                        return(
                         <tbody key={cdata.id}>
                             <tr  className="product-box-contain">
@@ -151,11 +137,11 @@ const Cart = (props) => {
                                   </li>
   
                                   <li className="text-content">
-                                    <span className="text-title">Sold By:{product1.seller_detail}</span>
+                                    <span className="text-title">Sold By:{cdata.vendor_id}</span>
                                   </li>
   
                                   <li className="text-content">
-                                    <span className="text-title">Quality:{cdata.quantity}</span>
+                                    <span className="text-title">Quatity:{cdata.quantity}</span>
                                   </li>
   
                                   <li>
@@ -209,7 +195,7 @@ const Cart = (props) => {
                           <td className="price">
                             <h4 className="table-title text-content">Price</h4>
                             <h5>
-                              {cdata.price} <del className="text-content">{cdata.price+cdata.discount}</del>
+                              {cdata.product_price} <del className="text-content">{cdata.mrp}</del>
                             </h5>
                             <h6 className="theme-color">You Save:{cdata.discount}</h6>
                           </td>
@@ -251,7 +237,7 @@ const Cart = (props) => {
   
                           <td className="subtotal">
                             <h4 className="table-title text-content">Total</h4>
-                            <h5>{cdata.quantity * cdata.price}</h5>
+                            <h5>{parseInt(cdata.quantity) * parseInt(cdata.product_price)}</h5>
                           </td>
   
                           <td className="save-remove">

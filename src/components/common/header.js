@@ -15,9 +15,10 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
-const Header = () => {
+const Header = (props) => {
   const useridd = localStorage.getItem("userid")
-
+const [ProductPriceTotal,setProductPriceTotal] = useState(0)
+const [apicall, setapicall] = useState(false);
   const[categorydata,setCategoryData]=useState([]);
   const[pdata,setPdata]=useState([]);
   const navigate= useNavigate()
@@ -63,14 +64,27 @@ const Header = () => {
         .then((response) => {
             let data = response.data;
             setPdata(data);
-            // setapicall(false);
+            setapicall(false);
           });
       } catch (err) {}
     }
 
     getProductData();
-  }, []);
-
+  }, [apicall,props.addcart]);
+  const deleteCart=(id,user_id)=>{
+    console.log("id++++++++++++++++"+   id  )
+    console.log("user_id++++++++++++++++"+ user_id  )
+    axios
+    .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
+      id:id,
+      user_id:user_id
+    })
+    .then((response) => {
+      let data = response.data;
+      console.log("setDELETEEEEEEECartDataaaaaaaa-------------------"+JSON.stringify(data))
+      setapicall(true);
+    });
+  }
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -144,10 +158,14 @@ const Header = () => {
                       to="/login"
                       className="btn theme-bg-color ms-3 fire-button"
                     > */}
-                    <Link to="/login">
-                      <span>Login</span>
-                    </Link>
 
+                    {useridd ? 
+                    <Link to="/login" onClick={()=> localStorage.removeItem("userid")}>
+                      <span>Login Out</span>
+                    </Link> :
+                    <Link to="/login">
+                      <span>Login </span>
+                    </Link>}
                     {/* </NavLink> */}
                   </div>
                   <div className="right-nav">
@@ -222,6 +240,12 @@ const Header = () => {
                           <div className="onhover-div">
                             <ul className="cart-list " style={{flexDirection: "column"}}>
                             {(pdata || []).map((data)=>{
+                               for (let i = 0; i < data.length; i++) {
+                                var Total = 0;
+                                Total += data[i].quantity * data[i].price;
+                              setProductPriceTotal(Total)
+                              }
+
                                  return(
                               <li >
                                 <div className="drop-cart ">
@@ -248,7 +272,7 @@ const Header = () => {
                                         </span>
                                       {/* <span>{data.sale_price}</span> */}
                                     </h6>
-                                    <button className="close-button">
+                                    <button className="close-button" onClick={()=> deleteCart(data.id,data.user_id)}>
                                       <i className="fa-solid fa-xmark"></i>
                                     </button>
                                   </div>
@@ -259,7 +283,7 @@ const Header = () => {
                               </ul>
                             <div className="price-box">
                               <h5>Price :</h5>
-                              <h4 className="theme-color fw-bold">₹106.58</h4>
+                              <h4 className="theme-color fw-bold">₹{ProductPriceTotal}</h4>
                             </div>
                             <div className="button-group">
                               <NavLink

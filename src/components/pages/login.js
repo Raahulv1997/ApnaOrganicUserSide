@@ -50,7 +50,8 @@ const Login = () => {
                 </div>
 
                 <div className="input-box">
-                  <form className="row g-4" >
+                        
+                  <form className="row g-4" onSubmit={onSubmitClick}>
                     <div className="col-12">
                       <div className="form-floating theme-form-floating log-in-form">
                         <input
@@ -153,8 +154,8 @@ const Login = () => {
                     <div className="col-12">
                       <button
                         className="btn btn-animation w-100 justify-content-center"
-                        // type="submit"
-                        onClick={onSubmitClick}
+                        type="submit"
+                        // onClick={onSubmitClick}
                       >
                         Log In
                       </button>

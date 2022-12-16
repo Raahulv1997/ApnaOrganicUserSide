@@ -25,6 +25,8 @@ import moment from "moment";
 
 function Account() {
   const useridd = localStorage.getItem("userid")
+  const userpass =localStorage.getItem("upassword")
+
   const func=()=>{}
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -35,12 +37,16 @@ function Account() {
   const addAdderssClose = () => setaddAdderss(false);
   const addAdderssShow = () => setaddAdderss(true);
   const [wishlistdata, setwishlistdata] = useState([]);
+  const [orderhistory, setorderhistory] = useState([]);
+  const [totalorder, settotalorder] = useState('');
+
+
   const [userdata, setuserdata] = useState(
     {
     user_id:useridd,
     first_name:"",
     last_name:"",
-    password:"",
+    // password:"",
     email:"",
     phone_no:"",
     gender:"",
@@ -57,8 +63,9 @@ function Account() {
   }).catch(error => {
     console.log(error.response.error)
   })
-
- },[])
+  setwishlistclick();
+  OnOrderclick();
+ },[Password])
  
 // wishlist
 
@@ -75,7 +82,28 @@ const setwishlistclick = () =>{
   setclick(false)
 
 }
-console.log("----whisijd"+JSON.stringify(wishlistdata))
+
+// order history
+const OnOrderclick = () =>{
+  axios.get(`${process.env.REACT_APP_BASEURL}/user_orders?user_id=${useridd}`)
+  .then(response => {
+    setorderhistory(response.data)
+     var  result = response.data.filter((thing, index, self) =>
+      index === self.findIndex((t) => (
+       ( t.order_id == thing.order_id ) 
+      )
+      )
+  )
+  settotalorder(result.length)
+
+    // navigate('/your_account')
+    // return response;
+  }).catch(error => {
+    console.log(error.response.error)
+  })
+  setclick(false)
+}
+// end order history
 
   // edit Profile
   const handleSubmit = (event) => {
@@ -83,7 +111,6 @@ console.log("----whisijd"+JSON.stringify(wishlistdata))
     let form = event.currentTarget;
     // const name = event.target.value;
     // console.log("+++++++++FORMDATA"+event.target.DOB.value);
-
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
@@ -92,9 +119,7 @@ console.log("----whisijd"+JSON.stringify(wishlistdata))
     // eslint-disable-next-line no-undef
     axios.post(`${process.env.REACT_APP_BASEURL}/user_register`,userdata)
     .then(response => {
-      console.log("___--------save------"+JSON.stringify(response.data));
-      // navigate('/your_account')
-      // return response;
+      setShow(false)
     }).catch(error => {
       console.log(error.response.data.error)
     })
@@ -112,12 +137,12 @@ console.log("----whisijd"+JSON.stringify(wishlistdata))
   // change Password
 
   const [changepass, setchangepass] = useState({
-    email:`${userdata.email}`,
-    password:userdata.password,
+    email:'',
+    password:'',
     new_password:""
   });
  const ChangepassShow = () => {
-  // setchangepass(userdata)
+   setchangepass((changepass) =>{ return {...changepass,  email : `${userdata.email}`}});
   setPassword(true);
 }
 const OnchangePass = (e) => {
@@ -126,8 +151,6 @@ const OnchangePass = (e) => {
     [e.target.name]: e.target.value,
   });
 };
-console.log(JSON.stringify(changepass));
-
 const [formError, setFormError] = useState({
   currentPass: "",
   newPass: "",
@@ -138,8 +161,8 @@ const handlePassSubmit = (event) => {
   event.preventDefault();
   if (
     changepass.confirmpassword === undefined &&
-    changepass.newPass === undefined &&
-    changepass.currentpassword === undefined
+    changepass.new_password === undefined &&
+    changepass.password === undefined
   ) {
     setFormError({
       allPass: "All field are required",
@@ -147,26 +170,23 @@ const handlePassSubmit = (event) => {
 
     return false;
   }
-  if (changepass.currentpassword === undefined) {
+  if (changepass.password === undefined) {
     setFormError({
       currentPass: "Please enter current password",
     });
 
     return false;
   }
-  if (changepass.currentpassword !== "1234") {
-    setFormError({
-      currentPass: "Not match with current password",
-    });
-    return false;
-  }
-
-
-  if (changepass.newpassword === undefined) {
+  // if (changepass.password !== userpass) {
+  //   setFormError({
+  //     currentPass: "Not match with current password",
+  //   });
+  //   return false;
+  // }
+  if (changepass.new_password === undefined) {
     setFormError({
       newPass: "Please enter New password",
     });
-
     return false;
   }
 
@@ -174,18 +194,34 @@ const handlePassSubmit = (event) => {
     setFormError({
       confirmPass: "Please enter confirm password",
     });
-
     return false;
   }
 
-  if (changepass.confirmpassword !== changepass.newpassword) {
+  if (changepass.confirmpassword !== changepass.new_password) {
     setFormError({
       confirmPass: "Password & Confirm password not match",
     });
     return false;
   }
+  if(changepass.confirmpassword === changepass.new_password){
+    axios.post(`${process.env.REACT_APP_BASEURL}/change_user_password`,
+    {
+    "email":changepass.email,
+    "password":changepass.password,
+    "new_password":changepass.new_password
+  })
+    .then(response => {
+      if(response === true){
+        localStorage.setItem("upassword", response.data.new_password)
+        setPassword(false)
+      }
+      // navigate('/your_account')
+      // return response;
+    }).catch(error => {
+      console.log(error.response.data.error)
+    })
+  }
   setFormError("");
-  console.log(changepass);
   ChangepassClose();
 };
 const ChangepassClose = () => setPassword(false);
@@ -194,7 +230,6 @@ const ChangepassClose = () => setPassword(false);
 const [click, setclick] = useState(false);
 const side_bar = () => {
   setclick(true);
-
 };
   
 
@@ -216,7 +251,6 @@ const side_bar = () => {
 
   const OnaddAdderss = (e) => {
     let name = e.target.value;
-
     console.log(name);
     setaddNewAdderss({
       ...changepass,
@@ -228,7 +262,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
   // e.preventDefault();
   axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
     "user_id":useridd,
-    "product_id":id,
+    "product_view_id":id,
     "price":product_price,
     "discount":discount,
     "quantity":1,
@@ -245,7 +279,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
 // end add to cart
   return (
     <React.Fragment>
-      <Header />
+      <Header  addcart={()=>AddToCart()}/>
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
@@ -336,7 +370,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                               role="tab"
                               aria-controls="pills-order"
                               aria-selected="false"
-                              onClick={() => setclick(false)}
+                              onClick={() => OnOrderclick()}
                             >
                               <BsHandbag className="mx-2" />
                               Order
@@ -509,12 +543,12 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                     />
                                     <div className="totle-detail">
                                       <h5>Total Order</h5>
-                                      <h3>3658</h3>
+                                      <h3>{totalorder}</h3>
                                     </div>
                                   </div>
                                 </div>
 
-                                <div className="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
+                                {/* <div className="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
                                   <div className="totle-contain">
                                     <img
                                       src="https://themes.pixelstrap.com/fastkart/assets/images/svg/pending.svg"
@@ -531,7 +565,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                       <h3>254</h3>
                                     </div>
                                   </div>
-                                </div>
+                                </div> */}
 
                                 <div className="col-xxl-4 col-lg-6 col-md-4 col-sm-6">
                                   <div className="totle-contain">
@@ -547,7 +581,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                     />
                                     <div className="totle-detail">
                                       <h5>Total Wishlist</h5>
-                                      <h3>32158</h3>
+                                      <h3>{wishlistdata.length}</h3>
                                     </div>
                                   </div>
                                 </div>
@@ -612,13 +646,13 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                 <div className="dashboard-contant-title">
                                   <h4>
                                     Address Book{" "}
-                                    <Link
+                                    {/* <Link
                                       to="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                     >
                                       Edit
-                                    </Link>
+                                    </Link> */}
                                   </h4>
                                 </div>
 
@@ -682,25 +716,30 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                               <svg className="icon-width bg-gray"></svg>
                             </span>
                           </div>
-
+                          {(orderhistory || []).map((data)=>{
+return(
                           <div className="order-contain">
                             <div className="order-box dashboard-bg-box">
+   
                               <div className="order-container">
                                 <div className="order-icon">
                                   <i data-feather="box"></i>
                                 </div>
 
+  
+
                                 <div className="order-detail">
                                   <h4>
-                                    Delivere <span>Panding</span>
+                                    Delivery <span>{data.status}</span>
                                   </h4>
                                   <h6 className="text-content">
                                     Gouda parmesan caerphilly mozzarella cottage
                                     cheese cauliflower cheese taleggio gouda.
                                   </h6>
                                 </div>
+                                   
                               </div>
-
+                              
                               <div className="product-order-detail">
                                 <Link
                                   to="product-left.html"
@@ -728,7 +767,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                         <h6 className="text-content">
                                           Price :{" "}
                                         </h6>
-                                        <h5>$20.68</h5>
+                                        <h5>{data.price}</h5>
                                       </div>
                                     </li>
 
@@ -776,10 +815,33 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                         <h6 className="text-content">
                                           Sold By :{" "}
                                         </h6>
-                                        <h5>Fresho</h5>
+                                        <h5>{data.vendor_id}</h5>
                                       </div>
                                     </li>
-
+                                    <li>
+                                      <div className="size-box">
+                                        <h6 className="text-content">
+                                          Order Date :{" "}
+                                        </h6>
+                                        <h5>{data.order_date}</h5>
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div className="size-box">
+                                        <h6 className="text-content">
+                                          Delivery Date :{" "}
+                                        </h6>
+                                        <h5>{data.delivery_date}</h5>
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <div className="size-box">
+                                        <h6 className="text-content">
+                                          Stock :{" "}
+                                        </h6>
+                                        <h5>{data.quantity}</h5>
+                                      </div>
+                                    </li>
                                     <li>
                                       <div className="size-box">
                                         <h6 className="text-content">
@@ -791,348 +853,13 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                   </ul>
                                 </div>
                               </div>
+                          
                             </div>
 
-                            <div className="order-box dashboard-bg-box">
-                              <div className="order-container">
-                                <div className="order-icon">
-                                  <i data-feather="box"></i>
-                                </div>
-
-                                <div className="order-detail">
-                                  <h4>
-                                    Delivered{" "}
-                                    <span className="success-bg">Success</span>
-                                  </h4>
-                                  <h6 className="text-content">
-                                    Cheese on toast cheesy grin cheesy grin
-                                    cottage cheese caerphilly everyone loves
-                                    cottage cheese the big cheese.
-                                  </h6>
-                                </div>
-                              </div>
-
-                              <div className="product-order-detail">
-                                <Link
-                                  to="product-left.html"
-                                  className="order-image"
-                                >
-                                  <img
-                                    src={Product}
-                                    alt=""
-                                    className=" lazyload"
-                                  />
-                                </Link>
-
-                                <div className="order-wrap">
-                                  <Link to="product-left.html">
-                                    <h3>
-                                      Cold Brew Coffee Instant Coffee 50 g
-                                    </h3>
-                                  </Link>
-                                  <p className="text-content">
-                                    Pecorino paneer port-salut when the cheese
-                                    comes out everybody's happy red leicester
-                                    mascarpone blue castello cauliflower cheese.
-                                  </p>
-                                  <ul className="product-size p-0">
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Price :{" "}
-                                        </h6>
-                                        <h5>$20.68</h5>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Rate :{" "}
-                                        </h6>
-                                        <div className="product-rating ms-2">
-                                          <ul className="rating">
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i data-feather="star"></i>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Sold By :{" "}
-                                        </h6>
-                                        <h5>Fresho</h5>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Quantity :{" "}
-                                        </h6>
-                                        <h5>250 G</h5>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="order-box dashboard-bg-box">
-                              <div className="order-container">
-                                <div className="order-icon">
-                                  <i data-feather="box"></i>
-                                </div>
-
-                                <div className="order-detail">
-                                  <h4>
-                                    Delivere <span>Panding</span>
-                                  </h4>
-                                  <h6 className="text-content">
-                                    Cheesy grin boursin cheesy grin cheesecake
-                                    blue castello cream cheese lancashire melted
-                                    cheese.
-                                  </h6>
-                                </div>
-                              </div>
-
-                              <div className="product-order-detail">
-                                <Link
-                                  to="product-left.html"
-                                  className="order-image"
-                                >
-                                  <img
-                                    src={Product}
-                                    alt=""
-                                    className=" lazyload"
-                                  />
-                                </Link>
-
-                                <div className="order-wrap">
-                                  <Link to="product-left.html">
-                                    <h3>
-                                      Peanut Butter Bite Premium Butter Cookies
-                                      600 g
-                                    </h3>
-                                  </Link>
-                                  <p className="text-content">
-                                    Cow bavarian bergkase mascarpone paneer
-                                    squirty cheese fromage frais cheese slices
-                                    when the cheese comes out everybody's happy.
-                                  </p>
-                                  <ul className="product-size p-0">
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Price :{" "}
-                                        </h6>
-                                        <h5>$20.68</h5>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Rate :{" "}
-                                        </h6>
-                                        <div className="product-rating ms-2">
-                                          <ul className="rating">
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i data-feather="star"></i>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Sold By :{" "}
-                                        </h6>
-                                        <h5>Fresho</h5>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Quantity :{" "}
-                                        </h6>
-                                        <h5>250 G</h5>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
-
-                            <div className="order-box dashboard-bg-box">
-                              <div className="order-container">
-                                <div className="order-icon">
-                                  <i data-feather="box"></i>
-                                </div>
-
-                                <div className="order-detail">
-                                  <h4>
-                                    Delivered{" "}
-                                    <span className="success-bg">Success</span>
-                                  </h4>
-                                  <h6 className="text-content">
-                                    Caerphilly port-salut parmesan pecorino
-                                    croque monsieur dolcelatte melted cheese
-                                    cheese and wine.
-                                  </h6>
-                                </div>
-                              </div>
-
-                              <div className="product-order-detail">
-                                <Link
-                                  to="product-left.html"
-                                  className="order-image"
-                                >
-                                  <img
-                                    src={Product}
-                                    className=" lazyload"
-                                    alt=""
-                                  />
-                                </Link>
-
-                                <div className="order-wrap">
-                                  <Link to="product-left.html">
-                                    <h3>
-                                      SnackAmor Combo Pack of Jowar Stick and
-                                      Jowar Chips
-                                    </h3>
-                                  </Link>
-                                  <p className="text-content">
-                                    The big cheese cream cheese pepper jack
-                                    cheese slices danish fontina everyone loves
-                                    cheese on toast bavarian bergkase.
-                                  </p>
-                                  <ul className="product-size p-0">
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Price :{" "}
-                                        </h6>
-                                        <h5>$20.68</h5>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Rate :{" "}
-                                        </h6>
-                                        <div className="product-rating ms-2">
-                                          <ul className="rating">
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i data-feather="star"></i>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Sold By :{" "}
-                                        </h6>
-                                        <h5>Fresho</h5>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Quantity :{" "}
-                                        </h6>
-                                        <h5>250 G</h5>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
+                            
                           </div>
+                          )
+                            })}
                         </div>
                       </div>
                     </Tab.Pane>
@@ -1754,13 +1481,6 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                                     <h6>{userdata.email}</h6>
                                   </div>
                                 </li>
-
-                                <li>
-                                  <div className="location-box">
-                                    <BsCheck2Square />
-                                    <h6>Licensed for 2 years</h6>
-                                  </div>
-                                </li>
                               </ul>
                             </div>
 
@@ -2068,7 +1788,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                   </Form.Control.Feedback>
                 </Form.Group>
               </div>
-              <div className="col-md-6">
+              {/* <div className="col-md-6">
                 <Form.Group
                   className="mb-3 aos_input"
                   controlId="formBasicEmail"
@@ -2086,7 +1806,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                     Please Enter valid Password
                   </Form.Control.Feedback>
                 </Form.Group>
-              </div>
+              </div> */}
               <div className="col-md-6">
                 <Form.Group
                   className="mb-3 aos_input"
@@ -2241,6 +1961,8 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
                     placeholder="Current password"
                     value={changepass.password}
                     name={"password"}
+                    onChange={OnchangePass}
+
                   />
                   <p className="error-message">{formError.currentPass}</p>
                 </Form.Group>
@@ -2301,7 +2023,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
         </Form>
       </Modal>
 
-      <Modal size="md" show={addAdderss} onHide={addAdderssClose}>
+      {/* <Modal size="md" show={addAdderss} onHide={addAdderssClose}>
         <Form
           noValidate
           validated={addAdderssvalidated}
@@ -2424,7 +2146,7 @@ const AddToCart = (id , discount , product_price , quantity ) =>{
             </button>
           </Modal.Footer>
         </Form>
-      </Modal>
+      </Modal> */}
       <Footer />
     </React.Fragment>
   );
