@@ -21,6 +21,10 @@ const ProductDetail = () => {
   const[mrp,setMrp]=useState();
   const[size,setSize]=useState();
   const[colors,setColors]=useState('');
+  const[mfd,setMfd]=useState('');
+  const[exp,setExp]=useState('');
+  const[qut,setQut]=useState('');
+  const[varientId,setVarientId]=useState();
 
   const[discount,setDiscount]=useState();
   
@@ -56,7 +60,13 @@ let proid=localStorage.getItem("proid")
             setMrp(data.product_verient[0].mrp);
             setColors(data.product_verient[0].colors);
             setDiscount(data.product_verient[0].discount);
-            console.log("detailssssssssss-------------------"+JSON.stringify(data))
+            setSize(data.product_verient[0].size);
+            setMfd(data.product_verient[0].manufacturing_date);
+            setExp(data.product_verient[0].expire_date);
+            setQut(data.product_verient[0].quantity)
+            setVarientId(data.product_verient[0].id);
+
+            console.log("detailssssssssss-------------------"+JSON.stringify(data));
             // setapicall(false);
           });
       } catch (err) {}
@@ -64,26 +74,10 @@ let proid=localStorage.getItem("proid")
 
     getProductDetails();
   }, []);
-  // useEffect(() => {
-  //   function getStoreDetails() {
-  //     try {
-  //       axios
-  //         .get(`${process.env.REACT_APP_BASEURL}/vendors?id=2`)
-  //         .then((response) => {
-  //           let data = response.data;
-  //           console.log("stroreDETAILS-------------------"+JSON.stringify(data))
-  //           setStoreInfo(data);
-  //           // setapicall(false);
-  //         });
-  //     } catch (err) {}
-  //   }
-
-  //   getStoreDetails();
-  // }, []);
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:`${useridd}`,
-        product_id:`${productDetails.product_verient[0].id}`,
+        product_view_id:`${varientId}`,
         price:`${productDetails.product_verient[0].product_price}`,
         discount:`${productDetails.product_verient[0].discount}`,
         quantity:`${count}`,
@@ -93,13 +87,15 @@ let proid=localStorage.getItem("proid")
         let data = response.data;
         console.log("ADD CARTTT-------------------"+JSON.stringify(data))
         setProductDetails(data.results);
+        setVarientId();
+        console.log("variantiddddddddddd"+varientId)
       });
   }
   const AddToWishList= () =>{
     axios
 .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
     user_id:`${useridd}`,
-    product_view_id:`${productDetails.product_verient[0].id}`,
+    product_view_id:`${varientId}`,
     price:`${productDetails.product_verient[0].product_price}`,
     discount:`${productDetails.product_verient[0].discount}`,
 
@@ -115,18 +111,33 @@ setProductDetails(data.results)
 });
 
 }
-// console.log("_____ulluu)______--> "+productDetails.product_verient)
-// console.log("eeeeee---"+productprice)
-
-const setproductprice = (e,f,g,c)=>{
-  setProductprice(e)
-  setMrp(f)
-  setSize(g)
-  setColors(c)
-console.log("eeeeee---"+c)
 
 
+const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id)=>{
+  setProductprice(product_price);
+  setMrp(mrpp);
+  setSize(sizee);
+  setMfd(mfdd);
+  setExp(expp);
+  setQut(quantityy)
+  setVarientId(id);
+
+  
+console.log("eeeeee---"+product_price+mrpp+sizee+mfdd+expp+id+quantityy);
 }
+const productColor=(color,product_price,mrpp,mfdd,expp,quantityy,id)=>{
+setColors(color);
+setProductprice(product_price);
+setMrp(mrpp);
+setMfd(mfdd);
+setExp(expp);
+setQut(quantityy)
+setVarientId(id);
+console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
+}
+
+// console.log("varient-----"+varientId)
+
   return (
     <Fragment>
       <Header/>
@@ -215,6 +226,7 @@ console.log("eeeeee---"+c)
                       <div className="right-box-contain">
                         <h6 className="offer-top">{discount}%</h6>
                         <h2 className="name">{productDetails.product_title_name}</h2>
+                        {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                         <div className="price-rating">
                           <h3 className="theme-color price">
                             {productprice}
@@ -224,10 +236,14 @@ console.log("eeeeee---"+c)
                             <span className="offer theme-color">  
                               {discount}%off
                             </span>
-                           
+                            {/* <h3 className="text-dark">Taxs</h3>
+                            <h5>Gst:{productDetails.gst}</h5>
+                            <h5>Cgst:{productDetails.cgst}</h5>
+                            <h5>Sgst:{productDetails.sgst}</h5> */}
                           </h3>
+                           {productDetails.rating=='#ffb321'?
                           <div className="product-rating custom-rate">
-                            
+                           
                             <ul className="rating pt-3">
                             <li color="#ffb321">
                                       <FaStar
@@ -257,59 +273,45 @@ console.log("eeeeee---"+c)
                                       <FaStar icon="star" className="feather " />
                                     </li>
                             </ul>
-                          
-                            {/* <span className="review">
-                              {product_details.creview} Costumer Review
-                            </span> */}
-                          </div>
+                          </div>:null}
                         </div>
-                        <button style={{backgroundColor:colors}}>{colors}</button>
-                         {/*&nbsp;<button className="btn btn-danger">text</button>&nbsp;<button className="btn btn-info">text</button> */}
+                        <button className="btn" style={{backgroundColor:colors}}>{colors}</button>
                         <div className="procuct-contain">
-                              <p dangerouslySetInnerHTML={{__html:  productDetails.product_description}}
-
-/>
+                              <p dangerouslySetInnerHTML={{__html:productDetails.product_description}}/>
                               
                           </div>
-                        {/* <div className="procuct-contain">
-                          <p>{product_details.pdiscription}</p>
-                        </div> */}
 
                    {productDetails.product_verient ? 
                         <div className="product-packege">
                           <div className="product-title"> 
-                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
+                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece':null||productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
                           </div>
-                          
-                          <ul className="select-packege">
                           {(productDetails.product_verient).map((details) => {
                            
                            return (
-                            <>
+                            
+                          <ul className="select-packege">
+                         
                              <li>
                           
-                          <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.colors)}}
-                         className={size == details.size ? "active" : null} 
+                          <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.manufacturing_date,details.expire_date,details.quantity,details.id)}}
+                          className={size == details.size ? "active" : null}
                            >
                            {details.size}
                          </Link>
                         </li>
-                        <li>
-                          <Link  onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.colors)}}
-                          className={colors == details.colors ? "active " : null }
+                         <li>
+                          <Link  onClick={()=>{productColor(details.colors,details.product_price,details.mrp,details.manufacturing_date,details.expire_date,details.quantity, details.id)}}
+                          className={colors == details.colors ? "active" : null}
                             >
                             {details.colors}
                           </Link>
                        </li>
-                            </>
-                      
+                       
+                       </ul>  
                       
                        );
                       })}
-                        
-                       </ul>
-                     
-                         
                         </div> : null }
                         <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                               <div className="product-title">
@@ -380,7 +382,7 @@ console.log("eeeeee---"+c)
                               
                             </div>
                           </div>
-  
+                       
                           <button className="btn btn-dark">
                         <Link to="/cart">
                               {/* <i data-feather="heart"></i> */}
@@ -406,9 +408,12 @@ console.log("eeeeee---"+c)
                           </button>
                         </div>
                         </div>
-                        <div className="pickup-box">
+                        {/* {result.map((d)=>{
+                          return(
+                            <> */}
+                            <div className="pickup-box">
                           <div className="product-title">
-                            <h4>Store Information</h4>
+                            <h4>Other Information</h4>
                           </div>
                           <div className="pickup-detail">
                             <h4 className="text-content">
@@ -423,17 +428,21 @@ console.log("eeeeee---"+c)
                                  <Link to="/" >{productDetails.product_type}</Link>
                               </li>
                               <li>
+                                Taxs :{" "}
+                                 <Link to="/" >Gst:{productDetails.gst} , Sgst:{productDetails.sgst},Cgst:{productDetails.cgst}</Link>
+                              </li>
+                              <li>
                                 SKU :  <Link to="/" >SDFVW65467</Link>
                               </li>
-                              <li>
-                                MFG :  <Link to="/" >{productDetails.manufacturing_date}</Link>
-                              </li>
-                              <li>
-                                EXP :  <Link to="/" >{productDetails.expire_date}</Link>
-                              </li>
+                                     <li>
+                                    MFG :  <Link to="/" >{mfd}</Link>
+                                  </li>
+                                  <li>
+                                    EXP :  <Link to="/" >{exp}</Link>
+                                  </li>
                               <li>
                                 Stock :{" "}
-                                 <Link to="/" >2 Items Left</Link>
+                                 <Link to="/" >{qut}</Link>
                               </li>
                               <li>
                                 Tags :  <Link to="/" >Cake,</Link>{" "}
@@ -442,7 +451,7 @@ console.log("eeeeee---"+c)
                             </ul>
                           </div>
                         </div>
-  
+                        
                         <div className="paymnet-option">
                           <div className="product-title">
                             <h4>Guaranteed Safe Checkout</h4>
@@ -638,7 +647,7 @@ console.log("eeeeee---"+c)
                               </tr>
                               <tr>
                                 <td>Brand</td>
-                                <td>Lavian Exotique</td>
+                                <td>{productDetails.brand}</td>
                               </tr>
                               <tr>
                                 <td>Form</td>
