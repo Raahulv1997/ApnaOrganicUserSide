@@ -6,6 +6,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
+import Button from 'react-bootstrap/Button';
+import ButtonGroup from 'react-bootstrap/ButtonGroup';
 import Accordion from "react-bootstrap/Accordion";
 import {
   AiOutlineHome,
@@ -48,9 +50,8 @@ const Header = (props) => {
     (thing, index, self) =>
       index ===
       self.findIndex(
-        (t, x) =>
-          t.root_category_name == thing.root_category_name
-          // x.down1_category_name==thing.down1_category_name
+        (t, x) => t.root_category_name == thing.root_category_name
+        // x.down1_category_name==thing.down1_category_name
       )
   );
 
@@ -58,9 +59,8 @@ const Header = (props) => {
     (thing, index, self) =>
       index ===
       self.findIndex(
-        (t, x) =>
-          t.down1_category_name == thing.down1_category_name
-          // x.down1_category_name==thing.down1_category_name
+        (t, x) => t.down1_category_name == thing.down1_category_name
+        // x.down1_category_name==thing.down1_category_name
       )
   );
 
@@ -68,12 +68,10 @@ const Header = (props) => {
     (thing, index, self) =>
       index ===
       self.findIndex(
-        (t, x) =>
-          t.down2_category_name == thing.down2_category_name
-          // x.down1_category_name==thing.down1_category_name
+        (t, x) => t.down2_category_name == thing.down2_category_name
+        // x.down1_category_name==thing.down1_category_name
       )
   );
-  
 
   const searchProduct = (e) => {
     e.preventDefault();
@@ -375,7 +373,8 @@ const Header = (props) => {
                     className={
                       click === true
                         ? "category-dropdown show"
-                        : "category-dropdown"
+                        :
+                         "category-dropdown"
                     }
                   >
                     <div className="category-title">
@@ -383,6 +382,7 @@ const Header = (props) => {
                       <button
                         type="button"
                         className="btn p-0 close-button text-content"
+                        aria-expanded={false}
                       >
                         <i
                           className="fa-solid fa-xmark"
@@ -395,41 +395,60 @@ const Header = (props) => {
                         return (
                           <>
                             <Accordion.Item eventKey={catdata.root_id}>
-                              <Accordion.Header>
-                                {catdata.root_category_name}
+                              <Accordion.Header onClick={(e) => {
+                              setsearch(e.target.value);
+                            }}>
+                              
+                                
                               </Accordion.Header>
+                              <Dropdown as={ButtonGroup}>
+      <Button variant="success">{catdata.root_category_name}</Button>
 
+      <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+
+      <Dropdown.Menu>
+        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+      </Dropdown.Menu>
+    </Dropdown>
                               <Accordion.Body>
                                 <div className="onhover-category-box">
                                   {(level1category || []).map((data) => {
-                                    return (catdata.root_category_name ===
-                                      data.root_category_name  &&  data.down1_category_name !== null) ? (
+                                    return catdata.root_category_name ===
+                                      data.root_category_name &&
+                                      data.down1_category_name !== null ? (
                                       <div className="list-1">
                                         <div className="category-title-box">
                                           <div>
-                                            <h5>{data.down1_category_name}</h5>
+                                            <h5  >{data.down1_category_name}</h5>
                                           </div>
                                         </div>
                                         <ul className="p-0">
                                           {(level2category || []).map(
                                             (data1) => {
                                               return data.down1_category_name ===
-                                                data1.down1_category_name  &&  data.down2_category_name !== null ? (
+                                                data1.down1_category_name &&
+                                                data.down2_category_name !==
+                                                  null ? (
                                                 <li className="w-100">
-                                                    {data1.down2_category_name}
-                                                    <ul>
-                                                      {(categorydata || []).map((data2)=>{
-                                                        return(
-                                                          data1.down2_category_name ===
-                                                          data2.down2_category_name &&  data.down3_category_name !== null ? 
-                                                  <li className="w-100">
-                                                      {data2.down3_category_name}
-                                                      </li>
-                                                      : null
-                                                        )
-                                                      })}
-                                                      
-                                                    </ul>
+                                                  {data1.down2_category_name}
+                                                  <ul>
+                                                    {(categorydata || []).map(
+                                                      (data2) => {
+                                                        return data1.down2_category_name ===
+                                                          data2.down2_category_name &&
+                                                          data.down3_category_name !==
+                                                            null ? (
+                                                          <li className="w-100">
+                                                            {
+                                                              data2.down3_category_name
+                                                            }
+                                                          </li>
+                                                        ) : null;
+                                                      }
+                                                    )}
+                                                  </ul>
                                                 </li>
                                               ) : null;
                                             }
@@ -438,7 +457,6 @@ const Header = (props) => {
                                       </div>
                                     ) : null;
                                   })}
-                                 
                                 </div>
                               </Accordion.Body>
                             </Accordion.Item>
@@ -446,7 +464,6 @@ const Header = (props) => {
                         );
                       })}
                     </Accordion>
-                   
                   </div>
                 </div>
 
