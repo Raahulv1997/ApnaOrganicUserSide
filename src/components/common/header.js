@@ -37,6 +37,8 @@ const Header = (props) => {
           .then((response) => {
             let data = response.data;
             setCategoryData(data);
+            // console.log("Ctegoryyyyyyy-------------------"+JSON.stringify(data))
+
             // setsearchData(data);
           });
       } catch (err) {}

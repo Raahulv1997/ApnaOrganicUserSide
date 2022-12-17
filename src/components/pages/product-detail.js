@@ -24,7 +24,7 @@ const ProductDetail = () => {
   const[mfd,setMfd]=useState('');
   const[exp,setExp]=useState('');
   const[qut,setQut]=useState('');
-  const[varientId,setVarientId]=useState();
+  const[Id,setId]=useState();
 
   const[discount,setDiscount]=useState();
   
@@ -64,7 +64,7 @@ let proid=localStorage.getItem("proid")
             setMfd(data.product_verient[0].manufacturing_date);
             setExp(data.product_verient[0].expire_date);
             setQut(data.product_verient[0].quantity)
-            setVarientId(data.product_verient[0].id);
+            setId(data.product_verient[0].id);
 
             console.log("detailssssssssss-------------------"+JSON.stringify(data));
             // setapicall(false);
@@ -77,7 +77,7 @@ let proid=localStorage.getItem("proid")
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:`${useridd}`,
-        product_view_id:`${varientId}`,
+        product_view_id:`${Id}`,
         price:`${productDetails.product_verient[0].product_price}`,
         discount:`${productDetails.product_verient[0].discount}`,
         quantity:`${count}`,
@@ -87,15 +87,15 @@ let proid=localStorage.getItem("proid")
         let data = response.data;
         console.log("ADD CARTTT-------------------"+JSON.stringify(data))
         setProductDetails(data.results);
-        setVarientId();
-        console.log("variantiddddddddddd"+varientId)
+        setId();
+        console.log("variantiddddddddddd"+Id)
       });
   }
   const AddToWishList= () =>{
     axios
 .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
     user_id:`${useridd}`,
-    product_view_id:`${varientId}`,
+    product_view_id:`${Id}`,
     price:`${productDetails.product_verient[0].product_price}`,
     discount:`${productDetails.product_verient[0].discount}`,
 
@@ -120,7 +120,7 @@ const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id)=>{
   setMfd(mfdd);
   setExp(expp);
   setQut(quantityy)
-  setVarientId(id);
+  setId(id);
 
   
 console.log("eeeeee---"+product_price+mrpp+sizee+mfdd+expp+id+quantityy);
@@ -132,7 +132,7 @@ setMrp(mrpp);
 setMfd(mfdd);
 setExp(expp);
 setQut(quantityy)
-setVarientId(id);
+setId(id);
 console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
 }
 

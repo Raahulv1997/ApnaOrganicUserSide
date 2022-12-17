@@ -9,33 +9,58 @@ import Tabs from "react-bootstrap/Tabs";
 import { useEffect } from "react";
 import "../../CSS/style.css";
 import axios from "axios";
+import ProductDetail from "../pages/product-detail";
 const Benners = (props,productPrice,productMRF,name,image) => {
 const[productData,setProductData]=useState([]);
 const useridd = localStorage.getItem("userid")
-
+const[categoryTy,setCategoryTy]=useState('');
+// const[categoryTy,setCategoryTy]=useState([]);
   //let [count, setCount] = useState(0);
   var product = data.product;
     useEffect(() => {
       function getProductData() {
         try {
           axios
-          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,{
+          .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,{
             "product_search":{
-            "search":"",
-                }
+              "search":"",
+              "colors":"",
+              "size":"",
+              "category": "",
+              "product_type": `${categoryTy}`
+              }
           })
             .then((response) => {
               let data = response.data;
               setProductData(data.results);
-              console.log("productttttttt-------------------"+JSON.stringify(data))
+              // setCategoryTy();
+              console.log("categoryyyTYPEEEEEEE-------------------"+JSON.stringify(data))
               // setapicall(false);
             });
         } catch (err) {}
       }
       getProductData();
     }, []);
+    // const ClickToChange = (e) => {
+    //    setCategoryTy(e.target.text);
+    // console.log("oooooooo"+e)
+
+    // // setCategoryTy(e.target.value);
+    // };
+  
     // console.log("-ulloo---"+JSON.stringify(productData));
    
+
+      const catetype = productData.filter(
+        (thing, index, self) =>
+          index ===
+          self.findIndex(
+            (t, x) =>
+              t.product_type == thing.product_type
+              // x.down1_category_name==thing.down1_category_name
+          )
+      );
+
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -141,7 +166,9 @@ const useridd = localStorage.getItem("userid")
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
             <div className="all_catagrey_tabs">
-      <Tabs
+             
+        <Tabs
+        //  onSelect={ClickToChange()}
         defaultActiveKey="all"
         id="uncontrolled-tab-example myTab"
         className="nav nav-tabs tab-style-color mb-3 nav_item pt-5  pe-0 pe-md-5 border-0 justify-content-center"
@@ -151,6 +178,14 @@ const useridd = localStorage.getItem("userid")
             <div className="container-fluid-lg">
               <div className="title title">
                 <h2 className="mb-lg-0 mb-2">Our Products</h2>
+                {/* <div className="cat_div">
+              <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductData('')}>All</button>
+              {productData.map((data, i) => {
+                return(
+                  <button key={i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductData(data)}>{data}</button>
+                )              
+              })}
+              </div> */}
               </div>
               <div className="tab-content" id="myTabContent">
                 <div
@@ -169,7 +204,7 @@ const useridd = localStorage.getItem("userid")
                           <ProductBox
                             id={product.id}
                             image={product.image}
-                            name={product.product_title_name}
+                            name={product.product_title_name} 
                             productPrice={product.product_price}
                             productMRF={product.sale_price}
                             productid={product.product_id}
@@ -223,43 +258,49 @@ const useridd = localStorage.getItem("userid")
             </div>
           </section>
         </Tab>
-        <Tab eventKey="cooking" className="nav-item" title="Cooking">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Cooking</h2>
-          </div>
 
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {productData.map((product) => {
-                  return (
-                    <div
-                      key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.product_title_name}
-                        productPrice={product.product_price}
-                        productMRF={product.sale_price}
-                      />
-                    </div>
-                  );
-                })}
+        {catetype.map((data,i)=>{
+          return(
+            <Tab eventKey={i}  className="nav-item" title={data.product_type} >
+            <section className="product-section">
+            <div className="container-fluid-lg">
+              <div className="title title-flex">
+                <h2 className="mb-lg-0 mb-2">{data.product_type}</h2>
+              </div>
+    
+              <div className="tab-content" id="myTabContent">
+                <div
+                  className="tab-pane fade show active"
+                  id="all"
+                  role="tabpanel"
+                  aria-labelledby="all-tab"
+                >
+                  <div className="row w-100 ms-0">
+                    {productData.map((product) => {
+                      return (
+                        <div
+                          key={product.id}
+                          className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
+                        >
+                          <ProductBox
+                            image={product.image}
+                            name={product.product_title_name}
+                            productPrice={product.product_price}
+                            productMRF={product.sale_price}
+                          />
+                        </div>
+                      );
+                    })}
+                  </div>
+                </div>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-        </Tab>
-        <Tab eventKey="fruits&vagitables" className="nav-item" title="Fruits & Vagitables">
+          </section>
+            </Tab>
+          )
+        })}
+       
+        {/* <Tab eventKey="fruits&vagitables" className="nav-item" title="Fruits & Vagitables">
         <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
@@ -330,8 +371,9 @@ const useridd = localStorage.getItem("userid")
           </div>
         </div>
       </section>
-        </Tab>
+        </Tab> */}
       </Tabs>
+
     </div>
       
       {/* <!-- Product Sction Start --> */}
