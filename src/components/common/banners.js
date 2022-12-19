@@ -12,8 +12,11 @@ import axios from "axios";
 import ProductDetail from "../pages/product-detail";
 const Benners = (props,productPrice,productMRF,name,image) => {
 const[productData,setProductData]=useState([]);
+const[productType,setProductType]=useState([]);
+const [catArray, setcatArray] = useState([]);
+const [unCatArr, setunCatArr] = useState([]);
 const useridd = localStorage.getItem("userid")
-const[categoryTy,setCategoryTy]=useState('');
+
 // const[categoryTy,setCategoryTy]=useState([]);
   //let [count, setCount] = useState(0);
   var product = data.product;
@@ -24,15 +27,17 @@ const[categoryTy,setCategoryTy]=useState('');
           .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,{
             "product_search":{
               "search":"",
-              "colors":"",
-              "size":"",
-              "category": "",
-              "product_type": `${categoryTy}`
+              "product_type": `${productType}`
               }
           })
             .then((response) => {
               let data = response.data;
-              setProductData(data.results);
+              setProductData(response.data.results);
+              {
+                response.data.results.map((product) => {
+                  return setcatArray(catArray => [...catArray, product.product_type]);
+                })
+              }
               // setCategoryTy();
               console.log("categoryyyTYPEEEEEEE-------------------"+JSON.stringify(data))
               // setapicall(false);
@@ -40,26 +45,26 @@ const[categoryTy,setCategoryTy]=useState('');
         } catch (err) {}
       }
       getProductData();
-    }, []);
-    // const ClickToChange = (e) => {
-    //    setCategoryTy(e.target.text);
-    // console.log("oooooooo"+e)
-
-    // // setCategoryTy(e.target.value);
-    // };
+    }, [productType]);
+    
+    useEffect(() => {
+      const result = catArray.filter((thing, index, self) =>
+        index === self.findIndex((t) => (
+          t === thing
+        )))
+        setunCatArr(result)
   
-    // console.log("-ulloo---"+JSON.stringify(productData));
-   
-
-      const catetype = productData.filter(
-        (thing, index, self) =>
-          index ===
-          self.findIndex(
-            (t, x) =>
-              t.product_type == thing.product_type
-              // x.down1_category_name==thing.down1_category_name
-          )
-      );
+    }, [catArray])
+    console.log("------------"+JSON.stringify(productType))
+      // const catetype = productData.filter(
+      //   (thing, index, self) =>
+      //     index ===
+      //     self.findIndex(
+      //       (t, x) =>
+      //         t.product_type == thing.product_type
+      //         // x.down1_category_name==thing.down1_category_name
+      //     )
+      // );
 
   return (
     <Fragment>
@@ -167,25 +172,25 @@ const[categoryTy,setCategoryTy]=useState('');
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
             <div className="all_catagrey_tabs">
              
-        <Tabs
+        {/* <Tabs
         //  onSelect={ClickToChange()}
         defaultActiveKey="all"
         id="uncontrolled-tab-example myTab"
         className="nav nav-tabs tab-style-color mb-3 nav_item pt-5  pe-0 pe-md-5 border-0 justify-content-center"
       >
-        <Tab eventKey="all" className="nav-item" title="All">
+        <Tab eventKey="all" className="nav-item" title="All"> */}
           <section className="product-section">
             <div className="container-fluid-lg">
               <div className="title title">
                 <h2 className="mb-lg-0 mb-2">Our Products</h2>
-                {/* <div className="cat_div">
-              <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductData('')}>All</button>
-              {productData.map((data, i) => {
+                <div className="cat_div">
+              <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType('')}>All</button>
+              {unCatArr.map((catArr, i) => {
                 return(
-                  <button key={i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductData(data)}>{data}</button>
+                  <button key={i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType(catArr)}>{catArr}</button>
                 )              
               })}
-              </div> */}
+              </div>
               </div>
               <div className="tab-content" id="myTabContent">
                 <div
@@ -257,11 +262,11 @@ const[categoryTy,setCategoryTy]=useState('');
               </div>
             </div>
           </section>
-        </Tab>
+        {/* </Tab> */}
 
-        {catetype.map((data,i)=>{
-          return(
-            <Tab eventKey={i}  className="nav-item" title={data.product_type} >
+        {/* {catetype.map((data,i)=>{
+          return( */}
+            {/* <Tab eventKey={i}  className="nav-item" title={data.product_type} >
             <section className="product-section">
             <div className="container-fluid-lg">
               <div className="title title-flex">
@@ -296,9 +301,9 @@ const[categoryTy,setCategoryTy]=useState('');
               </div>
             </div>
           </section>
-            </Tab>
-          )
-        })}
+            </Tab> */}
+          {/* )
+        })} */}
        
         {/* <Tab eventKey="fruits&vagitables" className="nav-item" title="Fruits & Vagitables">
         <section className="product-section">
@@ -372,7 +377,7 @@ const[categoryTy,setCategoryTy]=useState('');
         </div>
       </section>
         </Tab> */}
-      </Tabs>
+      {/* </Tabs> */}
 
     </div>
       
