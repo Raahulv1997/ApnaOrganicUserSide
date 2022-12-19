@@ -4,7 +4,27 @@ import Footer from "../common/footer";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+import axios from "axios";
 const Forgot = () => {
+  const navigate = useNavigate();
+  const[email,setEmail]=useState([]);
+  const handleFormChange =(e)=>{
+    setEmail(e.target.value);
+    
+    // setForgotInfo({...forgotInfo,[e.target.name]: e.target.value})
+  }
+  const forgotPassword=()=>{
+    axios.post(`http://192.168.29.108:5000/user_forgot_password`,{
+      email:`${email}`
+    }).then(response => {
+      // localStorage.setItem("useridd" , response.data.user_id)
+      navigate('/login')
+     
+      // return response;
+    })
+  }
   return (
     <Fragment>
       <Header />
@@ -15,10 +35,9 @@ const Forgot = () => {
           <div className="row">
             <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
               <div className="image-contain">
-                <img src={Banner} className="img-fluid" alt="" />
+                <img src={Banner} className="img-fluid" alt=""/>
               </div>
             </div>
-
             <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto">
               <div className="d-flex align-items-center justify-content-center h-100">
                 <div className="log-in-box">
@@ -36,6 +55,7 @@ const Forgot = () => {
                             className="form-control"
                             id="email"
                             placeholder="Email Address"
+                            onChange={(e) => handleFormChange(e)} value={email} name={'email'}
                           />
                           <label htmlFor="email">Email Address</label>
                         </div>
@@ -44,7 +64,7 @@ const Forgot = () => {
                       <div className="col-12">
                         <button
                           className="btn btn-animation w-100"
-                          type="submit"
+                          type="button" onClick={forgotPassword}
                         >
                           Forgot Password
                         </button>

@@ -26,17 +26,14 @@ const Singup = () => {
       })
       .then((response) => {
         if (response.data === false) {
-          console.log("___--------------" + JSON.stringify(response.data));
           setemailerror("already");
           e.target.email.value = "";
         } else {
           setotp(response.data);
-          console.log("___--------------" + JSON.stringify(response.data));
         }
         return response;
       })
       .catch((error) => {
-        console.log(error.response.error);
       });
   };
   const onPasswordChange = (e) => {
@@ -52,17 +49,16 @@ const Singup = () => {
           password: passval,
         })
         .then((response) => {
-          localStorage.setItem("userid", response.data.insertId);
+          localStorage.setItem("userid", response.data.insertId);          
           localStorage.setItem("upassword", passval);
 
           navigate("/your_account");
           // return response;
         })
         .catch((error) => {
-          console.log(error.response.error);
         });
+
     } else {
-      console.log("invalid otp");
       setOtperror(true);
     }
   };

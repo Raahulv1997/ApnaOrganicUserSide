@@ -41,9 +41,6 @@ const Header = (props) => {
           .then((response) => {
             let data = response.data;
             setCategoryData(data);
-            // console.log("Ctegoryyyyyyy-------------------"+JSON.stringify(data))
-
-            // setsearchData(data);
           });
       } catch (err) {}
     }
@@ -55,7 +52,6 @@ const Header = (props) => {
       index ===
       self.findIndex(
         (t, x) => t.root_category_name == thing.root_category_name
-        // x.down1_category_name==thing.down1_category_name
       )
   );
 
@@ -64,7 +60,6 @@ const Header = (props) => {
       index ===
       self.findIndex(
         (t, x) => t.down1_category_name == thing.down1_category_name
-        // x.down1_category_name==thing.down1_category_name
       )
   );
 
@@ -73,7 +68,6 @@ const Header = (props) => {
       index ===
       self.findIndex(
         (t, x) => t.down2_category_name == thing.down2_category_name
-        // x.down1_category_name==thing.down1_category_name
       )
   );
   // console.log("--categoryyyyyyy----->>>"+ JSON.stringify(level1category))
@@ -297,6 +291,7 @@ const Header = (props) => {
                             <ul
                               className="cart-list "
                               style={{ flexDirection: "column" }}
+                              
                             >
                               {(pdata || []).map((data) => {
                                 for (let i = 0; i < data.length; i++) {
@@ -306,7 +301,7 @@ const Header = (props) => {
                                 }
 
                                 return (
-                                  <li>
+                                  <li key={pdata.id}>
                                     <div className="drop-cart ">
                                       <Link to="/" className="drop-image">
                                         <img
@@ -427,7 +422,7 @@ const Header = (props) => {
                                     return catdata.root_category_name ===
                                       data.root_category_name &&
                                       data.down1_category_name !== null ? (
-                                      <div className="list-1">
+                                      <div className="list-1" key={data.id}>
                                         <div className="category-title-box">
                                           <div value={data.down1_id}>
                                             <h5 onClick={searchCategoryProduct} value={data.down1_id} className={'searchsub_category searchsub_category_box'}>{data.down1_category_name}</h5>
@@ -475,10 +470,10 @@ const Header = (props) => {
                                     return catdata.root_category_name ===
                                       data.root_category_name &&
                                       data.down1_category_name !== null ? (
-                                      <div className="list-1">
+                                      <div className="list-1"  key={data.id}>
                                         <div className="category-title-box">
                                           <div>
-                                            <h5  >{data.down1_category_name}</h5>
+                                            <h5 >{data.down1_category_name}</h5>
                                           </div>
                                         </div>
                                         <ul className="p-0">
@@ -488,7 +483,7 @@ const Header = (props) => {
                                                 data1.down1_category_name &&
                                                 data.down2_category_name !==
                                                   null ? (
-                                                <li className="w-100">
+                                                <li className="w-100"  key={data1.id}>
                                                   {data1.down2_category_name}
                                                   <ul>
                                                     {(categorydata || []).map(
@@ -497,7 +492,7 @@ const Header = (props) => {
                                                           data2.down2_category_name &&
                                                           data.down3_category_name !==
                                                             null ? (
-                                                          <li className="w-100">
+                                                          <li className="w-100" key={data2.id}>
                                                             {
                                                               data2.down3_category_name
                                                             }

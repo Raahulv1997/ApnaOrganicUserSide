@@ -121,8 +121,7 @@ console.log("---------detail"+JSON.stringify(data.results))
             (thing, index, self) =>
               index ===
               self.findIndex(
-                (t, x) =>
-                  t.root_category_name == thing.root_category_name
+                (t, x) => t.root_category_name == thing.root_category_name
               )
           );
           setCategoryData(filtercategorydata);
@@ -130,20 +129,20 @@ console.log("---------detail"+JSON.stringify(data.results))
         });
     } catch (err) {}
   }, [apicall]);
-//  SEARCH AND SHOW CATEGORY
-  const onCategorySearch = (e) =>{
-   let catname = e.target.value;
+  //  SEARCH AND SHOW CATEGORY
+  const onCategorySearch = (e) => {
+    let catname = e.target.value;
     try {
-        axios
-          .post(`${process.env.REACT_APP_BASEURL}/search_category` ,{
-            "category_name":`${catname}`
-          })
-          .then((response) => {
-            let data = response.data;
-            setCategoryData(data);
-          });
-      } catch (err) {}
-  }
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/search_category`, {
+          category_name: `${catname}`,
+        })
+        .then((response) => {
+          let data = response.data;
+          setCategoryData(data);
+        });
+    } catch (err) {}
+  };
   var showcategorydata = [];
   const onCategoryNameAdd = (e) =>{
     setCategoryNameData(categoryNamedata => [...categoryNamedata, e.target.value])
@@ -166,16 +165,12 @@ console.log("---------detail"+JSON.stringify(data.results))
   // end category
 
 
-//   BRAND
-const filtercategorydata = categoryfilterdata.filter(
+  //   BRAND
+  const filtercategorydata = categoryfilterdata.filter(
     (thing, index, self) =>
-      index ===
-      self.findIndex(
-        (t, x) =>
-          t.brand == thing.brand
-      )
+      index === self.findIndex((t, x) => t.brand == thing.brand)
   );
-// END BRAND
+  // END BRAND
   return (
     <Fragment>
       <Header />
@@ -198,16 +193,17 @@ const filtercategorydata = categoryfilterdata.filter(
                       <Link to="">Clear All</Link>
                     </div>
                     <ul>
-{showcategorydata[0] !== '' || showcategorydata[0] !== null || showcategorydata[0] !== undefined?
-(showcategorydata[0] || []).map((show,i)=>{
-    return(
-<li key={i}>
-                        <Link to="">{show} </Link>
-                      </li>
-    )
-}):null}
-                      
-                     
+                      {showcategorydata[0] !== "" ||
+                      showcategorydata[0] !== null ||
+                      showcategorydata[0] !== undefined
+                        ? (showcategorydata[0] || []).map((show, i) => {
+                            return (
+                              <li key={show.id}>
+                                <Link to="">{show} </Link>
+                              </li>
+                            );
+                          })
+                        : null}
                     </ul>
                   </div>
                   <Accordion>
@@ -226,7 +222,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                 className="form-control"
                                 id="search"
                                 placeholder="Search .."
-                                onChange={(e)=>onCategorySearch(e)}
+                                onChange={(e) => onCategorySearch(e)}
                               />
                               <label htmlFor="search">Search</label>
                               {/* <button
@@ -240,7 +236,7 @@ const filtercategorydata = categoryfilterdata.filter(
                             <ul className="category-list custom-padding custom-height">
                               {(categorydata || []).map((cdta, i) => {
                                 return (
-                                  <li key={i}>
+                                  <li key={cdta.i}>
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"
@@ -351,7 +347,7 @@ const filtercategorydata = categoryfilterdata.filter(
                         >
                           <div className="accordion-body">
                             <ul className="category-list custom-padding">
-                              <li >
+                              <li>
                                 <div className="form-check ps-0 m-0 category-list-box">
                                   <input
                                     className="checkbox_animated"
@@ -366,7 +362,6 @@ const filtercategorydata = categoryfilterdata.filter(
                                         <FaStar
                                           className="feather fill"
                                           fill={"#ffb321"}
-
                                         />
                                       </li>
                                       <li color="#ffb321">
@@ -599,7 +594,6 @@ const filtercategorydata = categoryfilterdata.filter(
                                     htmlFor="flexCheckDefault"
                                   >
                                     <span className="name">upto 5%</span>
-                                   
                                   </label>
                                 </div>
                               </li>
@@ -803,7 +797,6 @@ const filtercategorydata = categoryfilterdata.filter(
                         brand={product.brand}
                         category={product.category}
                         producttype={product.product_type}
-
                       />
                     </div>
                   );

@@ -1,5 +1,5 @@
 import React  from "react";
-import { Link, Navigate, useNavigate} from "react-router-dom";
+import { Link,useNavigate} from "react-router-dom";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -9,15 +9,13 @@ import Footer from "../common/footer";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-import Profile from "../../Photos/product/user.jpg";
 import Product from "../../Photos/product/2.png";
 import { MdOutlineDashboard, MdOutlinePrivacyTip } from "react-icons/md";
-import { BsHandbag, BsCheck2Square } from "react-icons/bs";
+import { BsHandbag} from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
 import { GoLocation, GoMail } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
 import Col from "react-bootstrap/Col";
-import profile_cover from "../../Photos/media/cover-img.jpg";
 import { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
@@ -61,7 +59,6 @@ const navigate = useNavigate();
     // navigate('/your_account')
     // return response;
   }).catch(error => {
-    console.log(error.response.error)
   })
   setwishlistclick();
   OnOrderclick();
@@ -73,11 +70,9 @@ const setwishlistclick = () =>{
   axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
   .then(response => {
     setwishlistdata(response.data)
-    // console.log("----whisijd"+JSON.stringify(response.data))
     // navigate('/your_account')
     // return response;
   }).catch(error => {
-    console.log(error.response.error)
   })
   setclick(false)
 
@@ -90,7 +85,7 @@ const OnOrderclick = () =>{
     setorderhistory(response.data)
      var  result = response.data.filter((thing, index, self) =>
       index === self.findIndex((t) => (
-       ( t.order_id == thing.order_id ) 
+       ( t.order_id === thing.order_id ) 
       )
       )
   )
@@ -99,7 +94,6 @@ const OnOrderclick = () =>{
     // navigate('/your_account')
     // return response;
   }).catch(error => {
-    console.log(error.response.error)
   })
   setclick(false)
 }
@@ -110,18 +104,15 @@ const OnOrderclick = () =>{
     event.preventDefault();
     let form = event.currentTarget;
     // const name = event.target.value;
-    // console.log("+++++++++FORMDATA"+event.target.DOB.value);
     if (form.checkValidity() === false) {
       event.preventDefault();
-      event.stopPropagation();
-      console.log("aa");
+      event.stopPropagation()
     }
     // eslint-disable-next-line no-undef
     axios.post(`${process.env.REACT_APP_BASEURL}/user_register`,userdata)
     .then(response => {
       setShow(false)
     }).catch(error => {
-      console.log(error.response.data.error)
     })
     setValidated(true);
   };
@@ -132,7 +123,6 @@ const OnOrderclick = () =>{
       [e.target.name]: e.target.value,
     });
   };
-  // console.log("-----userdata"+JSON.stringify(userdata));
 
   // change Password
 
@@ -177,12 +167,6 @@ const handlePassSubmit = (event) => {
 
     return false;
   }
-  // if (changepass.password !== userpass) {
-  //   setFormError({
-  //     currentPass: "Not match with current password",
-  //   });
-  //   return false;
-  // }
   if (changepass.new_password === undefined) {
     setFormError({
       newPass: "Please enter New password",
@@ -218,7 +202,6 @@ const handlePassSubmit = (event) => {
       // navigate('/your_account')
       // return response;
     }).catch(error => {
-      console.log(error.response.data.error)
     })
   }
   setFormError("");
@@ -231,10 +214,6 @@ const [click, setclick] = useState(false);
 const side_bar = () => {
   setclick(true);
 };
-  
-
-  
-
   //add address
   const [addNewAdderss, setaddNewAdderss] = useState(0);
   const [addAdderssvalidated, setaddAdderssValidated] = useState(false);
@@ -251,7 +230,6 @@ const side_bar = () => {
 
   const OnaddAdderss = (e) => {
     let name = e.target.value;
-    console.log(name);
     setaddNewAdderss({
       ...changepass,
       [e.target.name]: e.target.value,
@@ -259,8 +237,6 @@ const side_bar = () => {
   };
 // add to cart
 const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
-  // e.preventDefault();
-  console.log("------d"+id)
   axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
     "user_id":useridd,
     "product_view_id":id,
@@ -270,10 +246,7 @@ const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
     "is_active":1
   })
   .then(response => {
-    console.log("----adddd-------"+JSON.stringify(response.data))
-    // navigate('/your_account')
   }).catch(error => {
-    console.log(error.response.error)
   })
 }
 // end add to cart
@@ -289,7 +262,7 @@ const onProductClick = (id) =>{
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
-        pageto={"/"}
+        pageHref={"/"} 
       />
 
       <section className="user-dashboard-section section-b-space">
@@ -723,8 +696,8 @@ const onProductClick = (id) =>{
                             </span>
                           </div>
                           {(orderhistory || []).map((data)=>{
-return(
-                          <div className="order-contain">
+                            return(
+                          <div key={data.id}   className="order-contain">
                             <div className="order-box dashboard-bg-box">
    
                               <div className="order-container">
@@ -891,7 +864,7 @@ return(
                           <div className="row g-sm-4 g-3">
                           {(wishlistdata || []).map((wdata) =>{
                                 return(
-                            <div className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
+                            <div key={wdata.id} className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
                               
                                   <div className="product-box-3 theme-bg-white h-100">
                                   <div className="product-header">

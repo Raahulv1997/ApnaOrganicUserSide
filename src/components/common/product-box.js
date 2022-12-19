@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 // function AddCart(props){
 // }
 let wlist;
+
+
 const ProductBox = ({
   id,
   name,
@@ -37,57 +39,50 @@ category
       setCount((count) => count - 1);
     }
   };
-
   const func = () => {};
-  //   console.log("dataaaaaaaa"+JSON.stringify(productData))
   const AddToCart = () => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id: `${useridd}`,
-        product_view_id: `${id}`,
-        price: `${productPrice}`,
-        discount: `${productMRF}`,
+      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
+        user_id:`${useridd}`,
+        product_view_id:`${id}`,
+        price:`${productPrice}`,
+        discount:`${productMRF}`,
         quantity: count,
         is_active: 1,
       })
       .then((response) => {
         let data = response.data;
-        console.log("ADD CARTTT-------------------" + JSON.stringify(data));
+        console.log("ADD CARTTT------------" + JSON.stringify(data));
         setData(data);
-        setapicall(true);
+        //setapicall(true);
       });
   };
-  // console.log('', window.location.pathname);
   wlist = window.location.pathname;
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
       console.log("ADD______WISHLIST");
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-          user_id: `${useridd}`,
-          product_view_id: `${id}`,
-          // price:`${productPrice}`,
-          // discount:`${productMRF}`,
+          user_id:`${useridd}`,
+          product_view_id:`${id}`,
         })
         .then((response) => {
           let data = response.data;
           console.log("wishlistttttt----------" + JSON.stringify(data));
           setData(response.data);
           setWlistData("remove");
-          //   setapicall(true);
+          setapicall(true);
         });
-      // setWlistData(a);
     } else if (wlist === "/wishlist") {
-      console.log("id---------" + id);
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-          id: `${id}`,
-          user_id: `${useridd}`,
+          id:`${id}`,
+          user_id:`${useridd}`,
         })
         .then((response) => {
           let data = response.data;
           console.log(
-            "REMOVEEEEEEEEEwishlistttttt----------" + JSON.stringify(data)
+            "REMOVEEEEEEEEEwishlistttttt----------"+JSON.stringify(data)
           );
           setData(response.data);
           setWlistData("add");
@@ -96,6 +91,7 @@ category
         });
     }
   };
+<<<<<<< HEAD
   // useEffect(() => {
   //   try {
   //     axios
@@ -122,12 +118,38 @@ category
   // }, [apicall]);
   const clickProduct = (productid) => {
     // console.log("product_iddddddd" + productid);
+=======
+  useEffect(() => {
+    try {
+      axios
+        .get(
+          `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
+          {
+            product_search: {
+              search: "",
+              colors: "",
+              size: "",
+              category: "",
+              product_type: "",
+            },
+          }
+        )
+        .then((response) => {
+          let data = response.data;
+          setData(data.results);
+          // setProductId(data);
+          setapicall(false);
+        });
+    } catch (err) {}
+  }, [apicall]);
+  const clickProduct = (productid) => {
+>>>>>>> dd120fff64fab769067c5c510546111d503fdb80
 
-    localStorage.setItem("proid", productid);
+    localStorage.setItem("proid",productid);
     navigate("/product-detail");
   };
   return (
-    <div className="product-box-3 p-0 mt-3 product_box overflow-hidden">
+    <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div className="product-image">
         <div className="ribbon_div">
           {special_offer == 0 || special_offer == "" ? null : (
@@ -147,7 +169,7 @@ category
             src={
               "https://www.shutterstock.com/image-photo/man-hands-holding-global-network-260nw-1801568002.jpg"
             }
-            className="img-fluid"
+            className="mt-5 "
             alt=""
           />
         </a>
@@ -155,6 +177,7 @@ category
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
+          {}
           <li color="#ffb321">
             <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
           </li>
