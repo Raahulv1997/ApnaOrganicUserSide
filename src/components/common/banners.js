@@ -178,14 +178,14 @@ const[categoryTy,setCategoryTy]=useState('');
             <div className="container-fluid-lg">
               <div className="title title">
                 <h2 className="mb-lg-0 mb-2">Our Products</h2>
-                {/* <div className="cat_div">
+                <div className="cat_div">
               <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductData('')}>All</button>
               {productData.map((data, i) => {
                 return(
                   <button key={i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductData(data)}>{data}</button>
                 )              
               })}
-              </div> */}
+              </div>
               </div>
               <div className="tab-content" id="myTabContent">
                 <div
