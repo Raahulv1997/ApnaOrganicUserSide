@@ -4,12 +4,9 @@ import BannerBox2 from "../../Photos/1.jpg";
 import Banner1 from "../../Photos/14.jpg";
 import ProductBox from "./product-box";
 import data from "../pages/data";
-import Tab from "react-bootstrap/Tab";
-import Tabs from "react-bootstrap/Tabs";
 import { useEffect } from "react";
 import "../../CSS/style.css";
 import axios from "axios";
-import ProductDetail from "../pages/product-detail";
 const Benners = (props,productPrice,productMRF,name,image) => {
 const[productData,setProductData]=useState([]);
 const[productType,setProductType]=useState([]);
@@ -26,8 +23,8 @@ const useridd = localStorage.getItem("userid")
           axios
           .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,{
             "product_search":{
-              "search":"",
-              "product_type": `${productType}`
+              "search":`${productType}`
+              
               }
           })
             .then((response) => {
@@ -55,17 +52,7 @@ const useridd = localStorage.getItem("userid")
         setunCatArr(result)
   
     }, [catArray])
-    console.log("------------"+JSON.stringify(productType))
-      // const catetype = productData.filter(
-      //   (thing, index, self) =>
-      //     index ===
-      //     self.findIndex(
-      //       (t, x) =>
-      //         t.product_type == thing.product_type
-      //         // x.down1_category_name==thing.down1_category_name
-      //     )
-      // );
-
+    console.log("------------"+JSON.stringify(productType));
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -170,19 +157,11 @@ const useridd = localStorage.getItem("userid")
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
-            <div className="all_catagrey_tabs">
-             
-        {/* <Tabs
-        //  onSelect={ClickToChange()}
-        defaultActiveKey="all"
-        id="uncontrolled-tab-example myTab"
-        className="nav nav-tabs tab-style-color mb-3 nav_item pt-5  pe-0 pe-md-5 border-0 justify-content-center"
-      >
-        <Tab eventKey="all" className="nav-item" title="All"> */}
+          <div className="all_catagrey_tabs">
           <section className="product-section">
             <div className="container-fluid-lg">
               <div className="title title">
-                <h2 className="mb-lg-0 mb-2">Our Products</h2>
+                <h2 className="mb-lg-0 mb-2">{productType}</h2>
                 <div className="cat_div">
               <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType('')}>All</button>
               {unCatArr.map((catArr, i) => {
@@ -216,82 +195,7 @@ const useridd = localStorage.getItem("userid")
                             discount={product.discount}
                             special_offer={product.special_offer}
                             rating={product.rating}
-
-                          />
-                          {/* <ProductBox
-                            image={product.image}
-                            name={product.name}
-                            productPrice={product.productPrice}
-                            productMRF={product.productMRF}
-
-                          /> */}
-                        </div>
-                      );
-                    })}
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="tab-content" id="myTabContent">
-              <div
-                className="tab-pane fade show active"
-                id="all"
-                role="tabpanel"
-                aria-labelledby="all-tab"
-              >
-                <div className="row w-100 ms-0">
-                  {productData.map((product) => {
-                    return (
-                      <div
-                        key={product.id}
-                        className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                      >
-                        {/* <ProductBox
-                          image={product.image}
-                          name={product.product_title_name}
-                          productMRF={product.mrp}
-                          productPrice={product.product_price}
-                          seotag={product.seo_tag}
-                          discount={product.discount}
-                          specialOffer={product.special_offer}
-                        /> */}
-                      </div>
-                    );
-                  })}
-                </div>
-              </div>
-            </div>
-          </section>
-        {/* </Tab> */}
-
-        {/* {catetype.map((data,i)=>{
-          return( */}
-            {/* <Tab eventKey={i}  className="nav-item" title={data.product_type} >
-            <section className="product-section">
-            <div className="container-fluid-lg">
-              <div className="title title-flex">
-                <h2 className="mb-lg-0 mb-2">{data.product_type}</h2>
-              </div>
-    
-              <div className="tab-content" id="myTabContent">
-                <div
-                  className="tab-pane fade show active"
-                  id="all"
-                  role="tabpanel"
-                  aria-labelledby="all-tab"
-                >
-                  <div className="row w-100 ms-0">
-                    {productData.map((product) => {
-                      return (
-                        <div
-                          key={product.id}
-                          className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                        >
-                          <ProductBox
-                            image={product.image}
-                            name={product.product_title_name}
-                            productPrice={product.product_price}
-                            productMRF={product.sale_price}
+                            producttype={product.product_type}
                           />
                         </div>
                       );
@@ -301,84 +205,6 @@ const useridd = localStorage.getItem("userid")
               </div>
             </div>
           </section>
-            </Tab> */}
-          {/* )
-        })} */}
-       
-        {/* <Tab eventKey="fruits&vagitables" className="nav-item" title="Fruits & Vagitables">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Fruits & Vagitables</h2>
-          </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {productData.map((product) => {
-                  return (
-                    <div
-                      key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.product_title_name}
-                        productPrice={product.product_price}
-                        productMRF={product.sale_price}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </Tab>
-        <Tab eventKey="baverage" className="nav-item" title="Baverage">
-        <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Baverage</h2>
-          </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {productData.map((product) => {
-                  return (
-                    <div
-                      // key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      <ProductBox
-                        image={product.image}
-                        name={product.product_title_name}
-                        productPrice={product.product_price}
-                        productMRF={product.sale_price}
-                      />
-                    </div>
-                 );
-                 })}
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-        </Tab> */}
-      {/* </Tabs> */}
-
     </div>
       
       {/* <!-- Product Sction Start --> */}
@@ -386,33 +212,6 @@ const useridd = localStorage.getItem("userid")
         <div className="container-fluid-lg">
           <div className="title title-flex">
             <h2 className="mb-lg-0 mb-2">Top Products</h2>
-          </div>
-
-          <div className="tab-content" id="myTabContent">
-            <div
-              className="tab-pane fade show active"
-              id="all"
-              role="tabpanel"
-              aria-labelledby="all-tab"
-            >
-              <div className="row w-100 ms-0">
-                {/* {productData.map((product) => {
-                  return ( */}
-                    <div
-                      // key={product.id}
-                      className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                    >
-                      {/* <ProductBox
-                        image={product.image}
-                        name={product.product_title_name}
-                        productPrice={product.product_price}
-                        productMRF={product.sale_price}
-                      /> */}
-                    </div>
-                {/* //   );
-                // })} */}
-              </div>
-            </div>
           </div>
         </div>
       </section>

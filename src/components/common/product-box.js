@@ -74,7 +74,7 @@ const ProductBox = ({
           console.log("wishlistttttt----------" + JSON.stringify(data));
           setData(response.data);
           setWlistData("remove");
-          //   setapicall(true);
+          setapicall(true);
         });
       // setWlistData(a);
     } else if (wlist === "/wishlist") {

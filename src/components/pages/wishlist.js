@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 function Wishlist() {
   const useridd = localStorage.getItem("userid")
-
+  const[apicall,setapicall]=useState(false);
   const[wishlist,setWishList]=useState([]);
   var product = data.product;
   console.log(product);
@@ -22,13 +22,13 @@ function Wishlist() {
             let data = response.data;
             setWishList(data);
             console.log("GETWWWWWW-------------------"+JSON.stringify(data))
-            // setapicall(false);
+            setapicall(false);
           });
       } catch (err) {}
     }
 
     getWishList();
-  }, []);
+  }, [apicall]);
  
   return (
     <React.Fragment>

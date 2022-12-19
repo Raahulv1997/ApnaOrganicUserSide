@@ -14,7 +14,7 @@ import axios from "axios";
 
 const ProductDetail = () => {
   const useridd = localStorage.getItem("userid")
- 
+  const[apicall,setapicall]=useState([]);
   const[productDetails,setProductDetails]=useState([]);
   const[storeInfo,setStoreInfo]=useState();
   const[productprice,setProductprice]=useState();
@@ -67,13 +67,13 @@ let proid=localStorage.getItem("proid")
             setId(data.product_verient[0].id);
 
             console.log("detailssssssssss-------------------"+JSON.stringify(data));
-            // setapicall(false);
+            setapicall(false);
           });
       } catch (err) {}
     }
 
     getProductDetails();
-  }, []);
+  }, [apicall]);
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:`${useridd}`,
@@ -88,6 +88,7 @@ let proid=localStorage.getItem("proid")
         console.log("ADD CARTTT-------------------"+JSON.stringify(data))
         setProductDetails(data.results);
         setId();
+        setapicall(true);
         console.log("variantiddddddddddd"+Id)
       });
   }
@@ -104,7 +105,7 @@ let proid=localStorage.getItem("proid")
     let data = response.data;
 console.log("detailsssWISHLISTTTTTT----------   " + JSON.stringify(data));
 setProductDetails(data.results)
-//   setapicall(false);
+setapicall(true);
 })
 .catch(function(error) {
   console.log(error);
@@ -241,9 +242,7 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                             <h5>Cgst:{productDetails.cgst}</h5>
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                           </h3>
-                           {productDetails.rating=='#ffb321'?
                           <div className="product-rating custom-rate">
-                           
                             <ul className="rating pt-3">
                             <li color="#ffb321">
                                       <FaStar
@@ -273,7 +272,7 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                                       <FaStar icon="star" className="feather " />
                                     </li>
                             </ul>
-                          </div>:null}
+                          </div>
                         </div>
                         <button className="btn" style={{backgroundColor:colors}}>{colors}</button>
                         <div className="procuct-contain">
