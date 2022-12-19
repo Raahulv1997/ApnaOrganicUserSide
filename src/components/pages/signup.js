@@ -6,60 +6,66 @@ import axios from "axios";
 // import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
 import { useState } from "react";
-import {  useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Singup = () => {
-const [otp, setotp]= useState(0);
-const [email, setemail]= useState('');
-const [emailerror, setemailerror]= useState('');
+  const [otp, setotp] = useState(0);
+  const [email, setemail] = useState("");
+  const [emailerror, setemailerror] = useState("");
 
-const [otperror, setOtperror]= useState(false);
-const [passval, setpassval]= useState('');
+  const [otperror, setOtperror] = useState(false);
+  const [passval, setpassval] = useState("");
 
-const navigate = useNavigate()
-  const SignUpUser= (e) =>{
+  const navigate = useNavigate();
+  const SignUpUser = (e) => {
     e.preventDefault();
     setemail(e.target.email.value);
     // alert("SINGNNN"+email)
-    axios.post(`${process.env.REACT_APP_BASEURL}/sign_up`,{'email':e.target.email.value})
-    .then(response => {
-      if(response.data === false){
-        console.log("___--------------"+JSON.stringify(response.data));
-        setemailerror('already');
-        e.target.email.value = '';
-      }
-      else{
-        setotp(response.data);
-        console.log("___--------------"+JSON.stringify(response.data));
-      }
-      return response;
-    }).catch(error => {
-      console.log(error.response.error)
-      
-    })
-  }
-  const onPasswordChange = (e)=>{
-    setpassval(e.target.value)
-    console.log(e.target.value+"---valuee")
-  }
-  const VerifyOTP = (e)=>{
-    e.preventDefault();
-    if(e.target.otpinput.value == otp){
-      axios.post(`${process.env.REACT_APP_BASEURL}/otp_verification`,{"email":email, "otp":otp, "password":passval})
-      .then(response => {
-        localStorage.setItem("userid",response.data.insertId)
-        localStorage.setItem("upassword",passval)
-
-        navigate('/your_account')
-        // return response;
-      }).catch(error => {
-        console.log(error.response.error)
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
+        email: e.target.email.value,
       })
+      .then((response) => {
+        if (response.data === false) {
+          console.log("___--------------" + JSON.stringify(response.data));
+          setemailerror("already");
+          e.target.email.value = "";
+        } else {
+          setotp(response.data);
+          console.log("___--------------" + JSON.stringify(response.data));
+        }
+        return response;
+      })
+      .catch((error) => {
+        console.log(error.response.error);
+      });
+  };
+  const onPasswordChange = (e) => {
+    setpassval(e.target.value);
+  };
+  const VerifyOTP = (e) => {
+    e.preventDefault();
+    if (e.target.otpinput.value == otp) {
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
+          email: email,
+          otp: otp,
+          password: passval,
+        })
+        .then((response) => {
+          localStorage.setItem("userid", response.data.insertId);
+          localStorage.setItem("upassword", passval);
+
+          navigate("/your_account");
+          // return response;
+        })
+        .catch((error) => {
+          console.log(error.response.error);
+        });
+    } else {
+      console.log("invalid otp");
+      setOtperror(true);
     }
-    else{
-      console.log("invalid otp")
-      setOtperror(true)
-    }
-  }
+  };
   return (
     <Fragment>
       <Header />
@@ -82,7 +88,10 @@ const navigate = useNavigate()
                 </div>
 
                 <div className="input-box">
-                  <form className="row g-4" onSubmit={otp===0? SignUpUser:VerifyOTP} >
+                  <form
+                    className="row g-4"
+                    onSubmit={otp === 0 ? SignUpUser : VerifyOTP}
+                  >
                     {/* <div className="col-12">
                       <div className="form-floating theme-form-floating">
                         <input
@@ -96,44 +105,56 @@ const navigate = useNavigate()
                     </div> */}
                     <div className="col-12">
                       <div className="form-floating theme-form-floating">
-                        <input                        
+                        <input
                           type="email"
-                          className={otp===0?"form-control":"form-control d-none"}
+                          className={
+                            otp === 0 ? "form-control" : "form-control d-none"
+                          }
                           id="email"
                           placeholder="Email Address"
-                          name='emailid'
+                          name="emailid"
                           required
                         />
-                         {emailerror==='already' ? <p className="text-danger">{'User Already Exist. Please Login'}</p> : null}
-                        <input                        
+                        {emailerror === "already" ? (
+                          <p className="text-danger">
+                            {"User Already Exist. Please Login"}
+                          </p>
+                        ) : null}
+                        <input
                           type="number"
-                          className={otp===0?"form-control d-none":"form-control"}
+                          className={
+                            otp === 0 ? "form-control d-none" : "form-control"
+                          }
                           id="otp"
                           placeholder="Enter OTP"
                           name="otpinput"
-                          
                         />
-                        <label className="text-start" htmlFor="email">{otp===0?'Email Address' : 'Enter OTP'}</label>
-
+                        <label className="text-start" htmlFor="email">
+                          {otp === 0 ? "Email Address" : "Enter OTP"}
+                        </label>
                       </div>
-                      {otperror ? <p className="text-danger">{'Invalid Otp'}</p> : null}
+                      {otperror ? (
+                        <p className="text-danger">{"Invalid Otp"}</p>
+                      ) : null}
                     </div>
-
+                    {otp === 0 ?
                     <div className="col-12">
                       <div className="form-floating theme-form-floating">
                         <input
                           type="password"
                           name="password"
-                          className={otp===0?"form-control d-none":"form-control"}
+                          className={
+                          "form-control"
+                          }
                           id="password"
                           placeholder="Password"
-                          onChange={(e)=>onPasswordChange(e)}
+                          onChange={(e) => onPasswordChange(e)}
                         />
                         <label htmlFor="password">Password</label>
                       </div>
-                    </div>
+                    </div> : null}
 
-                    <div className={otp===0?"col-12":"col-12 d-none"}>
+                    <div className={otp === 0 ? "col-12" : "col-12 d-none"}>
                       <div className="forgot-box">
                         <div className="form-check ps-0 m-0 remember-box">
                           <input
@@ -155,18 +176,23 @@ const navigate = useNavigate()
 
                     <div className="col-12">
                       <button className="btn btn-animation w-100" type="submit">
-                      {otp===0?"Sign Up":"Verify Otp"}
+                        {otp === 0 ? "Sign Up" : "Verify Otp"}
                       </button>
                     </div>
                   </form>
-                  
                 </div>
 
-                <div className={otp===0?"other-log-in":"other-log-in d-none"}>
+                <div
+                  className={otp === 0 ? "other-log-in" : "other-log-in d-none"}
+                >
                   <h6>or</h6>
                 </div>
 
-                <div className={otp===0?"log-in-button":"log-in-button d-none"}>
+                <div
+                  className={
+                    otp === 0 ? "log-in-button" : "log-in-button d-none"
+                  }
+                >
                   <ul>
                     <li>
                       <a
@@ -197,13 +223,19 @@ const navigate = useNavigate()
                   </ul>
                 </div>
 
-                <div className="other-log-in">
-                  
-                </div>
+                <div className="other-log-in"></div>
 
                 <div className="sign-up-box">
                   <h4>Already have an account?</h4>
-                  <button onClick={()=>{navigate('/login')}} className='btn btn-success my-1'> Log In</button>
+                  <button
+                    onClick={() => {
+                      navigate("/login");
+                    }}
+                    className="btn btn-success my-1"
+                  >
+                    {" "}
+                    Log In
+                  </button>
                 </div>
               </div>
             </div>

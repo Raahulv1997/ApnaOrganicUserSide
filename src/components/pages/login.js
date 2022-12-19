@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 import Banner from "../../Photos/login.png";
 import Footer from "../common/footer";
 import Header from "../common/header";
@@ -8,6 +8,7 @@ import "../../CSS/style.css";
 import axios from "axios";
 
 const Login = () => {
+  const navigate = useNavigate();
   const [credentailval , setcredentailval] = useState({
     user_email:"",
     user_password:""
@@ -16,18 +17,19 @@ const Login = () => {
     setcredentailval({...credentailval, [e.target.name]:e.target.value})
   }
   const onSubmitClick = (e) =>{
+    // e.prevantDefault();
+
     console.log("credentailval=====--->   "+credentailval)
-    e.prevantDefault();
-    axios.post(`${process.env.REACT_APP_BASEURL}/user_login`,credentailval)
+    axios.post(`http://192.168.29.108:5000/user_login`,credentailval)
     .then(response => {
       console.log("___--------save------"+JSON.stringify(response.data));
-      // navigate('/your_account')
+      localStorage.setItem("useridd" , response.data.user_id)
+      navigate('/')
       // return response;
     }).catch(error => {
       console.log(error.response.data.error)
     })
   }
-  console.log("---user"+JSON.stringify(credentailval))
   return (
     <Fragment>
       <Header />
@@ -51,7 +53,7 @@ const Login = () => {
 
                 <div className="input-box">
                         
-                  <form className="row g-4" onSubmit={onSubmitClick}>
+                  {/* <form className="row g-4" onSubmit={undefined}> */}
                     <div className="col-12">
                       <div className="form-floating theme-form-floating log-in-form">
                         <input
@@ -154,13 +156,13 @@ const Login = () => {
                     <div className="col-12">
                       <button
                         className="btn btn-animation w-100 justify-content-center"
-                        type="submit"
-                        // onClick={onSubmitClick}
+                        // type="submit"
+                        onClick={(e)=>onSubmitClick(e)}
                       >
                         Log In
                       </button>
                     </div>
-                  </form>
+                  {/* </form> */}
                 </div>
 
                 <div className="other-log-in">
