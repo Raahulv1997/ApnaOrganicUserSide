@@ -20,7 +20,7 @@ const ProductBox = ({
   producttype,
   brand,
   rating,
-  parent_category
+category
 }) => {
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
@@ -96,32 +96,32 @@ const ProductBox = ({
         });
     }
   };
-  useEffect(() => {
-    try {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
-          {
-            product_search: {
-              search: "",
-              colors: "",
-              size: "",
-              category: "",
-              product_type: "",
-            },
-          }
-        )
-        .then((response) => {
-          let data = response.data;
-          setData(data.results);
-          // setProductId(data);
-          //console.log("PRODUCT============"+JSON.stringify(data))
-          setapicall(false);
-        });
-    } catch (err) {}
-  }, [apicall]);
+  // useEffect(() => {
+  //   try {
+  //     axios
+  //       .get(
+  //         `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
+  //         {
+  //           product_search: {
+  //             search: "",
+  //             colors: "",
+  //             size: "",
+  //             category: "",
+  //             product_type: "",
+  //           },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         let data = response.data;
+  //         setData(data.results);
+  //         // setProductId(data);
+  //         //console.log("PRODUCT============"+JSON.stringify(data))
+  //         setapicall(false);
+  //       });
+  //   } catch (err) {}
+  // }, [apicall]);
   const clickProduct = (productid) => {
-    console.log("product_iddddddd" + productid);
+    // console.log("product_iddddddd" + productid);
 
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
@@ -173,7 +173,7 @@ const ProductBox = ({
         </ul>
         <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
-          <h5 className="name m-0">parent_category:{parent_category}</h5>
+          <h5 className="name m-0">category:{category}</h5>
           <h5 className="name m-0">brand:{brand}</h5>
           <h5 className="name m-0">rating:{rating}</h5>
           <h5 className="name m-0">producttype:{producttype}</h5>

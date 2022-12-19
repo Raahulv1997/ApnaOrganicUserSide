@@ -39,7 +39,7 @@ const useridd = localStorage.getItem("userid")
                 })
               }
               // setCategoryTy();
-              console.log("categoryyyTYPEEEEEEE-------------------"+JSON.stringify(data))
+              // console.log("categoryyyTYPEEEEEEE-------------------"+JSON.stringify(data))
               // setapicall(false);
             });
         } catch (err) {}
@@ -55,7 +55,7 @@ const useridd = localStorage.getItem("userid")
         setunCatArr(result)
   
     }, [catArray])
-    console.log("------------"+JSON.stringify(productType))
+    // console.log("------------"+JSON.stringify(productType))
       // const catetype = productData.filter(
       //   (thing, index, self) =>
       //     index ===

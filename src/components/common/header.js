@@ -17,6 +17,7 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
+import moment from "moment";
 const Header = (props) => {
   const useridd = localStorage.getItem("userid");
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
@@ -25,12 +26,13 @@ const Header = (props) => {
   const [pdata, setPdata] = useState([]);
   const navigate = useNavigate();
   const [click, setclick] = useState(false);
-  const [search, setsearch] = useState("");
+  const [search, setsearch] = useState([]);
   // const [cat_list, setcat_list] = useState(false);
   const open_Category = () => {
     setclick(true);
   };
-
+// const wee = [moment().startOf('week'), moment().endOf('week')]
+// console.log("---well"+wee)
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -74,11 +76,21 @@ const Header = (props) => {
         // x.down1_category_name==thing.down1_category_name
       )
   );
+  // console.log("--categoryyyyyyy----->>>"+ JSON.stringify(level1category))
+  const searchCategoryProduct = (e) => {
+    e.preventDefault();
+    // let filtercat = e.target.value;
+    // searchh.push([e.target.value])
+    // setsearch(search => [...search, filtercat]);
+    // let search=e.target.formSearchInputBox.value;
+    // navigate(`/shop?search=${search}`);
+  };
 
+ 
   const searchProduct = (e) => {
     e.preventDefault();
+    
     // let search=e.target.formSearchInputBox.value;
-    console.log("------->>>"+search)
     navigate(`/shop?search=${search}`);
   };
   useEffect(() => {
@@ -404,14 +416,12 @@ const Header = (props) => {
                                 
                               </Accordion.Header> */}
                               <Dropdown as={ButtonGroup} className={'category_dropdown_box'} >
-      <Button variant="light" className={'category_dropdown_name'} onClick={searchProduct} value={catdata.root_category_name}>{catdata.root_category_name}</Button>
+    
+      <Button variant="light" className={'category_dropdown_name'} onClick={()=>{navigate(`/shop?category=`+catdata.root_id)}} value={catdata.root_id}>{catdata.root_category_name}</Button>
 
       <Dropdown.Toggle split variant="light" id="dropdown-split-basic" drop={'end'} title={`Drop end`} className={'category_dropdown_btn'}/>
 
       <Dropdown.Menu>
-        {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
-        <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
          <div className="onhover-category-box">
                                   {(level1category || []).map((data) => {
                                     return catdata.root_category_name ===
@@ -419,8 +429,8 @@ const Header = (props) => {
                                       data.down1_category_name !== null ? (
                                       <div className="list-1">
                                         <div className="category-title-box">
-                                          <div>
-                                            <h5  >{data.down1_category_name}</h5>
+                                          <div value={data.down1_id}>
+                                            <h5 onClick={searchCategoryProduct} value={data.down1_id} className={'searchsub_category searchsub_category_box'}>{data.down1_category_name}</h5>
                                           </div>
                                         </div>
                                         <ul className="p-0">
@@ -430,7 +440,7 @@ const Header = (props) => {
                                                 data1.down1_category_name &&
                                                 data.down2_category_name !==
                                                   null ? (
-                                                <li className="w-100">
+                                                <li  onClick={searchCategoryProduct} value={data1.down2_id} className={'searchsub_category w-100 py-2'}>
                                                   {data1.down2_category_name}
                                                   <ul>
                                                     {(categorydata || []).map(
@@ -439,7 +449,7 @@ const Header = (props) => {
                                                           data2.down2_category_name &&
                                                           data.down3_category_name !==
                                                             null ? (
-                                                          <li className="w-100">
+                                                          <li onClick={searchCategoryProduct} value={data2.down3_id} className={'w-100  searchsub_category px-2 py-1'}>
                                                             {
                                                               data2.down3_category_name
                                                             }

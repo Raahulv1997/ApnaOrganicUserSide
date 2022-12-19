@@ -29487,3 +29487,10 @@ width: 100%;
   background-color:none !important;
   border-color:none !important;
 }
+.onhover-category-box .searchsub_category{
+cursor: pointer;
+}
+.onhover-category-box .searchsub_category_box{
+border: 0.3px solid grey;
+padding: 10px;
+}

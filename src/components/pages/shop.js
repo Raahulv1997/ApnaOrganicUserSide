@@ -17,6 +17,8 @@ const Shop = (props) => {
   const [click, setclick] = useState(false);
   const [productdata, setproductdata] = useState([]);
   const [searchText, setsearchText] = useState("");
+  const [searchCat, setsearchCat] = useState([]);
+
   const sidebar = () => {
     setclick(true);
   };
@@ -25,13 +27,15 @@ const Shop = (props) => {
   const [categorydata, setCategoryData] = useState([]);
   const [categoryfilterdata, setCategoryfilterData] = useState([]);
   const [apicall, setapicall] = useState(false);
-  const [categoryNamedata, setCategoryNameData] = useState({
-    parent_category:"",
-    brand:"",
-    discount:"",
-    rating:"",
-    product_price:""
-  })
+  const [categoryNamedata, setCategoryNameData] = useState([])
+  const [pricefilter, setpricefilter] = useState({
+    to_product_price:"",
+    from_product_price:""
+  });
+  const [discountfilter, setdiscountfilter] = useState([]);
+  const [brandfilter, setbrandfilter] = useState([]);
+  const [ratingfilter, setratingfilter] = useState([]);
+  
 //   const [showcategorydata, setshowCategoryData] = useState([]);
 
   useEffect(() => {
@@ -41,45 +45,69 @@ const Shop = (props) => {
       searchparams.get("search") === undefined
     ) {
       setsearchText("");
-    } else {
+    }
+    else {
       setsearchText(searchparams.get("search"));
+
     }
   }, [searchText]);
 
-
-  var product = data.product;
+  useEffect(() => {
+    if (
+      searchparams.get("category") === null ||
+      searchparams.get("category") === "" ||
+      searchparams.get("category") === undefined
+    ) {
+      setsearchCat("")
+    }
+    else {
+      setCategoryNameData(categoryNamedata => [...categoryNamedata, Number(searchparams.get("category"))]);
+    }
+  }, [searchCat]);
+  // var product = data.product;
 //   product list
   useEffect(() => {
+    console.log("--------category"+(categoryNamedata))
+    console.log("--------price"+(pricefilter))
+    console.log("--------discount"+(discountfilter))
+    console.log("--------brand"+(brandfilter))
+    console.log("--------rating"+(ratingfilter))
     function getProductData() {
       try {
         axios
           .post(
             `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,
             {
-              product_search: {
+              product_search: 
+              {
                 search: `${searchText}`,
-                parent_category:`${categoryNamedata.parent_category}`,
-                brand:`${categoryNamedata.brand}`,
-                discount:`${categoryNamedata.discount}`,
-                rating:`${categoryNamedata.rating}`,
-                product_price:`${categoryNamedata.product_price}`
+              price_from:`${pricefilter.from_product_price}`,
+              price_to:`${pricefilter.to_product_price}`,
+              product_type: [],
+              colors:[],
+              size:[],
+              brand:brandfilter,
+              discount:discountfilter,
+              rating:ratingfilter,
+              category:categoryNamedata
               },
             }
           )
           .then((response) => {
             let data = response.data;
             setProdData(data.results);
-            if(categoryNamedata.parent_category === '' && categoryNamedata.brand==='' && categoryNamedata.discount === ''&& categoryNamedata.rating === ''&& categoryNamedata.product_price=== ''){
+            if(categoryNamedata[0] ===null && brandfilter[0]===null && discountfilter[0] === null&& ratingfilter[0] === null && pricefilter.from_product_price=== null && pricefilter.to_product_price=== null){
                 setCategoryfilterData(data.results)
+console.log("---------detail"+JSON.stringify(data.results))
             }
-
             // setapicall(false);
           });
       } catch (err) {}
     }
     getProductData();
-  }, [categoryNamedata]);
+  }, [categoryNamedata,ratingfilter,brandfilter,discountfilter,pricefilter]);
 // end product list
+
 
 
   //   category
@@ -118,16 +146,22 @@ const Shop = (props) => {
   }
   var showcategorydata = [];
   const onCategoryNameAdd = (e) =>{
-//     if(categoryNamedata.product_price === undefined || categoryNamedata.product_price === null || 
-//         categoryNamedata.product_price === ''){
-// setCategoryNameData({...categoryNamedata, product_price:""})
-//         }
-let val = e.target.value
-console.log("---eeeeeee"+val)
-showcategorydata.push(e.target.value)
-    setCategoryNameData({...categoryNamedata, [e.target.name] : e.target.value})
+    setCategoryNameData(categoryNamedata => [...categoryNamedata, e.target.value])
   }
-  console.log("---change"+JSON.stringify(showcategorydata))
+  const onPriceFilterAdd = (e) =>{
+    setpricefilter({...pricefilter, [e.target.name]:e.target.value })
+  }
+  const onDiscountFilterAdd = (e) =>{
+    setdiscountfilter(discountfilter => [...discountfilter, e.target.value])
+  }
+  const onBrandFilterAdd = (e) =>{
+    setbrandfilter(brandfilter => [...brandfilter, e.target.value])
+  }
+  const onRatingFilterAdd = (e) =>{
+    setratingfilter(ratingfilter => [...ratingfilter, e.target.value])
+  }
+
+  // console.log("---change"+JSON.stringify(showcategorydata))
 //   END SEARCH AND SHOW CATEGORY
   // end category
 
@@ -211,9 +245,9 @@ const filtercategorydata = categoryfilterdata.filter(
                                       <input
                                         className="checkbox_animated"
                                         type="checkbox"
-                                        id="parent_category"
-                                        name={'parent_category'}
-                                        value={cdta.root_category_name}
+                                        id="category"
+                                        name={'category'}
+                                        value={cdta.root_id}
                                         onChange={(e)=>onCategoryNameAdd(e)}
                                       />
                                       <label
@@ -257,7 +291,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                             id="veget"
                                             name={'brand'} 
                                             value={data.brand}
-                                            onChange={(e)=>onCategoryNameAdd(e)}
+                                            onChange={(e)=>onBrandFilterAdd(e)}
                                                                                      />
                                           <label
                                             className="form-check-label"
@@ -288,15 +322,18 @@ const filtercategorydata = categoryfilterdata.filter(
                             type="text"
                             className="js-range-slider"
                             placeholder="from"
-                            name={'product_price'}
+                            name={'from_product_price'}
                                         // value={cdta.root_category_name}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onPriceFilterAdd(e)}
                           />
                           &nbsp;
                           <input
                             type="text"
                             className="js-range-slider"
-                            placeholder="to "
+                            placeholder="to"
+                            name={'to_product_price'}
+                                        // value={cdta.root_category_name}
+                                        onChange={(e)=>onPriceFilterAdd(e)}
                           />
                         </div>
                       </Accordion.Body>
@@ -321,7 +358,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     type="checkbox"
                                     name={'rating'}
                                         value={'5'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -371,7 +408,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     type="checkbox"
                                     name={'rating'}
                                         value={'4'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -417,7 +454,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     type="checkbox"
                                     name={'rating'}
                                         value={'3'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -460,7 +497,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     type="checkbox"
                                     name={'rating'}
                                         value={'2'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -500,7 +537,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     type="checkbox"
                                     name={'rating'}
                                         value={'1'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -555,7 +592,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     id="flexCheckDefault"
                                     name={'discount'}
                                         value={'10'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -575,7 +612,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     id="flexCheckDefault1"
                                     name={'discount'}
                                         value={'20'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -595,7 +632,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     id="flexCheckDefault2"
                                     name={'discount'}
                                         value={'30'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -615,7 +652,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     id="flexCheckDefault3"
                                     name={'discount'}
                                         value={'40'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -635,7 +672,7 @@ const filtercategorydata = categoryfilterdata.filter(
                                     id="flexCheckDefault4"
                                     name={'discount'}
                                         value={'50'}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        onChange={(e)=>onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -764,7 +801,7 @@ const filtercategorydata = categoryfilterdata.filter(
                         rating={product.rating}
                         discount={product.discount}
                         brand={product.brand}
-                        parent_category={product.parent_category}
+                        category={product.category}
                         producttype={product.product_type}
 
                       />
