@@ -78,7 +78,7 @@ const Header = (props) => {
   const searchProduct = (e) => {
     e.preventDefault();
     // let search=e.target.formSearchInputBox.value;
-    // console.log("------->>>"+search=`${search}`)
+    console.log("------->>>"+search)
     navigate(`/shop?search=${search}`);
   };
   useEffect(() => {
@@ -403,15 +403,60 @@ const Header = (props) => {
                               
                                 
                               </Accordion.Header> */}
-                              <Dropdown as={ButtonGroup} className={'category_dropdown_box'}>
-      <Button variant="light" className={'category_dropdown_name'} >{catdata.root_category_name}</Button>
+                              <Dropdown as={ButtonGroup} className={'category_dropdown_box'} >
+      <Button variant="light" className={'category_dropdown_name'} onClick={searchProduct} value={catdata.root_category_name}>{catdata.root_category_name}</Button>
 
       <Dropdown.Toggle split variant="light" id="dropdown-split-basic" drop={'end'} title={`Drop end`} className={'category_dropdown_btn'}/>
 
       <Dropdown.Menu>
-        <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
+        {/* <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
         <Dropdown.Item href="#/action-2">Another action</Dropdown.Item>
-        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item>
+        <Dropdown.Item href="#/action-3">Something else</Dropdown.Item> */}
+         <div className="onhover-category-box">
+                                  {(level1category || []).map((data) => {
+                                    return catdata.root_category_name ===
+                                      data.root_category_name &&
+                                      data.down1_category_name !== null ? (
+                                      <div className="list-1">
+                                        <div className="category-title-box">
+                                          <div>
+                                            <h5  >{data.down1_category_name}</h5>
+                                          </div>
+                                        </div>
+                                        <ul className="p-0">
+                                          {(level2category || []).map(
+                                            (data1) => {
+                                              return data.down1_category_name ===
+                                                data1.down1_category_name &&
+                                                data.down2_category_name !==
+                                                  null ? (
+                                                <li className="w-100">
+                                                  {data1.down2_category_name}
+                                                  <ul>
+                                                    {(categorydata || []).map(
+                                                      (data2) => {
+                                                        return data1.down2_category_name ===
+                                                          data2.down2_category_name &&
+                                                          data.down3_category_name !==
+                                                            null ? (
+                                                          <li className="w-100">
+                                                            {
+                                                              data2.down3_category_name
+                                                            }
+                                                          </li>
+                                                        ) : null;
+                                                      }
+                                                    )}
+                                                  </ul>
+                                                </li>
+                                              ) : null;
+                                            }
+                                          )}
+                                        </ul>
+                                      </div>
+                                    ) : null;
+                                  })}
+                                </div>
       </Dropdown.Menu>
     </Dropdown>
                               <Accordion.Body>
