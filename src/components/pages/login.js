@@ -8,6 +8,7 @@ import "../../CSS/style.css";
 import axios from "axios";
 
 const Login = () => {
+  const [error,setError]=useState(true);
   const navigate = useNavigate();
   const [credentailval , setcredentailval] = useState({
     user_email:"",
@@ -19,17 +20,25 @@ const Login = () => {
   const onSubmitClick = (e) =>{
     // e.prevantDefault();
 
-    console.log("credentailval=====--->   "+credentailval)
+    console.log("credentailval=====--->"+credentailval)
     axios.post(`http://192.168.29.108:5000/user_login`,credentailval)
     .then(response => {
-      console.log("___--------save------"+JSON.stringify(response.data));
-      localStorage.setItem("useridd" , response.data.user_id)
-      navigate('/')
+      if(response.data === false){
+      console.log("___------false------"+JSON.stringify(response.data));
+      setError(false);
+      }
+      else{
+        console.log("___--------true------"+JSON.stringify(response.data));
+        localStorage.setItem("useridd",response.data.user_id);
+        navigate('/');
+        setError(false);
+      }
       // return response;
     }).catch(error => {
       console.log(error.response.data.error)
     })
   }
+ 
   return (
     <Fragment>
       <Header />
@@ -65,6 +74,7 @@ const Login = () => {
                           onChange={(e)=>onCredentialChange(e)}
                           value={credentailval.user_email}
                         />
+                        
                         <label htmlFor="email">Email</label>
                       </div>
                     </div>
@@ -128,6 +138,10 @@ const Login = () => {
                         value={credentailval.user_password}
 
                         />
+                         {error===false ?
+                           <p className="mt-1 ms-2 text-danger" type="invalid">
+                      Please Enter Correct Password
+                    </p>:null}
                         <label htmlFor="password">Password</label>
                       </div>
                     </div>
@@ -147,8 +161,8 @@ const Login = () => {
                             Remember me
                           </label>
                         </div>
-                        <NavLink to="/forgot" className="forgot">
-                          Forgot Password?
+                        <NavLink to="/forgot"  className="forgot">
+                          Forgot Password? 
                         </NavLink>
                       </div>
                     </div>

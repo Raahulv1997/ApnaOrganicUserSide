@@ -71,7 +71,7 @@ const Cart = (props) => {
             let data = response.data;
             setCartData(data);
             setapicall(false);
-            console.log("setCartDataaaaaaaa-------------------"+JSON.stringify(data))
+            console.log("setCartDataaaaaaaa---------"+JSON.stringify(data))
             // setapicall(false);
           });
       } catch (err) {}

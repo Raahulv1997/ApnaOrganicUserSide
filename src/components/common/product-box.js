@@ -8,6 +8,8 @@ import { useNavigate } from "react-router-dom";
 // function AddCart(props){
 // }
 let wlist;
+
+
 const ProductBox = ({
   id,
   name,
@@ -23,6 +25,7 @@ const ProductBox = ({
   parent_category
 }) => {
   const useridd = localStorage.getItem("userid");
+  console.log("consoleeeee"+useridd)
   const [apicall, setapicall] = useState(false);
   const navigate = useNavigate();
   const [wlistData, setWlistData] = useState("");
@@ -39,33 +42,34 @@ const ProductBox = ({
   };
 
   const func = () => {};
-  //   console.log("dataaaaaaaa"+JSON.stringify(productData))
+  //console.log("dataaaaaaaa"+JSON.stringify(productData))
   const AddToCart = () => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id: `${useridd}`,
-        product_view_id: `${id}`,
-        price: `${productPrice}`,
-        discount: `${productMRF}`,
+      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
+        user_id:`${useridd}`,
+        product_view_id:`${id}`,
+        price:`${productPrice}`,
+        discount:`${productMRF}`,
         quantity: count,
         is_active: 1,
       })
       .then((response) => {
         let data = response.data;
-        console.log("ADD CARTTT-------------------" + JSON.stringify(data));
+        console.log("ADD CARTTT------------" + JSON.stringify(data));
         setData(data);
-        setapicall(true);
+        //setapicall(true);
       });
   };
-  // console.log('', window.location.pathname);
+  console.log("useridd"+useridd)
+  //console.log('', window.location.pathname);
   wlist = window.location.pathname;
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
       console.log("ADD______WISHLIST");
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-          user_id: `${useridd}`,
-          product_view_id: `${id}`,
+          user_id:`${useridd}`,
+          product_view_id:`${id}`,
           // price:`${productPrice}`,
           // discount:`${productMRF}`,
         })
@@ -76,18 +80,19 @@ const ProductBox = ({
           setWlistData("remove");
           setapicall(true);
         });
+        console.log("user ki id"+useridd)
       // setWlistData(a);
     } else if (wlist === "/wishlist") {
       console.log("id---------" + id);
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-          id: `${id}`,
-          user_id: `${useridd}`,
+          id:`${id}`,
+          user_id:`${useridd}`,
         })
         .then((response) => {
           let data = response.data;
           console.log(
-            "REMOVEEEEEEEEEwishlistttttt----------" + JSON.stringify(data)
+            "REMOVEEEEEEEEEwishlistttttt----------"+JSON.stringify(data)
           );
           setData(response.data);
           setWlistData("add");
@@ -123,7 +128,7 @@ const ProductBox = ({
   const clickProduct = (productid) => {
     console.log("product_iddddddd" + productid);
 
-    localStorage.setItem("proid", productid);
+    localStorage.setItem("proid",productid);
     navigate("/product-detail");
   };
   return (

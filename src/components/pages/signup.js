@@ -52,7 +52,7 @@ const Singup = () => {
           password: passval,
         })
         .then((response) => {
-          localStorage.setItem("userid", response.data.insertId);
+          localStorage.setItem("userid", response.data.insertId);          
           localStorage.setItem("upassword", passval);
 
           navigate("/your_account");
@@ -61,6 +61,7 @@ const Singup = () => {
         .catch((error) => {
           console.log(error.response.error);
         });
+
     } else {
       console.log("invalid otp");
       setOtperror(true);

@@ -13,7 +13,8 @@ import {useEffect } from "react";
 import axios from "axios";
 
 const ProductDetail = () => {
-  const useridd = localStorage.getItem("userid")
+  const useridd = localStorage.getItem("userid");
+  console.log("userIDDDDDDDDDDDDDDD"+useridd)
   const[apicall,setapicall]=useState([]);
   const[productDetails,setProductDetails]=useState([]);
   const[storeInfo,setStoreInfo]=useState();
@@ -27,7 +28,12 @@ const ProductDetail = () => {
   const[Id,setId]=useState();
 
   const[discount,setDiscount]=useState();
-  
+  let rating1=1;
+  let rating2=2;
+  let rating3=3;
+  let rating4=4;
+  let rating5=5;
+  console.log("ratingggggg1"+rating1)
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
@@ -45,8 +51,7 @@ const decrementCount = () => {
     
   }
 
-let proid=localStorage.getItem("proid")
-
+let proid=localStorage.getItem("proid");
 // console.log("dddddddd"+proid)
   useEffect(() => {
     function getProductDetails() {
@@ -65,7 +70,6 @@ let proid=localStorage.getItem("proid")
             setExp(data.product_verient[0].expire_date);
             setQut(data.product_verient[0].quantity)
             setId(data.product_verient[0].id);
-
             console.log("detailssssssssss-------------------"+JSON.stringify(data));
             setapicall(false);
           });
@@ -103,7 +107,7 @@ let proid=localStorage.getItem("proid")
   })
 .then((response) => {
     let data = response.data;
-console.log("detailsssWISHLISTTTTTT----------   " + JSON.stringify(data));
+console.log("detailsssWISHLISTTTTTT----------" + JSON.stringify(data));
 setProductDetails(data.results)
 setapicall(true);
 })
@@ -243,34 +247,36 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                           </h3>
                           <div className="product-rating custom-rate">
+                            
                             <ul className="rating pt-3">
+                            {rating1==productDetails.rating?
                             <li color="#ffb321">
                                       <FaStar
                                         icon="star"
                                         className="feather fill"
                                         fill={"#ffb321"}
                                       />
-                                    </li>
+                                    </li>:"#ffb321"||rating2==productDetails.rating?
                                     <li color="#ffb321">
                                       <FaStar
                                         icon="star"
                                         className="feather fill"
                                         fill={"#ffb321"}
                                       />
-                                    </li>
+                                    </li>:"#ffb321"||rating3==productDetails.rating?
                                     <li color="#ffb321">
                                       <FaStar
                                         icon="star"
                                         className="feather fill"
                                         fill={"#ffb321"}
                                       />
-                                    </li>
+                                    </li>:""||rating4==productDetails.rating?
                                     <li>
-                                      <FaStar icon="star" className="feather " />
-                                    </li>
+                                      <FaStar icon="star" className="feather"/>
+                                    </li>:""||rating5==productDetails.rating?
                                     <li>
-                                      <FaStar icon="star" className="feather " />
-                                    </li>
+                                      <FaStar icon="star" className="feather"/>
+                                    </li>:null}
                             </ul>
                           </div>
                         </div>
