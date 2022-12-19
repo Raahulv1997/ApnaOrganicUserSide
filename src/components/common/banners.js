@@ -35,9 +35,6 @@ const useridd = localStorage.getItem("userid")
                   return setcatArray(catArray => [...catArray, product.product_type]);
                 })
               }
-              // setCategoryTy();
-              console.log("categoryyyTYPEEEEEEE-------------------"+JSON.stringify(data))
-              // setapicall(false);
             });
         } catch (err) {}
       }
@@ -52,7 +49,6 @@ const useridd = localStorage.getItem("userid")
         setunCatArr(result)
   
     }, [catArray])
-    console.log("------------"+JSON.stringify(productType));
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">
@@ -166,7 +162,7 @@ const useridd = localStorage.getItem("userid")
               <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType('')}>All</button>
               {unCatArr.map((catArr, i) => {
                 return(
-                  <button key={i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType(catArr)}>{catArr}</button>
+                  <button key={catArr.i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType(catArr)}>{catArr}</button>
                 )              
               })}
               </div>

@@ -19,14 +19,12 @@ const Forgot = () => {
     axios.post(`http://192.168.29.108:5000/user_forgot_password`,{
       email:`${email}`
     }).then(response => {
-      console.log("___--------forgotPassword------"+JSON.stringify(response.data));
       // localStorage.setItem("useridd" , response.data.user_id)
       navigate('/login')
      
       // return response;
     })
   }
-  console.log("passsFOrgotttttt"+email);
   return (
     <Fragment>
       <Header />

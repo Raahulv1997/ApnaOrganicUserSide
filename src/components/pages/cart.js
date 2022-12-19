@@ -25,14 +25,12 @@ const Cart = (props) => {
 
   const incrementCount=(id,quantity)=> {
     let inc=quantity+1
-    console.log("quentityyyyyyy--------- "+inc)
     axios.put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
       id:id,
       quantity:inc
   }).then((response) => {
     let data = response.data;
     setapicall(true);
-    console.log("-------------------"+JSON.stringify(data))
     setQuantity(quantity=quantity+1)
  })
    
@@ -54,7 +52,6 @@ const Cart = (props) => {
       setapicall(true)
       let data = response.data;
       // setCartData(data);
-      console.log("DDDDDDDDDDDDDDDDDDDDDD-------------------"+JSON.stringify(data))
       // quantity = quantity- 1;
       setQuantity(quantity=quantity-1)
     });
@@ -80,8 +77,6 @@ const Cart = (props) => {
     getCartData();
   }, [apicall]);
   const deleteCart=(id,user_id)=>{
-    console.log("id++++++++++++++++"+   id  )
-    console.log("user_id++++++++++++++++"+ user_id  )
     axios
     .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
       id:id,

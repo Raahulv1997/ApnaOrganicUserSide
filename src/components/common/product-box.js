@@ -25,7 +25,6 @@ const ProductBox = ({
   parent_category
 }) => {
   const useridd = localStorage.getItem("userid");
-  console.log("consoleeeee"+useridd)
   const [apicall, setapicall] = useState(false);
   const navigate = useNavigate();
   const [wlistData, setWlistData] = useState("");
@@ -40,9 +39,7 @@ const ProductBox = ({
       setCount((count) => count - 1);
     }
   };
-
   const func = () => {};
-  //console.log("dataaaaaaaa"+JSON.stringify(productData))
   const AddToCart = () => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
@@ -60,8 +57,6 @@ const ProductBox = ({
         //setapicall(true);
       });
   };
-  console.log("useridd"+useridd)
-  //console.log('', window.location.pathname);
   wlist = window.location.pathname;
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
@@ -70,8 +65,6 @@ const ProductBox = ({
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
           user_id:`${useridd}`,
           product_view_id:`${id}`,
-          // price:`${productPrice}`,
-          // discount:`${productMRF}`,
         })
         .then((response) => {
           let data = response.data;
@@ -80,10 +73,7 @@ const ProductBox = ({
           setWlistData("remove");
           setapicall(true);
         });
-        console.log("user ki id"+useridd)
-      // setWlistData(a);
     } else if (wlist === "/wishlist") {
-      console.log("id---------" + id);
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
           id:`${id}`,
@@ -120,19 +110,17 @@ const ProductBox = ({
           let data = response.data;
           setData(data.results);
           // setProductId(data);
-          //console.log("PRODUCT============"+JSON.stringify(data))
           setapicall(false);
         });
     } catch (err) {}
   }, [apicall]);
   const clickProduct = (productid) => {
-    console.log("product_iddddddd" + productid);
 
     localStorage.setItem("proid",productid);
     navigate("/product-detail");
   };
   return (
-    <div className="product-box-3 p-0 mt-3 product_box overflow-hidden">
+    <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div className="product-image">
         <div className="ribbon_div">
           {special_offer == 0 || special_offer == "" ? null : (
@@ -152,7 +140,7 @@ const ProductBox = ({
             src={
               "https://www.shutterstock.com/image-photo/man-hands-holding-global-network-260nw-1801568002.jpg"
             }
-            className="img-fluid"
+            className="mt-5 "
             alt=""
           />
         </a>
@@ -160,6 +148,7 @@ const ProductBox = ({
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
+          {}
           <li color="#ffb321">
             <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
           </li>

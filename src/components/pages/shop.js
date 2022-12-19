@@ -119,21 +119,13 @@ const Shop = (props) => {
   };
   var showcategorydata = [];
   const onCategoryNameAdd = (e) => {
-    //     if(categoryNamedata.product_price === undefined || categoryNamedata.product_price === null ||
-    //         categoryNamedata.product_price === ''){
-    // setCategoryNameData({...categoryNamedata, product_price:""})
-    //         }
     let val = e.target.value;
-    console.log("---eeeeeee" + val);
     showcategorydata.push(e.target.value);
     setCategoryNameData({
       ...categoryNamedata,
       [e.target.name]: e.target.value,
     });
   };
-  console.log("---change" + JSON.stringify(showcategorydata));
-  //   END SEARCH AND SHOW CATEGORY
-  // end category
 
   //   BRAND
   const filtercategorydata = categoryfilterdata.filter(
@@ -168,7 +160,7 @@ const Shop = (props) => {
                       showcategorydata[0] !== undefined
                         ? (showcategorydata[0] || []).map((show, i) => {
                             return (
-                              <li key={i}>
+                              <li key={show.id}>
                                 <Link to="">{show} </Link>
                               </li>
                             );
@@ -206,7 +198,7 @@ const Shop = (props) => {
                             <ul className="category-list custom-padding custom-height">
                               {(categorydata || []).map((cdta, i) => {
                                 return (
-                                  <li key={i}>
+                                  <li key={cdta.i}>
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"
@@ -249,7 +241,7 @@ const Shop = (props) => {
                             <ul className="category-list custom-padding">
                               {(filtercategorydata || []).map((data, i) => {
                                 return (
-                                  <li key={i}>
+                                  <li key={data.i}>
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"

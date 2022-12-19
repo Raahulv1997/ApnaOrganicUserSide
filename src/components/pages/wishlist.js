@@ -11,7 +11,6 @@ function Wishlist() {
   const[apicall,setapicall]=useState(false);
   const[wishlist,setWishList]=useState([]);
   var product = data.product;
-  console.log(product);
   const func=()=>{}
   useEffect(() => {
     function getWishList() {
@@ -21,7 +20,6 @@ function Wishlist() {
           .then((response) => {
             let data = response.data;
             setWishList(data);
-            console.log("GETWWWWWW-------------------"+JSON.stringify(data))
             setapicall(false);
           });
       } catch (err) {}

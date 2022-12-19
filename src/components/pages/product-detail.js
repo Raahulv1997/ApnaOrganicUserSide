@@ -13,8 +13,7 @@ import {useEffect } from "react";
 import axios from "axios";
 
 const ProductDetail = () => {
-  const useridd = localStorage.getItem("userid");
-  console.log("userIDDDDDDDDDDDDDDD"+useridd)
+  const useridd= localStorage.getItem("userid");
   const[apicall,setapicall]=useState([]);
   const[productDetails,setProductDetails]=useState([]);
   const[storeInfo,setStoreInfo]=useState();
@@ -33,7 +32,6 @@ const ProductDetail = () => {
   let rating3=3;
   let rating4=4;
   let rating5=5;
-  console.log("ratingggggg1"+rating1)
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
@@ -52,7 +50,6 @@ const decrementCount = () => {
   }
 
 let proid=localStorage.getItem("proid");
-// console.log("dddddddd"+proid)
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -70,7 +67,6 @@ let proid=localStorage.getItem("proid");
             setExp(data.product_verient[0].expire_date);
             setQut(data.product_verient[0].quantity)
             setId(data.product_verient[0].id);
-            console.log("detailssssssssss-------------------"+JSON.stringify(data));
             setapicall(false);
           });
       } catch (err) {}
@@ -89,11 +85,9 @@ let proid=localStorage.getItem("proid");
     })
     .then((response) => {
         let data = response.data;
-        console.log("ADD CARTTT-------------------"+JSON.stringify(data))
         setProductDetails(data.results);
         setId();
         setapicall(true);
-        console.log("variantiddddddddddd"+Id)
       });
   }
   const AddToWishList= () =>{
@@ -107,14 +101,11 @@ let proid=localStorage.getItem("proid");
   })
 .then((response) => {
     let data = response.data;
-console.log("detailsssWISHLISTTTTTT----------" + JSON.stringify(data));
 setProductDetails(data.results)
 setapicall(true);
 })
 .catch(function(error) {
-  console.log(error);
 });
-
 }
 
 
@@ -126,9 +117,6 @@ const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id)=>{
   setExp(expp);
   setQut(quantityy)
   setId(id);
-
-  
-console.log("eeeeee---"+product_price+mrpp+sizee+mfdd+expp+id+quantityy);
 }
 const productColor=(color,product_price,mrpp,mfdd,expp,quantityy,id)=>{
 setColors(color);
@@ -138,11 +126,7 @@ setMfd(mfdd);
 setExp(expp);
 setQut(quantityy)
 setId(id);
-console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
 }
-
-// console.log("varient-----"+varientId)
-
   return (
     <Fragment>
       <Header/>
@@ -182,7 +166,7 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src=" http://localhost:3000/static/media/2.41a56ef0.jpg"
+                        src="https://imgstaticcontent.lbb.in/lbbnew/wp-content/uploads/sites/1/2017/07/13170510/130717_panipuri-generic.jpg"
                         alt="First slide"
                       />
                       <Carousel.Caption>
@@ -196,7 +180,7 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="http://localhost:3000/static/media/2.41a56ef0.jpg"
+                        src="https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"
                         alt="Second slide"
                       />
   
@@ -210,7 +194,7 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="http://localhost:3000/static/media/2.41a56ef0.jpg"
+                        src="https://assets.cntraveller.in/photos/60ba1ef8002baf698cc67527/master/pass/homemade-paneer-recipes-1366x768.jpg"
                         alt="Third slide"
                       />
   
@@ -226,8 +210,6 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                 </div>
                 <div className="col-12 col-md-6 wow fadeInUp"
                   data-wow-delay="0.1s">
-                  {/* {(productDetails).map((details) => {
-                    return ( */}
                       <div className="right-box-contain">
                         <h6 className="offer-top">{discount}%</h6>
                         <h2 className="name">{productDetails.product_title_name}</h2>
@@ -295,12 +277,12 @@ console.log("id-----"+color+product_price+mrpp+mfdd+expp+id+quantityy)
                            
                            return (
                             
-                          <ul className="select-packege">
+                          <ul className="select-packege" >
                          
-                             <li>
+                             <li key={details.id}>
                           
                           <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.manufacturing_date,details.expire_date,details.quantity,details.id)}}
-                          className={size == details.size ? "active" : null}
+                          className={size==details.size ? "active" : null}
                            >
                            {details.size}
                          </Link>

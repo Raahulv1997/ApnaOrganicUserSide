@@ -17,25 +17,19 @@ const Login = () => {
   const onCredentialChange= (e)=>{
     setcredentailval({...credentailval, [e.target.name]:e.target.value})
   }
-  const onSubmitClick = (e) =>{
-    // e.prevantDefault();
-
-    console.log("credentailval=====--->"+credentailval)
+  const onSubmitClick = () =>{
     axios.post(`http://192.168.29.108:5000/user_login`,credentailval)
     .then(response => {
       if(response.data === false){
-      console.log("___------false------"+JSON.stringify(response.data));
       setError(false);
       }
       else{
-        console.log("___--------true------"+JSON.stringify(response.data));
         localStorage.setItem("useridd",response.data.user_id);
         navigate('/');
         setError(false);
       }
       // return response;
     }).catch(error => {
-      console.log(error.response.data.error)
     })
   }
  

@@ -26,17 +26,14 @@ const Singup = () => {
       })
       .then((response) => {
         if (response.data === false) {
-          console.log("___--------------" + JSON.stringify(response.data));
           setemailerror("already");
           e.target.email.value = "";
         } else {
           setotp(response.data);
-          console.log("___--------------" + JSON.stringify(response.data));
         }
         return response;
       })
       .catch((error) => {
-        console.log(error.response.error);
       });
   };
   const onPasswordChange = (e) => {
@@ -59,11 +56,9 @@ const Singup = () => {
           // return response;
         })
         .catch((error) => {
-          console.log(error.response.error);
         });
 
     } else {
-      console.log("invalid otp");
       setOtperror(true);
     }
   };
