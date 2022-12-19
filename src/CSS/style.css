@@ -29467,3 +29467,23 @@ header .offcanvas-backdrop {
   display: block;
   align-items: center;
 }
+
+
+/* header */
+
+.category_dropdown_box{
+padding: 10px 0;
+width: 100%;
+}
+.category_dropdown_box .category_dropdown_name{
+ text-align: left; 
+}
+.category_dropdown_box  .category_dropdown_btn{
+  max-width: 36px !important;
+  width: 100%;
+}
+.category_dropdown_box  .category_dropdown_btn:hover {
+  color: none !important;
+  background-color:none !important;
+  border-color:none !important;
+}

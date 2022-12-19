@@ -397,16 +397,16 @@ const Header = (props) => {
                         return (
                           <>
                             <Accordion.Item eventKey={catdata.root_id}>
-                              <Accordion.Header onClick={(e) => {
+                              {/* <Accordion.Header onClick={(e) => {
                               setsearch(e.target.value);
                             }}>
                               
                                 
-                              </Accordion.Header>
-                              <Dropdown as={ButtonGroup}>
-      <Button variant="success">{catdata.root_category_name}</Button>
+                              </Accordion.Header> */}
+                              <Dropdown as={ButtonGroup} className={'category_dropdown_box'}>
+      <Button variant="light" className={'category_dropdown_name'} >{catdata.root_category_name}</Button>
 
-      <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+      <Dropdown.Toggle split variant="light" id="dropdown-split-basic" drop={'end'} title={`Drop end`} className={'category_dropdown_btn'}/>
 
       <Dropdown.Menu>
         <Dropdown.Item href="#/action-1">Action</Dropdown.Item>
