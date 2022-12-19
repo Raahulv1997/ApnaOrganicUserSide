@@ -35,12 +35,6 @@ const useridd = localStorage.getItem("userid")
                   return setcatArray(catArray => [...catArray, product.product_type]);
                 })
               }
-<<<<<<< HEAD
-              // setCategoryTy();
-              // console.log("categoryyyTYPEEEEEEE-------------------"+JSON.stringify(data))
-              // setapicall(false);
-=======
->>>>>>> dd120fff64fab769067c5c510546111d503fdb80
             });
         } catch (err) {}
       }
@@ -55,20 +49,6 @@ const useridd = localStorage.getItem("userid")
         setunCatArr(result)
   
     }, [catArray])
-<<<<<<< HEAD
-    // console.log("------------"+JSON.stringify(productType))
-      // const catetype = productData.filter(
-      //   (thing, index, self) =>
-      //     index ===
-      //     self.findIndex(
-      //       (t, x) =>
-      //         t.product_type == thing.product_type
-      //         // x.down1_category_name==thing.down1_category_name
-      //     )
-      // );
-
-=======
->>>>>>> dd120fff64fab769067c5c510546111d503fdb80
   return (
     <Fragment>
       <section className="home-section-2 section-b-space">

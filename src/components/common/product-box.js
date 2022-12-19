@@ -91,7 +91,6 @@ category
         });
     }
   };
-<<<<<<< HEAD
   // useEffect(() => {
   //   try {
   //     axios
@@ -118,32 +117,6 @@ category
   // }, [apicall]);
   const clickProduct = (productid) => {
     // console.log("product_iddddddd" + productid);
-=======
-  useEffect(() => {
-    try {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
-          {
-            product_search: {
-              search: "",
-              colors: "",
-              size: "",
-              category: "",
-              product_type: "",
-            },
-          }
-        )
-        .then((response) => {
-          let data = response.data;
-          setData(data.results);
-          // setProductId(data);
-          setapicall(false);
-        });
-    } catch (err) {}
-  }, [apicall]);
-  const clickProduct = (productid) => {
->>>>>>> dd120fff64fab769067c5c510546111d503fdb80
 
     localStorage.setItem("proid",productid);
     navigate("/product-detail");
