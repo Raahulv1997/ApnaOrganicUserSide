@@ -25,6 +25,7 @@ const ProductBox = ({
 category
 }) => {
   const useridd = localStorage.getItem("userid");
+  console.log("userrrrrrrrrr"+useridd)
   const [apicall, setapicall] = useState(false);
   const navigate = useNavigate();
   const [wlistData, setWlistData] = useState("");
@@ -59,6 +60,7 @@ category
         setapicall(true);
       });
   };
+  console.log("useridd"+useridd)
   wlist = window.location.pathname;
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
@@ -116,6 +118,7 @@ category
   // }, [apicall]);
   const clickProduct = (productid) => {
     localStorage.setItem("proid",productid);
+
     navigate("/product-detail");
   };
   return (

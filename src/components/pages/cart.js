@@ -17,7 +17,7 @@ const Cart = (props) => {
   const[quantity,setQuantity]=useState([]);
   var product1=data1.product1;
   const useridd = localStorage.getItem("userid")
-
+console.log("ooooooooooo"+useridd)
 
 
   const incrementCount=(id,quantity)=> {
