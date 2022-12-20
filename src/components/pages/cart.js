@@ -17,11 +17,10 @@ const Cart = (props) => {
   const [apicall, setapicall] = useState(false);
   const[cartdata,setCartData]=useState([]);
   const[quantity,setQuantity]=useState([]);
+  const [ProductPriceTotal,setProductPriceTotal] = useState(0);
   var product1=data1.product1;
   // let [count, setCount] = useState(0);
   const useridd = localStorage.getItem("userid")
-console.log("--userid"+useridd)
-
 
   const incrementCount=(id,quantity)=> {
     let inc=quantity+1
@@ -31,6 +30,7 @@ console.log("--userid"+useridd)
   }).then((response) => {
     let data = response.data;
     setapicall(true);
+    // setCartData(data);
     setQuantity(quantity=quantity+1)
  })
    
@@ -66,9 +66,13 @@ console.log("--userid"+useridd)
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
+            let ProductTotal=0;
+            data.map((cdata)=>{
+                ProductTotal += cdata.quantity * cdata.sale_price;
+            })
+            setProductPriceTotal(ProductTotal)
             setCartData(data);
             setapicall(false);
-            console.log("setCartDataaaaaaaa---------"+JSON.stringify(data))
             // setapicall(false);
           });
       } catch (err) {}
@@ -84,11 +88,26 @@ console.log("--userid"+useridd)
     })
     .then((response) => {
       let data = response.data;
-      console.log("setDELETEEEEEEECartDataaaaaaaa-------------------"+JSON.stringify(data))
       setapicall(true);
     });
   }
-  var ProductPriceTotal = 0;
+
+
+  // Save For later
+  const AddToWishList = (id) => {
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
+          user_id:`${useridd}`,
+          product_view_id:`${id}`,
+        })
+        .then((response) => {
+          let data = response.data;
+          // setData(response.data);
+          setapicall(true);
+        });
+    }
+  // };  End save For Later
+  // var ProductPriceTotal = 0;
   // payement 
   const onProccedClick =() =>{
       navigate('/checkout')
@@ -108,9 +127,6 @@ console.log("--userid"+useridd)
                 <div className="table-responsive-xl">
                   <table className="table">
                     {cartdata.map((cdata)=>{
-                      //  for (let i = 0; i < cdata.length; i++) {
-                      //   ProductPriceTotal += cdata[i].quantity * cdata[i].price;
-                      // }
                        return(
                         <tbody key={cdata.id}>
                             <tr  className="product-box-contain">
@@ -146,6 +162,7 @@ console.log("--userid"+useridd)
                                     <span>{cdata.price}</span>
                                     <span className="text-content">{"₹"+cdata.price+cdata.discount}</span>
                                   </li>
+  
   
                                   <li>
                                     <h5 className="saving theme-color">{cdata.discount}</h5>
@@ -188,13 +205,23 @@ console.log("--userid"+useridd)
                           </td>
   
                           <td className="price">
-                            <h4 className="table-title text-content">Price</h4>
+                            <h4 className="table-title text-content">Mrp
+                            <span className="theme-color mx-1">({cdata.discount}% off)</span>
+                            </h4>
                             <h5>
-                              {cdata.product_price} <del className="text-content">{cdata.mrp}</del>
+                            ₹{cdata.product_price} <del className="text-content text-danger">₹{cdata.mrp}</del>
+                             
                             </h5>
-                            <h6 className="theme-color">You Save:{cdata.discount}</h6>
+                            {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
+                            <h6 className="theme-color">You Save:₹{(cdata.mrp) - (cdata.product_price) }</h6>
                           </td>
-  
+                         
+                          <td className="price">
+                            {/* <h4 className="table-title text-content">Tax</h4> */}
+                            <h6 className="">Gst:{cdata.gst }</h6>
+                            <h6 className="">Cgst:{cdata.cgst }</h6>
+                            <h6 className="">Sgst:{cdata.sgst }</h6>
+                          </td>
                           <td className="quantity">
                             <h4 className="table-title text-content">Qty</h4>
                             <div className="quantity-price">
@@ -229,21 +256,27 @@ console.log("--userid"+useridd)
                               </div>
                             </div>
                           </td>
-  
+                          <td className="price">
+                            <h4 className="table-title text-content">Sale Price</h4>
+                            <h5>
+                            ₹{cdata.sale_price} 
+                            </h5>
+                           
+                          </td>
                           <td className="subtotal">
                             <h4 className="table-title text-content">Total</h4>
-                            <h5>{parseInt(cdata.quantity) * parseInt(cdata.product_price)}</h5>
+                            <h5>{parseInt(cdata.quantity) * parseInt(cdata.sale_price)}</h5>
                           </td>
   
                           <td className="save-remove">
                             <h4 className="table-title text-content">Action</h4>
-                            <Link to="/"
-                              className="save notifi-wishlist"
-                          
+                            <button
+                              className="save notifi-wishlist close_button btn px-0"
+                              onClick={()=> AddToWishList(cdata.id,cdata.user_id)}
                             >
                               Save for later
-                            </Link>
-                             <button type="button" className="remove close_button btn" onClick={()=> deleteCart(cdata.id,cdata.user_id)}>
+                            </button>
+                             <button type="button" className="remove close_button btn px-0" onClick={()=> deleteCart(cdata.id,cdata.user_id)}>
                               remove
                              </button>
                             {/* <Link to="/"

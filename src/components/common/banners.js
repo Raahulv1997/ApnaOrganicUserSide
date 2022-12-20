@@ -194,6 +194,8 @@ const useridd = localStorage.getItem("userid")
                             special_offer={product.special_offer}
                             rating={product.rating}
                             producttype={product.product_type}
+                        saleprice={product.sale_price}
+
                           />
                         </div>
                       );

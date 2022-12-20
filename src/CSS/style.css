@@ -29494,3 +29494,6 @@ cursor: pointer;
 border: 0.3px solid grey;
 padding: 10px;
 }
+.container-fluid-lg .row .tagfilter_box .tagcancel_btn{
+cursor: pointer;
+}

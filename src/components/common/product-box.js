@@ -1,6 +1,6 @@
 import React from "react";
 //import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
-import { FaStar } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt,FaRegStar } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -8,7 +8,6 @@ import { useNavigate } from "react-router-dom";
 // function AddCart(props){
 // }
 let wlist;
-
 
 const ProductBox = ({
   id,
@@ -22,7 +21,8 @@ const ProductBox = ({
   producttype,
   brand,
   rating,
-category
+  category,
+  saleprice
 }) => {
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
@@ -42,11 +42,11 @@ category
   const func = () => {};
   const AddToCart = () => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
-        user_id:`${useridd}`,
-        product_view_id:`${id}`,
-        price:`${productPrice}`,
-        discount:`${productMRF}`,
+      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+        user_id: `${useridd}`,
+        product_view_id: `${id}`,
+        price: `${saleprice}`,
+        discount: `${productMRF}`,
         quantity: count,
         is_active: 1,
       })
@@ -63,12 +63,11 @@ category
       console.log("ADD______WISHLIST");
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-          user_id:`${useridd}`,
-          product_view_id:`${id}`,
+          user_id: `${useridd}`,
+          product_view_id: `${id}`,
         })
         .then((response) => {
           let data = response.data;
-          console.log("wishlistttttt----------" + JSON.stringify(data));
           setData(response.data);
           setWlistData("remove");
           setapicall(true);
@@ -76,14 +75,12 @@ category
     } else if (wlist === "/wishlist") {
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-          id:`${id}`,
-          user_id:`${useridd}`,
+          id: `${id}`,
+          user_id: `${useridd}`,
         })
         .then((response) => {
           let data = response.data;
-          console.log(
-            "REMOVEEEEEEEEEwishlistttttt----------"+JSON.stringify(data)
-          );
+          console.log();
           setData(response.data);
           setWlistData("add");
           setapicall(true);
@@ -116,20 +113,22 @@ category
     } catch (err) {}
   }, [apicall]);
   const clickProduct = (productid) => {
-    // console.log("product_iddddddd" + productid);
-
-    localStorage.setItem("proid",productid);
+    localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
+
+  let ratingbox = [1, 2, 3, 4, 5];
+  let ratingg = Number(rating);
+
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div className="product-image">
         <div className="ribbon_div">
           {special_offer == 0 || special_offer == "" ? null : (
-            <span className="special_offer mb-1">{special_offer}</span>
+            <span className="special_offer mb-1">{special_offer}%</span>
           )}
           {discount == 0 || discount == "" ? null : (
-            <span className="discount_ribbon mb-1">Discount:{discount}</span>
+            <span className="discount_ribbon mb-1">{discount}%</span>
           )}
         </div>
         <div className="label-flex">
@@ -150,33 +149,36 @@ category
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
-          {}
-          <li color="#ffb321">
-            <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-          </li>
-          <li color="#ffb321">
-            <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-          </li>
-          <li color="#ffb321">
-            <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-          </li>
-          <li color="#ffb321">
-            <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-          </li>
-          <li>
-            <FaStar icon="star" className="feather " />
-          </li>
+          {
+          // !ratingg? null :
+          (ratingbox || []).map((rat, i) => {
+            return ratingg - rat >= 0 ? (
+              <li color="#ffb321" key={i}>
+                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
+              </li>
+            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+              <li color="#ffb321">
+                <FaStarHalfAlt
+                  icon="star"
+                  className="feather"
+                  fill={"#ffb321"}
+                />
+              </li>
+            ) : ratingg - rat <= -1 ? (
+              <li color="#ffb321">
+                <FaRegStar icon="star" className="feather "  fill={"#ffb321"}/>
+              </li>
+            ) : null;
+          })}
         </ul>
         <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
-          <h5 className="name m-0">category:{category}</h5>
-          <h5 className="name m-0">brand:{brand}</h5>
-          <h5 className="name m-0">rating:{rating}</h5>
-          <h5 className="name m-0">producttype:{producttype}</h5>
-
+          <h5 className="name m-0">{category}</h5>
+          <h5 className="name m-0">{brand}</h5>
+        
         </a>
         <h5 className="price theme-color m-0 mb-2">
-          {"₹" + productPrice}{" "}
+          {"₹" + saleprice}{" "}
           <del className="text-muted small">{"₹" + productMRF}</del>
         </h5>
         <div className="price-qty d-flex justify-content-between m-0">

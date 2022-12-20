@@ -12,6 +12,9 @@ import axios from "axios";
 import data from "./data";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
+import Badge from 'react-bootstrap/Badge';
+let showcategorydata = [];
+
 const Shop = (props) => {
   const [prodData, setProdData] = useState([]);
   const [click, setclick] = useState(false);
@@ -25,6 +28,7 @@ const Shop = (props) => {
   const useridd = localStorage.getItem("userid");
   const [searchparams] = useSearchParams();
   const [categorydata, setCategoryData] = useState([]);
+  const [categorynameChange, setCategoryNameChange] = useState(false);
   const [categoryfilterdata, setCategoryfilterData] = useState([]);
   const [apicall, setapicall] = useState(false);
   const [categoryNamedata, setCategoryNameData] = useState([])
@@ -67,11 +71,7 @@ const Shop = (props) => {
   // var product = data.product;
 //   product list
   useEffect(() => {
-    console.log("--------category"+(categoryNamedata))
-    console.log("--------price"+(pricefilter))
-    console.log("--------discount"+(discountfilter))
-    console.log("--------brand"+(brandfilter))
-    console.log("--------rating"+(ratingfilter))
+
     function getProductData() {
       try {
         axios
@@ -96,9 +96,9 @@ const Shop = (props) => {
           .then((response) => {
             let data = response.data;
             setProdData(data.results);
-            if(categoryNamedata[0] ===null && brandfilter[0]===null && discountfilter[0] === null&& ratingfilter[0] === null && pricefilter.from_product_price=== null && pricefilter.to_product_price=== null){
+    
+            if(categoryNamedata.length === 0 && ratingfilter.length === 0 && brandfilter.length === 0 && discountfilter.length === 0 &&  pricefilter.from_product_price === '' && pricefilter.to_product_price === '' ){
                 setCategoryfilterData(data.results)
-console.log("---------detail"+JSON.stringify(data.results))
             }
             // setapicall(false);
           });
@@ -132,46 +132,78 @@ console.log("---------detail"+JSON.stringify(data.results))
   //  SEARCH AND SHOW CATEGORY
   const onCategorySearch = (e) => {
     let catname = e.target.value;
-    try {
-      axios
-        .post(`${process.env.REACT_APP_BASEURL}/search_category`, {
-          category_name: `${catname}`,
-        })
-        .then((response) => {
-          let data = response.data;
-          setCategoryData(data);
-        });
-    } catch (err) {}
+    if(catname !== ''){
+      try {
+        axios
+          .post(`${process.env.REACT_APP_BASEURL}/search_category`, {
+            category_name: `${catname}`,
+          })
+          .then((response) => {
+           let  data = response.data;
+            setCategoryData(response.data);
+            setCategoryNameChange(true);
+  
+          });
+      } catch (err) {}
+    }
+   
   };
-  let showcategorydata = [];
-  const onCategoryNameAdd = (e) =>{
-    const target = e.target;
-    const value = target.type === 'checkbox' ? target.checked : target.value
-    setCategoryNameData(categoryNamedata => [...categoryNamedata, value])
-    showcategorydata.push(value);
+  const onCategoryNameAdd = (e,id,name) =>{
+    const value = e.target.type === 'checkbox' ? e.target.checked : id
+    if(e.target.checked === true){
+      setCategoryNameData(categoryNamedata => [...categoryNamedata, id])
+    showcategorydata.push(name);
+
+    }else{
+      setCategoryNameData(categoryNamedata.filter(item => item !== id));
+      const index = showcategorydata.indexOf(name);
+    if (index > -1) { // only splice array when item is found
+     showcategorydata.splice(index, 1); // 2nd parameter means remove one item only
+}
+ }
   }
   const onPriceFilterAdd = (e) =>{
     setpricefilter({...pricefilter, [e.target.name]:e.target.value })
     showcategorydata.push(e.target.value);
-
   }
   const onDiscountFilterAdd = (e) =>{
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    if(e.target.checked === true){
     setdiscountfilter(discountfilter => [...discountfilter, e.target.value])
+  }else{
+    setdiscountfilter(discountfilter.filter(item => item !== e.target.value));
+  }
     showcategorydata.push(e.target.value);
-
   }
   const onBrandFilterAdd = (e) =>{
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    if(e.target.checked === true){
     setbrandfilter(brandfilter => [...brandfilter, e.target.value])
+  }else{
+    setbrandfilter(brandfilter.filter(item => item !== e.target.value));
+  }
     showcategorydata.push(e.target.value);
 
   }
   const onRatingFilterAdd = (e) =>{
+    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
+    if(e.target.checked === true){
     setratingfilter(ratingfilter => [...ratingfilter, e.target.value])
+  }else{
+    setratingfilter(ratingfilter.filter(item => item !== e.target.value));
+  }
     showcategorydata.push(e.target.value);
 
   }
+const OnClearAllClick = (e) =>{
+showcategorydata = [];
+setCategoryNameData('')
+setpricefilter('')
+setdiscountfilter('')
+setbrandfilter('')
+setratingfilter('')
 
-  console.log("---change"+JSON.stringify(showcategorydata))
+}
 //   END SEARCH AND SHOW CATEGORY
   // end category
 
@@ -184,7 +216,7 @@ console.log("---------detail"+JSON.stringify(data.results))
   // END BRAND
   return (
     <Fragment>
-      <Header />
+      <Header/>
       <Breadcumb pageName={"Shop"} pageTitle={"Page Title"} pageHref={"/"} />
       {/* <!-- Shop Section Start --> */}
       <section className="section-b-space shop-section">
@@ -201,17 +233,18 @@ console.log("---------detail"+JSON.stringify(data.results))
                   <div className="filter-category">
                     <div className="filter-title">
                       <h2>Filters</h2>
-                      <Link to="">Clear All</Link>
+                      <Link to="" onClick={()=>OnClearAllClick()}>Clear All</Link>
                     </div>
-                    <ul>
+                    <ul className="tagfilter_box">
                       {showcategorydata[0] !== "" ||
                       showcategorydata[0] !== null ||
                       showcategorydata[0] !== undefined
-                        ? (showcategorydata[0] || []).map((show, i) => {
+                        ? (showcategorydata || []).map((show, i) => {
                             return (
-                              <li key={show.id}>
-                                <Link to="">{show} </Link>
-                              </li>
+                              <Badge bg="light" text="dark" className="d-flex align-items-center">
+       {show}
+       {/* <p className="mb-0 mx-2 tagcancel_btn" onClick={OnTagCancelClick}>x</p> */}
+      </Badge>
                             );
                           })
                         : null}
@@ -247,23 +280,27 @@ console.log("---------detail"+JSON.stringify(data.results))
                             <ul className="category-list custom-padding custom-height">
                               {(categorydata || []).map((cdta, i) => {
                                 return (
-                                  <li key={cdta.i}>
+                                 
+                                  <li key={i}>
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"
                                         type="checkbox"
                                         id="category"
                                         name={'category'}
-                                        // value={cdta.root_id}
-                                        onChange={(e)=>onCategoryNameAdd(e)}
+                                        // checked={categoryNamedata.length === 0 ? false : true}
+                                        onChange={categorynameChange ?  (e)=>onCategoryNameAdd(e,cdta.id,cdta.category_name) :(e)=>onCategoryNameAdd(e,cdta.root_id,cdta.root_category_name)} 
                                       />
                                       <label
                                         className="form-check-label"
                                         htmlFor="fruit"
                                       >
+                                         {categorynameChange ? 
                                         <span className="name">
+                                          {cdta.category_name}
+                                        </span> :   <span className="name">
                                           {cdta.root_category_name}
-                                        </span>
+                                        </span>}
                                         {/* <span className="number">(15)</span> */}
                                       </label>
                                     </div>
@@ -804,6 +841,7 @@ console.log("---------detail"+JSON.stringify(data.results))
                         brand={product.brand}
                         category={product.category}
                         producttype={product.product_type}
+                        saleprice={product.sale_price}
                       />
                     </div>
                   );
