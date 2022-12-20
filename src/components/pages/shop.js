@@ -9,20 +9,18 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "../../CSS/style.css";
 import { useEffect } from "react";
 import axios from "axios";
-import data from "./data";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 const Shop = (props) => {
   const [prodData, setProdData] = useState([]);
   const [click, setclick] = useState(false);
-  const [productdata, setproductdata] = useState([]);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
 
   const sidebar = () => {
     setclick(true);
   };
-  const useridd = localStorage.getItem("userid");
+  // const useridd = localStorage.getItem("userid");
   const [searchparams] = useSearchParams();
   const [categorydata, setCategoryData] = useState([]);
   const [categoryfilterdata, setCategoryfilterData] = useState([]);
@@ -80,7 +78,7 @@ const Shop = (props) => {
             {
               product_search: 
               {
-                search: `${searchText}`,
+              search: `${searchText}`,
               price_from:`${pricefilter.from_product_price}`,
               price_to:`${pricefilter.to_product_price}`,
               product_type: [],
@@ -100,7 +98,7 @@ const Shop = (props) => {
                 setCategoryfilterData(data.results)
 console.log("---------detail"+JSON.stringify(data.results))
             }
-            // setapicall(false);
+            setapicall(false);
           });
       } catch (err) {}
     }
@@ -121,7 +119,7 @@ console.log("---------detail"+JSON.stringify(data.results))
             (thing, index, self) =>
               index ===
               self.findIndex(
-                (t, x) => t.root_category_name == thing.root_category_name
+                (t) => t.root_category_name == thing.root_category_name
               )
           );
           setCategoryData(filtercategorydata);

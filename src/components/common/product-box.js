@@ -33,10 +33,12 @@ category
   function incrementCount() {
     count = count + 1;
     setCount(count);
+    setapicall(true);
   }
   const decrementCount = () => {
     if (count > 0) {
       setCount((count) => count - 1);
+      
     }
   };
   const func = () => {};
@@ -54,7 +56,7 @@ category
         let data = response.data;
         console.log("ADD CARTTT------------" + JSON.stringify(data));
         setData(data);
-        //setapicall(true);
+        setapicall(true);
       });
   };
   wlist = window.location.pathname;
@@ -87,7 +89,6 @@ category
           setData(response.data);
           setWlistData("add");
           setapicall(true);
-          //   setapicall(false);
         });
     }
   };
@@ -109,15 +110,11 @@ category
   //       .then((response) => {
   //         let data = response.data;
   //         setData(data.results);
-  //         // setProductId(data);
-  //         //console.log("PRODUCT============"+JSON.stringify(data))
   //         setapicall(false);
   //       });
   //   } catch (err) {}
   // }, [apicall]);
   const clickProduct = (productid) => {
-    // console.log("product_iddddddd" + productid);
-
     localStorage.setItem("proid",productid);
     navigate("/product-detail");
   };

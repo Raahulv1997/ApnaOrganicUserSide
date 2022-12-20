@@ -41,12 +41,13 @@ const Header = (props) => {
           .then((response) => {
             let data = response.data;
             setCategoryData(data);
+            setapicall(false);
           });
       } catch (err) {}
     }
 
     getCategoryData();
-  }, []);
+  }, [apicall]);
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===

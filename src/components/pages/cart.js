@@ -5,7 +5,6 @@ import Header from "../common/header";
 //import ProductImg1 from "../../Photos/product/1.png";
 import Breadcumb from "../common/beadcumb";
 import {data1} from './data';
-import { Button } from "bootstrap";
 import "../../CSS/style.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import  {useState,useEffect} from 'react';
@@ -13,12 +12,10 @@ import axios from "axios";
 const Cart = (props) => {
 
   const navigate = useNavigate();
-  // const[pdata,setPdata]=useState([]);
   const [apicall, setapicall] = useState(false);
   const[cartdata,setCartData]=useState([]);
   const[quantity,setQuantity]=useState([]);
   var product1=data1.product1;
-  // let [count, setCount] = useState(0);
   const useridd = localStorage.getItem("userid")
 
 
@@ -69,7 +66,6 @@ const Cart = (props) => {
             setCartData(data);
             setapicall(false);
             console.log("setCartDataaaaaaaa---------"+JSON.stringify(data))
-            // setapicall(false);
           });
       } catch (err) {}
     }
