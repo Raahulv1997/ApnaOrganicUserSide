@@ -65,11 +65,11 @@ const Shop = (props) => {
   // var product = data.product;
 //   product list
   useEffect(() => {
-    console.log("--------category"+(categoryNamedata))
-    console.log("--------price"+(pricefilter))
-    console.log("--------discount"+(discountfilter))
-    console.log("--------brand"+(brandfilter))
-    console.log("--------rating"+(ratingfilter))
+    // console.log("--------category"+(categoryNamedata))
+    // console.log("--------price"+(pricefilter))
+    // console.log("--------discount"+(discountfilter))
+    // console.log("--------brand"+(brandfilter))
+    // console.log("--------rating"+(ratingfilter))
     function getProductData() {
       try {
         axios
@@ -96,7 +96,7 @@ const Shop = (props) => {
             setProdData(data.results);
             if(categoryNamedata[0] ===null && brandfilter[0]===null && discountfilter[0] === null&& ratingfilter[0] === null && pricefilter.from_product_price=== null && pricefilter.to_product_price=== null){
                 setCategoryfilterData(data.results)
-console.log("---------detail"+JSON.stringify(data.results))
+// console.log("---------detail"+JSON.stringify(data.results))
             }
             setapicall(false);
           });
@@ -183,7 +183,7 @@ console.log("---------detail"+JSON.stringify(data.results))
   return (
     <Fragment>
       <Header />
-      <Breadcumb pageName={"Shop"} pageTitle={"Page Title"} pageHref={"/"} />
+      <Breadcumb pageName={"Shop"} pageTitle={"Shop"} pageHref={"/"} />
       {/* <!-- Shop Section Start --> */}
       <section className="section-b-space shop-section">
         <div className="container-fluid-lg">

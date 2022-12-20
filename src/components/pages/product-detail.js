@@ -127,6 +127,7 @@ setExp(expp);
 setQut(quantityy)
 setId(id);
 }
+
   return (
     <Fragment>
       <Header/>

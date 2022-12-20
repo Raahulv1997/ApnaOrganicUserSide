@@ -61,7 +61,7 @@ const Login = () => {
                       <div className="form-floating theme-form-floating log-in-form">
                         <input
                           type="email"
-                          className="form-control"
+                          className="form-control mb-2"
                           id="email"
                           placeholder="Your Email"
                           name='user_email'
@@ -69,7 +69,7 @@ const Login = () => {
                           value={credentailval.user_email}
                         />
                         
-                        <label htmlFor="email">Email</label>
+                        <label htmlFor="email" className="bg-transparent">Email</label>
                       </div>
                     </div>
 
@@ -136,10 +136,9 @@ const Login = () => {
                            <p className="mt-1 ms-2 text-danger" type="invalid">
                       Please Enter Correct Password
                     </p>:null}
-                        <label htmlFor="password">Password</label>
+                        <label htmlFor="password" className="bg-transparent">Password</label>
                       </div>
                     </div>
-
                     <div className="col-12">
                       <div className="forgot-box">
                         <div className="form-check ps-0 m-0 remember-box">

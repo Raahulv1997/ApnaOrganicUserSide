@@ -25,8 +25,8 @@ const ProductBox = ({
 category
 }) => {
   const useridd = localStorage.getItem("userid");
-  console.log("userrrrrrrrrr"+useridd)
   const [apicall, setapicall] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
   const [wlistData, setWlistData] = useState("");
   const [data, setData] = useState([]);
@@ -55,29 +55,32 @@ category
       })
       .then((response) => {
         let data = response.data;
-        console.log("ADD CARTTT------------" + JSON.stringify(data));
+        // console.log("ADD CARTTT------------" + JSON.stringify(data));
         setData(data);
         setapicall(true);
       });
   };
-  console.log("useridd"+useridd)
   wlist = window.location.pathname;
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
-      console.log("ADD______WISHLIST");
+      // console.log("ADD______WISHLIST");
+     
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
           user_id:`${useridd}`,
           product_view_id:`${id}`,
         })
+        
         .then((response) => {
           let data = response.data;
           console.log("wishlistttttt----------" + JSON.stringify(data));
           setData(response.data);
           setWlistData("remove");
           setapicall(true);
+          setIsActive(current => !current);
         });
-    } else if (wlist === "/wishlist") {
+    }
+     else if (wlist === "/wishlist") {
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
           id:`${id}`,
@@ -123,6 +126,7 @@ category
 
     navigate("/product-detail");
   };
+
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div className="product-image">
@@ -136,7 +140,7 @@ category
         </div>
         <div className="label-flex">
           <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-            <i className="fa-regular fa-heart" onClick={AddToWishList}></i>
+            <i className="fa-regular fa-heart"  style={{color: isActive ? 'red' : '',}} onClick={AddToWishList}></i>
           </button>
         </div>
         <a onClick={() => clickProduct(productid)}>
@@ -178,7 +182,7 @@ category
 
         </a>
         <h5 className="price theme-color m-0 mb-2">
-          {"₹" + productPrice}{" "}
+          {"₹" + productPrice}{""}
           <del className="text-muted small">{"₹" + productMRF}</del>
         </h5>
         <div className="price-qty d-flex justify-content-between m-0">

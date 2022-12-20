@@ -87,7 +87,6 @@ const Header = (props) => {
           });
       } catch (err) {}
     }
-
     getProductData();
   }, [apicall, props.addcart]);
   const deleteCart = (id, user_id) => {

@@ -63,7 +63,7 @@ const Cart = () => {
             let data = response.data;
             setCartData(data);
             setapicall(false);
-            console.log("setCartDataaaaaaaa---------"+JSON.stringify(data))
+            // console.log("setCartDataaaaaaaa---------"+JSON.stringify(data))
           });
       } catch (err) {}
     }
@@ -74,11 +74,11 @@ const Cart = () => {
     axios
     .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
       id:id,
-      user_id:user_id
+      user_id:`${user_id}`
     })
     .then((response) => {
       let data = response.data;
-      console.log("setDELETEEEEEEECartDataaaaaaaa-------------------"+JSON.stringify(data))
+      // console.log("setDELETEEEEEEECartDataaaaaaaa-------------------"+JSON.stringify(data))
       setapicall(true);
     });
   }
@@ -155,14 +155,12 @@ const Cart = () => {
                                           data-field=""
                                       
                                         >
-                                          <i className="fa-regular fa-minus"></i>
+                                        <i className="fa-regular fa-minus"></i>
                                         </button>
                                         <input
                                           className="form-control input-number qty-input"
                                           type="text"
                                           name="quantity"
-                                          
-                                          // onChange={func}
                                         />
                                         <button
                                           type="button"
