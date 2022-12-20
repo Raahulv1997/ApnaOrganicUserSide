@@ -425,7 +425,7 @@ const Header = (props) => {
                                       <div className="list-1" key={data.id}>
                                         <div className="category-title-box">
                                           <div value={data.down1_id}>
-                                            <h5 onClick={searchCategoryProduct} value={data.down1_id} className={'searchsub_category searchsub_category_box'}>{data.down1_category_name}</h5>
+                                            <h5 onClick={()=>{navigate(`/shop?category=`+catdata.down1_id)}} value={data.down1_id} className={'searchsub_category searchsub_category_box'}>{data.down1_category_name}</h5>
                                           </div>
                                         </div>
                                         <ul className="p-0">
@@ -435,7 +435,7 @@ const Header = (props) => {
                                                 data1.down1_category_name &&
                                                 data.down2_category_name !==
                                                   null ? (
-                                                <li  onClick={searchCategoryProduct} value={data1.down2_id} className={'searchsub_category w-100 py-2'}>
+                                                <li  onClick={()=>{navigate(`/shop?category=`+catdata.down2_id)}} value={data1.down2_id} className={'searchsub_category w-100 py-2'}>
                                                   {data1.down2_category_name}
                                                   <ul>
                                                     {(categorydata || []).map(
@@ -444,7 +444,7 @@ const Header = (props) => {
                                                           data2.down2_category_name &&
                                                           data.down3_category_name !==
                                                             null ? (
-                                                          <li onClick={searchCategoryProduct} value={data2.down3_id} className={'w-100  searchsub_category px-2 py-1'}>
+                                                          <li onClick={()=>{navigate(`/shop?category=`+catdata.down3_id)}} value={data2.down3_id} className={'w-100  searchsub_category px-2 py-1'}>
                                                             {
                                                               data2.down3_category_name
                                                             }
