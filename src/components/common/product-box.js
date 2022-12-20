@@ -26,6 +26,7 @@ const ProductBox = ({
 }) => {
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
+  const [isActive, setIsActive] = useState(false);
   const navigate = useNavigate();
   const [wlistData, setWlistData] = useState("");
   const [data, setData] = useState([]);
@@ -33,10 +34,12 @@ const ProductBox = ({
   function incrementCount() {
     count = count + 1;
     setCount(count);
+    setapicall(true);
   }
   const decrementCount = () => {
     if (count > 0) {
       setCount((count) => count - 1);
+      
     }
   };
   const func = () => {};
@@ -52,27 +55,31 @@ const ProductBox = ({
       })
       .then((response) => {
         let data = response.data;
-        console.log("ADD CARTTT------------" + JSON.stringify(data));
+        // console.log("ADD CARTTT------------" + JSON.stringify(data));
         setData(data);
-        //setapicall(true);
+        setapicall(true);
       });
   };
   wlist = window.location.pathname;
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
-      console.log("ADD______WISHLIST");
+      // console.log("ADD______WISHLIST");
+     
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
           user_id: `${useridd}`,
           product_view_id: `${id}`,
         })
+        
         .then((response) => {
           let data = response.data;
           setData(response.data);
           setWlistData("remove");
           setapicall(true);
+          setIsActive(current => !current);
         });
-    } else if (wlist === "/wishlist") {
+    }
+     else if (wlist === "/wishlist") {
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
           id: `${id}`,
@@ -84,7 +91,6 @@ const ProductBox = ({
           setData(response.data);
           setWlistData("add");
           setapicall(true);
-          //   setapicall(false);
         });
     }
   };
@@ -133,7 +139,7 @@ const ProductBox = ({
         </div>
         <div className="label-flex">
           <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-            <i className="fa-regular fa-heart" onClick={AddToWishList}></i>
+            <i className="fa-regular fa-heart"  style={{color: isActive ? 'red' : '',}} onClick={AddToWishList}></i>
           </button>
         </div>
         <a onClick={() => clickProduct(productid)}>

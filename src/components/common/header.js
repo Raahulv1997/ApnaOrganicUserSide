@@ -17,7 +17,6 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
-import moment from "moment";
 const Header = (props) => {
   const useridd = localStorage.getItem("userid");
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
@@ -41,12 +40,13 @@ const Header = (props) => {
           .then((response) => {
             let data = response.data;
             setCategoryData(data);
+            setapicall(false);
           });
       } catch (err) {}
     }
 
     getCategoryData();
-  }, []);
+  }, [apicall]);
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -70,21 +70,9 @@ const Header = (props) => {
         (t, x) => t.down2_category_name == thing.down2_category_name
       )
   );
-  // console.log("--categoryyyyyyy----->>>"+ JSON.stringify(level1category))
-  const searchCategoryProduct = (e) => {
-    e.preventDefault();
-    // let filtercat = e.target.value;
-    // searchh.push([e.target.value])
-    // setsearch(search => [...search, filtercat]);
-    // let search=e.target.formSearchInputBox.value;
-    // navigate(`/shop?search=${search}`);
-  };
-
  
   const searchProduct = (e) => {
     e.preventDefault();
-    
-    // let search=e.target.formSearchInputBox.value;
     navigate(`/shop?search=${search}`);
   };
   useEffect(() => {
@@ -99,7 +87,6 @@ const Header = (props) => {
           });
       } catch (err) {}
     }
-
     getProductData();
   }, [apicall, props.addcart]);
   const deleteCart = (id, user_id) => {

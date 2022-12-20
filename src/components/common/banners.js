@@ -13,9 +13,6 @@ const[productType,setProductType]=useState([]);
 const [catArray, setcatArray] = useState([]);
 const [unCatArr, setunCatArr] = useState([]);
 const useridd = localStorage.getItem("userid")
-
-// const[categoryTy,setCategoryTy]=useState([]);
-  //let [count, setCount] = useState(0);
   var product = data.product;
     useEffect(() => {
       function getProductData() {
@@ -33,7 +30,7 @@ const useridd = localStorage.getItem("userid")
               let data = response.data;
               setProductData(response.data.results);
               {
-                response.data.results.map((product) => {
+                  response.data.results.map((product) => {
                   return setcatArray(catArray => [...catArray, product.product_type]);
                 })
               }
@@ -164,7 +161,7 @@ const useridd = localStorage.getItem("userid")
               <button className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType('')}>All</button>
               {unCatArr.map((catArr, i) => {
                 return(
-                  <button key={catArr.i} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType(catArr)}>{catArr}</button>
+                  <button key={catArr.id} className="btn theme-bg-color btn-md ms-1 mx-auto text-white" onClick={()=>setProductType(catArr)}>{catArr}</button>
                 )              
               })}
               </div>

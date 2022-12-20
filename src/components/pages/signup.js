@@ -14,7 +14,16 @@ const Singup = () => {
 
   const [otperror, setOtperror] = useState(false);
   const [passval, setpassval] = useState("");
+  const [validated, setValidated] = useState(false);
+   const handleSubmit = (event) => {
+    const form = event.currentTarget;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+    }
 
+    setValidated(true);
+  };
   const navigate = useNavigate();
   const SignUpUser = (e) => {
     e.preventDefault();
@@ -31,6 +40,7 @@ const Singup = () => {
         } else {
           setotp(response.data);
         }
+        console.log("shiguppp"+response.data);
         return response;
       })
       .catch((error) => {
@@ -53,7 +63,7 @@ const Singup = () => {
           localStorage.setItem("upassword", passval);
 
           navigate("/your_account");
-          // return response;
+          return response;
         })
         .catch((error) => {
         });

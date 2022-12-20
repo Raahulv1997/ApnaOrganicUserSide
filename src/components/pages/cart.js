@@ -5,21 +5,18 @@ import Header from "../common/header";
 //import ProductImg1 from "../../Photos/product/1.png";
 import Breadcumb from "../common/beadcumb";
 import {data1} from './data';
-import { Button } from "bootstrap";
 import "../../CSS/style.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import  {useState,useEffect} from 'react';
 import axios from "axios";
-const Cart = (props) => {
+const Cart = () => {
 
   const navigate = useNavigate();
-  // const[pdata,setPdata]=useState([]);
   const [apicall, setapicall] = useState(false);
   const[cartdata,setCartData]=useState([]);
   const[quantity,setQuantity]=useState([]);
   const [ProductPriceTotal,setProductPriceTotal] = useState(0);
   var product1=data1.product1;
-  // let [count, setCount] = useState(0);
   const useridd = localStorage.getItem("userid")
 
   const incrementCount=(id,quantity)=> {
@@ -84,7 +81,7 @@ const Cart = (props) => {
     axios
     .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
       id:id,
-      user_id:user_id
+      user_id:`${user_id}`
     })
     .then((response) => {
       let data = response.data;
@@ -178,14 +175,12 @@ const Cart = (props) => {
                                           data-field=""
                                       
                                         >
-                                          <i className="fa-regular fa-minus"></i>
+                                        <i className="fa-regular fa-minus"></i>
                                         </button>
                                         <input
                                           className="form-control input-number qty-input"
                                           type="text"
                                           name="quantity"
-                                          value="1"
-                                          // onChange={func}
                                         />
                                         <button
                                           type="button"

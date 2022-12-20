@@ -208,7 +208,7 @@ useEffect(()=>{
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey="second" >
+                          <Nav.Link to="/" eventKey="second" >
                             <li className="nav-link" role="presentation">
                               <div
                               onClick={()=>DeliveryClick()}
@@ -631,13 +631,17 @@ useEffect(()=>{
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
+                          <Link to="/">
                           <butoon 
                               className="btn btn-light shopping-button text-dark"
                               onClick={()=>DeliveryClick()}
                             >
+                              
                               <i className="fa-solid fa-arrow-left-long me-3"></i>
                               Continue Shopping
+                            
                             </butoon>
+                            </Link>
                           </li>
 
                           <li>

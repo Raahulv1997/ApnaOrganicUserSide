@@ -9,7 +9,6 @@ import Dropdown from "react-bootstrap/Dropdown";
 import "../../CSS/style.css";
 import { useEffect } from "react";
 import axios from "axios";
-import data from "./data";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
 import Badge from 'react-bootstrap/Badge';
@@ -18,14 +17,13 @@ let showcategorydata = [];
 const Shop = (props) => {
   const [prodData, setProdData] = useState([]);
   const [click, setclick] = useState(false);
-  const [productdata, setproductdata] = useState([]);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
 
   const sidebar = () => {
     setclick(true);
   };
-  const useridd = localStorage.getItem("userid");
+  // const useridd = localStorage.getItem("userid");
   const [searchparams] = useSearchParams();
   const [categorydata, setCategoryData] = useState([]);
   const [categorynameChange, setCategoryNameChange] = useState(false);
@@ -71,7 +69,6 @@ const Shop = (props) => {
   // var product = data.product;
 //   product list
   useEffect(() => {
-
     function getProductData() {
       try {
         axios
@@ -80,7 +77,7 @@ const Shop = (props) => {
             {
               product_search: 
               {
-                search: `${searchText}`,
+              search: `${searchText}`,
               price_from:`${pricefilter.from_product_price}`,
               price_to:`${pricefilter.to_product_price}`,
               product_type: [],
@@ -100,7 +97,7 @@ const Shop = (props) => {
             if(categoryNamedata.length === 0 && ratingfilter.length === 0 && brandfilter.length === 0 && discountfilter.length === 0 &&  pricefilter.from_product_price === '' && pricefilter.to_product_price === '' ){
                 setCategoryfilterData(data.results)
             }
-            // setapicall(false);
+            setapicall(false);
           });
       } catch (err) {}
     }
@@ -121,7 +118,7 @@ const Shop = (props) => {
             (thing, index, self) =>
               index ===
               self.findIndex(
-                (t, x) => t.root_category_name == thing.root_category_name
+                (t) => t.root_category_name == thing.root_category_name
               )
           );
           setCategoryData(filtercategorydata);
@@ -216,8 +213,8 @@ setratingfilter('')
   // END BRAND
   return (
     <Fragment>
-      <Header/>
-      <Breadcumb pageName={"Shop"} pageTitle={"Page Title"} pageHref={"/"} />
+      <Header />
+      <Breadcumb pageName={"Shop"} pageTitle={"Shop"} pageHref={"/"} />
       {/* <!-- Shop Section Start --> */}
       <section className="section-b-space shop-section">
         <div className="container-fluid-lg">
@@ -327,7 +324,7 @@ setratingfilter('')
                             <ul className="category-list custom-padding">
                                 {(filtercategorydata || []).map((data,i)=>{
                                     return(
-                                        <li key={i}>
+                                        <li key={data.id}>
                                         <div className="form-check ps-0 m-0 category-list-box">
                                           <input
                                             className="checkbox_animated"
