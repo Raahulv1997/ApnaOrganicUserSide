@@ -13,9 +13,6 @@ const[productType,setProductType]=useState([]);
 const [catArray, setcatArray] = useState([]);
 const [unCatArr, setunCatArr] = useState([]);
 const useridd = localStorage.getItem("userid")
-
-// const[categoryTy,setCategoryTy]=useState([]);
-  //let [count, setCount] = useState(0);
   var product = data.product;
     useEffect(() => {
       function getProductData() {

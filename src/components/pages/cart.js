@@ -9,7 +9,7 @@ import "../../CSS/style.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import  {useState,useEffect} from 'react';
 import axios from "axios";
-const Cart = (props) => {
+const Cart = () => {
 
   const navigate = useNavigate();
   const [apicall, setapicall] = useState(false);
@@ -17,8 +17,6 @@ const Cart = (props) => {
   const[quantity,setQuantity]=useState([]);
   var product1=data1.product1;
   const useridd = localStorage.getItem("userid")
-console.log("ooooooooooo"+useridd)
-
 
   const incrementCount=(id,quantity)=> {
     let inc=quantity+1
@@ -163,7 +161,7 @@ console.log("ooooooooooo"+useridd)
                                           className="form-control input-number qty-input"
                                           type="text"
                                           name="quantity"
-                                          value="1"
+                                          
                                           // onChange={func}
                                         />
                                         <button

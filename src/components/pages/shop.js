@@ -245,7 +245,7 @@ console.log("---------detail"+JSON.stringify(data.results))
                             <ul className="category-list custom-padding custom-height">
                               {(categorydata || []).map((cdta, i) => {
                                 return (
-                                  <li key={cdta.i}>
+                                  <li key={cdta.id}>
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"
@@ -288,7 +288,7 @@ console.log("---------detail"+JSON.stringify(data.results))
                             <ul className="category-list custom-padding">
                                 {(filtercategorydata || []).map((data,i)=>{
                                     return(
-                                        <li key={i}>
+                                        <li key={data.id}>
                                         <div className="form-check ps-0 m-0 category-list-box">
                                           <input
                                             className="checkbox_animated"
