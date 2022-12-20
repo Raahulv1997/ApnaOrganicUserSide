@@ -91,30 +91,30 @@ category
         });
     }
   };
-  // useEffect(() => {
-  //   try {
-  //     axios
-  //       .get(
-  //         `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
-  //         {
-  //           product_search: {
-  //             search: "",
-  //             colors: "",
-  //             size: "",
-  //             category: "",
-  //             product_type: "",
-  //           },
-  //         }
-  //       )
-  //       .then((response) => {
-  //         let data = response.data;
-  //         setData(data.results);
-  //         // setProductId(data);
-  //         //console.log("PRODUCT============"+JSON.stringify(data))
-  //         setapicall(false);
-  //       });
-  //   } catch (err) {}
-  // }, [apicall]);
+  useEffect(() => {
+    try {
+      axios
+        .get(
+          `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
+          {
+            product_search: {
+              search: "",
+              colors: "",
+              size: "",
+              category: "",
+              product_type: "",
+            },
+          }
+        )
+        .then((response) => {
+          let data = response.data;
+          setData(data.results);
+          // setProductId(data);
+          //console.log("PRODUCT============"+JSON.stringify(data))
+          setapicall(false);
+        });
+    } catch (err) {}
+  }, [apicall]);
   const clickProduct = (productid) => {
     // console.log("product_iddddddd" + productid);
 

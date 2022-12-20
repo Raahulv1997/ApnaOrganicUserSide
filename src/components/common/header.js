@@ -113,7 +113,9 @@ const Header = (props) => {
         setapicall(true);
       });
   };
-
+const OnLogoutClick =() =>{
+localStorage.removeItem("userid")
+}
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -197,7 +199,7 @@ const Header = (props) => {
                     {useridd ? (
                       <Link
                         to="/login"
-                        onClick={() => localStorage.removeItem("userid")}
+                        onClick={OnLogoutClick}
                       >
                         <span>Login Out</span>
                       </Link>
