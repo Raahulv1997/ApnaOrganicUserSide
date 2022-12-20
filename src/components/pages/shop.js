@@ -143,24 +143,35 @@ console.log("---------detail"+JSON.stringify(data.results))
         });
     } catch (err) {}
   };
-  var showcategorydata = [];
+  let showcategorydata = [];
   const onCategoryNameAdd = (e) =>{
-    setCategoryNameData(categoryNamedata => [...categoryNamedata, e.target.value])
+    const target = e.target;
+    const value = target.type === 'checkbox' ? target.checked : target.value
+    setCategoryNameData(categoryNamedata => [...categoryNamedata, value])
+    showcategorydata.push(value);
   }
   const onPriceFilterAdd = (e) =>{
     setpricefilter({...pricefilter, [e.target.name]:e.target.value })
+    showcategorydata.push(e.target.value);
+
   }
   const onDiscountFilterAdd = (e) =>{
     setdiscountfilter(discountfilter => [...discountfilter, e.target.value])
+    showcategorydata.push(e.target.value);
+
   }
   const onBrandFilterAdd = (e) =>{
     setbrandfilter(brandfilter => [...brandfilter, e.target.value])
+    showcategorydata.push(e.target.value);
+
   }
   const onRatingFilterAdd = (e) =>{
     setratingfilter(ratingfilter => [...ratingfilter, e.target.value])
+    showcategorydata.push(e.target.value);
+
   }
 
-  // console.log("---change"+JSON.stringify(showcategorydata))
+  console.log("---change"+JSON.stringify(showcategorydata))
 //   END SEARCH AND SHOW CATEGORY
   // end category
 
@@ -243,7 +254,7 @@ console.log("---------detail"+JSON.stringify(data.results))
                                         type="checkbox"
                                         id="category"
                                         name={'category'}
-                                        value={cdta.root_id}
+                                        // value={cdta.root_id}
                                         onChange={(e)=>onCategoryNameAdd(e)}
                                       />
                                       <label
@@ -613,7 +624,6 @@ console.log("---------detail"+JSON.stringify(data.results))
                                     htmlFor="flexCheckDefault1"
                                   >
                                     <span className="name">5% - 10%</span>
-                                    <span className="number">(08)</span>
                                   </label>
                                 </div>
                               </li>
@@ -633,7 +643,6 @@ console.log("---------detail"+JSON.stringify(data.results))
                                     htmlFor="flexCheckDefault2"
                                   >
                                     <span className="name">10% - 15%</span>
-                                    <span className="number">(10)</span>
                                   </label>
                                 </div>
                               </li>
@@ -653,7 +662,6 @@ console.log("---------detail"+JSON.stringify(data.results))
                                     htmlFor="flexCheckDefault3"
                                   >
                                     <span className="name">15% - 25%</span>
-                                    <span className="number">(14)</span>
                                   </label>
                                 </div>
                               </li>
@@ -673,7 +681,6 @@ console.log("---------detail"+JSON.stringify(data.results))
                                     htmlFor="flexCheckDefault4"
                                   >
                                     <span className="name">More than 25%</span>
-                                    <span className="number">(13)</span>
                                   </label>
                                 </div>
                               </li>

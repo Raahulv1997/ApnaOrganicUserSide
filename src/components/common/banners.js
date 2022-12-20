@@ -23,7 +23,9 @@ const useridd = localStorage.getItem("userid")
           axios
           .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,{
             "product_search":{
-              "search":`${productType}`
+              "search":`${productType}`,
+              "price_from":"",
+              "price_to":"",
               
               }
           })
