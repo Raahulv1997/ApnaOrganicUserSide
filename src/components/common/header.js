@@ -526,14 +526,14 @@ localStorage.removeItem("userid")
                       <ul className="navbar-nav">
                         <li className="nav-item dropdown dropdown-mega">
                           <Link
-                            className="nav-link dropdown-toggle ps-xl-2 ps-0"
+                            className="nav-link dropdown-toggle  ps-xl-2 ps-0"
                             to="/"
                             data-bs-toggle="dropdown"
                           >
                             Home
                           </Link>
 
-                          <div className="dropdown-menu dropdown-menu-2 dropdown-image dropdown-menu-left">
+                          {/* <div className="dropdown-menu dropdown-menu-2 dropdown-image dropdown-menu-left">
                             <div className="dropdown-column">
                               <Link to="/" className="dropdown-item">
                                 <img
@@ -581,7 +581,7 @@ localStorage.removeItem("userid")
                                 <span>Slicktech</span>
                               </Link>
                             </div>
-                          </div>
+                          </div> */}
                         </li>
 
                         <li className="nav-item dropdown">
@@ -592,7 +592,7 @@ localStorage.removeItem("userid")
                             Shop
                           </NavLink>
 
-                          <ul className="dropdown-menu ps-4">
+                          {/* <ul className="dropdown-menu ps-4">
                             <li>
                               <Link to="/" className="dropdown-item">
                                 Shop Category Slider
@@ -628,7 +628,7 @@ localStorage.removeItem("userid")
                                 Shop Top Filter
                               </Link>
                             </li>
-                          </ul>
+                          </ul> */}
                         </li>
 
                         <li className="nav-item dropdown">
@@ -639,7 +639,7 @@ localStorage.removeItem("userid")
                             Product
                           </NavLink>
 
-                          <ul className="dropdown-menu ps-4">
+                          {/* <ul className="dropdown-menu ps-4">
                             <li>
                               <Link to="/" className="dropdown-item">
                                 Product 4 Image
@@ -675,13 +675,13 @@ localStorage.removeItem("userid")
                                 Product Sticky
                               </Link>
                             </li>
-                          </ul>
+                          </ul> */}
                         </li>
 
                         <li className="nav-item dropdown dropdown-mega">
                           <Link
                             to="/"
-                            className="nav-link dropdown-toggle ps-xl-2 ps-0"
+                            className="nav-link dropdown-toggle icon ps-xl-2 ps-0"
                             data-bs-toggle="dropdown"
                           >
                             Mega Menu
@@ -784,7 +784,7 @@ localStorage.removeItem("userid")
                         <li className="nav-item dropdown">
                           <Link
                             to="/"
-                            className="nav-link dropdown-toggle"
+                            className="nav-link dropdown-toggle icon"
                             data-bs-toggle="dropdown"
                           >
                             Blog
@@ -818,7 +818,7 @@ localStorage.removeItem("userid")
                         <li className="nav-item dropdown">
                           <Link
                             to="/"
-                            className="nav-link dropdown-toggle"
+                            className="nav-link dropdown-toggle icon "
                             data-bs-toggle="dropdown"
                           >
                             Pages

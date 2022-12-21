@@ -24,6 +24,7 @@ const ProductBox = ({
   category,
   saleprice,
 }) => {
+ 
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -67,11 +68,12 @@ const ProductBox = ({
     }
    
   wlist = window.location.pathname;
+
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
       // console.log("ADD______WISHLIST");
       axios
-        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
+        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
           user_id: `${useridd}`,
           product_view_id: `${id}`,
         })
@@ -82,11 +84,12 @@ const ProductBox = ({
           setapicall(true);
           setIsActive(true);
         });
-    } else if (wlist === "/wishlist") {
+    }  
+    else if (wlist === "/wishlist") {
       axios
-        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-          id: `${id}`,
-          user_id: `${useridd}`,
+        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+          id:`${id}`,
+          user_id:`${useridd}`,
         })
         .then((response) => {
           let data = response.data;
@@ -151,19 +154,21 @@ const ProductBox = ({
            
           </button>
         </div>
-        <a onClick={() => clickProduct(productid)}>
+        {image==""|| image==null|| image==undefined?
+         <a onClick={() => clickProduct(productid)}>
           <img
             src={
-              "https://www.shutterstock.com/image-photo/man-hands-holding-global-network-260nw-1801568002.jpg"
+              "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
             }
             className="mt-5 "
             alt=""
           />
-        </a>
+        </a>:null}
+       
       </div>
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
-        <ul className="rating p-0 m-0 mb-2">
+      <ul className="rating p-0 m-0 mb-2">
           {
             // !ratingg? null :
             (ratingbox || []).map((rat, i) => {

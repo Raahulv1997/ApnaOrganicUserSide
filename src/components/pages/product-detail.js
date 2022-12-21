@@ -5,13 +5,12 @@ import banner1 from "../../Photos/banner/14.jpg";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
-import { data3} from "../pages/data";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
 import {Link, NavLink } from "react-router-dom";
 import {useEffect } from "react";
 import axios from "axios";
-
+import { FaStarHalfAlt,FaRegStar } from "react-icons/fa";
 const ProductDetail = () => {
   const useridd= localStorage.getItem("userid");
   const[apicall,setapicall]=useState([]);
@@ -27,11 +26,9 @@ const ProductDetail = () => {
   const[Id,setId]=useState();
 
   const[discount,setDiscount]=useState();
-  let rating1=1;
-  let rating2=2;
-  let rating3=3;
-  let rating4=4;
-  let rating5=5;
+  const[rating,setRating]=useState([]);
+  let ratingbox = [1, 2, 3, 4, 5];
+  let ratingg = Number(rating);
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
@@ -67,6 +64,7 @@ let proid=localStorage.getItem("proid");
             setExp(data.product_verient[0].expire_date);
             setQut(data.product_verient[0].quantity)
             setId(data.product_verient[0].id);
+            setRating(data.rating);
             setapicall(false);
           });
       } catch (err) {}
@@ -165,9 +163,10 @@ setId(id);
                 <div className="col-xl-6 sm-2 col-lg-7">
                   <Carousel variant="dark">
                     <Carousel.Item>
+
                       <img
                         className="d-block w-100"
-                        src="https://imgstaticcontent.lbb.in/lbbnew/wp-content/uploads/sites/1/2017/07/13170510/130717_panipuri-generic.jpg"
+                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                         alt="First slide"
                       />
                       <Carousel.Caption>
@@ -181,7 +180,7 @@ setId(id);
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"
+                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                         alt="Second slide"
                       />
   
@@ -195,7 +194,7 @@ setId(id);
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="https://assets.cntraveller.in/photos/60ba1ef8002baf698cc67527/master/pass/homemade-paneer-recipes-1366x768.jpg"
+                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                         alt="Third slide"
                       />
   
@@ -230,37 +229,29 @@ setId(id);
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                           </h3>
                           <div className="product-rating custom-rate">
-                            
-                            <ul className="rating pt-3">
-                            {rating1==productDetails.rating?
-                            <li color="#ffb321">
-                                      <FaStar
-                                        icon="star"
-                                        className="feather fill"
-                                        fill={"#ffb321"}
-                                      />
-                                    </li>:"#ffb321"||rating2==productDetails.rating?
-                                    <li color="#ffb321">
-                                      <FaStar
-                                        icon="star"
-                                        className="feather fill"
-                                        fill={"#ffb321"}
-                                      />
-                                    </li>:"#ffb321"||rating3==productDetails.rating?
-                                    <li color="#ffb321">
-                                      <FaStar
-                                        icon="star"
-                                        className="feather fill"
-                                        fill={"#ffb321"}
-                                      />
-                                    </li>:""||rating4==productDetails.rating?
-                                    <li>
-                                      <FaStar icon="star" className="feather"/>
-                                    </li>:""||rating5==productDetails.rating?
-                                    <li>
-                                      <FaStar icon="star" className="feather"/>
-                                    </li>:null}
-                            </ul>
+                          <ul className="rating p-0 m-0 mb-2">
+          {
+          // !ratingg? null :
+          (ratingbox || []).map((rat, i) => {
+            return ratingg - rat >= 0 ? (
+              <li color="#ffb321" key={i}>
+                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
+              </li>
+            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+              <li color="#ffb321">
+                <FaStarHalfAlt
+                  icon="star"
+                  className="feather"
+                  fill={"#ffb321"}
+                />
+              </li>
+            ) : ratingg - rat <= -1 ? (
+              <li color="#ffb321">
+                <FaRegStar icon="star" className="feather "  fill={"#ffb321"}/>
+              </li>
+            ) : null;
+          })}
+        </ul>
                           </div>
                         </div>
                         <button className="btn" style={{backgroundColor:colors}}>{colors}</button>
