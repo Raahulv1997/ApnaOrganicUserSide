@@ -27,9 +27,13 @@ const ProductBox = ({
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [isActive, setIsActive] = useState(false);
+  const [wishid, setwishid] = useState('');
   const navigate = useNavigate();
   const [wlistData, setWlistData] = useState("");
   const [data, setData] = useState([]);
+  const[wishlist,setWishList]=useState([]);
+  const[addcartid,setaddcartid]=useState('');
+
   let [count, setCount] = useState(0);
   function incrementCount() {
     count = count + 1;
@@ -43,7 +47,8 @@ const ProductBox = ({
   };
   const func = () => {};
   const AddToCart = () => {
-    axios
+    if(addcartid !== id){
+      axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
         user_id: `${useridd}`,
         product_view_id: `${id}`,
@@ -54,28 +59,28 @@ const ProductBox = ({
       })
       .then((response) => {
         let data = response.data;
-        // console.log("ADD CARTTT------------" + JSON.stringify(data));
+        setaddcartid(id)
         setData(data);
         setapicall(true);
       });
   };
+    }
+   
   wlist = window.location.pathname;
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
       // console.log("ADD______WISHLIST");
-
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
           user_id: `${useridd}`,
           product_view_id: `${id}`,
         })
-
         .then((response) => {
           let data = response.data;
           setData(response.data);
           setWlistData("remove");
           setapicall(true);
-          setIsActive((current) => !current);
+          setIsActive(true);
         });
     } else if (wlist === "/wishlist") {
       axios
@@ -89,40 +94,42 @@ const ProductBox = ({
           setData(response.data);
           setWlistData("add");
           setapicall(true);
+          setIsActive(false);
         });
     }
   };
-  // useEffect(() => {
-  //   try {
-  //     axios
-  //       .get(
-  //         `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
-  //         {
-  //           product_search: {
-  //             search: "",
-  //             colors: "",
-  //             size: "",
-  //             category: "",
-  //             product_type: "",
-  //           },
-  //         }
-  //       )
-  //       .then((response) => {
-  //         let data = response.data;
-  //         setData(data.results);
-  //         // setProductId(data);
-  //         //console.log("PRODUCT============"+JSON.stringify(data))
-  //         setapicall(false);
-  //       });
-  //   } catch (err) {}
-  // }, [apicall]);
+ var wishlistdata = localStorage.getItem("wishlist")
+ console.log("============"+wishlistdata[wishlistdata.search("Myproduct6")]);
+  useEffect(() => {
+    try {
+      axios
+        .get(
+          `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
+          {
+            product_search: {
+              search: "",
+              colors: "",
+              size: "",
+              category: "",
+              product_type: "",
+            },
+          }
+        )
+        .then((response) => {
+          let data = response.data;
+          setData(data.results);
+          // setProductId(data);
+          //console.log("PRODUCT============"+JSON.stringify(data))
+          setapicall(false);
+        });
+    } catch (err) {}
+  }, [apicall]);
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
-
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div className="product-image">
@@ -138,9 +145,10 @@ const ProductBox = ({
           <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
             <i
               className="fa-regular fa-heart"
-              style={{ color: isActive ? "red" : "" }}
+              style={{ color: isActive?   "red" :""  }}
               onClick={AddToWishList}
             ></i>
+           
           </button>
         </div>
         <a onClick={() => clickProduct(productid)}>

@@ -20418,7 +20418,7 @@ header .offcanvas-backdrop {
 }
 
 .cart-table table tbody tr td .quantity-price {
-  width: 62%;
+  width: 80%;
 }
 
 @media (max-width: 1460px) {

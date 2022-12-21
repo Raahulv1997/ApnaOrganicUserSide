@@ -295,7 +295,7 @@ const Checkout = (props) => {
     });
   };
   // end payment
-  console.log("-------orderadd" + JSON.stringify(orderadd));
+  
   // order add
   useEffect(() => {
     setorderadd((orderadd) => {

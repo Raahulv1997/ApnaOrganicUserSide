@@ -20,6 +20,7 @@ function Wishlist() {
           .then((response) => {
             let data = response.data;
             setWishList(data);
+            localStorage.setItem("wishlist",JSON.stringify(data))
             // setapicall(false);
           });
       } catch (err) {}

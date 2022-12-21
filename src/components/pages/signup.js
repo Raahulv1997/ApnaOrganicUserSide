@@ -15,13 +15,12 @@ const Singup = () => {
   const [otperror, setOtperror] = useState(false);
   const [passval, setpassval] = useState("");
   const [validated, setValidated] = useState(false);
-   const handleSubmit = (event) => {
+  const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
     }
-
     setValidated(true);
   };
   const navigate = useNavigate();
@@ -40,11 +39,9 @@ const Singup = () => {
         } else {
           setotp(response.data);
         }
-        console.log("shiguppp"+response.data);
         return response;
       })
-      .catch((error) => {
-      });
+      .catch((error) => {});
   };
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
@@ -59,15 +56,13 @@ const Singup = () => {
           password: passval,
         })
         .then((response) => {
-          localStorage.setItem("userid", response.data.insertId);          
+          localStorage.setItem("userid", response.data.insertId);
           localStorage.setItem("upassword", passval);
 
           navigate("/your_account");
           return response;
         })
-        .catch((error) => {
-        });
-
+        .catch((error) => {});
     } else {
       setOtperror(true);
     }
@@ -143,22 +138,21 @@ const Singup = () => {
                         <p className="text-danger">{"Invalid Otp"}</p>
                       ) : null}
                     </div>
-                    {otp === 0 ?
-                    <div className="col-12">
-                      <div className="form-floating theme-form-floating">
-                        <input
-                          type="password"
-                          name="password"
-                          className={
-                          "form-control"
-                          }
-                          id="password"
-                          placeholder="Password"
-                          onChange={(e) => onPasswordChange(e)}
-                        />
-                        <label htmlFor="password">Password</label>
+                    {otp === 0 ? (
+                      <div className="col-12">
+                        <div className="form-floating theme-form-floating">
+                          <input
+                            type="password"
+                            name="password"
+                            className={"form-control"}
+                            id="password"
+                            placeholder="Password"
+                            onChange={(e) => onPasswordChange(e)}
+                          />
+                          <label htmlFor="password">Password</label>
+                        </div>
                       </div>
-                    </div> : null}
+                    ) : null}
 
                     <div className={otp === 0 ? "col-12" : "col-12 d-none"}>
                       <div className="forgot-box">
@@ -168,6 +162,7 @@ const Singup = () => {
                             type="checkbox"
                             id="flexCheckDefault"
                             name="termscheck"
+                            required
                           />
                           <label
                             className="form-check-label"

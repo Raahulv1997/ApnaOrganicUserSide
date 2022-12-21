@@ -1,7 +1,8 @@
 import React, { Fragment } from "react";
-// import data from './Pages/data';
+import Modal from "react-bootstrap/Modal";
 import Footer from "../common/footer";
 import Header from "../common/header";
+import Button from 'react-bootstrap/Button';
 //import ProductImg1 from "../../Photos/product/1.png";
 import Breadcumb from "../common/beadcumb";
 import { data1 } from "./data";
@@ -11,12 +12,14 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 const Cart = () => {
   const navigate = useNavigate();
+  const [show, setShow] = useState('');
   const [apicall, setapicall] = useState(false);
   const [cartdata, setCartData] = useState([]);
   const [quantity, setQuantity] = useState([]);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
+
 
   const incrementCount = (id, quantity) => {
     let inc = quantity + 1;
@@ -131,18 +134,34 @@ const Cart = () => {
   };
   // end payment
 
+// coupon list
+
+const handleClose = () => {
+  setShow(false);
+}
+const handleShow = (e) => {
+    setShow(true);
+  }
+ 
+
+const onCouponClick = () =>{
+  setShow(true);
+
+}
+// end coupon list
+
   // discount and shipping
   let ShippingCharge = 0.0;
   let CouponDis = 0.0;
-
+// end 
   return (
     <Fragment>
       <Header />
       <Breadcumb pageName={"Cart"} pageTitle={"Cart page"} pageHref={"/"} />
       {/* <!-- Cart Section Start --> */}
       <section className="cart-section section-b-space">
-        <div className="container-fluid-lg">
-          <div className="row g-sm-5 g-3">
+        <div className="container-fluid-lg p-0">
+          <div className="row g-sm-5 g-3 ">
             <div className="col-xxl-9">
               <div className="cart-table">
                 <div className="table-responsive-xl">
@@ -364,7 +383,7 @@ const Cart = () => {
                                       <i className="fa-regular fa-minus"></i>
                                     </button>
                                     <input
-                                      className="form-control input-number qty-input mx-2"
+                                      className="form-control input-number qty-input"
                                       type="text"
                                       name="quantity"
                                       value={cdata.quantity}
@@ -452,8 +471,9 @@ const Cart = () => {
 
             <div className="col-xxl-3">
               <div className="summery-box p-sticky">
-                <div className="summery-header">
+                <div className="summery-header d-flex align-items-center justify-content-between">
                   <h3>Cart Total</h3>
+                  {/* <Button className="btn-apply text-light btn-success" onClick={()=>onCouponClick()}>Add Coupon</Button> */}
                 </div>
 
                 <div className="summery-contain">
@@ -495,7 +515,7 @@ const Cart = () => {
 
                 <ul className="summery-total">
                   <li className="list-total border-top-0">
-                    <h4>Total (USD)</h4>
+                    <h4>Total (Rupees)</h4>
                     <h4 className="price theme-color">
                       ₹
                       {(ProductPriceTotal - CouponDis + ShippingCharge).toFixed(
@@ -533,6 +553,26 @@ const Cart = () => {
           </div>
         </div>
       </section>
+      <Modal
+          show={show}
+          onHide={() => handleClose()}
+          dialogClassName="w-80"
+          aria-labelledby="example-custom-modal-styling-title"
+          centered
+        >
+          
+            <Modal.Header closeButton className="">
+              <Modal.Title id="example-custom-modal-styling-title">
+               Coupons
+              </Modal.Title>
+            </Modal.Header>
+            <Modal.Body className="p-3">
+           
+            </Modal.Body>
+            <Modal.Footer className="">
+             
+            </Modal.Footer>
+        </Modal>
       {/* <!-- Cart Section End --> */}
       <Footer />
     </Fragment>
