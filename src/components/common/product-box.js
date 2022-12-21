@@ -1,6 +1,6 @@
 import React from "react";
 //import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
-import { FaStar, FaStarHalfAlt,FaRegStar } from "react-icons/fa";
+import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
@@ -22,7 +22,7 @@ const ProductBox = ({
   brand,
   rating,
   category,
-  saleprice
+  saleprice,
 }) => {
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
@@ -39,7 +39,6 @@ const ProductBox = ({
   const decrementCount = () => {
     if (count > 0) {
       setCount((count) => count - 1);
-      
     }
   };
   const func = () => {};
@@ -64,22 +63,21 @@ const ProductBox = ({
   const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
       // console.log("ADD______WISHLIST");
-     
+
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
           user_id: `${useridd}`,
           product_view_id: `${id}`,
         })
-        
+
         .then((response) => {
           let data = response.data;
           setData(response.data);
           setWlistData("remove");
           setapicall(true);
-          setIsActive(current => !current);
+          setIsActive((current) => !current);
         });
-    }
-     else if (wlist === "/wishlist") {
+    } else if (wlist === "/wishlist") {
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
           id: `${id}`,
@@ -94,35 +92,34 @@ const ProductBox = ({
         });
     }
   };
-  useEffect(() => {
-    try {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
-          {
-            product_search: {
-              search: "",
-              colors: "",
-              size: "",
-              category: "",
-              product_type: "",
-            },
-          }
-        )
-        .then((response) => {
-          let data = response.data;
-          setData(data.results);
-          // setProductId(data);
-          //console.log("PRODUCT============"+JSON.stringify(data))
-          setapicall(false);
-        });
-    } catch (err) {}
-  }, [apicall]);
+  // useEffect(() => {
+  //   try {
+  //     axios
+  //       .get(
+  //         `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
+  //         {
+  //           product_search: {
+  //             search: "",
+  //             colors: "",
+  //             size: "",
+  //             category: "",
+  //             product_type: "",
+  //           },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         let data = response.data;
+  //         setData(data.results);
+  //         // setProductId(data);
+  //         //console.log("PRODUCT============"+JSON.stringify(data))
+  //         setapicall(false);
+  //       });
+  //   } catch (err) {}
+  // }, [apicall]);
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
-
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
 
@@ -139,7 +136,11 @@ const ProductBox = ({
         </div>
         <div className="label-flex">
           <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-            <i className="fa-regular fa-heart"  style={{color: isActive ? 'red' : '',}} onClick={AddToWishList}></i>
+            <i
+              className="fa-regular fa-heart"
+              style={{ color: isActive ? "red" : "" }}
+              onClick={AddToWishList}
+            ></i>
           </button>
         </div>
         <a onClick={() => clickProduct(productid)}>
@@ -156,32 +157,40 @@ const ProductBox = ({
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
           {
-          // !ratingg? null :
-          (ratingbox || []).map((rat, i) => {
-            return ratingg - rat >= 0 ? (
-              <li color="#ffb321" key={i}>
-                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-              </li>
-            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
-              <li color="#ffb321">
-                <FaStarHalfAlt
-                  icon="star"
-                  className="feather"
-                  fill={"#ffb321"}
-                />
-              </li>
-            ) : ratingg - rat <= -1 ? (
-              <li color="#ffb321">
-                <FaRegStar icon="star" className="feather "  fill={"#ffb321"}/>
-              </li>
-            ) : null;
-          })}
+            // !ratingg? null :
+            (ratingbox || []).map((rat, i) => {
+              return ratingg - rat >= 0 ? (
+                <li color="#ffb321" key={i}>
+                  <FaStar
+                    icon="star"
+                    className="feather fill"
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+                <li color="#ffb321">
+                  <FaStarHalfAlt
+                    icon="star"
+                    className="feather"
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : ratingg - rat <= -1 ? (
+                <li color="#ffb321">
+                  <FaRegStar
+                    icon="star"
+                    className="feather "
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : null;
+            })
+          }
         </ul>
         <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
           <h5 className="name m-0">{brand}</h5>
-        
         </a>
         <h5 className="price theme-color m-0 mb-2">
           {"₹" + saleprice}{" "}

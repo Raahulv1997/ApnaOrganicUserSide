@@ -65,23 +65,27 @@ const Cart = () => {
             let ProductTotal = 0;
             data.map((cdata) => {
               ProductTotal +=
-              Number(cdata.quantity) *
-              Number(cdata.product_price) -
-              (cdata.product_price * cdata.discount) /
-                100 + Number((cdata.product_price) -
-                (cdata.product_price * cdata.discount) /
-                  100)*cdata.gst /
-                  100+
-                  Number((cdata.product_price) -
-                  (cdata.product_price * cdata.discount) /
-                    100)*cdata.cgst /
-                    100 +
-                    Number((cdata.product_price) -
-                    (cdata.product_price * cdata.discount) /
-                      100)*cdata.sgst /
-                      100 -
-                (cdata.sale_price * cdata.discount) / 100
-            
+                Number(cdata.quantity) * Number(cdata.product_price) -
+                (cdata.product_price * cdata.discount) / 100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.gst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.cgst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.sgst) /
+                  100 -
+                (cdata.sale_price * cdata.discount) / 100;
             });
             setProductPriceTotal(ProductTotal);
             setCartData(data);
@@ -224,206 +228,196 @@ const Cart = () => {
                               </div>
                             </td>
                             <td className="price">
-                                      <h4 className="table-title text-content">
-                                        Price
-                                        <span className="theme-color mx-1">
-                                          ({cdata.discount}% off)
-                                        </span>
-                                      </h4>
-                                      <h5>
-                                      <del className="text-content text-danger mx-2 mb-0">
-                                          ₹{Number(cdata.product_price).toFixed(2)}
-                                        </del>
-                                        <b>
-                                          {" "}
-                                          ₹
-                                          {Number((cdata.product_price) -
-                                            (cdata.product_price *
-                                              cdata.discount) /
-                                              100).toFixed(2)}{" "}
-                                        </b>
-                                        
-                                      </h5>
-                                      {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
-                                      <h6 className="theme-color">
-                                        You Save:₹(
-                                        {(Number(cdata.sale_price) *
-                                          cdata.discount /
-                                          100).toFixed(2)}
-                                        )
-                                      </h6>
-                                    </td>
-                                    <td className="price">
-                                      {/* <h4 className="table-title text-content">Tax</h4> */}
-                                      {/* { Number((cdata.product_price) -
+                              <h4 className="table-title text-content">
+                                Price
+                                <span className="theme-color mx-1">
+                                  ({cdata.discount}% off)
+                                </span>
+                              </h4>
+                              <h5>
+                                <del className="text-content text-danger mx-2 mb-0">
+                                  ₹{Number(cdata.product_price).toFixed(2)}
+                                </del>
+                                <b>
+                                  {" "}
+                                  ₹
+                                  {Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ).toFixed(2)}{" "}
+                                </b>
+                              </h5>
+                              {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
+                              <h6 className="theme-color">
+                                You Save:₹(
+                                {(
+                                  (Number(cdata.sale_price) * cdata.discount) /
+                                  100
+                                ).toFixed(2)}
+                                )
+                              </h6>
+                            </td>
+                            <td className="price">
+                              {/* <h4 className="table-title text-content">Tax</h4> */}
+                              {/* { Number((cdata.product_price) -
                                     (cdata.product_price * cdata.discount) /
                                       100)*cdata.gst /
                                       100} */}
-                                      <h6 className="">Gst:{Number(cdata.gst).toFixed(2)}%</h6>
-                                      <h6 className="">Cgst:{Number(cdata.cgst).toFixed(2)}%</h6>
-                                      <h6 className="">Sgst:{Number(cdata.sgst).toFixed(2)}%</h6>
-                                    </td>
+                              <h6 className="">
+                                Gst:{Number(cdata.gst).toFixed(2)}%
+                              </h6>
+                              <h6 className="">
+                                Cgst:{Number(cdata.cgst).toFixed(2)}%
+                              </h6>
+                              <h6 className="">
+                                Sgst:{Number(cdata.sgst).toFixed(2)}%
+                              </h6>
+                            </td>
 
-                                    <td className="price">
-                                      <h4 className="table-title text-content">
-                                        Taxable Value: ₹
-                                        {(Number(cdata.product_price) -
-                                          (cdata.product_price *
-                                            cdata.discount) /
-                                            100).toFixed(2)}
-                                      </h4>
-                                      {cdata.sgst === null
-                                        ? (cdata.sgst = "0")
-                                        : cdata.sgst === cdata.sgst}
-                                      {cdata.cgst === null
-                                        ? (cdata.cgst = "0")
-                                        : cdata.cgst === cdata.cgst}
-                                      <h4 className="table-title text-content">
-                                        Tax: ₹
-                                        {((Number(
-                                          cdata.product_price -
-                                            (cdata.product_price *
-                                              cdata.discount) /
-                                              100
-                                        ) *
-                                          cdata.gst) /
-                                          100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.cgst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.sgst) /
-                                            100).toFixed(2)}
-                                      </h4>
-                                    </td>
-                                    <td className="price">
-                                      <h4 className="table-title text-content">
-                                        Sale Price: ₹
-                                        {(Number(cdata.product_price) -
-                                          (cdata.product_price *
-                                            cdata.discount) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.gst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.cgst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.sgst) /
-                                            100).toFixed(2)}
-                                      </h4>
-                                    </td>
+                            <td className="price">
+                              <h4 className="table-title text-content">
+                                Taxable Value: ₹
+                                {(
+                                  Number(cdata.product_price) -
+                                  (cdata.product_price * cdata.discount) / 100
+                                ).toFixed(2)}
+                              </h4>
+                              {cdata.sgst === null
+                                ? (cdata.sgst = "0")
+                                : cdata.sgst === cdata.sgst}
+                              {cdata.cgst === null
+                                ? (cdata.cgst = "0")
+                                : cdata.cgst === cdata.cgst}
+                              <h4 className="table-title text-content">
+                                Tax: ₹
+                                {(
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.gst) /
+                                    100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.cgst) /
+                                    100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.sgst) /
+                                    100
+                                ).toFixed(2)}
+                              </h4>
+                            </td>
+                            <td className="price">
+                              <h4 className="table-title text-content">
+                                Sale Price: ₹
+                                {(
+                                  Number(cdata.product_price) -
+                                  (cdata.product_price * cdata.discount) / 100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.gst) /
+                                    100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.cgst) /
+                                    100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.sgst) /
+                                    100
+                                ).toFixed(2)}
+                              </h4>
+                            </td>
 
-                                    <td className="quantity">
-                                      <h4 className="table-title text-content">
-                                        Qty
-                                      </h4>
-                                      <div className="quantity-price">
-                                        <div className="cart_qty">
-                                          <div className="input-group d-flex">
-                                            <button
-                                              type="button"
-                                              className="btn qty-left-minus"
-                                              data-type="minus"
-                                              data-field=""
-                                              onClick={() =>
-                                                decrementCount(
-                                                  cdata.id,
-                                                  cdata.quantity
-                                                )
-                                              }
-                                            >
-                                              <i className="fa-regular fa-minus"></i>
-                                            </button>
-                                            <input
-                                              className="form-control input-number qty-input mx-2"
-                                              type="text"
-                                              name="quantity"
-                                              value={cdata.quantity}
-                                              onChange={func}
-                                            />
-                                            <button
-                                              type="button"
-                                              className="btn qty-right-plus"
-                                              data-type="plus"
-                                              data-field=""
-                                              onClick={() =>
-                                                incrementCount(
-                                                  cdata.id,
-                                                  cdata.quantity
-                                                )
-                                              }
-                                            >
-                                              <i className="fa-regular fa-plus"></i>
-                                            </button>
-                                          </div>
-                                        </div>
-                                      </div>
-                                    </td>
+                            <td className="quantity">
+                              <h4 className="table-title text-content">Qty</h4>
+                              <div className="quantity-price">
+                                <div className="cart_qty">
+                                  <div className="input-group d-flex">
+                                    <button
+                                      type="button"
+                                      className="btn qty-left-minus"
+                                      data-type="minus"
+                                      data-field=""
+                                      onClick={() =>
+                                        decrementCount(cdata.id, cdata.quantity)
+                                      }
+                                    >
+                                      <i className="fa-regular fa-minus"></i>
+                                    </button>
+                                    <input
+                                      className="form-control input-number qty-input mx-2"
+                                      type="text"
+                                      name="quantity"
+                                      value={cdata.quantity}
+                                      onChange={func}
+                                    />
+                                    <button
+                                      type="button"
+                                      className="btn qty-right-plus"
+                                      data-type="plus"
+                                      data-field=""
+                                      onClick={() =>
+                                        incrementCount(cdata.id, cdata.quantity)
+                                      }
+                                    >
+                                      <i className="fa-regular fa-plus"></i>
+                                    </button>
+                                  </div>
+                                </div>
+                              </div>
+                            </td>
 
-                                    <td className="subtotal">
-                                      <h4 className="table-title text-content">
-                                        Total
-                                      </h4>
-                                      <h5>
-                                      {((cdata.quantity) *
-                                       Number(cdata.product_price) -
-                                          (cdata.product_price *
-                                            cdata.discount) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.gst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.cgst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.sgst) /
-                                            100).toFixed(2)
-                                            }
-                                      </h5>
-                                    </td>
+                            <td className="subtotal">
+                              <h4 className="table-title text-content">
+                                Total
+                              </h4>
+                              <h5>
+                                {(
+                                  cdata.quantity * Number(cdata.product_price) -
+                                  (cdata.product_price * cdata.discount) / 100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.gst) /
+                                    100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.cgst) /
+                                    100 +
+                                  (Number(
+                                    cdata.product_price -
+                                      (cdata.product_price * cdata.discount) /
+                                        100
+                                  ) *
+                                    cdata.sgst) /
+                                    100
+                                ).toFixed(2)}
+                              </h5>
+                            </td>
 
                             <td className="save-remove">
                               <h4 className="table-title text-content">
@@ -480,7 +474,9 @@ const Cart = () => {
                     <li>
                       <h4>Subtotal</h4>
 
-                      <h4 className="price">₹ {ProductPriceTotal.toFixed(2)}</h4>
+                      <h4 className="price">
+                        ₹ {ProductPriceTotal.toFixed(2)}
+                      </h4>
                     </li>
 
                     <li>
@@ -490,7 +486,9 @@ const Cart = () => {
 
                     <li className="align-items-start">
                       <h4>Shipping</h4>
-                      <h4 className="price text-end">₹{ShippingCharge.toFixed(2)}</h4>
+                      <h4 className="price text-end">
+                        ₹{ShippingCharge.toFixed(2)}
+                      </h4>
                     </li>
                   </ul>
                 </div>
@@ -499,7 +497,10 @@ const Cart = () => {
                   <li className="list-total border-top-0">
                     <h4>Total (USD)</h4>
                     <h4 className="price theme-color">
-                      ₹{(ProductPriceTotal - CouponDis + ShippingCharge).toFixed(2)}
+                      ₹
+                      {(ProductPriceTotal - CouponDis + ShippingCharge).toFixed(
+                        2
+                      )}
                     </h4>
                   </li>
                 </ul>
