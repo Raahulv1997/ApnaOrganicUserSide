@@ -163,9 +163,10 @@ setId(id);
                 <div className="col-xl-6 sm-2 col-lg-7">
                   <Carousel variant="dark">
                     <Carousel.Item>
+
                       <img
                         className="d-block w-100"
-                        src="https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"
+                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                         alt="First slide"
                       />
                       <Carousel.Caption>
@@ -179,7 +180,7 @@ setId(id);
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"
+                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                         alt="Second slide"
                       />
   
@@ -193,7 +194,7 @@ setId(id);
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"
+                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                         alt="Third slide"
                       />
   

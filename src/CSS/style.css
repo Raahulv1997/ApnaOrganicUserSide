@@ -14700,7 +14700,7 @@ header .navbar.navbar-expand-xl .navbar-nav .nav-link .label-menu::before {
   right: 10px;
 }
 
-header .navbar.navbar-expand-xl .navbar-nav .nav-link::before,
+header .navbar.navbar-expand-xl .navbar-nav .nav-link.icon::before,
 .language::before {
   content: "";
   position: absolute;

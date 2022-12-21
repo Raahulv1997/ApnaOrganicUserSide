@@ -61,13 +61,13 @@ const ProductBox = ({
       });
   };
   wlist = window.location.pathname;
-  const AddToWishList = () => {
 
+  const AddToWishList = () => {
     if (wlist === "/" || wlist === "/shop") {
       // console.log("ADD______WISHLIST");
 
       axios
-        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
+        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
           user_id: `${useridd}`,
           product_view_id: `${id}`,
         })
@@ -79,11 +79,12 @@ const ProductBox = ({
           setapicall(true);
           setIsActive((current) => !current);
         });
-    } else if (wlist === "/wishlist") {
+    }  
+    else if (wlist === "/wishlist") {
       axios
-        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-          id: `${id}`,
-          user_id: `${useridd}`,
+        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+          id:`${id}`,
+          user_id:`${useridd}`,
         })
         .then((response) => {
           let data = response.data;
@@ -124,7 +125,7 @@ const ProductBox = ({
   };
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
-
+  let img=[''];
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div className="product-image">
@@ -145,15 +146,17 @@ const ProductBox = ({
             ></i>
           </button>
         </div>
-        <a onClick={() => clickProduct(productid)}>
+        {image==""|| image==null|| image==undefined?
+         <a onClick={() => clickProduct(productid)}>
           <img
             src={
-              "https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"
+              "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
             }
             className="mt-5 "
             alt=""
           />
-        </a>
+        </a>:null}
+       
       </div>
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
