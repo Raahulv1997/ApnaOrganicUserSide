@@ -22,8 +22,9 @@ const ProductBox = ({
   brand,
   rating,
   category,
-  saleprice
+  saleprice,
 }) => {
+ 
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -62,6 +63,7 @@ const ProductBox = ({
   };
   wlist = window.location.pathname;
   const AddToWishList = () => {
+
     if (wlist === "/" || wlist === "/shop") {
       // console.log("ADD______WISHLIST");
      
@@ -122,7 +124,6 @@ const ProductBox = ({
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
-
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
 
@@ -145,7 +146,7 @@ const ProductBox = ({
         <a onClick={() => clickProduct(productid)}>
           <img
             src={
-              "https://www.shutterstock.com/image-photo/man-hands-holding-global-network-260nw-1801568002.jpg"
+              "https://www.cypressgreen.in/blog/wp-content/uploads/2021/03/food.jpg"
             }
             className="mt-5 "
             alt=""
@@ -154,7 +155,7 @@ const ProductBox = ({
       </div>
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
-        <ul className="rating p-0 m-0 mb-2">
+      <ul className="rating p-0 m-0 mb-2">
           {
           // !ratingg? null :
           (ratingbox || []).map((rat, i) => {

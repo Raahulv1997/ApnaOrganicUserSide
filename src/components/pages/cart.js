@@ -137,7 +137,7 @@ const Cart = () => {
       <Breadcumb pageName={"Cart"} pageTitle={"Cart page"} pageHref={"/"} />
       {/* <!-- Cart Section Start --> */}
       <section className="cart-section section-b-space">
-        <div className="container-fluid-lg">
+        <div className="container-fluid">
           <div className="row g-sm-5 g-3">
             <div className="col-xxl-9">
               <div className="cart-table">
