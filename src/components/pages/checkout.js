@@ -22,7 +22,7 @@ const Checkout = (props) => {
   const [quantity, setQuantity] = useState([]);
   const [DeliveryMethod, setDeliveryMethod] = useState("");
   const [userdata, setuserdata] = useState([]);
-  const [DeliveyTab,setDeliveyTab] = useState('')
+  const [DeliveyTab, setDeliveyTab] = useState("");
   const [singlorder, setsinglorder] = useState({
     order_id: "1",
     product_id: "2",
@@ -56,6 +56,7 @@ const Checkout = (props) => {
     order_product: [],
   });
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
+  const [SalePricee, setSalePricee] = useState(0);
   const [TotalTax, setTotalTax] = useState(0);
   // discount and shipping
   let ShippingCharge = 0.0;
@@ -116,13 +117,32 @@ const Checkout = (props) => {
             let Totalcgst = 0;
             let Totalsgst = 0;
             let TotalTaxableValue = 0;
+            let Saleprice = 0;
             data.map((cdata) => {
+              // totalprice
               ProductTotal +=
-                parseInt(cdata.quantity) *
-                parseInt(
-                  Number(cdata.sale_price) -
-                    (cdata.sale_price * cdata.discount) / 100
-                );
+                Number(cdata.quantity) * Number(cdata.product_price) -
+                (cdata.product_price * cdata.discount) / 100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.gst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.cgst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.sgst) /
+                  100 -
+                (cdata.sale_price * cdata.discount) / 100;
+              // end totalprice
               if (cdata.gst === null) {
                 cdata.gst = "0";
               }
@@ -132,15 +152,72 @@ const Checkout = (props) => {
               if (cdata.cgst === null) {
                 cdata.cgst = "0";
               }
-              Totaltaxes +=
-                Number(cdata.gst) + Number(cdata.cgst) + Number(cdata.sgst);
-              Totalgst += Number(cdata.gst);
-              Totalcgst += Number(cdata.cgst);
-              Totalsgst += Number(cdata.sgst);
-              TotalTaxableValue =
+
+              // gst
+              Totalgst +=
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.gst) /
+                100;
+              // end gst
+
+              // cgst
+              Totalcgst +=
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.cgst) /
+                100;
+              // end cgst
+
+              // sgst
+              Totalsgst +=
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.sgst) /
+                100;
+              // end sgst
+              // totaltax
+              Totaltaxes += Totalgst + Totalcgst + Totalsgst;
+              // end totaltax
+
+              // totaltaxable value
+              TotalTaxableValue +=
                 Number(cdata.product_price) -
                 (cdata.product_price * cdata.discount) / 100;
+              // end totaltaxable value
+
+              // saleprice
+              Saleprice = (
+                Number(cdata.product_price) -
+                (cdata.product_price * cdata.discount) / 100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.gst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.cgst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.sgst) /
+                  100
+              ).toFixed(2);
+              // end saleprice
             });
+
             setorderadd({
               ...orderadd,
               total_amount: ProductTotal - CouponDis + ShippingCharge,
@@ -152,6 +229,7 @@ const Checkout = (props) => {
               vendor_id: "1",
               order_product: [],
             });
+            setSalePricee(Saleprice);
             setProductPriceTotal(ProductTotal);
             setTotalTax(Totaltaxes);
             setCartData(data);
@@ -214,18 +292,10 @@ const Checkout = (props) => {
       delivery_date: "2022-12-25",
       invoice_date: currentdate,
       order_date: currentdate,
-      total_amount: "",
-      total_gst: "",
-      total_cgst: "",
-      total_sgst: "",
-      taxable_value: "",
-      discount_coupon: "0",
-      vendor_id: "1",
-      order_product: [],
     });
   };
   // end payment
-
+  console.log("-------orderadd" + JSON.stringify(orderadd));
   // order add
   useEffect(() => {
     setorderadd((orderadd) => {
@@ -242,7 +312,6 @@ const Checkout = (props) => {
       .catch((error) => {});
   };
   // end order add
-
   return (
     <Fragment>
       <Header />
@@ -288,7 +357,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link to="/" eventKey="second">
+                          <Nav.Link eventKey="second">
                             <li className="nav-link" role="presentation">
                               <div
                                 onClick={() => DeliveryClick()}
@@ -479,25 +548,31 @@ const Checkout = (props) => {
                                         </span>
                                       </h4>
                                       <h5>
-                                      <del className="text-content text-danger mx-2">
-                                          ₹{Number(cdata.product_price).toFixed(2)}
+                                        <del className="text-content text-danger mx-2">
+                                          ₹
+                                          {Number(cdata.product_price).toFixed(
+                                            2
+                                          )}
                                         </del>
                                         <b>
                                           {" "}
                                           ₹
-                                          {Number((cdata.product_price) -
-                                            (cdata.product_price *
-                                              cdata.discount) /
-                                              100).toFixed(2)}{" "}
+                                          {Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ).toFixed(2)}{" "}
                                         </b>
-                                        
                                       </h5>
                                       {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
                                       <h6 className="theme-color">
                                         You Save:₹(
-                                        {(Number(cdata.sale_price) *
-                                          cdata.discount /
-                                          100).toFixed(2)}
+                                        {(
+                                          (Number(cdata.sale_price) *
+                                            cdata.discount) /
+                                          100
+                                        ).toFixed(2)}
                                         )
                                       </h6>
                                     </td>
@@ -507,18 +582,26 @@ const Checkout = (props) => {
                                     (cdata.product_price * cdata.discount) /
                                       100)*cdata.gst /
                                       100} */}
-                                      <h6 className="">Gst:{Number(cdata.gst).toFixed(2)}%</h6>
-                                      <h6 className="">Cgst:{Number(cdata.cgst).toFixed(2)}%</h6>
-                                      <h6 className="">Sgst:{Number(cdata.sgst).toFixed(2)}%</h6>
+                                      <h6 className="">
+                                        Gst:{Number(cdata.gst).toFixed(2)}%
+                                      </h6>
+                                      <h6 className="">
+                                        Cgst:{Number(cdata.cgst).toFixed(2)}%
+                                      </h6>
+                                      <h6 className="">
+                                        Sgst:{Number(cdata.sgst).toFixed(2)}%
+                                      </h6>
                                     </td>
 
                                     <td className="price">
                                       <h4 className="table-title text-content">
                                         Taxable Value: ₹
-                                        {(Number(cdata.product_price) -
+                                        {(
+                                          Number(cdata.product_price) -
                                           (cdata.product_price *
                                             cdata.discount) /
-                                            100).toFixed(2)}
+                                            100
+                                        ).toFixed(2)}
                                       </h4>
                                       {cdata.sgst === null
                                         ? (cdata.sgst = "0")
@@ -528,14 +611,15 @@ const Checkout = (props) => {
                                         : cdata.cgst === cdata.cgst}
                                       <h4 className="table-title text-content">
                                         Tax: ₹
-                                        {((Number(
-                                          cdata.product_price -
-                                            (cdata.product_price *
-                                              cdata.discount) /
-                                              100
-                                        ) *
-                                          cdata.gst) /
-                                          100 +
+                                        {(
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.gst) /
+                                            100 +
                                           (Number(
                                             cdata.product_price -
                                               (cdata.product_price *
@@ -551,13 +635,15 @@ const Checkout = (props) => {
                                                 100
                                           ) *
                                             cdata.sgst) /
-                                            100).toFixed(2)}
+                                            100
+                                        ).toFixed(2)}
                                       </h4>
                                     </td>
                                     <td className="price">
                                       <h4 className="table-title text-content">
                                         Sale Price: ₹
-                                        {(Number(cdata.product_price) -
+                                        {(
+                                          Number(cdata.product_price) -
                                           (cdata.product_price *
                                             cdata.discount) /
                                             100 +
@@ -584,7 +670,8 @@ const Checkout = (props) => {
                                                 100
                                           ) *
                                             cdata.sgst) /
-                                            100).toFixed(2)}
+                                            100
+                                        ).toFixed(2)}
                                       </h4>
                                     </td>
 
@@ -640,8 +727,9 @@ const Checkout = (props) => {
                                         Total
                                       </h4>
                                       <h5>
-                                      {((cdata.quantity) *
-                                       Number(cdata.product_price) -
+                                        {(
+                                          cdata.quantity *
+                                            Number(cdata.product_price) -
                                           (cdata.product_price *
                                             cdata.discount) /
                                             100 +
@@ -668,8 +756,8 @@ const Checkout = (props) => {
                                                 100
                                           ) *
                                             cdata.sgst) /
-                                            100).toFixed(2)
-                                            }
+                                            100
+                                        ).toFixed(2)}
                                       </h5>
                                     </td>
 
@@ -720,7 +808,9 @@ const Checkout = (props) => {
                           <li>
                             <button
                               className="btn btn-animation proceed-btn"
-                              // eventKey ="second"
+                              onClick={() => {
+                                setDeliveyTab("second");
+                              }}
                             >
                               Continue Delivery Address
                             </button>
@@ -1120,11 +1210,69 @@ const Checkout = (props) => {
                                 return (
                                   <li key={data.id}>
                                     <h4>
-                                      {data.sale_price}{" "}
+                                      {(
+                                        Number(data.product_price) -
+                                        (data.product_price * data.discount) /
+                                          100 +
+                                        (Number(
+                                          data.product_price -
+                                            (data.product_price *
+                                              data.discount) /
+                                              100
+                                        ) *
+                                          data.gst) /
+                                          100 +
+                                        (Number(
+                                          data.product_price -
+                                            (data.product_price *
+                                              data.discount) /
+                                              100
+                                        ) *
+                                          data.cgst) /
+                                          100 +
+                                        (Number(
+                                          data.product_price -
+                                            (data.product_price *
+                                              data.discount) /
+                                              100
+                                        ) *
+                                          data.sgst) /
+                                          100
+                                      ).toFixed(2)}{" "}
                                       <span>X {data.quantity}</span>
                                     </h4>
                                     <h4 className="price">
-                                      ₹{data.sale_price * data.quantity}
+                                      ₹
+                                      {(
+                                        data.quantity *
+                                          Number(data.product_price) -
+                                        (data.product_price * data.discount) /
+                                          100 +
+                                        (Number(
+                                          data.product_price -
+                                            (data.product_price *
+                                              data.discount) /
+                                              100
+                                        ) *
+                                          data.gst) /
+                                          100 +
+                                        (Number(
+                                          data.product_price -
+                                            (data.product_price *
+                                              data.discount) /
+                                              100
+                                        ) *
+                                          data.cgst) /
+                                          100 +
+                                        (Number(
+                                          data.product_price -
+                                            (data.product_price *
+                                              data.discount) /
+                                              100
+                                        ) *
+                                          data.sgst) /
+                                          100
+                                      ).toFixed(2)}
                                     </h4>
                                   </li>
                                 );
@@ -1134,7 +1282,9 @@ const Checkout = (props) => {
                             <ul className="summery-total bg-white">
                               <li>
                                 <h4>Subtotal(Tax included)</h4>
-                                <h4 className="price">₹{ProductPriceTotal}</h4>
+                                <h4 className="price">
+                                  ₹{ProductPriceTotal.toFixed(2)}
+                                </h4>
                               </li>
 
                               <li>
@@ -1145,7 +1295,7 @@ const Checkout = (props) => {
                               <li>
                                 <h4>Tax</h4>
                                 <h4 className="price text-danger">
-                                  ₹{TotalTax}
+                                  ₹{TotalTax.toFixed(2)}
                                 </h4>
                               </li>
 
@@ -1158,9 +1308,11 @@ const Checkout = (props) => {
                                 <h4>Total (Rupees)</h4>
                                 <h4 className="price">
                                   ₹
-                                  {ProductPriceTotal -
+                                  {(
+                                    ProductPriceTotal -
                                     CouponDis +
-                                    ShippingCharge}
+                                    ShippingCharge
+                                  ).toFixed(2)}
                                 </h4>
                               </li>
                             </ul>

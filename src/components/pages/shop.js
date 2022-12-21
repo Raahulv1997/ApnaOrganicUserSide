@@ -3,7 +3,7 @@ import ProductBox from "../common/product-box";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
-import { FaStar } from "react-icons/fa";
+import { FaStar,FaRegStar } from "react-icons/fa";
 import Accordion from "react-bootstrap/Accordion";
 import Dropdown from "react-bootstrap/Dropdown";
 import "../../CSS/style.css";
@@ -11,7 +11,7 @@ import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSearchParams } from "react-router-dom";
-import Badge from 'react-bootstrap/Badge';
+import Badge from "react-bootstrap/Badge";
 let showcategorydata = [];
 
 const Shop = (props) => {
@@ -29,16 +29,16 @@ const Shop = (props) => {
   const [categorynameChange, setCategoryNameChange] = useState(false);
   const [categoryfilterdata, setCategoryfilterData] = useState([]);
   const [apicall, setapicall] = useState(false);
-  const [categoryNamedata, setCategoryNameData] = useState([])
+  const [categoryNamedata, setCategoryNameData] = useState([]);
   const [pricefilter, setpricefilter] = useState({
-    to_product_price:"",
-    from_product_price:""
+    to_product_price: "",
+    from_product_price: "",
   });
   const [discountfilter, setdiscountfilter] = useState([]);
   const [brandfilter, setbrandfilter] = useState([]);
   const [ratingfilter, setratingfilter] = useState([]);
-  
-//   const [showcategorydata, setshowCategoryData] = useState([]);
+
+  //   const [showcategorydata, setshowCategoryData] = useState([]);
 
   useEffect(() => {
     if (
@@ -47,10 +47,8 @@ const Shop = (props) => {
       searchparams.get("search") === undefined
     ) {
       setsearchText("");
-    }
-    else {
+    } else {
       setsearchText(searchparams.get("search"));
-
     }
   }, [searchText]);
 
@@ -60,14 +58,16 @@ const Shop = (props) => {
       searchparams.get("category") === "" ||
       searchparams.get("category") === undefined
     ) {
-      setsearchCat("")
-    }
-    else {
-      setCategoryNameData(categoryNamedata => [...categoryNamedata, Number(searchparams.get("category"))]);
+      setsearchCat("");
+    } else {
+      setCategoryNameData((categoryNamedata) => [
+        ...categoryNamedata,
+        Number(searchparams.get("category")),
+      ]);
     }
   }, [searchCat]);
   // var product = data.product;
-//   product list
+  //   product list
   useEffect(() => {
     function getProductData() {
       try {
@@ -75,37 +75,47 @@ const Shop = (props) => {
           .post(
             `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,
             {
-              product_search: 
-              {
-              search: `${searchText}`,
-              price_from:`${pricefilter.from_product_price}`,
-              price_to:`${pricefilter.to_product_price}`,
-              product_type: [],
-              colors:[],
-              size:[],
-              brand:brandfilter,
-              discount:discountfilter,
-              rating:ratingfilter,
-              category:categoryNamedata
+              product_search: {
+                search: `${searchText}`,
+                price_from: `${pricefilter.from_product_price}`,
+                price_to: `${pricefilter.to_product_price}`,
+                product_type: [],
+                colors: [],
+                size: [],
+                brand: brandfilter,
+                discount: discountfilter,
+                rating: ratingfilter,
+                category: categoryNamedata,
               },
             }
           )
           .then((response) => {
             let data = response.data;
             setProdData(data.results);
-    
-            if(categoryNamedata.length === 0 && ratingfilter.length === 0 && brandfilter.length === 0 && discountfilter.length === 0 &&  pricefilter.from_product_price === '' && pricefilter.to_product_price === '' ){
-                setCategoryfilterData(data.results)
+
+            if (
+              categoryNamedata.length === 0 &&
+              ratingfilter.length === 0 &&
+              brandfilter.length === 0 &&
+              discountfilter.length === 0 &&
+              pricefilter.from_product_price === "" &&
+              pricefilter.to_product_price === ""
+            ) {
+              setCategoryfilterData(data.results);
             }
             setapicall(false);
           });
       } catch (err) {}
     }
     getProductData();
-  }, [categoryNamedata,ratingfilter,brandfilter,discountfilter,pricefilter]);
-// end product list
-
-
+  }, [
+    categoryNamedata,
+    ratingfilter,
+    brandfilter,
+    discountfilter,
+    pricefilter,
+  ]);
+  // end product list
 
   //   category
   useEffect(() => {
@@ -129,81 +139,100 @@ const Shop = (props) => {
   //  SEARCH AND SHOW CATEGORY
   const onCategorySearch = (e) => {
     let catname = e.target.value;
-    if(catname !== ''){
+    if (catname !== "") {
       try {
         axios
           .post(`${process.env.REACT_APP_BASEURL}/search_category`, {
             category_name: `${catname}`,
           })
           .then((response) => {
-           let  data = response.data;
+            let data = response.data;
             setCategoryData(response.data);
             setCategoryNameChange(true);
-  
           });
       } catch (err) {}
     }
-   
   };
-  const onCategoryNameAdd = (e,id,name) =>{
-    const value = e.target.type === 'checkbox' ? e.target.checked : id
-    if(e.target.checked === true){
-      setCategoryNameData(categoryNamedata => [...categoryNamedata, id])
-    showcategorydata.push(name);
-
-    }else{
-      setCategoryNameData(categoryNamedata.filter(item => item !== id));
+  const onCategoryNameAdd = (e, id, name) => {
+    const value = e.target.type === "checkbox" ? e.target.checked : id;
+    if (e.target.checked === true) {
+      setCategoryNameData((categoryNamedata) => [...categoryNamedata, id]);
+      showcategorydata.push(name);
+    } else {
+      setCategoryNameData(categoryNamedata.filter((item) => item !== id));
       const index = showcategorydata.indexOf(name);
-    if (index > -1) { // only splice array when item is found
-     showcategorydata.splice(index, 1); // 2nd parameter means remove one item only
-}
- }
-  }
-  const onPriceFilterAdd = (e) =>{
-    setpricefilter({...pricefilter, [e.target.name]:e.target.value })
+      if (index > -1) {
+        // only splice array when item is found
+        showcategorydata.splice(index, 1); // 2nd parameter means remove one item only
+      }
+    }
+  };
+  const onPriceFilterAdd = (e) => {
+    setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
     showcategorydata.push(e.target.value);
-  }
-  const onDiscountFilterAdd = (e) =>{
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
-    if(e.target.checked === true){
-    setdiscountfilter(discountfilter => [...discountfilter, e.target.value])
-  }else{
-    setdiscountfilter(discountfilter.filter(item => item !== e.target.value));
-  }
+  };
+  const onDiscountFilterAdd = (e) => {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    if (e.target.checked === true) {
+      setdiscountfilter((discountfilter) => [
+        ...discountfilter,
+        e.target.value,
+      ]);
     showcategorydata.push(e.target.value);
-  }
-  const onBrandFilterAdd = (e) =>{
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
-    if(e.target.checked === true){
-    setbrandfilter(brandfilter => [...brandfilter, e.target.value])
-  }else{
-    setbrandfilter(brandfilter.filter(item => item !== e.target.value));
-  }
+    } else {
+      setdiscountfilter(
+        discountfilter.filter((item) => item !== e.target.value)
+      );
+      const index = showcategorydata.indexOf(e.target.value);
+      if (index > -1) {
+        // only splice array when item is found
+        showcategorydata.splice(index, 1); // 2nd parameter means remove one item only
+      }
+    }
+  };
+  const onBrandFilterAdd = (e) => {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    if (e.target.checked === true) {
+      setbrandfilter((brandfilter) => [...brandfilter, e.target.value]);
     showcategorydata.push(e.target.value);
 
-  }
-  const onRatingFilterAdd = (e) =>{
-    const value = e.target.type === 'checkbox' ? e.target.checked : e.target.value
-    if(e.target.checked === true){
-    setratingfilter(ratingfilter => [...ratingfilter, e.target.value])
-  }else{
-    setratingfilter(ratingfilter.filter(item => item !== e.target.value));
-  }
+    } else {
+      setbrandfilter(brandfilter.filter((item) => item !== e.target.value));
+      const index = showcategorydata.indexOf(e.target.value);
+      if (index > -1) {
+        // only splice array when item is found
+        showcategorydata.splice(index, 1); // 2nd parameter means remove one item only
+      }
+    }
+  };
+  const onRatingFilterAdd = (e) => {
+    const value =
+      e.target.type === "checkbox" ? e.target.checked : e.target.value;
+    if (e.target.checked === true) {
+      setratingfilter((ratingfilter) => [...ratingfilter, e.target.value]);
     showcategorydata.push(e.target.value);
 
-  }
-const OnClearAllClick = (e) =>{
-showcategorydata = [];
-setCategoryNameData('')
-setpricefilter('')
-setdiscountfilter('')
-setbrandfilter('')
-setratingfilter('')
-
-}
-//   END SEARCH AND SHOW CATEGORY
+    } else {
+      setratingfilter(ratingfilter.filter((item) => item !== e.target.value));
+      const index = showcategorydata.indexOf(e.target.value);
+      if (index > -1) {
+        // only splice array when item is found
+        showcategorydata.splice(index, 1); // 2nd parameter means remove one item only
+      }
+    }
+  };
+  const OnClearAllClick = (e) => {
+    showcategorydata = [];
+    setCategoryNameData("");
+    setpricefilter("");
+    setdiscountfilter("");
+    setbrandfilter("");
+    setratingfilter("");
+  };
+  //   END SEARCH AND SHOW CATEGORY
   // end category
-
 
   //   BRAND
   const filtercategorydata = categoryfilterdata.filter(
@@ -230,7 +259,9 @@ setratingfilter('')
                   <div className="filter-category">
                     <div className="filter-title">
                       <h2>Filters</h2>
-                      <Link to="" onClick={()=>OnClearAllClick()}>Clear All</Link>
+                      <Link to="" onClick={() => OnClearAllClick()}>
+                        Clear All
+                      </Link>
                     </div>
                     <ul className="tagfilter_box">
                       {showcategorydata[0] !== "" ||
@@ -238,10 +269,14 @@ setratingfilter('')
                       showcategorydata[0] !== undefined
                         ? (showcategorydata || []).map((show, i) => {
                             return (
-                              <Badge bg="light" text="dark" className="d-flex align-items-center">
-       {show}
-       {/* <p className="mb-0 mx-2 tagcancel_btn" onClick={OnTagCancelClick}>x</p> */}
-      </Badge>
+                              <Badge
+                                bg="light"
+                                text="dark"
+                                className="d-flex align-items-center"
+                              >
+                                {show}
+                                {/* <p className="mb-0 mx-2 tagcancel_btn" onClick={OnTagCancelClick}>x</p> */}
+                              </Badge>
                             );
                           })
                         : null}
@@ -277,27 +312,43 @@ setratingfilter('')
                             <ul className="category-list custom-padding custom-height">
                               {(categorydata || []).map((cdta, i) => {
                                 return (
-                                 
                                   <li key={i}>
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"
                                         type="checkbox"
                                         id="category"
-                                        name={'category'}
+                                        name={"category"}
                                         // checked={categoryNamedata.length === 0 ? false : true}
-                                        onChange={categorynameChange ?  (e)=>onCategoryNameAdd(e,cdta.id,cdta.category_name) :(e)=>onCategoryNameAdd(e,cdta.root_id,cdta.root_category_name)} 
+                                        onChange={
+                                          categorynameChange
+                                            ? (e) =>
+                                                onCategoryNameAdd(
+                                                  e,
+                                                  cdta.id,
+                                                  cdta.category_name
+                                                )
+                                            : (e) =>
+                                                onCategoryNameAdd(
+                                                  e,
+                                                  cdta.root_id,
+                                                  cdta.root_category_name
+                                                )
+                                        }
                                       />
                                       <label
                                         className="form-check-label"
                                         htmlFor="fruit"
                                       >
-                                         {categorynameChange ? 
-                                        <span className="name">
-                                          {cdta.category_name}
-                                        </span> :   <span className="name">
-                                          {cdta.root_category_name}
-                                        </span>}
+                                        {categorynameChange ? (
+                                          <span className="name">
+                                            {cdta.category_name}
+                                          </span>
+                                        ) : (
+                                          <span className="name">
+                                            {cdta.root_category_name}
+                                          </span>
+                                        )}
                                         {/* <span className="number">(15)</span> */}
                                       </label>
                                     </div>
@@ -322,31 +373,30 @@ setratingfilter('')
                         >
                           <div className="accordion-body">
                             <ul className="category-list custom-padding">
-                                {(filtercategorydata || []).map((data,i)=>{
-                                    return(
-                                        <li key={data.id}>
-                                        <div className="form-check ps-0 m-0 category-list-box">
-                                          <input
-                                            className="checkbox_animated"
-                                            type="checkbox"
-                                            id="veget"
-                                            name={'brand'} 
-                                            value={data.brand}
-                                            onChange={(e)=>onBrandFilterAdd(e)}
-                                                                                     />
-                                          <label
-                                            className="form-check-label"
-                                            htmlFor="veget"
-                                          >
-                                            <span className="name">{data.brand}</span>
-                                          </label>
-                                        </div>
-                                      </li>
-                                    )
-                                })}
-                            
-
-                              
+                              {(filtercategorydata || []).map((data, i) => {
+                                return (
+                                  <li key={data.id}>
+                                    <div className="form-check ps-0 m-0 category-list-box">
+                                      <input
+                                        className="checkbox_animated"
+                                        type="checkbox"
+                                        id="veget"
+                                        name={"brand"}
+                                        value={data.brand}
+                                        onChange={(e) => onBrandFilterAdd(e)}
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="veget"
+                                      >
+                                        <span className="name">
+                                          {data.brand}
+                                        </span>
+                                      </label>
+                                    </div>
+                                  </li>
+                                );
+                              })}
                             </ul>
                           </div>
                         </div>
@@ -363,18 +413,18 @@ setratingfilter('')
                             type="text"
                             className="js-range-slider"
                             placeholder="from"
-                            name={'from_product_price'}
-                                        // value={cdta.root_category_name}
-                                        onChange={(e)=>onPriceFilterAdd(e)}
+                            name={"from_product_price"}
+                            // value={cdta.root_category_name}
+                            onChange={(e) => onPriceFilterAdd(e)}
                           />
                           &nbsp;
                           <input
                             type="text"
                             className="js-range-slider"
                             placeholder="to"
-                            name={'to_product_price'}
-                                        // value={cdta.root_category_name}
-                                        onChange={(e)=>onPriceFilterAdd(e)}
+                            name={"to_product_price"}
+                            // value={cdta.root_category_name}
+                            onChange={(e) => onPriceFilterAdd(e)}
                           />
                         </div>
                       </Accordion.Body>
@@ -397,9 +447,9 @@ setratingfilter('')
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={'rating'}
-                                        value={'5'}
-                                        onChange={(e)=>onRatingFilterAdd(e)}
+                                    name={"rating"}
+                                    value={"5"}
+                                    onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -446,9 +496,9 @@ setratingfilter('')
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={'rating'}
-                                        value={'4'}
-                                        onChange={(e)=>onRatingFilterAdd(e)}
+                                    name={"rating"}
+                                    value={"4"}
+                                    onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -477,7 +527,7 @@ setratingfilter('')
                                         />
                                       </li>
                                       <li>
-                                        <FaStar className="feather " />
+                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -492,9 +542,9 @@ setratingfilter('')
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={'rating'}
-                                        value={'3'}
-                                        onChange={(e)=>onRatingFilterAdd(e)}
+                                    name={"rating"}
+                                    value={"3"}
+                                    onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -517,10 +567,10 @@ setratingfilter('')
                                         />
                                       </li>
                                       <li color="#ffb321">
-                                        <FaStar className="feather " />
+                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                       <li>
-                                        <FaStar className="feather " />
+                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -535,9 +585,9 @@ setratingfilter('')
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={'rating'}
-                                        value={'2'}
-                                        onChange={(e)=>onRatingFilterAdd(e)}
+                                    name={"rating"}
+                                    value={"2"}
+                                    onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -554,13 +604,13 @@ setratingfilter('')
                                         />
                                       </li>
                                       <li color="#ffb321">
-                                        <FaStar className="feather " />
+                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                       <li color="#ffb321">
-                                        <FaStar className="feather " />
+                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                       <li>
-                                        <FaStar className="feather " />
+                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -575,9 +625,9 @@ setratingfilter('')
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={'rating'}
-                                        value={'1'}
-                                        onChange={(e)=>onRatingFilterAdd(e)}
+                                    name={"rating"}
+                                    value={"1"}
+                                    onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
@@ -588,16 +638,49 @@ setratingfilter('')
                                         />
                                       </li>
                                       <li color="#ffb321">
-                                        <FaStar className="feather " />
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                       <li color="#ffb321">
-                                        <FaStar className="feather " />
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                       <li color="#ffb321">
-                                        <FaStar className="feather " />
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                       <li>
-                                        <FaStar className="feather " />
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                      </li>
+                                    </ul>
+                                    <span className="text-content">
+                                      (1 Star)
+                                    </span>
+                                  </div>
+                                </div>
+                              </li>
+                              <li>
+                                <div className="form-check ps-0 m-0 category-list-box">
+                                  <input
+                                    className="checkbox_animated"
+                                    type="checkbox"
+                                    name={"rating"}
+                                    value={"0"}
+                                    onChange={(e) => onRatingFilterAdd(e)}
+                                  />
+                                  <div className="form-check-label">
+                                    <ul className="rating p-0">
+                                      <li color="#ffb321">
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                      </li>
+                                      <li color="#ffb321">
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                      </li>
+                                      <li color="#ffb321">
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                      </li>
+                                      <li color="#ffb321">
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                      </li>
+                                      <li>
+                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -630,9 +713,9 @@ setratingfilter('')
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault"
-                                    name={'discount'}
-                                        value={'10'}
-                                        onChange={(e)=>onDiscountFilterAdd(e)}
+                                    name={"discount"}
+                                    value={"10"}
+                                    onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -649,9 +732,9 @@ setratingfilter('')
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault1"
-                                    name={'discount'}
-                                        value={'20'}
-                                        onChange={(e)=>onDiscountFilterAdd(e)}
+                                    name={"discount"}
+                                    value={"20"}
+                                    onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -668,9 +751,9 @@ setratingfilter('')
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault2"
-                                    name={'discount'}
-                                        value={'30'}
-                                        onChange={(e)=>onDiscountFilterAdd(e)}
+                                    name={"discount"}
+                                    value={"30"}
+                                    onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -687,9 +770,9 @@ setratingfilter('')
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault3"
-                                    name={'discount'}
-                                        value={'40'}
-                                        onChange={(e)=>onDiscountFilterAdd(e)}
+                                    name={"discount"}
+                                    value={"40"}
+                                    onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
@@ -706,9 +789,9 @@ setratingfilter('')
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault4"
-                                    name={'discount'}
-                                        value={'50'}
-                                        onChange={(e)=>onDiscountFilterAdd(e)}
+                                    name={"discount"}
+                                    value={"50"}
+                                    onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
