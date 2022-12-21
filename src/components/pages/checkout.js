@@ -41,7 +41,7 @@ let currentdate = moment().format()
   status:"pending",
   total_quantity:'',
   ref_no:"12345678",
-  shipping_charges:"400",
+  shipping_charges:"0",
   payment_mode:"cod",
   delivery_date:"2022-12-15",
   invoice_date:currentdate,
@@ -55,6 +55,8 @@ let currentdate = moment().format()
   vendor_id:"1",
   order_product:[]
   });
+  const [ProductPriceTotal,setProductPriceTotal] = useState(0);
+  const [TotalTax,setTotalTax] = useState(0);
 
 
   var address = data2.address;
@@ -105,9 +107,27 @@ let currentdate = moment().format()
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
+            let ProductTotal=0;
+            let Totaltaxes=0;
+
+            data.map((cdata)=>{
+                ProductTotal += parseInt(cdata.quantity) * parseInt(Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100);
+                if(cdata.gst===null){
+                  cdata.gst = '0'
+                } 
+                if(cdata.sgst===null){
+                  cdata.sgst = '0'
+                } 
+                if(cdata.cgst===null){
+                  cdata.cgst = '0'
+                } 
+                Totaltaxes += Number(cdata.gst) + Number(cdata.cgst) +Number(cdata.sgst);
+
+            })
+            setProductPriceTotal(ProductTotal)
+            setTotalTax(Totaltaxes);
             setCartData(data);
             setapicall(false);
-            console.log("setCartDataaaaaaaa-------------------"+JSON.stringify(data))
             // setapicall(false);
           });
       } catch (err) {}
@@ -128,6 +148,21 @@ let currentdate = moment().format()
   }
   // end add remove cart
 
+  // Save For later
+  const SaveForLater = (id) => {
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
+        user_id:`${useridd}`,
+        product_view_id:`${id}`,
+      })
+      .then((response) => {
+        let data = response.data;
+        // setData(response.data);
+        setapicall(true);
+      });
+  }
+//   End save For Later
+
   // delivery address
   const DeliveryClick = () =>{
     axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
@@ -142,10 +177,24 @@ let currentdate = moment().format()
   // end delivery address
 
   // payment
-
   const getPaymentData = () =>{
 setapicall(true)
-setorderadd({...orderadd, total_quantity:cartdata.length})
+setorderadd({...orderadd, 
+  total_quantity:cartdata.length,
+  payment_mode:"cod",
+  delivery_date:"2022-12-25",
+  invoice_date:currentdate,
+  order_date:currentdate,
+  total_amount:"",
+  total_gst:"",
+  total_cgst:"",
+  total_sgst:"",
+  taxable_value:"",
+  discount_coupon:"0",
+  vendor_id:"1",
+  order_product:[]
+
+})
   }
   // end payment
 
@@ -161,8 +210,11 @@ useEffect(()=>{
     }).catch(error => {
     })
   }
-
   // end order add
+
+    // discount and shipping
+let ShippingCharge = 0.00;
+let CouponDis = 0.00;
   return (
     <Fragment>
       <Header />
@@ -298,183 +350,19 @@ useEffect(()=>{
                     </div>
                   </Nav>
                 </div>
-
+{/* Tabssss */}
                 <div className="col-xxl-9 col-lg-8">
                   <Tab.Content>
+
+                    {/* Shopping Cart */}
                     <Tab.Pane eventKey="first">
                       <h2 className="tab-title">Shopping Cart</h2>
                       <div className="cart-table p-0">
                         <div className="table-responsive">
                           <table className="table">
                           {cartdata.map((cdata)=>{
-                      //  for (let i = 0; i < cdata.length; i++) {
-                      //   ProductPriceTotal += cdata[i].quantity * cdata[i].price;
-                      // }
+                   
                        return(
-                            //     <tbody key={product1.id}>
-                            //       <tr
-                            //         className="product-box-contain"
-                            //       >
-                            //         <td className="product-detail">
-                            //           <div className="product border-0">
-                            //           <Link 
-                            //               to={product1.image}
-                            //               className="product-image"
-                            //             >
-                            //               <img
-                            //                 src={product1.image}
-                            //                 className="img-fluid lazyload"
-                            //                 alt=""
-                            //               />
-                            //             </Link>
-                            //             <div className="product-detail">
-                            //               <ul>
-                            //                 <li className="name">
-                            //        <Link to="/"
-                            //                     className="text-title"
-                            //                   >
-                            //                     {product1.name}
-                            //                   </Link>
-                            //                 </li>
-
-                            //                 <li className="text-content">
-                            //                   <span className="text-title">
-                            //                     Sold By :
-                            //                     {product1.seller_detail}
-                            //                   </span>
-                            //                 </li>
-
-                            //                 <li className="text-content">
-                            //                   <span className="text-title">
-                            //                     {product1.quantity}
-                            //                   </span>
-                            //                 </li>
-
-                            //                 <li>
-                            //                   <h5 className="text-content d-inline-block">
-                            //                     Price :
-                            //                   </h5>
-                            //                   <span>
-                            //                     {product1.productPrice}
-                            //                   </span>
-                            //                   <span className="text-content">
-                            //                     {product1.productMRF}
-                            //                   </span>
-                            //                 </li>
-                            //                 <li className="quantity-price-box">
-                            //                   <div className="cart_qty">
-                            //                     <div className="input-group">
-                            //                       <button
-                            //                         type="button"
-                            //                         className="qty-left-minus"
-                            //                         data-type="minus"
-                            //                         data-field=""
-                            //                       >
-                            //                         <i
-                            //                           className="fa fa-minus"
-                            //                           aria-hidden="true"
-                            //                         ></i>
-                            //                       </button>
-                            //                       <input
-                            //                         className="form-control input-number qty-input"
-                            //                         type="text"
-                            //                         name="quantity"
-                            //                         value="1"
-                            //                         onChange={func}
-                            //                       />
-                            //                       <button
-                            //                         type="button"
-                            //                         className="qty-right-plus"
-                            //                         data-type="plus"
-                            //                         data-field=""
-                            //                       >
-                            //                         <i
-                            //                           className="fa fa-plus"
-                            //                           aria-hidden="true"
-                            //                         ></i>
-                            //                       </button>
-                            //                     </div>
-                            //                   </div>
-                            //                 </li>
-                            //               </ul>
-                            //             </div>
-                            //           </div>
-                            //         </td>
-
-                            //         <td className="price">
-                            //           <h4 className="table-title text-content">
-                            //             Price
-                            //           </h4>
-                            //           <h5>
-                            //             <span>{product1.productPrice}</span>
-                            //             <del className="text-content">
-                            //               ₹45.68
-                            //             </del>
-                            //           </h5>
-                            //           <h6 className="theme-color">
-                            //             You Save :{product1.saving}
-                            //           </h6>
-                            //         </td>
-
-                            //         <td className="quantity">
-                            //           <h4 className="table-title text-content">
-                            //             Qty
-                            //           </h4>
-                            //           <div className="quantity-price">
-                            //             <div className="cart_qty">
-                            //               <div className="input-group">
-                            //                 <button
-                            //                   type="button"
-                            //                   className="qty-left-minus"
-                            //                   data-type="minus"
-                            //                   data-field=""
-                            //                 >
-                            //                   <i className="fa-regular fa-minus"></i>
-                            //                 </button>
-                            //                 <input
-                            //                   className="form-control input-number qty-input"
-                            //                   type="text"
-                            //                   name="quantity"
-                            //                   value="1"
-                            //                   onChange={func}
-                            //                 />
-                            //                 <button
-                            //                   type="button"
-                            //                   className="qty-right-plus"
-                            //                   data-type="plus"
-                            //                   data-field=""
-                            //                 >
-                            //                   <i className="fa-regular fa-plus"></i>
-                            //                 </button>
-                            //               </div>
-                            //             </div>
-                            //           </div>
-                            //         </td>
-
-                            //         <td className="subtotal">
-                            //           <h4 className="table-title text-content">
-                            //             Total
-                            //           </h4>
-                            //           <h5>{product1.total}</h5>
-                            //         </td>
-
-                            //         <td className="save-remove">
-                            //           <h4 className="table-title text-content">
-                            //             Action
-                            //           </h4>
-                            //           <Link to="/"
-                            //             className="save notifi-wishlist"
-                                      
-                            //           >
-                            //             Save for later
-                            //           </Link>
-                            //           <button type="button" className="remove close_button btn" onClick={()=> deleteCart(cdata.id,cdata.user_id)}>
-                            //   remove
-                            //  </button>
-                            //         </td>
-                            //       </tr>
-                            //     </tbody>
-
                             <tbody key={cdata.id}>
                             <tr  className="product-box-contain">
                           <td className="product-detail">
@@ -495,7 +383,7 @@ useEffect(()=>{
                                   </li>
   
                                   <li className="text-content">
-                                    <span className="text-title">Sold By:{cdata.vendor_id}</span>
+                                    <span className="text-title">Sold By:{cdata.store_name}</span>
                                   </li>
   
                                   <li className="text-content">
@@ -511,7 +399,7 @@ useEffect(()=>{
                                   </li>
   
                                   <li>
-                                    <h5 className="saving theme-color">{cdata.discount}</h5>
+                                    <h5 className="saving theme-color">₹{cdata.discount}</h5>
                                   </li>
   
                                   <li className="quantity-price-box">
@@ -549,15 +437,35 @@ useEffect(()=>{
                               </div>
                             </div>
                           </td>
-  
                           <td className="price">
-                            <h4 className="table-title text-content">Price</h4>
-                            <h5>
-                              {cdata.product_price} <del className="text-content">{cdata.mrp}</del>
-                            </h5>
-                            <h6 className="theme-color">You Save:{cdata.discount}</h6>
+                            <h4 className="table-title text-content">Mrp:
+                            ₹{cdata.mrp} 
+                            </h4>
+                            {cdata.sgst===null  ? cdata.sgst = '0' : cdata.sgst === cdata.sgst}
+                     {cdata.cgst === null ?cdata.cgst = '0': cdata.cgst === cdata.cgst}
+                            <h4 className="table-title text-content text-danger">Tax:
+                            ₹{(Number(cdata.gst) +Number(cdata.cgst) +Number(cdata.sgst))} 
+                            </h4>
                           </td>
-  
+                          <td className="price">
+                            {/* <h4 className="table-title text-content">Tax</h4> */}
+                            <h6 className="">Gst:{cdata.gst }</h6>
+                            <h6 className="">Cgst:{cdata.cgst }</h6>
+                            <h6 className="">Sgst:{cdata.sgst }</h6>
+                          </td>
+                          <td className="price">
+                            <h4 className="table-title text-content">Price
+                            <span className="theme-color mx-1">({cdata.discount}% off)</span>
+                            </h4>
+                            <h5>
+                          <b>  ₹{Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100} </b><del className="text-content text-danger">₹{cdata.sale_price}</del>
+                             
+                            </h5>
+                            {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
+                            <h6 className="theme-color">You Save:₹({Number(cdata.sale_price)*(cdata.discount)/100})</h6>
+                          </td>
+                         
+                         
                           <td className="quantity">
                             <h4 className="table-title text-content">Qty</h4>
                             <div className="quantity-price">
@@ -592,32 +500,25 @@ useEffect(()=>{
                               </div>
                             </div>
                           </td>
-  
+                          
                           <td className="subtotal">
                             <h4 className="table-title text-content">Total</h4>
-                            {cdata.sgst===null  ? cdata.sgst = '0' : cdata.sgst === cdata.sgst}
-                            {cdata.cgst === null ?cdata.cgst = '0': cdata.cgst === cdata.cgst}
-                             
-                            <h5>{(parseInt(cdata.quantity)) * ((parseInt(cdata.product_price)) + (parseInt(cdata.gst)) +( parseInt(cdata.cgst)) +(parseInt(cdata.sgst)))}</h5>
+                            <b><h5>{parseInt(cdata.quantity) * parseInt(Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100)}</h5></b>
                           </td>
+                         
   
                           <td className="save-remove">
                             <h4 className="table-title text-content">Action</h4>
-                            <Link to="/"
-                              className="save notifi-wishlist"
-                          
+                            <button
+                              className="save notifi-wishlist close_button btn px-0"
+                              onClick={()=> SaveForLater(cdata.id,cdata.user_id)}
                             >
                               Save for later
-                            </Link>
+                            </button>
                              <button type="button" className="remove close_button btn" onClick={()=> deleteCart(cdata.id,cdata.user_id)}>
                               remove
                              </button>
-                            {/* <Link to="/"
-                              className="remove close_button"
-                              
-                            >remove
-                             {deleteCart}
-                            </Link> */}
+                           
                           </td>
                         </tr>
 
@@ -655,6 +556,9 @@ useEffect(()=>{
                         </ul>
                       </div>
                     </Tab.Pane>
+                    {/* End Shopping Cart */}
+
+                    {/* Delivery Address*/}
                     <Tab.Pane eventKey="second">
                       <div className="d-flex align-items-center mb-3">
                         <h2 className="tab-title mb-0">Delivery Address</h2>
@@ -800,6 +704,9 @@ useEffect(()=>{
                         </ul>
                       </div>
                     </Tab.Pane>
+                     {/* End Delivery Address*/}
+
+          {/* Delivery Option*/}
                     <Tab.Pane eventKey="third">
                       <h2 className="tab-title">Delivery Option</h2>
                       <div className="row g-4">
@@ -1022,6 +929,9 @@ useEffect(()=>{
                         </ul>
                       </div>
                     </Tab.Pane>
+                    {/* End Delivery Option*/}
+
+{/* Payment Option */}
                     <Tab.Pane eventKey="fourth">
                       <h2 className="tab-title">Payment Option</h2>
                       <div className="row g-sm-4 g-2">
@@ -1037,9 +947,9 @@ useEffect(()=>{
                                 return(
                                   <li key={data.id}>
                                   <h4>
-                                    {data.product_price} <span>X {data.quantity}</span>
+                                    {data.sale_price} <span>X {data.quantity}</span>
                                   </h4>
-                                  <h4 className="price">₹{data.product_price * data.quantity}</h4>
+                                  <h4 className="price">₹{data.sale_price * data.quantity}</h4>
                                 </li>
                                 )
                               })}
@@ -1047,28 +957,28 @@ useEffect(()=>{
 
                             <ul className="summery-total bg-white">
                               <li>
-                                <h4>Subtotal</h4>
-                                <h4 className="price">₹00.00</h4>
+                                <h4>Subtotal(Tax included)</h4>
+                                <h4 className="price">₹{ProductPriceTotal}</h4>
                               </li>
 
                               <li>
                                 <h4>Shipping</h4>
-                                <h4 className="price">₹0.00</h4>
+                                <h4 className="price">₹{ShippingCharge}</h4>
                               </li>
 
                               <li>
                                 <h4>Tax</h4>
-                                <h4 className="price">₹+00.00</h4>
+                                <h4 className="price text-danger">₹{TotalTax}</h4>
                               </li>
 
                               <li>
                                 <h4>Coupon/Code</h4>
-                                <h4 className="price">₹-00.10</h4>
+                                <h4 className="price">₹{CouponDis}</h4>
                               </li>
 
                               <li className="list-total">
-                                <h4>Total (USD)</h4>
-                                <h4 className="price">₹19.28</h4>
+                                <h4>Total (Rupees)</h4>
+                                <h4 className="price">₹{ProductPriceTotal - CouponDis + ShippingCharge}</h4>
                               </li>
                             </ul>
                           </div>
@@ -1557,6 +1467,7 @@ useEffect(()=>{
                         </ul>
                       </div>
                     </Tab.Pane>
+                         {/* End Payment Option */}
                   </Tab.Content>
                 </div>
               </Row>

@@ -56,6 +56,8 @@ const Cart = () => {
   const func =()=>{
     
   }
+
+  // Cart Detail
   useEffect(() => {
     function getCartData() {
       try {
@@ -65,7 +67,7 @@ const Cart = () => {
             let data = response.data;
             let ProductTotal=0;
             data.map((cdata)=>{
-                ProductTotal += cdata.quantity * cdata.sale_price;
+                ProductTotal +=parseInt(cdata.quantity) * parseInt(Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100)
             })
             setProductPriceTotal(ProductTotal)
             setCartData(data);
@@ -77,6 +79,7 @@ const Cart = () => {
 
     getCartData();
   }, [apicall]);
+  // end Cart Detail
   const deleteCart=(id,user_id)=>{
     axios
     .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
@@ -104,12 +107,17 @@ const Cart = () => {
         });
     }
   // };  End save For Later
-  // var ProductPriceTotal = 0;
+
   // payement 
   const onProccedClick =() =>{
       navigate('/checkout')
   }
   // end payment
+
+
+  // discount and shipping
+let ShippingCharge = 0.00;
+let CouponDis = 0.00;
 
   return (
     <Fragment>
@@ -145,7 +153,7 @@ const Cart = () => {
                                   </li>
   
                                   <li className="text-content">
-                                    <span className="text-title">Sold By:{cdata.vendor_id}</span>
+                                    <span className="text-title">Sold By:{cdata.store_name}</span>
                                   </li>
   
                                   <li className="text-content">
@@ -157,7 +165,7 @@ const Cart = () => {
                                       Price:
                                     </h5>
                                     <span>{cdata.price}</span>
-                                    <span className="text-content">{"₹"+cdata.price+cdata.discount}</span>
+                                    <span className="text-content">{"₹"+cdata.mrp}</span>
                                   </li>
   
   
@@ -198,25 +206,35 @@ const Cart = () => {
                               </div>
                             </div>
                           </td>
-  
                           <td className="price">
-                            <h4 className="table-title text-content">Mrp
-                            <span className="theme-color mx-1">({cdata.discount}% off)</span>
+                            <h4 className="table-title text-content">Mrp:
+                            ₹{cdata.mrp} 
                             </h4>
-                            <h5>
-                            ₹{cdata.product_price} <del className="text-content text-danger">₹{cdata.mrp}</del>
-                             
-                            </h5>
-                            {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
-                            <h6 className="theme-color">You Save:₹{(cdata.mrp) - (cdata.product_price) }</h6>
+                            {cdata.sgst===null  ? cdata.sgst = '0' : cdata.sgst === cdata.sgst}
+                     {cdata.cgst === null ?cdata.cgst = '0': cdata.cgst === cdata.cgst}
+                            <h4 className="table-title text-content text-danger">Tax:
+                            ₹{(Number(cdata.gst) +Number(cdata.cgst) +Number(cdata.sgst))} 
+                            </h4>
                           </td>
-                         
                           <td className="price">
                             {/* <h4 className="table-title text-content">Tax</h4> */}
                             <h6 className="">Gst:{cdata.gst }</h6>
                             <h6 className="">Cgst:{cdata.cgst }</h6>
                             <h6 className="">Sgst:{cdata.sgst }</h6>
                           </td>
+                          <td className="price">
+                            <h4 className="table-title text-content">Price
+                            <span className="theme-color mx-1">({cdata.discount}% off)</span>
+                            </h4>
+                            <h5>
+                          <b>  ₹{Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100} </b><del className="text-content text-danger">₹{cdata.sale_price}</del>
+                             
+                            </h5>
+                            {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
+                            <h6 className="theme-color">You Save:₹({Number(cdata.sale_price)*(cdata.discount)/100})</h6>
+                          </td>
+                         
+                         
                           <td className="quantity">
                             <h4 className="table-title text-content">Qty</h4>
                             <div className="quantity-price">
@@ -251,16 +269,10 @@ const Cart = () => {
                               </div>
                             </div>
                           </td>
-                          <td className="price">
-                            <h4 className="table-title text-content">Sale Price</h4>
-                            <h5>
-                            ₹{cdata.sale_price} 
-                            </h5>
-                           
-                          </td>
+                          
                           <td className="subtotal">
                             <h4 className="table-title text-content">Total</h4>
-                            <h5>{parseInt(cdata.quantity) * parseInt(cdata.sale_price)}</h5>
+                            <h5>{parseInt(cdata.quantity) * parseInt(Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100)}</h5>
                           </td>
   
                           <td className="save-remove">
@@ -274,12 +286,6 @@ const Cart = () => {
                              <button type="button" className="remove close_button btn px-0" onClick={()=> deleteCart(cdata.id,cdata.user_id)}>
                               remove
                              </button>
-                            {/* <Link to="/"
-                              className="remove close_button"
-                              
-                            >remove
-                             {deleteCart}
-                            </Link> */}
                           </td>
                         </tr>
 
@@ -320,12 +326,12 @@ const Cart = () => {
 
                     <li>
                       <h4>Coupon Discount</h4>
-                      <h4 className="price">(-) 0.00</h4>
+                      <h4 className="price">(-) ₹{CouponDis}</h4>
                     </li>
 
                     <li className="align-items-start">
                       <h4>Shipping</h4>
-                      <h4 className="price text-end">₹0.00</h4>
+                      <h4 className="price text-end">₹{ShippingCharge}</h4>
                     </li>
                   </ul>
                 </div>
@@ -333,7 +339,7 @@ const Cart = () => {
                 <ul className="summery-total">
                   <li className="list-total border-top-0">
                     <h4>Total (USD)</h4>
-                    <h4 className="price theme-color">₹{}</h4>
+                    <h4 className="price theme-color">₹{ProductPriceTotal-CouponDis + ShippingCharge}</h4>
                   </li>
                 </ul>
 
