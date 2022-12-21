@@ -14,90 +14,93 @@ import moment from "moment";
 const Checkout = (props) => {
   const navigate = useNavigate();
   var product1 = data1.product1;
-const useridd = localStorage.getItem("userid")
-let currentdate = moment().format()
+  const useridd = localStorage.getItem("userid");
+  let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
   const [navtab, setnavtab] = useState(false);
-  const[cartdata,setCartData]=useState([]);
-  const[quantity,setQuantity]=useState([]);
-  const[DeliveryMethod,setDeliveryMethod]=useState('');
+  const [cartdata, setCartData] = useState([]);
+  const [quantity, setQuantity] = useState([]);
+  const [DeliveryMethod, setDeliveryMethod] = useState("");
   const [userdata, setuserdata] = useState([]);
-  const [singlorder, setsinglorder] = useState( 
-    {
-    order_id:"1",
-    product_id:"2",
-    price:"3",
-    quantity:"4",
-    gst:"6",
-    cgst:"7",
-    sgst:"8",
-    offer_id:"9",
-    discount:"10%",
-    product_total_price:"5000"}
-    );
-
-  const [orderadd, setorderadd] = useState( {
-  user_id:useridd,
-  status:"pending",
-  total_quantity:'',
-  ref_no:"12345678",
-  shipping_charges:"0",
-  payment_mode:"cod",
-  delivery_date:"2022-12-15",
-  invoice_date:currentdate,
-  order_date:currentdate,
-  total_amount:"",
-  total_gst:"",
-  total_cgst:"",
-  total_sgst:"",
-  taxable_value:"",
-  discount_coupon:"0",
-  vendor_id:"1",
-  order_product:[]
+  const [DeliveyTab,setDeliveyTab] = useState('')
+  const [singlorder, setsinglorder] = useState({
+    order_id: "1",
+    product_id: "2",
+    price: "3",
+    quantity: "4",
+    gst: "6",
+    cgst: "7",
+    sgst: "8",
+    offer_id: "9",
+    discount: "10%",
+    product_total_price: "5000",
   });
-  const [ProductPriceTotal,setProductPriceTotal] = useState(0);
-  const [TotalTax,setTotalTax] = useState(0);
 
+  const [orderadd, setorderadd] = useState({
+    user_id: useridd,
+    status: "pending",
+    total_quantity: "",
+    ref_no: "12345678",
+    shipping_charges: "0",
+    payment_mode: "cod",
+    delivery_date: "2022-12-15",
+    invoice_date: currentdate,
+    order_date: currentdate,
+    total_amount: "",
+    total_gst: "",
+    total_cgst: "",
+    total_sgst: "",
+    taxable_value: "",
+    discount_coupon: "0",
+    vendor_id: "1",
+    order_product: [],
+  });
+  const [ProductPriceTotal, setProductPriceTotal] = useState(0);
+  const [TotalTax, setTotalTax] = useState(0);
+  // discount and shipping
+  let ShippingCharge = 0.0;
+  let CouponDis = 0.0;
+
+  // end discount and shipping
 
   var address = data2.address;
-  const func=(e)=>{
-    setDeliveryMethod(e.target.value)
-  }
-  const incrementCount=(id,quantity)=> {
-    let inc=quantity+1
-    axios.put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-      id:id,
-      quantity:inc
-  }).then((response) => {
-    let data = response.data;
-    setapicall(true);
-    // quantity = quantity + 1;
+  const func = (e) => {
+    setDeliveryMethod(e.target.value);
+  };
+  const incrementCount = (id, quantity) => {
+    let inc = quantity + 1;
+    axios
+      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
+        id: id,
+        quantity: inc,
+      })
+      .then((response) => {
+        let data = response.data;
+        setapicall(true);
+        // quantity = quantity + 1;
 
-    setQuantity(quantity=quantity+1)
- })
-   
-  }
-  const decrementCount=(id,quantity)=> {
+        setQuantity((quantity = quantity + 1));
+      });
+  };
+  const decrementCount = (id, quantity) => {
     let dec;
-    if(quantity>0){
-
-       dec=quantity-1;
-    }
-    else{
-      return(false);
+    if (quantity > 0) {
+      dec = quantity - 1;
+    } else {
+      return false;
     }
 
     axios
-    .put(`${process.env.REACT_APP_BASEURL}/cart_update`,{
-      id:id,
-      quantity:dec
-    })
-    .then((response) => {
-      setapicall(true)
-      let data = response.data;
-      setQuantity(quantity=quantity-1)
-    });
-  }
+      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
+        id: id,
+        quantity: dec,
+      })
+      .then((response) => {
+        setapicall(true);
+        let data = response.data;
+        setQuantity((quantity = quantity - 1));
+      });
+  };
 
   // add and remove
   useEffect(() => {
@@ -107,24 +110,49 @@ let currentdate = moment().format()
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
-            let ProductTotal=0;
-            let Totaltaxes=0;
-
-            data.map((cdata)=>{
-                ProductTotal += parseInt(cdata.quantity) * parseInt(Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100);
-                if(cdata.gst===null){
-                  cdata.gst = '0'
-                } 
-                if(cdata.sgst===null){
-                  cdata.sgst = '0'
-                } 
-                if(cdata.cgst===null){
-                  cdata.cgst = '0'
-                } 
-                Totaltaxes += Number(cdata.gst) + Number(cdata.cgst) +Number(cdata.sgst);
-
-            })
-            setProductPriceTotal(ProductTotal)
+            let ProductTotal = 0;
+            let Totaltaxes = 0;
+            let Totalgst = 0;
+            let Totalcgst = 0;
+            let Totalsgst = 0;
+            let TotalTaxableValue = 0;
+            data.map((cdata) => {
+              ProductTotal +=
+                parseInt(cdata.quantity) *
+                parseInt(
+                  Number(cdata.sale_price) -
+                    (cdata.sale_price * cdata.discount) / 100
+                );
+              if (cdata.gst === null) {
+                cdata.gst = "0";
+              }
+              if (cdata.sgst === null) {
+                cdata.sgst = "0";
+              }
+              if (cdata.cgst === null) {
+                cdata.cgst = "0";
+              }
+              Totaltaxes +=
+                Number(cdata.gst) + Number(cdata.cgst) + Number(cdata.sgst);
+              Totalgst += Number(cdata.gst);
+              Totalcgst += Number(cdata.cgst);
+              Totalsgst += Number(cdata.sgst);
+              TotalTaxableValue =
+                Number(cdata.product_price) -
+                (cdata.product_price * cdata.discount) / 100;
+            });
+            setorderadd({
+              ...orderadd,
+              total_amount: ProductTotal - CouponDis + ShippingCharge,
+              total_gst: Totalgst,
+              total_cgst: Totalcgst,
+              total_sgst: Totalsgst,
+              taxable_value: TotalTaxableValue,
+              discount_coupon: CouponDis,
+              vendor_id: "1",
+              order_product: [],
+            });
+            setProductPriceTotal(ProductTotal);
             setTotalTax(Totaltaxes);
             setCartData(data);
             setapicall(false);
@@ -135,86 +163,86 @@ let currentdate = moment().format()
 
     getCartData();
   }, [apicall]);
-  const deleteCart=(id,user_id)=>{
+  const deleteCart = (id, user_id) => {
     axios
-    .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,{
-      id:id,
-      user_id:user_id
-    })
-    .then((response) => {
-      let data = response.data;
-      setapicall(true);
-    });
-  }
+      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
+        id: id,
+        user_id: user_id,
+      })
+      .then((response) => {
+        let data = response.data;
+        setapicall(true);
+      });
+  };
   // end add remove cart
 
   // Save For later
   const SaveForLater = (id) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-        user_id:`${useridd}`,
-        product_view_id:`${id}`,
+        user_id: `${useridd}`,
+        product_view_id: `${id}`,
       })
       .then((response) => {
         let data = response.data;
         // setData(response.data);
         setapicall(true);
       });
-  }
-//   End save For Later
+  };
+  //   End save For Later
 
   // delivery address
-  const DeliveryClick = () =>{
-    axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
-    .then(response => {
-      setuserdata(response.data)
-      // navigate('/your_account')
-      // return response;
-    }).catch(error => {
-    })
-
-  }
+  const DeliveryClick = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
+      .then((response) => {
+        setuserdata(response.data);
+        // navigate('/your_account')
+        // return response;
+      })
+      .catch((error) => {});
+  };
   // end delivery address
 
   // payment
-  const getPaymentData = () =>{
-setapicall(true)
-setorderadd({...orderadd, 
-  total_quantity:cartdata.length,
-  payment_mode:"cod",
-  delivery_date:"2022-12-25",
-  invoice_date:currentdate,
-  order_date:currentdate,
-  total_amount:"",
-  total_gst:"",
-  total_cgst:"",
-  total_sgst:"",
-  taxable_value:"",
-  discount_coupon:"0",
-  vendor_id:"1",
-  order_product:[]
-
-})
-  }
+  const getPaymentData = () => {
+    setapicall(true);
+    setorderadd({
+      ...orderadd,
+      total_quantity: cartdata.length,
+      payment_mode: "cod",
+      delivery_date: "2022-12-25",
+      invoice_date: currentdate,
+      order_date: currentdate,
+      total_amount: "",
+      total_gst: "",
+      total_cgst: "",
+      total_sgst: "",
+      taxable_value: "",
+      discount_coupon: "0",
+      vendor_id: "1",
+      order_product: [],
+    });
+  };
   // end payment
 
   // order add
-useEffect(()=>{
-  setorderadd((orderadd) =>{ return {...orderadd,  order_product : cartdata}});
-},[apicall])
-  const onOrderAdd = () =>{
-    axios.post(`${process.env.REACT_APP_BASEURL}/orders` ,orderadd)
-    .then(response => {
-      // navigate('/your_account')
-      // return response;
-    }).catch(error => {
-    })
-  }
+  useEffect(() => {
+    setorderadd((orderadd) => {
+      return { ...orderadd, order_product: cartdata };
+    });
+  }, [apicall]);
+  const onOrderAdd = () => {
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd)
+      .then((response) => {
+        // navigate('/your_account')
+        // return response;
+      })
+      .catch((error) => {});
+  };
   // end order add
 
-    // discount and shipping
-let ShippingCharge = 0.00;
-let CouponDis = 0.00;
   return (
     <Fragment>
       <Header />
@@ -249,7 +277,7 @@ let CouponDis = 0.00;
                                     src="https://cdn.lordicon.com/ggihhudh.json"
                                     trigger="loop-on-hover"
                                     colors="primary:#121331,secondary:#646e78,tertiary:#0baf9a"
-                                      className="lord-icon"
+                                    className="lord-icon"
                                   ></lord-icon>
                                 </div>
                               </div>
@@ -260,10 +288,10 @@ let CouponDis = 0.00;
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link to="/" eventKey="second" >
+                          <Nav.Link to="/" eventKey="second">
                             <li className="nav-link" role="presentation">
                               <div
-                              onClick={()=>DeliveryClick()}
+                                onClick={() => DeliveryClick()}
                                 className="nav-item"
                                 id="delivery-address"
                                 data-bs-toggle="tab"
@@ -327,7 +355,7 @@ let CouponDis = 0.00;
                                 data-bs-toggle="tab"
                                 data-bs-target="#p-options"
                                 role="tab"
-                                onClick={()=>getPaymentData()}
+                                onClick={() => getPaymentData()}
                               >
                                 <div className="nav-item-box">
                                   <div>
@@ -350,179 +378,325 @@ let CouponDis = 0.00;
                     </div>
                   </Nav>
                 </div>
-{/* Tabssss */}
+                {/* Tabssss */}
                 <div className="col-xxl-9 col-lg-8">
                   <Tab.Content>
-
                     {/* Shopping Cart */}
                     <Tab.Pane eventKey="first">
                       <h2 className="tab-title">Shopping Cart</h2>
                       <div className="cart-table p-0">
                         <div className="table-responsive">
                           <table className="table">
-                          {cartdata.map((cdata)=>{
-                   
-                       return(
-                            <tbody key={cdata.id}>
-                            <tr  className="product-box-contain">
-                          <td className="product-detail">
-                            <div className="product border-0">
-                         <Link to="/"
-                                className="product-image"
-                              >
-                                <img
-                                  src={'https://burst.shopifycdn.com/photos/person-holds-a-book-over-a-stack-and-turns-the-page.jpg?width=1200&format=pjpg&exif=0&iptc=0'}
-                                  className="img-fluid lazyload"
-                                  alt={cdata.product_title_name}
-                                />
-                              </Link>
-                              <div className="product-detail">
-                                <ul>
-                                  <li className="name">
-                                  <Link to="/">{cdata.product_title_name}</Link>
-                                  </li>
-  
-                                  <li className="text-content">
-                                    <span className="text-title">Sold By:{cdata.store_name}</span>
-                                  </li>
-  
-                                  <li className="text-content">
-                                    <span className="text-title">Quatity:{cdata.quantity}</span>
-                                  </li>
-  
-                                  <li>
-                                    <h5 className="text-content d-inline-block">
-                                      Price:
-                                    </h5>
-                                    <span>{cdata.product_price}</span>
-                                    <span className="text-content">{"₹"+cdata.mrp}</span>
-                                  </li>
-  
-                                  <li>
-                                    <h5 className="saving theme-color">₹{cdata.discount}</h5>
-                                  </li>
-  
-                                  <li className="quantity-price-box">
-                                    <div className="cart_qty">
-                                      <div className="input-group">
-                                        <button
-                                          type="button"
-                                          className="btn qty-left-minus"
-                                          data-type="minus"
-                                          data-field=""
-                                      
-                                        >
-                                          <i className="fa-regular fa-minus"></i>
-                                        </button>
-                                        <input
-                                          className="form-control input-number qty-input"
-                                          type="text"
-                                          name="quantity"
-                                          value="1"
-                                          // onChange={func}
-                                        />
-                                        <button
-                                          type="button"
-                                          className="btn qty-right-plus"
-                                          data-type="plus"
-                                          data-field=""
-                                         
-                                        >
-                                          <i className="fa-regular fa-plus"></i>
-                                        </button>
-                                      </div>
-                                    </div>
-                                  </li> 
-                                </ul>
-                              </div>
-                            </div>
-                          </td>
-                          <td className="price">
-                            <h4 className="table-title text-content">Mrp:
-                            ₹{cdata.mrp} 
-                            </h4>
-                            {cdata.sgst===null  ? cdata.sgst = '0' : cdata.sgst === cdata.sgst}
-                     {cdata.cgst === null ?cdata.cgst = '0': cdata.cgst === cdata.cgst}
-                            <h4 className="table-title text-content text-danger">Tax:
-                            ₹{(Number(cdata.gst) +Number(cdata.cgst) +Number(cdata.sgst))} 
-                            </h4>
-                          </td>
-                          <td className="price">
-                            {/* <h4 className="table-title text-content">Tax</h4> */}
-                            <h6 className="">Gst:{cdata.gst }</h6>
-                            <h6 className="">Cgst:{cdata.cgst }</h6>
-                            <h6 className="">Sgst:{cdata.sgst }</h6>
-                          </td>
-                          <td className="price">
-                            <h4 className="table-title text-content">Price
-                            <span className="theme-color mx-1">({cdata.discount}% off)</span>
-                            </h4>
-                            <h5>
-                          <b>  ₹{Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100} </b><del className="text-content text-danger">₹{cdata.sale_price}</del>
-                             
-                            </h5>
-                            {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
-                            <h6 className="theme-color">You Save:₹({Number(cdata.sale_price)*(cdata.discount)/100})</h6>
-                          </td>
-                         
-                         
-                          <td className="quantity">
-                            <h4 className="table-title text-content">Qty</h4>
-                            <div className="quantity-price">
-                              <div className="cart_qty">
-                                <div className="input-group">
-                                  <button
-                                    type="button"
-                                    className="btn qty-left-minus"
-                                    data-type="minus"
-                                    data-field=""
-                                    onClick={()=>decrementCount(cdata.id,cdata.quantity)}
-                                  >
-                                    <i className="fa-regular fa-minus"></i>
-                                  </button>
-                                  <input
-                                    className="form-control input-number qty-input"
-                                    type="text"
-                                    name="quantity"
-                                    value={cdata.quantity}
-                                      onChange={func}  
-                                  />
-                                  <button
-                                    type="button"
-                                    className="btn qty-right-plus"
-                                    data-type="plus"
-                                    data-field=""
-                                    onClick={()=>incrementCount(cdata.id,cdata.quantity)}
-                                  >
-                                    <i className="fa-regular fa-plus" ></i>
-                                  </button>
-                                </div>
-                              </div>
-                            </div>
-                          </td>
-                          
-                          <td className="subtotal">
-                            <h4 className="table-title text-content">Total</h4>
-                            <b><h5>{parseInt(cdata.quantity) * parseInt(Number(cdata.sale_price)-(cdata.sale_price)*(cdata.discount)/100)}</h5></b>
-                          </td>
-                         
-  
-                          <td className="save-remove">
-                            <h4 className="table-title text-content">Action</h4>
-                            <button
-                              className="save notifi-wishlist close_button btn px-0"
-                              onClick={()=> SaveForLater(cdata.id,cdata.user_id)}
-                            >
-                              Save for later
-                            </button>
-                             <button type="button" className="remove close_button btn" onClick={()=> deleteCart(cdata.id,cdata.user_id)}>
-                              remove
-                             </button>
-                           
-                          </td>
-                        </tr>
+                            {cartdata.map((cdata) => {
+                              return (
+                                <tbody key={cdata.id}>
+                                  <tr className="product-box-contain">
+                                    <td className="product-detail">
+                                      <div className="product border-0">
+                                        <Link to="/" className="product-image">
+                                          <img
+                                            src={
+                                              "https://burst.shopifycdn.com/photos/person-holds-a-book-over-a-stack-and-turns-the-page.jpg?width=1200&format=pjpg&exif=0&iptc=0"
+                                            }
+                                            className="img-fluid lazyload"
+                                            alt={cdata.product_title_name}
+                                          />
+                                        </Link>
+                                        <div className="product-detail">
+                                          <ul>
+                                            <li className="name">
+                                              <Link to="/">
+                                                {cdata.product_title_name}
+                                              </Link>
+                                            </li>
 
-                        </tbody>
+                                            <li className="text-content">
+                                              <span className="text-title">
+                                                Sold By:{cdata.store_name}
+                                              </span>
+                                            </li>
+
+                                            <li className="text-content">
+                                              <span className="text-title">
+                                                Quatity:{cdata.quantity}
+                                              </span>
+                                            </li>
+
+                                            <li>
+                                              <h5 className="text-content d-inline-block">
+                                                Price:
+                                              </h5>
+                                              <span>{cdata.product_price}</span>
+                                              <span className="text-content">
+                                                {"₹" + cdata.mrp}
+                                              </span>
+                                            </li>
+
+                                            <li>
+                                              <h5 className="saving theme-color">
+                                                ₹{cdata.discount}
+                                              </h5>
+                                            </li>
+
+                                            <li className="quantity-price-box">
+                                              <div className="cart_qty">
+                                                <div className="input-group">
+                                                  <button
+                                                    type="button"
+                                                    className="btn qty-left-minus"
+                                                    data-type="minus"
+                                                    data-field=""
+                                                  >
+                                                    <i className="fa-regular fa-minus"></i>
+                                                  </button>
+                                                  <input
+                                                    className="form-control input-number qty-input"
+                                                    type="text"
+                                                    name="quantity"
+                                                    value="1"
+                                                    // onChange={func}
+                                                  />
+                                                  <button
+                                                    type="button"
+                                                    className="btn qty-right-plus"
+                                                    data-type="plus"
+                                                    data-field=""
+                                                  >
+                                                    <i className="fa-regular fa-plus"></i>
+                                                  </button>
+                                                </div>
+                                              </div>
+                                            </li>
+                                          </ul>
+                                        </div>
+                                      </div>
+                                    </td>
+                                    <td className="price">
+                                      <h4 className="table-title text-content">
+                                        Price
+                                        <span className="theme-color mx-1">
+                                          ({cdata.discount}% off)
+                                        </span>
+                                      </h4>
+                                      <h5>
+                                      <del className="text-content text-danger mx-2">
+                                          ₹{Number(cdata.product_price).toFixed(2)}
+                                        </del>
+                                        <b>
+                                          {" "}
+                                          ₹
+                                          {Number((cdata.product_price) -
+                                            (cdata.product_price *
+                                              cdata.discount) /
+                                              100).toFixed(2)}{" "}
+                                        </b>
+                                        
+                                      </h5>
+                                      {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
+                                      <h6 className="theme-color">
+                                        You Save:₹(
+                                        {(Number(cdata.sale_price) *
+                                          cdata.discount /
+                                          100).toFixed(2)}
+                                        )
+                                      </h6>
+                                    </td>
+                                    <td className="price">
+                                      {/* <h4 className="table-title text-content">Tax</h4> */}
+                                      {/* { Number((cdata.product_price) -
+                                    (cdata.product_price * cdata.discount) /
+                                      100)*cdata.gst /
+                                      100} */}
+                                      <h6 className="">Gst:{Number(cdata.gst).toFixed(2)}%</h6>
+                                      <h6 className="">Cgst:{Number(cdata.cgst).toFixed(2)}%</h6>
+                                      <h6 className="">Sgst:{Number(cdata.sgst).toFixed(2)}%</h6>
+                                    </td>
+
+                                    <td className="price">
+                                      <h4 className="table-title text-content">
+                                        Taxable Value: ₹
+                                        {(Number(cdata.product_price) -
+                                          (cdata.product_price *
+                                            cdata.discount) /
+                                            100).toFixed(2)}
+                                      </h4>
+                                      {cdata.sgst === null
+                                        ? (cdata.sgst = "0")
+                                        : cdata.sgst === cdata.sgst}
+                                      {cdata.cgst === null
+                                        ? (cdata.cgst = "0")
+                                        : cdata.cgst === cdata.cgst}
+                                      <h4 className="table-title text-content">
+                                        Tax: ₹
+                                        {((Number(
+                                          cdata.product_price -
+                                            (cdata.product_price *
+                                              cdata.discount) /
+                                              100
+                                        ) *
+                                          cdata.gst) /
+                                          100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.cgst) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.sgst) /
+                                            100).toFixed(2)}
+                                      </h4>
+                                    </td>
+                                    <td className="price">
+                                      <h4 className="table-title text-content">
+                                        Sale Price: ₹
+                                        {(Number(cdata.product_price) -
+                                          (cdata.product_price *
+                                            cdata.discount) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.gst) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.cgst) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.sgst) /
+                                            100).toFixed(2)}
+                                      </h4>
+                                    </td>
+
+                                    <td className="quantity">
+                                      <h4 className="table-title text-content">
+                                        Qty
+                                      </h4>
+                                      <div className="quantity-price">
+                                        <div className="cart_qty">
+                                          <div className="input-group d-flex">
+                                            <button
+                                              type="button"
+                                              className="btn qty-left-minus"
+                                              data-type="minus"
+                                              data-field=""
+                                              onClick={() =>
+                                                decrementCount(
+                                                  cdata.id,
+                                                  cdata.quantity
+                                                )
+                                              }
+                                            >
+                                              <i className="fa-regular fa-minus"></i>
+                                            </button>
+                                            <input
+                                              className="form-control input-number qty-input mx-2"
+                                              type="text"
+                                              name="quantity"
+                                              value={cdata.quantity}
+                                              onChange={func}
+                                            />
+                                            <button
+                                              type="button"
+                                              className="btn qty-right-plus"
+                                              data-type="plus"
+                                              data-field=""
+                                              onClick={() =>
+                                                incrementCount(
+                                                  cdata.id,
+                                                  cdata.quantity
+                                                )
+                                              }
+                                            >
+                                              <i className="fa-regular fa-plus"></i>
+                                            </button>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </td>
+
+                                    <td className="subtotal">
+                                      <h4 className="table-title text-content">
+                                        Total
+                                      </h4>
+                                      <h5>
+                                      {((cdata.quantity) *
+                                       Number(cdata.product_price) -
+                                          (cdata.product_price *
+                                            cdata.discount) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.gst) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.cgst) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price -
+                                              (cdata.product_price *
+                                                cdata.discount) /
+                                                100
+                                          ) *
+                                            cdata.sgst) /
+                                            100).toFixed(2)
+                                            }
+                                      </h5>
+                                    </td>
+
+                                    <td className="save-remove">
+                                      <h4 className="table-title text-content">
+                                        Action
+                                      </h4>
+                                      <button
+                                        className="save notifi-wishlist close_button btn px-0"
+                                        onClick={() =>
+                                          SaveForLater(cdata.id, cdata.user_id)
+                                        }
+                                      >
+                                        Save for later
+                                      </button>
+                                      <button
+                                        type="button"
+                                        className="remove close_button btn"
+                                        onClick={() =>
+                                          deleteCart(cdata.id, cdata.user_id)
+                                        }
+                                      >
+                                        remove
+                                      </button>
+                                    </td>
+                                  </tr>
+                                </tbody>
                               );
                             })}
                           </table>
@@ -532,16 +706,14 @@ let CouponDis = 0.00;
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
-                          <Link to="/">
-                          <butoon 
-                              className="btn btn-light shopping-button text-dark"
-                              onClick={()=>DeliveryClick()}
-                            >
-                              
-                              <i className="fa-solid fa-arrow-left-long me-3"></i>
-                              Continue Shopping
-                            
-                            </butoon>
+                            <Link to="/">
+                              <butoon
+                                className="btn btn-light shopping-button text-dark"
+                                onClick={() => DeliveryClick()}
+                              >
+                                <i className="fa-solid fa-arrow-left-long me-3"></i>
+                                Continue Shopping
+                              </butoon>
                             </Link>
                           </li>
 
@@ -559,7 +731,7 @@ let CouponDis = 0.00;
                     {/* End Shopping Cart */}
 
                     {/* Delivery Address*/}
-                    <Tab.Pane eventKey="second">
+                    <Tab.Pane eventKey={DeliveyTab}>
                       <div className="d-flex align-items-center mb-3">
                         <h2 className="tab-title mb-0">Delivery Address</h2>
                         <button
@@ -574,61 +746,62 @@ let CouponDis = 0.00;
                       </div>
                       <div className="row">
                         <div className="col-12 col-md-6">
-                          {userdata ? 
-                          userdata.map((address) => {
-                            return (
-                              <div key={address.id} className="">
-                                <div className="delivery-address-box">
-                                  <div>
-                                    <div className="form-check">
-                                      <input
-                                        className="form-check-input"
-                                        type="radio"
-                                        name="jack"
-                                        id="flexRadioDefault1"
-                                      />
-                                    </div>
+                          {userdata
+                            ? userdata.map((address) => {
+                                return (
+                                  <div key={address.id} className="">
+                                    <div className="delivery-address-box">
+                                      <div>
+                                        <div className="form-check">
+                                          <input
+                                            className="form-check-input"
+                                            type="radio"
+                                            name="jack"
+                                            id="flexRadioDefault1"
+                                          />
+                                        </div>
 
-                                    <div className="label">
-                                      <label>Office</label>
-                                    </div>
-                                    <ul
-                                      key={address.id}
-                                      className="delivery-address-detail"
-                                    >
-                                      <li>
-                                        <h4 className="fw-500">
-                                          {address.first_name} {address.last_name} 
-                                        </h4>
-                                      </li>
-                                      <li>
-                                        <p className="text-content">
-                                          <span className="text-title">
-                                            Address:{address.address}
-                                          </span>
-                                        </p>
-                                      </li>
-                                      {/* <li>
+                                        <div className="label">
+                                          <label>Office</label>
+                                        </div>
+                                        <ul
+                                          key={address.id}
+                                          className="delivery-address-detail"
+                                        >
+                                          <li>
+                                            <h4 className="fw-500">
+                                              {address.first_name}{" "}
+                                              {address.last_name}
+                                            </h4>
+                                          </li>
+                                          <li>
+                                            <p className="text-content">
+                                              <span className="text-title">
+                                                Address:{address.address}
+                                              </span>
+                                            </p>
+                                          </li>
+                                          {/* <li>
                                         <h6 className="text-content">
                                           <span className="text-title">
                                             Pin Code :{address.pincode}
                                           </span>
                                         </h6>
                                       </li> */}
-                                      <li>
-                                        <h6 className="text-content mb-0">
-                                          <span className="text-title">
-                                            Phone :{address.phone_no}
-                                          </span>
-                                        </h6>
-                                      </li>
-                                    </ul>
+                                          <li>
+                                            <h6 className="text-content mb-0">
+                                              <span className="text-title">
+                                                Phone :{address.phone_no}
+                                              </span>
+                                            </h6>
+                                          </li>
+                                        </ul>
+                                      </div>
+                                    </div>
                                   </div>
-                                </div>
-                              </div>
-                            );
-                          })
-                        : null}
+                                );
+                              })
+                            : null}
                         </div>
                         <div className="col-12 col-md-6">
                           {userdata.map((address) => {
@@ -654,8 +827,8 @@ let CouponDis = 0.00;
                                     >
                                       <li>
                                         <h4 className="fw-500">
-                                        {address.first_name} {address.last_name} 
-
+                                          {address.first_name}{" "}
+                                          {address.last_name}
                                         </h4>
                                       </li>
                                       <li>
@@ -704,9 +877,9 @@ let CouponDis = 0.00;
                         </ul>
                       </div>
                     </Tab.Pane>
-                     {/* End Delivery Address*/}
+                    {/* End Delivery Address*/}
 
-          {/* Delivery Option*/}
+                    {/* Delivery Option*/}
                     <Tab.Pane eventKey="third">
                       <h2 className="tab-title">Delivery Option</h2>
                       <div className="row g-4">
@@ -931,7 +1104,7 @@ let CouponDis = 0.00;
                     </Tab.Pane>
                     {/* End Delivery Option*/}
 
-{/* Payment Option */}
+                    {/* Payment Option */}
                     <Tab.Pane eventKey="fourth">
                       <h2 className="tab-title">Payment Option</h2>
                       <div className="row g-sm-4 g-2">
@@ -943,15 +1116,18 @@ let CouponDis = 0.00;
                             </div>
 
                             <ul className="summery-contain bg-white custom-height">
-                              {(cartdata || []) .map((data)=>{
-                                return(
+                              {(cartdata || []).map((data) => {
+                                return (
                                   <li key={data.id}>
-                                  <h4>
-                                    {data.sale_price} <span>X {data.quantity}</span>
-                                  </h4>
-                                  <h4 className="price">₹{data.sale_price * data.quantity}</h4>
-                                </li>
-                                )
+                                    <h4>
+                                      {data.sale_price}{" "}
+                                      <span>X {data.quantity}</span>
+                                    </h4>
+                                    <h4 className="price">
+                                      ₹{data.sale_price * data.quantity}
+                                    </h4>
+                                  </li>
+                                );
                               })}
                             </ul>
 
@@ -968,7 +1144,9 @@ let CouponDis = 0.00;
 
                               <li>
                                 <h4>Tax</h4>
-                                <h4 className="price text-danger">₹{TotalTax}</h4>
+                                <h4 className="price text-danger">
+                                  ₹{TotalTax}
+                                </h4>
                               </li>
 
                               <li>
@@ -978,7 +1156,12 @@ let CouponDis = 0.00;
 
                               <li className="list-total">
                                 <h4>Total (Rupees)</h4>
-                                <h4 className="price">₹{ProductPriceTotal - CouponDis + ShippingCharge}</h4>
+                                <h4 className="price">
+                                  ₹
+                                  {ProductPriceTotal -
+                                    CouponDis +
+                                    ShippingCharge}
+                                </h4>
                               </li>
                             </ul>
                           </div>
@@ -1002,7 +1185,7 @@ let CouponDis = 0.00;
                                           className="form-check-input mt-0"
                                           type="radio"
                                           value="choice7"
-                                           onChange={func} 
+                                          onChange={func}
                                           name="button"
                                         />
                                         Credit or Debit Card
@@ -1421,7 +1604,7 @@ let CouponDis = 0.00;
                                           className="form-check-input mt-0"
                                           type="radio"
                                           value="cod"
-                                          onChange={(e)=>func(e)}
+                                          onChange={(e) => func(e)}
                                           name="cod"
                                         />
                                         Cash On Delivery
@@ -1433,10 +1616,7 @@ let CouponDis = 0.00;
                                       <h5 className="cod-review">
                                         Pay digitally with SMS Pay Link. Cash
                                         may not be accepted in COVID restricted
-                                        areas.{" "}
-                                        <Link to="/">
-                                          Know more.
-                                        </Link>
+                                        areas. <Link to="/">Know more.</Link>
                                       </h5>
                                     </div>
                                   </Accordion.Body>
@@ -1458,7 +1638,7 @@ let CouponDis = 0.00;
 
                           <li>
                             <button
-                          onClick={()=>onOrderAdd()}
+                              onClick={() => onOrderAdd()}
                               className="btn btn-animation"
                             >
                               Done
@@ -1467,7 +1647,7 @@ let CouponDis = 0.00;
                         </ul>
                       </div>
                     </Tab.Pane>
-                         {/* End Payment Option */}
+                    {/* End Payment Option */}
                   </Tab.Content>
                 </div>
               </Row>
