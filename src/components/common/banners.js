@@ -13,9 +13,7 @@ const[productType,setProductType]=useState([]);
 const [catArray, setcatArray] = useState([]);
 const [unCatArr, setunCatArr] = useState([]);
 const useridd = sessionStorage.getItem("userid")
-if(!useridd){
-  useridd = 'newuser'
-}
+
   var product = data.product;
     useEffect(() => {
       function getProductData() {
