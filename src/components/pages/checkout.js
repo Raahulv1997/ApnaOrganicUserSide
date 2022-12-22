@@ -14,7 +14,7 @@ import moment from "moment";
 const Checkout = (props) => {
   const navigate = useNavigate();
   var product1 = data1.product1;
-  const useridd = localStorage.getItem("userid");
+  const useridd = sessionStorage.getItem("userid");
   let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
   const [navtab, setnavtab] = useState(false);

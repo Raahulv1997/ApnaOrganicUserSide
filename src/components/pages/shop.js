@@ -19,11 +19,12 @@ const Shop = (props) => {
   const [click, setclick] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
+  const useridd = sessionStorage.getItem("userid")
 
   const sidebar = () => {
     setclick(true);
   };
-  // const useridd = localStorage.getItem("userid");
+  // const useridd = sessionStorage.getItem("userid");
   const [searchparams] = useSearchParams();
   const [categorydata, setCategoryData] = useState([]);
   const [categorynameChange, setCategoryNameChange] = useState(false);
@@ -73,7 +74,7 @@ const Shop = (props) => {
       try {
         axios
           .post(
-            `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,
+            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
             {
               product_search: {
                 search: `${searchText}`,

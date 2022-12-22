@@ -24,7 +24,7 @@ const Login = () => {
       setError(false);
       }
       else{
-        localStorage.setItem("userid",response.data.user_id);
+        sessionStorage.setItem("userid",response.data.user_id);
         navigate('/');
         setError(false);
       }

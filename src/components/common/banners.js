@@ -12,13 +12,16 @@ const[productData,setProductData]=useState([]);
 const[productType,setProductType]=useState([]);
 const [catArray, setcatArray] = useState([]);
 const [unCatArr, setunCatArr] = useState([]);
-const useridd = localStorage.getItem("userid")
+const useridd = sessionStorage.getItem("userid")
+if(!useridd){
+  useridd = 'newuser'
+}
   var product = data.product;
     useEffect(() => {
       function getProductData() {
         try {
           axios
-          .post(`${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=400`,{
+          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,{
             "product_search":{
               "search":`${productType}`,
               "price_from":"",

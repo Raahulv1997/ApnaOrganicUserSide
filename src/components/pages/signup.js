@@ -56,8 +56,8 @@ const Singup = () => {
           password: passval,
         })
         .then((response) => {
-          localStorage.setItem("userid", response.data.insertId);
-          localStorage.setItem("upassword", passval);
+          sessionStorage.setItem("userid", response.data.insertId);
+          sessionStorage.setItem("upassword", passval);
 
           navigate("/your_account");
           return response;

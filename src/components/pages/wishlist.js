@@ -7,7 +7,7 @@ import data from "./data";
 import { Link } from "react-router-dom";
 import axios from "axios";
 function Wishlist() {
-  const useridd = localStorage.getItem("userid")
+  const useridd = sessionStorage.getItem("userid")
   // const[apicall,setapicall]=useState(false);
   const[wishlist,setWishList]=useState([]);
   var product = data.product;
@@ -20,7 +20,6 @@ function Wishlist() {
           .then((response) => {
             let data = response.data;
             setWishList(data);
-            localStorage.setItem("wishlist",JSON.stringify(data))
             // setapicall(false);
           });
       } catch (err) {}

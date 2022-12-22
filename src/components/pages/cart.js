@@ -2,6 +2,8 @@ import React, { Fragment } from "react";
 import Modal from "react-bootstrap/Modal";
 import Footer from "../common/footer";
 import Header from "../common/header";
+import Badge from 'react-bootstrap/Badge';
+import ListGroup from 'react-bootstrap/ListGroup';
 import Button from 'react-bootstrap/Button';
 //import ProductImg1 from "../../Photos/product/1.png";
 import Breadcumb from "../common/beadcumb";
@@ -10,16 +12,19 @@ import "../../CSS/style.css";
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 const Cart = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState('');
   const [apicall, setapicall] = useState(false);
   const [cartdata, setCartData] = useState([]);
+  const [coupondata, setcouponData] = useState([]);
   const [quantity, setQuantity] = useState([]);
+  const [discountt, setdiscountt] = useState('');
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
-  const useridd = localStorage.getItem("userid");
-
+  const useridd = sessionStorage.getItem("userid");
+const currentdate = moment().format();
 
   const incrementCount = (id, quantity) => {
     let inc = quantity + 1;
@@ -55,7 +60,13 @@ const Cart = () => {
         setQuantity((quantity = quantity - 1));
       });
   };
-  const func = () => {};
+  const func = (e) => {
+    let discountpercent = coupondata.filter(item => item.code === e.target.value);
+    let couponcode =discountpercent[0];
+    // setdiscountt(couponcode.percentage)
+    console.log("---e"+JSON.stringify(discountpercent))
+
+  };
 
   // Cart Detail
   useEffect(() => {
@@ -146,7 +157,18 @@ const handleShow = (e) => {
 
 const onCouponClick = () =>{
   setShow(true);
-
+  axios
+      .post(`${process.env.REACT_APP_BASEURL}/coupons_list`, {
+        "campaign_name":"",
+        "code":"",
+        "status":""
+      })
+      .then((response) => {
+       let data = response.data;
+       const result = data.filter(item => item.status !== 'pending');
+       setcouponData(result)
+      })
+      .catch((error) => {});
 }
 // end coupon list
 
@@ -473,7 +495,7 @@ const onCouponClick = () =>{
               <div className="summery-box p-sticky">
                 <div className="summery-header d-flex align-items-center justify-content-between">
                   <h3>Cart Total</h3>
-                  {/* <Button className="btn-apply text-light btn-success" onClick={()=>onCouponClick()}>Add Coupon</Button> */}
+                  <Button className="btn-apply text-light btn-success" onClick={()=>onCouponClick()}>Add Coupon</Button>
                 </div>
 
                 <div className="summery-contain">
@@ -485,7 +507,8 @@ const onCouponClick = () =>{
                         className="form-control"
                         id="exampleFormControlInput1"
                         placeholder="Enter Coupon Code Here..."
-                        // onChange={func}
+                        onChange={(e)=>func(e)}
+                        
                       />
                       <button className="btn-apply">Apply</button>
                     </div>
@@ -567,7 +590,41 @@ const onCouponClick = () =>{
               </Modal.Title>
             </Modal.Header>
             <Modal.Body className="p-3">
-           
+            <ListGroup as="ol" numbered>
+              {(coupondata || []).map((data)=>{
+               var diff = moment(data.end_date).diff(currentdate, 'day');
+                return (
+                  data.status === 'pending'? null :
+                  <ListGroup.Item
+                  as="li"
+                  className="d-flex justify-content-between align-items-start"
+                >
+                  <div className="ms-2 me-auto">
+                    <div className="fw-bold">{data.campaign_name}</div>
+                    {data.code}
+                  </div>
+                  <div>
+                  <div>
+                  <Badge bg="success" pill className="mx-2">
+                  {data.percentage}%
+                  </Badge>
+                  <Badge bg={data.status === 'active'? "primary" : data.status === 'expired' ? "danger" : null} pill>
+                    {diff >= 0 ?
+                  data.status: 'expired'}
+                  </Badge>
+                  </div>
+                 <div>
+                 {diff >= 0 ?
+                 <span>Expire in {diff}days</span> :
+                 null}
+                 </div>
+                 </div>
+                </ListGroup.Item>
+                )
+              })}
+   
+     
+    </ListGroup>
             </Modal.Body>
             <Modal.Footer className="">
              

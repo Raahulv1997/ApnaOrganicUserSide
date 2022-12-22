@@ -22,8 +22,8 @@ import moment from "moment";
 // import {CiMail} from 'react-icons/ci';
 
 function Account() {
-  const useridd = localStorage.getItem("userid")
-  const userpass =localStorage.getItem("upassword")
+  const useridd = sessionStorage.getItem("userid")
+  const userpass =sessionStorage.getItem("upassword")
 const navigate = useNavigate();
   const func=()=>{}
   const [show, setShow] = useState(false);
@@ -196,7 +196,7 @@ const handlePassSubmit = (event) => {
   })
     .then(response => {
       if(response === true){
-        localStorage.setItem("upassword", response.data.new_password)
+        sessionStorage.setItem("upassword", response.data.new_password)
         setPassword(false)
       }
       // navigate('/your_account')
@@ -253,7 +253,7 @@ const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
 
 
 const onProductClick = (id) =>{
-  localStorage.setItem("orderid" , id)
+  sessionStorage.setItem("orderid" , id)
   navigate('/product_detail')
 }
   return (

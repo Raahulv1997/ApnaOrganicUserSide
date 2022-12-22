@@ -12,7 +12,7 @@ import {useEffect } from "react";
 import axios from "axios";
 import { FaStarHalfAlt,FaRegStar } from "react-icons/fa";
 const ProductDetail = () => {
-  const useridd= localStorage.getItem("userid");
+  const useridd= sessionStorage.getItem("userid");
   const[apicall,setapicall]=useState([]);
   const[productDetails,setProductDetails]=useState([]);
   const[storeInfo,setStoreInfo]=useState();
@@ -46,7 +46,7 @@ const decrementCount = () => {
     
   }
 
-let proid=localStorage.getItem("proid");
+let proid=sessionStorage.getItem("proid");
   useEffect(() => {
     function getProductDetails() {
       try {

@@ -25,7 +25,7 @@ const ProductBox = ({
   saleprice,
 }) => {
  
-  const useridd = localStorage.getItem("userid");
+  const useridd = sessionStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [wishid, setwishid] = useState('');
@@ -101,13 +101,11 @@ const ProductBox = ({
         });
     }
   };
- var wishlistdata = localStorage.getItem("wishlist")
- console.log("============"+wishlistdata[wishlistdata.search("Myproduct6")]);
   useEffect(() => {
     try {
       axios
         .get(
-          `${process.env.REACT_APP_BASEURL}/apna_organic_home?page=0&per_page=4`,
+          `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
           {
             product_search: {
               search: "",
@@ -128,7 +126,7 @@ const ProductBox = ({
     } catch (err) {}
   }, [apicall]);
   const clickProduct = (productid) => {
-    localStorage.setItem("proid", productid);
+    sessionStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
   let ratingbox = [1, 2, 3, 4, 5];

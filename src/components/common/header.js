@@ -18,7 +18,7 @@ import {
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
 const Header = (props) => {
-  const useridd = localStorage.getItem("userid");
+  const useridd = sessionStorage.getItem("userid");
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [apicall, setapicall] = useState(false);
   const [categorydata, setCategoryData] = useState([]);
@@ -101,7 +101,7 @@ const Header = (props) => {
       });
   };
 const OnLogoutClick =() =>{
-localStorage.removeItem("userid")
+sessionStorage.removeItem("userid")
 }
   return (
     <Fragment>
