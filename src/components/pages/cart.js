@@ -17,10 +17,11 @@ const Cart = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState('');
   const [apicall, setapicall] = useState(false);
+  const [couponname, setcouponname] = useState('');
   const [cartdata, setCartData] = useState([]);
   const [coupondata, setcouponData] = useState([]);
   const [quantity, setQuantity] = useState([]);
-  const [discountt, setdiscountt] = useState('');
+  const [CouponDis, setCouponDis] = useState(0);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = sessionStorage.getItem("userid");
@@ -38,6 +39,8 @@ const currentdate = moment().format();
         setapicall(true);
         // setCartData(data);
         setQuantity((quantity = quantity + 1));
+        CheckCoupon();
+
       });
   };
   const decrementCount = (id, quantity) => {
@@ -58,15 +61,10 @@ const currentdate = moment().format();
         // setCartData(data);
         // quantity = quantity- 1;
         setQuantity((quantity = quantity - 1));
+        CheckCoupon();
       });
   };
-  const func = (e) => {
-    let discountpercent = coupondata.filter(item => item.code === e.target.value);
-    let couponcode =discountpercent[0];
-    // setdiscountt(couponcode.percentage)
-    console.log("---e"+JSON.stringify(discountpercent))
-
-  };
+ 
 
   // Cart Detail
   useEffect(() => {
@@ -121,6 +119,8 @@ const currentdate = moment().format();
       .then((response) => {
         let data = response.data;
         setapicall(true);
+        CheckCoupon();
+
       });
   };
 
@@ -146,35 +146,62 @@ const currentdate = moment().format();
   // end payment
 
 // coupon list
+let discountpercent;
+const func = (e) => {
+  setapicall(true)
+  setcouponname(e.target.value)
+   discountpercent = coupondata.filter(item => item.code === e.target.value && ProductPriceTotal >= item.minimum_amount);
+   console.log("--------ediscountpercent"+discountpercent)
+};
 
+const CheckCoupon = ()=>{
+  discountpercent = coupondata.filter(item => item.code === couponname && ProductPriceTotal >= item.minimum_amount);
+}
 const handleClose = () => {
   setShow(false);
 }
 const handleShow = (e) => {
     setShow(true);
   }
- 
-
+  useEffect(() => {
+    axios
+    .post(`${process.env.REACT_APP_BASEURL}/coupons_list`, {
+      "campaign_name":"",
+      "code":"",
+      "status":""
+    })
+    .then((response) => {
+     let data = response.data;
+     const result = data.filter(item => item.status === 'active' && moment(item.end_date).diff(currentdate, 'day') >= 0);
+     setcouponData(result)
+    })
+    .catch((error) => {});
+  }, [apicall]);
 const onCouponClick = () =>{
+  setapicall(true)
   setShow(true);
-  axios
-      .post(`${process.env.REACT_APP_BASEURL}/coupons_list`, {
-        "campaign_name":"",
-        "code":"",
-        "status":""
-      })
-      .then((response) => {
-       let data = response.data;
-       const result = data.filter(item => item.status !== 'pending');
-       setcouponData(result)
-      })
-      .catch((error) => {});
+  // axios
+  //     .post(`${process.env.REACT_APP_BASEURL}/coupons_list`, {
+  //       "campaign_name":"",
+  //       "code":"",
+  //       "status":""
+  //     })
+  //     .then((response) => {
+  //      let data = response.data;
+  //      const result = data.filter(item => item.status === 'active' && moment(item.end_date).diff(currentdate, 'day') >= 0);
+  //      setcouponData(result)
+  //     })
+  //     .catch((error) => {});
+}
+const OnApplyClick =() =>{
+  CheckCoupon()
+let discntcoupn = Number(discountpercent[0].percentage)/100;
+    setCouponDis(discntcoupn)
 }
 // end coupon list
 
   // discount and shipping
   let ShippingCharge = 0.0;
-  let CouponDis = 0.0;
 // end 
   return (
     <Fragment>
@@ -510,7 +537,7 @@ const onCouponClick = () =>{
                         onChange={(e)=>func(e)}
                         
                       />
-                      <button className="btn-apply">Apply</button>
+                      <button className="btn-apply" onClick={()=>OnApplyClick()}>Apply</button>
                     </div>
                   </div>
                   <ul className="p-0">
@@ -518,13 +545,13 @@ const onCouponClick = () =>{
                       <h4>Subtotal</h4>
 
                       <h4 className="price">
-                        ₹ {ProductPriceTotal.toFixed(2)}
+                        ₹{ProductPriceTotal.toFixed(2)}
                       </h4>
                     </li>
 
                     <li>
                       <h4>Coupon Discount</h4>
-                      <h4 className="price">(-) ₹{CouponDis.toFixed(2)}</h4>
+                      <h4 className="price">(-) ₹{Number(CouponDis).toFixed(2)}</h4>
                     </li>
 
                     <li className="align-items-start">
@@ -541,7 +568,7 @@ const onCouponClick = () =>{
                     <h4>Total (Rupees)</h4>
                     <h4 className="price theme-color">
                       ₹
-                      {(ProductPriceTotal - CouponDis + ShippingCharge).toFixed(
+                      {(ProductPriceTotal - Number(CouponDis) + ShippingCharge).toFixed(
                         2
                       )}
                     </h4>
@@ -600,23 +627,25 @@ const onCouponClick = () =>{
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">
-                    <div className="fw-bold">{data.campaign_name}</div>
-                    {data.code}
+                    <div className="fw-bold">{data.campaign_name} - ({data.code})</div>
+                    <span >Minimum Amt:<b><span className="text-success mx-1">₹{data.minimum_amount}</span></b></span>
+                    {ProductPriceTotal < data.minimum_amount ?
+                <b> <span className="text-dark">
+                 shop for  <span className="text-success">₹{(data.minimum_amount -ProductPriceTotal).toFixed(2)}</span> more
+                  </span></b> 
+                  : null }
                   </div>
                   <div>
-                  <div>
+                  <div className="d-flex">
                   <Badge bg="success" pill className="mx-2">
                   {data.percentage}%
                   </Badge>
-                  <Badge bg={data.status === 'active'? "primary" : data.status === 'expired' ? "danger" : null} pill>
-                    {diff >= 0 ?
-                  data.status: 'expired'}
+                  <Badge bg={ProductPriceTotal < data.minimum_amount ? "secondary" :'warning' } pill>
+                  {ProductPriceTotal < data.minimum_amount ? 'not applicable' : 'applicable'}
                   </Badge>
                   </div>
                  <div>
-                 {diff >= 0 ?
-                 <span>Expire in {diff}days</span> :
-                 null}
+               <b> <span className="text-danger">Expire in {diff}days</span></b> 
                  </div>
                  </div>
                 </ListGroup.Item>

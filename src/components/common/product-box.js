@@ -48,23 +48,24 @@ const ProductBox = ({
   };
   const func = () => {};
   const AddToCart = () => {
-    if(addcartid !== id){
+      let cnt = 1;
       axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
         user_id: `${useridd}`,
         product_view_id: `${id}`,
         price: `${saleprice}`,
         discount: `${productMRF}`,
-        quantity: count,
+        quantity: count === 0 ? cnt : count,
         is_active: 1,
       })
       .then((response) => {
         let data = response.data;
+      setCount(0);
         setaddcartid(id)
         setData(data);
         setapicall(true);
       });
-  };
+  
     }
    
   wlist = window.location.pathname;
