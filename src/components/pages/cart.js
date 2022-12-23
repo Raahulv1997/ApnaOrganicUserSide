@@ -2,9 +2,9 @@ import React, { Fragment } from "react";
 import Modal from "react-bootstrap/Modal";
 import Footer from "../common/footer";
 import Header from "../common/header";
-import Badge from 'react-bootstrap/Badge';
-import ListGroup from 'react-bootstrap/ListGroup';
-import Button from 'react-bootstrap/Button';
+import Badge from "react-bootstrap/Badge";
+import ListGroup from "react-bootstrap/ListGroup";
+import Button from "react-bootstrap/Button";
 //import ProductImg1 from "../../Photos/product/1.png";
 import Breadcumb from "../common/beadcumb";
 import { data1 } from "./data";
@@ -15,9 +15,9 @@ import axios from "axios";
 import moment from "moment";
 const Cart = () => {
   const navigate = useNavigate();
-  const [show, setShow] = useState('');
+  const [show, setShow] = useState("");
   const [apicall, setapicall] = useState(false);
-  const [couponname, setcouponname] = useState('');
+  const [couponname, setcouponname] = useState("");
   const [cartdata, setCartData] = useState([]);
   const [coupondata, setcouponData] = useState([]);
   const [quantity, setQuantity] = useState([]);
@@ -25,7 +25,7 @@ const Cart = () => {
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = sessionStorage.getItem("userid");
-const currentdate = moment().format();
+  const currentdate = moment().format();
 
   const incrementCount = (id, quantity) => {
     let inc = quantity + 1;
@@ -40,7 +40,6 @@ const currentdate = moment().format();
         // setCartData(data);
         setQuantity((quantity = quantity + 1));
         CheckCoupon();
-
       });
   };
   const decrementCount = (id, quantity) => {
@@ -64,7 +63,6 @@ const currentdate = moment().format();
         CheckCoupon();
       });
   };
- 
 
   // Cart Detail
   useEffect(() => {
@@ -120,7 +118,6 @@ const currentdate = moment().format();
         let data = response.data;
         setapicall(true);
         CheckCoupon();
-
       });
   };
 
@@ -145,64 +142,72 @@ const currentdate = moment().format();
   };
   // end payment
 
-// coupon list
-let discountpercent;
-const func = (e) => {
-  setapicall(true)
-  setcouponname(e.target.value)
-   discountpercent = coupondata.filter(item => item.code === e.target.value && ProductPriceTotal >= item.minimum_amount);
-   console.log("--------ediscountpercent"+discountpercent)
-};
+  // coupon list
+  let discountpercent;
+  const func = (e) => {
+    setapicall(true);
+    setcouponname(e.target.value);
+    discountpercent = coupondata.filter(
+      (item) =>
+        item.code === e.target.value && ProductPriceTotal >= item.minimum_amount
+    );
+  };
 
-const CheckCoupon = ()=>{
-  discountpercent = coupondata.filter(item => item.code === couponname && ProductPriceTotal >= item.minimum_amount);
+  const CheckCoupon = () => {
+  setapicall(true);
+    discountpercent = coupondata.filter(
+      (item) =>
+        item.code === couponname && ProductPriceTotal >= item.minimum_amount
+    );
+if(discountpercent.length !== 0){
+  let discntcoupn = Number(discountpercent[0].percentage) / 100;
+    setCouponDis(discntcoupn);
 }
-const handleClose = () => {
-  setShow(false);
+else{
+  setCouponDis(0);
 }
-const handleShow = (e) => {
+  };
+
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = (e) => {
     setShow(true);
-  }
+  };
   useEffect(() => {
     axios
-    .post(`${process.env.REACT_APP_BASEURL}/coupons_list`, {
-      "campaign_name":"",
-      "code":"",
-      "status":""
-    })
-    .then((response) => {
-     let data = response.data;
-     const result = data.filter(item => item.status === 'active' && moment(item.end_date).diff(currentdate, 'day') >= 0);
-     setcouponData(result)
-    })
-    .catch((error) => {});
+      .post(`${process.env.REACT_APP_BASEURL}/coupons_list`, {
+        campaign_name: "",
+        code: "",
+        status: "",
+      })
+      .then((response) => {
+        let data = response.data;
+        const result = data.filter(
+          (item) =>
+            item.status === "active" &&
+            moment(item.end_date).diff(currentdate, "day") >= 0
+        );
+        setcouponData(result);
+      })
+      .catch((error) => {});
   }, [apicall]);
-const onCouponClick = () =>{
-  setapicall(true)
-  setShow(true);
-  // axios
-  //     .post(`${process.env.REACT_APP_BASEURL}/coupons_list`, {
-  //       "campaign_name":"",
-  //       "code":"",
-  //       "status":""
-  //     })
-  //     .then((response) => {
-  //      let data = response.data;
-  //      const result = data.filter(item => item.status === 'active' && moment(item.end_date).diff(currentdate, 'day') >= 0);
-  //      setcouponData(result)
-  //     })
-  //     .catch((error) => {});
-}
-const OnApplyClick =() =>{
-  CheckCoupon()
-let discntcoupn = Number(discountpercent[0].percentage)/100;
-    setCouponDis(discntcoupn)
-}
-// end coupon list
+  const onCouponClick = () => {
+    setapicall(true);
+    setShow(true);
+ 
+  };
+  const OnApplyClick = () => {
+    console.log("----")
+    CheckCoupon();
+    let discntcoupn = Number(discountpercent[0].percentage) / 100;
+    setCouponDis(discntcoupn);
+  };
+  // end coupon list
 
   // discount and shipping
   let ShippingCharge = 0.0;
-// end 
+  // end
   return (
     <Fragment>
       <Header />
@@ -518,11 +523,16 @@ let discntcoupn = Number(discountpercent[0].percentage)/100;
               </div>
             </div>
 
-            <div className="col-xxl-3">
+            <div className="col-xxl-4">
               <div className="summery-box p-sticky">
                 <div className="summery-header d-flex align-items-center justify-content-between">
                   <h3>Cart Total</h3>
-                  <Button className="btn-apply text-light btn-success" onClick={()=>onCouponClick()}>Add Coupon</Button>
+                  <Button
+                    className="btn-apply text-light btn-success"
+                    onClick={() => onCouponClick()}
+                  >
+                    Add Coupon
+                  </Button>
                 </div>
 
                 <div className="summery-contain">
@@ -534,24 +544,28 @@ let discntcoupn = Number(discountpercent[0].percentage)/100;
                         className="form-control"
                         id="exampleFormControlInput1"
                         placeholder="Enter Coupon Code Here..."
-                        onChange={(e)=>func(e)}
-                        
+                        onChange={(e) => func(e)}
                       />
-                      <button className="btn-apply" onClick={()=>OnApplyClick()}>Apply</button>
+                      <button
+                        className="btn-apply"
+                        onClick={() => OnApplyClick()}
+                      >
+                        Apply
+                      </button>
                     </div>
                   </div>
                   <ul className="p-0">
                     <li>
                       <h4>Subtotal</h4>
 
-                      <h4 className="price">
-                        ₹{ProductPriceTotal.toFixed(2)}
-                      </h4>
+                      <h4 className="price">₹{ProductPriceTotal.toFixed(2)}</h4>
                     </li>
 
                     <li>
                       <h4>Coupon Discount</h4>
-                      <h4 className="price">(-) ₹{Number(CouponDis).toFixed(2)}</h4>
+                      <h4 className="price">
+                        (-) ₹{Number(CouponDis).toFixed(2)}
+                      </h4>
                     </li>
 
                     <li className="align-items-start">
@@ -568,9 +582,11 @@ let discntcoupn = Number(discountpercent[0].percentage)/100;
                     <h4>Total (Rupees)</h4>
                     <h4 className="price theme-color">
                       ₹
-                      {(ProductPriceTotal - Number(CouponDis) + ShippingCharge).toFixed(
-                        2
-                      )}
+                      {(
+                        ProductPriceTotal -
+                        Number(CouponDis) +
+                        ShippingCharge
+                      ).toFixed(2)}
                     </h4>
                   </li>
                 </ul>
@@ -604,61 +620,88 @@ let discntcoupn = Number(discountpercent[0].percentage)/100;
         </div>
       </section>
       <Modal
-          show={show}
-          onHide={() => handleClose()}
-          dialogClassName="w-80"
-          aria-labelledby="example-custom-modal-styling-title"
-          centered
-        >
-          
-            <Modal.Header closeButton className="">
-              <Modal.Title id="example-custom-modal-styling-title">
-               Coupons
-              </Modal.Title>
-            </Modal.Header>
-            <Modal.Body className="p-3">
-            <ListGroup as="ol" numbered>
-              {(coupondata || []).map((data)=>{
-               var diff = moment(data.end_date).diff(currentdate, 'day');
-                return (
-                  data.status === 'pending'? null :
-                  <ListGroup.Item
+        show={show}
+        onHide={() => handleClose()}
+        dialogClassName="w-80"
+        aria-labelledby="example-custom-modal-styling-title"
+        centered
+      >
+        <Modal.Header closeButton className="">
+          <Modal.Title id="example-custom-modal-styling-title">
+            Coupons
+          </Modal.Title>
+        </Modal.Header>
+        <Modal.Body className="p-3">
+          <ListGroup as="ol" numbered>
+            {(coupondata || []).map((data) => {
+              var diff = moment(data.end_date).diff(currentdate, "day");
+              return data.status === "pending" ? null : (
+                <ListGroup.Item
                   as="li"
                   className="d-flex justify-content-between align-items-start"
                 >
                   <div className="ms-2 me-auto">
-                    <div className="fw-bold">{data.campaign_name} - ({data.code})</div>
-                    <span >Minimum Amt:<b><span className="text-success mx-1">₹{data.minimum_amount}</span></b></span>
-                    {ProductPriceTotal < data.minimum_amount ?
-                <b> <span className="text-dark">
-                 shop for  <span className="text-success">₹{(data.minimum_amount -ProductPriceTotal).toFixed(2)}</span> more
-                  </span></b> 
-                  : null }
+                    <div className="fw-bold">
+                      {data.campaign_name} - ({data.code})
+                    </div>
+                    <span>
+                      Minimum Amt:
+                      <b>
+                        <span className="text-success mx-1">
+                          ₹{data.minimum_amount}
+                        </span>
+                      </b>
+                    </span>
+                    {ProductPriceTotal < data.minimum_amount ? (
+                      <b>
+                        {" "}
+                        <span className="text-dark">
+                          shop for{" "}
+                          <span className="text-success">
+                            ₹
+                            {(data.minimum_amount - ProductPriceTotal).toFixed(
+                              2
+                            )}
+                          </span>{" "}
+                          more
+                        </span>
+                      </b>
+                    ) : null}
                   </div>
                   <div>
-                  <div className="d-flex">
-                  <Badge bg="success" pill className="mx-2">
-                  {data.percentage}%
-                  </Badge>
-                  <Badge bg={ProductPriceTotal < data.minimum_amount ? "secondary" :'warning' } pill>
-                  {ProductPriceTotal < data.minimum_amount ? 'not applicable' : 'applicable'}
-                  </Badge>
+                    <div className="d-flex">
+                      <Badge bg="success" pill className="mx-2">
+                        {data.percentage}%
+                      </Badge>
+                      <Badge
+                        bg={
+                          ProductPriceTotal < data.minimum_amount
+                            ? "secondary"
+                            : "warning"
+                        }
+                        pill
+                      >
+                        {ProductPriceTotal < data.minimum_amount
+                          ? "not applicable"
+                          : "applicable"}
+                      </Badge>
+                    </div>
+                    <div>
+                      <b>
+                        {" "}
+                        <span className="text-danger">
+                          Expire in {diff}days
+                        </span>
+                      </b>
+                    </div>
                   </div>
-                 <div>
-               <b> <span className="text-danger">Expire in {diff}days</span></b> 
-                 </div>
-                 </div>
                 </ListGroup.Item>
-                )
-              })}
-   
-     
-    </ListGroup>
-            </Modal.Body>
-            <Modal.Footer className="">
-             
-            </Modal.Footer>
-        </Modal>
+              );
+            })}
+          </ListGroup>
+        </Modal.Body>
+        <Modal.Footer className=""></Modal.Footer>
+      </Modal>
       {/* <!-- Cart Section End --> */}
       <Footer />
     </Fragment>

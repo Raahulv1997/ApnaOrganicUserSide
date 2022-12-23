@@ -6,8 +6,8 @@ import { NavLink, useNavigate } from "react-router-dom";
 import Dropdown from "react-bootstrap/Dropdown";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
-import Button from 'react-bootstrap/Button';
-import ButtonGroup from 'react-bootstrap/ButtonGroup';
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Accordion from "react-bootstrap/Accordion";
 import {
   AiOutlineHome,
@@ -30,8 +30,8 @@ const Header = (props) => {
   const open_Category = () => {
     setclick(true);
   };
-// const wee = [moment().startOf('week'), moment().endOf('week')]
-// console.log("---well"+wee)
+  // const wee = [moment().startOf('week'), moment().endOf('week')]
+  // console.log("---well"+wee)
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -50,9 +50,7 @@ const Header = (props) => {
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
-      self.findIndex(
-        (t, x) => t.root_category_name == thing.root_category_name
-      )
+      self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
   );
 
   const level1category = categorydata.filter(
@@ -70,7 +68,7 @@ const Header = (props) => {
         (t, x) => t.down2_category_name == thing.down2_category_name
       )
   );
- 
+
   const searchProduct = (e) => {
     e.preventDefault();
     navigate(`/shop?search=${search}`);
@@ -82,6 +80,32 @@ const Header = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
+            let ProductTotal = 0;
+            data.map((cdata) => {
+              ProductTotal +=
+                Number(cdata.quantity) * Number(cdata.product_price) -
+                (cdata.product_price * cdata.discount) / 100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.gst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.cgst) /
+                  100 +
+                (Number(
+                  cdata.product_price -
+                    (cdata.product_price * cdata.discount) / 100
+                ) *
+                  cdata.sgst) /
+                  100 -
+                (cdata.sale_price * cdata.discount) / 100;
+            });
+            setProductPriceTotal(ProductTotal);
             setPdata(data);
             setapicall(false);
           });
@@ -100,9 +124,9 @@ const Header = (props) => {
         setapicall(true);
       });
   };
-const OnLogoutClick =() =>{
-sessionStorage.removeItem("userid")
-}
+  const OnLogoutClick = () => {
+    sessionStorage.removeItem("userid");
+  };
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
@@ -184,10 +208,7 @@ sessionStorage.removeItem("userid")
                     > */}
 
                     {useridd ? (
-                      <Link
-                        to="/login"
-                        onClick={OnLogoutClick}
-                      >
+                      <Link to="/login" onClick={OnLogoutClick}>
                         <span>Login Out</span>
                       </Link>
                     ) : (
@@ -280,15 +301,8 @@ sessionStorage.removeItem("userid")
                             <ul
                               className="cart-list "
                               style={{ flexDirection: "column" }}
-                              
                             >
                               {(pdata || []).map((data) => {
-                                for (let i = 0; i < data.length; i++) {
-                                  var Total = 0;
-                                  Total += data[i].quantity * data[i].price;
-                                  setProductPriceTotal(Total);
-                                }
-
                                 return (
                                   <li key={pdata.id}>
                                     <div className="drop-cart ">
@@ -308,7 +322,13 @@ sessionStorage.removeItem("userid")
                                           <span className="im=block">
                                             {data.quantity}x
                                           </span>{" "}
-                                          <span>₹{data.product_price}</span>
+                                          <span>
+                                            ₹
+                                            {Number(data.product_price) -
+                                              (data.product_price *
+                                                data.discount) /
+                                                100}
+                                          </span>
                                           {/* <span>{data.sale_price}</span> */}
                                         </h6>
                                         <button
@@ -371,8 +391,7 @@ sessionStorage.removeItem("userid")
                     className={
                       click === true
                         ? "category-dropdown show"
-                        :
-                         "category-dropdown"
+                        : "category-dropdown"
                     }
                   >
                     <div className="category-title">
@@ -399,70 +418,127 @@ sessionStorage.removeItem("userid")
                               
                                 
                               </Accordion.Header> */}
-                              <Dropdown as={ButtonGroup} className={'category_dropdown_box'} >
-    
-      <Button variant="light" className={'category_dropdown_name'} onClick={()=>{navigate(`/shop?category=`+catdata.root_id)}} value={catdata.root_id}>{catdata.root_category_name}</Button>
+                              <Dropdown
+                                as={ButtonGroup}
+                                className={"category_dropdown_box"}
+                              >
+                                <Button
+                                  variant="light"
+                                  className={"category_dropdown_name"}
+                                  onClick={() => {
+                                    navigate(
+                                      `/shop?category=` + catdata.root_id
+                                    );
+                                  }}
+                                  value={catdata.root_id}
+                                >
+                                  {catdata.root_category_name}
+                                </Button>
 
-      <Dropdown.Toggle split variant="light" id="dropdown-split-basic" drop={'end'} title={`Drop end`} className={'category_dropdown_btn'}/>
+                                <Dropdown.Toggle
+                                  split
+                                  variant="light"
+                                  id="dropdown-split-basic"
+                                  drop={"end"}
+                                  title={`Drop end`}
+                                  className={"category_dropdown_btn"}
+                                />
 
-      <Dropdown.Menu>
-         <div className="onhover-category-box">
-                                  {(level1category || []).map((data) => {
-                                    return catdata.root_category_name ===
-                                      data.root_category_name &&
-                                      data.down1_category_name !== null ? (
-                                      <div className="list-1" key={data.id}>
-                                        <div className="category-title-box">
-                                          <div value={data.down1_id}>
-                                            <h5 onClick={()=>{navigate(`/shop?category=`+catdata.down1_id)}} value={data.down1_id} className={'searchsub_category searchsub_category_box'}>{data.down1_category_name}</h5>
+                                <Dropdown.Menu>
+                                  <div className="onhover-category-box">
+                                    {(level1category || []).map((data) => {
+                                      return catdata.root_category_name ===
+                                        data.root_category_name &&
+                                        data.down1_category_name !== null ? (
+                                        <div className="list-1" key={data.id}>
+                                          <div className="category-title-box">
+                                            <div value={data.down1_id}>
+                                              <h5
+                                                onClick={() => {
+                                                  navigate(
+                                                    `/shop?category=` +
+                                                      catdata.down1_id
+                                                  );
+                                                }}
+                                                value={data.down1_id}
+                                                className={
+                                                  "searchsub_category searchsub_category_box"
+                                                }
+                                              >
+                                                {data.down1_category_name}
+                                              </h5>
+                                            </div>
                                           </div>
+                                          <ul className="p-0">
+                                            {(level2category || []).map(
+                                              (data1) => {
+                                                return data.down1_category_name ===
+                                                  data1.down1_category_name &&
+                                                  data.down2_category_name !==
+                                                    null ? (
+                                                  <li
+                                                    onClick={() => {
+                                                      navigate(
+                                                        `/shop?category=` +
+                                                          catdata.down2_id
+                                                      );
+                                                    }}
+                                                    value={data1.down2_id}
+                                                    className={
+                                                      "searchsub_category w-100 py-2"
+                                                    }
+                                                  >
+                                                    {data1.down2_category_name}
+                                                    <ul>
+                                                      {(categorydata || []).map(
+                                                        (data2) => {
+                                                          return data1.down2_category_name ===
+                                                            data2.down2_category_name &&
+                                                            data.down3_category_name !==
+                                                              null ? (
+                                                            <li
+                                                              onClick={() => {
+                                                                navigate(
+                                                                  `/shop?category=` +
+                                                                    catdata.down3_id
+                                                                );
+                                                              }}
+                                                              value={
+                                                                data2.down3_id
+                                                              }
+                                                              className={
+                                                                "w-100  searchsub_category px-2 py-1"
+                                                              }
+                                                            >
+                                                              {
+                                                                data2.down3_category_name
+                                                              }
+                                                            </li>
+                                                          ) : null;
+                                                        }
+                                                      )}
+                                                    </ul>
+                                                  </li>
+                                                ) : null;
+                                              }
+                                            )}
+                                          </ul>
                                         </div>
-                                        <ul className="p-0">
-                                          {(level2category || []).map(
-                                            (data1) => {
-                                              return data.down1_category_name ===
-                                                data1.down1_category_name &&
-                                                data.down2_category_name !==
-                                                  null ? (
-                                                <li  onClick={()=>{navigate(`/shop?category=`+catdata.down2_id)}} value={data1.down2_id} className={'searchsub_category w-100 py-2'}>
-                                                  {data1.down2_category_name}
-                                                  <ul>
-                                                    {(categorydata || []).map(
-                                                      (data2) => {
-                                                        return data1.down2_category_name ===
-                                                          data2.down2_category_name &&
-                                                          data.down3_category_name !==
-                                                            null ? (
-                                                          <li onClick={()=>{navigate(`/shop?category=`+catdata.down3_id)}} value={data2.down3_id} className={'w-100  searchsub_category px-2 py-1'}>
-                                                            {
-                                                              data2.down3_category_name
-                                                            }
-                                                          </li>
-                                                        ) : null;
-                                                      }
-                                                    )}
-                                                  </ul>
-                                                </li>
-                                              ) : null;
-                                            }
-                                          )}
-                                        </ul>
-                                      </div>
-                                    ) : null;
-                                  })}
-                                </div>
-      </Dropdown.Menu>
-    </Dropdown>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </Dropdown.Menu>
+                              </Dropdown>
                               <Accordion.Body>
                                 <div className="onhover-category-box">
                                   {(level1category || []).map((data) => {
                                     return catdata.root_category_name ===
                                       data.root_category_name &&
                                       data.down1_category_name !== null ? (
-                                      <div className="list-1"  key={data.id}>
+                                      <div className="list-1" key={data.id}>
                                         <div className="category-title-box">
                                           <div>
-                                            <h5 >{data.down1_category_name}</h5>
+                                            <h5>{data.down1_category_name}</h5>
                                           </div>
                                         </div>
                                         <ul className="p-0">
@@ -472,7 +548,10 @@ sessionStorage.removeItem("userid")
                                                 data1.down1_category_name &&
                                                 data.down2_category_name !==
                                                   null ? (
-                                                <li className="w-100"  key={data1.id}>
+                                                <li
+                                                  className="w-100"
+                                                  key={data1.id}
+                                                >
                                                   {data1.down2_category_name}
                                                   <ul>
                                                     {(categorydata || []).map(
@@ -481,7 +560,10 @@ sessionStorage.removeItem("userid")
                                                           data2.down2_category_name &&
                                                           data.down3_category_name !==
                                                             null ? (
-                                                          <li className="w-100" key={data2.id}>
+                                                          <li
+                                                            className="w-100"
+                                                            key={data2.id}
+                                                          >
                                                             {
                                                               data2.down3_category_name
                                                             }

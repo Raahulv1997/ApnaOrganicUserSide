@@ -55,7 +55,7 @@ function Wishlist() {
                       productMRF={wlist.sale_price}
                       productid={wlist.product_id}
                       saleprice={wlist.sale_price}
-                      id={wlist.id}
+                      wishlistid={wlist.id}
                       rating={wlist.rating}
                       discount={wlist.discount}
                       special_offer={wlist.special_offer}

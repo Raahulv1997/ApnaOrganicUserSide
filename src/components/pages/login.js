@@ -20,7 +20,7 @@ const Login = () => {
   const onSubmitClick = () =>{
     axios.post(`http://192.168.29.108:5000/user_login`,credentailval)
     .then(response => {
-      if(response.data === false){
+      if(response.data === false || response.data === "check_credintials"){
       setError(false);
       }
       else{

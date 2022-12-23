@@ -23,6 +23,8 @@ const ProductBox = ({
   rating,
   category,
   saleprice,
+  wishlistt,
+  wishlistid
 }) => {
  
   const useridd = sessionStorage.getItem("userid");
@@ -30,9 +32,8 @@ const ProductBox = ({
   const [isActive, setIsActive] = useState(false);
   const [wishid, setwishid] = useState('');
   const navigate = useNavigate();
-  const [wlistData, setWlistData] = useState("");
+  const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
-  const[wishlist,setWishList]=useState([]);
   const[addcartid,setaddcartid]=useState('');
 
   let [count, setCount] = useState(0);
@@ -71,7 +72,7 @@ const ProductBox = ({
   wlist = window.location.pathname;
 
   const AddToWishList = () => {
-    if (wlist === "/" || wlist === "/shop") {
+    if (wlist === "/" || wlist === "/shop" || wlistData === 'add' ) {
       // console.log("ADD______WISHLIST");
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
@@ -86,10 +87,10 @@ const ProductBox = ({
           setIsActive(true);
         });
     }  
-    else if (wlist === "/wishlist") {
+     if (wlist === "/wishlist" || wlistData === 'remove' || wishlistt > 0) {
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
-          id:`${id}`,
+          id:`${wishlistid}`,
           user_id:`${useridd}`,
         })
         .then((response) => {
@@ -110,10 +111,8 @@ const ProductBox = ({
           {
             product_search: {
               search: "",
-              colors: "",
-              size: "",
-              category: "",
-              product_type: "",
+              price_from: "",
+              price_to: "",
             },
           }
         )
@@ -145,12 +144,19 @@ const ProductBox = ({
         </div>
         <div className="label-flex">
           <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
+            {wishlistt > 0 ? 
             <i
               className="fa-regular fa-heart"
-              style={{ color: isActive?   "red" :""  }}
+              style={{ color:   "red"  }}
               onClick={AddToWishList}
             ></i>
-           
+            :
+            <i
+            className="fa-regular fa-heart"
+            style={{ color:  ""  }}
+            onClick={AddToWishList}
+          ></i>
+            }
           </button>
         </div>
         {image==""|| image==null|| image==undefined?
