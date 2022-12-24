@@ -12,8 +12,7 @@ function Wishlist() {
   const useridd = sessionStorage.getItem("userid");
   const[apicall,setapicall]=useState(false);
   const [wishlist, setWishList] = useState([]);
-  const [cardaddproduct,setcardaddproduct] = useState('')
-  let [count, setCount] = useState(0);
+  const [wishlistocart,setwishlistocart] = useState('')
   const navigate = useNavigate();
 
   var product = data.product;
@@ -34,26 +33,27 @@ function Wishlist() {
     getWishList();
   }, [apicall]);
 
-  function incrementCount(id,wishlistid) {
-    let cardadd = wishlist.find((item) => item.id === wishlistid);
-    console.log("----"+JSON.stringify(cardadd))
-    setcardaddproduct(cardadd);
-    count = count + 1;
-    setCount(count);
-    setapicall(true);
-  }
-  const decrementCount = (id,wishlistid) => {
-    let cardadd = wishlist.find((item) => item.id === wishlistid);
-    setcardaddproduct(cardadd);
-    if (count > 0) {
-      setCount((count) => count - 1);
-    }
-  };
+  // function incrementCount(id,wishlistid) {
+   
+  //   let cardadd = wishlist.find((item) => item.id === wishlistid);
+  //   console.log("----"+JSON.stringify(cardadd))
+  //   setwishlistocart(cardadd);
+  //   count = count + 1;
+  //   setCount(count);
+  //   setapicall(true);
+  // }
+  // const decrementCount = (id,wishlistid) => {
+  //   let cardadd = wishlist.find((item) => item.id === wishlistid);
+  //   setwishlistocart(cardadd);
+  //   if (count > 0) {
+  //     setCount((count) => count - 1);
+  //   }
+  // };
   // end product quantity
 
   // product box
 
-  const AddToCart = (id,saleprice,productMRF,wishlistid) => {
+  const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
     let cnt = 1;
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
@@ -66,7 +66,6 @@ function Wishlist() {
       })
       .then((response) => {
         let data = response.data;
-        setCount(0);
         setapicall(true);
         localStorage.setItem("cartupdate", true);
       });
@@ -120,19 +119,11 @@ function Wishlist() {
                       discount={wlist.discount}
                       special_offer={wlist.special_offer}
                       clickProduct={clickProduct}
-                      decrementCount={decrementCount}
-                      incrementCount={incrementCount}
                       AddToWishList={AddToWishList}
                       AddToCart={AddToCart}
-                      count={count}
-                      cardaddproduct={cardaddproduct}
+                      wishlistocart={wishlistocart}
                     />
-                    {/* <ProductBox
-                      image={product.image}
-                      name={product.name}
-                      productPrice={product.productPrice}
-                      productMRF={product.productMRF}
-                    /> */}
+                    
                   </div>
                 );
               })}

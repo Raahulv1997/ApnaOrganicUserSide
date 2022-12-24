@@ -39,13 +39,9 @@ const Shop = (props) => {
   const [brandfilter, setbrandfilter] = useState([]);
   const [ratingfilter, setratingfilter] = useState([]);
   const [data, setData] = useState([]);
-  const [cardaddproduct,setcardaddproduct] = useState('');
-  const [productData, setProductData] = useState([]);
   const [wlistData, setWlistData] = useState("add");
   const [isActive, setIsActive] = useState(false);
-  let [count, setCount] = useState(0);
-  //   const [showcategorydata, setshowCategoryData] = useState([]);
-  const AddToCart = (id,saleprice,productMRF) => {
+  const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
     let cnt = 1;
     axios
     .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
@@ -58,8 +54,6 @@ const Shop = (props) => {
     })
     .then((response) => {
       let data = response.data;
-    setCount(0);
-      // setaddcartid(id)
       setData(data);
       setapicall(true);
       localStorage.setItem("cartupdate",true)
@@ -101,27 +95,7 @@ const Shop = (props) => {
     }
   };
  
-  function incrementCount(id) {
    
-    let cardadd = prodData.find(item=> item.id=== id);
-  //  console.log("consoleeeeeeee"+prodData)
-
-    setcardaddproduct(cardadd)
-    // console.log("cardddddd"+cardadd)
-    //  console.log("--------"+JSON.stringify(cardadd))
-    //  console.log("--------"+(cardadd.id) + "---dsdhj"+id)
-     if(cardadd.id === id){
-       count = count + 1;
-       setCount(count);
-       setapicall(true);
-     }
-   }
-
-   const decrementCount = (id) => {
-     if (count > 0) {
-       setCount((count) => count - 1);
-     }
-   };
    const clickProduct = (productid) => {
     sessionStorage.setItem("proid", productid);
     navigate("/product-detail");
@@ -313,7 +287,6 @@ const Shop = (props) => {
       }
     }
   };
-  console.log("consoleeMERAAAAAAAAAAAAAAAAAeeeeee"+JSON.stringify(prodData))
 
   const OnClearAllClick = (e) => {
     showcategorydata = [];
@@ -1015,12 +988,8 @@ const Shop = (props) => {
                         producttype={product.product_type}
                         saleprice={product.sale_price}
                         clickProduct={clickProduct}
-                        decrementCount={decrementCount}
-                        incrementCount={incrementCount}
                         AddToCart={AddToCart}
                         AddToWishList={AddToWishList}
-                        count={count}
-                        cardaddproduct={cardaddproduct}
                         wishlistt={product.wishlist}
                       />
                     </div>

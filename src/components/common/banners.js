@@ -20,7 +20,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [data, setData] = useState([]);
   const [cardaddproduct,setcardaddproduct] = useState('')
 
-  let [count, setCount] = useState(0);
+  let [count, setCount] = useState(1);
  
   const navigate = useNavigate();
   // var product = data.product;
@@ -67,31 +67,34 @@ const Benners = (props, productPrice, productMRF, name, image) => {
 function incrementCount(id) {
  let cardadd = productData.find(item=> item.id=== id);
  setcardaddproduct(cardadd)
-    count = count + 1;
-    setCount(count);
-    setapicall(true);
+
+  count = count + 1;
+  setCount(count);
+  setapicall(true);
+ console.log("-----"+id +"----"+ cardadd.id +"ppppppp"+count)
+
 }
-console.log("hjhgjhgjgkhkj"+JSON.stringify(productData))
 const decrementCount = (id) => {
   let cardadd = productData.find(item=> item.id=== id);
  setcardaddproduct(cardadd)
+ if(cardadd.id === id){
   if (count > 0) {
     setCount((count) => count - 1);
   }
+}
 };
 // end product quantity
 
   // product box
 
-  const AddToCart = (id,saleprice,productMRF,wishlistid) => {
-    let cnt = 1;
+  const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
     axios
     .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
       user_id: `${useridd}`,
       product_view_id: `${id}`,
       price: `${saleprice}`,
       discount: `${productMRF}`,
-      quantity: count === 0 ? cnt : count,
+      quantity:  count,
       is_active: 1,
     })
     .then((response) => {
