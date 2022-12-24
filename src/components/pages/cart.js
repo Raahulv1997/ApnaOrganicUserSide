@@ -26,6 +26,7 @@ const Cart = () => {
   var product1 = data1.product1;
   const useridd = sessionStorage.getItem("userid");
   const currentdate = moment().format();
+  
 
   const incrementCount = (id, quantity) => {
     let inc = quantity + 1;
@@ -75,27 +76,32 @@ const Cart = () => {
             let ProductTotal = 0;
             data.map((cdata) => {
               ProductTotal +=
-                Number(cdata.quantity) * Number(cdata.product_price) -
+              (
+                cdata.quantity * Number(cdata.product_price) -
                 (cdata.product_price * cdata.discount) / 100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.gst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.cgst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.sgst) /
-                  100 -
-                (cdata.sale_price * cdata.discount) / 100;
+                  100
+              )
+                console.log("---product"+ProductTotal)
             });
             setProductPriceTotal(ProductTotal);
             setCartData(data);

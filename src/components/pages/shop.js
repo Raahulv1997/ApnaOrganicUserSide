@@ -243,7 +243,7 @@ const Shop = (props) => {
   // END BRAND
   return (
     <Fragment>
-      <Header/>
+      <Header />
       <Breadcumb pageName={"Shop"} pageTitle={"Shop"} pageHref={"/"} />
       {/* <!-- Shop Section Start --> */}
       <section className="section-b-space shop-section">

@@ -7,6 +7,7 @@ import data from "../pages/data";
 import { useEffect } from "react";
 import "../../CSS/style.css";
 import axios from "axios";
+import Header from "./header";
 const Benners = (props, productPrice, productMRF, name, image) => {
   const [productData, setProductData] = useState([]);
   const [productType, setProductType] = useState([]);
@@ -54,6 +55,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   }, [catArray]);
   return (
     <Fragment>
+         
+
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
@@ -81,7 +84,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                 </div>
               </div>
             </div>
-
+           
             <div className="col-xxl-3 col-xl-4 col-md-6 ratio_medium">
               <div className="home-contain">
                 <div>
