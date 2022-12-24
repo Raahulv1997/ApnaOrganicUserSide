@@ -33,11 +33,13 @@ const Header = (props) => {
   // const wee = [moment().startOf('week'), moment().endOf('week')]
   // console.log("---well"+wee)
   let cartup = localStorage.getItem("cartupdate")
-  // if(cartup  === true){
-  //   setapicall(true);
-  //   console.log("-----apics"+cartup )
-  // }
-  console.log("-----apics"+localStorage.getItem("cartupdate") )
+  if(cartup  === true){
+    setapicall(true);
+    console.log("-----apics"+cartup )
+  }
+  // console.log("-----apics"+localStorage.getItem("cartupdate") )
+  console.log("-----apicall"+props.addcart )
+
 
   useEffect(() => {
     function getCategoryData() {
@@ -122,14 +124,14 @@ const Header = (props) => {
             setPdata(data);
 
             setapicall(false);
-            localStorage.setItem("cartupdate",false)
+            localStorage.removeItem("cartupdate")
 
           });
           
       } catch (err) {}
     }
     getCartData();
-  }, [apicall,cartup]);
+  }, [apicall,cartup,props.addcart]);
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -344,10 +346,31 @@ const Header = (props) => {
                                           </span>{" "}
                                           <span>
                                             ₹
-                                            {Number(data.product_price) -
-                                              (data.product_price *
-                                                data.discount) /
-                                                100}
+                                            {(
+                                  Number(data.product_price) -
+                                  (data.product_price * data.discount) / 100 +
+                                  (Number(
+                                    data.product_price -
+                                      (data.product_price * data.discount) /
+                                        100
+                                  ) *
+                                    data.gst) /
+                                    100 +
+                                  (Number(
+                                    data.product_price -
+                                      (data.product_price * data.discount) /
+                                        100
+                                  ) *
+                                    data.cgst) /
+                                    100 +
+                                  (Number(
+                                    data.product_price -
+                                      (data.product_price * data.discount) /
+                                        100
+                                  ) *
+                                    data.sgst) /
+                                    100
+                                ).toFixed(2)}
                                           </span>
                                           {/* <span>{data.sale_price}</span> */}
                                         </h6>
