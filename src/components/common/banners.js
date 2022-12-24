@@ -5,6 +5,7 @@ import Banner1 from "../../Photos/14.jpg";
 import ProductBox from "./product-box";
 import data from "../pages/data";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import "../../CSS/style.css";
 import axios from "axios";
 import Header from "./header";
@@ -14,8 +15,16 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
   const useridd = sessionStorage.getItem("userid");
+  const [apicall, setapicall] = useState(false);
+  const [isActive, setIsActive] = useState(false);
+  const [wlistData, setWlistData] = useState("add");
+  const [data, setData] = useState([]);
+  const [cardaddproduct,setcardaddproduct] = useState('')
 
-  var product = data.product;
+  let [count, setCount] = useState(0);
+ 
+  const navigate = useNavigate();
+  // var product = data.product;
   useEffect(() => {
     function getProductData() {
       try {
@@ -53,6 +62,114 @@ const Benners = (props, productPrice, productMRF, name, image) => {
     );
     setunCatArr(result);
   }, [catArray]);
+
+// product quantity
+function incrementCount(id) {
+ let cardadd = productData.find(item=> item.id=== id);
+ setcardaddproduct(cardadd)
+  console.log("--------"+JSON.stringify(cardadd))
+  console.log("--------"+(cardadd.id) + "---dsdhj"+id)
+  if(cardadd.id === id){
+    count = count + 1;
+    setCount(count);
+    setapicall(true);
+  }
+
+}
+console.log("hjhgjhgjgkhkj"+JSON.stringify(productData))
+const decrementCount = (id) => {
+  if (count > 0) {
+    setCount((count) => count - 1);
+  }
+};
+// end product quantity
+
+  // product box
+
+  const AddToCart = (id,saleprice,productMRF) => {
+    let cnt = 1;
+    axios
+    .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+      user_id: `${useridd}`,
+      product_view_id: `${id}`,
+      price: `${saleprice}`,
+      discount: `${productMRF}`,
+      quantity: count === 0 ? cnt : count,
+      is_active: 1,
+    })
+    .then((response) => {
+      let data = response.data;
+    setCount(0);
+      // setaddcartid(id)
+      setData(data);
+      setapicall(true);
+      localStorage.setItem("cartupdate",true)
+    });
+
+  }
+// wlist = window.location.pathname;
+
+const AddToWishList = (id,wishlistt) => {
+  if ( wlistData === 'add' ) {
+    // console.log("ADD______WISHLIST");
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
+        user_id: `${useridd}`,
+        product_view_id: `${id}`,
+      })
+      .then((response) => {
+        let data = response.data;
+        setData(response.data);
+        setWlistData("remove");
+        setapicall(true);
+        setIsActive(true);
+      });
+  }  
+   if (wishlistt > 0) {
+    axios
+      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+        product_id:`${id}`,
+        user_id:`${useridd}`,
+      })
+      .then((response) => {
+        let data = response.data;
+        console.log();
+        setData(response.data);
+        setWlistData("add");
+        setapicall(true);
+        setIsActive(false);
+      });
+  }
+};
+useEffect(() => {
+  try {
+    axios
+      .get(
+        `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+        {
+          product_search: {
+            search: "",
+            price_from: "",
+            price_to: "",
+          },
+        }
+      )
+      .then((response) => {
+        let data = response.data;
+        setData(data.results);
+        // setProductId(data);
+        //console.log("PRODUCT============"+JSON.stringify(data))
+        setapicall(false);
+      });
+  } catch (err) {}
+}, [apicall]);
+const clickProduct = (productid) => {
+  sessionStorage.setItem("proid", productid);
+  navigate("/product-detail");
+};
+
+
+// end product box
   return (
     <Fragment>
          
@@ -206,6 +323,14 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                           producttype={product.product_type}
                           saleprice={product.sale_price}
                           wishlistt={product.wishlist}
+                          clickProduct={clickProduct}
+                          decrementCount={decrementCount}
+                          incrementCount={incrementCount}
+                          AddToWishList={AddToWishList}
+                          AddToCart={AddToCart}
+                          count={count}
+                          cardaddproduct={cardaddproduct}
+                          
                         />
                       </div>
                     );
