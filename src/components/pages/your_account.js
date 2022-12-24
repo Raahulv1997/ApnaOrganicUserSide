@@ -245,6 +245,7 @@ const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
     "quantity":1,
     "is_active":1
   })
+  console.log("addcarttt"+id)
   .then(response => {
   }).catch(error => {
   })
@@ -259,6 +260,7 @@ const onProductClick = (id) =>{
   return (
     <React.Fragment>
       <Header addcart={AddToCart}/>
+      
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}

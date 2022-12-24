@@ -105,14 +105,20 @@ const Header = (props) => {
                   100 -
                 (cdata.sale_price * cdata.discount) / 100;
             });
+            
             setProductPriceTotal(ProductTotal);
             setPdata(data);
+
             setapicall(false);
           });
+          
       } catch (err) {}
     }
+    
     getProductData();
-  }, [apicall, props.addcart]);
+  },[apicall, props.addcart]);
+  // console.log("pdataaaaaaaaaa"+JSON.stringify(props.addcart))
+
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -293,8 +299,11 @@ const Header = (props) => {
                               pdata.length === "" ||
                               pdata.length === "0"
                                 ? "0"
-                                : pdata.length}
+                                : pdata.length
+                                }
+                                
                             </small>
+                          
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">
