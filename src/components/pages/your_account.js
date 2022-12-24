@@ -45,7 +45,7 @@ const navigate = useNavigate();
     user_id:useridd,
     first_name:"",
     last_name:"",
-    // password:"",
+    //password:"",
     email:"",
     phone_no:"",
     gender:"",
@@ -875,7 +875,7 @@ const onProductClick = (id) =>{
                                     <div className="product-image">
                                       <Link to="product-left.html">
                                         <img
-                                          src={Product}
+                                          src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                                           className="img-fluid  lazyload"
                                           alt=""
                                         />
