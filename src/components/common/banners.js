@@ -76,7 +76,7 @@ function incrementCount(id) {
   }
 
 }
-console.log("hjhgjhgjgkhkj"+JSON.stringify(productData))
+// console.log("hjhgjhgjgkhkj"+JSON.stringify(productData))
 const decrementCount = (id) => {
   if (count > 0) {
     setCount((count) => count - 1);
