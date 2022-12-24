@@ -25,7 +25,14 @@ const ProductBox = ({
   category,
   saleprice,
   wishlistt,
-  wishlistid
+  wishlistid,
+  clickProduct,
+  AddToWishList,
+  AddToCart,
+  incrementCount,
+  decrementCount,
+  count,
+  cardaddproduct
 }) => {
  
   const useridd = sessionStorage.getItem("userid");
@@ -36,100 +43,100 @@ const ProductBox = ({
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
   const[addcartid,setaddcartid]=useState('');
-  let [count, setCount] = useState(0);
-  function incrementCount() {
-    count = count + 1;
-    setCount(count);
-    setapicall(true);
-  }
-  const decrementCount = () => {
-    if (count > 0) {
-      setCount((count) => count - 1);
-    }
-  };
+  // let [count, setCount] = useState(0);
+  // function incrementCount() {
+  //   count = count + 1;
+  //   setCount(count);
+  //   setapicall(true);
+  // }
+  // const decrementCount = () => {
+  //   if (count > 0) {
+  //     setCount((count) => count - 1);
+  //   }
+  // };
   const func = () => {};
-  const AddToCart = () => {
-      let cnt = 1;
-      axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id: `${useridd}`,
-        product_view_id: `${id}`,
-        price: `${saleprice}`,
-        discount: `${productMRF}`,
-        quantity: count === 0 ? cnt : count,
-        is_active: 1,
-      })
-      .then((response) => {
-        let data = response.data;
-      setCount(0);
-        setaddcartid(id)
-        setData(data);
-        setapicall(true);
-        localStorage.setItem("cartupdate",true)
-      });
+  // const AddToCart = () => {
+  //     let cnt = 1;
+  //     axios
+  //     .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+  //       user_id: `${useridd}`,
+  //       product_view_id: `${id}`,
+  //       price: `${saleprice}`,
+  //       discount: `${productMRF}`,
+  //       quantity: count === 0 ? cnt : count,
+  //       is_active: 1,
+  //     })
+  //     .then((response) => {
+  //       let data = response.data;
+  //     setCount(0);
+  //       setaddcartid(id)
+  //       setData(data);
+  //       setapicall(true);
+  //       localStorage.setItem("cartupdate",true)
+  //     });
   
-    }
+  //   }
    
-  wlist = window.location.pathname;
+  // wlist = window.location.pathname;
 
-  const AddToWishList = () => {
-    if (wlist === "/" || wlist === "/shop" || wlistData === 'add' ) {
-      // console.log("ADD______WISHLIST");
-      axios
-        .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-          user_id: `${useridd}`,
-          product_view_id: `${id}`,
-        })
-        .then((response) => {
-          let data = response.data;
-          setData(response.data);
-          setWlistData("remove");
-          setapicall(true);
-          setIsActive(true);
-        });
-    }  
-     if (wlist === "/wishlist" || wlistData === 'remove' || wishlistt > 0) {
-      axios
-        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
-          id:`${wishlistid}`,
-          user_id:`${useridd}`,
-        })
-        .then((response) => {
-          let data = response.data;
-          console.log();
-          setData(response.data);
-          setWlistData("add");
-          setapicall(true);
-          setIsActive(false);
-        });
-    }
-  };
-  useEffect(() => {
-    try {
-      axios
-        .get(
-          `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
-          {
-            product_search: {
-              search: "",
-              price_from: "",
-              price_to: "",
-            },
-          }
-        )
-        .then((response) => {
-          let data = response.data;
-          setData(data.results);
-          // setProductId(data);
-          //console.log("PRODUCT============"+JSON.stringify(data))
-          setapicall(false);
-        });
-    } catch (err) {}
-  }, [apicall]);
-  const clickProduct = (productid) => {
-    sessionStorage.setItem("proid", productid);
-    navigate("/product-detail");
-  };
+  // const AddToWishList = () => {
+  //   if (wlist === "/" || wlist === "/shop" || wlistData === 'add' ) {
+  //     // console.log("ADD______WISHLIST");
+  //     axios
+  //       .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
+  //         user_id: `${useridd}`,
+  //         product_view_id: `${id}`,
+  //       })
+  //       .then((response) => {
+  //         let data = response.data;
+  //         setData(response.data);
+  //         setWlistData("remove");
+  //         setapicall(true);
+  //         setIsActive(true);
+  //       });
+  //   }  
+  //    if (wlist === "/wishlist" || wlistData === 'remove' || wishlistt > 0) {
+  //     axios
+  //       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+  //         id:`${wishlistid}`,
+  //         user_id:`${useridd}`,
+  //       })
+  //       .then((response) => {
+  //         let data = response.data;
+  //         console.log();
+  //         setData(response.data);
+  //         setWlistData("add");
+  //         setapicall(true);
+  //         setIsActive(false);
+  //       });
+  //   }
+  // };
+  // useEffect(() => {
+  //   try {
+  //     axios
+  //       .get(
+  //         `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+  //         {
+  //           product_search: {
+  //             search: "",
+  //             price_from: "",
+  //             price_to: "",
+  //           },
+  //         }
+  //       )
+  //       .then((response) => {
+  //         let data = response.data;
+  //         setData(data.results);
+  //         // setProductId(data);
+  //         //console.log("PRODUCT============"+JSON.stringify(data))
+  //         setapicall(false);
+  //       });
+  //   } catch (err) {}
+  // }, [apicall]);
+  // const clickProduct = (productid) => {
+  //   sessionStorage.setItem("proid", productid);
+  //   navigate("/product-detail");
+  // };
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
   return (
@@ -149,13 +156,13 @@ const ProductBox = ({
             <i
               className="fa-regular fa-heart"
               style={{ color:   "red"  }}
-              onClick={AddToWishList}
+              onClick={()=>AddToWishList(id,wishlistt)}
             ></i>
             :
             <i
             className="fa-regular fa-heart"
             style={{ color:  ""  }}
-            onClick={AddToWishList}
+            onClick={()=>AddToWishList(id,wishlistt)}
           ></i>
             }
           </button>
@@ -220,7 +227,7 @@ const ProductBox = ({
             <div className="counter">
               <div
                 className="qty-left-minus"
-                onClick={decrementCount}
+                onClick={()=>decrementCount(id)}
                 data-type="minus"
                 data-field=""
               >
@@ -231,12 +238,12 @@ const ProductBox = ({
                 className="form-control input-number qty-input"
                 type="text"
                 name="quantity"
-                value={count}
+                value={cardaddproduct ? cardaddproduct.id === id ? count : 0 : 0}
                 onChange={func}
               />
               <div
                 className="qty-right-plus"
-                onClick={incrementCount}
+                onClick={()=>incrementCount(id)}
                 data-type="plus"
                 data-field=""
               >
@@ -247,7 +254,7 @@ const ProductBox = ({
 
           <button
             className="buy-button buy-button-2 btn btn-cart"
-            onClick={() => AddToCart()}
+            onClick={() => AddToCart(id,saleprice,productMRF)}
           >
             <i className="fa-regular fa-cart-shopping"></i>
           </button>
