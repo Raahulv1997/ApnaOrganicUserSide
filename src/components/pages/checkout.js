@@ -121,27 +121,31 @@ const Checkout = (props) => {
             data.map((cdata) => {
               // totalprice
               ProductTotal +=
-                Number(cdata.quantity) * Number(cdata.product_price) -
+              (
+                cdata.quantity * Number(cdata.product_price) -
                 (cdata.product_price * cdata.discount) / 100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.gst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.cgst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.sgst) /
-                  100 -
-                (cdata.sale_price * cdata.discount) / 100;
+                  100
+              )
               // end totalprice
               if (cdata.gst === null) {
                 cdata.gst = "0";

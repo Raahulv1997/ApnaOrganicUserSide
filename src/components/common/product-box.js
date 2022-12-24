@@ -5,6 +5,7 @@ import { useState } from "react";
 import axios from "axios";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "./header";
 // function AddCart(props){
 // }
 let wlist;
@@ -35,7 +36,6 @@ const ProductBox = ({
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
   const[addcartid,setaddcartid]=useState('');
-
   let [count, setCount] = useState(0);
   function incrementCount() {
     count = count + 1;
@@ -65,6 +65,7 @@ const ProductBox = ({
         setaddcartid(id)
         setData(data);
         setapicall(true);
+        localStorage.setItem("cartupdate",true)
       });
   
     }

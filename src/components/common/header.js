@@ -32,6 +32,13 @@ const Header = (props) => {
   };
   // const wee = [moment().startOf('week'), moment().endOf('week')]
   // console.log("---well"+wee)
+  let cartup = localStorage.getItem("cartupdate")
+  // if(cartup  === true){
+  //   setapicall(true);
+  //   console.log("-----apics"+cartup )
+  // }
+  console.log("-----apics"+localStorage.getItem("cartupdate") )
+
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -41,6 +48,7 @@ const Header = (props) => {
             let data = response.data;
             setCategoryData(data);
             setapicall(false);
+
           });
       } catch (err) {}
     }
@@ -74,7 +82,7 @@ const Header = (props) => {
     navigate(`/shop?search=${search}`);
   };
   useEffect(() => {
-    function getProductData() {
+    function getCartData() {
       try {
         axios
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
@@ -83,36 +91,42 @@ const Header = (props) => {
             let ProductTotal = 0;
             data.map((cdata) => {
               ProductTotal +=
-                Number(cdata.quantity) * Number(cdata.product_price) -
+              (
+                cdata.quantity * Number(cdata.product_price) -
                 (cdata.product_price * cdata.discount) / 100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.gst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.cgst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                    (cdata.product_price * cdata.discount) /
+                      100
                 ) *
                   cdata.sgst) /
-                  100 -
-                (cdata.sale_price * cdata.discount) / 100;
+                  100
+              )
             });
             setProductPriceTotal(ProductTotal);
             setPdata(data);
             setapicall(false);
+            localStorage.setItem("cartupdate",false)
+
           });
       } catch (err) {}
     }
-    getProductData();
-  }, [apicall, props.addcart]);
+    getCartData();
+  }, [apicall,cartup]);
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -348,7 +362,7 @@ const Header = (props) => {
                             <div className="price-box">
                               <h5>Price :</h5>
                               <h4 className="theme-color fw-bold">
-                                ₹{ProductPriceTotal}
+                                ₹{ProductPriceTotal.toFixed(2)}
                               </h4>
                             </div>
                             <div className="button-group">
