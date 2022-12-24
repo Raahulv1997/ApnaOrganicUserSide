@@ -156,13 +156,13 @@ const ProductBox = ({
             <i
               className="fa-regular fa-heart"
               style={{ color:   "red"  }}
-              onClick={()=>AddToWishList(id,wishlistt)}
+              onClick={()=>AddToWishList(id,wishlistt,productid,wishlistid)}
             ></i>
             :
             <i
             className="fa-regular fa-heart"
             style={{ color:  ""  }}
-            onClick={()=>AddToWishList(id,wishlistt)}
+            onClick={()=>AddToWishList(id,wishlistt,productid,wishlistid)}
           ></i>
             }
           </button>
@@ -227,7 +227,7 @@ const ProductBox = ({
             <div className="counter">
               <div
                 className="qty-left-minus"
-                onClick={()=>decrementCount(id)}
+                onClick={()=>decrementCount(id,wishlistid)}
                 data-type="minus"
                 data-field=""
               >
@@ -243,7 +243,7 @@ const ProductBox = ({
               />
               <div
                 className="qty-right-plus"
-                onClick={()=>incrementCount(id)}
+                onClick={()=>incrementCount(id,wishlistid)}
                 data-type="plus"
                 data-field=""
               >
@@ -254,7 +254,7 @@ const ProductBox = ({
 
           <button
             className="buy-button buy-button-2 btn btn-cart"
-            onClick={() => AddToCart(id,saleprice,productMRF)}
+            onClick={() => AddToCart(id,saleprice,productMRF,wishlistid)}
           >
             <i className="fa-regular fa-cart-shopping"></i>
           </button>

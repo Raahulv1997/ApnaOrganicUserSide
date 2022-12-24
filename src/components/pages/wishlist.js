@@ -1,4 +1,4 @@
-import React, { useState,useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
 import Footer from "../common/footer";
@@ -6,12 +6,18 @@ import ProductBox from "../common/product-box";
 import data from "./data";
 import { Link } from "react-router-dom";
 import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 function Wishlist() {
-  const useridd = sessionStorage.getItem("userid")
-  // const[apicall,setapicall]=useState(false);
-  const[wishlist,setWishList]=useState([]);
+  const useridd = sessionStorage.getItem("userid");
+  const[apicall,setapicall]=useState(false);
+  const [wishlist, setWishList] = useState([]);
+  const [cardaddproduct,setcardaddproduct] = useState('')
+  let [count, setCount] = useState(0);
+  const navigate = useNavigate();
+
   var product = data.product;
-  const func=()=>{}
+  const func = () => {};
   useEffect(() => {
     function getWishList() {
       try {
@@ -20,14 +26,68 @@ function Wishlist() {
           .then((response) => {
             let data = response.data;
             setWishList(data);
-            // setapicall(false);
+            setapicall(false);
           });
       } catch (err) {}
     }
 
     getWishList();
-  }, []);
- 
+  }, [apicall]);
+
+  function incrementCount(id,wishlistid) {
+    let cardadd = wishlist.find((item) => item.id === wishlistid);
+    console.log("----"+JSON.stringify(cardadd))
+    setcardaddproduct(cardadd);
+    count = count + 1;
+    setCount(count);
+    setapicall(true);
+  }
+  const decrementCount = (id,wishlistid) => {
+    let cardadd = wishlist.find((item) => item.id === wishlistid);
+    setcardaddproduct(cardadd);
+    if (count > 0) {
+      setCount((count) => count - 1);
+    }
+  };
+  // end product quantity
+
+  // product box
+
+  const AddToCart = (id,saleprice,productMRF,wishlistid) => {
+    let cnt = 1;
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+        user_id: `${useridd}`,
+        product_view_id: `${wishlistid}`,
+        price: `${saleprice}`,
+        discount: `${productMRF}`,
+        quantity: count === 0 ? cnt : count,
+        is_active: 1,
+      })
+      .then((response) => {
+        let data = response.data;
+        setCount(0);
+        setapicall(true);
+        localStorage.setItem("cartupdate", true);
+      });
+  };
+  // wlist = window.location.pathname;
+
+  const AddToWishList = (id,wishlistt,wishlistid) => {
+      axios
+        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
+          product_id: `${wishlistid}`,
+          user_id: `${useridd}`,
+        })
+        .then((response) => {
+          let data = response.data;
+          setapicall(true);
+        });
+  };
+  const clickProduct = (productid) => {
+    sessionStorage.setItem("proid", productid);
+    navigate("/product-detail");
+  };
   return (
     <React.Fragment>
       <Header />
@@ -59,7 +119,13 @@ function Wishlist() {
                       rating={wlist.rating}
                       discount={wlist.discount}
                       special_offer={wlist.special_offer}
-
+                      clickProduct={clickProduct}
+                      decrementCount={decrementCount}
+                      incrementCount={incrementCount}
+                      AddToWishList={AddToWishList}
+                      AddToCart={AddToCart}
+                      count={count}
+                      cardaddproduct={cardaddproduct}
                     />
                     {/* <ProductBox
                       image={product.image}
@@ -231,7 +297,10 @@ function Wishlist() {
                         />
                       </Link>
 
-                      <Link to="shop-left-sidebar.html" className="deal-contain">
+                      <Link
+                        to="shop-left-sidebar.html"
+                        className="deal-contain"
+                      >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>
@@ -250,7 +319,10 @@ function Wishlist() {
                         />
                       </Link>
 
-                      <Link to="shop-left-sidebar.html" className="deal-contain">
+                      <Link
+                        to="shop-left-sidebar.html"
+                        className="deal-contain"
+                      >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>
@@ -269,7 +341,10 @@ function Wishlist() {
                         />
                       </Link>
 
-                      <Link to="shop-left-sidebar.html" className="deal-contain">
+                      <Link
+                        to="shop-left-sidebar.html"
+                        className="deal-contain"
+                      >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>
@@ -288,7 +363,10 @@ function Wishlist() {
                         />
                       </Link>
 
-                      <Link to="shop-left-sidebar.html" className="deal-contain">
+                      <Link
+                        to="shop-left-sidebar.html"
+                        className="deal-contain"
+                      >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
                         <h6>
                           $52.57 <del>57.62</del> <span>500 G</span>

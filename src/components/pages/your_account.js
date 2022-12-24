@@ -37,6 +37,7 @@ const navigate = useNavigate();
   const [wishlistdata, setwishlistdata] = useState([]);
   const [orderhistory, setorderhistory] = useState([]);
   const [totalorder, settotalorder] = useState('');
+  const [cartupdateid, setcartupdateid] = useState('');
 
 
   const [userdata, setuserdata] = useState(
@@ -246,6 +247,8 @@ const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
     "is_active":1
   })
   .then(response => {
+  let cartup =  localStorage.setItem("cartupdate",true);
+  setcartupdateid(cartup)
   }).catch(error => {
   })
 }
@@ -258,7 +261,7 @@ const onProductClick = (id) =>{
 }
   return (
     <React.Fragment>
-      <Header addcart={AddToCart}/>
+      <Header addcart={cartupdateid}/>
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
