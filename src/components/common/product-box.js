@@ -96,7 +96,6 @@ const ProductBox = ({
         })
         .then((response) => {
           let data = response.data;
-          console.log();
           setData(response.data);
           setWlistData("add");
           setapicall(true);
