@@ -261,7 +261,8 @@ const onProductClick = (id) =>{
 }
   return (
     <React.Fragment>
-      <Header addcart={cartupdateid}/>
+      <Header addcart={AddToCart}/>
+      
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}

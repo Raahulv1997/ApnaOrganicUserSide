@@ -119,12 +119,15 @@ const Header = (props) => {
                   100
               )
             });
+            
             setProductPriceTotal(ProductTotal);
             setPdata(data);
+
             setapicall(false);
             localStorage.removeItem("cartupdate")
 
           });
+          
       } catch (err) {}
     }
     getCartData();
@@ -309,8 +312,11 @@ const Header = (props) => {
                               pdata.length === "" ||
                               pdata.length === "0"
                                 ? "0"
-                                : pdata.length}
+                                : pdata.length
+                                }
+                                
                             </small>
+                          
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">

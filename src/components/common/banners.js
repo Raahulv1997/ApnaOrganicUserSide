@@ -19,8 +19,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
   const [cardaddproduct,setcardaddproduct] = useState('')
+
   let [count, setCount] = useState(0);
-  
+ 
   const navigate = useNavigate();
   // var product = data.product;
   useEffect(() => {
@@ -70,6 +71,7 @@ function incrementCount(id) {
     setCount(count);
     setapicall(true);
 }
+console.log("hjhgjhgjgkhkj"+JSON.stringify(productData))
 const decrementCount = (id) => {
   let cardadd = productData.find(item=> item.id=== id);
  setcardaddproduct(cardadd)
@@ -301,6 +303,7 @@ const clickProduct = (productid) => {
                           AddToCart={AddToCart}
                           count={count}
                           cardaddproduct={cardaddproduct}
+                          
                         />
                       </div>
                     );

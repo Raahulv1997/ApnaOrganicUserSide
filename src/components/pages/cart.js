@@ -106,6 +106,7 @@ const Cart = () => {
             setProductPriceTotal(ProductTotal);
             setCartData(data);
             setapicall(false);
+            
             // setapicall(false);
           });
       } catch (err) {}

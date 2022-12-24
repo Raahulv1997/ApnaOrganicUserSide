@@ -10,7 +10,7 @@ import "../../CSS/style.css";
 import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams,useNavigate } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
 let showcategorydata = [];
 
@@ -20,7 +20,7 @@ const Shop = (props) => {
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
   const useridd = sessionStorage.getItem("userid")
-
+  const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
   };
@@ -38,9 +38,94 @@ const Shop = (props) => {
   const [discountfilter, setdiscountfilter] = useState([]);
   const [brandfilter, setbrandfilter] = useState([]);
   const [ratingfilter, setratingfilter] = useState([]);
-
+  const [data, setData] = useState([]);
+  const [cardaddproduct,setcardaddproduct] = useState('');
+  const [productData, setProductData] = useState([]);
+  const [wlistData, setWlistData] = useState("add");
+  const [isActive, setIsActive] = useState(false);
+  let [count, setCount] = useState(0);
   //   const [showcategorydata, setshowCategoryData] = useState([]);
+  const AddToCart = (id,saleprice,productMRF) => {
+    let cnt = 1;
+    axios
+    .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+      user_id: `${useridd}`,
+      product_view_id: `${id}`,
+      price: `${saleprice}`,
+      discount: `${productMRF}`,
+      quantity: count === 0 ? cnt : count,
+      is_active: 1,
+    })
+    .then((response) => {
+      let data = response.data;
+    setCount(0);
+      // setaddcartid(id)
+      setData(data);
+      setapicall(true);
+      localStorage.setItem("cartupdate",true)
+    });
 
+  }
+  const AddToWishList = (id,wishlistt) => {
+    
+     if (wishlistt > 0) {
+      axios
+        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
+          product_id:`${id}`,
+          user_id:`${useridd}`,
+        })
+        .then((response) => {
+          let data = response.data;
+          console.log();
+          setData(response.data);
+          setWlistData("add");
+          setapicall(true);
+          setIsActive(false);
+          
+        });
+    }
+    else{
+      axios
+      .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
+        user_id: `${useridd}`,
+        product_view_id: `${id}`,
+      })
+      .then((response) => {
+        let data = response.data;
+        setData(response.data);
+        setWlistData("remove");
+        setapicall(true);
+        setIsActive(true);
+      });
+  
+    }
+  };
+ 
+  function incrementCount(id) {
+   
+    let cardadd = prodData.find(item=> item.id=== id);
+  //  console.log("consoleeeeeeee"+prodData)
+
+    setcardaddproduct(cardadd)
+    // console.log("cardddddd"+cardadd)
+    //  console.log("--------"+JSON.stringify(cardadd))
+    //  console.log("--------"+(cardadd.id) + "---dsdhj"+id)
+     if(cardadd.id === id){
+       count = count + 1;
+       setCount(count);
+       setapicall(true);
+     }
+   }
+
+   const decrementCount = (id) => {
+     if (count > 0) {
+       setCount((count) => count - 1);
+     }
+   };
+   const clickProduct = (productid) => {
+    sessionStorage.setItem("proid", productid);
+    navigate("/product-detail");
+  };
   useEffect(() => {
     if (
       searchparams.get("search") === null ||
@@ -93,6 +178,7 @@ const Shop = (props) => {
           .then((response) => {
             let data = response.data;
             setProdData(data.results);
+            // console.log("hhhhggggggg"+JSON.stringify(data))
 
             if (
               categoryNamedata.length === 0 &&
@@ -115,6 +201,9 @@ const Shop = (props) => {
     brandfilter,
     discountfilter,
     pricefilter,
+    apicall,
+    
+
   ]);
   // end product list
 
@@ -224,6 +313,8 @@ const Shop = (props) => {
       }
     }
   };
+  console.log("consoleeMERAAAAAAAAAAAAAAAAAeeeeee"+JSON.stringify(prodData))
+
   const OnClearAllClick = (e) => {
     showcategorydata = [];
     setCategoryNameData("");
@@ -923,6 +1014,14 @@ const Shop = (props) => {
                         category={product.category}
                         producttype={product.product_type}
                         saleprice={product.sale_price}
+                        clickProduct={clickProduct}
+                        decrementCount={decrementCount}
+                        incrementCount={incrementCount}
+                        AddToCart={AddToCart}
+                        AddToWishList={AddToWishList}
+                        count={count}
+                        cardaddproduct={cardaddproduct}
+                        wishlistt={product.wishlist}
                       />
                     </div>
                   );
