@@ -38,7 +38,7 @@ const Header = (props) => {
     console.log("-----apics"+cartup )
   }
   // console.log("-----apics"+localStorage.getItem("cartupdate") )
-  console.log("-----apicall"+props.addcart )
+  console.log("-----apicall"+props.addcart)
 
 
   useEffect(() => {

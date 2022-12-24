@@ -24,37 +24,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
  
   const navigate = useNavigate();
   // var product = data.product;
-  useEffect(() => {
-    function getProductData() {
-      try {
-        axios
-          .post(
-            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
-            {
-              product_search: {
-                search: `${productType}`,
-                price_from: "",
-                price_to: "",
-              },
-            }
-          )
-          .then((response) => {
-            let data = response.data;
-            setProductData(response.data.results);
-            setapicall(false)
-            {
-              response.data.results.map((product) => {
-                return setcatArray((catArray) => [
-                  ...catArray,
-                  product.product_type,
-                ]);
-              });
-            }
-          });
-      } catch (err) {}
-    }
-    getProductData();
-  }, [productType,apicall]);
+ 
 
   useEffect(() => {
     const result = catArray.filter(
@@ -64,25 +34,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   }, [catArray]);
 
 // product quantity
-function incrementCount(id) {
- let cardadd = productData.find(item=> item.id=== id);
- setcardaddproduct(cardadd)
 
-  count = count + 1;
-  setCount(count);
-  setapicall(true);
- console.log("-----"+id +"----"+ cardadd.id +"ppppppp"+count)
-
-}
-const decrementCount = (id) => {
-  let cardadd = productData.find(item=> item.id=== id);
- setcardaddproduct(cardadd)
- if(cardadd.id === id){
-  if (count > 0) {
-    setCount((count) => count - 1);
-  }
-}
-};
 // end product quantity
 
   // product box
@@ -104,9 +56,10 @@ const decrementCount = (id) => {
       setData(data);
       setapicall(true);
       localStorage.setItem("cartupdate",true)
+      console.log("ADDCART"+true)
     });
-
   }
+  
 // wlist = window.location.pathname;
 
 const AddToWishList = (id,wishlistt,wishlistid) => {
@@ -138,7 +91,37 @@ const AddToWishList = (id,wishlistt,wishlistid) => {
     });
   }
 };
-
+useEffect(() => {
+  function getProductData() {
+    try {
+      axios
+        .post(
+          `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+          {
+            product_search: {
+              search: `${productType}`,
+              price_from: "",
+              price_to: "",
+            },
+          }
+        )
+        .then((response) => {
+          let data = response.data;
+          setProductData(response.data.results);
+          setapicall(false)
+          {
+            response.data.results.map((product) => {
+              return setcatArray((catArray) => [
+                ...catArray,
+                product.product_type,
+              ]);
+            });
+          }
+        });
+    } catch (err) {}
+  }
+  getProductData();
+}, [productType,apicall]);
 const clickProduct = (productid) => {
   sessionStorage.setItem("proid", productid);
   navigate("/product-detail");
@@ -149,7 +132,7 @@ const clickProduct = (productid) => {
   return (
     <Fragment>
          
-
+      <Header/>
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
@@ -300,12 +283,8 @@ const clickProduct = (productid) => {
                           saleprice={product.sale_price}
                           wishlistt={product.wishlist}
                           clickProduct={clickProduct}
-                          decrementCount={decrementCount}
-                          incrementCount={incrementCount}
                           AddToWishList={AddToWishList}
                           AddToCart={AddToCart}
-                          count={count}
-                          cardaddproduct={cardaddproduct}
                           
                         />
                       </div>

@@ -57,6 +57,7 @@ const Shop = (props) => {
       setData(data);
       setapicall(true);
       localStorage.setItem("cartupdate",true)
+      console.log("ADDCART"+true)
     });
 
   }
@@ -287,6 +288,7 @@ const Shop = (props) => {
       }
     }
   };
+  // console.log("consoleeMERAAAAAAAAAAAAAAAAAeeeeee"+JSON.stringify(prodData))
 
   const OnClearAllClick = (e) => {
     showcategorydata = [];
