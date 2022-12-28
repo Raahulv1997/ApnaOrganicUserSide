@@ -8,6 +8,7 @@ import "../../CSS/style.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Singup = () => {
+
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [emailerror, setemailerror] = useState("");
@@ -58,7 +59,6 @@ const Singup = () => {
         .then((response) => {
           sessionStorage.setItem("userid", response.data.insertId);
           sessionStorage.setItem("upassword", passval);
-
           navigate("/your_account");
           return response;
         })
@@ -67,6 +67,7 @@ const Singup = () => {
       setOtperror(true);
     }
   };
+
   return (
     <Fragment>
       <Header />

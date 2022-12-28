@@ -10,12 +10,12 @@ import "../../CSS/style.css";
 import {Link, NavLink } from "react-router-dom";
 import {useEffect } from "react";
 import axios from "axios";
+import Form from 'react-bootstrap/Form';
 import { FaStarHalfAlt,FaRegStar } from "react-icons/fa";
 const ProductDetail = () => {
   const useridd= sessionStorage.getItem("userid");
   const[apicall,setapicall]=useState([]);
   const[productDetails,setProductDetails]=useState([]);
-  const[storeInfo,setStoreInfo]=useState();
   const[productprice,setProductprice]=useState();
   const[mrp,setMrp]=useState();
   const[size,setSize]=useState();
@@ -24,9 +24,17 @@ const ProductDetail = () => {
   const[exp,setExp]=useState('');
   const[qut,setQut]=useState('');
   const[Id,setId]=useState();
-
+  // const[review,setReview]=useState([]);
   const[discount,setDiscount]=useState();
-  const[rating,setRating]=useState([]);
+  const [addreviewdata, setaddreviewdata] = useState([]);
+  
+   const[reviewData,setReviewData]=useState([]);
+   const [Searchreview, setSearchReview] = useState({
+    "product_name":"",
+    "category_type":"",
+    "status":""
+   });
+   const[rating,setRating]=useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
   // var product_details = data3.product_details;
@@ -64,7 +72,7 @@ let proid=sessionStorage.getItem("proid");
             setExp(data.product_verient[0].expire_date);
             setQut(data.product_verient[0].quantity)
             setId(data.product_verient[0].id);
-            setRating(data.rating);
+
             setapicall(false);
           });
       } catch (err) {}
@@ -106,7 +114,6 @@ setapicall(true);
 });
 }
 
-
 const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id)=>{
   setProductprice(product_price);
   setMrp(mrpp);
@@ -125,7 +132,58 @@ setExp(expp);
 setQut(quantityy)
 setId(id);
 }
+ useEffect(() => {
+    axios.post(`${process.env.REACT_APP_BASEURL}/review_list`,{
+    product_name:"",
+    category_type:"",
+    status:""
+}).then ((response) => {
+  let data= response.data;
+  setReviewData(response.data)
+  // setSearchReview(response.data)
+  console.log("CONSOLEE"+JSON.stringify(data))
+    setapicall(false);
+    })
+  }, [apicall]);
 
+// useEffect(() => {
+//   axios
+//     .get(`${process.env.REACT_APP_BASEURL}/review_detaile?id=14`)
+//     .then((response) => {
+//       let data= response.data;
+//       setaddreviewdata(data)
+//       console.log("dataaaareview"+JSON.stringify(data))
+//       setapicall(false);
+//     })
+//     .catch(function(error) {
+//       console.log(error);
+
+//     });
+// }, [apicall]);
+const handleFormChange = (e) => {
+  setaddreviewdata({...addreviewdata,[e.target.name]: e.target.value});
+  };
+  console.log("CLICKTOADDDATAAAA"+JSON.stringify(addreviewdata))
+
+const AddReview = (e) => {
+    axios
+    .post(`${process.env.REACT_APP_BASEURL}/review_rating`,
+    {
+      user_id:`${useridd}`,
+      user_name:"mayur",
+      product_id:`${Id}`,
+      product_name:`${addreviewdata.product_name}`,
+      category_type:`${addreviewdata.category_type}`,
+      review_date:`${addreviewdata.review_date}`,
+      review_rating:4,
+      comment:`${addreviewdata.comment}`
+    }
+    )
+    .then((response) => {
+      console.log("reviewwwwwwwwwwwwwwwwww----------" +JSON.stringify(addreviewdata));
+    });
+}
+console.log("jhaskdjajdvhasjhvfasdhasdasdjhg0"+JSON.stringify(reviewData))
   return (
     <Fragment>
       <Header/>
@@ -879,17 +937,64 @@ setId(id);
   
                             <div className="col-xl-6">
                               <div className="review-title">
+                               
                                 <h4 className="fw-500">Add a review</h4>
                               </div>
-  
-                              <div className="row g-4">
-                                <div className="col-md-6">
+                              <div className="d-flex">
+                              <div className="product-rating">
+                              
+                                    <Link>
+                              <ul className="rating">
+                                <li color="#ffb321">
+                                   <FaStar
+                                            icon="star"
+                                              className="feather fill"
+                                              fill={"#ffb321"}
+                                            />
+                                           
+                                          </li>
+                                          <li color="#ffb321">
+                                            <FaStar
+                                              icon="star"
+                                              className="feather fill"
+                                              fill={"#ffb321"}
+                                            />
+                                          </li>
+                                          <li color="#ffb321">
+                                            <FaStar
+                                              icon="star"
+                                              className="feather fill"
+                                              fill={"#ffb321"}
+                                            />
+                                          </li>
+                                          <li>
+                                            <FaStar
+                                              icon="star"
+                                              className="feather "
+                                            />
+                                          </li>
+                                          <li>
+                                            <FaStar
+                                              icon="star"
+                                              className="feather "
+                                            />
+                                          </li> 
+                                </ul>
+                                </Link>
+                              </div>
+                              </div>
+                              <div  className="row g-4">
+                                     <div className="col-md-6">
                                   <div className="form-floating theme-form-floating">
                                     <input
                                       type="text"
                                       className="form-control"
                                       id="name"
+                                      name={"user_name"}
+                                      onChange={(e) => handleFormChange(e)}
+                                      value={addreviewdata.user_name}
                                       placeholder="Name"
+
                                     />
                                     <label htmlFor="name">Your Name</label>
                                   </div>
@@ -898,42 +1003,80 @@ setId(id);
                                 <div className="col-md-6">
                                   <div className="form-floating theme-form-floating">
                                     <input
-                                      type="email"
+                                      type="text"
                                       className="form-control"
-                                      id="email"
-                                      placeholder="Email Address"
+                                      name={"product_name"}
+                                      id="product name"
+                                      placeholder="Product Name"
+                                      onChange={(e) => handleFormChange(e)}
+                                      value={addreviewdata.product_name}
+
                                     />
-                                    <label htmlFor="email">Email Address</label>
+                                    <label htmlFor="name">Product Name</label>
                                   </div>
                                 </div>
   
                                 <div className="col-md-6">
-                                  <div className="form-floating theme-form-floating">
-                                    <input
-                                      type="url"
-                                      className="form-control"
-                                      id="website"
-                                      placeholder="Website"
-                                    />
-                                    <label htmlFor="website">Website</label>
-                                  </div>
+                                      <Form.Select
+                                      aria-label="Search by category"
+                                      className="adminselectbox"
+                                      placeholder="Search by category"
+                                      onChange={(e) => handleFormChange(e)} name={'category_type'}
+                                      value={addreviewdata.category_type}
+                                      >
+                                     <option value={''}>Select Categories</option>
+                  
+                  <option value="cloth">cloth</option>
+                  <option value="food">Fish & Meat</option>
+                  <option value="baby care">Baby Care</option>
+                </Form.Select>
+                                  {/* <div className="form-floating theme-form-floating"> */}
+                                 
                                 </div>
   
                                 <div className="col-md-6">
-                                  <div className="form-floating theme-form-floating">
-                                    <input
+                                  {/* <div className="form-floating theme-form-floating"> */}
+                                  <Form.Select
+              aria-label="Search by Status"
+              className="adminselectbox"
+              name='status'
+              onChange={(e) => handleFormChange(e)}
+              value={addreviewdata.status}
+            >
+              <option>-Status-</option>
+              <option value="pending"> Pending</option>
+              <option value="approved">Approved</option>
+              <option value="blocked">Blocked</option>
+            </Form.Select>
+                                    {/* <input
                                       type="url"
                                       className="form-control"
                                       id="review1"
                                       placeholder="Give your review a title"
                                     />
-                                    <label htmlFor="review1">Review Title</label>
+                                    <label htmlFor="review1">Review Title</label> */}
+                                  {/* </div> */}
+                                </div>
+                                <div className="col-md-6">
+                                  <div className="form-floating theme-form-floating">
+                                    <input
+                                      type="date"
+                                      className="form-control"
+                                      id="date"
+                                      // placeholder="Select Date"
+                                      name={"review_date"}
+                                      onChange={(e) => handleFormChange(e)}
+                                      value={addreviewdata.review_date}
+                                    />
+                                    <label htmlFor="date">Date</label>
                                   </div>
                                 </div>
-  
                                 <div className="col-12">
                                   <div className="form-floating theme-form-floating your_comment">
                                     <textarea
+                                   onChange={(e) => handleFormChange(e)}
+                                  value={addreviewdata.comment}
+                                  name={"comment"}
                                       className="form-control"
                                       placeholder="Leave a comment here"
                                       id="floatingTextarea2"
@@ -942,18 +1085,32 @@ setId(id);
                                       Write Your Comment
                                     </label>
                                   </div>
+                                  <NavLink
+                                to=""
+                                onClick={AddReview}
+                                className="btn btn-sm cart-button theme-bg-color text-white mt-3"
+                              >
+                                Add Review
+                              </NavLink>
+                                 
                                 </div>
+                                  
+                               
                               </div>
                             </div>
                           </div>
                         </div>
                         <div className="col-12">
-                          <div className="review-title">
+                        <div className="review-title">
                             <h4 className="fw-500">
                               Customer questions & answers
                             </h4>
                           </div>
   
+                          {reviewData.map(rdataa=>{
+                            return(
+                              <>
+                              
                           <div className="review-people">
                             <ul className="review-list">
                               <li>
@@ -969,7 +1126,84 @@ setId(id);
                                   </div>
   
                                   <div className="people-comment">
-                                     <Link to="/" >
+                                        <Link to="/" >
+                                      {rdataa.user_name}
+                                    </Link>
+                                    <div className="date-time d-flex d-flex justify-content-between">
+                                      <h6 className="text-content">
+                                        {rdataa.review_date}
+                                      </h6>
+  
+                                      <div className="product-rating">
+                                        <ul className="rating ">
+                                        {
+          // !ratingg? null :
+          (ratingbox || []).map((rat, i) => {
+            return ratingg - rat >= 0 ? (
+              <li color="#ffb321" key={i}>
+                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
+              </li>
+            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+              <li color="#ffb321">
+                <FaStarHalfAlt
+                  icon="star"
+                  className="feather"
+                  fill={"#ffb321"}
+                />
+              </li>
+            ) : ratingg - rat <= -1 ? (
+              <li color="#ffb321">
+                <FaRegStar icon="star" className="feather"  fill={"#ffb321"}/>
+              </li>
+            ) : null;
+          })}
+                                           {/* <li color="#ffb321">
+                                            <FaStar
+                                              icon="star"
+                                              className="feather fill"
+                                              fill={"#ffb321"}
+                                            />
+                                          </li>
+                                          <li color="#ffb321">
+                                            <FaStar
+                                              icon="star"
+                                              className="feather fill"
+                                              fill={"#ffb321"}
+                                            />
+                                          </li>
+                                          <li color="#ffb321">
+                                            <FaStar
+                                              icon="star"
+                                              className="feather fill"
+                                              fill={"#ffb321"}
+                                            />
+                                          </li>
+                                          <li>
+                                            <FaStar
+                                              icon="star"
+                                              className="feather "
+                                            />
+                                          </li>
+                                          <li>
+                                            <FaStar
+                                              icon="star"
+                                              className="feather "
+                                            />
+                                          </li> */}
+                                        </ul>
+                                      </div>
+                                    </div>
+  
+                                    <div className="reply">
+                                      <p className="w-100">
+                                       {rdataa.comment}
+                                         <Link to="/" >Reply</Link>
+                                      </p>
+                                    </div>
+                                        {/* </>
+                                      )
+                                    })} */}
+                                     {/* <Link to="/" >
                                       Tracey
                                     </Link>
                                     <div className="date-time d-flex d-flex justify-content-between">
@@ -1026,11 +1260,11 @@ setId(id);
                                         shortbread candy canes cookie.
                                          <Link to="/" >Reply</Link>
                                       </p>
-                                    </div>
+                                    </div> */}
                                   </div>
                                 </div>
                               </li>
-  
+{/*   
                               <li className="w-100">
                                 <div className="people-box">
                                   <div>
@@ -1103,8 +1337,8 @@ setId(id);
                                   </div>
                                 </div>
                               </li>
-  
-                              <li>
+   */}
+                              {/* <li>
                                 <div className="people-box">
                                   <div>
                                     <div className="people-image">
@@ -1179,9 +1413,12 @@ setId(id);
                                     </div>
                                   </div>
                                 </div>
-                              </li>
+                              </li> */}
                             </ul>
                           </div>
+                              </>
+                           )
+                          })} 
                         </div>
                       </Tab>
                     </Tabs>

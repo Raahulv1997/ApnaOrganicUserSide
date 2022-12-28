@@ -153,7 +153,7 @@ const Shop = (props) => {
           .then((response) => {
             let data = response.data;
             setProdData(data.results);
-            // console.log("hhhhggggggg"+JSON.stringify(data))
+            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+JSON.stringify(data))
 
             if (
               categoryNamedata.length === 0 &&

@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { Fragment, useState } from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import { Link, NavLink } from "react-router-dom";
@@ -13,7 +13,11 @@ import veg23 from '../../Photos/vegetable/product/23.png';
 import veg24 from '../../Photos/vegetable/product/24.png';
 import veg26 from '../../Photos/vegetable/product/26.png';
 import Accordion from 'react-bootstrap/Accordion';
+import axios from "axios";
+import { useEffect} from "react";
 const BlogDetail = () => {
+
+
     return (
         <Fragment>
         <Header />

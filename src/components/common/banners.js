@@ -15,16 +15,48 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
   const useridd = sessionStorage.getItem("userid");
+
   const [apicall, setapicall] = useState(false);
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
-  const [cardaddproduct,setcardaddproduct] = useState('')
 
   let [count, setCount] = useState(1);
  
   const navigate = useNavigate();
   // var product = data.product;
- 
+  useEffect(() => {
+    function getRating() {
+      try {
+        axios
+          .post(
+            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+            {
+              product_search: {
+                search: `${productType}`,
+                price_from: "",
+                price_to: "",
+              },
+            }
+          )
+          .then((response) => {
+            let data = response.data;
+            setProductData(response.data.results);
+            sessionStorage.setItem("reviewid",response.data.results.id);
+
+            setapicall(false)
+            {
+              response.data.results.map((product) => {
+                return setcatArray((catArray) => [
+                  ...catArray,
+                  product.product_type,
+                ]);
+              });
+            }
+          });
+      } catch (err) {}
+    }
+    getRating();
+  }, []);
 
   useEffect(() => {
     const result = catArray.filter(
@@ -108,15 +140,8 @@ useEffect(() => {
         .then((response) => {
           let data = response.data;
           setProductData(response.data.results);
+          console.log("product"+JSON.stringify(response.data.results))
           setapicall(false)
-          {
-            response.data.results.map((product) => {
-              return setcatArray((catArray) => [
-                ...catArray,
-                product.product_type,
-              ]);
-            });
-          }
         });
     } catch (err) {}
   }

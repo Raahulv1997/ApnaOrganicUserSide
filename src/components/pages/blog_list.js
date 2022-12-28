@@ -12,8 +12,29 @@ import veg24 from "../../Photos/vegetable/product/24.png";
 import veg26 from "../../Photos/vegetable/product/26.png";
 import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
-
+import { useState,useEffect } from "react";
+import axios from "axios";
 const BlogList = () => {
+  const[blog,setBlog]=useState([]);
+// const[apicall,setapicall]=
+    useEffect(() => {
+        function getBlogDetails() {
+          try {
+            axios
+              .get(`${process.env.REACT_APP_BASEURL}/blogs`,{
+                id:"1",
+               
+              })
+              .then((response) => {
+                let data = response.data;
+                setBlog(data);
+                // setapicall(false);
+              });
+          } catch (err) {}
+        }
+      getBlogDetails();
+      }, []);
+      console.log("bhavnaaaaaaaaaa"+JSON.stringify(blog))
   return (
     <Fragment>
       <Header />
@@ -413,352 +434,273 @@ const BlogList = () => {
                     />
                   </div>
                 </div>
-                <div
-                  classNameName="accordion left-accordion-box"
-                  id="accordionPanelsStayOpenExample"
-                >
-                  <Accordion>
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header>Recent Post</Accordion.Header>
-                      <Accordion.Body>
-                        <div
-                          id="panelsStayOpen-collapseOne"
-                          className="accordion-collapse collapse show"
-                          aria-labelledby="panelsStayOpen-headingOne"
-                        >
-                          <div classNameName="accordion-body pt-0">
-                            <div classNameName="recent-post-box">
-                              <div classNameName="recent-box">
-                                <Link
-                                  to="blog-detail.html"
-                                  classNameName="recent-image"
-                                >
-                                  <img
-                                    src={blog1}
-                                    classNameName="img-fluid  lazyload"
-                                    alt=""
-                                  />
-                                </Link>
+                <div className="accordion left-accordion-box" id="accordionPanelsStayOpenExample">
+    
+                       <Accordion>
+                        <Accordion.Item eventKey="2">
+                            <Accordion.Header>
+                            Recent Post
+                            </Accordion.Header>
+                            <Accordion.Body>
+                            <div id="panelsStayOpen-collapseOne"className="accordion-collapse collapse show"
+                                    aria-labelledby="panelsStayOpen-headingOne">
+                            <div className="accordion-body pt-0">
+                                        <div className="recent-post-box">
+                                            <div className="recent-box">
+                                                <Link to="/" className="recent-image">
+                                                    <img src={blog1}
+                                                        className="img-fluid  lazyload" alt=""/>
+                                                </Link>
 
-                                <div classNameName="recent-detail">
-                                  <Link to="blog-detail.html">
-                                    <h5 classNameName="recent-name">
-                                      Green onion knife and salad placed
-                                    </h5>
-                                  </Link>
-                                  <h6>
-                                    25 Jan, 2022{" "}
-                                    <i data-feather="thumbs-up"></i>
-                                  </h6>
+                                                <div className="recent-detail">
+                                                <Link to="/">
+                                                        <h5 className="recent-name">Green onion knife and salad placed</h5>
+                                                    </Link>
+                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
+                                                </div>
+                                            </div>
+
+                                            <div className="recent-box">
+                                            <Link to="/" className="recent-image">
+                                                    <img src={blog2}
+                                                       className="img-fluid  lazyload" alt=""/>
+                                                </Link>
+
+                                                <div className="recent-detail">
+                                                <Link to="/">
+                                                        <h5 className="recent-name">Health and skin for your organic</h5>
+                                                    </Link>
+                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
+                                                </div>
+                                            </div>
+
+                                            <div className="recent-box">
+                                            <Link to="/" className="recent-image">
+                                                    <img src={blog3}
+                                                       className="img-fluid  lazyload" alt=""/>
+                                                </Link>
+
+                                                <div className="recent-detail">
+                                                <Link to="/">
+                                                        <h5 className="recent-name">Organics mix masala fresh & soft</h5>
+                                                    </Link>
+                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
+                                                </div>
+                                            </div>
+
+                                            <div className="recent-box">
+                                            <Link to="/" className="recent-image">
+                                                    <img src={blog4}
+                                                        className="img-fluid  lazyload" alt=""/>
+                                                </Link>
+
+                                                <div className="recent-detail">
+                                                <Link to="/" >
+                                                        <h5 className="recent-name">Fresh organics brand and picnic</h5>
+                                                    </Link>
+                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    </div>
+                            </Accordion.Body>
+                        </Accordion.Item>
+                        </Accordion>
+                        <Accordion>
+                            <Accordion.Item eventKey="2">
+                                <Accordion.Header>
+                                Category
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse collapse show"
+                                    aria-labelledby="panelsStayOpen-headingTwo">
+                                    <div className="accordion-body p-0">
+                                        <div className="category-list-box">
+                                            <ul>
+                                                <li>
+                                                <Link to="/" >
+                                                        <div className="category-name">
+                                                            <h5>Latest Recipes</h5>
+                                                            <span>10</span>
+                                                        </div>
+                                                    </Link>
+                                                </li>
+
+                                                <li>
+                                                <Link to="/" >
+                                                        <div className="category-name">
+                                                            <h5>Diet Food</h5>
+                                                            <span>6</span>
+                                                        </div>
+                                                    </Link>
+                                                </li>
+
+                                                <li>
+                                                    <Link to="/" >
+                                                        <div className="category-name">
+                                                            <h5>Low calorie Items</h5>
+                                                            <span>8</span>
+                                                        </div>
+                                                    </Link>
+                                                </li>
+
+                                                <li>
+                                                    <Link to="/" >
+                                                        <div className="category-name">
+                                                            <h5>Cooking Method</h5>
+                                                            <span>9</span>
+                                                        </div>
+                                                    </Link>
+                                                </li>
+
+                                                <li>
+                                                    <Link to="/" >
+                                                        <div className="category-name">
+                                                            <h5>Dairy Free</h5>
+                                                            <span>12</span>
+                                                        </div>
+                                                    </Link>
+                                                </li>
+
+                                                <li>
+                                                    <Link to="/" >
+                                                        <div className="category-name">
+                                                            <h5>Vegetarian Food</h5>
+                                                            <span>10</span>
+                                                        </div>
+                                                    </Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                        <Accordion>
+                            <Accordion.Item eventKey="2">
+                                <Accordion.Header>
+                                Product Tags
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse collapse show"
+                                    aria-labelledby="panelsStayOpen-headingThree">
+                                    <div className="accordion-body pt-0">
+                                        <div className="product-tags-box">
+                                            <ul>
 
-                              <div classNameName="recent-box">
-                                <Link
-                                  to="blog-detail.html"
-                                  classNameName="recent-image"
-                                >
-                                  <img
-                                    src={blog2}
-                                    className="img-fluid  lazyload"
-                                    alt=""
-                                  />
-                                </Link>
+                                                <li>
+                                                <Link to="/" >Fruit Cutting</Link>
+                                                </li>
 
-                                <div classNameName="recent-detail">
-                                  <Link to="blog-detail.html">
-                                    <h5 classNameName="recent-name">
-                                      Health and skin for your organic
-                                    </h5>
-                                  </Link>
-                                  <h6>
-                                    25 Jan, 2022{" "}
-                                    <i data-feather="thumbs-up"></i>
-                                  </h6>
+                                                <li>
+                                                   <Link to="/" >Meat</Link>
+                                                </li>
+
+                                                <li>
+                                                   <Link to="/" >organic</Link>
+                                                </li>
+
+                                                <li>
+                                                   <Link to="/" >cake</Link>
+                                                </li>
+
+                                                <li>
+                                                   <Link to="/" >pick fruit</Link>
+                                                </li>
+
+                                                <li>
+                                                   <Link to="/" >backery</Link>
+                                                </li>
+
+                                                <li>
+                                                   <Link to="/" >organix food</Link>
+                                                </li>
+
+                                                <li>
+                                                   <Link to="/" >Most Expensive Fruit</Link>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                    </div>
                                 </div>
-                              </div>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
+                        <Accordion>
+                            <Accordion.Item eventKey="2">
+                                <Accordion.Header>
+                                Trending Products
+                                </Accordion.Header>
+                                <Accordion.Body>
+                                <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse collapse show"
+                                    aria-labelledby="panelsStayOpen-headingFour">
+                                    <div className="accordion-body">
+                                        <ul className="product-list product-list-2 border-0 p-0">
+                                            <li>
+                                                <div className="offer-product">
+                                                <Link to="/"  className="offer-image">
+                                                        <img src={veg23}
+                                                          className=" lazyload" alt=""/>
+                                                    </Link>
 
-                              <div classNameName="recent-box">
-                                <Link
-                                  to="blog-detail.html"
-                                  classNameName="recent-image"
-                                >
-                                  <img
-                                    src={blog3}
-                                    className="img-fluid  lazyload"
-                                    alt=""
-                                  />
-                                </Link>
+                                                    <div className="offer-detail">
+                                                        <div>
+                                                        <Link to="/" >
+                                                                <h6 className="name">Meatigo Premium Goat Curry</h6>
+                                                            </Link>
+                                                            <span>450 G</span>
+                                                            <h6 className="price theme-color">$ 70.00</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
 
-                                <div classNameName="recent-detail">
-                                  <Link to="blog-detail.html">
-                                    <h5 classNameName="recent-name">
-                                      Organics mix masala fresh & soft
-                                    </h5>
-                                  </Link>
-                                  <h6>
-                                    25 Jan, 2022{" "}
-                                    <i data-feather="thumbs-up"></i>
-                                  </h6>
+                                            <li>
+                                                <div className="offer-product">
+                                                    <Link to="/"  className="offer-image">
+                                                        <img src={veg24}
+                                                           className=" lazyload" alt=""/>
+                                                    </Link>
+
+                                                    <div className="offer-detail">
+                                                        <div>
+                                                            <Link to="/" >
+                                                                <h6 className="name">Dates Medjoul Premium Imported</h6>
+                                                            </Link>
+                                                            <span>450 G</span>
+                                                            <h6 className="price theme-color">$ 40.00</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+
+                                            <li className="mb-0">
+                                                <div className="offer-product">
+                                                    <Link to="/"  className="offer-image">
+                                                        <img src={veg26}
+                                                            className=" lazyload" alt=""/>
+                                                    </Link>
+
+                                                    <div className="offer-detail">
+                                                        <div>
+                                                            <Link to="/" >
+                                                                <h6 className="name">Apple Red Premium Imported</h6>
+                                                            </Link>
+                                                            <span>1 KG</span>
+                                                            <h6 className="price theme-color">$ 80.00</h6>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
                                 </div>
-                              </div>
-
-                              <div classNameName="recent-box">
-                                <Link
-                                  to="blog-detail.html"
-                                  className="recent-image"
-                                >
-                                  <img
-                                    src={blog4}
-                                    classNameName="img-fluid  lazyload"
-                                    alt=""
-                                  />
-                                </Link>
-
-                                <div classNameName="recent-detail">
-                                  <Link to="blog-detail.html">
-                                    <h5 classNameName="recent-name">
-                                      Fresh organics brand and picnic
-                                    </h5>
-                                  </Link>
-                                  <h6>
-                                    25 Jan, 2022{" "}
-                                    <i data-feather="thumbs-up"></i>
-                                  </h6>
-                                </div>
-                              </div>
-                            </div>
-                          </div>
+                                </Accordion.Body>
+                            </Accordion.Item>
+                        </Accordion>
                         </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-                  <Accordion>
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header>Category</Accordion.Header>
-                      <Accordion.Body>
-                        <div
-                          id="panelsStayOpen-collapseTwo"
-                          className="accordion-collapse collapse collapse show"
-                          aria-labelledby="panelsStayOpen-headingTwo"
-                        >
-                          <div className="accordion-body p-0">
-                            <div className="category-list-box">
-                              <ul>
-                                <li>
-                                  <Link to="blog-list.html">
-                                    <div className="category-name">
-                                      <h5>Latest Recipes</h5>
-                                      <span>10</span>
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li>
-                                  <Link to="blog-list.html">
-                                    <div className="category-name">
-                                      <h5>Diet Food</h5>
-                                      <span>6</span>
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li>
-                                  <Link to="blog-list.html">
-                                    <div className="category-name">
-                                      <h5>Low calorie Items</h5>
-                                      <span>8</span>
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li>
-                                  <Link to="blog-list.html">
-                                    <div className="category-name">
-                                      <h5>Cooking Method</h5>
-                                      <span>9</span>
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li>
-                                  <Link to="blog-list.html">
-                                    <div className="category-name">
-                                      <h5>Dairy Free</h5>
-                                      <span>12</span>
-                                    </div>
-                                  </Link>
-                                </li>
-
-                                <li>
-                                  <Link to="blog-list.html">
-                                    <div className="category-name">
-                                      <h5>Vegetarian Food</h5>
-                                      <span>10</span>
-                                    </div>
-                                  </Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-                  <Accordion>
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header>Product Tags</Accordion.Header>
-                      <Accordion.Body>
-                        <div
-                          id="panelsStayOpen-collapseThree"
-                          className="accordion-collapse collapse collapse show"
-                          aria-labelledby="panelsStayOpen-headingThree"
-                        >
-                          <div className="accordion-body pt-0">
-                            <div className="product-tags-box">
-                              <ul>
-                                <li>
-                                  <Link to="#">Fruit Cutting</Link>
-                                </li>
-
-                                <li>
-                                  <Link to="#">Meat</Link>
-                                </li>
-
-                                <li>
-                                  <Link to="#">organic</Link>
-                                </li>
-
-                                <li>
-                                  <Link to="#">cake</Link>
-                                </li>
-
-                                <li>
-                                  <Link to="#">pick fruit</Link>
-                                </li>
-
-                                <li>
-                                  <Link to="#">backery</Link>
-                                </li>
-
-                                <li>
-                                  <Link to="#">organix food</Link>
-                                </li>
-
-                                <li>
-                                  <Link to="#">Most Expensive Fruit</Link>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-                  <Accordion>
-                    <Accordion.Item eventKey="2">
-                      <Accordion.Header>Trending Products</Accordion.Header>
-                      <Accordion.Body>
-                        <div
-                          id="panelsStayOpen-collapseFour"
-                          className="accordion-collapse collapse collapse show"
-                          aria-labelledby="panelsStayOpen-headingFour"
-                        >
-                          <div className="accordion-body">
-                            <ul className="product-list product-list-2 border-0 p-0">
-                              <li>
-                                <div className="offer-product">
-                                  <Link
-                                    to="shop-left-sidebar.html"
-                                    className="offer-image"
-                                  >
-                                    <img
-                                      src={veg23}
-                                      className=" lazyload"
-                                      alt=""
-                                    />
-                                  </Link>
-
-                                  <div className="offer-detail">
-                                    <div>
-                                      <Link to="shop-left-sidebar.html">
-                                        <h6 className="name">
-                                          Meatigo Premium Goat Curry
-                                        </h6>
-                                      </Link>
-                                      <span>450 G</span>
-                                      <h6 className="price theme-color">
-                                        $ 70.00
-                                      </h6>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-
-                              <li>
-                                <div className="offer-product">
-                                  <Link
-                                    to="shop-left-sidebar.html"
-                                    className="offer-image"
-                                  >
-                                    <img
-                                      src={veg24}
-                                      className=" lazyload"
-                                      alt=""
-                                    />
-                                  </Link>
-
-                                  <div className="offer-detail">
-                                    <div>
-                                      <Link to="shop-left-sidebar.html">
-                                        <h6 className="name">
-                                          Dates Medjoul Premium Imported
-                                        </h6>
-                                      </Link>
-                                      <span>450 G</span>
-                                      <h6 className="price theme-color">
-                                        $ 40.00
-                                      </h6>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-
-                              <li className="mb-0">
-                                <div className="offer-product">
-                                  <Link
-                                    to="shop-left-sidebar.html"
-                                    className="offer-image"
-                                  >
-                                    <img
-                                      src={veg26}
-                                      className=" lazyload"
-                                      alt=""
-                                    />
-                                  </Link>
-
-                                  <div className="offer-detail">
-                                    <div>
-                                      <Link to="shop-left-sidebar.html">
-                                        <h6 className="name">
-                                          Apple Red Premium Imported
-                                        </h6>
-                                      </Link>
-                                      <span>1 KG</span>
-                                      <h6 className="price theme-color">
-                                        $ 80.00
-                                      </h6>
-                                    </div>
-                                  </div>
-                                </div>
-                              </li>
-                            </ul>
-                          </div>
-                        </div>
-                      </Accordion.Body>
-                    </Accordion.Item>
-                  </Accordion>
-                </div>
               </div>
             </div>
           </div>

@@ -30,7 +30,6 @@ const ProductBox = ({
   AddToWishList,
   AddToCart,
 }) => {
- 
   const useridd = sessionStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [isActive, setIsActive] = useState(false);
@@ -75,8 +74,10 @@ const ProductBox = ({
             }
           </button>
         </div>
+        
         {image==""|| image==null|| image==undefined?
          <a onClick={() => clickProduct(productid)}>
+
           <img
             src={
               "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
