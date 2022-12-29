@@ -24,19 +24,20 @@ import Careers from "./components/pages/careers";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
 function App() {
+  let useridd = sessionStorage.getItem("userid")
   return (
     <BrowserRouter>
       <Routes>      
         <Route path="/" element={<Home/>} />
         <Route path="/shop" element={<Shop/>} />
+        <Route path="/login" element={<Login/>} />
+        <Route path="/signup" element={<Signup/>} />
         {/* <Route path="/banners" element={<Benners/>}/>
         <Route path="/header" element={<Header/>}/> */}
         <Route path="/product-detail" element={<ProductDetail/>} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/checkout" element={<Checkout/>} />
         <Route path="/forgot" element={<Forgot/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup/>} />
         <Route path="/aboutus" element={<Aboutus/>} />
         <Route path="/contactus" element={<Contactus/>} />
         <Route path="/faq" element={<Faq/>} />
