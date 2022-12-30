@@ -1,5 +1,5 @@
 import React, { Fragment, useState } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate,useLocation } from "react-router-dom";
 import Banner from "../../Photos/login.png";
 import Footer from "../common/footer";
 import Header from "../common/header";
@@ -7,8 +7,10 @@ import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
 import axios from "axios";
 
-const Login = () => {
+const Login = ({ logIn }) => {
   const [error,setError]=useState(true);
+  const [loginerror,setLoginerror]=useState(true);
+  const { state } = useLocation();
   const navigate = useNavigate();
   const [credentailval , setcredentailval] = useState({
     user_email:"",
@@ -18,18 +20,40 @@ const Login = () => {
     setcredentailval({...credentailval, [e.target.name]:e.target.value})
   }
   const onSubmitClick = () =>{
+    const { from } = state || {};
     axios.post(`http://192.168.29.108:5000/user_login`,credentailval)
     .then(response => {
-      if(response.data === false || response.data === "check_credintials"){
-      setError(false);
+      if(response.data === "check_credintials"){
+      setLoginerror(false)
+      }
+      if(response.data === false){
+        setError(false)
+      }
+      else if(from === undefined){
+        localStorage.setItem("userid",response.data.user_id);
+        console.log("----from-------"+from)
+        navigate('/');
+       setError(false);
+
       }
       else{
-        sessionStorage.setItem("userid",response.data.user_id);
-        navigate('/');
+        localStorage.setItem("userid",response.data.user_id);
+          const { from } = state || {};
+          // callback to update state
+          console.log("----from-------"+from)
+          console.log("-------from.pathname----"+from.pathname)
+          console.log("----state-------"+state)
+          logIn();
+          // redirect back to protected route being accessed
+          navigate(from.pathname, { replace: true });
+        // }
         setError(false);
       }
+       
+
       // return response;
     }).catch(error => {
+
     })
   }
  
@@ -70,57 +94,15 @@ const Login = () => {
                         />
                         
                         <label htmlFor="email" className="bg-transparent">Email</label>
+                        {loginerror===false ?
+                           <p className="mt-1 ms-2 text-danger" type="invalid">
+                      Please Sign In First
+                    </p>:null}
                       </div>
                     </div>
 
                     <div className="col-12">
-                      {/* <div
-                        id="otp"
-                        className="inputs d-flex flex-row justify-content-center"
-                      >
-                        <input
-                          className="text-center form-control rounded"
-                          type="text"
-                          id="first"
-                          maxLength="1"
-                          placeholder="0"
-                        />
-                        <input
-                          className="text-center form-control rounded"
-                          type="text"
-                          id="second"
-                          maxLength="1"
-                          placeholder="0"
-                        />
-                        <input
-                          className="text-center form-control rounded"
-                          type="text"
-                          id="third"
-                          maxLength="1"
-                          placeholder="0"
-                        />
-                        <input
-                          className="text-center form-control rounded"
-                          type="text"
-                          id="fourth"
-                          maxLength="1"
-                          placeholder="0"
-                        />
-                        <input
-                          className="text-center form-control rounded"
-                          type="text"
-                          id="fifth"
-                          maxLength="1"
-                          placeholder="0"
-                        />
-                        <input
-                          className="text-center form-control rounded"
-                          type="text"
-                          id="sixth"
-                          maxLength="1"
-                          placeholder="0"
-                        />
-                      </div> */}
+                      
                        <div className="form-floating theme-form-floating log-in-form">
                         <input
                           type="password"
@@ -179,20 +161,22 @@ const Login = () => {
                 <div className="log-in-button">
                   <ul>
                     <li>
-                      <Link
-                        to="https://www.google.com/"
+                      <a
+                      target={"blank"}
+                        href="https://www.google.com/"
                         className="btn google-button w-100"
                       >
                         Log In with Google
-                      </Link>
+                      </a>
                     </li>
                     <li>
-                      <Link
-                        to="https://www.facebook.com/"
+                      <a
+                      target={"blank"}
+                        href="https://www.facebook.com/"
                         className="btn google-button w-100"
                       >
                         Log In with Facebook
-                      </Link>
+                      </a>
                     </li>
                   </ul>
                 </div>

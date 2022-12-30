@@ -1,5 +1,5 @@
 import React  from "react";
-import { Link,useNavigate} from "react-router-dom";
+import { json, Link,useNavigate} from "react-router-dom";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -22,8 +22,8 @@ import moment from "moment";
 // import {CiMail} from 'react-icons/ci';
 
 function Account() {
-  const useridd = sessionStorage.getItem("userid")
-  const userpass =sessionStorage.getItem("upassword")
+  const useridd = localStorage.getItem("userid")
+  const userpass =localStorage.getItem("upassword")
 const navigate = useNavigate();
   const func=()=>{}
   const [show, setShow] = useState(false);
@@ -66,7 +66,7 @@ const navigate = useNavigate();
  },[Password])
  
 // wishlist
-
+console.log("userdatsa"+JSON.stringify(userdata))
 const setwishlistclick = () =>{
   axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
   .then(response => {
@@ -197,7 +197,7 @@ const handlePassSubmit = (event) => {
   })
     .then(response => {
       if(response === true){
-        sessionStorage.setItem("upassword", response.data.new_password)
+        localStorage.setItem("upassword", response.data.new_password)
         setPassword(false)
       }
       // navigate('/your_account')
@@ -256,7 +256,7 @@ const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
 
 
 const onProductClick = (id) =>{
-  sessionStorage.setItem("orderid" , id)
+  localStorage.setItem("orderid" , id)
   navigate('/product_detail')
 }
   return (
@@ -296,21 +296,6 @@ const onProductClick = (id) =>{
                     </div> */}
 
                     <div className="profile-contain">
-                      {/* <div className="profile-image">
-                        <div className="position-relative">
-                          <img
-                            src={Profile}
-                            className=" lazyload update_img"
-                            alt=""
-                          />
-                          <div className="cover-icon">
-                            <i className="fa-solid fa-pen">
-                              <input type="file" />
-                            </i>
-                          </div>
-                        </div>
-                      </div> */}
-
                       <div className="profile-name">
                         <h3>{userdata.first_name} {userdata.last_name}</h3>
                         <h6 className="text-content">{userdata.email}</h6>

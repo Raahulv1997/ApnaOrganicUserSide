@@ -14,8 +14,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [productType, setProductType] = useState([]);
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
-  const useridd = sessionStorage.getItem("userid");
-
+  let useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
@@ -41,7 +40,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           .then((response) => {
             let data = response.data;
             setProductData(response.data.results);
-            sessionStorage.setItem("reviewid",response.data.results.id);
+            localStorage.setItem("reviewid",response.data.results.id);
 
             setapicall(false)
             {
@@ -72,30 +71,46 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   // product box
 
   const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
-    axios
-    .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-      user_id: `${useridd}`,
-      product_view_id: `${id}`,
-      price: `${saleprice}`,
-      discount: `${productMRF}`,
-      quantity:  count,
-      is_active: 1,
-    })
-    .then((response) => {
-      let data = response.data;
-    setCount(0);
-      // setaddcartid(id)
-      setData(data);
-      setapicall(true);
-      localStorage.setItem("cartupdate",true)
-      console.log("ADDCART"+true)
-    });
+    if(useridd === undefined ||
+      useridd === "null" ||
+      useridd === "" ||
+      useridd === null){
+        navigate("/login")
+    }
+    else{
+      axios
+      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+        user_id: `${useridd}`,
+        product_view_id: `${id}`,
+        price: `${saleprice}`,
+        discount: `${productMRF}`,
+        quantity:  count,
+        is_active: 1,
+      })
+      .then((response) => {
+        let data = response.data;
+      setCount(0);
+        // setaddcartid(id)
+        setData(data);
+        setapicall(true);
+        localStorage.setItem("cartupdate",true)
+        console.log("ADDCART"+true)
+      });
+     
+    }
   }
   
 // wlist = window.location.pathname;
 
 const AddToWishList = (id,wishlistt,wishlistid) => {
-   if (wishlistt > 0) {
+  if(useridd === undefined ||
+    useridd === "null" ||
+    useridd === "" ||
+    useridd === null){
+      navigate("/login")
+}
+else{
+  if (wishlistt > 0) {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
         product_id:`${id}`,
@@ -122,13 +137,22 @@ const AddToWishList = (id,wishlistt,wishlistid) => {
       setapicall(true);
     });
   }
+}
 };
 useEffect(() => {
+ 
+  let homeurl;
+  if(useridd!== "null" || useridd !== '' || useridd !== null){
+     homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`
+  }
+  else{
+     homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`
+  }
   function getProductData() {
     try {
       axios
         .post(
-          `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+          `${homeurl}`,
           {
             product_search: {
               search: `${productType}`,
@@ -140,7 +164,6 @@ useEffect(() => {
         .then((response) => {
           let data = response.data;
           setProductData(response.data.results);
-          console.log("product"+JSON.stringify(response.data.results))
           setapicall(false)
         });
     } catch (err) {}
@@ -148,7 +171,7 @@ useEffect(() => {
   getProductData();
 }, [productType,apicall]);
 const clickProduct = (productid) => {
-  sessionStorage.setItem("proid", productid);
+  localStorage.setItem("proid", productid);
   navigate("/product-detail");
 };
 

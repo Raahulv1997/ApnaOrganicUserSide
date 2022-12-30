@@ -19,12 +19,12 @@ const Shop = (props) => {
   const [click, setclick] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
-  const useridd = sessionStorage.getItem("userid")
+  const useridd = localStorage.getItem("userid")
   const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
   };
-  // const useridd = sessionStorage.getItem("userid");
+  // const useridd = localStorage.getItem("userid");
   const [searchparams] = useSearchParams();
   const [categorydata, setCategoryData] = useState([]);
   const [categorynameChange, setCategoryNameChange] = useState(false);
@@ -42,6 +42,13 @@ const Shop = (props) => {
   const [wlistData, setWlistData] = useState("add");
   const [isActive, setIsActive] = useState(false);
   const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
+    if(useridd === undefined ||
+      useridd === "null" ||
+      useridd === "" ||
+      useridd === null){
+        navigate("/login")
+  }
+  else{
     let cnt = 1;
     axios
     .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
@@ -61,9 +68,17 @@ const Shop = (props) => {
     });
 
   }
-  const AddToWishList = (id,wishlistt) => {
     
-     if (wishlistt > 0) {
+  }
+  const AddToWishList = (id,wishlistt) => {
+    if(useridd === undefined ||
+      useridd === "null" ||
+      useridd === "" ||
+      useridd === null){
+        navigate("/login")
+  }
+  else{
+    if (wishlistt > 0) {
       axios
         .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
           product_id:`${id}`,
@@ -94,11 +109,13 @@ const Shop = (props) => {
       });
   
     }
+  }
+    
   };
  
    
    const clickProduct = (productid) => {
-    sessionStorage.setItem("proid", productid);
+    localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
   useEffect(() => {
@@ -130,11 +147,18 @@ const Shop = (props) => {
   // var product = data.product;
   //   product list
   useEffect(() => {
+    let homeurl;
+    if(useridd!== "null" || useridd !== '' || useridd !== null){
+       homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`
+    }
+    else{
+       homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`
+    }
     function getProductData() {
       try {
         axios
           .post(
-            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+            `${homeurl}`,
             {
               product_search: {
                 search: `${searchText}`,
@@ -153,7 +177,7 @@ const Shop = (props) => {
           .then((response) => {
             let data = response.data;
             setProdData(data.results);
-            console.log("AAAAAAAAAAAAAAAAAAAAAAAAAAAAA"+JSON.stringify(data))
+            
 
             if (
               categoryNamedata.length === 0 &&

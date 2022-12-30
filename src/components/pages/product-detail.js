@@ -7,13 +7,13 @@ import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
-import {Link, NavLink } from "react-router-dom";
+import {Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import {useEffect } from "react";
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import { FaStarHalfAlt,FaRegStar } from "react-icons/fa";
-const ProductDetail = () => {
-  const useridd= sessionStorage.getItem("userid");
+const ProductDetail = ({logIn}) => {
+  const useridd= localStorage.getItem("userid");
   const[apicall,setapicall]=useState([]);
   const[productDetails,setProductDetails]=useState([]);
   const[productprice,setProductprice]=useState();
@@ -36,10 +36,15 @@ const ProductDetail = () => {
    });
    const[rating,setRating]=useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = Number(rating);
+  let ratingg = Number(productDetails.rating);
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(0);
+  const { state } = useLocation();
+  const navigate = useNavigate();
+
+
+
   function incrementCount() {
     count = count + 1;
     setCount(count);
@@ -54,7 +59,7 @@ const decrementCount = () => {
     
   }
 
-let proid=sessionStorage.getItem("proid");
+let proid=localStorage.getItem("proid");
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -180,10 +185,8 @@ const AddReview = (e) => {
     }
     )
     .then((response) => {
-      console.log("reviewwwwwwwwwwwwwwwwww----------" +JSON.stringify(addreviewdata));
     });
 }
-console.log("jhaskdjajdvhasjhvfasdhasdasdjhg0"+JSON.stringify(reviewData))
   return (
     <Fragment>
       <Header/>
@@ -1108,6 +1111,8 @@ console.log("jhaskdjajdvhasjhvfasdhasdasdjhg0"+JSON.stringify(reviewData))
                           </div>
   
                           {reviewData.map(rdataa=>{
+                      let ratingg = Number(rdataa.review_rating);
+
                             return(
                               <>
                               
@@ -1139,6 +1144,7 @@ console.log("jhaskdjajdvhasjhvfasdhasdasdjhg0"+JSON.stringify(reviewData))
                                         {
           // !ratingg? null :
           (ratingbox || []).map((rat, i) => {
+
             return ratingg - rat >= 0 ? (
               <li color="#ffb321" key={i}>
                 <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
