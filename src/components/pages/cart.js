@@ -22,10 +22,15 @@ const Cart = () => {
   const [coupondata, setcouponData] = useState([]);
   const [quantity, setQuantity] = useState([]);
   const [CouponDis, setCouponDis] = useState(0);
+  const [Couponid, setCouponid] = useState(0);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
+<<<<<<< HEAD
   const useridd = sessionStorage.getItem("userid");
   
+=======
+  const useridd = localStorage.getItem("userid");
+>>>>>>> 1cc97ff57b7d87f442dcb5a49ee25a123b315aba
   const currentdate = moment().format();
   
 
@@ -102,7 +107,6 @@ const Cart = () => {
                   cdata.sgst) /
                   100
               )
-                console.log("---product"+ProductTotal)
             });
             setProductPriceTotal(ProductTotal);
             setCartData(data);
@@ -114,7 +118,7 @@ const Cart = () => {
     }
 
     getCartData();
-  }, [apicall]);
+  }, [apicall,quantity]);
   // end Cart Detail
   const deleteCart = (id, user_id) => {
     axios
@@ -146,6 +150,8 @@ const Cart = () => {
 
   // payement
   const onProccedClick = () => {
+    localStorage.setItem("coupon",CouponDis)
+    localStorage.setItem("couponid",Couponid)
     navigate("/checkout");
   };
   // end payment
@@ -170,6 +176,7 @@ const Cart = () => {
 if(discountpercent.length !== 0){
   let discntcoupn = Number(discountpercent[0].percentage) / 100;
     setCouponDis(discntcoupn);
+    setCouponid(discountpercent[0].id)
 }
 else{
   setCouponDis(0);
@@ -206,10 +213,11 @@ else{
  
   };
   const OnApplyClick = () => {
-    console.log("----")
     CheckCoupon();
     let discntcoupn = Number(discountpercent[0].percentage) / 100;
     setCouponDis(discntcoupn);
+    setCouponid(discountpercent[0].id)
+
   };
   // end coupon list
 

@@ -14,7 +14,7 @@ import moment from "moment";
 const Checkout = (props) => {
   const navigate = useNavigate();
   var product1 = data1.product1;
-  const useridd = sessionStorage.getItem("userid");
+  const useridd = localStorage.getItem("userid");
   let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
   const [navtab, setnavtab] = useState(false);
@@ -23,18 +23,6 @@ const Checkout = (props) => {
   const [DeliveryMethod, setDeliveryMethod] = useState("");
   const [userdata, setuserdata] = useState([]);
   const [DeliveyTab, setDeliveyTab] = useState("");
-  const [singlorder, setsinglorder] = useState({
-    order_id: "1",
-    product_id: "2",
-    price: "3",
-    quantity: "4",
-    gst: "6",
-    cgst: "7",
-    sgst: "8",
-    offer_id: "9",
-    discount: "10%",
-    product_total_price: "5000",
-  });
 
   const [orderadd, setorderadd] = useState({
     user_id: useridd,
@@ -42,7 +30,7 @@ const Checkout = (props) => {
     total_quantity: "",
     ref_no: "12345678",
     shipping_charges: "0",
-    payment_mode: "cod",
+    payment_mode: "",
     delivery_date: "2022-12-15",
     invoice_date: currentdate,
     order_date: currentdate,
@@ -60,14 +48,15 @@ const Checkout = (props) => {
   const [TotalTax, setTotalTax] = useState(0);
   // discount and shipping
   let ShippingCharge = 0.0;
-  let CouponDis = 0.0;
-
+  let CouponDis = localStorage.getItem("coupon")
+let CouponId = localStorage.getItem("couponid")
   // end discount and shipping
 
   var address = data2.address;
   const func = (e) => {
     setDeliveryMethod(e.target.value);
   };
+
   const incrementCount = (id, quantity) => {
     let inc = quantity + 1;
     axios
@@ -102,10 +91,16 @@ const Checkout = (props) => {
         setQuantity((quantity = quantity - 1));
       });
   };
+ // single order add
+ useEffect(() => {
+  setorderadd((orderadd) => {
+    return { ...orderadd, order_product: cartdata };
+  });
+}, [apicall]);
+// end single order add
 
   // add and remove
   useEffect(() => {
-    function getCartData() {
       try {
         axios
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
@@ -221,7 +216,6 @@ const Checkout = (props) => {
               ).toFixed(2);
               // end saleprice
             });
-
             setorderadd({
               ...orderadd,
               total_amount: ProductTotal - CouponDis + ShippingCharge,
@@ -229,22 +223,20 @@ const Checkout = (props) => {
               total_cgst: Totalcgst,
               total_sgst: Totalsgst,
               taxable_value: TotalTaxableValue,
-              discount_coupon: CouponDis,
+              discount_coupon_value:CouponDis,
+              discount_coupon: CouponId,
               vendor_id: "1",
-              order_product: [],
+              payment_mode: DeliveryMethod,
+              order_product: cartdata,
             });
             setSalePricee(Saleprice);
             setProductPriceTotal(ProductTotal);
             setTotalTax(Totaltaxes);
             setCartData(data);
             setapicall(false);
-            // setapicall(false);
           });
       } catch (err) {}
-    }
-
-    getCartData();
-  }, [apicall]);
+  }, [apicall,DeliveryMethod]);
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -257,7 +249,6 @@ const Checkout = (props) => {
       });
   };
   // end add remove cart
-
   // Save For later
   const SaveForLater = (id) => {
     axios
@@ -292,20 +283,12 @@ const Checkout = (props) => {
     setorderadd({
       ...orderadd,
       total_quantity: cartdata.length,
-      payment_mode: "cod",
-      delivery_date: "2022-12-25",
+      delivery_date: "2023-01-15",
       invoice_date: currentdate,
       order_date: currentdate,
     });
   };
   // end payment
-  
-  // order add
-  useEffect(() => {
-    setorderadd((orderadd) => {
-      return { ...orderadd, order_product: cartdata };
-    });
-  }, [apicall]);
   const onOrderAdd = () => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd)
@@ -389,7 +372,7 @@ const Checkout = (props) => {
                           </Nav.Link>
                         </Nav.Item>
                       </div>
-                      <div className="col-6 col-md-12 my-2">
+                      {/* <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
                           <Nav.Link eventKey="third">
                             <li className="nav-link" role="presentation">
@@ -417,7 +400,7 @@ const Checkout = (props) => {
                             </li>
                           </Nav.Link>
                         </Nav.Item>
-                      </div>
+                      </div> */}
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
                           <Nav.Link eventKey="fourth">
@@ -432,7 +415,7 @@ const Checkout = (props) => {
                               >
                                 <div className="nav-item-box">
                                   <div>
-                                    <span>STEP 4</span>
+                                    <span>STEP 3</span>
                                     <h4>Payment Options</h4>
                                   </div>
                                   <lord-icon
@@ -797,7 +780,7 @@ const Checkout = (props) => {
 
                       <div className="button-group">
                         <ul className="button-group-list">
-                          <li>
+                          {/* <li>
                             <Link to="/">
                               <butoon
                                 className="btn btn-light shopping-button text-dark"
@@ -807,9 +790,9 @@ const Checkout = (props) => {
                                 Continue Shopping
                               </butoon>
                             </Link>
-                          </li>
+                          </li> */}
 
-                          <li>
+                          {/* <li>
                             <button
                               className="btn btn-animation proceed-btn"
                               onClick={() => {
@@ -818,17 +801,17 @@ const Checkout = (props) => {
                             >
                               Continue Delivery Address
                             </button>
-                          </li>
+                          </li> */}
                         </ul>
                       </div>
                     </Tab.Pane>
                     {/* End Shopping Cart */}
 
                     {/* Delivery Address*/}
-                    <Tab.Pane eventKey={DeliveyTab}>
+                    <Tab.Pane eventKey={'second'}>
                       <div className="d-flex align-items-center mb-3">
                         <h2 className="tab-title mb-0">Delivery Address</h2>
-                        <button
+                        {/* <button
                           className="btn btn-animation btn-sm fw-bold ms-auto"
                           type="button"
                           data-bs-toggle="modal"
@@ -836,7 +819,7 @@ const Checkout = (props) => {
                         >
                           <i className="fa-solid fa-plus d-block d-sm-none m-0"></i>
                           <span className="d-none d-sm-block">+ Add New</span>
-                        </button>
+                        </button> */}
                       </div>
                       <div className="row">
                         <div className="col-12 col-md-6">
@@ -846,14 +829,14 @@ const Checkout = (props) => {
                                   <div key={address.id} className="">
                                     <div className="delivery-address-box">
                                       <div>
-                                        <div className="form-check">
+                                        {/* <div className="form-check">
                                           <input
                                             className="form-check-input"
                                             type="radio"
                                             name="jack"
                                             id="flexRadioDefault1"
                                           />
-                                        </div>
+                                        </div> */}
 
                                         <div className="label">
                                           <label>Office</label>
@@ -903,14 +886,14 @@ const Checkout = (props) => {
                               <div key={address.id} className="">
                                 <div className="delivery-address-box">
                                   <div>
-                                    <div className="form-check">
+                                    {/* <div className="form-check">
                                       <input
                                         className="form-check-input"
                                         type="radio"
                                         name="jack"
                                         id="flexRadioDefault1"
                                       />
-                                    </div>
+                                    </div> */}
 
                                     <div className="label">
                                       <label>Home</label>
@@ -954,7 +937,7 @@ const Checkout = (props) => {
                           })}
                         </div>
                       </div>
-                      <div className="button-group">
+                      {/* <div className="button-group">
                         <ul className="button-group-list">
                           <li>
                             <button className="btn btn-light shopping-button backward-btn text-dark">
@@ -969,7 +952,7 @@ const Checkout = (props) => {
                             </button>
                           </li>
                         </ul>
-                      </div>
+                      </div> */}
                     </Tab.Pane>
                     {/* End Delivery Address*/}
 
@@ -1340,15 +1323,15 @@ const Checkout = (props) => {
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
-                                          value="choice7"
-                                          onChange={func}
-                                          name="button"
+                                          value="card"
+                                          onChange={(e)=>func(e)}
+                                          name="payment"
                                         />
                                         Credit or Debit Card
                                       </label>
                                     </div>{" "}
                                   </Accordion.Header>
-                                  <Accordion.Body>
+                                  {/* <Accordion.Body>
                                     <div
                                       id="flush-collapseOne"
                                       className="accordion-collapse collapse show"
@@ -1433,7 +1416,7 @@ const Checkout = (props) => {
                                         </div>
                                       </div>
                                     </div>
-                                  </Accordion.Body>
+                                  </Accordion.Body> */}
                                 </Accordion.Item>
                               </Accordion>
                             </div>
@@ -1451,15 +1434,15 @@ const Checkout = (props) => {
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
-                                          value="choice8"
-                                          name="button"
-                                          onChange={func}
+                                          value="netbanking"
+                                          name="payment"
+                                          onChange={(e)=>func(e)}
                                         />
                                         Net Banking
                                       </label>
                                     </div>
                                   </Accordion.Header>
-                                  <Accordion.Body>
+                                  {/* <Accordion.Body>
                                     <div className="accordion-body">
                                       <h5 className="text-uppercase mb-4">
                                         Select Your Bank
@@ -1602,7 +1585,7 @@ const Checkout = (props) => {
                                         </div>
                                       </div>
                                     </div>
-                                  </Accordion.Body>
+                                  </Accordion.Body> */}
                                 </Accordion.Item>
                               </Accordion>
                             </div>
@@ -1619,15 +1602,15 @@ const Checkout = (props) => {
                                         <input
                                           className="form-check-input mt-0"
                                           type="radio"
-                                          value="choice9"
-                                          onChange={func}
-                                          name="button"
+                                          value="wallet"
+                                          onChange={(e)=>func(e)}
+                                          name="payment"
                                         />
                                         My Wallet
                                       </label>
                                     </div>
                                   </Accordion.Header>
-                                  <Accordion.Body>
+                                  {/* <Accordion.Body>
                                     <div className="accordion-body">
                                       <h5 className="text-uppercase mb-4">
                                         Select Your Wallet
@@ -1742,7 +1725,7 @@ const Checkout = (props) => {
                                         </div>
                                       </div>
                                     </div>
-                                  </Accordion.Body>
+                                  </Accordion.Body> */}
                                 </Accordion.Item>
                               </Accordion>
                             </div>
@@ -1761,7 +1744,7 @@ const Checkout = (props) => {
                                           type="radio"
                                           value="cod"
                                           onChange={(e) => func(e)}
-                                          name="cod"
+                                          name="payment"
                                         />
                                         Cash On Delivery
                                       </label>

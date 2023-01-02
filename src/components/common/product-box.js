@@ -30,7 +30,7 @@ const ProductBox = ({
   AddToWishList,
   AddToCart,
 }) => {
-  const useridd = sessionStorage.getItem("userid");
+  const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [isActive, setIsActive] = useState(false);
   const [wishid, setwishid] = useState('');

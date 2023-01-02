@@ -9,7 +9,7 @@ import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
 function Wishlist() {
-  const useridd = sessionStorage.getItem("userid");
+  const useridd = localStorage.getItem("userid");
   const[apicall,setapicall]=useState(false);
   const [wishlist, setWishList] = useState([]);
   const [wishlistocart,setwishlistocart] = useState('')
@@ -84,7 +84,7 @@ function Wishlist() {
         });
   };
   const clickProduct = (productid) => {
-    sessionStorage.setItem("proid", productid);
+    localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
   return (

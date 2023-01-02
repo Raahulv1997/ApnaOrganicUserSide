@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./App.css";
 import Home from "./home";
 import Cart from "./components/pages/cart";
@@ -21,22 +21,35 @@ import BlogList from "./components/pages/blog_list";
 import BlogDetail from "./components/pages/blog_detail";
 import Otp from "./components/pages/otp_verification";
 import Careers from "./components/pages/careers";
+import AuthWrapper from "./components/pages/authwrapper";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
 function App() {
+  let useridd = localStorage.getItem("userid")
+  const [userLogged, setUserLogged] = useState(
+    JSON.parse(localStorage.getItem("userid"))
+  );
+
+  useEffect(() => {
+    localStorage.setItem("userid", JSON.stringify(userLogged));
+  }, [userLogged]);
+
+  const logIn = () => setUserLogged(true);
+  const logOut = () => setUserLogged(false);
+
   return (
     <BrowserRouter>
-      <Routes>      
+      <Routes>  
+     
         <Route path="/" element={<Home/>} />
+        <Route path="/login" element={<Login logIn={logIn}/>} />
         <Route path="/shop" element={<Shop/>} />
-        {/* <Route path="/banners" element={<Benners/>}/>
-        <Route path="/header" element={<Header/>}/> */}
+        <Route path="/signup" element={<Signup/>} />
+        <Route element={<AuthWrapper />}>
         <Route path="/product-detail" element={<ProductDetail/>} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/checkout" element={<Checkout/>} />
         <Route path="/forgot" element={<Forgot/>} />
-        <Route path="/login" element={<Login/>} />
-        <Route path="/signup" element={<Signup/>} />
         <Route path="/aboutus" element={<Aboutus/>} />
         <Route path="/contactus" element={<Contactus/>} />
         <Route path="/faq" element={<Faq/>} />
@@ -49,11 +62,11 @@ function App() {
         <Route path="/blog_list" element={<BlogList/>} />
         <Route path="/blog_detail" element={<BlogDetail/>} />
         <Route path="/otp_verification" element={<Otp/>} />
-
+</Route>
 
 
       </Routes>
-    </BrowserRouter>
+       </BrowserRouter>
   );
 }
 

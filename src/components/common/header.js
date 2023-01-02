@@ -18,7 +18,7 @@ import {
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
 const Header = (props) => {
-  const useridd = sessionStorage.getItem("userid");
+  const useridd = localStorage.getItem("userid");
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [apicall, setapicall] = useState(false);
   const [categorydata, setCategoryData] = useState([]);
@@ -32,14 +32,11 @@ const Header = (props) => {
   };
   // const wee = [moment().startOf('week'), moment().endOf('week')]
   // console.log("---well"+wee)
-  let cartup = localStorage.getItem("cartupdate")
-  if(cartup  === true){
+  let cartup = localStorage.getItem("cartupdate");
+  if (cartup === true) {
     setapicall(true);
-    console.log("-----apics"+cartup )
   }
   // console.log("-----apics"+localStorage.getItem("cartupdate") )
-  console.log("-----apicall"+props.addcart)
-
 
   useEffect(() => {
     function getCategoryData() {
@@ -50,7 +47,6 @@ const Header = (props) => {
             let data = response.data;
             setCategoryData(data);
             setapicall(false);
-
           });
       } catch (err) {}
     }
@@ -93,45 +89,38 @@ const Header = (props) => {
             let ProductTotal = 0;
             data.map((cdata) => {
               ProductTotal +=
-              (
                 cdata.quantity * Number(cdata.product_price) -
                 (cdata.product_price * cdata.discount) / 100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
+                    (cdata.product_price * cdata.discount) / 100
                 ) *
                   cdata.gst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
+                    (cdata.product_price * cdata.discount) / 100
                 ) *
                   cdata.cgst) /
                   100 +
                 (Number(
                   cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
+                    (cdata.product_price * cdata.discount) / 100
                 ) *
                   cdata.sgst) /
-                  100
-              )
+                  100;
             });
-            
+
             setProductPriceTotal(ProductTotal);
             setPdata(data);
 
             setapicall(false);
-            localStorage.removeItem("cartupdate")
-
+            localStorage.removeItem("cartupdate");
           });
-          
       } catch (err) {}
     }
     getCartData();
-  }, [apicall,cartup,props.addcart]);
+  }, [apicall, cartup, props.addcart]);
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -144,7 +133,7 @@ const Header = (props) => {
       });
   };
   const OnLogoutClick = () => {
-    sessionStorage.removeItem("userid");
+    localStorage.removeItem("userid");
   };
   return (
     <Fragment>
@@ -226,13 +215,16 @@ const Header = (props) => {
                       className="btn theme-bg-color ms-3 fire-button"
                     > */}
 
-                    {useridd ? (
-                      <Link to="/login" onClick={OnLogoutClick}>
-                        <span>Login Out</span>
-                      </Link>
-                    ) : (
+                    {useridd === undefined ||
+                    useridd === "null" ||
+                    useridd === "" ||
+                    useridd === null ? (
                       <Link to="/login">
                         <span>Login </span>
+                      </Link>
+                    ) : (
+                      <Link to="/login" onClick={OnLogoutClick}>
+                        <span>Login Out</span>
                       </Link>
                     )}
                     {/* </NavLink> */}
@@ -312,11 +304,9 @@ const Header = (props) => {
                               pdata.length === "" ||
                               pdata.length === "0"
                                 ? "0"
-                                : pdata.length
-                                }
-                                
+                                : pdata.length}
                             </small>
-                          
+
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">
@@ -347,30 +337,35 @@ const Header = (props) => {
                                           <span>
                                             ₹
                                             {(
-                                  Number(data.product_price) -
-                                  (data.product_price * data.discount) / 100 +
-                                  (Number(
-                                    data.product_price -
-                                      (data.product_price * data.discount) /
-                                        100
-                                  ) *
-                                    data.gst) /
-                                    100 +
-                                  (Number(
-                                    data.product_price -
-                                      (data.product_price * data.discount) /
-                                        100
-                                  ) *
-                                    data.cgst) /
-                                    100 +
-                                  (Number(
-                                    data.product_price -
-                                      (data.product_price * data.discount) /
-                                        100
-                                  ) *
-                                    data.sgst) /
-                                    100
-                                ).toFixed(2)}
+                                              Number(data.product_price) -
+                                              (data.product_price *
+                                                data.discount) /
+                                                100 +
+                                              (Number(
+                                                data.product_price -
+                                                  (data.product_price *
+                                                    data.discount) /
+                                                    100
+                                              ) *
+                                                data.gst) /
+                                                100 +
+                                              (Number(
+                                                data.product_price -
+                                                  (data.product_price *
+                                                    data.discount) /
+                                                    100
+                                              ) *
+                                                data.cgst) /
+                                                100 +
+                                              (Number(
+                                                data.product_price -
+                                                  (data.product_price *
+                                                    data.discount) /
+                                                    100
+                                              ) *
+                                                data.sgst) /
+                                                100
+                                            ).toFixed(2)}
                                           </span>
                                           {/* <span>{data.sale_price}</span> */}
                                         </h6>
@@ -755,7 +750,7 @@ const Header = (props) => {
                             </li>
                           </ul> */}
                         </li>
-
+{/* 
                         <li className="nav-item dropdown">
                           <NavLink
                             to="/product-detail"
@@ -764,7 +759,7 @@ const Header = (props) => {
                             Product
                           </NavLink>
 
-                          {/* <ul className="dropdown-menu ps-4">
+                          <ul className="dropdown-menu ps-4">
                             <li>
                               <Link to="/" className="dropdown-item">
                                 Product 4 Image
@@ -800,10 +795,10 @@ const Header = (props) => {
                                 Product Sticky
                               </Link>
                             </li>
-                          </ul> */}
-                        </li>
+                          </ul>
+                        </li> */}
 
-                        <li className="nav-item dropdown dropdown-mega">
+                        {/* <li className="nav-item dropdown dropdown-mega">
                           <Link
                             to="/"
                             className="nav-link dropdown-toggle icon ps-xl-2 ps-0"
@@ -904,9 +899,9 @@ const Header = (props) => {
 
                             <div className="dropdown-column dropdown-column-img col-3"></div>
                           </div>
-                        </li>
+                        </li> */}
 
-                        <li className="nav-item dropdown">
+                        {/* <li className="nav-item dropdown">
                           <Link
                             to="/"
                             className="nav-link dropdown-toggle icon"
@@ -938,7 +933,7 @@ const Header = (props) => {
                               </NavLink>
                             </li>
                           </ul>
-                        </li>
+                        </li> */}
 
                         <li className="nav-item dropdown">
                           <Link
@@ -949,25 +944,54 @@ const Header = (props) => {
                             Pages
                           </Link>
                           <ul className="dropdown-menu ps-4">
-                            <li>
+                            {/* <li>
                               <Link to="/" className="dropdown-item">
                                 404
                               </Link>
-                            </li>
+                            </li> */}
                             <li>
                               <Link className="dropdown-item" to="/aboutus">
                                 About Us
                               </Link>
                             </li>
                             <li>
-                              <Link className="dropdown-item" to="/cart">
+                              <Link className="dropdown-item" to=
+                              {useridd === undefined ||
+                              useridd === "null" ||
+                              useridd === "" ||
+                              useridd === null ? "/login":
+                              "/cart"}>
                                 Cart
                               </Link>
                             </li>
                             <li>
-                              <Link className="dropdown-item">Checkout</Link>
+                              <Link to= {useridd === undefined ||
+                              useridd === "null" ||
+                              useridd === "" ||
+                              useridd === null ? "/login":
+                              "/your_account"} className="dropdown-item">
+                                Your Account
+                              </Link>
                             </li>
+                            {/* <li>
+                              <Link to=
+                              {useridd === undefined ||
+                                useridd === "null" ||
+                                useridd === "" ||
+                                useridd === null ? "/login":
+                              "/your_orders" }className="dropdown-item">
+                                Your Order
+                              </Link>
+                            </li> */}
                             <li>
+                              <Link className="dropdown-item"  to=
+                              {useridd === undefined ||
+                                useridd === "null" ||
+                                useridd === "" ||
+                                useridd === null ? "/login":
+                              "/checkout"}>Checkout</Link>
+                            </li>
+                            {/* <li>
                               <Link to="/" className="dropdown-item">
                                 Coming Soon
                               </Link>
@@ -976,13 +1000,13 @@ const Header = (props) => {
                               <Link to="/" className="dropdown-item">
                                 Compare
                               </Link>
-                            </li>
-                            <li>
+                            </li> */}
+                            {/* <li>
                               <Link className="dropdown-item" to="/faq">
                                 Faq
                               </Link>
-                            </li>
-                            <li>
+                            </li> */}
+                            {/* <li>
                               <Link to="/" className="dropdown-item">
                                 Order Success
                               </Link>
@@ -1004,14 +1028,18 @@ const Header = (props) => {
                               <Link to="/" className="dropdown-item">
                                 Search
                               </Link>
-                            </li>
+                            </li> */}
                             <li>
                               <Link to="/" className="dropdown-item">
                                 User Dashboard
                               </Link>
                             </li>
                             <li>
-                              <Link to="/" className="dropdown-item">
+                              <Link to={useridd === undefined ||
+                              useridd === "null" ||
+                              useridd === "" ||
+                              useridd === null ? "/login":
+                              "/wishlist"} className="dropdown-item">
                                 Wishlist
                               </Link>
                             </li>
