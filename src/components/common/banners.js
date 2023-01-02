@@ -9,7 +9,9 @@ import { useNavigate } from "react-router-dom";
 import "../../CSS/style.css";
 import axios from "axios";
 import Header from "./header";
-const Benners = (props, productPrice, productMRF, name, image) => {
+
+const Benners = (props, productPrice, productMRF, name,image) => {
+  
   const [productData, setProductData] = useState([]);
   const [productType, setProductType] = useState([]);
   const [catArray, setcatArray] = useState([]);
@@ -19,9 +21,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [apicall, setapicall] = useState(false);
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
-
+  const[showbanner,setShowBanner]=useState([]);
+   const [Imgarray, setImgArray] = useState([]);
   let [count, setCount] = useState(1);
- 
   const navigate = useNavigate();
   // var product = data.product;
   useEffect(() => {
@@ -151,8 +153,28 @@ const clickProduct = (productid) => {
   sessionStorage.setItem("proid", productid);
   navigate("/product-detail");
 };
-
-
+const result = showbanner.filter((thing, index, self) =>
+index == self.findIndex((t) => (
+  t.image[1] == thing.image[1]
+)))
+console.log("resulttttttttt"+JSON.stringify(result))
+let logo = `${process.env.REACT_APP_BASEURL}/${showbanner.image}`
+let docsdata = `${process.env.REACT_APP_BASEURL}/${Imgarray}`
+var Newlogo = logo.replace("/public", "");
+useEffect(() => {
+  axios.post(`${process.env.REACT_APP_BASEURL}/banner_list`,
+  {
+    banner_id:"",
+    title:"",
+    banner_location:""
+  }).then ((response) => {
+    let data= response.data;
+    setShowBanner(response.data)
+    setImgArray(JSON.parse(response.data[0].multiple_document_upload))
+      })
+},[apicall]);
+    console.log("my -----------Logo"+JSON.stringify(showbanner))
+ 
 // end product box
   return (
     <Fragment>
@@ -162,12 +184,19 @@ const clickProduct = (productid) => {
         <div className="container-fluid-lg">
           <div className="row g-4">
             <div className="col-xxl-6 col-xl-8 col-md-6">
-              <div className="home-contain h-100">
+                  <div className="home-contain h-100">
+                 {/*{showbanner.image ?
+                  <img src={Newlogo} width={'50px'} alt="image" className="img-fluid bg-img lazyload h-100"/> : null} */}
+                  {/* {result.map((img)=>{
+                return( */}
                 <img
-                  src={BannerBox1}
+                  src={showbanner.image}
                   className="img-fluid bg-img lazyload h-100"
-                  alt=""
+                  alt="image"
+                  width={'50px'}
                 />
+                {/* )
+              })} */}
                 <div className="home-detail w-50 p-center-left">
                   <div>
                     <h6 className="ls-expanded theme-color">ORGANIC</h6>

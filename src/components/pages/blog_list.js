@@ -14,27 +14,31 @@ import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
-const BlogList = () => {
-  const[blog,setBlog]=useState([]);
-// const[apicall,setapicall]=
-    useEffect(() => {
-        function getBlogDetails() {
-          try {
-            axios
-              .get(`${process.env.REACT_APP_BASEURL}/blogs`,{
-                id:"1",
-               
-              })
-              .then((response) => {
-                let data = response.data;
-                setBlog(data);
-                // setapicall(false);
-              });
-          } catch (err) {}
-        }
-      getBlogDetails();
-      }, []);
-      console.log("bhavnaaaaaaaaaa"+JSON.stringify(blog))
+const BlogList = (clickBlog)=> {
+  
+  const[apicall,setapicall]=useState([]);
+  const[blogData,setBlogData]=useState([]);
+  const[id,setId]=useState();
+  localStorage.setItem("idd",id)
+
+  useEffect(() => {
+    axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
+    {
+    "id":"",
+    "for_":"user",
+    "recent":"",
+    "category":[],
+    "product_tag":""
+  }).then ((response) => {
+  let data= response.data[0];
+  setBlogData(response.data)
+  setId(data.id)
+  console.log("blog IDDDDDDDDDDDDDD"+JSON.stringify(data.id));
+  console.log("blog"+JSON.stringify(blogData));
+
+    setapicall(false);
+    })
+  }, [apicall]);
   return (
     <Fragment>
       <Header />
@@ -45,7 +49,9 @@ const BlogList = () => {
           <div className="row g-4">
             <div className="col-xxl-9 col-xl-8 col-lg-7 order-lg-2">
               <div className="row g-4">
-                <div className="col-12">
+                {blogData.map((showData)=>{
+                  return(<>
+                   <div className="col-12">
                   <div className="blog-box blog-list wow fadeInUp">
                     <div className="blog-image">
                       <img src={blog1} className="lazyload" alt="" />
@@ -55,23 +61,20 @@ const BlogList = () => {
                       <div className="blog-label">
                         <span className="time">
                           <i data-feather="clock"></i>
-                          <span>25 Feg, 2022</span>
+                          <span>{showData.publish_date}</span>
                         </span>
                         <span className="super">
                           <i data-feather="user"></i>
                           <span>Mark J. Speight</span>
                         </span>
                       </div>
-                      <Link to="blog-detail.html">
-                        <h3>
-                          one pot creamy mediterranean chicken pasta cream.
+                      <Link to="/blog_detail">
+                        <h3  onClick={(id) => clickBlog(id)}>
+                          {showData.title}
                         </h3>
                       </Link>
                       <p>
-                        Monterey jack cheese slices cream cheese cream cheese
-                        hard cheese roquefort emmental lancashire. Who moved my
-                        cheese dolcelatte st. agur blue cheese fromage
-                        mozzarella say cheese mascarpone blue castello.
+                      {showData.description}
                       </p>
                       <button onclick="location" className="blog-button">
                         Read More <i className="fa-solid fa-right-long"></i>
@@ -79,8 +82,11 @@ const BlogList = () => {
                     </div>
                   </div>
                 </div>
+                  </>)
+                })}
+               
 
-                <div className="col-12">
+                {/* <div className="col-12">
                   <div
                     className="blog-box blog-list wow fadeInUp"
                     data-wow-delay="0.05s"
@@ -128,9 +134,9 @@ const BlogList = () => {
                       <label>
                         <i className="fa-solid fa-bolt-lightning"></i> popular
                       </label>
-                    </div>
+                    </div> */}
 
-                    <div className="blog-contain blog-contain-2">
+                    {/* <div className="blog-contain blog-contain-2">
                       <div className="blog-label">
                         <span className="time">
                           <i data-feather="clock"></i>
@@ -195,9 +201,9 @@ const BlogList = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-12">
+                {/* <div className="col-12">
                   <div
                     className="blog-box blog-list wow fadeInUp"
                     data-wow-delay="0.2s"
@@ -272,9 +278,9 @@ const BlogList = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-12">
+                {/* <div className="col-12">
                   <div
                     className="blog-box blog-list wow fadeInUp"
                     data-wow-delay="0.3s"
@@ -312,9 +318,9 @@ const BlogList = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-12">
+                {/* <div className="col-12">
                   <div
                     className="blog-box blog-list wow fadeInUp"
                     data-wow-delay="0.35s"
@@ -349,9 +355,9 @@ const BlogList = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
 
-                <div className="col-12">
+                {/* <div className="col-12">
                   <div
                     className="blog-box blog-list wow fadeInUp"
                     data-wow-delay="0.4s"
@@ -388,7 +394,7 @@ const BlogList = () => {
                       </button>
                     </div>
                   </div>
-                </div>
+                </div> */}
               </div>
 
               <nav className="custome-pagination">

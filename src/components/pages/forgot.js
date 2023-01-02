@@ -10,21 +10,47 @@ import axios from "axios";
 const Forgot = () => {
   const navigate = useNavigate();
   const[email,setEmail]=useState([]);
+  const [otp, setotp] = useState(0);
+  const [otperror, setOtperror] = useState(false);
+  const [passval, setpassval] = useState("");
   const handleFormChange =(e)=>{
     setEmail(e.target.value);
     
     // setForgotInfo({...forgotInfo,[e.target.name]: e.target.value})
   }
+  const onPasswordChange = (e) => {
+    setpassval(e.target.value);
+  };
   const forgotPassword=()=>{
     axios.post(`http://192.168.29.108:5000/user_forgot_password`,{
       email:`${email}`
     }).then(response => {
       // sessionStorage.setItem("useridd" , response.data.user_id)
-      navigate('/login')
+      navigate('/forgot')
      
       // return response;
     })
   }
+  const VerifyOTP = (e) => {
+    e.preventDefault();
+    if (e.target.otpinput.value == otp) {
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
+          email: email,
+          otp: otp,
+          password: passval,
+        })
+        .then((response) => {
+          sessionStorage.setItem("userid", response.data.insertId);
+          sessionStorage.setItem("upassword", passval);
+          navigate("/your_account");
+          return response;
+        })
+        .catch((error) => {});
+    } else {
+      setOtperror(true);
+    }
+  };
   return (
     <Fragment>
       <Header />
@@ -45,9 +71,9 @@ const Forgot = () => {
                     <h3>Welcome To Apna Organic</h3>
                     <h4>Forgot your password</h4>
                   </div>
-
+                 
                   <div className="input-box">
-                    <form className="row g-4">
+                    <form className="row g-4"  onSubmit={otp === 0 ? forgotPassword : VerifyOTP}>
                       <div className="col-12">
                         <div className="form-floating theme-form-floating log-in-form">
                           <input
@@ -59,14 +85,97 @@ const Forgot = () => {
                           />
                           <label htmlFor="email">Email Address</label>
                         </div>
-                      </div>
-
-                      <div className="col-12">
+                        <div className="col-12 mt-3">
                         <button
                           className="btn btn-animation w-100"
                           type="button" onClick={forgotPassword}
                         >
                           Forgot Password
+                        </button>
+                      </div>
+                      </div>
+                      <div className="log-in-title">
+                      <h4>Enter one time otp</h4>
+                    <h5 className="text-content">
+                      A code has been sent to your email
+                    </h5>
+                  </div>
+                      <div
+                    id="otp"
+                    className="inputs d-flex flex-row justify-content-center"
+                  >
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="first"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="second"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="third"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="fourth"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="fifth"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                    <input
+                      className="text-center form-control rounded"
+                      type="text"
+                      id="sixth"
+                      maxlength="1"
+                      placeholder="0"
+                    />
+                  </div>
+                  <div className="col-12 mt-3">
+                        <button
+                          className="btn btn-animation w-100"
+                          type="button" onClick={VerifyOTP}
+                        >
+                          VerifyOTP
+                        </button>
+                      </div>
+                  {otp === 0 ? (
+                      <div className="col-12">
+                        <div className="form-floating theme-form-floating">
+                          <input
+                            type="password"
+                            name="password"
+                            className={"form-control"}
+                            id="password"
+                            placeholder="New Password"
+                            onChange={(e) => onPasswordChange(e)}
+                          />
+                          <label htmlFor="password">Enter New Password</label>
+                        </div>
+                      </div>
+                    ) : null}
+                      <div className="col-12 mt-3">
+                        <button
+                          className="btn btn-animation w-100"
+                          type="button" onClick={VerifyOTP}
+                        >
+                          Forgot
                         </button>
                       </div>
                     </form>

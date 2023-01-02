@@ -25,6 +25,7 @@ const Cart = () => {
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = sessionStorage.getItem("userid");
+  
   const currentdate = moment().format();
   
 
