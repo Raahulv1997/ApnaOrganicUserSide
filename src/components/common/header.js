@@ -901,7 +901,7 @@ const Header = (props) => {
                           </div>
                         </li> */}
 
-                        {/* <li className="nav-item dropdown">
+                        <li className="nav-item dropdown">
                           <Link
                             to="/"
                             className="nav-link dropdown-toggle icon"
@@ -933,7 +933,7 @@ const Header = (props) => {
                               </NavLink>
                             </li>
                           </ul>
-                        </li> */}
+                        </li>
 
                         <li className="nav-item dropdown">
                           <Link

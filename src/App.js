@@ -45,11 +45,12 @@ function App() {
         <Route path="/login" element={<Login logIn={logIn}/>} />
         <Route path="/shop" element={<Shop/>} />
         <Route path="/signup" element={<Signup/>} />
+        <Route path="/forgot" element={<Forgot/>} />
+
         <Route element={<AuthWrapper />}>
         <Route path="/product-detail" element={<ProductDetail/>} />
         <Route path="/cart" element={<Cart/>} />
         <Route path="/checkout" element={<Checkout/>} />
-        <Route path="/forgot" element={<Forgot/>} />
         <Route path="/aboutus" element={<Aboutus/>} />
         <Route path="/contactus" element={<Contactus/>} />
         <Route path="/faq" element={<Faq/>} />

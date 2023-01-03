@@ -25,12 +25,7 @@ const Cart = () => {
   const [Couponid, setCouponid] = useState(0);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
-<<<<<<< HEAD
-  const useridd = sessionStorage.getItem("userid");
-  
-=======
   const useridd = localStorage.getItem("userid");
->>>>>>> 1cc97ff57b7d87f442dcb5a49ee25a123b315aba
   const currentdate = moment().format();
   
 
