@@ -13,7 +13,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-const Cart = () => {
+const Cart = (all_images) => {
   const navigate = useNavigate();
   const [show, setShow] = useState("");
   const [apicall, setapicall] = useState(false);
@@ -33,13 +33,13 @@ const Cart = () => {
     let inc = quantity + 1;
     axios
       .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        id: id,
+        cart_id: id,
         quantity: inc,
       })
       .then((response) => {
         let data = response.data;
         setapicall(true);
-        // setCartData(data);
+        setCartData(data);
         setQuantity((quantity = quantity + 1));
         CheckCoupon();
       });
@@ -59,7 +59,7 @@ const Cart = () => {
       .then((response) => {
         setapicall(true);
         let data = response.data;
-        // setCartData(data);
+        setCartData(data);
         // quantity = quantity- 1;
         setQuantity((quantity = quantity - 1));
         CheckCoupon();
@@ -239,7 +239,7 @@ else{
                               <div className="product border-0">
                                 <Link to="/" className="product-image">
                                   <img
-                                    src={product1.image}
+                                    src={cdata.all_images}
                                     className="img-fluid lazyload"
                                     alt=""
                                   />

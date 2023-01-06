@@ -29,6 +29,7 @@ const ProductBox = ({
   clickProduct,
   AddToWishList,
   AddToCart,
+  allimages
 }) => {
   const useridd = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
@@ -39,17 +40,47 @@ const ProductBox = ({
   const [data, setData] = useState([]);
   const[addcartid,setaddcartid]=useState('');
   let [count, setCount] = useState(1);
+  const [productType, setProductType] = useState([]);
+  const [productData, setProductData] = useState([]);
  
   const func = (e) => {
     
   };
- 
+  useEffect(() => {
+    function getAllData() {
+      try {
+        axios
+          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+          {
+            product_search: {
+              search: `${productType}`,
+              price_from: "",
+              price_to: "",
+            },
+          })
+          .then((response) => {
+            let data = response.data.result;
+            setProductData(response.data.results);
+          console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+            setapicall(false);
+
+          });
+      } catch (err) {}
+    }
+
+    getAllData();
+  }, []);
+  const result = productData.filter((thing, index, self) =>
+  index == self.findIndex((t) => (
+    t.all_images== thing.all_images
+  )))
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div className="product-image">
-        <div className="ribbon_div">
+
+<div className="ribbon_div">
           {special_offer == 0 || special_offer == "" ? null : (
             <span className="special_offer mb-1">{special_offer}%</span>
           )}
@@ -75,18 +106,17 @@ const ProductBox = ({
           </button>
         </div>
         
-        {image==""|| image==null|| image==undefined?
+        {/* {image==""|| image==null|| image==undefined? */}
          <a onClick={() => clickProduct(productid)}>
-
-          <img
-            src={
-              "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
-            }
+          
+             <img
+            src={allimages}
             className="mt-5 "
             alt=""
           />
-        </a>:null}
-       
+
+          
+        </a>
       </div>
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">

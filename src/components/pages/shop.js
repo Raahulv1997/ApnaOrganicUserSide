@@ -1001,7 +1001,7 @@ const Shop = (props) => {
                   return (
                     <div key={product.id}>
                       <ProductBox
-                        image={product.image}
+                        // image={product.image}
                         id={product.id}
                         name={product.product_title_name}
                         productMRF={product.sale_price}
@@ -1017,6 +1017,7 @@ const Shop = (props) => {
                         AddToCart={AddToCart}
                         AddToWishList={AddToWishList}
                         wishlistt={product.wishlist}
+                        allimages={product.all_images}
                       />
                     </div>
                   );

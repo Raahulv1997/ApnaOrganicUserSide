@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 import "../../CSS/style.css";
 import axios from "axios";
 import Header from "./header";
-
+import { Link } from "react-router-dom";
 const Benners = (props, productPrice, productMRF, name,image) => {
   
   const [productData, setProductData] = useState([]);
@@ -166,6 +166,7 @@ useEffect(() => {
         .then((response) => {
           let data = response.data;
           setProductData(response.data.results);
+          // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
           setapicall(false)
         });
     } catch (err) {}
@@ -178,12 +179,12 @@ const clickProduct = (productid) => {
 };
 const result = showbanner.filter((thing, index, self) =>
 index == self.findIndex((t) => (
-  t.image[1] == thing.image[1]
+  t.banner_url== thing.banner_url
 )))
-console.log("resulttttttttt"+JSON.stringify(result))
-let logo = `${process.env.REACT_APP_BASEURL}/${showbanner.image}`
-let docsdata = `${process.env.REACT_APP_BASEURL}/${Imgarray}`
-var Newlogo = logo.replace("/public", "");
+// console.log("resulttttttttt"+JSON.stringify(result))
+// let logo = `${process.env.REACT_APP_BASEURL}/${showbanner.image}`
+// let docsdata = `${process.env.REACT_APP_BASEURL}/${Imgarray}`
+// var Newlogo = logo.replace("/public", "");
 useEffect(() => {
   axios.post(`${process.env.REACT_APP_BASEURL}/banner_list`,
   {
@@ -193,7 +194,7 @@ useEffect(() => {
   }).then ((response) => {
     let data= response.data;
     setShowBanner(response.data)
-    setImgArray(JSON.parse(response.data[0].multiple_document_upload))
+    // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       })
 },[apicall]);
     console.log("my -----------Logo"+JSON.stringify(showbanner))
@@ -206,33 +207,38 @@ useEffect(() => {
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
-            <div className="col-xxl-6 col-xl-8 col-md-6">
+          {result.map((img)=>{
+                return(
+                  <>
+                 <div className="col-xxl-6 col-xl-8 col-md-6">
                   <div className="home-contain h-100">
-                 {/*{showbanner.image ?
-                  <img src={Newlogo} width={'50px'} alt="image" className="img-fluid bg-img lazyload h-100"/> : null} */}
-                  {/* {result.map((img)=>{
-                return( */}
-                <img
-                  src={showbanner.image}
-                  className="img-fluid bg-img lazyload h-100"
+                {result===img?"home_page_right_side(1)":null}
+                 <img src={img.image}
+                  className="img-fluid bg-img lazyload h-100 w-100"
                   alt="image"
-                  width={'50px'}
+                  name="banner_url"
+                  // width={'100px'}
                 />
-                {/* )
-              })} */}
+               
+                
                 <div className="home-detail w-50 p-center-left">
                   <div>
                     <h6 className="ls-expanded theme-color">ORGANIC</h6>
-                    <h1 className="fw-bold w-100">100% Fresh</h1>
+                    <h1 className="fw-bold w-100">
+                      {/* 100% Fresh */}
+                    {img.title}</h1>
                     <h3 className="text-content fw-light">
                       Fruit & Vegetables
                     </h3>
                     <p className="d-sm-block d-none">
-                      Free shipping on all your order. we deliver you enjoy
+                      {/* Free shipping on all your order. we deliver you enjoy */}
+                      {img.description}
                     </p>
+                    <Link to={img.banner_url}>
                     <button className="btn mt-sm-4 btn-2 theme-bg-color text-white mend-auto btn-2-animation">
                       Shop Now
-                    </button>
+                    </button></Link>
+                    
                   </div>
                 </div>
               </div>
@@ -242,7 +248,7 @@ useEffect(() => {
               <div className="home-contain">
                 <div>
                   <img
-                    src={BannerBox2}
+                    src={img.image}
                     className="img-fluid bg-img lazyload "
                     alt=""
                   />
@@ -251,9 +257,11 @@ useEffect(() => {
                   <div>
                     <h4 className="fw-bold">Fresh & 100% Organic</h4>
                     <h5 className="text-center">famer's market</h5>
+                    <Link to={img.banner_url}>
                     <button className="btn bg-white theme-color mt-3 home-button mx-auto btn-2">
                       Shop Now
-                    </button>
+                    </button></Link>
+                   
                   </div>
                 </div>
               </div>
@@ -265,7 +273,7 @@ useEffect(() => {
                   <div className="home-contain">
                     <a href="shop-left-sidebar.html">
                       <img
-                        src={BannerBox1}
+                        src={img.image}
                         className="img-fluid bg-img lazyload"
                         alt=""
                       />
@@ -283,7 +291,7 @@ useEffect(() => {
                   <div className="home-contain">
                     <a href="shop-left-sidebar.html">
                       <img
-                        src={BannerBox1}
+                        src={img.image}
                         className="img-fluid bg-img lazyload"
                         alt=""
                       />
@@ -298,7 +306,11 @@ useEffect(() => {
                 </div>
               </div>
             </div>
+            </>
+              )
+            })} 
           </div>
+        
         </div>
       </section>
 
@@ -362,7 +374,7 @@ useEffect(() => {
                           clickProduct={clickProduct}
                           AddToWishList={AddToWishList}
                           AddToCart={AddToCart}
-                          
+                          allimages={product.all_images}
                         />
                       </div>
                     );

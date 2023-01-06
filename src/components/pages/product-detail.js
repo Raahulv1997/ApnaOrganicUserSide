@@ -24,10 +24,12 @@ const ProductDetail = ({logIn}) => {
   const[exp,setExp]=useState('');
   const[qut,setQut]=useState('');
   const[Id,setId]=useState();
+  const[image,setImage]=useState([]);
+  // const[image,setImage]=useState('');
   // const[review,setReview]=useState([]);
   const[discount,setDiscount]=useState();
   const [addreviewdata, setaddreviewdata] = useState([]);
-  
+  const[showImage,setShowImages]=useState([]);
    const[reviewData,setReviewData]=useState([]);
    const [Searchreview, setSearchReview] = useState({
     "product_name":"",
@@ -77,7 +79,7 @@ let proid=localStorage.getItem("proid");
             setExp(data.product_verient[0].expire_date);
             setQut(data.product_verient[0].quantity)
             setId(data.product_verient[0].id);
-
+            setImage(data.product_verient[0].product_image_path);
             setapicall(false);
           });
       } catch (err) {}
@@ -85,6 +87,31 @@ let proid=localStorage.getItem("proid");
 
     getProductDetails();
   }, [apicall]);
+// console.log("VERIENTIDDDDDDDD"+JSON.stringify(productDetails))
+  useEffect(() => {
+    function getProductImage() {
+      try {
+        axios
+          .get(`http://192.168.29.108:5000/product_images_get_singal_veriant?product_id=${proid}&product_verient_id=${Id}`)
+          .then((response) => {
+            let data = response.data;
+            setapicall(false);
+            setShowImages(data);
+            console.log("IMAGESSSS ________DATA"+JSON.stringify(data))
+
+          });
+      } catch (err) {}
+    }
+
+    getProductImage();
+  }, [apicall]);
+
+  const result = showImage.filter((thing, index, self) =>
+  index == self.findIndex((t) => (
+    t.product_image_path== thing.product_image_path
+  )))
+
+// console.log("IMGGGGGGGGGGGGGGGGGGGGGGGGG"+JSON.stringify(showImage))
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:`${useridd}`,
@@ -119,7 +146,7 @@ setapicall(true);
 });
 }
 
-const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id)=>{
+const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id,productimagename)=>{
   setProductprice(product_price);
   setMrp(mrpp);
   setSize(sizee);
@@ -127,8 +154,10 @@ const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id)=>{
   setExp(expp);
   setQut(quantityy)
   setId(id);
+  setImage(productimagename);
+
 }
-const productColor=(color,product_price,mrpp,mfdd,expp,quantityy,id)=>{
+const productColor=(color,product_price,mrpp,mfdd,expp,quantityy,id,productimagename)=>{
 setColors(color);
 setProductprice(product_price);
 setMrp(mrpp);
@@ -136,6 +165,7 @@ setMfd(mfdd);
 setExp(expp);
 setQut(quantityy)
 setId(id);
+setImage(productimagename);
 }
  useEffect(() => {
     axios.post(`${process.env.REACT_APP_BASEURL}/review_list`,{
@@ -146,29 +176,16 @@ setId(id);
   let data= response.data;
   setReviewData(response.data)
   // setSearchReview(response.data)
-  console.log("CONSOLEE"+JSON.stringify(data))
+  // console.log("CONSOLEE"+JSON.stringify(data))
     setapicall(false);
     })
   }, [apicall]);
 
-// useEffect(() => {
-//   axios
-//     .get(`${process.env.REACT_APP_BASEURL}/review_detaile?id=14`)
-//     .then((response) => {
-//       let data= response.data;
-//       setaddreviewdata(data)
-//       console.log("dataaaareview"+JSON.stringify(data))
-//       setapicall(false);
-//     })
-//     .catch(function(error) {
-//       console.log(error);
 
-//     });
-// }, [apicall]);
 const handleFormChange = (e) => {
   setaddreviewdata({...addreviewdata,[e.target.name]: e.target.value});
   };
-  console.log("CLICKTOADDDATAAAA"+JSON.stringify(addreviewdata))
+  // console.log("CLICKTOADDDATAAAA"+JSON.stringify(addreviewdata))
 
 const AddReview = (e) => {
     axios
@@ -220,55 +237,60 @@ const AddReview = (e) => {
             <div className="row">
               <div className="col-xl-8 col-lg-7 wow fadeInUp"></div>
               <div className="row g-6">
-                  
+
                 <div className="col-xl-6 sm-2 col-lg-7">
-                  <Carousel variant="dark">
+                {/* {result.map((images)=>{
+                    return( */}
+                       <Carousel variant="dark">
                     <Carousel.Item>
 
                       <img
                         className="d-block w-100"
-                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                        src={image}
                         alt="First slide"
+                        name="product_image_path"
                       />
                       <Carousel.Caption>
                         <h3 style={{ color: "black" }}>First slide label</h3>
                         <p style={{ color: "black" }}>
-                          Nulla vitae elit libero, a pharetra augue mollis
-                          interdum.
+                          {/* {images.product_image_name} */}
                         </p>
                       </Carousel.Caption>
                     </Carousel.Item>
-                    <Carousel.Item>
+                    {/* <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                        src={images.product_image_path}
                         alt="Second slide"
                       />
   
                       <Carousel.Caption>
                         <h3 style={{ color: "black" }}>Second slide label</h3>
                         <p style={{ color: "black" }}>
-                          Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                        {images.product_image_name}
                         </p>
                       </Carousel.Caption>
                     </Carousel.Item>
                     <Carousel.Item>
                       <img
                         className="d-block w-100"
-                        src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                        src={images.product_image_path}
                         alt="Third slide"
                       />
   
                       <Carousel.Caption>
                         <h3 style={{ color: "black" }}>Third slide label</h3>
                         <p style={{ color: "black" }}>
-                          Praesent commodo cursus magna, vel scelerisque nisl
-                          consectetur.
+                        {images.product_image_name}
                         </p>
                       </Carousel.Caption>
-                    </Carousel.Item>
+                    </Carousel.Item> */}
                   </Carousel>
+{/*                    
+                   )
+                  })}  */}
                 </div>
+                
                 <div className="col-12 col-md-6 wow fadeInUp"
                   data-wow-delay="0.1s">
                       <div className="right-box-contain">
@@ -324,7 +346,7 @@ const AddReview = (e) => {
                    {productDetails.product_verient ? 
                         <div className="product-packege">
                           <div className="product-title"> 
-                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece':null||productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
+                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece':productDetails.product_verient[0].image==='product_image_name'?"Images": null||productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
                           </div>
                           {(productDetails.product_verient).map((details) => {
                            
@@ -334,14 +356,14 @@ const AddReview = (e) => {
                          
                              <li key={details.id}>
                           
-                          <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.manufacturing_date,details.expire_date,details.quantity,details.id)}}
+                          <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.manufacturing_date,details.expire_date,details.quantity,details.id,details.product_image_name)}}
                           className={size==details.size ? "active" : null}
                            >
                            {details.size}
                          </Link>
                         </li>
                          <li>
-                          <Link  onClick={()=>{productColor(details.colors,details.product_price,details.mrp,details.manufacturing_date,details.expire_date,details.quantity, details.id)}}
+                          <Link  onClick={()=>{productColor(details.colors,details.product_price,details.mrp,details.manufacturing_date,details.expire_date,details.quantity, details.id,details.product_image_name)}}
                           className={colors == details.colors ? "active" : null}
                             >
                             {details.colors}

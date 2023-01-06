@@ -8,7 +8,7 @@ import { Link } from "react-router-dom";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-function Wishlist() {
+function Wishlist(all_images) {
   const useridd = localStorage.getItem("userid");
   const[apicall,setapicall]=useState(false);
   const [wishlist, setWishList] = useState([]);
@@ -102,13 +102,14 @@ function Wishlist() {
           >
             <div className="row w-100">
               {wishlist.map((wlist) => {
+                console.log("kkkkkk"+JSON.stringify(wishlist))
                 return (
                   <div
                     key={wlist.id}
                     className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                   >
                     <ProductBox
-                      image={product.image}
+                      image={product.all_images}
                       name={wlist.product_title_name}
                       productPrice={wlist.product_price}
                       productMRF={wlist.sale_price}
@@ -122,6 +123,7 @@ function Wishlist() {
                       AddToWishList={AddToWishList}
                       AddToCart={AddToCart}
                       wishlistocart={wishlistocart}
+                      allimages={wlist.all_images}
                     />
                     
                   </div>
