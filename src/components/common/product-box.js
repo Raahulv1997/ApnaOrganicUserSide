@@ -107,7 +107,7 @@ const ProductBox = ({
         </div>
         
         {/* {image==""|| image==null|| image==undefined? */}
-         <a onClick={() => clickProduct(productid)}>
+         <a onClick={() => clickProduct(productid,id)}>
           
              <img
             src={allimages}

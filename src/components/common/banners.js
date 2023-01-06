@@ -173,14 +173,16 @@ useEffect(() => {
   }
   getProductData();
 }, [productType,apicall]);
-const clickProduct = (productid) => {
+const clickProduct = (productid,id) => {
   localStorage.setItem("proid", productid);
+  localStorage.setItem("variantid", id);
+
   navigate("/product-detail");
 };
-const result = showbanner.filter((thing, index, self) =>
-index == self.findIndex((t) => (
-  t.banner_url== thing.banner_url
-)))
+// const result = showbanner.filter((thing, index, self) =>
+// index == self.findIndex((t) => (
+//   t.banner_url== thing.banner_url
+// )))
 // console.log("resulttttttttt"+JSON.stringify(result))
 // let logo = `${process.env.REACT_APP_BASEURL}/${showbanner.image}`
 // let docsdata = `${process.env.REACT_APP_BASEURL}/${Imgarray}`
@@ -207,26 +209,26 @@ useEffect(() => {
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
-          {result.map((img)=>{
+          {showbanner.map((img)=>{
                 return(
                   <>
                  <div className="col-xxl-6 col-xl-8 col-md-6">
                   <div className="home-contain h-100">
-                {result===img?"home_page_right_side(1)":null}
+                {img.banner_location ==='home_page_left_side(1)'?
+                <>
                  <img src={img.image}
-                  className="img-fluid bg-img lazyload h-100 w-100"
+                  className="img-fluid bg-img lazyload "
                   alt="image"
-                  name="banner_url"
+                  name="image"
                   // width={'100px'}
                 />
-               
-                
                 <div className="home-detail w-50 p-center-left">
                   <div>
                     <h6 className="ls-expanded theme-color">ORGANIC</h6>
                     <h1 className="fw-bold w-100">
                       {/* 100% Fresh */}
-                    {img.title}</h1>
+                    {img.title}
+                    </h1>
                     <h3 className="text-content fw-light">
                       Fruit & Vegetables
                     </h3>
@@ -241,22 +243,27 @@ useEffect(() => {
                     
                   </div>
                 </div>
+                </>
+                :null}
               </div>
             </div>
            
             <div className="col-xxl-3 col-xl-4 col-md-6 ratio_medium">
               <div className="home-contain">
-                <div>
+              {img.banner_location==='home_page_right_side(3)'?
+                 <>
+                  
                   <img
                     src={img.image}
                     className="img-fluid bg-img lazyload "
-                    alt=""
+                    alt="image"
+                    name="image"
                   />
-                </div>
+              
                 <div className="home-detail text-center p-top-center w-100 ">
                   <div>
-                    <h4 className="fw-bold">Fresh & 100% Organic</h4>
-                    <h5 className="text-center">famer's market</h5>
+                    <h4 className="fw-bold">{img.title}</h4>
+                    <h5 className="text-center">{img.description}</h5>
                     <Link to={img.banner_url}>
                     <button className="btn bg-white theme-color mt-3 home-button mx-auto btn-2">
                       Shop Now
@@ -264,6 +271,8 @@ useEffect(() => {
                    
                   </div>
                 </div>
+                 </>
+               :null}
               </div>
             </div>
 
@@ -272,11 +281,13 @@ useEffect(() => {
                 <div className="col-xxl-12 col-sm-6">
                   <div className="home-contain">
                     <a href="shop-left-sidebar.html">
+                      {img.banner_location==='home_page_right_side(3)'?
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload"
-                        alt=""
-                      />
+                        alt="image"
+                        name="image"
+                      />:null}
                     </a>
                     <div className="home-detail  p-center text-center">
                       <div>
@@ -290,18 +301,20 @@ useEffect(() => {
                 <div className="col-xxl-12 col-sm-6">
                   <div className="home-contain">
                     <a href="shop-left-sidebar.html">
+                      {img.banner_location==='home_page_right_side(4)'?
                       <img
                         src={img.image}
-                        className="img-fluid bg-img lazyload"
-                        alt=""
-                      />
+                        className="img-fluid bg-img lazyload w-100 h-100"
+                        alt="image"
+                        name='image'
+                      />:null}
                     </a>
-                    <div className="home-detail  w-50 p-center-left home-p-sm">
+                    {/* <div className="home-detail  w-50 p-center-left home-p-sm">
                       <div>
                         <h4 className="fw-bold">Safe food saves lives</h4>
                         <h5>Discount Offer</h5>
                       </div>
-                    </div>
+                    </div> */}
                   </div>
                 </div>
               </div>

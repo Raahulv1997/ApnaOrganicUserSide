@@ -17,7 +17,7 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
-const Header = (props) => {
+const Header = (props,allimages) => {
   const useridd = localStorage.getItem("userid");
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [apicall, setapicall] = useState(false);
@@ -320,7 +320,7 @@ const Header = (props) => {
                                     <div className="drop-cart ">
                                       <Link to="/" className="drop-image">
                                         <img
-                                          src="../public/vegetable/product/1.png"
+                                          src={allimages}
                                           className="lazyload"
                                           alt=""
                                         />

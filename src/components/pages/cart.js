@@ -33,17 +33,21 @@ const Cart = (all_images) => {
     let inc = quantity + 1;
     axios
       .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        cart_id: id,
+        id: id,
         quantity: inc,
       })
+      // console.log("ID PLEASEEEEEEEEEE"+id)
+
       .then((response) => {
         let data = response.data;
+
         setapicall(true);
-        setCartData(data);
+        // setCartData(data);
         setQuantity((quantity = quantity + 1));
         CheckCoupon();
       });
   };
+  console.log("DATAAA----------------"+JSON.stringify(cartdata))
   const decrementCount = (id, quantity) => {
     let dec;
     if (quantity > 0) {
@@ -59,7 +63,7 @@ const Cart = (all_images) => {
       .then((response) => {
         setapicall(true);
         let data = response.data;
-        setCartData(data);
+        // setCartData(data);
         // quantity = quantity- 1;
         setQuantity((quantity = quantity - 1));
         CheckCoupon();
@@ -115,6 +119,7 @@ const Cart = (all_images) => {
     getCartData();
   }, [apicall,quantity]);
   // end Cart Detail
+  
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -442,7 +447,7 @@ else{
                                       data-type="minus"
                                       data-field=""
                                       onClick={() =>
-                                        decrementCount(cdata.id, cdata.quantity)
+                                        decrementCount(cdata.cart_id, cdata.quantity)
                                       }
                                     >
                                       <i className="fa-regular fa-minus"></i>
@@ -460,7 +465,7 @@ else{
                                       data-type="plus"
                                       data-field=""
                                       onClick={() =>
-                                        incrementCount(cdata.id, cdata.quantity)
+                                        incrementCount(cdata.cart_id, cdata.quantity)
                                       }
                                     >
                                       <i className="fa-regular fa-plus"></i>

@@ -62,6 +62,7 @@ const decrementCount = () => {
   }
 
 let proid=localStorage.getItem("proid");
+let varientId=localStorage.getItem("variantid")
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -81,31 +82,13 @@ let proid=localStorage.getItem("proid");
             setId(data.product_verient[0].id);
             setImage(data.product_verient[0].product_image_path);
             setapicall(false);
+            setproductColor(data.product_verient[0].colors,data.product_verient[0].product_price,data.product_verient[0].mrp,data.product_verient[0].manufacturing_date,data.product_verient[0].expire_date,data.product_verient[0].quantity,varientId,proid);
           });
       } catch (err) {}
     }
 
     getProductDetails();
   }, [apicall]);
-// console.log("VERIENTIDDDDDDDD"+JSON.stringify(productDetails))
-  useEffect(() => {
-    function getProductImage() {
-      try {
-        axios
-          .get(`http://192.168.29.108:5000/product_images_get_singal_veriant?product_id=${proid}&product_verient_id=${Id}`)
-          .then((response) => {
-            let data = response.data;
-            setapicall(false);
-            setShowImages(data);
-            console.log("IMAGESSSS ________DATA"+JSON.stringify(data))
-
-          });
-      } catch (err) {}
-    }
-
-    getProductImage();
-  }, [apicall]);
-
   const result = showImage.filter((thing, index, self) =>
   index == self.findIndex((t) => (
     t.product_image_path== thing.product_image_path
@@ -146,7 +129,7 @@ setapicall(true);
 });
 }
 
-const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id,productimagename)=>{
+const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id,productid)=>{
   setProductprice(product_price);
   setMrp(mrpp);
   setSize(sizee);
@@ -154,10 +137,23 @@ const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id,product
   setExp(expp);
   setQut(quantityy)
   setId(id);
-  setImage(productimagename);
-
+  try {
+    axios
+      .get(`http://192.168.29.108:5000/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+      .then((response) => {
+        let data = response.data;
+        setapicall(false);
+        setShowImages(data);
+        console.log("IMAGESSSS ________DATA"+JSON.stringify(data))
+  
+      });
+  } catch (err) {}
+ 
 }
-const productColor=(color,product_price,mrpp,mfdd,expp,quantityy,id,productimagename)=>{
+const setproductColor=(color,product_price,mrpp,mfdd,expp,quantityy,id,productid)=>{
+  localStorage.setItem("variantid", id);
+  localStorage.setItem("proid", productid);
+
 setColors(color);
 setProductprice(product_price);
 setMrp(mrpp);
@@ -165,7 +161,19 @@ setMfd(mfdd);
 setExp(expp);
 setQut(quantityy)
 setId(id);
-setImage(productimagename);
+try {
+  axios
+    .get(`http://192.168.29.108:5000/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+    .then((response) => {
+      let data = response.data;
+      setapicall(false);
+      setShowImages(data);
+      console.log("IMAGESSSS ________DATA"+JSON.stringify(data))
+
+    });
+} catch (err) {}
+// setImage(product_image_namee);
+
 }
  useEffect(() => {
     axios.post(`${process.env.REACT_APP_BASEURL}/review_list`,{
@@ -204,6 +212,7 @@ const AddReview = (e) => {
     .then((response) => {
     });
 }
+// console.log("--------------------------DDDDDDDDDDDDDDDDDDDD"+JSON.stringify(productDetails))
   return (
     <Fragment>
       <Header/>
@@ -239,24 +248,32 @@ const AddReview = (e) => {
               <div className="row g-6">
 
                 <div className="col-xl-6 sm-2 col-lg-7">
-                {/* {result.map((images)=>{
-                    return( */}
+               
                        <Carousel variant="dark">
+                       {showImage.map((images)=>{
+                          console.log(">>>> "+images.product_verient_id +"=="+varientId+"||"+images.productid == proid)
+                    return(
+                    
                     <Carousel.Item>
-
+                      {images.product_verient_id == varientId || images.productid == proid?
                       <img
-                        className="d-block w-100"
-                        src={image}
+                        className="d-block"
+                        src={images.product_image_path}
                         alt="First slide"
-                        name="product_image_path"
-                      />
-                      <Carousel.Caption>
+                        name={images.product_image_name}
+                        style={{height:"750px",width:"750px"}}
+                      />:null}
+                    </Carousel.Item>
+                      )
+                    })}
+                    </Carousel>
+
+                      {/* <Carousel.Caption>
                         <h3 style={{ color: "black" }}>First slide label</h3>
                         <p style={{ color: "black" }}>
-                          {/* {images.product_image_name} */}
+                          {"images.product_image_name"}
                         </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
+                      </Carousel.Caption> */}
                     {/* <Carousel.Item>
                       <img
                         className="d-block w-100"
@@ -285,10 +302,8 @@ const AddReview = (e) => {
                         </p>
                       </Carousel.Caption>
                     </Carousel.Item> */}
-                  </Carousel>
-{/*                    
-                   )
-                  })}  */}
+                   
+                   
                 </div>
                 
                 <div className="col-12 col-md-6 wow fadeInUp"
@@ -346,24 +361,24 @@ const AddReview = (e) => {
                    {productDetails.product_verient ? 
                         <div className="product-packege">
                           <div className="product-title"> 
-                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece':productDetails.product_verient[0].image==='product_image_name'?"Images": null||productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
+                       <h4>{productDetails.product_verient[0].unit === 'gms'?'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece':result?"": null||productDetails.product_verient[0].colors==='red'?'Colors':productDetails.product_verient[0].colors==='black'?'':productDetails.product_verient[0].colors==='yellow'?'':productDetails.product_verient[0].colors==='green'?'':productDetails.product_verient[0].colors==='blue'?'Colors':null} </h4>
                           </div>
                           {(productDetails.product_verient).map((details) => {
-                           
                            return (
                             
                           <ul className="select-packege" >
                          
                              <li key={details.id}>
                           
-                          <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.manufacturing_date,details.expire_date,details.quantity,details.id,details.product_image_name)}}
+                          <Link onClick={()=>{setproductprice(details.product_price,details.mrp,details.size,details.manufacturing_date,details.expire_date,details.quantity,details.id,details.product_id
+                          )}}
                           className={size==details.size ? "active" : null}
                            >
                            {details.size}
                          </Link>
                         </li>
                          <li>
-                          <Link  onClick={()=>{productColor(details.colors,details.product_price,details.mrp,details.manufacturing_date,details.expire_date,details.quantity, details.id,details.product_image_name)}}
+                          <Link  onClick={()=>{setproductColor(details.colors,details.product_price,details.mrp,details.manufacturing_date,details.expire_date,details.quantity, details.id,details.product_id)}}
                           className={colors == details.colors ? "active" : null}
                             >
                             {details.colors}
