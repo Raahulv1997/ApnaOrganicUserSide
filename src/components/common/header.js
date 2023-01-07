@@ -322,7 +322,8 @@ const Header = (props,allimages) => {
                                         <img
                                           src={allimages}
                                           className="lazyload"
-                                          alt=""
+                                          alt="image"
+                                          name="image"
                                         />
                                       </Link>
 
