@@ -65,10 +65,6 @@ const ProductBox = ({
   //         .then((response) => {
   //           let data = response.data.result;
   //           setProductData(response.data.results);
-<<<<<<< HEAD
-  //         console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
-=======
->>>>>>> 670d725dbdece4a149dab8775e3202731ef2e516
   //           setapicall(false);
 
   //         });
@@ -77,17 +73,10 @@ const ProductBox = ({
 
   //   getAllData();
   // }, []);
-<<<<<<< HEAD
-  const result = productData.filter((thing, index, self) =>
-  index == self.findIndex((t) => (
-    t.all_images== thing.all_images
-  )))
-=======
   // const result = productData.filter((thing, index, self) =>
   // index == self.findIndex((t) => (
   //   t.all_images== thing.all_images
   // )))
->>>>>>> 670d725dbdece4a149dab8775e3202731ef2e516
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
   return (
