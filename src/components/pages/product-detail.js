@@ -57,12 +57,13 @@ const decrementCount = () => {
         setCount(count => count - 1);
     }
 };
-
   const func =()=>{
     
   }
 
 let proid=localStorage.getItem("proid");
+console.log("---------------proidddd---"+proid)
+
 let varientId=localStorage.getItem("variantid")
   useEffect(() => {
     function getProductDetails() {

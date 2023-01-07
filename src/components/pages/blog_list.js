@@ -14,18 +14,21 @@ import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
-const BlogList = (clickBlog)=> {
-  
+const BlogList = ()=> {
+  const clickBlog=(id)=>{
+    localStorage.setItem("idd",id)
+    console.log("bLOgg KAAAAAAAA id "+id)
+  }
   const[apicall,setapicall]=useState([]);
   const[blogData,setBlogData]=useState([]);
   const[id,setId]=useState();
-  localStorage.setItem("idd",id)
+  
 
   useEffect(() => {
     axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
     {
     "id":"",
-    "for_":"user",
+    "for_":"admin",
     "recent":"",
     "category":[],
     "product_tag":""
@@ -39,6 +42,20 @@ const BlogList = (clickBlog)=> {
     setapicall(false);
     })
   }, [apicall]);
+  // const Search=()=>{
+  //   axios.post(`${process.env.REACT_APP_BASEURL}/coupons_list`,{
+  //     "campaign_name":`${SearchCoup.campaign_name}`,
+  //      "code":`${SearchCoup.code}`,
+  //      "status":`${SearchCoup.status}`
+   
+
+  // }).then ((response) => {
+  //   setcoupondata(response.data)
+  //   setSearchCoup('');
+
+  //   })
+  // }
+
   return (
     <Fragment>
       <Header />
@@ -54,7 +71,7 @@ const BlogList = (clickBlog)=> {
                    <div className="col-12">
                   <div className="blog-box blog-list wow fadeInUp">
                     <div className="blog-image">
-                      <img src={blog1} className="lazyload" alt="" />
+                      <img src={showData.image} className="lazyload w-50 h-50" alt="image"name="image" />
                     </div>
 
                     <div className="blog-contain blog-contain-2">
@@ -69,7 +86,7 @@ const BlogList = (clickBlog)=> {
                         </span>
                       </div>
                       <Link to="/blog_detail">
-                        <h3  onClick={(id) => clickBlog(id)}>
+                        <h3  onClick={(id) => clickBlog(showData.id)} >
                           {showData.title}
                         </h3>
                       </Link>
@@ -451,63 +468,29 @@ const BlogList = (clickBlog)=> {
                             <div id="panelsStayOpen-collapseOne"className="accordion-collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingOne">
                             <div className="accordion-body pt-0">
-                                        <div className="recent-post-box">
-                                            <div className="recent-box">
-                                                <Link to="/" className="recent-image">
-                                                    <img src={blog1}
-                                                        className="img-fluid  lazyload" alt=""/>
-                                                </Link>
+                            {blogData.map((blog)=>{
+                                            return(
+                                              <>
+                                              <div className="recent-post-box">
+                                         
+                                         <div className="recent-box">
+                                             <Link to="/" className="recent-image">
+                                                 <img src={blog.image}
+                                                     className="img-fluid  lazyload" alt="image"/>
+                                             </Link>
 
-                                                <div className="recent-detail">
-                                                <Link to="/">
-                                                        <h5 className="recent-name">Green onion knife and salad placed</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                            <Link to="/" className="recent-image">
-                                                    <img src={blog2}
-                                                       className="img-fluid  lazyload" alt=""/>
-                                                </Link>
-
-                                                <div className="recent-detail">
-                                                <Link to="/">
-                                                        <h5 className="recent-name">Health and skin for your organic</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                            <Link to="/" className="recent-image">
-                                                    <img src={blog3}
-                                                       className="img-fluid  lazyload" alt=""/>
-                                                </Link>
-
-                                                <div className="recent-detail">
-                                                <Link to="/">
-                                                        <h5 className="recent-name">Organics mix masala fresh & soft</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                            <Link to="/" className="recent-image">
-                                                    <img src={blog4}
-                                                        className="img-fluid  lazyload" alt=""/>
-                                                </Link>
-
-                                                <div className="recent-detail">
-                                                <Link to="/" >
-                                                        <h5 className="recent-name">Fresh organics brand and picnic</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-                                        </div>
+                                             <div className="recent-detail">
+                                             <Link to="/">
+                                                     <h5 className="recent-name">{blog.title}</h5>
+                                                 </Link>
+                                                 <h6>{blog.publish_date} <i data-feather="thumbs-up"></i></h6>
+                                             </div>
+                                         </div>
+                                     </div>
+                                              </>
+                                            )
+                                          })}
+                                        
                                     </div>
                                     </div>
                             </Accordion.Body>
@@ -524,16 +507,11 @@ const BlogList = (clickBlog)=> {
                                     <div className="accordion-body p-0">
                                         <div className="category-list-box">
                                             <ul>
-                                                <li>
-                                                <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Latest Recipes</h5>
-                                                            <span>10</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
+                                              {blogData.map((blog)=>{
+                                                return(
+                                                  <>
+                                                  
+                                                  <li>
                                                 <Link to="/" >
                                                         <div className="category-name">
                                                             <h5>Diet Food</h5>
@@ -577,6 +555,12 @@ const BlogList = (clickBlog)=> {
                                                         </div>
                                                     </Link>
                                                 </li>
+                                                  </>
+                                                )
+                                              })}
+                                                
+
+                                              
                                             </ul>
                                         </div>
                                     </div>

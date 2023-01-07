@@ -46,30 +46,31 @@ const ProductBox = ({
   const func = (e) => {
     
   };
-  useEffect(() => {
-    function getAllData() {
-      try {
-        axios
-          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
-          {
-            product_search: {
-              search: `${productType}`,
-              price_from: "",
-              price_to: "",
-            },
-          })
-          .then((response) => {
-            let data = response.data.result;
-            setProductData(response.data.results);
-          console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
-            setapicall(false);
+  console.log(">>>>>>>>>>>>>>>>>>>>>productIDDDD"+productid)
+  // useEffect(() => {
+  //   function getAllData() {
+  //     try {
+  //       axios
+  //         .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+  //         {
+  //           product_search: {
+  //             search: `${productType}`,
+  //             price_from: "",
+  //             price_to: "",
+  //           },
+  //         })
+  //         .then((response) => {
+  //           let data = response.data.result;
+  //           setProductData(response.data.results);
+  //         console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+  //           setapicall(false);
 
-          });
-      } catch (err) {}
-    }
+  //         });
+  //     } catch (err) {}
+  //   }
 
-    getAllData();
-  }, []);
+  //   getAllData();
+  // }, []);
   const result = productData.filter((thing, index, self) =>
   index == self.findIndex((t) => (
     t.all_images== thing.all_images

@@ -27,14 +27,14 @@ useEffect(() => {
           .post(`${process.env.REACT_APP_BASEURL}/blogs`,
           {
                 "id":`${blodid}`,
-                "for_":"user",
+                "for_":"admin",
                 "recent":"",
                 "category":[],
                 "product_tag":""
               })
           .then((response) => {
-            let data = response.data;
-            setBlogDetails(response.data);
+            let data = response.data[0];
+            setBlogDetails(data);
             setapicall(false);
 
           });
@@ -378,20 +378,21 @@ useEffect(() => {
 
                 <div className="col-xxl-9 col-xl-8 col-lg-7 ratio_50">
                     <div className="blog-detail-image rounded-3 mb-4">
-                        <img src={blog1}className="bg-img w-100  lazyload" alt=""/>
+                       
+                        <img src={blogDetails.image}className="bg-img w-100  lazyload" alt=""/>
                         <div className="blog-image-contain">
-                            <ul className="contain-list">
+                            {/* <ul className="contain-list">
                                 <li>backpack</li>
                                 <li>life style</li>
                                 <li>organic</li>
-                            </ul>
+                            </ul> */}
                             <h2>{blogDetails.title}</h2>
                             <ul className="contain-comment-list">
                                 <li>
-                                    <div className="user-list">
+                                    {/* <div className="user-list">
                                         <i data-feather="user"></i>
                                         <span>Caroline</span>
-                                    </div>
+                                    </div> */}
                                 </li>
 
                                 <li>
@@ -402,10 +403,10 @@ useEffect(() => {
                                 </li>
 
                                 <li>
-                                    <div className="user-list">
+                                    {/* <div className="user-list">
                                         <i data-feather="message-square"></i>
                                         <span>82 Comment</span>
-                                    </div>
+                                    </div> */}
                                 </li>
                             </ul>
                         </div>
@@ -440,7 +441,7 @@ useEffect(() => {
                             on-brand but completeley fresh we can't hear you.</p> */}
 
                         <div className="blog-details-quote">
-                            <h3>Adipisicing elit Qui ipsam natus aspernatur quaerat impedit eveniet ipsum dolor</h3>
+                            <h3>{blogDetails.title}</h3>
                             <h5>- Denny Dose</h5>
                         </div>
 
@@ -465,7 +466,7 @@ useEffect(() => {
                             meeting at 2:30 today.</p> */}
                     </div>
 
-                    <div className="comment-box overflow-hidden">
+                    {/* <div className="comment-box overflow-hidden">
                         <div className="leave-title">
                             <h3>Comments</h3>
                         </div>
@@ -542,9 +543,9 @@ useEffect(() => {
                                 </li>
                             </ul>
                         </div>
-                    </div>
+                    </div> */}
 
-                    <div className="leave-box">
+                    {/* <div className="leave-box">
                         <div className="leave-title mt-0">
                             <h3>Leave Comment</h3>
                         </div>
@@ -595,7 +596,7 @@ useEffect(() => {
                             <button className="btn btn-animation ms-xxl-auto mt-xxl-0 mt-3 btn-md fw-bold">Post
                                 Comment</button>
                         </div>
-                    </div>
+                    </div> */}
                 </div>
             </div>
         </div>
