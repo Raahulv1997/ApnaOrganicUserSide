@@ -192,12 +192,11 @@ try {
 
 const handleFormChange = (e) => {
   setaddreviewdata({...addreviewdata,[e.target.name]: e.target.value});
-  console.log("CLICKTOADDDATAAAA"+JSON.stringify(addreviewdata))
 
   };
 const onRatingChange=(e)=>{
   setRrating(e.target.value)
-  console.log("onRatingChange"+JSON.stringify(addreviewdata))
+  console.log("onRatingChange"+JSON.stringify((e.target.value)))
 
 
 }
@@ -218,7 +217,8 @@ const AddReview = (e) => {
     .then((response) => {
     });
 }
-// console.log("--------REVIEWWWW>>>>>>>>>>>>>>>>>>>"+JSON.stringify(reviewData))
+
+
   return (
     <Fragment>
       <Header/>
@@ -274,42 +274,6 @@ const AddReview = (e) => {
                     })}
                     </Carousel>
 
-                      {/* <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>First slide label</h3>
-                        <p style={{ color: "black" }}>
-                          {"images.product_image_name"}
-                        </p>
-                      </Carousel.Caption> */}
-                    {/* <Carousel.Item>
-                      <img
-                        className="d-block w-100"
-                        src={images.product_image_path}
-                        alt="Second slide"
-                      />
-  
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>Second slide label</h3>
-                        <p style={{ color: "black" }}>
-                        {images.product_image_name}
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item>
-                    <Carousel.Item>
-                      <img
-                        className="d-block w-100"
-                        src={images.product_image_path}
-                        alt="Third slide"
-                      />
-  
-                      <Carousel.Caption>
-                        <h3 style={{ color: "black" }}>Third slide label</h3>
-                        <p style={{ color: "black" }}>
-                        {images.product_image_name}
-                        </p>
-                      </Carousel.Caption>
-                    </Carousel.Item> */}
-                   
-                   
                 </div>
                 
                 <div className="col-12 col-md-6 wow fadeInUp"
@@ -535,58 +499,7 @@ const AddReview = (e) => {
                           </div>
                         </div>
                         
-                        {/* <div className="paymnet-option">
-                          <div className="product-title">
-                            <h4>Guaranteed Safe Checkout</h4>
-                          </div>
-                          <ul>
-                            <li>
-                               <Link to="/" >
-                                <img
-                                  src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/1.svg"
-                                  className=" lazyload"
-                                  alt=""
-                                />
-                              </Link>
-                            </li>
-                            <li>
-                               <Link to="/" >
-                                <img
-                                  src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/2.svg"
-                                  className=" lazyload"
-                                  alt=""
-                                />
-                              </Link>
-                            </li>
-                            <li>
-                               <Link to="/" >
-                                <img
-                                  src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/3.svg"
-                                  className=" lazyload"
-                                  alt=""
-                                />
-                              </Link>
-                            </li>
-                            <li>
-                               <Link to="/" >
-                                <img
-                                  src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/4.svg"
-                                  className=" lazyload"
-                                  alt=""
-                                />
-                              </Link>
-                            </li>
-                            <li>
-                               <Link to="/" >
-                                <img
-                                  src="https://themes.pixelstrap.com/fastkart/assets/images/product/payment/5.svg"
-                                  className=" lazyload"
-                                  alt=""
-                                />
-                              </Link>
-                            </li>
-                          </ul>
-                        </div> */}
+                       
                       </div>
                     {/* );
                   })} */}
@@ -663,44 +576,6 @@ const AddReview = (e) => {
                         title="Additional info"
                       >
                         { <p dangerouslySetInnerHTML={{__html:productDetails.other_introduction}}/>}
-                        {/* <div className="table-responsive">
-                          <table className="table info-table">
-                            <tbody>
-                              <tr>
-                                <td>Specialty</td>
-                                <td>Vegetarian</td>
-                              </tr>
-                              <tr>
-                                <td>Ingredient Type</td>
-                                <td>Vegetarian</td>
-                              </tr>
-                              <tr>
-                                <td>Brand</td>
-                                <td>{productDetails.brand}</td>
-                              </tr>
-                              <tr>
-                                <td>Form</td>
-                                <td>Bar Brownie</td>
-                              </tr>
-                              <tr>
-                                <td>Package Information</td>
-                                <td>Box</td>
-                              </tr>
-                              <tr>
-                                <td>Manufacturer</td>
-                                <td>Prayagh Nutri Product Pvt Ltd</td>
-                              </tr>
-                              <tr>
-                                <td>Item part number</td>
-                                <td>LE 014 - 20pcs Crème Bakes (Pack of 2)</td>
-                              </tr>
-                              <tr>
-                                <td>Net Quantity</td>
-                                <td>40.00 count</td>
-                              </tr>
-                            </tbody>
-                          </table>
-                        </div> */}
                       </Tab>
   
                       <Tab
@@ -709,7 +584,7 @@ const AddReview = (e) => {
                         eventKey="Care Instuctions"
                         title="Care Instuctions"
                       >
-                        {/* <div className="tab-pane fade" id="care" role="tabpanel" aria-labelledby="care-tab"> */}
+                     
                         <div className="information-box">
                           <ul>
                             <li>
@@ -937,9 +812,32 @@ const AddReview = (e) => {
                               
                                     
                               <ul className="rating">
-                                <li color="#ffb321">
+                                {ratingbox.map((rdata,i)=>{
+                                  return(
+                                    <li color="#ffb321">
+                                    <Form.Check aria-label="option 1" 
+                                    onChange={(e) =>onRatingChange(e)}
+                                    name={`review_rating`}
+                                    value={rdata}
+                                    />
+                                    {Rrating===rdata ? 
+                                     <FaStar
+                                                  icon="star"
+                                                    className="feather fill"
+                                                    fill={"#ffb321"}
+                                                  />
+                                                  :
+                                                   
+                                                   <FaRegStar
+                    icon="star"
+                    className="feather "
+                    fill={"#ffb321"}
+                  />}
+                                                </li>
+                                  )
+                                })}
+                                {/* <li color="#ffb321">
                               <Form.Check aria-label="option 1" 
-                              
                               onChange={(e) =>onRatingChange(e)}
                               name="review_rating1"
                               value={"1"}
@@ -1001,7 +899,7 @@ const AddReview = (e) => {
                                               icon="star"
                                               className="feather "
                                             />
-                                          </li> 
+                                          </li>  */}
                                 </ul>
                                 
                               </div>

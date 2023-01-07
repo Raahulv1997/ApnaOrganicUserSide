@@ -22,6 +22,7 @@ import BlogDetail from "./components/pages/blog_detail";
 import Otp from "./components/pages/otp_verification";
 import Careers from "./components/pages/careers";
 import AuthWrapper from "./components/pages/authwrapper";
+import SellerSignUp from "./components/pages/sellersignup";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
 function App() {
@@ -48,6 +49,7 @@ function App() {
         <Route path="/shop" element={<Shop />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<Forgot />} />
+        <Route path='/sellersignup' element={<SellerSignUp/>}/>
 
         <Route element={<AuthWrapper/>}>
           <Route path="/product-detail" element={<ProductDetail />} />

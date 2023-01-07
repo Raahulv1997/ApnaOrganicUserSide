@@ -232,6 +232,16 @@ const Header = (props,allimages) => {
                   <div className="right-nav">
                     <div className="nav-number"></div>
 
+                   
+                      <Link to="/sellersignup" >
+                        <span className="text-primary">Become A Seller </span>
+                      </Link>
+                   
+                    {/* </NavLink> */}
+                  </div>
+                  <div className="right-nav">
+                    <div className="nav-number"></div>
+
                     {/* <NavLink
                       to=""
                       className="btn theme-bg-color ms-3 fire-button"

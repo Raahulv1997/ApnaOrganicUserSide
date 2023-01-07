@@ -46,33 +46,33 @@ const ProductBox = ({
   const func = (e) => {
     
   };
-  useEffect(() => {
-    function getAllData() {
-      try {
-        axios
-          .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
-          {
-            product_search: {
-              search: `${productType}`,
-              price_from: "",
-              price_to: "",
-            },
-          })
-          .then((response) => {
-            let data = response.data.result;
-            setProductData(response.data.results);
-            setapicall(false);
+  // useEffect(() => {
+  //   function getAllData() {
+  //     try {
+  //       axios
+  //         .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+  //         {
+  //           product_search: {
+  //             search: `${productType}`,
+  //             price_from: "",
+  //             price_to: "",
+  //           },
+  //         })
+  //         .then((response) => {
+  //           let data = response.data.result;
+  //           setProductData(response.data.results);
+  //           setapicall(false);
 
-          });
-      } catch (err) {}
-    }
+  //         });
+  //     } catch (err) {}
+  //   }
 
-    getAllData();
-  }, []);
-  const result = productData.filter((thing, index, self) =>
-  index == self.findIndex((t) => (
-    t.all_images== thing.all_images
-  )))
+  //   getAllData();
+  // }, []);
+  // const result = productData.filter((thing, index, self) =>
+  // index == self.findIndex((t) => (
+  //   t.all_images== thing.all_images
+  // )))
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
   return (
@@ -109,7 +109,7 @@ const ProductBox = ({
          <a onClick={() => clickProduct(productid,id)}>
           
              <img
-            src={allimages}
+            src={allimages? allimages :"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
             className="mt-5 "
             alt=""
           />
