@@ -120,7 +120,6 @@ else{
       })
       .then((response) => {
         let data = response.data;
-        console.log();
         setData(response.data);
         setWlistData("add");
         setapicall(true);
@@ -144,7 +143,7 @@ else{
 useEffect(() => {
  
   let homeurl;
-  if(useridd!== "null" || useridd !== '' || useridd !== null){
+  if(useridd=== "null" || useridd === '' || useridd === null || useridd=== undefined){
      homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`
   }
   else{
@@ -199,7 +198,6 @@ useEffect(() => {
     // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       })
 },[apicall]);
-    console.log("my -----------Logo"+JSON.stringify(showbanner))
  
 // end product box
   return (

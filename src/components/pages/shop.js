@@ -148,7 +148,7 @@ const Shop = (props) => {
   //   product list
   useEffect(() => {
     let homeurl;
-    if(useridd!== "null" || useridd !== '' || useridd !== null){
+    if(useridd=== "null" || useridd === '' || useridd === null || useridd=== undefined){
        homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`
     }
     else{

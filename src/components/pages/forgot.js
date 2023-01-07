@@ -20,7 +20,13 @@ const Forgot = () => {
   }
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
+    console.log("----pass"+e.target.value)
+
   };
+  const OnOtpChange = (e)=>{
+    setotp(e.target.value)
+    console.log("----otp"+e.target.value)
+  }
   const forgotPassword=()=>{
     axios.post(`http://192.168.29.108:5000/user_forgot_password`,{
       email:`${email}`
@@ -35,23 +41,26 @@ const Forgot = () => {
   }
   const VerifyOTP = (e) => {
     e.preventDefault();
-    if (e.target.otpinput.value == otp) {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
           email: email,
-          otp: otp,
+          otp: Number(otp),
           password: passval,
         })
         .then((response) => {
-          sessionStorage.setItem("userid", response.data.insertId);
-          sessionStorage.setItem("upassword", passval);
-          navigate("/your_account");
-          return response;
+          if(response.data.message === 'please check credential'){
+            setOtperror(true);
+          }
+          else{
+            sessionStorage.setItem("userid", response.data.insertId);
+            sessionStorage.setItem("upassword", passval);
+            // navigate("/your_account");
+            // return response;
+          }
+          
         })
         .catch((error) => {});
-    } else {
-      setOtperror(true);
-    }
+    
   };
   return (
     <Fragment>
@@ -107,59 +116,29 @@ const Forgot = () => {
                     className="inputs d-flex flex-row justify-content-center"
                   >
                     <input
-                      className="text-center form-control rounded"
+                      className={"form-control"}
                       type="text"
                       id="first"
-                      maxlength="1"
-                      placeholder="0"
+                      placeholder="Enter Otp"
+                      onChange={(e)=>OnOtpChange(e)}
                     />
-                    <input
-                      className="text-center form-control rounded"
-                      type="text"
-                      id="second"
-                      maxlength="1"
-                      placeholder="0"
-                    />
-                    <input
-                      className="text-center form-control rounded"
-                      type="text"
-                      id="third"
-                      maxlength="1"
-                      placeholder="0"
-                    />
-                    <input
-                      className="text-center form-control rounded"
-                      type="text"
-                      id="fourth"
-                      maxlength="1"
-                      placeholder="0"
-                    />
-                    <input
-                      className="text-center form-control rounded"
-                      type="text"
-                      id="fifth"
-                      maxlength="1"
-                      placeholder="0"
-                    />
-                    <input
-                      className="text-center form-control rounded"
-                      type="text"
-                      id="sixth"
-                      maxlength="1"
-                      placeholder="0"
-                    />
+                    
                   </div>
-                  <div className="col-12 mt-3">
+                  {/* <div className="col-12 mt-3">
                         <button
                           className="btn btn-animation w-100"
                           type="button" onClick={VerifyOTP}
                         >
                           VerifyOTP
                         </button>
-                      </div>
-                  {otp === 0 ? (
+                      </div> */}
+                  {/* {otp === 0 ? ( */}
                       <div className="col-12">
                         <div className="form-floating theme-form-floating">
+                        <div className="log-in-title">
+                      <h4>Enter New Password</h4>
+                    
+                  </div>
                           <input
                             type="password"
                             name="password"
@@ -168,16 +147,15 @@ const Forgot = () => {
                             placeholder="New Password"
                             onChange={(e) => onPasswordChange(e)}
                           />
-                          <label htmlFor="password">Enter New Password</label>
                         </div>
                       </div>
-                    ) : null}
+                    {/* ) : null} */}
                       <div className="col-12 mt-3">
                         <button
                           className="btn btn-animation w-100"
                           type="button" onClick={VerifyOTP}
                         >
-                          Forgot
+                          Change Password
                         </button>
                       </div>
                     </form>

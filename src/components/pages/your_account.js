@@ -19,7 +19,7 @@ import Col from "react-bootstrap/Col";
 import { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-// import {CiMail} from 'react-icons/ci';
+import {demo} from '../../Photos/demo.jpg';
 
 function Account() {
   const useridd = localStorage.getItem("userid")
@@ -61,16 +61,17 @@ const navigate = useNavigate();
     // return response;
   }).catch(error => {
   })
-  setwishlistclick();
+  Onwishlistclick();
   OnOrderclick();
  },[Password])
  
 // wishlist
-// console.log("userdatsa"+JSON.stringify(userdata))
-const setwishlistclick = () =>{
+const Onwishlistclick = () =>{
   axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
   .then(response => {
-    // setwishlistdata(response.data)
+    if(response.data.message !=='empty'){
+      setwishlistdata(response.data)
+    }
     // navigate('/your_account')
     // return response;
   }).catch(error => {
@@ -256,8 +257,9 @@ const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
 
 
 const onProductClick = (id) =>{
-  localStorage.setItem("orderid" , id)
-  navigate('/product_detail')
+  // localStorage.setItem("orderid" , id)
+  localStorage.setItem("proid" , id)
+  navigate('/product-detail')
 }
   return (
     <React.Fragment>
@@ -359,7 +361,7 @@ const onProductClick = (id) =>{
                               role="tab"
                               aria-controls="pills-wishlist"
                               aria-selected="false"
-                              onClick={() => setwishlistclick()}
+                              onClick={() => Onwishlistclick()}
                             >
                               <AiOutlineHeart className="mx-2" />
                               Wishlist
@@ -670,7 +672,7 @@ const onProductClick = (id) =>{
                       </div>
                     </Tab.Pane>
                     {/* order history */}
-                    <Tab.Pane eventKey="second">
+                    <Tab.Pane eventKey="second">  
                       <div
                         className="tab-pane fade show"
                         id="pills-order"
@@ -708,21 +710,22 @@ const onProductClick = (id) =>{
                               </div>
                               
                               <div className="product-order-detail">
-                                <Link
-                                onClick={()=>onProductClick(data.id)}
+                                <div
+                                onClick={()=>onProductClick(data.product_id
+                                  )}
                                   className="order-image"
                                 >
                                   <img
-                                    src={Product}
+                                    src={data.all_images?data.all_images :"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
                                     className="lazyload"
                                     alt=""
                                   />
-                                </Link>
+                                </div>
 
                                 <div className="order-wrap">
-                                  <Link to="product-left.html">
+                                  <p >
                                     <h3>{data.product_title_name}</h3>
-                                  </Link>
+                                  </p>
                                   <p className="text-content">
                                   {data.product_description}
                                   </p>
@@ -788,7 +791,7 @@ const onProductClick = (id) =>{
                                         <h6 className="text-content">
                                           Order Date :{" "}
                                         </h6>
-                                        <h5>{data.order_date}</h5>
+                                        <h5>{moment(data.order_date).format('yyyy-MM-DD')}</h5>
                                       </div>
                                     </li>
                                     <li>
@@ -812,9 +815,9 @@ const onProductClick = (id) =>{
                                         <h6 className="text-content">
                                           Quantity :{" "}
                                         </h6>
-                                        {data.unit === 'gms' || data.unit === 'l' || data.unit === 'pcs'? 
-                                        <h5>{data.unit_quantity}{data.unit}</h5>
-                                        :  <h5>{data.size}{data.unit}
+                                        {data.unit === 'gms' || data.unit === 'ml' || data.unit === 'piece'? 
+                                        <h5>{data.unit_quantity} {data.unit}</h5>
+                                        :  <h5>{data.size} {data.unit}
                                          </h5>
                                         }
 
@@ -858,13 +861,13 @@ const onProductClick = (id) =>{
                                   <div className="product-box-3 theme-bg-white h-100">
                                   <div className="product-header">
                                     <div className="product-image">
-                                      <Link to="product-left.html">
+                                      <div onClick={()=> onProductClick(wdata.product_id)}>
                                         <img
-                                          src="https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                          src={wdata.all_images?wdata.all_images :"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
                                           className="img-fluid  lazyload"
                                           alt=""
                                         />
-                                      </Link>
+                                      </div>
   
                                       <div className="product-header-top">
                                         <button className="btn wishlist-button close_button">

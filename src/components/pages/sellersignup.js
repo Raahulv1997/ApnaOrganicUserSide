@@ -7,7 +7,7 @@ import axios from "axios";
 import "../../CSS/style.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-const Singup = () => {
+const SellerSignUp = () => {
 
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
@@ -30,7 +30,7 @@ const Singup = () => {
     setemail(e.target.email.value);
     // alert("SINGNNN"+email)
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
+      .post(`${process.env.REACT_APP_BASEURL}/vendor_signup`, {
         email: e.target.email.value,
       })
       .then((response) => {
@@ -55,7 +55,7 @@ const Singup = () => {
     e.preventDefault();
     // if (e.target.otpinput.value == otp) {
       axios
-        .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
+        .post(`${process.env.REACT_APP_BASEURL}/vendor_otp_verify`, {
           email: email,
           otp: Number(otp),
           password: passval,
@@ -87,7 +87,8 @@ const Singup = () => {
           <div className="row">
             <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
               <div className="image-contain">
-                <img src={Banner} className="img-fluid" alt="" />
+                {/* <img src={Banner} className="img-fluid" alt="" />
+                 */}
               </div>
             </div>
 
@@ -261,4 +262,4 @@ const Singup = () => {
     </Fragment>
   );
 };
-export default Singup;
+export default SellerSignUp;

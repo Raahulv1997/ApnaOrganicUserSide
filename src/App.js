@@ -22,34 +22,36 @@ import BlogDetail from "./components/pages/blog_detail";
 import Otp from "./components/pages/otp_verification";
 import Careers from "./components/pages/careers";
 import AuthWrapper from "./components/pages/authwrapper";
+import SellerSignUp from "./components/pages/sellersignup";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
 function App() {
   let useridds = localStorage.getItem("userid")
-  // const [userLogged, setUserLogged] = useState(
-  //   JSON.parse(localStorage.getItem("userid"))
-  // );
+  const [userLogged, setUserLogged] = useState(
+    JSON.parse(localStorage.getItem("userid"))
+  );
 
-  // useEffect(() => {
-  //   localStorage.setItem("userid", JSON.stringify(userLogged));
-  // }, [userLogged]);
+  useEffect(() => {
+    localStorage.setItem("userid", JSON.stringify(userLogged));
+  }, [userLogged]);
 
-  // const logIn = () => setUserLogged(true);
-  // const logOut = () => setUserLogged(false);
+  const logIn = () => setUserLogged(true);
+  const logOut = () => setUserLogged(false);
 
   return (
     <BrowserRouter>
       <Routes>
 
         <Route path="/" element={<Home />} />
-        {/* <Route path="/login" element={<Login logIn={logIn}/>} /> */}
-        <Route path="/login" element={<Login />} />
+        <Route path="/login" element={<Login logIn={logIn}/>} />
+        {/* <Route path="/login" element={<Login />} /> */}
 
         <Route path="/shop" element={<Shop />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<Forgot />} />
+        <Route path='/sellersignup' element={<SellerSignUp/>}/>
 
-        {/* <Route element={<AuthWrapper/>}> */}
+        <Route element={<AuthWrapper/>}>
           <Route path="/product-detail" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
@@ -65,7 +67,7 @@ function App() {
           <Route path="/blog_list" element={<BlogList />} />
           <Route path="/blog_detail" element={<BlogDetail />} />
           <Route path="/otp_verification" element={<Otp />} />
-        {/* </Route> */}
+        </Route>
 
 
       </Routes>

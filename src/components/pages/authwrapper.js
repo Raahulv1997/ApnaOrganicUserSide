@@ -1,20 +1,20 @@
-// import { Navigate, Outlet, useLocation } from 'react-router-dom';
+import { Navigate, Outlet, useLocation } from 'react-router-dom';
 
-// const AuthWrapper = () => {
+const AuthWrapper = () => {
 
-//   const location = useLocation(); // current location
+  const location = useLocation(); // current location
 
-//   const userLogged = JSON.parse(localStorage.getItem("userid"));
+  const userLogged = JSON.parse(localStorage.getItem("userid"));
   
-//   return userLogged
-//     ? <Outlet />
-//     : (
-//       <Navigate
-//         to="/login"
-//         replace
-//         state={{ from: location }} // <-- pass location in route state
-//       />
-//     );
-// };
+  return userLogged
+    ? <Outlet />
+    : (
+      <Navigate
+        to="/login"
+        replace
+        state={{ from: location }} // <-- pass location in route state
+      />
+    );
+};
 
-// export default AuthWrapper;
+export default AuthWrapper;

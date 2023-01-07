@@ -46,7 +46,10 @@ const ProductBox = ({
   const func = (e) => {
     
   };
+<<<<<<< HEAD
   console.log(">>>>>>>>>>>>>>>>>>>>>productIDDDD"+productid)
+=======
+>>>>>>> 670d725dbdece4a149dab8775e3202731ef2e516
   // useEffect(() => {
   //   function getAllData() {
   //     try {
@@ -62,7 +65,10 @@ const ProductBox = ({
   //         .then((response) => {
   //           let data = response.data.result;
   //           setProductData(response.data.results);
+<<<<<<< HEAD
   //         console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+=======
+>>>>>>> 670d725dbdece4a149dab8775e3202731ef2e516
   //           setapicall(false);
 
   //         });
@@ -71,10 +77,17 @@ const ProductBox = ({
 
   //   getAllData();
   // }, []);
+<<<<<<< HEAD
   const result = productData.filter((thing, index, self) =>
   index == self.findIndex((t) => (
     t.all_images== thing.all_images
   )))
+=======
+  // const result = productData.filter((thing, index, self) =>
+  // index == self.findIndex((t) => (
+  //   t.all_images== thing.all_images
+  // )))
+>>>>>>> 670d725dbdece4a149dab8775e3202731ef2e516
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
   return (
@@ -111,7 +124,7 @@ const ProductBox = ({
          <a onClick={() => clickProduct(productid,id)}>
           
              <img
-            src={allimages}
+            src={allimages? allimages :"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
             className="mt-5 "
             alt=""
           />
@@ -159,8 +172,8 @@ const ProductBox = ({
           <h5 className="name m-0">{brand}</h5>
         </a>
         <h5 className="price theme-color m-0 mb-2">
-          {"₹" + saleprice}{" "}
-          <del className="text-muted small">{"₹" + productMRF}</del>
+          {"₹" + (saleprice).toFixed(2)}{" "}
+          <del className="text-muted small">{"₹" + (productMRF).toFixed(2)}</del>
         </h5>
         <div className="price-qty d-flex justify-content-between m-0">
           <div className="counter-number d-md-block d-none">
