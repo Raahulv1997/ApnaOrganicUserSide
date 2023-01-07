@@ -26,7 +26,7 @@ const Checkout = (props) => {
 
   const [orderadd, setorderadd] = useState({
     user_id: useridd,
-    status: "pending",
+    status: "placed",
     total_quantity: "",
     ref_no: "12345678",
     shipping_charges: "0",

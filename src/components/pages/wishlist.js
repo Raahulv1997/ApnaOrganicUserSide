@@ -24,8 +24,11 @@ function Wishlist(all_images) {
           .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
-            setWishList(data);
-            setapicall(false);
+            if(data.message !=='empty'){
+              setWishList(data);
+              setapicall(false);
+            }
+         
           });
       } catch (err) {}
     }
@@ -101,8 +104,8 @@ function Wishlist(all_images) {
             aria-labelledby="all-tab"
           >
             <div className="row w-100">
-              {wishlist.map((wlist) => {
-                console.log("kkkkkk"+JSON.stringify(wishlist))
+              {wishlist?
+              wishlist.map((wlist) => {
                 return (
                   <div
                     key={wlist.id}
@@ -128,7 +131,8 @@ function Wishlist(all_images) {
                     
                   </div>
                 );
-              })}
+              })
+            :null}
             </div>
           </div>
         </div>

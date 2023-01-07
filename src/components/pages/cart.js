@@ -47,7 +47,6 @@ const Cart = (all_images) => {
         CheckCoupon();
       });
   };
-  console.log("DATAAA----------------"+JSON.stringify(cartdata))
   const decrementCount = (id, quantity) => {
     let dec;
     if (quantity > 0) {

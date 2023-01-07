@@ -94,7 +94,6 @@ let varientId=localStorage.getItem("variantid")
     t.product_image_path== thing.product_image_path
   )))
 
-// console.log("IMGGGGGGGGGGGGGGGGGGGGGGGGG"+JSON.stringify(showImage))
   const AddToCart=()=>{
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
         user_id:`${useridd}`,
@@ -144,7 +143,6 @@ const setproductprice = (product_price,mrpp,sizee,mfdd,expp,quantityy,id,product
         let data = response.data;
         setapicall(false);
         setShowImages(data);
-        console.log("IMAGESSSS ________DATA"+JSON.stringify(data))
   
       });
   } catch (err) {}
@@ -168,7 +166,6 @@ try {
       let data = response.data;
       setapicall(false);
       setShowImages(data);
-      console.log("IMAGESSSS ________DATA"+JSON.stringify(data))
 
     });
 } catch (err) {}
@@ -184,7 +181,6 @@ try {
   let data= response.data;
   setReviewData(response.data)
   // setSearchReview(response.data)
-  // console.log("CONSOLEE"+JSON.stringify(data))
     setapicall(false);
     })
   }, [apicall]);
@@ -193,7 +189,6 @@ try {
 const handleFormChange = (e) => {
   setaddreviewdata({...addreviewdata,[e.target.name]: e.target.value});
   };
-  // console.log("CLICKTOADDDATAAAA"+JSON.stringify(addreviewdata))
 
 const AddReview = (e) => {
     axios
@@ -251,7 +246,7 @@ const AddReview = (e) => {
                
                        <Carousel variant="dark">
                        {showImage.map((images)=>{
-                          console.log(">>>> "+images.product_verient_id +"=="+varientId+"||"+images.productid == proid)
+                        
                     return(
                     
                     <Carousel.Item>

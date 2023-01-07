@@ -61,7 +61,6 @@ const ProductBox = ({
           .then((response) => {
             let data = response.data.result;
             setProductData(response.data.results);
-          console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
             setapicall(false);
 
           });
@@ -158,8 +157,8 @@ const ProductBox = ({
           <h5 className="name m-0">{brand}</h5>
         </a>
         <h5 className="price theme-color m-0 mb-2">
-          {"₹" + saleprice}{" "}
-          <del className="text-muted small">{"₹" + productMRF}</del>
+          {"₹" + (saleprice).toFixed(2)}{" "}
+          <del className="text-muted small">{"₹" + (productMRF).toFixed(2)}</del>
         </h5>
         <div className="price-qty d-flex justify-content-between m-0">
           <div className="counter-number d-md-block d-none">

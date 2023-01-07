@@ -910,7 +910,7 @@ const Header = (props,allimages) => {
                             Blog
                           </Link>
                           <ul className="dropdown-menu ps-4">
-                            <li>
+                            {/* <li>
                               <NavLink
                                 to="/blog_detail"
                                 className="dropdown-item"
@@ -918,12 +918,7 @@ const Header = (props,allimages) => {
                                 {" "}
                                 Blog Detail
                               </NavLink>
-                            </li>
-                            <li>
-                              <Link to="/" className="dropdown-item">
-                                Blog Grid
-                              </Link>
-                            </li>
+                            </li> */}
                             <li>
                               <NavLink
                                 to="/blog_list"

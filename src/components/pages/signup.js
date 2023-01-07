@@ -37,7 +37,8 @@ const Singup = () => {
         if (response.data === false) {
           setemailerror("already");
           e.target.email.value = "";
-        } else {
+        } 
+        else {
           setotp(response.data);
         }
         return response;
@@ -47,25 +48,33 @@ const Singup = () => {
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
   };
+  const OnOTpChange = (e)=>{
+    setotp(e.target.value);
+  }
   const VerifyOTP = (e) => {
     e.preventDefault();
-    if (e.target.otpinput.value == otp) {
+    // if (e.target.otpinput.value == otp) {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
           email: email,
-          otp: otp,
+          otp: Number(otp),
           password: passval,
         })
         .then((response) => {
-          localStorage.setItem("userid", response.data.insertId);
-          localStorage.setItem("upassword", passval);
-          navigate("/your_account");
-          return response;
+          if(response.data.message === 'please check credential'){
+            setOtperror(true);
+          }
+          else{
+            localStorage.setItem("userid", response.data.insertId);
+            localStorage.setItem("upassword", passval);
+            navigate("/your_account");
+            return response;
+          }
+          
         })
         .catch((error) => {});
-    } else {
-      setOtperror(true);
-    }
+      console.log(otp)
+    
   };
 
   return (
@@ -130,6 +139,7 @@ const Singup = () => {
                           id="otp"
                           placeholder="Enter OTP"
                           name="otpinput"
+                          onChange={(e)=>OnOTpChange(e)}
                         />
                         <label className="text-start" htmlFor="email">
                           {otp === 0 ? "Email Address" : "Enter OTP"}
