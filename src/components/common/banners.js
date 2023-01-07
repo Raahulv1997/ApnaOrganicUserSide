@@ -213,8 +213,8 @@ useEffect(() => {
                 return(
                   <>
                  <div className="col-xxl-6 col-xl-8 col-md-6">
-                  <div className="home-contain h-100">
-                {img.banner_location ==='home_page_left_side(1)'?
+                  <div className="home-contain">
+                {img.banner_location ==='home_page_right_side(2)'?
                 <>
                  <img src={img.image}
                   className="img-fluid bg-img lazyload "
@@ -281,7 +281,7 @@ useEffect(() => {
                 <div className="col-xxl-12 col-sm-6">
                   <div className="home-contain">
                     <a href="shop-left-sidebar.html">
-                      {img.banner_location==='home_page_right_side(3)'?
+                      {img.banner_location==='home_page_right_side(2)'?
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload"
@@ -291,8 +291,8 @@ useEffect(() => {
                     </a>
                     <div className="home-detail  p-center text-center">
                       <div>
-                        <h4 className="text-center">Organic Lifestyle</h4>
-                        <h5 className="text-center">Best Weekend Sales</h5>
+                        <h4 className="text-center">{img.title}</h4>
+                        <h5 className="text-center">{img.description}</h5>
                       </div>
                     </div>
                   </div>
@@ -301,7 +301,7 @@ useEffect(() => {
                 <div className="col-xxl-12 col-sm-6">
                   <div className="home-contain">
                     <a href="shop-left-sidebar.html">
-                      {img.banner_location==='home_page_right_side(4)'?
+                      {img.banner_location==='home_page_right_side(3)'?
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload w-100 h-100"
@@ -309,12 +309,12 @@ useEffect(() => {
                         name='image'
                       />:null}
                     </a>
-                    {/* <div className="home-detail  w-50 p-center-left home-p-sm">
+                    <div className="home-detail  w-50 p-center-left home-p-sm">
                       <div>
                         <h4 className="fw-bold">Safe food saves lives</h4>
                         <h5>Discount Offer</h5>
                       </div>
-                    </div> */}
+                    </div>
                   </div>
                 </div>
               </div>
@@ -410,27 +410,39 @@ useEffect(() => {
       {/* <!-- Product Sction End --> */}
       {/* <!-- Banner Section Start --> */}
       <section className="banner-section">
-        <div className="container-fluid-lg">
+            <div className="container-fluid-lg">
           <div className="row">
             <div className="col-12">
-              <div className="banner-contain-3 section-b-space section-t-space hover-effect">
-                <img src={Banner1} className="img-fluid bg-img w-100" alt="" />
+              <div className="banner-contain-3 section-b-space section-t-space hover-effect w-100 ">
+                {showbanner.map((img)=>{
+                  return(
+                    <>
+                    {img.banner_location==='top_product_banner'?
+                    <>
+                     <img src={img.image} className="img-fluid bg-img w-100 h-50" alt="image" name="image" />
                 <div className="banner-detail p-center text-dark text-center p-0">
                   <div>
                     <h4 className="ls-expanded text-uppercase theme-color">
-                      Try Our New
+                      {/* Try Our New */}{img.title}
                     </h4>
-                    <h2 className="my-3">
+                    {/* <h2 className="my-3">
                       100% Organic Best Quality Best Price
-                    </h2>
+                    </h2> */}
                     <h4 className="text-content fw-300">
-                      Best Apna Organic Food Quality
+                      {/* Best Apna Organic Food Quality */}{img.description}
                     </h4>
+                    <Link to={img.banner_url}>
                     <button className="btn theme-bg-color mt-sm-4 btn-md mx-auto text-white fw-bold">
                       Shop Now
                     </button>
+                    </Link>
                   </div>
                 </div>
+                </>:null}
+                    </>
+                  )
+                })}
+                 
               </div>
             </div>
           </div>

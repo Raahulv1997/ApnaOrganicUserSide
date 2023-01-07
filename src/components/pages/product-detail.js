@@ -31,6 +31,7 @@ const ProductDetail = ({logIn}) => {
   const [addreviewdata, setaddreviewdata] = useState([]);
   const[showImage,setShowImages]=useState([]);
    const[reviewData,setReviewData]=useState([]);
+   const[Rrating,setRrating]=useState('');
    const [Searchreview, setSearchReview] = useState({
     "product_name":"",
     "category_type":"",
@@ -183,18 +184,26 @@ try {
 }).then ((response) => {
   let data= response.data;
   setReviewData(response.data)
+  setRrating(data);
+
   // setSearchReview(response.data)
-  // console.log("CONSOLEE"+JSON.stringify(data))
     setapicall(false);
     })
   }, [apicall]);
 
+  // console.log("CONSOLEE"+JSON.stringify(Rrating))
 
 const handleFormChange = (e) => {
   setaddreviewdata({...addreviewdata,[e.target.name]: e.target.value});
-  };
-  // console.log("CLICKTOADDDATAAAA"+JSON.stringify(addreviewdata))
+  console.log("CLICKTOADDDATAAAA"+JSON.stringify(addreviewdata))
 
+  };
+const onRatingChange=(e)=>{
+  setRrating(e.target.value)
+  console.log("onRatingChange"+JSON.stringify(addreviewdata))
+
+
+}
 const AddReview = (e) => {
     axios
     .post(`${process.env.REACT_APP_BASEURL}/review_rating`,
@@ -205,14 +214,14 @@ const AddReview = (e) => {
       product_name:`${addreviewdata.product_name}`,
       category_type:`${addreviewdata.category_type}`,
       review_date:`${addreviewdata.review_date}`,
-      review_rating:4,
+      review_rating:`${Rrating}`,
       comment:`${addreviewdata.comment}`
     }
     )
     .then((response) => {
     });
 }
-// console.log("--------------------------DDDDDDDDDDDDDDDDDDDD"+JSON.stringify(productDetails))
+// console.log("--------REVIEWWWW>>>>>>>>>>>>>>>>>>>"+JSON.stringify(reviewData))
   return (
     <Fragment>
       <Header/>
@@ -529,7 +538,7 @@ const AddReview = (e) => {
                           </div>
                         </div>
                         
-                        <div className="paymnet-option">
+                        {/* <div className="paymnet-option">
                           <div className="product-title">
                             <h4>Guaranteed Safe Checkout</h4>
                           </div>
@@ -580,7 +589,7 @@ const AddReview = (e) => {
                               </Link>
                             </li>
                           </ul>
-                        </div>
+                        </div> */}
                       </div>
                     {/* );
                   })} */}
@@ -610,44 +619,14 @@ const AddReview = (e) => {
                           <div className="product-description">
                             <div className="nav-desh">
                               <div className="desh-title"></div>
-                              <p>
-                                Jelly beans carrot cake icing biscuit oat cake
-                                gummi bears tart. Lemon drops carrot cake pudding
-                                sweet gummi bears. Chocolate cake tart cupcake
-                                donut topping liquorice sugar plum chocolate bar.
-                                Jelly beans tiramisu caramels jujubes biscuit
-                                liquorice chocolate. Pudding toffee jujubes oat
-                                cake sweet roll. Lemon drops dessert croissant
-                                danish cake cupcake. Sweet roll candy chocolate
-                                toffee jelly sweet roll halvah brownie topping.
-                                Marshmallow powder candy sesame snaps jelly beans
-                                candy canes marshmallow gingerbread pie.
-                              </p>
+                              <p dangerouslySetInnerHTML={{__html:productDetails.product_description}}/>
                             </div>
   
                             <div className="nav-desh">
                               <div className="desh-title">
                                 <h5>Organic:</h5>
                               </div>
-                              <p>
-                                vitae et leo duis ut diam quam nulla porttitor
-                                massa id neque aliquam vestibulum morbi blandit
-                                cursus risus at ultrices mi tempus imperdiet nulla
-                                malesuada pellentesque elit eget gravida cum
-                                sociis natoque penatibus et magnis dis parturient
-                                montes nascetur ridiculus mus mauris vitae
-                                ultricies leo integer malesuada nunc vel risus
-                                commodo viverra maecenas accumsan lacus vel
-                                facilisis volutpat est velit egestas dui id ornare
-                                arcu odio ut sem nulla pharetra diam sit amet nisl
-                                suscipit adipiscing bibendum est ultricies integer
-                                quis auctor elit sed vulputate mi sit amet mauris
-                                commodo quis imperdiet massa tincidunt nunc
-                                pulvinar sapien et ligula ullamcorper malesuada
-                                proin libero nunc consequat interdum varius sit
-                                amet mattis vulputate enim nulla aliquet porttitor
-                                lacus luctus accumsan.
-                              </p>
+                              <p dangerouslySetInnerHTML={{__html:productDetails.product_description}}/>
                             </div>
   
                             <div className="banner-contain nav-desh">
@@ -673,33 +652,8 @@ const AddReview = (e) => {
                               <div className="desh-title mt-3">
                                 <h5>From The Manufacturer:</h5>
                               </div>
-                              <p>
-                                Jelly beans shortbread chupa chups carrot cake
-                                jelly-o halvah apple pie pudding gingerbread.
-                                Apple pie halvah cake tiramisu shortbread cotton
-                                candy croissant chocolate cake. Tart cupcake
-                                caramels gummi bears macaroon gingerbread
-                                fruitcake marzipan wafer. Marzipan dessert cupcake
-                                ice cream tootsie roll. Brownie chocolate cake
-                                pudding cake powder candy ice cream ice cream
-                                cake. Jujubes soufflé chupa chups cake candy
-                                halvah donut. Tart tart icing lemon drops
-                                fruitcake apple pie.
-                              </p>
-  
-                              <p>
-                                Dessert liquorice tart soufflé chocolate bar apple
-                                pie pastry danish soufflé. Gummi bears halvah
-                                gingerbread jelly icing. Chocolate cake chocolate
-                                bar pudding chupa chups bear claw pie dragée donut
-                                halvah. Gummi bears cookie ice cream jelly-o
-                                jujubes sweet croissant. Marzipan cotton candy
-                                gummi bears lemon drops lollipop lollipop
-                                chocolate. Ice cream cookie dragée cake sweet roll
-                                sweet roll.Lemon drops cookie muffin carrot cake
-                                chocolate marzipan gingerbread topping chocolate
-                                bar. Soufflé tiramisu pastry sweet dessert.
-                              </p>
+                              <p dangerouslySetInnerHTML={{__html:productDetails.product_description}}/>
+                              <p dangerouslySetInnerHTML={{__html:productDetails.product_description}}/>
                             </div>
                           </div>
                         </div>
@@ -711,7 +665,8 @@ const AddReview = (e) => {
                         eventKey="Additional info"
                         title="Additional info"
                       >
-                        <div className="table-responsive">
+                        { <p dangerouslySetInnerHTML={{__html:productDetails.other_introduction}}/>}
+                        {/* <div className="table-responsive">
                           <table className="table info-table">
                             <tbody>
                               <tr>
@@ -748,7 +703,7 @@ const AddReview = (e) => {
                               </tr>
                             </tbody>
                           </table>
-                        </div>
+                        </div> */}
                       </Tab>
   
                       <Tab
@@ -983,24 +938,44 @@ const AddReview = (e) => {
                               <div className="d-flex">
                               <div className="product-rating">
                               
-                                    <Link>
+                                    
                               <ul className="rating">
                                 <li color="#ffb321">
-                                   <FaStar
+                              <Form.Check aria-label="option 1" 
+                              
+                              onChange={(e) =>onRatingChange(e)}
+                              name="review_rating1"
+                              value={"1"}
+                              />
+
+                                <FaStar
                                             icon="star"
                                               className="feather fill"
                                               fill={"#ffb321"}
                                             />
-                                           
+                                
                                           </li>
+                                          
                                           <li color="#ffb321">
-                                            <FaStar
+                              <Form.Check aria-label="option 1"
+                                 onChange={(e) => onRatingChange(e)}
+                                 name="review_rating2"
+                                 value={"2"}
+                              />
+
+                                          <FaStar
                                               icon="star"
                                               className="feather fill"
                                               fill={"#ffb321"}
                                             />
                                           </li>
                                           <li color="#ffb321">
+                              <Form.Check aria-label="option 1" 
+                                 onChange={(e) => onRatingChange(e)}
+                                 name="review_rating3"
+                                 value={"3"}
+                              />
+
                                             <FaStar
                                               icon="star"
                                               className="feather fill"
@@ -1008,19 +983,30 @@ const AddReview = (e) => {
                                             />
                                           </li>
                                           <li>
+                              <Form.Check aria-label="1"
+                                 onChange={(e) => onRatingChange(e)}
+                                 name="review_rating4"
+                                 value={"4"}
+                             />
+
                                             <FaStar
                                               icon="star"
                                               className="feather "
                                             />
                                           </li>
                                           <li>
+                              <Form.Check aria-label="option 1"     onChange={(e) => onRatingChange(e)}
+                              name="review_rating5"
+                              value={"5"}
+                               />
+
                                             <FaStar
                                               icon="star"
                                               className="feather "
                                             />
                                           </li> 
                                 </ul>
-                                </Link>
+                                
                               </div>
                               </div>
                               <div  className="row g-4">
@@ -1200,39 +1186,7 @@ const AddReview = (e) => {
               </li>
             ) : null;
           })}
-                                           {/* <li color="#ffb321">
-                                            <FaStar
-                                              icon="star"
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              icon="star"
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li color="#ffb321">
-                                            <FaStar
-                                              icon="star"
-                                              className="feather fill"
-                                              fill={"#ffb321"}
-                                            />
-                                          </li>
-                                          <li>
-                                            <FaStar
-                                              icon="star"
-                                              className="feather "
-                                            />
-                                          </li>
-                                          <li>
-                                            <FaStar
-                                              icon="star"
-                                              className="feather "
-                                            />
-                                          </li> */}
+                                      
                                         </ul>
                                       </div>
                                     </div>

@@ -66,11 +66,11 @@ const navigate = useNavigate();
  },[Password])
  
 // wishlist
-console.log("userdatsa"+JSON.stringify(userdata))
+// console.log("userdatsa"+JSON.stringify(userdata))
 const setwishlistclick = () =>{
   axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
   .then(response => {
-    setwishlistdata(response.data)
+    // setwishlistdata(response.data)
     // navigate('/your_account')
     // return response;
   }).catch(error => {
