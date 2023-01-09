@@ -46,10 +46,6 @@ const ProductBox = ({
   const func = (e) => {
     
   };
-<<<<<<< HEAD
-  console.log(">>>>>>>>>>>>>>>>>>>>>productIDDDD"+productid)
-=======
->>>>>>> 670d725dbdece4a149dab8775e3202731ef2e516
   // useEffect(() => {
   //   function getAllData() {
   //     try {
