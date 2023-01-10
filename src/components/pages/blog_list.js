@@ -27,16 +27,22 @@ const BlogList = ()=> {
     setSearchCategory({...searchCategory,[e.target.name]: e.target.value});
   }
   const onRecentClick=(e)=>{
-    setRecent({...recent,[e.target.name]: e.target.value})
-  console.log("fffffffffffffffffffff"+JSON.stringify(e.target.name))
+    setRecent (e.target.value)
+  console.log("fffffffffffffffffffff"+JSON.stringify(recent))
+
+  }
+  const onProductTagClick=(e)=>{
+    setProductTag(e.target.value)
+  console.log("fffffffffffffffffffff"+JSON.stringify(recent))
 
   }
   useEffect(()=>{
     onCategorySearch()
-  },[searchCategory])
+  },[searchCategory,recent,productTag])
   // console.log(">>>>>>>>>>>>>>"+JSON.stringify(searchCategory))
     const onCategorySearch = () => {
       // let categoryname = e.target.value;
+      if(searchCategory.category?categoryArray:"")
       categoryArray.push(searchCategory.category)
       if (categoryArray !== "") {
         try {
@@ -44,10 +50,10 @@ const BlogList = ()=> {
             .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
           
                     id:"",
-                    for_:"admin",
+                    for_:"user",
                     recent:recent,
                     category:categoryArray,
-                    product_tag:""
+                    product_tag:productTag
                   
             })
             .then((response) => {
@@ -504,8 +510,23 @@ const BlogList = ()=> {
                                                   
                                                      className="img-fluid  lazyload" alt="image"/>
                                              </Link>
-
-                                             <div className="recent-detail">
+                                             <div className="form-check ps-0 m-0 category-list-box">
+                                      <input
+                                        className="checkbox_animated"
+                                        type="checkbox"
+                                        id="title"
+                                        name={"title"}
+                                        value={blog.title}
+                                        onChange={(e)=>onRecentClick(e)}
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="fruit"
+                                      >
+                                        {blog.title}
+                                      </label>
+                                    </div>
+                                             {/* <div className="recent-detail">
                                       
                                                      <h5 className="recent-name"
                                                        onClick={(e)=>onRecentClick(e)}
@@ -514,7 +535,7 @@ const BlogList = ()=> {
                                                      >{blog.title}</h5>
                                             
                                                  <h6 >{blog.publish_date}<i data-feather="thumbs-up"></i></h6>
-                                             </div>
+                                             </div> */}
                                          </div>
                                      </div>
                                               </>
@@ -587,11 +608,27 @@ const BlogList = ()=> {
                                               return(
                                                 <>
                                                 <li>
-                                                <div className="category-name">
+                                                <div className="form-check ps-0 m-0 category-list-box">
+                                      <input
+                                        className="checkbox_animated"
+                                        type="checkbox"
+                                        id="product_tag"
+                                        name={"product_tag"}
+                                        value={blog.product_tag}
+                                        onChange={(e)=>onProductTagClick(e)}
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="fruit"
+                                      >
+                                        {blog.product_tag}
+                                      </label>
+                                    </div>
+                                                {/* <div className="category-name">
                                                             <h5
                                                             // onClick={onBlogSearch}
                                                             >{blog.product_tag}</h5>
-                                                           </div>
+                                                           </div> */}
                                                 </li>
 
                                                 {/* <li>

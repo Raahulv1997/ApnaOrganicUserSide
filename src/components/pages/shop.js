@@ -330,6 +330,12 @@ const Shop = (props) => {
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.brand == thing.brand)
   );
+  const result = categorydata.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
+  );
+
   // END BRAND
   return (
     <Fragment>
@@ -374,6 +380,7 @@ const Shop = (props) => {
                     </ul>
                   </div>
                   <Accordion>
+                    
                     <Accordion.Item eventKey="2">
                       <Accordion.Header>Categories</Accordion.Header>
                       <Accordion.Body>
@@ -399,8 +406,9 @@ const Shop = (props) => {
                             <i className="fa-regular fa-magnifying-glass"></i>
                           </button> */}
                             </div>
-
+                              
                             <ul className="category-list custom-padding custom-height">
+                          
                               {(categorydata || []).map((cdta, i) => {
                                 return (
                                   <li key={i}>

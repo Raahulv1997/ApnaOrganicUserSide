@@ -31,6 +31,8 @@ const ProductDetail = ({logIn}) => {
   const [addreviewdata, setaddreviewdata] = useState([]);
   const[showImage,setShowImages]=useState([]);
    const[reviewData,setReviewData]=useState([]);
+  const[showbanner,setShowBanner]=useState([]);
+
    const[Rrating,setRrating]=useState('');
    const [Searchreview, setSearchReview] = useState({
     "product_name":"",
@@ -218,7 +220,19 @@ const AddReview = (e) => {
     .then((response) => {
     });
 }
-
+useEffect(() => {
+  axios.post(`${process.env.REACT_APP_BASEURL}/banner_list`,
+  {
+    banner_id:"",
+    title:"",
+    banner_location:""
+  }).then ((response) => {
+    let data= response.data;
+    setShowBanner(response.data)
+    console.log("BANNERRRR------"+JSON.stringify(showbanner))
+    // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
+      })
+},[apicall]);
 
   return (
     <Fragment>
@@ -265,7 +279,7 @@ const AddReview = (e) => {
                       {images.product_verient_id == varientId || images.productid == proid?
                       <img
                         className="d-block"
-                        src={images.product_image_path}
+                        src={images.product_image_path?images.product_image_path:"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
                         alt="First slide"
                         name={images.product_image_name}
                         style={{height:"750px",width:"750px"}}
@@ -541,22 +555,33 @@ const AddReview = (e) => {
                             </div>
   
                             <div className="banner-contain nav-desh">
-                              <img
-                                src={banner1}
+                              {showbanner.map((img)=>{
+                                return(
+                                  <>
+                                  {img.banner_location==='home_page_right_side(1)'?
+                                  <>
+                                  <img
+                                src={img.image}
                                 className="bg-img  lazyload w-100"
-                                alt=""
+                                alt="image"
+                                style={{height:"500px"}}
                               />
                               <div className="banner-details p-center banner-b-space w-100 text-center">
                                 <div>
                                   <h6 className="ls-expanded theme-color mb-sm-3 mb-1">
-                                    SUMMER
+                                    {img.title}
                                   </h6>
-                                  <h2>VEGETABLE</h2>
+                                  <h2>{img.description}</h2>
                                   <p className="mx-auto mt-1">
                                     Save up to 5% OFF
                                   </p>
                                 </div>
                               </div>
+                                  </>:null}
+                                  </>
+                                )
+                              })}
+                              
                             </div>
   
                             <div className="nav-desh">

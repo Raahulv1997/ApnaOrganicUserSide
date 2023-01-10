@@ -56,7 +56,6 @@ let CouponId = localStorage.getItem("couponid")
   const func = (e) => {
     setDeliveryMethod(e.target.value);
   };
-
   const incrementCount = (id, quantity) => {
     let inc = quantity + 1;
     axios
@@ -64,14 +63,34 @@ let CouponId = localStorage.getItem("couponid")
         id: id,
         quantity: inc,
       })
+      // console.log("ID PLEASEEEEEEEEEE"+id)
+
       .then((response) => {
         let data = response.data;
-        setapicall(true);
-        // quantity = quantity + 1;
 
+        setapicall(true);
+        // setCartData(data);
         setQuantity((quantity = quantity + 1));
+        // CheckCoupon();
       });
   };
+
+  // const incrementCount = (id, quantity) => {
+  //   let inc = quantity + 1;
+  //   axios
+  //     .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
+  //       id: id,
+  //       quantity: inc,
+  //     })
+  //     .then((response) => {
+  //       let data = response.data;
+  //       setapicall(true);
+  //       // quantity = quantity + 1;
+  //       setQuantity((quantity = quantity + 1));
+  //       console.log("CLICK"+quantity)
+
+  //     });
+  // };
   const decrementCount = (id, quantity) => {
     let dec;
     if (quantity > 0) {
@@ -451,9 +470,7 @@ let CouponId = localStorage.getItem("couponid")
                                       <div className="product border-0">
                                         <Link to="/" className="product-image">
                                           <img
-                                            src={
-                                              "https://burst.shopifycdn.com/photos/person-holds-a-book-over-a-stack-and-turns-the-page.jpg?width=1200&format=pjpg&exif=0&iptc=0"
-                                            }
+                                            src={cdata.all_images}
                                             className="img-fluid lazyload"
                                             alt={cdata.product_title_name}
                                           />
@@ -676,7 +693,7 @@ let CouponId = localStorage.getItem("couponid")
                                               data-field=""
                                               onClick={() =>
                                                 decrementCount(
-                                                  cdata.id,
+                                                  cdata.cart_id,
                                                   cdata.quantity
                                                 )
                                               }
@@ -697,7 +714,7 @@ let CouponId = localStorage.getItem("couponid")
                                               data-field=""
                                               onClick={() =>
                                                 incrementCount(
-                                                  cdata.id,
+                                                  cdata.cart_id,
                                                   cdata.quantity
                                                 )
                                               }
