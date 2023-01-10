@@ -29519,3 +29519,9 @@ position: relative;
 .forgot-box .forgotemail_password_btn{
     cursor: pointer;
   }
+
+  /* shop page */
+.category-list-box .subcategory_btn{
+cursor: pointer;
+}
+  /* end shop page */
