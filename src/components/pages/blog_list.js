@@ -7,6 +7,7 @@ import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
 let categoryArray=[];
 
 const BlogList = ()=> {
@@ -33,7 +34,7 @@ const BlogList = ()=> {
   }
   const onProductTagClick=(e)=>{
     setProductTag(e.target.value)
-  console.log("fffffffffffffffffffff"+JSON.stringify(recent))
+  console.log("fffffffffffffffffffff"+JSON.stringify(productTag))
 
   }
   useEffect(()=>{
@@ -51,19 +52,20 @@ const BlogList = ()=> {
           
                     id:"",
                     for_:"user",
-                    recent:recent,
+                    recent:"",
                     category:categoryArray,
                     product_tag:productTag
                   
             })
             .then((response) => {
-              let data = response.data;
+              let data = response.data[0];
               setBlogData(response.data);
               
             });
         } catch (err) {}
       }
-    };           
+    };      
+    console.log("hhhhhhhhhhhhhhh"+productTag)     
   useEffect(() => {
     axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
     {
@@ -73,7 +75,12 @@ const BlogList = ()=> {
     "category":[],
     "product_tag":""
   }).then ((response) => {
-  let data= response.data[0];
+    let data = response.data[0];
+            if(data.message !=='empty'){
+              setBlogData(data);
+              setapicall(false);
+            }
+ 
   setBlogData(response.data);
   setcatData(response.data);
 
@@ -85,7 +92,7 @@ const BlogList = ()=> {
     })
   }, [apicall]);
 
-
+console.log("?///////////"+JSON.stringify(blogData))
   return (
     <Fragment>
       <Header />
@@ -500,6 +507,7 @@ const BlogList = ()=> {
                                     aria-labelledby="panelsStayOpen-headingOne">
                             <div className="accordion-body pt-0">
                             {catData.map((blog)=>{
+                              
                                             return(
                                               <>
                                               <div className="recent-post-box">
@@ -510,32 +518,16 @@ const BlogList = ()=> {
                                                   
                                                      className="img-fluid  lazyload" alt="image"/>
                                              </Link>
-                                             <div className="form-check ps-0 m-0 category-list-box">
-                                      <input
-                                        className="checkbox_animated"
-                                        type="checkbox"
-                                        id="title"
-                                        name={"title"}
-                                        value={blog.title}
-                                        onChange={(e)=>onRecentClick(e)}
-                                      />
-                                      <label
-                                        className="form-check-label"
-                                        htmlFor="fruit"
-                                      >
-                                        {blog.title}
-                                      </label>
-                                    </div>
-                                             {/* <div className="recent-detail">
-                                      
-                                                     <h5 className="recent-name"
-                                                       onClick={(e)=>onRecentClick(e)}
+                                             <div className="recent-detail">
+                                             <Link to="/blog_detail"> <h5 className="recent-name"
+                                                       
                                                        name="title"
                                                       //value={blog.title}
                                                      >{blog.title}</h5>
-                                            
+                                            </Link>
+                                                    
                                                  <h6 >{blog.publish_date}<i data-feather="thumbs-up"></i></h6>
-                                             </div> */}
+                                             </div>
                                          </div>
                                      </div>
                                               </>
