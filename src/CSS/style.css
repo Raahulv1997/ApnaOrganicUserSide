@@ -29498,3 +29498,24 @@ padding: 10px;
 .container-fluid-lg .row .tagfilter_box .tagcancel_btn{
 cursor: pointer;
 }
+
+
+/* vendor signup and edit */
+
+.vendordoc_image_table .vendordoc_image_table_body .imgprivew_box{
+position: relative;
+}
+.vendordoc_image_table .vendordoc_image_table_body .imgprivew_box .cross_icon{
+  position: absolute;
+  color: green;
+  background-color: #fff;
+  border-radius: 50%;
+  padding: 0 5px;
+  border: 1px solid green;
+  right: 1px;
+  top: -1px;
+  cursor: pointer;
+  }
+.forgot-box .forgotemail_password_btn{
+    cursor: pointer;
+  }

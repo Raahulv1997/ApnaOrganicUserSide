@@ -234,6 +234,7 @@ let CouponId = localStorage.getItem("couponid")
             setTotalTax(Totaltaxes);
             setCartData(data);
             setapicall(false);
+            
           });
       } catch (err) {}
   }, [apicall,DeliveryMethod]);

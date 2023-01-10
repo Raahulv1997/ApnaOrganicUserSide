@@ -815,7 +815,7 @@ const AddReview = (e) => {
                               <ul className="rating">
                                 {ratingbox.map((rdata,i)=>{
                                   return(
-                                    <li color="#ffb321">
+                                    <li color="#ffb321" key={i}>
                                     <Form.Check aria-label="option 1" 
                                     onChange={(e) =>onRatingChange(e)}
                                     name={`review_rating`}
