@@ -17,7 +17,7 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
-const Header = (props,allimages) => {
+const Header = (props) => {
   const useridd = localStorage.getItem("userid");
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [apicall, setapicall] = useState(false);
@@ -37,7 +37,7 @@ const Header = (props,allimages) => {
     setapicall(true);
   }
   // console.log("-----apics"+localStorage.getItem("cartupdate") )
-
+// console.log("BBBBBBBBBBBBBBBBBBB--------"+JSON.stringify(pdata))
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -330,7 +330,7 @@ const Header = (props,allimages) => {
                                     <div className="drop-cart ">
                                       <Link to="/" className="drop-image">
                                         <img
-                                          src={allimages}
+                                          src={data.all_images}
                                           className="lazyload"
                                           alt="image"
                                           name="image"
@@ -921,6 +921,15 @@ const Header = (props,allimages) => {
                             Blog
                           </Link>
                           <ul className="dropdown-menu ps-4">
+                            
+                            <li>
+                              <NavLink
+                                to="/blog_list"
+                                className="dropdown-item"
+                              >
+                                Blog List
+                              </NavLink>
+                            </li>
                             {/* <li>
                               <NavLink
                                 to="/blog_detail"
@@ -930,14 +939,6 @@ const Header = (props,allimages) => {
                                 Blog Detail
                               </NavLink>
                             </li> */}
-                            <li>
-                              <NavLink
-                                to="/blog_list"
-                                className="dropdown-item"
-                              >
-                                Blog List
-                              </NavLink>
-                            </li>
                           </ul>
                         </li>
 

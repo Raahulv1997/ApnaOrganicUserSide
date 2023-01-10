@@ -379,6 +379,12 @@ const Shop = (props) => {
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.brand == thing.brand)
   );
+  // const result = categorydata.filter(
+  //   (thing, index, self) =>
+  //     index ===
+  //     self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
+  // );
+
   // END BRAND
   return (
     <Fragment>
@@ -423,6 +429,7 @@ const Shop = (props) => {
                     </ul>
                   </div>
                   <Accordion>
+                    
                     <Accordion.Item eventKey="2">
                       <Accordion.Header>Categories</Accordion.Header>
                       <Accordion.Body>

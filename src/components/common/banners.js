@@ -178,14 +178,6 @@ const clickProduct = (productid,id) => {
 
   navigate("/product-detail");
 };
-// const result = showbanner.filter((thing, index, self) =>
-// index == self.findIndex((t) => (
-//   t.banner_url== thing.banner_url
-// )))
-// console.log("resulttttttttt"+JSON.stringify(result))
-// let logo = `${process.env.REACT_APP_BASEURL}/${showbanner.image}`
-// let docsdata = `${process.env.REACT_APP_BASEURL}/${Imgarray}`
-// var Newlogo = logo.replace("/public", "");
 useEffect(() => {
   axios.post(`${process.env.REACT_APP_BASEURL}/banner_list`,
   {

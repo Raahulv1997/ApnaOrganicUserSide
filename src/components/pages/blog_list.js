@@ -2,28 +2,70 @@ import React, { Fragment } from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
-import blog1 from "../../Photos/blog/1.jpg";
-import blog2 from "../../Photos/blog/2.jpg";
-import blog3 from "../../Photos/blog/3.jpg";
-import blog4 from "../../Photos/blog/4.jpg";
-import blog5 from "../../Photos/blog/5.jpg";
-import veg23 from "../../Photos/vegetable/product/23.png";
-import veg24 from "../../Photos/vegetable/product/24.png";
-import veg26 from "../../Photos/vegetable/product/26.png";
+
 import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
 import { useState,useEffect } from "react";
 import axios from "axios";
+import moment from "moment";
+let categoryArray=[];
+
 const BlogList = ()=> {
+
   const clickBlog=(id)=>{
     localStorage.setItem("idd",id)
-    console.log("bLOgg KAAAAAAAA id "+id)
+ 
   }
   const[apicall,setapicall]=useState([]);
   const[blogData,setBlogData]=useState([]);
-  const[id,setId]=useState();
-  
+  const[catData,setcatData]=useState([]);
 
+  const [searchCategory,setSearchCategory]=useState("");
+  const[recent,setRecent]=useState("");
+  const[productTag,setProductTag]=useState("");
+  const[id,setId]=useState('');
+  const onCategoryClick=(e)=>{
+    setSearchCategory({...searchCategory,[e.target.name]: e.target.value});
+  }
+  const onRecentClick=(e)=>{
+    setRecent (e.target.value)
+  console.log("fffffffffffffffffffff"+JSON.stringify(recent))
+
+  }
+  const onProductTagClick=(e)=>{
+    setProductTag(e.target.value)
+  console.log("fffffffffffffffffffff"+JSON.stringify(productTag))
+
+  }
+  useEffect(()=>{
+    onCategorySearch()
+  },[searchCategory,recent,productTag])
+  // console.log(">>>>>>>>>>>>>>"+JSON.stringify(searchCategory))
+    const onCategorySearch = () => {
+      // let categoryname = e.target.value;
+      if(searchCategory.category?categoryArray:"")
+      categoryArray.push(searchCategory.category)
+      if (categoryArray !== "") {
+        try {
+          axios
+            .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
+          
+                    id:"",
+                    for_:"user",
+                    recent:"",
+                    category:categoryArray,
+                    product_tag:productTag
+                  
+            })
+            .then((response) => {
+              let data = response.data[0];
+              setBlogData(response.data);
+              
+            });
+        } catch (err) {}
+      }
+    };      
+    console.log("hhhhhhhhhhhhhhh"+productTag)     
   useEffect(() => {
     axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
     {
@@ -33,29 +75,24 @@ const BlogList = ()=> {
     "category":[],
     "product_tag":""
   }).then ((response) => {
-  let data= response.data[0];
-  setBlogData(response.data)
+    let data = response.data[0];
+            if(data.message !=='empty'){
+              setBlogData(data);
+              setapicall(false);
+            }
+ 
+  setBlogData(response.data);
+  setcatData(response.data);
+
   setId(data.id)
   console.log("blog IDDDDDDDDDDDDDD"+JSON.stringify(data.id));
-  console.log("blog"+JSON.stringify(blogData));
+  // console.log("blog"+JSON.stringify(blogData));
 
     setapicall(false);
     })
   }, [apicall]);
-  // const Search=()=>{
-  //   axios.post(`${process.env.REACT_APP_BASEURL}/coupons_list`,{
-  //     "campaign_name":`${SearchCoup.campaign_name}`,
-  //      "code":`${SearchCoup.code}`,
-  //      "status":`${SearchCoup.status}`
-   
 
-  // }).then ((response) => {
-  //   setcoupondata(response.data)
-  //   setSearchCoup('');
-
-  //   })
-  // }
-
+console.log("?///////////"+JSON.stringify(blogData))
   return (
     <Fragment>
       <Header />
@@ -451,6 +488,7 @@ const BlogList = ()=> {
                   <div className="search-box">
                     <input
                       type="search"
+                      // onChange={(e) =>SearchBlogCategory(e)}
                       className="form-control"
                       id="exampleFormControlInput1"
                       placeholder="Search...."
@@ -468,22 +506,27 @@ const BlogList = ()=> {
                             <div id="panelsStayOpen-collapseOne"className="accordion-collapse collapse show"
                                     aria-labelledby="panelsStayOpen-headingOne">
                             <div className="accordion-body pt-0">
-                            {blogData.map((blog)=>{
+                            {catData.map((blog)=>{
+                              
                                             return(
                                               <>
                                               <div className="recent-post-box">
-                                         
+                                             
                                          <div className="recent-box">
-                                             <Link to="/" className="recent-image">
+                                             <Link to="" className="recent-image">
                                                  <img src={blog.image}
+                                                  
                                                      className="img-fluid  lazyload" alt="image"/>
                                              </Link>
-
                                              <div className="recent-detail">
-                                             <Link to="/">
-                                                     <h5 className="recent-name">{blog.title}</h5>
-                                                 </Link>
-                                                 <h6>{blog.publish_date} <i data-feather="thumbs-up"></i></h6>
+                                             <Link to="/blog_detail"> <h5 className="recent-name"
+                                                       
+                                                       name="title"
+                                                      //value={blog.title}
+                                                     >{blog.title}</h5>
+                                            </Link>
+                                                    
+                                                 <h6 >{blog.publish_date}<i data-feather="thumbs-up"></i></h6>
                                              </div>
                                          </div>
                                      </div>
@@ -497,77 +540,51 @@ const BlogList = ()=> {
                         </Accordion.Item>
                         </Accordion>
                         <Accordion>
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>
-                                Category
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse collapse show"
-                                    aria-labelledby="panelsStayOpen-headingTwo">
-                                    <div className="accordion-body p-0">
-                                        <div className="category-list-box">
-                                            <ul>
-                                              {blogData.map((blog)=>{
-                                                return(
-                                                  <>
-                                                  
-                                                  <li>
-                                                <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Diet Food</h5>
-                                                            <span>6</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Low calorie Items</h5>
-                                                            <span>8</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Cooking Method</h5>
-                                                            <span>9</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Dairy Free</h5>
-                                                            <span>12</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Vegetarian Food</h5>
-                                                            <span>10</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-                                                  </>
-                                                )
-                                              })}
-                                                
-
-                                              
-                                            </ul>
-                                        </div>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>Categories</Accordion.Header>
+                      <Accordion.Body>
+                        <div
+                          id="collapseOne"
+                          className="accordion-collapse collapse show"
+                          aria-labelledby="panelsStayOpen-headingOne"
+                        >
+                          <div className="accordion-body">
+                            <div className="form-floating theme-form-floating-2 search-box">
+                            <ul className="category-list custom-padding custom-height">
+                             {catData.map((blog)=>{
+                              return(
+                                <>
+                                <li>
+                                    <div className="form-check ps-0 m-0 category-list-box">
+                                      <input
+                                        className="checkbox_animated"
+                                        type="checkbox"
+                                        id="category"
+                                        name={"category"}
+                                        value={blog.category}
+                                        onChange={(e)=>onCategoryClick(e)}
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="fruit"
+                                      >
+                                        {blog.category}
+                                      </label>
                                     </div>
-                                </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
+                                  </li>
+                                </>
+                              )
+                             })}
+                                  
+                            </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+
+
                         <Accordion>
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>
@@ -579,12 +596,34 @@ const BlogList = ()=> {
                                     <div className="accordion-body pt-0">
                                         <div className="product-tags-box">
                                             <ul>
-
+                                            {catData.map((blog)=>{  
+                                              return(
+                                                <>
                                                 <li>
-                                                <Link to="/" >Fruit Cutting</Link>
+                                                <div className="form-check ps-0 m-0 category-list-box">
+                                      <input
+                                        className="checkbox_animated"
+                                        type="checkbox"
+                                        id="product_tag"
+                                        name={"product_tag"}
+                                        value={blog.product_tag}
+                                        onChange={(e)=>onProductTagClick(e)}
+                                      />
+                                      <label
+                                        className="form-check-label"
+                                        htmlFor="fruit"
+                                      >
+                                        {blog.product_tag}
+                                      </label>
+                                    </div>
+                                                {/* <div className="category-name">
+                                                            <h5
+                                                            // onClick={onBlogSearch}
+                                                            >{blog.product_tag}</h5>
+                                                           </div> */}
                                                 </li>
 
-                                                <li>
+                                                {/* <li>
                                                    <Link to="/" >Meat</Link>
                                                 </li>
 
@@ -610,7 +649,10 @@ const BlogList = ()=> {
 
                                                 <li>
                                                    <Link to="/" >Most Expensive Fruit</Link>
-                                                </li>
+                                                </li> */}
+                                                </>
+                                                )
+                                              })}
                                             </ul>
                                         </div>
                                     </div>
@@ -618,7 +660,7 @@ const BlogList = ()=> {
                                 </Accordion.Body>
                             </Accordion.Item>
                         </Accordion>
-                        <Accordion>
+                        {/* <Accordion>
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>
                                 Trending Products
@@ -689,7 +731,7 @@ const BlogList = ()=> {
                                 </div>
                                 </Accordion.Body>
                             </Accordion.Item>
-                        </Accordion>
+                        </Accordion> */}
                         </div>
               </div>
             </div>
