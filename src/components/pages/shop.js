@@ -152,11 +152,9 @@ const Shop = (props) => {
   }, [searchCat,searchparams]);
   // var product = data.product;
   //   product list
-  console.log(searchCat+"baharsearch")
 
 
   useEffect(() => {
-    console.log(searchCat+"search")
     let homeurl;
     if(useridd=== "null" || useridd === '' || useridd === null || useridd=== undefined){
        homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`
@@ -173,6 +171,9 @@ const Shop = (props) => {
                 search: `${searchText}`,
                 price_from: `${pricefilter.from_product_price}`,
                 price_to: `${pricefilter.to_product_price}`,
+                id:"",
+                product_title_name:"",
+                sale_price:"",
                 product_type: [],
                 colors: [],
                 size: [],
