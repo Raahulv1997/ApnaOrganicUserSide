@@ -143,18 +143,20 @@ const Shop = (props) => {
     ) {
       setsearchCat("");
     } else {
+      setsearchCat((searchparams.get("category")))
       setCategoryNameData((categoryNamedata) => [
         ...categoryNamedata,
-        Number(searchparams.get("category")),
+        (searchparams.get("category")),
       ]);
     }
-  }, [searchCat]);
+  }, [searchCat,searchparams]);
   // var product = data.product;
   //   product list
-  console.log(categoryNamedata+"baharsearch")
+  console.log(searchCat+"baharsearch")
+
 
   useEffect(() => {
-    console.log(categoryNamedata+"search")
+    console.log(searchCat+"search")
     let homeurl;
     if(useridd=== "null" || useridd === '' || useridd === null || useridd=== undefined){
        homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`
@@ -177,15 +179,16 @@ const Shop = (props) => {
                 brand: brandfilter,
                 discount: discountfilter,
                 rating: ratingfilter,
-                category: categoryNamedata,
+                category: [searchCat],
               },
             }
           )
           .then((response) => {
             let data = response.data;
             setProdData(data.results);
+            
             if (
-              categoryNamedata.length === 0 &&
+              searchCat.length === 0 &&
               ratingfilter.length === 0 &&
               brandfilter.length === 0 &&
               discountfilter.length === 0 &&
@@ -205,7 +208,8 @@ const Shop = (props) => {
     discountfilter,
     pricefilter,
     apicall,
-    searchText
+    searchText,
+    searchCat
   ]);
   // end product list
 
