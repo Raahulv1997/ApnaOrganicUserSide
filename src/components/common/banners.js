@@ -36,9 +36,10 @@ const Benners = (props, productPrice, productMRF, name,image) => {
                 search: `${productType}`,
                 price_from: "",
                 price_to: "",
-                id:"asc",
+                id:"",
                 product_title_name:"",
                 sale_price:"",
+                short_by_updated_on:"",
               },
             }
           )

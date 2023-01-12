@@ -45,6 +45,11 @@ const Shop = (props) => {
   const [isActive, setIsActive] = useState(false);
   const [subcategory,setsubcategory] = useState(false);
   const [checkboxfilter,setcheckboxfilter] = useState(false);
+  const [sortingfilter,setsortingfilter] = useState({
+    price:"",
+    aproduct:"",
+    latest:""
+  });
 
   const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
     if(useridd === undefined ||
@@ -153,6 +158,12 @@ const Shop = (props) => {
   // var product = data.product;
   //   product list
 
+// SORTING
+const onSortingChange = (e)=>{
+  setsortingfilter({...sortingfilter, [e.target.name]:e.target.value})
+}
+console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
+// END SORTING
 
   useEffect(() => {
     let homeurl;
@@ -171,9 +182,10 @@ const Shop = (props) => {
                 search: `${searchText}`,
                 price_from: `${pricefilter.from_product_price}`,
                 price_to: `${pricefilter.to_product_price}`,
-                id:"",
-                product_title_name:"",
-                sale_price:"",
+                id:`${sortingfilter.latest}`,
+                product_title_name:`${sortingfilter.aproduct}`,
+                sale_price:`${sortingfilter.price}`,
+                short_by_updated_on:"",
                 product_type: [],
                 colors: [],
                 size: [],
@@ -210,7 +222,8 @@ const Shop = (props) => {
     pricefilter,
     apicall,
     searchText,
-    searchCat
+    searchCat,
+    sortingfilter
   ]);
   // end product list
 
@@ -1169,13 +1182,12 @@ const Shop = (props) => {
                         {/* <i className="fa-solid fa-angle-down"></i> */}
                       </Dropdown.Toggle>
                       <Dropdown.Menu>
-                        <Dropdown.Item>Popularity</Dropdown.Item>
-                        <Dropdown.Item>Low - High Price</Dropdown.Item>
-                        <Dropdown.Item>High - Low Price</Dropdown.Item>
-                        <Dropdown.Item>Average Rating</Dropdown.Item>
-                        <Dropdown.Item>A - Z Order</Dropdown.Item>
-                        <Dropdown.Item>Z - A Order</Dropdown.Item>
-                        <Dropdown.Item>% Off - Hight To Low</Dropdown.Item>
+                        <Dropdown.Item name={'latest'} onChange={(e)=>onSortingChange(e)} value={'desc'}>Latest</Dropdown.Item>
+                        <Dropdown.Item name={'price'} onChange={(e)=>onSortingChange(e)} value={'desc'}>Low - High Price</Dropdown.Item>
+                        <Dropdown.Item name={'price'} onChange={(e)=>onSortingChange(e)} value={'asc'}>High - Low Price</Dropdown.Item>
+                    
+                        <Dropdown.Item name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'asc'}>A - Z Product</Dropdown.Item>
+                        <Dropdown.Item name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'desc'}>Z - A Product</Dropdown.Item>
                       </Dropdown.Menu>
                     </Dropdown>
                   </div>
