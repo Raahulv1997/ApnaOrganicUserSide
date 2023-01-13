@@ -14,6 +14,7 @@ import { useSearchParams,useNavigate } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Form from 'react-bootstrap/Form';
 let showcategorydata = [];
 
 const Shop = (props) => {
@@ -46,9 +47,10 @@ const Shop = (props) => {
   const [subcategory,setsubcategory] = useState(false);
   const [checkboxfilter,setcheckboxfilter] = useState(false);
   const [sortingfilter,setsortingfilter] = useState({
-    price:"",
+    latest:"",
     aproduct:"",
-    latest:""
+    hprice:"",
+
   });
 
   const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
@@ -160,7 +162,36 @@ const Shop = (props) => {
 
 // SORTING
 const onSortingChange = (e)=>{
-  setsortingfilter({...sortingfilter, [e.target.name]:e.target.value})
+  if(e.target.value === 'latest'){
+    setsortingfilter({...sortingfilter, 
+      latest:"desc",
+      aproduct:"",
+      hprice:""
+    })
+  }
+  else  if(e.target.value === 'aproduct'){
+    setsortingfilter({...sortingfilter,
+      aproduct:"asc",
+      hprice:"",
+      latest:"",
+    })
+  }
+  else  if(e.target.value === 'zproduct'){
+    setsortingfilter({...sortingfilter, 
+      hprice:"",
+      latest:"",
+      aproduct:"desc"})
+  }
+  else  if(e.target.value === 'hprice'){
+    setsortingfilter({...sortingfilter, hprice:"desc",
+    latest:"",
+    aproduct:""})
+  }
+  else  if(e.target.value === 'lprice'){
+    setsortingfilter({...sortingfilter, hprice:"asc",
+    latest:"",
+    aproduct:""})
+  }
 }
 console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
 // END SORTING
@@ -184,7 +215,7 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                 price_to: `${pricefilter.to_product_price}`,
                 id:`${sortingfilter.latest}`,
                 product_title_name:`${sortingfilter.aproduct}`,
-                sale_price:`${sortingfilter.price}`,
+                sale_price:`${sortingfilter.hprice}`,
                 short_by_updated_on:"",
                 product_type: [],
                 colors: [],
@@ -1176,20 +1207,22 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                 <div className="top-filter-menu">
                   <div className="category-dropdown">
                     <h4 className="text-content">Sort By :</h4>
-                    <Dropdown>
-                      <Dropdown.Toggle variant="light" id="dropdown-basic">
-                        Most Popular
-                        {/* <i className="fa-solid fa-angle-down"></i> */}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item name={'latest'} onChange={(e)=>onSortingChange(e)} value={'desc'}>Latest</Dropdown.Item>
-                        <Dropdown.Item name={'price'} onChange={(e)=>onSortingChange(e)} value={'desc'}>Low - High Price</Dropdown.Item>
-                        <Dropdown.Item name={'price'} onChange={(e)=>onSortingChange(e)} value={'asc'}>High - Low Price</Dropdown.Item>
+                    <Form.Select
+                                  aria-label="Search by category"
+                                  className="adminselectbox"
+                                  placeholder="Search by category"
+                                  onChange={(e) => onSortingChange(e)}
+                                  name={'latest'}
+                                >
+
+                                  <option value={''}><input type='checkbox'/>Select </option>
+                                  <option name={'latest'} onChange={(e)=>onSortingChange(e)} value={'latest'}><input type='checkbox'/>Latest</option>
+                                  <option name={'price'} onChange={(e)=>onSortingChange(e)} value={'hprice'}>High Price</option>
+                                  <option name={'price'} onChange={(e)=>onSortingChange(e)} value={'lprice'}>Low Price</option>
+                                  <option name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'aproduct'}>A - Z Product</option>
+                                  <option name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'zproduct'}>Z - A Product</option>
+                                </Form.Select>
                     
-                        <Dropdown.Item name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'asc'}>A - Z Product</Dropdown.Item>
-                        <Dropdown.Item name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'desc'}>Z - A Product</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
                   </div>
                 </div>
               </div>
