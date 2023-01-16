@@ -130,35 +130,17 @@ let CouponId = localStorage.getItem("couponid")
             let Totalgst = 0;
             let Totalcgst = 0;
             let Totalsgst = 0;
+            let Totalmtax =0;
+            let Totalvtax =0;
+            let Totalwtax =0;
+            let Totalrtax =0;
             let TotalTaxableValue = 0;
             let Saleprice = 0;
             data.map((cdata) => {
               // totalprice
               ProductTotal +=
               (
-                cdata.quantity * Number(cdata.product_price) -
-                (cdata.product_price * cdata.discount) / 100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
-                ) *
-                  cdata.gst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
-                ) *
-                  cdata.cgst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
-                ) *
-                  cdata.sgst) /
-                  100
+                cdata.quantity * Number(cdata.sale_price)
               )
               // end totalprice
               if (cdata.gst === null) {
@@ -174,8 +156,7 @@ let CouponId = localStorage.getItem("couponid")
               // gst
               Totalgst +=
                 (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                  cdata.product_price 
                 ) *
                   cdata.gst) /
                 100;
@@ -184,8 +165,7 @@ let CouponId = localStorage.getItem("couponid")
               // cgst
               Totalcgst +=
                 (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                  cdata.product_price 
                 ) *
                   cdata.cgst) /
                 100;
@@ -194,44 +174,50 @@ let CouponId = localStorage.getItem("couponid")
               // sgst
               Totalsgst +=
                 (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
+                  cdata.product_price 
                 ) *
                   cdata.sgst) /
                 100;
               // end sgst
+              Totalmtax +=
+                (Number(
+                  cdata.product_price 
+                ) *
+                  cdata.manufacturers_sales_tax) /
+                100;
+                Totalvtax +=
+                (Number(
+                  cdata.product_price 
+                ) *
+                  cdata.value_added_tax) /
+                100;
+                Totalrtax +=
+                (Number(
+                  cdata.product_price 
+                ) *
+                  cdata.retails_sales_tax) /
+                100;
+                Totalwtax +=
+                (Number(
+                  cdata.product_price 
+                ) *
+                  cdata.wholesale_sales_tax) /
+                100;
+
+
+
               // totaltax
-              Totaltaxes += Totalgst + Totalcgst + Totalsgst;
+              Totaltaxes += Totalgst + Totalcgst + Totalsgst + Totalmtax + Totalvtax + Totalrtax + Totalwtax ;
               // end totaltax
 
               // totaltaxable value
               TotalTaxableValue +=
-                Number(cdata.product_price) -
-                (cdata.product_price * cdata.discount) / 100;
+                (cdata.product_price);
               // end totaltaxable value
 
               // saleprice
               Saleprice = (
-                Number(cdata.product_price) -
-                (cdata.product_price * cdata.discount) / 100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.gst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.cgst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.sgst) /
-                  100
+                Number(cdata.sale_price) 
               ).toFixed(2);
               // end saleprice
             });
@@ -244,7 +230,7 @@ let CouponId = localStorage.getItem("couponid")
               taxable_value: TotalTaxableValue,
               discount_coupon_value:CouponDis,
               discount_coupon: CouponId,
-              vendor_id: "1",
+              vendor_id: data.vendor_id,
               payment_mode: DeliveryMethod,
               order_product: cartdata,
             });
@@ -555,18 +541,15 @@ let CouponId = localStorage.getItem("couponid")
                                       <h5>
                                         <del className="text-content text-danger mx-2">
                                           ₹
-                                          {Number(cdata.product_price).toFixed(
+                                          {Number(cdata.mrp).toFixed(
                                             2
                                           )}
                                         </del>
                                         <b>
                                           {" "}
                                           ₹
-                                          {Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
+                                          {(
+                                            cdata.product_price 
                                           ).toFixed(2)}{" "}
                                         </b>
                                       </h5>
@@ -574,7 +557,7 @@ let CouponId = localStorage.getItem("couponid")
                                       <h6 className="theme-color">
                                         You Save:₹(
                                         {(
-                                          (Number(cdata.sale_price) *
+                                          (Number(cdata.mrp) *
                                             cdata.discount) /
                                           100
                                         ).toFixed(2)}
@@ -602,10 +585,7 @@ let CouponId = localStorage.getItem("couponid")
                                       <h4 className="table-title text-content">
                                         Taxable Value: ₹
                                         {(
-                                          Number(cdata.product_price) -
-                                          (cdata.product_price *
-                                            cdata.discount) /
-                                            100
+                                          Number(cdata.product_price)
                                         ).toFixed(2)}
                                       </h4>
                                       {cdata.sgst === null
@@ -618,28 +598,36 @@ let CouponId = localStorage.getItem("couponid")
                                         Tax: ₹
                                         {(
                                           (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
+                                            cdata.product_price ) *
                                             cdata.gst) /
                                             100 +
                                           (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
+                                            cdata.product_price ) *
                                             cdata.cgst) /
                                             100 +
                                           (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
+                                            cdata.product_price ) *
                                             cdata.sgst) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.wholesale_sales_tax) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.manufacturers_sales_tax) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.retails_sales_tax) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.value_added_tax) /
                                             100
                                         ).toFixed(2)}
                                       </h4>
@@ -648,34 +636,7 @@ let CouponId = localStorage.getItem("couponid")
                                       <h4 className="table-title text-content">
                                         Sale Price: ₹
                                         {(
-                                          Number(cdata.product_price) -
-                                          (cdata.product_price *
-                                            cdata.discount) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.gst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.cgst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.sgst) /
-                                            100
+                                          Number(cdata.sale_price)
                                         ).toFixed(2)}
                                       </h4>
                                     </td>
@@ -734,34 +695,7 @@ let CouponId = localStorage.getItem("couponid")
                                       <h5>
                                         {(
                                           cdata.quantity *
-                                            Number(cdata.product_price) -
-                                          (cdata.product_price *
-                                            cdata.discount) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.gst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.cgst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price -
-                                              (cdata.product_price *
-                                                cdata.discount) /
-                                                100
-                                          ) *
-                                            cdata.sgst) /
-                                            100
+                                            Number(cdata.sale_price)
                                         ).toFixed(2)}
                                       </h5>
                                     </td>
@@ -1216,33 +1150,7 @@ let CouponId = localStorage.getItem("couponid")
                                   <li key={data.id}>
                                     <h4>
                                       {(
-                                        Number(data.product_price) -
-                                        (data.product_price * data.discount) /
-                                          100 +
-                                        (Number(
-                                          data.product_price -
-                                            (data.product_price *
-                                              data.discount) /
-                                              100
-                                        ) *
-                                          data.gst) /
-                                          100 +
-                                        (Number(
-                                          data.product_price -
-                                            (data.product_price *
-                                              data.discount) /
-                                              100
-                                        ) *
-                                          data.cgst) /
-                                          100 +
-                                        (Number(
-                                          data.product_price -
-                                            (data.product_price *
-                                              data.discount) /
-                                              100
-                                        ) *
-                                          data.sgst) /
-                                          100
+                                        Number(data.sale_price)
                                       ).toFixed(2)}{" "}
                                       <span>X {data.quantity}</span>
                                     </h4>
@@ -1250,33 +1158,7 @@ let CouponId = localStorage.getItem("couponid")
                                       ₹
                                       {(
                                         data.quantity *
-                                          Number(data.product_price) -
-                                        (data.product_price * data.discount) /
-                                          100 +
-                                        (Number(
-                                          data.product_price -
-                                            (data.product_price *
-                                              data.discount) /
-                                              100
-                                        ) *
-                                          data.gst) /
-                                          100 +
-                                        (Number(
-                                          data.product_price -
-                                            (data.product_price *
-                                              data.discount) /
-                                              100
-                                        ) *
-                                          data.cgst) /
-                                          100 +
-                                        (Number(
-                                          data.product_price -
-                                            (data.product_price *
-                                              data.discount) /
-                                              100
-                                        ) *
-                                          data.sgst) /
-                                          100
+                                          Number(data.sale_price) 
                                       ).toFixed(2)}
                                     </h4>
                                   </li>
