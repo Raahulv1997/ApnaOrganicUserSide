@@ -213,7 +213,7 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                 search: `${searchText}`,
                 price_from: `${pricefilter.from_product_price}`,
                 price_to: `${pricefilter.to_product_price}`,
-                id:`${sortingfilter.latest}`,
+                latest_first:`${sortingfilter.latest}`,
                 product_title_name:`${sortingfilter.aproduct}`,
                 sale_price:`${sortingfilter.hprice}`,
                 short_by_updated_on:"",

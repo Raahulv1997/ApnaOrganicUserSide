@@ -163,9 +163,10 @@ useEffect(() => {
               search: `${productType}`,
               price_from: "",
               price_to: "",
-              id:"asc",
+              latest_first:"asc",
             product_title_name:"",
             sale_price:"",
+            short_by_updated_on:"",
             },
           }
         )
