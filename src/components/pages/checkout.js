@@ -299,7 +299,8 @@ let CouponId = localStorage.getItem("couponid")
     axios
       .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd)
       .then((response) => {
-        // navigate('/your_account')
+        localStorage.setItem("orderid",response.data.order_id)
+        navigate('/your_orders')
         // return response;
       })
       .catch((error) => {});
@@ -565,21 +566,35 @@ let CouponId = localStorage.getItem("couponid")
                                       </h6>
                                     </td>
                                     <td className="price">
-                                      {/* <h4 className="table-title text-content">Tax</h4> */}
-                                      {/* { Number((cdata.product_price) -
-                                    (cdata.product_price * cdata.discount) /
-                                      100)*cdata.gst /
-                                      100} */}
-                                      <h6 className="">
-                                        Gst:{Number(cdata.gst).toFixed(2)}%
-                                      </h6>
-                                      <h6 className="">
-                                        Cgst:{Number(cdata.cgst).toFixed(2)}%
-                                      </h6>
-                                      <h6 className="">
-                                        Sgst:{Number(cdata.sgst).toFixed(2)}%
-                                      </h6>
-                                    </td>
+                            
+                            <h6 className="">
+                              Gst:{Number(cdata.gst).toFixed(2)}%
+                            </h6>
+                            <h6 className="">
+                              Cgst:{Number(cdata.cgst).toFixed(2)}%
+                            </h6>
+                            <h6 className="">
+                              Sgst:{Number(cdata.sgst).toFixed(2)}%
+                            </h6>
+                          </td>
+                          <td className="price">
+                                    <div className="">
+                                    <h6 className="">
+                              Mtax:{Number(cdata.manufacturers_sales_tax).toFixed(2)}%
+                            </h6>
+                            <h6 className="">
+                              WTax:{Number(cdata.wholesale_sales_tax).toFixed(2)}%
+                            </h6>
+                                    
+                                   
+                            <h6 className="">
+                              VTax:{Number(cdata.value_added_tax).toFixed(2)}%
+                            </h6>
+                            <h6 className="">
+                              RTax:{Number(cdata.retails_sales_tax).toFixed(2)}%
+                            </h6>
+                            </div>
+                          </td>
 
                                     <td className="price">
                                       <h4 className="table-title text-content">
@@ -594,6 +609,29 @@ let CouponId = localStorage.getItem("couponid")
                                       {cdata.cgst === null
                                         ? (cdata.cgst = "0")
                                         : cdata.cgst === cdata.cgst}
+                                        <h4 className="table-title text-content">
+                               Total Tax: 
+                                {(
+                                          Number(
+                                            cdata.gst )  +
+                                          Number(
+                                            cdata.cgst ) +
+                                          Number(
+                                            cdata.sgst ) 
+                                            +
+                                          Number(
+                                            cdata.wholesale_sales_tax )
+                                            +
+                                          Number(
+                                            cdata.manufacturers_sales_tax ) 
+                                            +
+                                          Number(
+                                            cdata.retails_sales_tax )
+                                            +
+                                          Number(
+                                            cdata.value_added_tax ) 
+                                        ).toFixed(2)}%
+                              </h4>
                                       <h4 className="table-title text-content">
                                         Tax: ₹
                                         {(

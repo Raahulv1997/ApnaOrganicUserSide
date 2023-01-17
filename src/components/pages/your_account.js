@@ -261,6 +261,12 @@ const onProductClick = (id) =>{
   localStorage.setItem("proid" , id)
   navigate('/product-detail')
 }
+
+const OnImageClick = (id) =>{
+  localStorage.setItem("orderid" , id)
+  // navigate('/your_orders')
+
+}
   return (
     <React.Fragment>
       <Header addcart={AddToCart}/>
@@ -700,11 +706,9 @@ const onProductClick = (id) =>{
 
                                 <div className="order-detail">
                                   <h4>
-                                    Delivery <span>{data.status}</span>
+                                    Status <span>{data.status}</span>
                                   </h4>
-                                  <h6 className="text-content">
-                                  {data.product_description}
-                                  </h6>
+                                  <div dangerouslySetInnerHTML={{ __html: data.product_description }} className='editor'></div>
                                 </div>
                                    
                               </div>
@@ -719,6 +723,8 @@ const onProductClick = (id) =>{
                                     src={data.all_images?data.all_images :"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
                                     className="lazyload"
                                     alt=""
+                                    width={250}
+                                    onClick={OnImageClick(data.order_id)}
                                   />
                                 </div>
 
@@ -727,7 +733,7 @@ const onProductClick = (id) =>{
                                     <h3>{data.product_title_name}</h3>
                                   </p>
                                   <p className="text-content">
-                                  {data.product_description}
+                                  <div dangerouslySetInnerHTML={{ __html: data.product_description }} className='editor'></div>
                                   </p>
                                   <ul className="product-size p-0">
                                     <li>

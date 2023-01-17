@@ -127,7 +127,7 @@ const Cart = (all_images) => {
 
   // payement
   const onProccedClick = () => {
-    localStorage.setItem("coupon",CouponDis)
+    localStorage.setItem("coupon",(CouponDis).toFixed(2))
     localStorage.setItem("couponid",Couponid)
     navigate("/checkout");
   };
@@ -151,7 +151,7 @@ const Cart = (all_images) => {
         item.code === couponname && ProductPriceTotal >= item.minimum_amount
     );
 if(discountpercent.length !== 0){
-  let discntcoupn = Number(discountpercent[0].percentage) / 100;
+  let discntcoupn = Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
     setCouponDis(discntcoupn);
     setCouponid(discountpercent[0].id)
 }
@@ -191,7 +191,7 @@ else{
   };
   const OnApplyClick = () => {
     CheckCoupon();
-    let discntcoupn = Number(discountpercent[0].percentage) / 100;
+    let discntcoupn =  Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
     setCouponDis(discntcoupn);
     setCouponid(discountpercent[0].id)
 
@@ -323,11 +323,7 @@ else{
                               </h6>
                             </td>
                             <td className="price">
-                              {/* <h4 className="table-title text-content">Tax</h4> */}
-                              {/* { Number((cdata.product_price) -
-                                    (cdata.product_price * cdata.discount) /
-                                      100)*cdata.gst /
-                                      100} */}
+                            
                               <h6 className="">
                                 Gst:{Number(cdata.gst).toFixed(2)}%
                               </h6>
@@ -338,7 +334,24 @@ else{
                                 Sgst:{Number(cdata.sgst).toFixed(2)}%
                               </h6>
                             </td>
-
+                            <td className="price">
+                                      <div className="">
+                                      <h6 className="">
+                                Mtax:{Number(cdata.manufacturers_sales_tax).toFixed(2)}%
+                              </h6>
+                              <h6 className="">
+                                WTax:{Number(cdata.wholesale_sales_tax).toFixed(2)}%
+                              </h6>
+                                      
+                                     
+                              <h6 className="">
+                                VTax:{Number(cdata.value_added_tax).toFixed(2)}%
+                              </h6>
+                              <h6 className="">
+                                RTax:{Number(cdata.retails_sales_tax).toFixed(2)}%
+                              </h6>
+                              </div>
+                            </td>
                             <td className="price">
                               <h4 className="table-title text-content">
                                 Taxable Value: ₹
@@ -352,6 +365,29 @@ else{
                               {cdata.cgst === null
                                 ? (cdata.cgst = "0")
                                 : cdata.cgst === cdata.cgst}
+                                <h4 className="table-title text-content">
+                               Total Tax: 
+                                {(
+                                          Number(
+                                            cdata.gst )  +
+                                          Number(
+                                            cdata.cgst ) +
+                                          Number(
+                                            cdata.sgst ) 
+                                            +
+                                          Number(
+                                            cdata.wholesale_sales_tax )
+                                            +
+                                          Number(
+                                            cdata.manufacturers_sales_tax ) 
+                                            +
+                                          Number(
+                                            cdata.retails_sales_tax )
+                                            +
+                                          Number(
+                                            cdata.value_added_tax ) 
+                                        ).toFixed(2)}%
+                              </h4>
                               <h4 className="table-title text-content">
                                 Tax: ₹
                                 {(
