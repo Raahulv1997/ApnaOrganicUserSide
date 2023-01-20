@@ -19,11 +19,15 @@ const Login = ({ logIn }) => {
   const onCredentialChange= (e)=>{
     setcredentailval({...credentailval, [e.target.name]:e.target.value})
   }
-  const onSubmitClick = () =>{
+  const onSubmitClick = (e) =>{
     const { from } = state || {};
     axios.post(`http://192.168.29.108:5000/user_login`,credentailval)
     .then(response => {
-      if(response.data === "check_credintials"){
+      console.log("--"+response.data.message)
+      if(response.data.message === "check_credintials"){
+        e.target.user_email.value='';
+        e.target.user_password.value='';
+
       setLoginerror(false)
       }
       if(response.data === false){

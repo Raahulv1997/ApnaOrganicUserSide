@@ -37,6 +37,7 @@ const Singup = () => {
         if (response.data === false) {
           setemailerror("already");
           e.target.email.value = "";
+          e.target.password.value="";
         } 
         else {
           setotp(response.data);
@@ -153,6 +154,7 @@ const Singup = () => {
                       <div className="col-12">
                         <div className="form-floating theme-form-floating">
                           <input
+                          required
                             type="password"
                             name="password"
                             className={"form-control"}

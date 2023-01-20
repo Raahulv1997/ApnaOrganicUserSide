@@ -257,13 +257,13 @@ const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
 
 
 const onProductClick = (id) =>{
-  // localStorage.setItem("orderid" , id)
-  localStorage.setItem("proid" , id)
-  navigate('/product-detail')
+  localStorage.setItem("orderid" , id)
+  // localStorage.setItem("proid" , id)
+  navigate('/your_orders')
 }
 
 const OnImageClick = (id) =>{
-  localStorage.setItem("orderid" , id)
+  // localStorage.setItem("orderid" , id)
   // navigate('/your_orders')
 
 }
@@ -706,7 +706,7 @@ const OnImageClick = (id) =>{
 
                                 <div className="order-detail">
                                   <h4>
-                                    Status <span>{data.status}</span>
+                                    Status <span >{data.status}</span>
                                   </h4>
                                   <div dangerouslySetInnerHTML={{ __html: data.product_description }} className='editor'></div>
                                 </div>
@@ -715,7 +715,7 @@ const OnImageClick = (id) =>{
                               
                               <div className="product-order-detail">
                                 <div
-                                onClick={()=>onProductClick(data.product_id
+                                onClick={()=>onProductClick(data.order_id
                                   )}
                                   className="order-image"
                                 >
