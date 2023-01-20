@@ -211,14 +211,14 @@ useEffect(() => {
                 return(
                   <>
                  <div className="col-xxl-6 col-xl-8 col-md-6">
-                  <div className="home-contain " style={{marginTop:"-550px"}}>
+                  <div className="home-contain " style={{marginTop:"-530px"}}>
                 {img.banner_location ==='home_page_left_side'?
                 <>
                  <img src={img.image}
                   className="img-fluid bg-img lazyload "
                   alt="image"
                   name="image"
-                  style={{width:"400px"}}
+                  style={{width:"700px",height:"600px"}}
                 />
                 <div className="home-detail w-50 p-center-left">
                   <div>
@@ -247,7 +247,7 @@ useEffect(() => {
             </div>
            
             <div className="col-xxl-3 col-xl-4 col-md-6 ratio_medium">
-              <div className="home-contain">
+              <div className="home-contain" style={{marginTop:"50px"}}>
               {img.banner_location==='home_page_left_side(1)'?
                  <>
                   
@@ -256,6 +256,7 @@ useEffect(() => {
                     className="img-fluid bg-img lazyload "
                     alt="image"
                     name="image"
+                    // style={{height:"100px"}}
                   />
               
                 <div className="home-detail text-center p-top-center w-100 ">
@@ -277,29 +278,31 @@ useEffect(() => {
             <div className="col-xxl-3 ratio_65">
               <div className="row g-3">
                 <div className="col-xxl-12 col-sm-6">
-                  <div className="home-contain">
+                  <div className="home-contain" style={{marginTop:"-700px",height:"200px"}}>
+                  {img.banner_location==='home_page_right_side(2)'?
                     <a href="shop-left-sidebar.html">
-                      {img.banner_location==='home_page_right_side(1)'?
+                     
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload"
                         alt="image"
                         name="image"
-                      />:null}
+                      />
                     </a>
+                    :null}
                     <div className="home-detail  p-center text-center">
                       <div>
-                        <h4 className="text-center">{img.title}</h4>
-                        <h5 className="text-center">{img.description}</h5>
+                        <h4 className="text-center text-white">{img.title}</h4>
+                        <h5 className="text-center text-white">{img.description}</h5>
                       </div>
                     </div>
                   </div>
                 </div>
 
                 <div className="col-xxl-12 col-sm-6">
-                  <div className="home-contain">
+                  <div className="home-contain" style={{marginTop:"-350px",height:"250px"}}>
                     <a href="shop-left-sidebar.html">
-                      {img.banner_location==='home_page_right_side(3)'?
+                      {img.banner_location==='home_page_right_side(1)'?
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload w-100 h-100"
@@ -309,8 +312,8 @@ useEffect(() => {
                     </a>
                     <div className="home-detail  w-50 p-center-left home-p-sm">
                       <div>
-                        <h4 className="fw-bold">Safe food saves lives</h4>
-                        <h5>Discount Offer</h5>
+                        <h4 className="fw-bold">{img.title}</h4>
+                        <h5>{img.description}</h5>
                       </div>
                     </div>
                   </div>

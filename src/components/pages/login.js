@@ -23,7 +23,7 @@ const Login = ({ logIn }) => {
     const { from } = state || {};
     axios.post(`http://192.168.29.108:5000/user_login`,credentailval)
     .then(response => {
-      if(response.data === "check_credintials"){
+      if(response.data === false){
       setLoginerror(false)
       }
       if(response.data === false){
