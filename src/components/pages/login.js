@@ -31,23 +31,22 @@ const Login = ({ logIn }) => {
       }
       else if(from === undefined){
         localStorage.setItem("userid",response.data.user_id);
-        console.log("----from-------"+from)
+        console.log("----fromelse-------"+from)
         navigate('/');
-       setError(false);
-
+      //  setError(false);
       }
       else{
         localStorage.setItem("userid",response.data.user_id);
           const { from } = state || {};
           // callback to update state
-          console.log("----from-------"+from)
+          console.log("----from-------"+response.data.user_id)
           console.log("-------from.pathname----"+from.pathname)
           console.log("----state-------"+state)
           logIn();
           // redirect back to protected route being accessed
           navigate(from.pathname, { replace: true });
         // }
-        setError(false);
+        // setError(false);
       }
        
 

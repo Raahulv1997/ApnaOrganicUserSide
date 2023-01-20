@@ -12,6 +12,9 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { useSearchParams,useNavigate } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
+import Button from "react-bootstrap/Button";
+import ButtonGroup from "react-bootstrap/ButtonGroup";
+import Form from 'react-bootstrap/Form';
 let showcategorydata = [];
 
 const Shop = (props) => {
@@ -41,6 +44,15 @@ const Shop = (props) => {
   const [data, setData] = useState([]);
   const [wlistData, setWlistData] = useState("add");
   const [isActive, setIsActive] = useState(false);
+  const [subcategory,setsubcategory] = useState(false);
+  const [checkboxfilter,setcheckboxfilter] = useState(false);
+  const [sortingfilter,setsortingfilter] = useState({
+    latest:"",
+    aproduct:"",
+    hprice:"",
+
+  });
+
   const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
     if(useridd === undefined ||
       useridd === "null" ||
@@ -138,14 +150,52 @@ const Shop = (props) => {
     ) {
       setsearchCat("");
     } else {
+      setsearchCat((searchparams.get("category")))
       setCategoryNameData((categoryNamedata) => [
         ...categoryNamedata,
-        Number(searchparams.get("category")),
+        (searchparams.get("category")),
       ]);
     }
-  }, [searchCat]);
+  }, [searchCat,searchparams]);
   // var product = data.product;
   //   product list
+
+// SORTING
+const onSortingChange = (e)=>{
+  if(e.target.value === 'latest'){
+    setsortingfilter({...sortingfilter, 
+      latest:"desc",
+      aproduct:"",
+      hprice:""
+    })
+  }
+  else  if(e.target.value === 'aproduct'){
+    setsortingfilter({...sortingfilter,
+      aproduct:"asc",
+      hprice:"",
+      latest:"",
+    })
+  }
+  else  if(e.target.value === 'zproduct'){
+    setsortingfilter({...sortingfilter, 
+      hprice:"",
+      latest:"",
+      aproduct:"desc"})
+  }
+  else  if(e.target.value === 'hprice'){
+    setsortingfilter({...sortingfilter, hprice:"desc",
+    latest:"",
+    aproduct:""})
+  }
+  else  if(e.target.value === 'lprice'){
+    setsortingfilter({...sortingfilter, hprice:"asc",
+    latest:"",
+    aproduct:""})
+  }
+}
+console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
+// END SORTING
+
   useEffect(() => {
     let homeurl;
     if(useridd=== "null" || useridd === '' || useridd === null || useridd=== undefined){
@@ -154,7 +204,6 @@ const Shop = (props) => {
     else{
        homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`
     }
-    function getProductData() {
       try {
         axios
           .post(
@@ -164,13 +213,17 @@ const Shop = (props) => {
                 search: `${searchText}`,
                 price_from: `${pricefilter.from_product_price}`,
                 price_to: `${pricefilter.to_product_price}`,
+                latest_first:`${sortingfilter.latest}`,
+                product_title_name:`${sortingfilter.aproduct}`,
+                sale_price:`${sortingfilter.hprice}`,
+                short_by_updated_on:"",
                 product_type: [],
                 colors: [],
                 size: [],
                 brand: brandfilter,
                 discount: discountfilter,
                 rating: ratingfilter,
-                category: categoryNamedata,
+                category: [searchCat],
               },
             }
           )
@@ -178,9 +231,8 @@ const Shop = (props) => {
             let data = response.data;
             setProdData(data.results);
             
-
             if (
-              categoryNamedata.length === 0 &&
+              searchCat.length === 0 &&
               ratingfilter.length === 0 &&
               brandfilter.length === 0 &&
               discountfilter.length === 0 &&
@@ -192,39 +244,78 @@ const Shop = (props) => {
             setapicall(false);
           });
       } catch (err) {}
-    }
-    getProductData();
-  }, [
+    
+  },[
     categoryNamedata,
     ratingfilter,
     brandfilter,
     discountfilter,
     pricefilter,
     apicall,
-    
-
+    searchText,
+    searchCat,
+    sortingfilter
   ]);
   // end product list
 
   //   category
+  // useEffect(() => {
+  //   try {
+  //     axios
+  //       .get(`${process.env.REACT_APP_BASEURL}/category?category=${indval}`)
+  //       .then((response) => {
+  //         let data = response.data;
+  //         console.log("----"+JSON.stringify(data))
+  //         const filtercategorydata = data.filter(
+  //           (thing, index, self) =>
+  //             index ===
+  //             self.findIndex(
+  //               (t) => t.root_category_name == thing.root_category_name
+  //             )
+  //         );
+  //         setCategoryData(filtercategorydata);
+  //         // setsearchData(data);
+  //       });
+  //   } catch (err) {}
+  // }, [apicall]);
   useEffect(() => {
-    try {
-      axios
-        .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
-        .then((response) => {
-          let data = response.data;
-          const filtercategorydata = data.filter(
-            (thing, index, self) =>
-              index ===
-              self.findIndex(
-                (t) => t.root_category_name == thing.root_category_name
-              )
-          );
-          setCategoryData(filtercategorydata);
-          // setsearchData(data);
-        });
-    } catch (err) {}
+    function getCategoryData() {
+      try {
+        axios
+          .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
+          .then((response) => {
+            let data = response.data;
+            setCategoryData(data);
+            setapicall(false);
+          });
+      } catch (err) {}
+    }
+    getCategoryData();
   }, [apicall]);
+  const result = categorydata.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
+  );
+
+  const level1category = categorydata.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex(
+        (t, x) => t.down1_category_name == thing.down1_category_name
+      )
+  );
+
+  const level2category = categorydata.filter(
+    (thing, index, self) =>
+      index ===
+      self.findIndex(
+        (t, x) => t.down2_category_name == thing.down2_category_name
+      )
+  );
+  const OnCategoryAdd = () =>{
+    setsubcategory(true)
+  }
   //  SEARCH AND SHOW CATEGORY
   const onCategorySearch = (e) => {
     let catname = e.target.value;
@@ -283,6 +374,7 @@ const Shop = (props) => {
   const onBrandFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
+
     if (e.target.checked === true) {
       setbrandfilter((brandfilter) => [...brandfilter, e.target.value]);
     showcategorydata.push(e.target.value);
@@ -296,6 +388,7 @@ const Shop = (props) => {
       }
     }
   };
+
   const onRatingFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -316,11 +409,16 @@ const Shop = (props) => {
 
   const OnClearAllClick = (e) => {
     showcategorydata = [];
+    setcheckboxfilter(true)
     setCategoryNameData("");
-    setpricefilter("");
+    setpricefilter({...pricefilter,
+      to_product_price: "",
+    from_product_price: ""
+    });
     setdiscountfilter("");
     setbrandfilter("");
     setratingfilter("");
+    setapicall(true)
   };
   //   END SEARCH AND SHOW CATEGORY
   // end category
@@ -330,11 +428,11 @@ const Shop = (props) => {
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.brand == thing.brand)
   );
-  const result = categorydata.filter(
-    (thing, index, self) =>
-      index ===
-      self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
-  );
+  // const result = categorydata.filter(
+  //   (thing, index, self) =>
+  //     index ===
+  //     self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
+  // );
 
   // END BRAND
   return (
@@ -390,7 +488,7 @@ const Shop = (props) => {
                           aria-labelledby="panelsStayOpen-headingOne"
                         >
                           <div className="accordion-body">
-                            <div className="form-floating theme-form-floating-2 search-box">
+                            {/* <div className="form-floating theme-form-floating-2 search-box">
                               <input
                                 type="search"
                                 className="form-control"
@@ -399,62 +497,183 @@ const Shop = (props) => {
                                 onChange={(e) => onCategorySearch(e)}
                               />
                               <label htmlFor="search">Search</label>
-                              {/* <button
-                            className="btn search-button"
-                            // onClick={searchProduct}
-                          >
-                            <i className="fa-regular fa-magnifying-glass"></i>
-                          </button> */}
-                            </div>
-                              
-                            <ul className="category-list custom-padding custom-height">
                           
-                              {(categorydata || []).map((cdta, i) => {
-                                return (
-                                  <li key={i}>
-                                    <div className="form-check ps-0 m-0 category-list-box">
-                                      <input
-                                        className="checkbox_animated"
-                                        type="checkbox"
-                                        id="category"
-                                        name={"category"}
-                                        // checked={categoryNamedata.length === 0 ? false : true}
-                                        onChange={
-                                          categorynameChange
-                                            ? (e) =>
-                                                onCategoryNameAdd(
-                                                  e,
-                                                  cdta.id,
-                                                  cdta.category_name
-                                                )
-                                            : (e) =>
-                                                onCategoryNameAdd(
-                                                  e,
-                                                  cdta.root_id,
-                                                  cdta.root_category_name
-                                                )
-                                        }
-                                      />
-                                      <label
-                                        className="form-check-label"
-                                        htmlFor="fruit"
-                                      >
-                                        {categorynameChange ? (
-                                          <span className="name">
-                                            {cdta.category_name}
-                                          </span>
-                                        ) : (
-                                          <span className="name">
-                                            {cdta.root_category_name}
-                                          </span>
-                                        )}
-                                        {/* <span className="number">(15)</span> */}
-                                      </label>
-                                    </div>
-                                  </li>
-                                );
-                              })}
-                            </ul>
+                            </div> */}
+
+                            <Accordion>
+                      {result.map((catdata, i) => {
+                        return (
+                          <>
+                            <Accordion.Item eventKey={catdata.root_id}>
+                              <Dropdown
+                                as={ButtonGroup}
+                                className={"category_dropdown_box"}
+                              >
+                                <Button
+                                  variant="light"
+                                  className={"category_dropdown_name"}
+                                  onClick={() => {
+                                    navigate(
+                                      `/shop?category=` + catdata.root_id
+                                    );
+                                  }}
+                                  value={catdata.root_id}
+                                >
+                                  {catdata.root_category_name}
+                                </Button>
+
+                                <Dropdown.Toggle
+                                  split
+                                  variant="light"
+                                  id="dropdown-split-basic"
+                                  drop={"end"}
+                                  title={`Drop end`}
+                                  className={"category_dropdown_btn"}
+                                />
+
+                                <Dropdown.Menu>
+                                  <div className="onhover-category-box">
+                                    {(level1category || []).map((data,i) => {
+                                      return catdata.root_category_name ===
+                                        data.root_category_name &&
+                                        data.down1_category_name !== null ? (
+                                        <div className="list-1" key={data.id}>
+                                          <div className="category-title-box">
+                                            <div value={data.down1_id}>
+                                              <h5
+                                                onClick={() => {
+                                                  navigate(
+                                                    `/shop?category=` +
+                                                      catdata.down1_id
+                                                  );
+                                                }}
+                                                value={data.down1_id}
+                                                className={
+                                                  "searchsub_category px-2"
+                                                }
+                                              >
+                                               {i+1}{')'} {data.down1_category_name}
+                                              </h5>
+                                            </div>
+                                          </div>
+                                          <ul className="p-0">
+                                            {(level2category || []).map(
+                                              (data1,i) => {
+                                                return data.down1_category_name ===
+                                                  data1.down1_category_name &&
+                                                  data.down2_category_name !==
+                                                    null ? (
+                                                  <li
+                                                    onClick={() => {
+                                                      navigate(
+                                                        `/shop?category=` +
+                                                          catdata.down2_id
+                                                      );
+                                                    }}
+                                                    value={data1.down2_id}
+                                                    className={
+                                                      "searchsub_category w-100 py-2 px-4"
+                                                    }
+                                                  >
+                                                   {i+1}{')'} {data1.down2_category_name}
+                                                    <ul>
+                                                      {(categorydata || []).map(
+                                                        (data2) => {
+                                                          return data1.down2_category_name ===
+                                                            data2.down2_category_name &&
+                                                            data.down3_category_name !==
+                                                              null ? (
+                                                            <li
+                                                              onClick={() => {
+                                                                navigate(
+                                                                  `/shop?category=` +
+                                                                    catdata.down3_id
+                                                                );
+                                                              }}
+                                                              value={
+                                                                data2.down3_id
+                                                              }
+                                                              className={
+                                                                "w-100  searchsub_category px-3 py-1"
+                                                              }
+                                                            >
+                                                             {'*)'} {
+                                                                data2.down3_category_name
+                                                              }
+                                                            </li>
+                                                          ) : null;
+                                                        }
+                                                      )}
+                                                    </ul>
+                                                  </li>
+                                                ) : null;
+                                              }
+                                            )}
+                                          </ul>
+                                        </div>
+                                      ) : null;
+                                    })}
+                                  </div>
+                                </Dropdown.Menu>
+                              </Dropdown>
+                              <Accordion.Body>
+                                <div className="onhover-category-box">
+                                  {(level1category || []).map((data,i) => {
+                                    return catdata.root_category_name ===
+                                      data.root_category_name &&
+                                      data.down1_category_name !== null ? (
+                                      <div className="list-1" key={data.id}>
+                                        <div className="category-title-box">
+                                          <div>
+                                            <h5>{data.down1_category_name}</h5>
+                                          </div>
+                                        </div>
+                                        <ul className="p-0">
+                                          {(level2category || []).map(
+                                            (data1) => {
+                                              return data.down1_category_name ===
+                                                data1.down1_category_name &&
+                                                data.down2_category_name !==
+                                                  null ? (
+                                                <li
+                                                  className="w-100"
+                                                  key={data1.id}
+                                                >
+                                                  {data1.down2_category_name}
+                                                  <ul>
+                                                    {(categorydata || []).map(
+                                                      (data2) => {
+                                                        return data1.down2_category_name ===
+                                                          data2.down2_category_name &&
+                                                          data.down3_category_name !==
+                                                            null ? (
+                                                          <li
+                                                            className="w-100"
+                                                            key={data2.id}
+                                                          >
+                                                            {
+                                                              data2.down3_category_name
+                                                            }
+                                                          </li>
+                                                        ) : null;
+                                                      }
+                                                    )}
+                                                  </ul>
+                                                </li>
+                                              ) : null;
+                                            }
+                                          )}
+                                        </ul>
+                                      </div>
+                                    ) : null;
+                                  })}
+                                </div>
+                              </Accordion.Body>
+                            </Accordion.Item>
+                          </>
+                        );
+                      })}
+                    </Accordion>
                           </div>
                         </div>
                       </Accordion.Body>
@@ -481,6 +700,7 @@ const Shop = (props) => {
                                         type="checkbox"
                                         id="veget"
                                         name={"brand"}
+                                        // checked={checkboxfilter ===  true ? false : true}
                                         value={data.brand}
                                         onChange={(e) => onBrandFilterAdd(e)}
                                       />
@@ -513,7 +733,7 @@ const Shop = (props) => {
                             className="js-range-slider"
                             placeholder="from"
                             name={"from_product_price"}
-                            // value={cdta.root_category_name}
+                            value={pricefilter.from_product_price}
                             onChange={(e) => onPriceFilterAdd(e)}
                           />
                           &nbsp;
@@ -522,7 +742,7 @@ const Shop = (props) => {
                             className="js-range-slider"
                             placeholder="to"
                             name={"to_product_price"}
-                            // value={cdta.root_category_name}
+                            value={pricefilter.to_product_price}
                             onChange={(e) => onPriceFilterAdd(e)}
                           />
                         </div>
@@ -813,14 +1033,14 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault"
                                     name={"discount"}
-                                    value={"10"}
+                                    value={"5"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
                                     htmlFor="flexCheckDefault"
                                   >
-                                    <span className="name">upto 5%</span>
+                                    <span className="name"> 5%</span>
                                   </label>
                                 </div>
                               </li>
@@ -832,14 +1052,14 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault1"
                                     name={"discount"}
-                                    value={"20"}
+                                    value={"10"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
                                     htmlFor="flexCheckDefault1"
                                   >
-                                    <span className="name">5% - 10%</span>
+                                    <span className="name">10%</span>
                                   </label>
                                 </div>
                               </li>
@@ -851,14 +1071,14 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault2"
                                     name={"discount"}
-                                    value={"30"}
+                                    value={"15"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
                                     htmlFor="flexCheckDefault2"
                                   >
-                                    <span className="name">10% - 15%</span>
+                                    <span className="name">15%</span>
                                   </label>
                                 </div>
                               </li>
@@ -870,18 +1090,19 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault3"
                                     name={"discount"}
-                                    value={"40"}
+                                    value={"20"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
                                     htmlFor="flexCheckDefault3"
                                   >
-                                    <span className="name">15% - 25%</span>
+                                    <span className="name">20%</span>
                                   </label>
                                 </div>
                               </li>
 
+                             
                               <li>
                                 <div className="form-check ps-0 m-0 category-list-box">
                                   <input
@@ -889,14 +1110,14 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault4"
                                     name={"discount"}
-                                    value={"50"}
+                                    value={"30"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
                                   <label
                                     className="form-check-label"
                                     htmlFor="flexCheckDefault4"
                                   >
-                                    <span className="name">More than 25%</span>
+                                    <span className="name">30%</span>
                                   </label>
                                 </div>
                               </li>
@@ -986,21 +1207,22 @@ const Shop = (props) => {
                 <div className="top-filter-menu">
                   <div className="category-dropdown">
                     <h4 className="text-content">Sort By :</h4>
-                    <Dropdown>
-                      <Dropdown.Toggle variant="light" id="dropdown-basic">
-                        Most Popular
-                        {/* <i className="fa-solid fa-angle-down"></i> */}
-                      </Dropdown.Toggle>
-                      <Dropdown.Menu>
-                        <Dropdown.Item>Popularity</Dropdown.Item>
-                        <Dropdown.Item>Low - High Price</Dropdown.Item>
-                        <Dropdown.Item>High - Low Price</Dropdown.Item>
-                        <Dropdown.Item>Average Rating</Dropdown.Item>
-                        <Dropdown.Item>A - Z Order</Dropdown.Item>
-                        <Dropdown.Item>Z - A Order</Dropdown.Item>
-                        <Dropdown.Item>% Off - Hight To Low</Dropdown.Item>
-                      </Dropdown.Menu>
-                    </Dropdown>
+                    <Form.Select
+                                  aria-label="Search by category"
+                                  className="adminselectbox"
+                                  placeholder="Search by category"
+                                  onChange={(e) => onSortingChange(e)}
+                                  name={'latest'}
+                                >
+
+                                  <option value={''}><input type='checkbox'/>Select </option>
+                                  <option name={'latest'} onChange={(e)=>onSortingChange(e)} value={'latest'}><input type='checkbox'/>Latest</option>
+                                  <option name={'price'} onChange={(e)=>onSortingChange(e)} value={'hprice'}>High Price</option>
+                                  <option name={'price'} onChange={(e)=>onSortingChange(e)} value={'lprice'}>Low Price</option>
+                                  <option name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'aproduct'}>A - Z Product</option>
+                                  <option name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'zproduct'}>Z - A Product</option>
+                                </Form.Select>
+                    
                   </div>
                 </div>
               </div>

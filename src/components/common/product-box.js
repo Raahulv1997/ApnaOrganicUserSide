@@ -56,6 +56,9 @@ const ProductBox = ({
   //             search: `${productType}`,
   //             price_from: "",
   //             price_to: "",
+                // id:"asc",
+                // product_title_name:"",
+                //  sale_price:"",
   //           },
   //         })
   //         .then((response) => {

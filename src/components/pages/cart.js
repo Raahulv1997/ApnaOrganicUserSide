@@ -81,29 +81,7 @@ const Cart = (all_images) => {
             data.map((cdata) => {
               ProductTotal +=
               (
-                cdata.quantity * Number(cdata.product_price) -
-                (cdata.product_price * cdata.discount) / 100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
-                ) *
-                  cdata.gst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
-                ) *
-                  cdata.cgst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) /
-                      100
-                ) *
-                  cdata.sgst) /
-                  100
+                cdata.quantity * Number(cdata.sale_price)
               )
             });
             setProductPriceTotal(ProductTotal);
@@ -149,7 +127,7 @@ const Cart = (all_images) => {
 
   // payement
   const onProccedClick = () => {
-    localStorage.setItem("coupon",CouponDis)
+    localStorage.setItem("coupon",(CouponDis).toFixed(2))
     localStorage.setItem("couponid",Couponid)
     navigate("/checkout");
   };
@@ -173,7 +151,7 @@ const Cart = (all_images) => {
         item.code === couponname && ProductPriceTotal >= item.minimum_amount
     );
 if(discountpercent.length !== 0){
-  let discntcoupn = Number(discountpercent[0].percentage) / 100;
+  let discntcoupn = Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
     setCouponDis(discntcoupn);
     setCouponid(discountpercent[0].id)
 }
@@ -213,7 +191,7 @@ else{
   };
   const OnApplyClick = () => {
     CheckCoupon();
-    let discntcoupn = Number(discountpercent[0].percentage) / 100;
+    let discntcoupn =  Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
     setCouponDis(discntcoupn);
     setCouponid(discountpercent[0].id)
 
@@ -324,15 +302,13 @@ else{
                               </h4>
                               <h5>
                                 <del className="text-content text-danger mx-2 mb-0">
-                                  ₹{Number(cdata.product_price).toFixed(2)}
+                                  ₹{Number(cdata.mrp).toFixed(2)}
                                 </del>
                                 <b>
                                   {" "}
                                   ₹
                                   {Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
+                                    cdata.product_price 
                                   ).toFixed(2)}{" "}
                                 </b>
                               </h5>
@@ -340,18 +316,14 @@ else{
                               <h6 className="theme-color">
                                 You Save:₹(
                                 {(
-                                  (Number(cdata.sale_price) * cdata.discount) /
+                                  (Number(cdata.mrp) * cdata.discount) /
                                   100
                                 ).toFixed(2)}
                                 )
                               </h6>
                             </td>
                             <td className="price">
-                              {/* <h4 className="table-title text-content">Tax</h4> */}
-                              {/* { Number((cdata.product_price) -
-                                    (cdata.product_price * cdata.discount) /
-                                      100)*cdata.gst /
-                                      100} */}
+                            
                               <h6 className="">
                                 Gst:{Number(cdata.gst).toFixed(2)}%
                               </h6>
@@ -362,14 +334,30 @@ else{
                                 Sgst:{Number(cdata.sgst).toFixed(2)}%
                               </h6>
                             </td>
-
+                            <td className="price">
+                                      <div className="">
+                                      <h6 className="">
+                                Mtax:{Number(cdata.manufacturers_sales_tax).toFixed(2)}%
+                              </h6>
+                              <h6 className="">
+                                WTax:{Number(cdata.wholesale_sales_tax).toFixed(2)}%
+                              </h6>
+                                      
+                                     
+                              <h6 className="">
+                                VTax:{Number(cdata.value_added_tax).toFixed(2)}%
+                              </h6>
+                              <h6 className="">
+                                RTax:{Number(cdata.retails_sales_tax).toFixed(2)}%
+                              </h6>
+                              </div>
+                            </td>
                             <td className="price">
                               <h4 className="table-title text-content">
                                 Taxable Value: ₹
-                                {(
-                                  Number(cdata.product_price) -
-                                  (cdata.product_price * cdata.discount) / 100
-                                ).toFixed(2)}
+                                {Number(
+                                    cdata.product_price 
+                                  ).toFixed(2)}
                               </h4>
                               {cdata.sgst === null
                                 ? (cdata.sgst = "0")
@@ -377,60 +365,72 @@ else{
                               {cdata.cgst === null
                                 ? (cdata.cgst = "0")
                                 : cdata.cgst === cdata.cgst}
+                                <h4 className="table-title text-content">
+                               Total Tax: 
+                                {(
+                                          Number(
+                                            cdata.gst )  +
+                                          Number(
+                                            cdata.cgst ) +
+                                          Number(
+                                            cdata.sgst ) 
+                                            +
+                                          Number(
+                                            cdata.wholesale_sales_tax )
+                                            +
+                                          Number(
+                                            cdata.manufacturers_sales_tax ) 
+                                            +
+                                          Number(
+                                            cdata.retails_sales_tax )
+                                            +
+                                          Number(
+                                            cdata.value_added_tax ) 
+                                        ).toFixed(2)}%
+                              </h4>
                               <h4 className="table-title text-content">
                                 Tax: ₹
                                 {(
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.gst) /
-                                    100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.cgst) /
-                                    100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.sgst) /
-                                    100
-                                ).toFixed(2)}
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.gst) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.cgst) /
+                                            100 +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.sgst) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.wholesale_sales_tax) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.manufacturers_sales_tax) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.retails_sales_tax) /
+                                            100
+                                            +
+                                          (Number(
+                                            cdata.product_price ) *
+                                            cdata.value_added_tax) /
+                                            100
+                                        ).toFixed(2)}
                               </h4>
                             </td>
                             <td className="price">
                               <h4 className="table-title text-content">
                                 Sale Price: ₹
                                 {(
-                                  Number(cdata.product_price) -
-                                  (cdata.product_price * cdata.discount) / 100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.gst) /
-                                    100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.cgst) /
-                                    100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.sgst) /
-                                    100
+                                  Number(cdata.sale_price) 
                                 ).toFixed(2)}
                               </h4>
                             </td>
@@ -480,29 +480,7 @@ else{
                               </h4>
                               <h5>
                                 {(
-                                  cdata.quantity * Number(cdata.product_price) -
-                                  (cdata.product_price * cdata.discount) / 100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.gst) /
-                                    100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.cgst) /
-                                    100 +
-                                  (Number(
-                                    cdata.product_price -
-                                      (cdata.product_price * cdata.discount) /
-                                        100
-                                  ) *
-                                    cdata.sgst) /
-                                    100
+                                  cdata.quantity * Number(cdata.sale_price) 
                                 ).toFixed(2)}
                               </h5>
                             </td>
@@ -571,7 +549,7 @@ else{
                   </div>
                   <ul className="p-0">
                     <li>
-                      <h4>Subtotal</h4>
+                      <h4>Subtotal(Tax Included)</h4>
 
                       <h4 className="price">₹{ProductPriceTotal.toFixed(2)}</h4>
                     </li>
