@@ -211,26 +211,26 @@ useEffect(() => {
                 return(
                   <>
                  <div className="col-xxl-6 col-xl-8 col-md-6">
-                  <div className="home-contain">
-                {img.banner_location ==='home_page_right_side(2)'?
+                  <div className="home-contain " style={{marginTop:"-550px"}}>
+                {img.banner_location ==='home_page_left_side'?
                 <>
                  <img src={img.image}
                   className="img-fluid bg-img lazyload "
                   alt="image"
                   name="image"
-                  // width={'100px'}
+                  style={{width:"400px"}}
                 />
                 <div className="home-detail w-50 p-center-left">
                   <div>
                     <h6 className="ls-expanded theme-color">ORGANIC</h6>
-                    <h1 className="fw-bold w-100">
+                    <h1 className="fw-bold w-100 text-white">
                       {/* 100% Fresh */}
                     {img.title}
                     </h1>
-                    <h3 className="text-content fw-light">
+                    <h3 className="text-content fw-light text-white">
                       Fruit & Vegetables
                     </h3>
-                    <p className="d-sm-block d-none">
+                    <p className="d-sm-block d-none text-white">
                       {/* Free shipping on all your order. we deliver you enjoy */}
                       {img.description}
                     </p>
@@ -248,7 +248,7 @@ useEffect(() => {
            
             <div className="col-xxl-3 col-xl-4 col-md-6 ratio_medium">
               <div className="home-contain">
-              {img.banner_location==='home_page_right_side(3)'?
+              {img.banner_location==='home_page_left_side(1)'?
                  <>
                   
                   <img
@@ -260,8 +260,8 @@ useEffect(() => {
               
                 <div className="home-detail text-center p-top-center w-100 ">
                   <div>
-                    <h4 className="fw-bold">{img.title}</h4>
-                    <h5 className="text-center">{img.description}</h5>
+                    <h4 className="fw-bold text-white" >{img.title}</h4>
+                    <h5 className="text-white">{img.description}</h5>
                     <Link to={img.banner_url}>
                     <button className="btn bg-white theme-color mt-3 home-button mx-auto btn-2">
                       Shop Now
@@ -279,7 +279,7 @@ useEffect(() => {
                 <div className="col-xxl-12 col-sm-6">
                   <div className="home-contain">
                     <a href="shop-left-sidebar.html">
-                      {img.banner_location==='home_page_right_side(2)'?
+                      {img.banner_location==='home_page_right_side(1)'?
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload"

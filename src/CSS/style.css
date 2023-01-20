@@ -14074,7 +14074,7 @@ header .header-nav .header-nav-right .deal-button span {
   background-position: center center;
   background-repeat: no-repeat;
   background-size: cover;
-  height: 800px;
+  height:100%;
 }
 
 .home-section-2.home-section-bg {
