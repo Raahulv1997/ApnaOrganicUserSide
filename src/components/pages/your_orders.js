@@ -68,10 +68,6 @@ function Orders() {
   }
 
 
-  const onAccountClick = ()=>{
-    localStorage.removeItem('orderid')
-    navigate('/your_account')
-  }
  var total=0;
  var sub_total=0;
  var total_tax=0;
@@ -324,7 +320,6 @@ function Orders() {
         </div> */}
          <div className="order_detail_page container-fluid-lg">
       <div className="order_detail">
-        <button className="btn btn-success" onClick={onAccountClick}>{'Your Account'}</button>
         <div className="row">
           <div className="col-lg-8">
             <div className="left_side">

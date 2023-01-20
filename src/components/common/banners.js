@@ -211,7 +211,7 @@ useEffect(() => {
                 return(
                   <>
                  <div className="col-xxl-6 col-xl-8 col-md-6">
-                  <div className="home-contain " style={{marginTop:"-530px"}}>
+                  <div className="home-contain " style={{marginTop:"-560px"}}>
                 {img.banner_location ==='home_page_left_side'?
                 <>
                  <img src={img.image}
@@ -222,7 +222,7 @@ useEffect(() => {
                 />
                 <div className="home-detail w-50 p-center-left">
                   <div>
-                    <h6 className="ls-expanded theme-color">ORGANIC</h6>
+                    <h3 className="ls-expanded theme-color">ORGANIC</h3>
                     <h1 className="fw-bold w-100 text-white">
                       {/* 100% Fresh */}
                     {img.title}
@@ -261,8 +261,8 @@ useEffect(() => {
               
                 <div className="home-detail text-center p-top-center w-100 ">
                   <div>
-                    <h4 className="fw-bold text-white" >{img.title}</h4>
-                    <h5 className="text-white">{img.description}</h5>
+                    <h2 className="fw-bold text-white">{img.title}</h2>
+                    <h3 className="text-white">{img.description}</h3>
                     <Link to={img.banner_url}>
                     <button className="btn bg-white theme-color mt-3 home-button mx-auto btn-2">
                       Shop Now
@@ -278,8 +278,9 @@ useEffect(() => {
             <div className="col-xxl-3 ratio_65">
               <div className="row g-3">
                 <div className="col-xxl-12 col-sm-6">
-                  <div className="home-contain" style={{marginTop:"-700px",height:"200px"}}>
+                  <div className="home-contain" style={{marginTop:"-700px",height:"250px"}}>
                   {img.banner_location==='home_page_right_side(2)'?
+                  <>
                     <a href="shop-left-sidebar.html">
                      
                       <img
@@ -289,33 +290,37 @@ useEffect(() => {
                         name="image"
                       />
                     </a>
-                    :null}
+                    
                     <div className="home-detail  p-center text-center">
                       <div>
-                        <h4 className="text-center text-white">{img.title}</h4>
-                        <h5 className="text-center text-white">{img.description}</h5>
+                        <h3 className="text-center text-white">{img.title}</h3>
+                        <h4 className="text-center text-white">{img.description}</h4>
                       </div>
                     </div>
+                    </>:null}
                   </div>
                 </div>
 
                 <div className="col-xxl-12 col-sm-6">
                   <div className="home-contain" style={{marginTop:"-350px",height:"250px"}}>
-                    <a href="shop-left-sidebar.html">
+                   
                       {img.banner_location==='home_page_right_side(1)'?
+                       <>
+                        <a href="shop-left-sidebar.html">
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload w-100 h-100"
                         alt="image"
                         name='image'
-                      />:null}
+                      />
                     </a>
                     <div className="home-detail  w-50 p-center-left home-p-sm">
                       <div>
-                        <h4 className="fw-bold">{img.title}</h4>
-                        <h5>{img.description}</h5>
+                        <h3 className="fw-bold text-white">{img.title}</h3>
+                        <h5 className=" text-white">{img.description}</h5>
                       </div>
                     </div>
+                    </>:null}
                   </div>
                 </div>
               </div>

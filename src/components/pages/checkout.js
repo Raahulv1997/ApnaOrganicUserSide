@@ -10,8 +10,10 @@ import Accordion from "react-bootstrap/Accordion";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
-
+import SweetAlert from "sweetalert-react";
+// import "sweetalert/dist/sweetalert.css";
 const Checkout = (props) => {
+  const[ProductAlert,setProductAlert]=useState(false)
   const navigate = useNavigate();
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
@@ -75,22 +77,7 @@ let CouponId = localStorage.getItem("couponid")
       });
   };
 
-  // const incrementCount = (id, quantity) => {
-  //   let inc = quantity + 1;
-  //   axios
-  //     .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-  //       id: id,
-  //       quantity: inc,
-  //     })
-  //     .then((response) => {
-  //       let data = response.data;
-  //       setapicall(true);
-  //       // quantity = quantity + 1;
-  //       setQuantity((quantity = quantity + 1));
-  //       console.log("CLICK"+quantity)
 
-  //     });
-  // };
   const decrementCount = (id, quantity) => {
     let dec;
     if (quantity > 0) {
@@ -300,12 +287,19 @@ let CouponId = localStorage.getItem("couponid")
       .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd)
       .then((response) => {
         localStorage.setItem("orderid",response.data.order_id)
-        navigate('/your_orders')
+         setProductAlert(true)
         // return response;
       })
       .catch((error) => {});
   };
   // end order add
+
+  // sweetalert
+  const closeProductAlert=()=>{
+    setProductAlert(false)
+    navigate('/your_orders')
+  }
+  // end sweetalert
   return (
     <Fragment>
       <Header />
@@ -450,7 +444,8 @@ let CouponId = localStorage.getItem("couponid")
                       <div className="cart-table p-0">
                         <div className="table-responsive">
                           <table className="table">
-                            {cartdata.map((cdata) => {
+                            {cartdata?
+                            cartdata.map((cdata) => {
                               return (
                                 <tbody key={cdata.id}>
                                   <tr className="product-box-contain">
@@ -763,7 +758,8 @@ let CouponId = localStorage.getItem("couponid")
                                   </tr>
                                 </tbody>
                               );
-                            })}
+                            })
+                          :null}
                           </table>
                         </div>
                       </div>
@@ -1733,6 +1729,14 @@ let CouponId = localStorage.getItem("couponid")
         </div>
       </section>
       {/* <!-- Checkout section End --> */}
+      <SweetAlert
+          show={ProductAlert}
+          title="Added Successfully "
+          text=" Order Added"
+           onConfirm={closeProductAlert}
+      
+        />
+
       <Footer />
     </Fragment>
   );

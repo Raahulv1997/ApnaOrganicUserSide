@@ -37,7 +37,7 @@ const Header = (props) => {
     setapicall(true);
   }
   // console.log("-----apics"+localStorage.getItem("cartupdate") )
-// console.log("BBBBBBBBBBBBBBBBBBB--------"+JSON.stringify(pdata))
+  // console.log("BBBBBBBBBBBBBBBBBBB--------"+JSON.stringify(pdata))
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -86,30 +86,33 @@ const Header = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
+            console.log(JSON.stringify(data) + "data");
             let ProductTotal = 0;
-            data.map((cdata) => {
-              ProductTotal +=
-                cdata.quantity * Number(cdata.product_price) -
-                (cdata.product_price * cdata.discount) / 100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.gst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.cgst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.sgst) /
-                  100;
-            });
+            if (data) {
+              data.map((cdata) => {
+                ProductTotal +=
+                  cdata.quantity * Number(cdata.product_price) -
+                  (cdata.product_price * cdata.discount) / 100 +
+                  (Number(
+                    cdata.product_price -
+                      (cdata.product_price * cdata.discount) / 100
+                  ) *
+                    cdata.gst) /
+                    100 +
+                  (Number(
+                    cdata.product_price -
+                      (cdata.product_price * cdata.discount) / 100
+                  ) *
+                    cdata.cgst) /
+                    100 +
+                  (Number(
+                    cdata.product_price -
+                      (cdata.product_price * cdata.discount) / 100
+                  ) *
+                    cdata.sgst) /
+                    100;
+              });
+            }
 
             setProductPriceTotal(ProductTotal);
             setPdata(data);
@@ -232,11 +235,10 @@ const Header = (props) => {
                   <div className="right-nav">
                     <div className="nav-number"></div>
 
-                   
-                      <Link to="/sellersignup" >
-                        <span className="text-primary">Become A Seller </span>
-                      </Link>
-                   
+                    <Link to="/sellersignup">
+                      <span className="text-primary">Become A Seller </span>
+                    </Link>
+
                     {/* </NavLink> */}
                   </div>
                   <div className="right-nav">
@@ -761,7 +763,7 @@ const Header = (props) => {
                             </li>
                           </ul> */}
                         </li>
-{/* 
+                        {/* 
                         <li className="nav-item dropdown">
                           <NavLink
                             to="/product-detail"
@@ -921,7 +923,6 @@ const Header = (props) => {
                             Blog
                           </Link>
                           <ul className="dropdown-menu ps-4">
-                            
                             <li>
                               <NavLink
                                 to="/blog_list"
@@ -962,25 +963,36 @@ const Header = (props) => {
                               </Link>
                             </li>
                             <li>
-                              <Link className="dropdown-item" to=
-                              {useridd === undefined ||
-                              useridd === "null" ||
-                              useridd === "" ||
-                              useridd === null ? "/login":
-                              "/cart"}>
+                              <Link
+                                className="dropdown-item"
+                                to={
+                                  useridd === undefined ||
+                                  useridd === "null" ||
+                                  useridd === "" ||
+                                  useridd === null
+                                    ? "/login"
+                                    : "/cart"
+                                }
+                              >
                                 Cart
                               </Link>
                             </li>
                             <li>
-                              <Link to= {useridd === undefined ||
-                              useridd === "null" ||
-                              useridd === "" ||
-                              useridd === null ? "/login":
-                              "/your_account"} className="dropdown-item">
+                              <Link
+                                to={
+                                  useridd === undefined ||
+                                  useridd === "null" ||
+                                  useridd === "" ||
+                                  useridd === null
+                                    ? "/login"
+                                    : "/your_account"
+                                }
+                                className="dropdown-item"
+                              >
                                 Your Account
                               </Link>
                             </li>
-                            <li>
+                            {/* <li>
                               <Link to=
                               {useridd === undefined ||
                                 useridd === "null" ||
@@ -989,14 +1001,21 @@ const Header = (props) => {
                               "/your_orders" }className="dropdown-item">
                                 Your Order
                               </Link>
-                            </li>
+                            </li> */}
                             <li>
-                              <Link className="dropdown-item"  to=
-                              {useridd === undefined ||
-                                useridd === "null" ||
-                                useridd === "" ||
-                                useridd === null ? "/login":
-                              "/checkout"}>Checkout</Link>
+                              <Link
+                                className="dropdown-item"
+                                to={
+                                  useridd === undefined ||
+                                  useridd === "null" ||
+                                  useridd === "" ||
+                                  useridd === null
+                                    ? "/login"
+                                    : "/checkout"
+                                }
+                              >
+                                Checkout
+                              </Link>
                             </li>
                             {/* <li>
                               <Link to="/" className="dropdown-item">
@@ -1042,11 +1061,17 @@ const Header = (props) => {
                               </Link>
                             </li>
                             <li>
-                              <Link to={useridd === undefined ||
-                              useridd === "null" ||
-                              useridd === "" ||
-                              useridd === null ? "/login":
-                              "/wishlist"} className="dropdown-item">
+                              <Link
+                                to={
+                                  useridd === undefined ||
+                                  useridd === "null" ||
+                                  useridd === "" ||
+                                  useridd === null
+                                    ? "/login"
+                                    : "/wishlist"
+                                }
+                                className="dropdown-item"
+                              >
                                 Wishlist
                               </Link>
                             </li>

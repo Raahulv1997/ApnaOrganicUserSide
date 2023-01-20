@@ -1154,6 +1154,7 @@ useEffect(()=>{
         <div className="col-12">
           <div className="form-floating theme-form-floating log-in-form">
             <input
+            required
               type="email"
               className="form-control"
               id="email"
@@ -1206,6 +1207,7 @@ useEffect(()=>{
       
     </div>
             <input
+            required
               type="password"
               name="password"
               className={"form-control"}
@@ -1290,6 +1292,7 @@ useEffect(()=>{
             <div className="col-12">
               <div className="form-floating theme-form-floating">
                 <input
+                required
                   type="password"
                   name="password"
                   disabled={(otp === 0 && Signup === true) ? true: false }
