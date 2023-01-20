@@ -86,30 +86,33 @@ const Header = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
+            console.log(JSON.stringify(data) + "data");
             let ProductTotal = 0;
-            data.map((cdata) => {
-              ProductTotal +=
-                cdata.quantity * Number(cdata.product_price) -
-                (cdata.product_price * cdata.discount) / 100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.gst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.cgst) /
-                  100 +
-                (Number(
-                  cdata.product_price -
-                    (cdata.product_price * cdata.discount) / 100
-                ) *
-                  cdata.sgst) /
-                  100;
-            });
+            if (data) {
+              data.map((cdata) => {
+                ProductTotal +=
+                  cdata.quantity * Number(cdata.product_price) -
+                  (cdata.product_price * cdata.discount) / 100 +
+                  (Number(
+                    cdata.product_price -
+                      (cdata.product_price * cdata.discount) / 100
+                  ) *
+                    cdata.gst) /
+                    100 +
+                  (Number(
+                    cdata.product_price -
+                      (cdata.product_price * cdata.discount) / 100
+                  ) *
+                    cdata.cgst) /
+                    100 +
+                  (Number(
+                    cdata.product_price -
+                      (cdata.product_price * cdata.discount) / 100
+                  ) *
+                    cdata.sgst) /
+                    100;
+              });
+            }
 
             setProductPriceTotal(ProductTotal);
             setPdata(data);
