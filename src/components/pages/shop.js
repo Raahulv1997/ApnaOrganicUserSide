@@ -15,6 +15,8 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
+import Pagination from "./Pagination";
+
 let showcategorydata = [];
 
 const Shop = (props) => {
@@ -23,6 +25,8 @@ const Shop = (props) => {
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
   const useridd = localStorage.getItem("userid");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [recordsPerPage, setrecordsPerPage] = useState(5);
   const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
@@ -51,6 +55,17 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
+
+  // CALCULATIO OF PAGINATION:-
+
+  const indexOfLastRecord = currentPage * recordsPerPage;
+  console.log(indexOfLastRecord);
+  const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
+  console.log(indexOfFirstRecord);
+  const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
+  const nPages = Math.ceil(prodData.length / recordsPerPage);
+  console.log(nPages);
+  console.log("pagep", prodData);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
@@ -196,6 +211,7 @@ const Shop = (props) => {
       });
     }
   };
+  console.log("-----pdkedkf" + JSON.stringify(sortingfilter));
   // END SORTING
 
   useEffect(() => {
@@ -207,9 +223,9 @@ const Shop = (props) => {
       useridd === undefined ||
       useridd === true
     ) {
-      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=4&user_id`;
+      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}&user_id`;
     } else {
-      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=4&user_id=${useridd}`;
+      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}&user_id=${useridd}`;
     }
     try {
       axios
@@ -228,11 +244,12 @@ const Shop = (props) => {
             brand: brandfilter,
             discount: discountfilter,
             rating: ratingfilter,
-            category: searchCat,
+            category: [searchCat],
           },
         })
         .then((response) => {
           let data = response.data;
+          console.log(response.data.results);
           setProdData(data.results);
 
           if (
@@ -258,6 +275,8 @@ const Shop = (props) => {
     searchText,
     searchCat,
     sortingfilter,
+    recordsPerPage,
+    currentPage,
   ]);
   // end product list
 
@@ -353,10 +372,7 @@ const Shop = (props) => {
   const onPriceFilterAdd = (e) => {
     setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
     showcategorydata.push(e.target.value);
-    let i = showcategorydata.pop();
-    console.log("--iiiii--" + i);
   };
-
   const onDiscountFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -439,7 +455,7 @@ const Shop = (props) => {
   //     self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
   // );
 
-  // END BRAND
+  // END BRANDz
   return (
     <Fragment>
       <Header />
@@ -1370,7 +1386,7 @@ const Shop = (props) => {
                   );
                 })}
               </div>
-              <nav className="custome-pagination">
+              {/* <nav className="custome-pagination">
                 <ul className="pagination justify-content-center">
                   <li className="page-item disabled">
                     <Link
@@ -1403,7 +1419,16 @@ const Shop = (props) => {
                     </Link>
                   </li>
                 </ul>
-              </nav>
+              </nav> */}
+              <div className="d-flex justify-content-center">
+                <Pagination
+                  className="d-flex justify-content-center"
+                  nPages={nPages}
+                  currentPage={currentPage}
+                  setCurrentPage={setCurrentPage}
+                  recordsPerPage={recordsPerPage}
+                />
+              </div>
             </div>
           </div>
         </div>
