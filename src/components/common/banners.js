@@ -163,7 +163,7 @@ useEffect(() => {
               search: `${productType}`,
               price_from: "",
               price_to: "",
-              latest_first:"asc",
+              latest_first:"",
             product_title_name:"",
             sale_price:"",
             short_by_updated_on:"",
@@ -207,18 +207,19 @@ useEffect(() => {
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
-          {showbanner.map((img)=>{
+         
+                 <div className="col-xxl-6 col-xl-8 col-md-6">
+                 {showbanner.map((img)=>{
                 return(
                   <>
-                 <div className="col-xxl-6 col-xl-8 col-md-6">
-                  <div className="home-contain " style={{marginTop:"-560px"}}>
+                  <div className="home-contain ">
                 {img.banner_location ==='home_page_left_side'?
                 <>
                  <img src={img.image}
                   className="img-fluid bg-img lazyload "
                   alt="image"
                   name="image"
-                  style={{width:"700px",height:"600px"}}
+                  // style={{width:"700px",height:"600px"}}
                 />
                 <div className="home-detail w-50 p-center-left">
                   <div>
@@ -244,19 +245,25 @@ useEffect(() => {
                 </>
                 :null}
               </div>
+              </>
+              )
+            })}
             </div>
            
             <div className="col-xxl-3 col-xl-4 col-md-6 ratio_medium">
-              <div className="home-contain" style={{marginTop:"50px"}}>
+            {showbanner.map((img)=>{
+                return(
+                  <>
+              <div className="home-contain">
               {img.banner_location==='home_page_left_side(1)'?
                  <>
                   
                   <img
                     src={img.image}
-                    className="img-fluid bg-img lazyload "
+                    className="img-fluid bg-img lazyload"
                     alt="image"
                     name="image"
-                    // style={{height:"100px"}}
+                    style={{height:"739px"}}
                   />
               
                 <div className="home-detail text-center p-top-center w-100 ">
@@ -273,12 +280,18 @@ useEffect(() => {
                  </>
                :null}
               </div>
+              </>
+              )
+            })}
             </div>
 
             <div className="col-xxl-3 ratio_65">
-              <div className="row g-3">
+              <div className="row g-4">
                 <div className="col-xxl-12 col-sm-6">
-                  <div className="home-contain" style={{marginTop:"-700px",height:"250px"}}>
+                {showbanner.map((img)=>{
+                return(
+                  <>
+                  <div className="home-contain" >
                   {img.banner_location==='home_page_right_side(2)'?
                   <>
                     <a href="shop-left-sidebar.html">
@@ -299,12 +312,18 @@ useEffect(() => {
                     </div>
                     </>:null}
                   </div>
+                  </>
+              )
+            })}
                 </div>
 
                 <div className="col-xxl-12 col-sm-6">
-                  <div className="home-contain" style={{marginTop:"-350px",height:"250px"}}>
+                {showbanner.map((img)=>{
+                return(
+                  <>
+                  <div className="home-contain" >
                    
-                      {img.banner_location==='home_page_right_side(1)'?
+                      {img.banner_location==='home_page_right_side(2)'?
                        <>
                         <a href="shop-left-sidebar.html">
                       <img
@@ -322,12 +341,14 @@ useEffect(() => {
                     </div>
                     </>:null}
                   </div>
+                  </>
+                     )
+                   })}
                 </div>
+                
               </div>
             </div>
-            </>
-              )
-            })} 
+           
           </div>
         
         </div>
