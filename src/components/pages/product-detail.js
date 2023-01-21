@@ -570,7 +570,7 @@ const ProductDetail = ({ logIn }) => {
                                         src={img.image}
                                         className="bg-img lazyload w-100"
                                         alt="image"
-                                        style={{ height: "600px" }}
+                                        
                                       />
                                       <div className="banner-details p-center banner-b-space w-100 text-center">
                                         <div>
