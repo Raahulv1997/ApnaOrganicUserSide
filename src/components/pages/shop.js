@@ -3,18 +3,18 @@ import ProductBox from "../common/product-box";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
-import { FaStar,FaRegStar } from "react-icons/fa";
+import { FaStar, FaRegStar } from "react-icons/fa";
 import Accordion from "react-bootstrap/Accordion";
 import Dropdown from "react-bootstrap/Dropdown";
 import "../../CSS/style.css";
 import { useEffect } from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { useSearchParams,useNavigate } from "react-router-dom";
+import { useSearchParams, useNavigate } from "react-router-dom";
 import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 let showcategorydata = [];
 
 const Shop = (props) => {
@@ -22,7 +22,7 @@ const Shop = (props) => {
   const [click, setclick] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
-  const useridd = localStorage.getItem("userid")
+  const useridd = localStorage.getItem("userid");
   const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
@@ -44,89 +44,86 @@ const Shop = (props) => {
   const [data, setData] = useState([]);
   const [wlistData, setWlistData] = useState("add");
   const [isActive, setIsActive] = useState(false);
-  const [subcategory,setsubcategory] = useState(false);
-  const [checkboxfilter,setcheckboxfilter] = useState(false);
-  const [sortingfilter,setsortingfilter] = useState({
-    latest:"",
-    aproduct:"",
-    hprice:"",
-
+  const [subcategory, setsubcategory] = useState(false);
+  const [checkboxfilter, setcheckboxfilter] = useState(false);
+  const [sortingfilter, setsortingfilter] = useState({
+    latest: "",
+    aproduct: "",
+    hprice: "",
   });
 
-  const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
-    if(useridd === undefined ||
+  const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
+    if (
+      useridd === undefined ||
       useridd === "null" ||
       useridd === "" ||
-      useridd === null){
-        navigate("/login")
-  }
-  else{
-    let cnt = 1;
-    axios
-    .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-      user_id: `${useridd}`,
-      product_view_id: `${id}`,
-      price: `${saleprice}`,
-      discount: `${productMRF}`,
-      quantity: count === 0 ? cnt : count,
-      is_active: 1,
-    })
-    .then((response) => {
-      let data = response.data;
-      setData(data);
-      setapicall(true);
-      localStorage.setItem("cartupdate",true)
-      console.log("ADDCART"+true)
-    });
-
-  }
-    
-  }
-  const AddToWishList = (id,wishlistt) => {
-    if(useridd === undefined ||
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null){
-        navigate("/login")
-  }
-  else{
-    if (wishlistt > 0) {
+      useridd === null
+    ) {
+      navigate("/login");
+    } else {
+      let cnt = 1;
       axios
-        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,{
-          product_id:`${id}`,
-          user_id:`${useridd}`,
+        .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+          user_id: `${useridd}`,
+          product_view_id: `${id}`,
+          price: `${saleprice}`,
+          discount: `${productMRF}`,
+          quantity: count === 0 ? cnt : count,
+          is_active: 1,
         })
         .then((response) => {
           let data = response.data;
-          console.log();
-          setData(response.data);
-          setWlistData("add");
+          setData(data);
           setapicall(true);
-          setIsActive(false);
-          
+          localStorage.setItem("cartupdate", true);
+          console.log("ADDCART" + true);
         });
     }
-    else{
-      axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`,{
-        user_id: `${useridd}`,
-        product_view_id: `${id}`,
-      })
-      .then((response) => {
-        let data = response.data;
-        setData(response.data);
-        setWlistData("remove");
-        setapicall(true);
-        setIsActive(true);
-      });
-  
-    }
-  }
-    
   };
- 
-   
-   const clickProduct = (productid) => {
+  const AddToWishList = (id, wishlistt) => {
+    if (
+      useridd === undefined ||
+      useridd === "null" ||
+      useridd === "" ||
+      useridd === null
+    ) {
+      navigate("/login");
+    } else {
+      if (wishlistt > 0) {
+        axios
+          .put(
+            `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+            {
+              product_id: `${id}`,
+              user_id: `${useridd}`,
+            }
+          )
+          .then((response) => {
+            let data = response.data;
+            console.log();
+            setData(response.data);
+            setWlistData("add");
+            setapicall(true);
+            setIsActive(false);
+          });
+      } else {
+        axios
+          .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
+            user_id: `${useridd}`,
+            product_view_id: `${id}`,
+          })
+          .then((response) => {
+            let data = response.data;
+            setData(response.data);
+            setWlistData("remove");
+            setapicall(true);
+            setIsActive(true);
+          });
+      }
+    }
+  };
+
+  const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
@@ -150,102 +147,107 @@ const Shop = (props) => {
     ) {
       setsearchCat("");
     } else {
-      setsearchCat((searchparams.get("category")))
+      setsearchCat(searchparams.get("category"));
       setCategoryNameData((categoryNamedata) => [
         ...categoryNamedata,
-        (searchparams.get("category")),
+        searchparams.get("category"),
       ]);
     }
-  }, [searchCat,searchparams]);
+  }, [searchCat, searchparams]);
   // var product = data.product;
   //   product list
 
-// SORTING
-const onSortingChange = (e)=>{
-  if(e.target.value === 'latest'){
-    setsortingfilter({...sortingfilter, 
-      latest:"desc",
-      aproduct:"",
-      hprice:""
-    })
-  }
-  else  if(e.target.value === 'aproduct'){
-    setsortingfilter({...sortingfilter,
-      aproduct:"asc",
-      hprice:"",
-      latest:"",
-    })
-  }
-  else  if(e.target.value === 'zproduct'){
-    setsortingfilter({...sortingfilter, 
-      hprice:"",
-      latest:"",
-      aproduct:"desc"})
-  }
-  else  if(e.target.value === 'hprice'){
-    setsortingfilter({...sortingfilter, hprice:"desc",
-    latest:"",
-    aproduct:""})
-  }
-  else  if(e.target.value === 'lprice'){
-    setsortingfilter({...sortingfilter, hprice:"asc",
-    latest:"",
-    aproduct:""})
-  }
-}
-console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
-// END SORTING
+  // SORTING
+  const onSortingChange = (e) => {
+    if (e.target.value === "latest") {
+      setsortingfilter({
+        ...sortingfilter,
+        latest: "desc",
+        aproduct: "",
+        hprice: "",
+      });
+    } else if (e.target.value === "aproduct") {
+      setsortingfilter({
+        ...sortingfilter,
+        aproduct: "asc",
+        hprice: "",
+        latest: "",
+      });
+    } else if (e.target.value === "zproduct") {
+      setsortingfilter({
+        ...sortingfilter,
+        hprice: "",
+        latest: "",
+        aproduct: "desc",
+      });
+    } else if (e.target.value === "hprice") {
+      setsortingfilter({
+        ...sortingfilter,
+        hprice: "desc",
+        latest: "",
+        aproduct: "",
+      });
+    } else if (e.target.value === "lprice") {
+      setsortingfilter({
+        ...sortingfilter,
+        hprice: "asc",
+        latest: "",
+        aproduct: "",
+      });
+    }
+  };
+  // END SORTING
 
   useEffect(() => {
     let homeurl;
-    if(useridd=== "null" || useridd === '' || useridd === null || useridd=== undefined){
-       homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`
+    if (
+      useridd === "null" ||
+      useridd === "" ||
+      useridd === null ||
+      useridd === undefined
+    ) {
+      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=4&user_id`;
+    } else {
+      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=4&user_id=${useridd}`;
     }
-    else{
-       homeurl =`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`
-    }
-      try {
-        axios
-          .post(
-            `${homeurl}`,
-            {
-              product_search: {
-                search: `${searchText}`,
-                price_from: `${pricefilter.from_product_price}`,
-                price_to: `${pricefilter.to_product_price}`,
-                latest_first:`${sortingfilter.latest}`,
-                product_title_name:`${sortingfilter.aproduct}`,
-                sale_price:`${sortingfilter.hprice}`,
-                short_by_updated_on:"",
-                product_type: [],
-                colors: [],
-                size: [],
-                brand: brandfilter,
-                discount: discountfilter,
-                rating: ratingfilter,
-                category: [searchCat],
-              },
-            }
-          )
-          .then((response) => {
-            let data = response.data;
-            setProdData(data.results);
-            
-            if (
-              searchCat.length === 0 &&
-              ratingfilter.length === 0 &&
-              brandfilter.length === 0 &&
-              discountfilter.length === 0 &&
-              pricefilter.from_product_price === "" &&
-              pricefilter.to_product_price === ""
-            ) {
-              setCategoryfilterData(data.results);
-            }
-            setapicall(false);
-          });
-      } catch (err) {}
-    
-  },[
+    try {
+      axios
+        .post(`${homeurl}`, {
+          product_search: {
+            search: `${searchText}`,
+            price_from: `${pricefilter.from_product_price}`,
+            price_to: `${pricefilter.to_product_price}`,
+            id: `${sortingfilter.latest}`,
+            product_title_name: `${sortingfilter.aproduct}`,
+            sale_price: `${sortingfilter.hprice}`,
+            short_by_updated_on: "",
+            product_type: [],
+            colors: [],
+            size: [],
+            brand: brandfilter,
+            discount: discountfilter,
+            rating: ratingfilter,
+            category: searchCat,
+          },
+        })
+        .then((response) => {
+          let data = response.data;
+          setProdData(data.results);
+
+          if (
+            searchCat.length === 0 &&
+            ratingfilter.length === 0 &&
+            brandfilter.length === 0 &&
+            discountfilter.length === 0 &&
+            pricefilter.from_product_price === "" &&
+            pricefilter.to_product_price === ""
+          ) {
+            setCategoryfilterData(data.results);
+          }
+          setapicall(false);
+        });
+    } catch (err) {}
+  }, [
     categoryNamedata,
     ratingfilter,
     brandfilter,
@@ -254,7 +256,7 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
     apicall,
     searchText,
     searchCat,
-    sortingfilter
+    sortingfilter,
   ]);
   // end product list
 
@@ -313,9 +315,9 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
         (t, x) => t.down2_category_name == thing.down2_category_name
       )
   );
-  const OnCategoryAdd = () =>{
-    setsubcategory(true)
-  }
+  const OnCategoryAdd = () => {
+    setsubcategory(true);
+  };
   //  SEARCH AND SHOW CATEGORY
   const onCategorySearch = (e) => {
     let catname = e.target.value;
@@ -350,7 +352,9 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
   const onPriceFilterAdd = (e) => {
     setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
     showcategorydata.push(e.target.value);
+    // return showcategorydata.pop();
   };
+  console.log("--showwwwwwwwwww--" + showcategorydata);
   const onDiscountFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -359,7 +363,7 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
         ...discountfilter,
         e.target.value,
       ]);
-    showcategorydata.push(e.target.value);
+      showcategorydata.push(e.target.value);
     } else {
       setdiscountfilter(
         discountfilter.filter((item) => item !== e.target.value)
@@ -377,8 +381,7 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
 
     if (e.target.checked === true) {
       setbrandfilter((brandfilter) => [...brandfilter, e.target.value]);
-    showcategorydata.push(e.target.value);
-
+      showcategorydata.push(e.target.value);
     } else {
       setbrandfilter(brandfilter.filter((item) => item !== e.target.value));
       const index = showcategorydata.indexOf(e.target.value);
@@ -394,8 +397,7 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     if (e.target.checked === true) {
       setratingfilter((ratingfilter) => [...ratingfilter, e.target.value]);
-    showcategorydata.push(e.target.value);
-
+      showcategorydata.push(e.target.value);
     } else {
       setratingfilter(ratingfilter.filter((item) => item !== e.target.value));
       const index = showcategorydata.indexOf(e.target.value);
@@ -409,16 +411,17 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
 
   const OnClearAllClick = (e) => {
     showcategorydata = [];
-    setcheckboxfilter(true)
+    setcheckboxfilter(true);
     setCategoryNameData("");
-    setpricefilter({...pricefilter,
+    setpricefilter({
+      ...pricefilter,
       to_product_price: "",
-    from_product_price: ""
+      from_product_price: "",
     });
     setdiscountfilter("");
     setbrandfilter("");
     setratingfilter("");
-    setapicall(true)
+    setapicall(true);
   };
   //   END SEARCH AND SHOW CATEGORY
   // end category
@@ -478,7 +481,6 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                     </ul>
                   </div>
                   <Accordion>
-                    
                     <Accordion.Item eventKey="2">
                       <Accordion.Header>Categories</Accordion.Header>
                       <Accordion.Body>
@@ -501,179 +503,215 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                             </div> */}
 
                             <Accordion>
-                      {result.map((catdata, i) => {
-                        return (
-                          <>
-                            <Accordion.Item eventKey={catdata.root_id}>
-                              <Dropdown
-                                as={ButtonGroup}
-                                className={"category_dropdown_box"}
-                              >
-                                <Button
-                                  variant="light"
-                                  className={"category_dropdown_name"}
-                                  onClick={() => {
-                                    navigate(
-                                      `/shop?category=` + catdata.root_id
-                                    );
-                                  }}
-                                  value={catdata.root_id}
-                                >
-                                  {catdata.root_category_name}
-                                </Button>
+                              {result.map((catdata, i) => {
+                                return (
+                                  <>
+                                    <Accordion.Item eventKey={catdata.root_id}>
+                                      <Dropdown
+                                        as={ButtonGroup}
+                                        className={"category_dropdown_box"}
+                                      >
+                                        <Button
+                                          variant="light"
+                                          className={"category_dropdown_name"}
+                                          onClick={() => {
+                                            navigate(
+                                              `/shop?category=` +
+                                                catdata.root_id
+                                            );
+                                          }}
+                                          value={catdata.root_id}
+                                        >
+                                          {catdata.root_category_name}
+                                        </Button>
 
-                                <Dropdown.Toggle
-                                  split
-                                  variant="light"
-                                  id="dropdown-split-basic"
-                                  drop={"end"}
-                                  title={`Drop end`}
-                                  className={"category_dropdown_btn"}
-                                />
+                                        <Dropdown.Toggle
+                                          split
+                                          variant="light"
+                                          id="dropdown-split-basic"
+                                          drop={"end"}
+                                          title={`Drop end`}
+                                          className={"category_dropdown_btn"}
+                                        />
 
-                                <Dropdown.Menu>
-                                  <div className="onhover-category-box">
-                                    {(level1category || []).map((data,i) => {
-                                      return catdata.root_category_name ===
-                                        data.root_category_name &&
-                                        data.down1_category_name !== null ? (
-                                        <div className="list-1" key={data.id}>
-                                          <div className="category-title-box">
-                                            <div value={data.down1_id}>
-                                              <h5
-                                                onClick={() => {
-                                                  navigate(
-                                                    `/shop?category=` +
-                                                      catdata.down1_id
-                                                  );
-                                                }}
-                                                value={data.down1_id}
-                                                className={
-                                                  "searchsub_category px-2"
-                                                }
-                                              >
-                                               {i+1}{')'} {data.down1_category_name}
-                                              </h5>
-                                            </div>
-                                          </div>
-                                          <ul className="p-0">
-                                            {(level2category || []).map(
-                                              (data1,i) => {
-                                                return data.down1_category_name ===
-                                                  data1.down1_category_name &&
-                                                  data.down2_category_name !==
+                                        <Dropdown.Menu>
+                                          <div className="onhover-category-box">
+                                            {(level1category || []).map(
+                                              (data, i) => {
+                                                return catdata.root_category_name ===
+                                                  data.root_category_name &&
+                                                  data.down1_category_name !==
                                                     null ? (
-                                                  <li
-                                                    onClick={() => {
-                                                      navigate(
-                                                        `/shop?category=` +
-                                                          catdata.down2_id
-                                                      );
-                                                    }}
-                                                    value={data1.down2_id}
-                                                    className={
-                                                      "searchsub_category w-100 py-2 px-4"
-                                                    }
+                                                  <div
+                                                    className="list-1"
+                                                    key={data.id}
                                                   >
-                                                   {i+1}{')'} {data1.down2_category_name}
-                                                    <ul>
-                                                      {(categorydata || []).map(
-                                                        (data2) => {
-                                                          return data1.down2_category_name ===
-                                                            data2.down2_category_name &&
-                                                            data.down3_category_name !==
-                                                              null ? (
-                                                            <li
-                                                              onClick={() => {
-                                                                navigate(
-                                                                  `/shop?category=` +
-                                                                    catdata.down3_id
-                                                                );
-                                                              }}
-                                                              value={
-                                                                data2.down3_id
-                                                              }
-                                                              className={
-                                                                "w-100  searchsub_category px-3 py-1"
-                                                              }
-                                                            >
-                                                             {'*)'} {
-                                                                data2.down3_category_name
-                                                              }
-                                                            </li>
-                                                          ) : null;
-                                                        }
-                                                      )}
+                                                    <div className="category-title-box">
+                                                      <div
+                                                        value={data.down1_id}
+                                                      >
+                                                        <h5
+                                                          onClick={() => {
+                                                            navigate(
+                                                              `/shop?category=` +
+                                                                catdata.down1_id
+                                                            );
+                                                          }}
+                                                          value={data.down1_id}
+                                                          className={
+                                                            "searchsub_category px-2"
+                                                          }
+                                                        >
+                                                          {i + 1}
+                                                          {")"}{" "}
+                                                          {
+                                                            data.down1_category_name
+                                                          }
+                                                        </h5>
+                                                      </div>
+                                                    </div>
+                                                    <ul className="p-0">
+                                                      {(
+                                                        level2category || []
+                                                      ).map((data1, i) => {
+                                                        return data.down1_category_name ===
+                                                          data1.down1_category_name &&
+                                                          data.down2_category_name !==
+                                                            null ? (
+                                                          <li
+                                                            onClick={() => {
+                                                              navigate(
+                                                                `/shop?category=` +
+                                                                  catdata.down2_id
+                                                              );
+                                                            }}
+                                                            value={
+                                                              data1.down2_id
+                                                            }
+                                                            className={
+                                                              "searchsub_category w-100 py-2 px-4"
+                                                            }
+                                                          >
+                                                            {i + 1}
+                                                            {")"}{" "}
+                                                            {
+                                                              data1.down2_category_name
+                                                            }
+                                                            <ul>
+                                                              {(
+                                                                categorydata ||
+                                                                []
+                                                              ).map((data2) => {
+                                                                return data1.down2_category_name ===
+                                                                  data2.down2_category_name &&
+                                                                  data.down3_category_name !==
+                                                                    null ? (
+                                                                  <li
+                                                                    onClick={() => {
+                                                                      navigate(
+                                                                        `/shop?category=` +
+                                                                          catdata.down3_id
+                                                                      );
+                                                                    }}
+                                                                    value={
+                                                                      data2.down3_id
+                                                                    }
+                                                                    className={
+                                                                      "w-100  searchsub_category px-3 py-1"
+                                                                    }
+                                                                  >
+                                                                    {"*)"}{" "}
+                                                                    {
+                                                                      data2.down3_category_name
+                                                                    }
+                                                                  </li>
+                                                                ) : null;
+                                                              })}
+                                                            </ul>
+                                                          </li>
+                                                        ) : null;
+                                                      })}
                                                     </ul>
-                                                  </li>
+                                                  </div>
                                                 ) : null;
                                               }
                                             )}
-                                          </ul>
-                                        </div>
-                                      ) : null;
-                                    })}
-                                  </div>
-                                </Dropdown.Menu>
-                              </Dropdown>
-                              <Accordion.Body>
-                                <div className="onhover-category-box">
-                                  {(level1category || []).map((data,i) => {
-                                    return catdata.root_category_name ===
-                                      data.root_category_name &&
-                                      data.down1_category_name !== null ? (
-                                      <div className="list-1" key={data.id}>
-                                        <div className="category-title-box">
-                                          <div>
-                                            <h5>{data.down1_category_name}</h5>
                                           </div>
-                                        </div>
-                                        <ul className="p-0">
-                                          {(level2category || []).map(
-                                            (data1) => {
-                                              return data.down1_category_name ===
-                                                data1.down1_category_name &&
-                                                data.down2_category_name !==
+                                        </Dropdown.Menu>
+                                      </Dropdown>
+                                      <Accordion.Body>
+                                        <div className="onhover-category-box">
+                                          {(level1category || []).map(
+                                            (data, i) => {
+                                              return catdata.root_category_name ===
+                                                data.root_category_name &&
+                                                data.down1_category_name !==
                                                   null ? (
-                                                <li
-                                                  className="w-100"
-                                                  key={data1.id}
+                                                <div
+                                                  className="list-1"
+                                                  key={data.id}
                                                 >
-                                                  {data1.down2_category_name}
-                                                  <ul>
-                                                    {(categorydata || []).map(
-                                                      (data2) => {
-                                                        return data1.down2_category_name ===
-                                                          data2.down2_category_name &&
-                                                          data.down3_category_name !==
+                                                  <div className="category-title-box">
+                                                    <div>
+                                                      <h5>
+                                                        {
+                                                          data.down1_category_name
+                                                        }
+                                                      </h5>
+                                                    </div>
+                                                  </div>
+                                                  <ul className="p-0">
+                                                    {(level2category || []).map(
+                                                      (data1) => {
+                                                        return data.down1_category_name ===
+                                                          data1.down1_category_name &&
+                                                          data.down2_category_name !==
                                                             null ? (
                                                           <li
                                                             className="w-100"
-                                                            key={data2.id}
+                                                            key={data1.id}
                                                           >
                                                             {
-                                                              data2.down3_category_name
+                                                              data1.down2_category_name
                                                             }
+                                                            <ul>
+                                                              {(
+                                                                categorydata ||
+                                                                []
+                                                              ).map((data2) => {
+                                                                return data1.down2_category_name ===
+                                                                  data2.down2_category_name &&
+                                                                  data.down3_category_name !==
+                                                                    null ? (
+                                                                  <li
+                                                                    className="w-100"
+                                                                    key={
+                                                                      data2.id
+                                                                    }
+                                                                  >
+                                                                    {
+                                                                      data2.down3_category_name
+                                                                    }
+                                                                  </li>
+                                                                ) : null;
+                                                              })}
+                                                            </ul>
                                                           </li>
                                                         ) : null;
                                                       }
                                                     )}
                                                   </ul>
-                                                </li>
+                                                </div>
                                               ) : null;
                                             }
                                           )}
-                                        </ul>
-                                      </div>
-                                    ) : null;
-                                  })}
-                                </div>
-                              </Accordion.Body>
-                            </Accordion.Item>
-                          </>
-                        );
-                      })}
-                    </Accordion>
+                                        </div>
+                                      </Accordion.Body>
+                                    </Accordion.Item>
+                                  </>
+                                );
+                              })}
+                            </Accordion>
                           </div>
                         </div>
                       </Accordion.Body>
@@ -846,7 +884,10 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                                         />
                                       </li>
                                       <li>
-                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -886,10 +927,16 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                                         />
                                       </li>
                                       <li color="#ffb321">
-                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li>
-                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -923,13 +970,22 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                                         />
                                       </li>
                                       <li color="#ffb321">
-                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li color="#ffb321">
-                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li>
-                                        <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -957,16 +1013,28 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                                         />
                                       </li>
                                       <li color="#ffb321">
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li color="#ffb321">
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li color="#ffb321">
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li>
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -987,19 +1055,34 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                                   <div className="form-check-label">
                                     <ul className="rating p-0">
                                       <li color="#ffb321">
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li color="#ffb321">
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li color="#ffb321">
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li color="#ffb321">
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                       <li>
-                                      <FaRegStar className="feather "  fill={"#ffb321"}/>
+                                        <FaRegStar
+                                          className="feather "
+                                          fill={"#ffb321"}
+                                        />
                                       </li>
                                     </ul>
                                     <span className="text-content">
@@ -1102,7 +1185,6 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                                 </div>
                               </li>
 
-                             
                               <li>
                                 <div className="form-check ps-0 m-0 category-list-box">
                                   <input
@@ -1208,21 +1290,53 @@ console.log("-----pdkedkf"+JSON.stringify(sortingfilter))
                   <div className="category-dropdown">
                     <h4 className="text-content">Sort By :</h4>
                     <Form.Select
-                                  aria-label="Search by category"
-                                  className="adminselectbox"
-                                  placeholder="Search by category"
-                                  onChange={(e) => onSortingChange(e)}
-                                  name={'latest'}
-                                >
-
-                                  <option value={''}><input type='checkbox'/>Select </option>
-                                  <option name={'latest'} onChange={(e)=>onSortingChange(e)} value={'latest'}><input type='checkbox'/>Latest</option>
-                                  <option name={'price'} onChange={(e)=>onSortingChange(e)} value={'hprice'}>High Price</option>
-                                  <option name={'price'} onChange={(e)=>onSortingChange(e)} value={'lprice'}>Low Price</option>
-                                  <option name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'aproduct'}>A - Z Product</option>
-                                  <option name={'aproduct'} onChange={(e)=>onSortingChange(e)} value={'zproduct'}>Z - A Product</option>
-                                </Form.Select>
-                    
+                      aria-label="Search by category"
+                      className="adminselectbox"
+                      placeholder="Search by category"
+                      onChange={(e) => onSortingChange(e)}
+                      name={"latest"}
+                    >
+                      <option value={""}>
+                        <input type="checkbox" />
+                        Select{" "}
+                      </option>
+                      <option
+                        name={"latest"}
+                        onChange={(e) => onSortingChange(e)}
+                        value={"latest"}
+                      >
+                        <input type="checkbox" />
+                        Latest
+                      </option>
+                      <option
+                        name={"price"}
+                        onChange={(e) => onSortingChange(e)}
+                        value={"hprice"}
+                      >
+                        High Price
+                      </option>
+                      <option
+                        name={"price"}
+                        onChange={(e) => onSortingChange(e)}
+                        value={"lprice"}
+                      >
+                        Low Price
+                      </option>
+                      <option
+                        name={"aproduct"}
+                        onChange={(e) => onSortingChange(e)}
+                        value={"aproduct"}
+                      >
+                        A - Z Product
+                      </option>
+                      <option
+                        name={"aproduct"}
+                        onChange={(e) => onSortingChange(e)}
+                        value={"zproduct"}
+                      >
+                        Z - A Product
+                      </option>
+                    </Form.Select>
                   </div>
                 </div>
               </div>

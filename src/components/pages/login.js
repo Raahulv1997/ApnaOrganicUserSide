@@ -10,6 +10,8 @@ import axios from "axios";
 const Login = ({ logIn }) => {
   const [error, setError] = useState(true);
   const [loginerror, setLoginerror] = useState(true);
+  const [passworderror, setpassworderror] = useState(false);
+
   const { state } = useLocation();
   const navigate = useNavigate();
   const [credentailval, setcredentailval] = useState({
@@ -39,10 +41,12 @@ const Login = ({ logIn }) => {
               from +
               credentailval.user_password
           );
-          setLoginerror(false);
+          setpassworderror(true);
+        } else if (response.data.message === "password not matched") {
+          setError(false);
         } else if (
           from === undefined &&
-          credentailval.user_password !== "" &&
+          response.data.message !== "password not matched" &&
           credentailval.user_email !== ""
         ) {
           localStorage.setItem("userid", response.data.user_id);
@@ -128,6 +132,10 @@ const Login = ({ logIn }) => {
                       {error === false ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
                           Please Enter Correct Password
+                        </p>
+                      ) : passworderror === true ? (
+                        <p className="mt-1 ms-2 text-danger" type="invalid">
+                          Please Enter Password
                         </p>
                       ) : null}
                       <label htmlFor="password" className="bg-transparent">
