@@ -204,7 +204,8 @@ const Shop = (props) => {
       useridd === "null" ||
       useridd === "" ||
       useridd === null ||
-      useridd === undefined
+      useridd === undefined ||
+      useridd === true
     ) {
       homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=4&user_id`;
     } else {
@@ -355,7 +356,6 @@ const Shop = (props) => {
     let i = showcategorydata.pop();
     console.log("--iiiii--" + i);
   };
-  console.log("--showwwwwwwwwww--" + showcategorydata);
 
   const onDiscountFilterAdd = (e) => {
     const value =
@@ -1364,6 +1364,7 @@ const Shop = (props) => {
                         AddToWishList={AddToWishList}
                         wishlistt={product.wishlist}
                         allimages={product.all_images}
+                        cart={product.cart}
                       />
                     </div>
                   );

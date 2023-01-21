@@ -80,7 +80,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       useridd === undefined ||
       useridd === "null" ||
       useridd === "" ||
-      useridd === null
+      useridd === null ||
+      useridd === true
     ) {
       navigate("/login");
     } else {
@@ -112,7 +113,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       useridd === undefined ||
       useridd === "null" ||
       useridd === "" ||
-      useridd === null
+      useridd === null ||
+      useridd === true
     ) {
       navigate("/login");
     } else {
@@ -152,7 +154,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       useridd === "null" ||
       useridd === "" ||
       useridd === null ||
-      useridd === undefined
+      useridd === undefined ||
+      useridd === true
     ) {
       homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`;
     } else {
@@ -425,6 +428,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                           AddToWishList={AddToWishList}
                           AddToCart={AddToCart}
                           allimages={product.all_images}
+                          cart={product.cart}
                         />
                       </div>
                     );
