@@ -8,7 +8,6 @@ import "../../CSS/style.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Singup = () => {
-
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [emailerror, setemailerror] = useState("");
@@ -37,10 +36,10 @@ const Singup = () => {
         if (response.data === false) {
           setemailerror("already");
           e.target.email.value = "";
-          e.target.password.value="";
-        } 
-        else {
+          e.target.password.value = "";
+        } else {
           setotp(response.data);
+          setemailerror("");
         }
         return response;
       })
@@ -49,33 +48,30 @@ const Singup = () => {
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
   };
-  const OnOTpChange = (e)=>{
+  const OnOTpChange = (e) => {
     setotp(e.target.value);
-  }
+  };
   const VerifyOTP = (e) => {
     e.preventDefault();
     // if (e.target.otpinput.value == otp) {
-      axios
-        .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
-          email: email,
-          otp: Number(otp),
-          password: passval,
-        })
-        .then((response) => {
-          if(response.data.message === 'please check credential'){
-            setOtperror(true);
-          }
-          else{
-            localStorage.setItem("userid", response.data.insertId);
-            localStorage.setItem("upassword", passval);
-            navigate("/your_account");
-            return response;
-          }
-          
-        })
-        .catch((error) => {});
-      console.log(otp)
-    
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
+        email: email,
+        otp: Number(otp),
+        password: passval,
+      })
+      .then((response) => {
+        if (response.data.message === "please check credential") {
+          setOtperror(true);
+        } else {
+          localStorage.setItem("userid", response.data.insertId);
+          localStorage.setItem("upassword", passval);
+          navigate("/your_account");
+          return response;
+        }
+      })
+      .catch((error) => {});
+    console.log(otp);
   };
 
   return (
@@ -126,12 +122,12 @@ const Singup = () => {
                           placeholder="Email Address"
                           name="emailid"
                           required
-                        />
-                        {emailerror === "already" ? (
+                        />{" "}
+                        {emailerror === "" ? null : (
                           <p className="text-danger">
                             {"User Already Exist. Please Login"}
                           </p>
-                        ) : null}
+                        )}
                         <input
                           type="number"
                           className={
@@ -140,7 +136,7 @@ const Singup = () => {
                           id="otp"
                           placeholder="Enter OTP"
                           name="otpinput"
-                          onChange={(e)=>OnOTpChange(e)}
+                          onChange={(e) => OnOTpChange(e)}
                         />
                         <label className="text-start" htmlFor="email">
                           {otp === 0 ? "Email Address" : "Enter OTP"}
@@ -154,7 +150,7 @@ const Singup = () => {
                       <div className="col-12">
                         <div className="form-floating theme-form-floating">
                           <input
-                          required
+                            required
                             type="password"
                             name="password"
                             className={"form-control"}

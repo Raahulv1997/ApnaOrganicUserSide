@@ -163,7 +163,7 @@ useEffect(() => {
               search: `${productType}`,
               price_from: "",
               price_to: "",
-              latest_first:"asc",
+              latest_first:"",
             product_title_name:"",
             sale_price:"",
             short_by_updated_on:"",
@@ -207,22 +207,23 @@ useEffect(() => {
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
-          {showbanner.map((img)=>{
+         
+                 <div className="col-xxl-6 col-xl-8 col-md-6">
+                 {showbanner.map((img)=>{
                 return(
                   <>
-                 <div className="col-xxl-6 col-xl-8 col-md-6">
-                  <div className="home-contain " style={{marginTop:"-550px"}}>
+                  <div className="home-contain ">
                 {img.banner_location ==='home_page_left_side'?
                 <>
                  <img src={img.image}
                   className="img-fluid bg-img lazyload "
                   alt="image"
                   name="image"
-                  style={{width:"400px"}}
+                  // style={{width:"700px",height:"600px"}}
                 />
                 <div className="home-detail w-50 p-center-left">
                   <div>
-                    <h6 className="ls-expanded theme-color">ORGANIC</h6>
+                    <h3 className="ls-expanded theme-color">ORGANIC</h3>
                     <h1 className="fw-bold w-100 text-white">
                       {/* 100% Fresh */}
                     {img.title}
@@ -244,24 +245,31 @@ useEffect(() => {
                 </>
                 :null}
               </div>
+              </>
+              )
+            })}
             </div>
            
             <div className="col-xxl-3 col-xl-4 col-md-6 ratio_medium">
+            {showbanner.map((img)=>{
+                return(
+                  <>
               <div className="home-contain">
               {img.banner_location==='home_page_left_side(1)'?
                  <>
                   
                   <img
                     src={img.image}
-                    className="img-fluid bg-img lazyload "
+                    className="img-fluid bg-img lazyload"
                     alt="image"
                     name="image"
+                    style={{height:"739px"}}
                   />
               
                 <div className="home-detail text-center p-top-center w-100 ">
                   <div>
-                    <h4 className="fw-bold text-white" >{img.title}</h4>
-                    <h5 className="text-white">{img.description}</h5>
+                    <h2 className="fw-bold text-white">{img.title}</h2>
+                    <h3 className="text-white">{img.description}</h3>
                     <Link to={img.banner_url}>
                     <button className="btn bg-white theme-color mt-3 home-button mx-auto btn-2">
                       Shop Now
@@ -272,54 +280,75 @@ useEffect(() => {
                  </>
                :null}
               </div>
+              </>
+              )
+            })}
             </div>
 
             <div className="col-xxl-3 ratio_65">
-              <div className="row g-3">
+              <div className="row g-4">
                 <div className="col-xxl-12 col-sm-6">
-                  <div className="home-contain">
+                {showbanner.map((img)=>{
+                return(
+                  <>
+                  <div className="home-contain" >
+                  {img.banner_location==='home_page_right_side(2)'?
+                  <>
                     <a href="shop-left-sidebar.html">
-                      {img.banner_location==='home_page_right_side(1)'?
+                     
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload"
                         alt="image"
                         name="image"
-                      />:null}
+                      />
                     </a>
+                    
                     <div className="home-detail  p-center text-center">
                       <div>
-                        <h4 className="text-center">{img.title}</h4>
-                        <h5 className="text-center">{img.description}</h5>
+                        <h3 className="text-center text-white">{img.title}</h3>
+                        <h4 className="text-center text-white">{img.description}</h4>
                       </div>
                     </div>
+                    </>:null}
                   </div>
+                  </>
+              )
+            })}
                 </div>
 
                 <div className="col-xxl-12 col-sm-6">
-                  <div className="home-contain">
-                    <a href="shop-left-sidebar.html">
-                      {img.banner_location==='home_page_right_side(3)'?
+                {showbanner.map((img)=>{
+                return(
+                  <>
+                  <div className="home-contain" >
+                   
+                      {img.banner_location==='home_page_right_side(2)'?
+                       <>
+                        <a href="shop-left-sidebar.html">
                       <img
                         src={img.image}
                         className="img-fluid bg-img lazyload w-100 h-100"
                         alt="image"
                         name='image'
-                      />:null}
+                      />
                     </a>
                     <div className="home-detail  w-50 p-center-left home-p-sm">
                       <div>
-                        <h4 className="fw-bold">Safe food saves lives</h4>
-                        <h5>Discount Offer</h5>
+                        <h3 className="fw-bold text-white">{img.title}</h3>
+                        <h5 className=" text-white">{img.description}</h5>
                       </div>
                     </div>
+                    </>:null}
                   </div>
+                  </>
+                     )
+                   })}
                 </div>
+                
               </div>
             </div>
-            </>
-              )
-            })} 
+           
           </div>
         
         </div>

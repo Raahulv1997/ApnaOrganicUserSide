@@ -564,19 +564,19 @@ const ProductDetail = ({ logIn }) => {
                             {showbanner.map((img) => {
                               return (
                                 <>
-                                  {img.banner_location === 'home_page_right_side(1)' ?
+                                  {img.banner_location === 'home_page_right_side(2)' ?
                                     <>
                                       <img
                                         src={img.image}
-                                        className="bg-img  lazyload w-100"
+                                        className="bg-img lazyload w-100"
                                         alt="image"
-                                        style={{ height: "500px" }}
+                                        
                                       />
                                       <div className="banner-details p-center banner-b-space w-100 text-center">
                                         <div>
-                                          <h6 className="ls-expanded theme-color mb-sm-3 mb-1">
+                                          <h4 className="ls-expanded theme-color mb-sm-3 mb-1">
                                             {img.title}
-                                          </h6>
+                                          </h4>
                                           <h2>{img.description}</h2>
                                           <p className="mx-auto mt-1">
                                             Save up to 5% OFF
