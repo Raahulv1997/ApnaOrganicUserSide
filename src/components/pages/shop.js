@@ -352,9 +352,11 @@ const Shop = (props) => {
   const onPriceFilterAdd = (e) => {
     setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
     showcategorydata.push(e.target.value);
-    // return showcategorydata.pop();
+    let i = showcategorydata.pop();
+    console.log("--iiiii--" + i);
   };
   console.log("--showwwwwwwwwww--" + showcategorydata);
+
   const onDiscountFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
