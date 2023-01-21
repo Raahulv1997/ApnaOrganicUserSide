@@ -9,8 +9,9 @@ import axios from "axios";
 
 const Login = ({ logIn }) => {
   const [error, setError] = useState(true);
-  const [passworderror, setpasswordError] = useState(true);
   const [loginerror, setLoginerror] = useState(true);
+  const [passworderror, setpassworderror] = useState(false);
+
   const { state } = useLocation();
   const navigate = useNavigate();
   const [credentailval, setcredentailval] = useState({
@@ -32,15 +33,25 @@ const Login = ({ logIn }) => {
 
           setLoginerror(false);
         }
-        if (response.data.message === "password not matched") {
-          setpasswordError(false);
-        }
         if (response.data === false) {
           setError(false);
-        } else if (from === undefined) {
+        } else if (credentailval.user_password === "") {
+          console.log(
+            "----credentailval.user_password-------" +
+              from +
+              credentailval.user_password
+          );
+          setpassworderror(true);
+        } else if (response.data.message === "password not matched") {
+          setError(false);
+        } else if (
+          from === undefined &&
+          response.data.message !== "password not matched" &&
+          credentailval.user_email !== ""
+        ) {
           localStorage.setItem("userid", response.data.user_id);
           console.log("----fromelse-------" + from);
-          navigate("/");
+          // navigate('/');
           //  setError(false);
         } else {
           localStorage.setItem("userid", response.data.user_id);
@@ -58,9 +69,7 @@ const Login = ({ logIn }) => {
 
         // return response;
       })
-      .catch((error) => {
-        console.log(error);
-      });
+      .catch((error) => {});
   };
 
   return (
@@ -124,10 +133,9 @@ const Login = ({ logIn }) => {
                         <p className="mt-1 ms-2 text-danger" type="invalid">
                           Please Enter Correct Password
                         </p>
-                      ) : null}
-                      {passworderror === false ? (
+                      ) : passworderror === true ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
-                          Please Enter the Password
+                          Please Enter Password
                         </p>
                       ) : null}
                       <label htmlFor="password" className="bg-transparent">
@@ -135,7 +143,7 @@ const Login = ({ logIn }) => {
                       </label>
                     </div>
                   </div>
-                  <div className="col-12 mt-4 mb-2">
+                  <div className="col-12">
                     <div className="forgot-box">
                       <div className="form-check ps-0 m-0 remember-box">
                         <input
