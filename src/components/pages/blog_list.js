@@ -108,7 +108,7 @@ console.log("?///////////"+JSON.stringify(blogData))
                    <div className="col-12">
                   <div className="blog-box blog-list wow fadeInUp">
                     <div className="blog-image">
-                      <img src={showData.image} className="lazyload w-50 h-50" alt="image"name="image" />
+                      <img src={showData.image} className="lazyload " alt="image"name="image" />
                     </div>
 
                     <div className="blog-contain blog-contain-2">
@@ -130,9 +130,12 @@ console.log("?///////////"+JSON.stringify(blogData))
                       <p>
                       {showData.description}
                       </p>
-                      <button onclick="location" className="blog-button">
+                      <Link to="/blog_detail">
+                      <button onclick="location"  className="blog-button">
                         Read More <i className="fa-solid fa-right-long"></i>
                       </button>
+                      </Link>
+                     
                     </div>
                   </div>
                 </div>

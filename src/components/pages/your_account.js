@@ -38,8 +38,7 @@ const navigate = useNavigate();
   const [orderhistory, setorderhistory] = useState([]);
   const [totalorder, settotalorder] = useState('');
   const [cartupdateid, setcartupdateid] = useState('');
-
-
+  const [udata,setUdata]=useState([]);
   const [userdata, setuserdata] = useState(
     {
     user_id:useridd,
@@ -53,10 +52,12 @@ const navigate = useNavigate();
     address:"",
     address2:""
     });
+
  useEffect(()=>{
   axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
   .then(response => {
-    setuserdata(response.data[0])
+    setuserdata(response.data)
+    setUdata(response.data)
     // navigate('/your_account')
     // return response;
   }).catch(error => {
@@ -64,7 +65,6 @@ const navigate = useNavigate();
   Onwishlistclick();
   OnOrderclick();
  },[Password])
- 
 // wishlist
 const Onwishlistclick = () =>{
   axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
@@ -121,10 +121,11 @@ const OnOrderclick = () =>{
 
   const OnchangeFistname = (e) => {
     setuserdata({
-      ...userdata,
+      ...udata,
       [e.target.name]: e.target.value,
     });
   };
+  console.log("hh////////////"+JSON.stringify(userdata))
 
   // change Password
 
@@ -1717,7 +1718,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="text"
                     placeholder="Name"
-                    value={userdata.first_name}
+                    value={udata.first_name}
                     name={"first_name"}
                     onChange={OnchangeFistname}
                     required
@@ -1737,7 +1738,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="text"
                     placeholder="Name"
-                    value={userdata.last_name}
+                    value={udata.last_name}
                     name={"last_name"}
                     onChange={OnchangeFistname}
                     required
@@ -1758,7 +1759,7 @@ const OnImageClick = (id) =>{
                     type="email"
                     placeholder="Email Address"
                     required
-                    value={userdata.email}
+                    value={udata.email}
                     name={"email"}
                     // onChange={OnchangeFistname}
                   />
@@ -1795,7 +1796,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="number"
                     placeholder="Mobile"
-                    value={userdata.phone_no}
+                    value={udata.phone_no}
                     name={"phone_no"}
                     onChange={OnchangeFistname}
                     required
@@ -1817,7 +1818,7 @@ const OnImageClick = (id) =>{
                     type="location"
                     placeholder="Add Address"
                     required
-                    value={userdata.address}
+                    value={udata.address}
                     name={"address"}
                     onChange={OnchangeFistname}
                   />
@@ -1836,7 +1837,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="location"
                     placeholder="Add Address2"
-                    value={userdata.address2}
+                    value={udata.address2}
                     name={"address2"}
                     onChange={OnchangeFistname}
                   />
@@ -1851,7 +1852,7 @@ const OnImageClick = (id) =>{
                   aria-label="Product Type"
                   className="adminselectbox"
                   required
-                  value={userdata.gender}
+                  value={udata.gender}
                   name={"gender"}
                   onChange={OnchangeFistname}
                 >
@@ -1872,7 +1873,7 @@ const OnImageClick = (id) =>{
                     <Form.Control
                       type="date"
                       placeholder="Product Quantity"
-                      value={moment(userdata.date_of_birth).format('yyyy-MM-DD')}
+                      value={moment(udata.date_of_birth).format('yyyy-MM-DD')}
                       name={"date_of_birth"}
                       onChange={OnchangeFistname}
                       required

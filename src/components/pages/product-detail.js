@@ -548,10 +548,10 @@ const ProductDetail = ({ logIn }) => {
                         aria-labelledby="description-tab"
                       >
                         <div className="product-description">
-                          <div className="nav-desh">
+                          {/* <div className="nav-desh">
                             <div className="desh-title"></div>
                             <p dangerouslySetInnerHTML={{ __html: productDetails.product_description }} />
-                          </div>
+                          </div> */}
 
                           <div className="nav-desh">
                             <div className="desh-title">
@@ -590,13 +590,13 @@ const ProductDetail = ({ logIn }) => {
 
                           </div>
 
-                          <div className="nav-desh">
+                          {/* <div className="nav-desh">
                             <div className="desh-title mt-3">
                               <h5>From The Manufacturer:</h5>
                             </div>
                             <p dangerouslySetInnerHTML={{ __html: productDetails.product_description }} />
                             <p dangerouslySetInnerHTML={{ __html: productDetails.product_description }} />
-                          </div>
+                          </div> */}
                         </div>
                       </div>
                     </Tab>

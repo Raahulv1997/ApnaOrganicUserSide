@@ -292,7 +292,7 @@ useEffect(() => {
                 return(
                   <>
                   <div className="home-contain" >
-                  {img.banner_location==='home_page_right_side(2)'?
+                  {img.banner_location==='home_page_right_side(1)'?
                   <>
                     <a href="shop-left-sidebar.html">
                      
