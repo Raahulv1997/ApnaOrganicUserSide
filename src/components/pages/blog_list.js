@@ -5,94 +5,88 @@ import Breadcumb from "../common/beadcumb";
 
 import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
-import { useState,useEffect } from "react";
+import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-let categoryArray=[];
+let categoryArray = [];
 
-const BlogList = ()=> {
+const BlogList = () => {
+  const clickBlog = (id) => {
+    localStorage.setItem("idd", id);
+  };
+  const [apicall, setapicall] = useState([]);
+  const [blogData, setBlogData] = useState([]);
+  const [catData, setcatData] = useState([]);
 
-  const clickBlog=(id)=>{
-    localStorage.setItem("idd",id)
- 
-  }
-  const[apicall,setapicall]=useState([]);
-  const[blogData,setBlogData]=useState([]);
-  const[catData,setcatData]=useState([]);
-
-  const [searchCategory,setSearchCategory]=useState("");
-  const[recent,setRecent]=useState("");
-  const[productTag,setProductTag]=useState("");
-  const[id,setId]=useState('');
-  const onCategoryClick=(e)=>{
-    setSearchCategory({...searchCategory,[e.target.name]: e.target.value});
-  }
-  const onRecentClick=(e)=>{
-    setRecent (e.target.value)
-  console.log("fffffffffffffffffffff"+JSON.stringify(recent))
-
-  }
-  const onProductTagClick=(e)=>{
-    setProductTag(e.target.value)
-  console.log("fffffffffffffffffffff"+JSON.stringify(productTag))
-
-  }
-  useEffect(()=>{
-    onCategorySearch()
-  },[searchCategory,recent,productTag])
-  // console.log(">>>>>>>>>>>>>>"+JSON.stringify(searchCategory))
-    const onCategorySearch = () => {
-      // let categoryname = e.target.value;
-      if(searchCategory.category?categoryArray:"")
-      categoryArray.push(searchCategory.category)
-      if (categoryArray !== "") {
-        try {
-          axios
-            .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
-          
-                    id:"",
-                    for_:"user",
-                    recent:"",
-                    category:categoryArray,
-                    product_tag:productTag
-                  
-            })
-            .then((response) => {
-              let data = response.data[0];
-              setBlogData(response.data);
-              
-            });
-        } catch (err) {}
-      }
-    };      
-    console.log("hhhhhhhhhhhhhhh"+productTag)     
+  const [searchCategory, setSearchCategory] = useState("");
+  const [recent, setRecent] = useState("");
+  const [productTag, setProductTag] = useState("");
+  const [id, setId] = useState("");
+  const onCategoryClick = (e) => {
+    setSearchCategory({ ...searchCategory, [e.target.name]: e.target.value });
+  };
+  const onRecentClick = (e) => {
+    setRecent(e.target.value);
+    console.log("fffffffffffffffffffff" + JSON.stringify(recent));
+  };
+  const onProductTagClick = (e) => {
+    setProductTag(e.target.value);
+    console.log("fffffffffffffffffffff" + JSON.stringify(productTag));
+  };
   useEffect(() => {
-    axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
-    {
-    "id":"",
-    "for_":"admin",
-    "recent":"",
-    "category":[],
-    "product_tag":""
-  }).then ((response) => {
-    let data = response.data[0];
-            if(data.message !=='empty'){
-              setBlogData(data);
-              setapicall(false);
-            }
- 
-  setBlogData(response.data);
-  setcatData(response.data);
+    onCategorySearch();
+  }, [searchCategory, recent, productTag]);
+  // console.log(">>>>>>>>>>>>>>"+JSON.stringify(searchCategory))
+  const onCategorySearch = () => {
+    // let categoryname = e.target.value;
+    if (searchCategory.category ? categoryArray : "")
+      categoryArray.push(searchCategory.category);
+    if (categoryArray !== "") {
+      try {
+        axios
+          .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
+            id: "",
+            for_: "user",
+            recent: "",
+            category: categoryArray,
+            product_tag: productTag,
+          })
+          .then((response) => {
+            let data = response.data[0];
+            setBlogData(response.data);
+          });
+      } catch (err) {}
+    }
+  };
+  console.log("hhhhhhhhhhhhhhh" + productTag);
+  useEffect(() => {
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
+        id: "",
+        for_: "admin",
+        recent: "",
+        category: [],
+        product_tag: "",
+      })
+      .then((response) => {
+        let data = response.data[0];
+        if (data.message !== "empty") {
+          setBlogData(data);
+          setapicall(false);
+        }
 
-  setId(data.id)
-  console.log("blog IDDDDDDDDDDDDDD"+JSON.stringify(data.id));
-  // console.log("blog"+JSON.stringify(blogData));
+        setBlogData(response.data);
+        setcatData(response.data);
 
-    setapicall(false);
-    })
+        setId(data.id);
+        console.log("blog IDDDDDDDDDDDDDD" + JSON.stringify(data.id));
+        // console.log("blog"+JSON.stringify(blogData));
+
+        setapicall(false);
+      });
   }, [apicall]);
 
-console.log("?///////////"+JSON.stringify(blogData))
+  console.log("?///////////" + JSON.stringify(blogData));
   return (
     <Fragment>
       <Header />
@@ -108,37 +102,41 @@ console.log("?///////////"+JSON.stringify(blogData))
                    <div className="col-12">
                   <div className="blog-box blog-list wow fadeInUp">
                     <div className="blog-image">
-                      <img src={showData.image} className="lazyload w-50 h-50" alt="image"name="image" />
+                      <img src={showData.image} className="lazyload " alt="image"name="image" />
                     </div>
 
-                    <div className="blog-contain blog-contain-2">
-                      <div className="blog-label">
-                        <span className="time">
-                          <i data-feather="clock"></i>
-                          <span>{showData.publish_date}</span>
-                        </span>
-                        <span className="super">
-                          <i data-feather="user"></i>
-                          <span>Mark J. Speight</span>
-                        </span>
+                          <div className="blog-contain blog-contain-2">
+                            <div className="blog-label">
+                              <span className="time">
+                                <i data-feather="clock"></i>
+                                <span>{showData.publish_date}</span>
+                              </span>
+                              <span className="super">
+                                <i data-feather="user"></i>
+                                <span>Mark J. Speight</span>
+                              </span>
+                            </div>
+                            <Link to="/blog_detail">
+                              <h3 onClick={(id) => clickBlog(showData.id)}>
+                                {showData.title}
+                              </h3>
+                            </Link>
+                            <p>{showData.description}</p>
+                            <Link to="/blog_detail">
+                              <button
+                                onclick="location"
+                                className="blog-button"
+                              >
+                                Read More{" "}
+                                <i className="fa-solid fa-right-long"></i>
+                              </button>
+                            </Link>
+                          </div>
+                        </div>
                       </div>
-                      <Link to="/blog_detail">
-                        <h3  onClick={(id) => clickBlog(showData.id)} >
-                          {showData.title}
-                        </h3>
-                      </Link>
-                      <p>
-                      {showData.description}
-                      </p>
-                      <button onclick="location" className="blog-button">
-                        Read More <i className="fa-solid fa-right-long"></i>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-                  </>)
+                    </>
+                  );
                 })}
-               
 
                 {/* <div className="col-12">
                   <div
@@ -190,7 +188,7 @@ console.log("?///////////"+JSON.stringify(blogData))
                       </label>
                     </div> */}
 
-                    {/* <div className="blog-contain blog-contain-2">
+                {/* <div className="blog-contain blog-contain-2">
                       <div className="blog-label">
                         <span className="time">
                           <i data-feather="clock"></i>
@@ -495,51 +493,60 @@ console.log("?///////////"+JSON.stringify(blogData))
                     />
                   </div>
                 </div>
-                <div className="accordion left-accordion-box" id="accordionPanelsStayOpenExample">
-    
-                       <Accordion>
-                        <Accordion.Item eventKey="2">
-                            <Accordion.Header>
-                            Recent Post
-                            </Accordion.Header>
-                            <Accordion.Body>
-                            <div id="panelsStayOpen-collapseOne"className="accordion-collapse collapse show"
-                                    aria-labelledby="panelsStayOpen-headingOne">
-                            <div className="accordion-body pt-0">
-                            {catData.map((blog)=>{
-                              
-                                            return(
-                                              <>
-                                              <div className="recent-post-box">
-                                             
-                                         <div className="recent-box">
-                                             <Link to="" className="recent-image">
-                                                 <img src={blog.image}
-                                                  
-                                                     className="img-fluid  lazyload" alt="image"/>
-                                             </Link>
-                                             <div className="recent-detail">
-                                             <Link to="/blog_detail"> <h5 className="recent-name"
-                                                       
-                                                       name="title"
-                                                      //value={blog.title}
-                                                     >{blog.title}</h5>
-                                            </Link>
-                                                    
-                                                 <h6 >{blog.publish_date}<i data-feather="thumbs-up"></i></h6>
-                                             </div>
-                                         </div>
-                                     </div>
-                                              </>
-                                            )
-                                          })}
-                                        
+                <div
+                  className="accordion left-accordion-box"
+                  id="accordionPanelsStayOpenExample"
+                >
+                  <Accordion>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>Recent Post</Accordion.Header>
+                      <Accordion.Body>
+                        <div
+                          id="panelsStayOpen-collapseOne"
+                          className="accordion-collapse collapse show"
+                          aria-labelledby="panelsStayOpen-headingOne"
+                        >
+                          <div className="accordion-body pt-0">
+                            {catData.map((blog) => {
+                              return (
+                                <>
+                                  <div className="recent-post-box">
+                                    <div className="recent-box">
+                                      <Link to="" className="recent-image">
+                                        <img
+                                          src={blog.image}
+                                          className="img-fluid  lazyload"
+                                          alt="image"
+                                        />
+                                      </Link>
+                                      <div className="recent-detail">
+                                        <Link to="/blog_detail">
+                                          {" "}
+                                          <h5
+                                            className="recent-name"
+                                            name="title"
+                                            //value={blog.title}
+                                          >
+                                            {blog.title}
+                                          </h5>
+                                        </Link>
+
+                                        <h6>
+                                          {blog.publish_date}
+                                          <i data-feather="thumbs-up"></i>
+                                        </h6>
+                                      </div>
                                     </div>
-                                    </div>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        </Accordion>
-                        <Accordion>
+                                  </div>
+                                </>
+                              );
+                            })}
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                  <Accordion>
                     <Accordion.Item eventKey="2">
                       <Accordion.Header>Categories</Accordion.Header>
                       <Accordion.Body>
@@ -550,33 +557,32 @@ console.log("?///////////"+JSON.stringify(blogData))
                         >
                           <div className="accordion-body">
                             <div className="form-floating theme-form-floating-2 search-box">
-                            <ul className="category-list custom-padding custom-height">
-                             {catData.map((blog)=>{
-                              return(
-                                <>
-                                <li>
-                                    <div className="form-check ps-0 m-0 category-list-box">
-                                      <input
-                                        className="checkbox_animated"
-                                        type="checkbox"
-                                        id="category"
-                                        name={"category"}
-                                        value={blog.category}
-                                        onChange={(e)=>onCategoryClick(e)}
-                                      />
-                                      <label
-                                        className="form-check-label"
-                                        htmlFor="fruit"
-                                      >
-                                        {blog.category}
-                                      </label>
-                                    </div>
-                                  </li>
-                                </>
-                              )
-                             })}
-                                  
-                            </ul>
+                              <ul className="category-list custom-padding custom-height">
+                                {catData.map((blog) => {
+                                  return (
+                                    <>
+                                      <li>
+                                        <div className="form-check ps-0 m-0 category-list-box">
+                                          <input
+                                            className="checkbox_animated"
+                                            type="checkbox"
+                                            id="category"
+                                            name={"category"}
+                                            value={blog.category}
+                                            onChange={(e) => onCategoryClick(e)}
+                                          />
+                                          <label
+                                            className="form-check-label"
+                                            htmlFor="fruit"
+                                          >
+                                            {blog.category}
+                                          </label>
+                                        </div>
+                                      </li>
+                                    </>
+                                  );
+                                })}
+                              </ul>
                             </div>
                           </div>
                         </div>
@@ -584,46 +590,48 @@ console.log("?///////////"+JSON.stringify(blogData))
                     </Accordion.Item>
                   </Accordion>
 
-
-                        <Accordion>
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>
-                                Product Tags
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse collapse show"
-                                    aria-labelledby="panelsStayOpen-headingThree">
-                                    <div className="accordion-body pt-0">
-                                        <div className="product-tags-box">
-                                            <ul>
-                                            {catData.map((blog)=>{  
-                                              return(
-                                                <>
-                                                <li>
-                                                <div className="form-check ps-0 m-0 category-list-box">
-                                      <input
-                                        className="checkbox_animated"
-                                        type="checkbox"
-                                        id="product_tag"
-                                        name={"product_tag"}
-                                        value={blog.product_tag}
-                                        onChange={(e)=>onProductTagClick(e)}
-                                      />
-                                      <label
-                                        className="form-check-label"
-                                        htmlFor="fruit"
-                                      >
-                                        {blog.product_tag}
-                                      </label>
-                                    </div>
-                                                {/* <div className="category-name">
+                  <Accordion>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>Product Tags</Accordion.Header>
+                      <Accordion.Body>
+                        <div
+                          id="panelsStayOpen-collapseThree"
+                          className="accordion-collapse collapse collapse show"
+                          aria-labelledby="panelsStayOpen-headingThree"
+                        >
+                          <div className="accordion-body pt-0">
+                            <div className="product-tags-box">
+                              <ul>
+                                {catData.map((blog) => {
+                                  return (
+                                    <>
+                                      <li>
+                                        <div className="form-check ps-0 m-0 category-list-box">
+                                          <input
+                                            className="checkbox_animated"
+                                            type="checkbox"
+                                            id="product_tag"
+                                            name={"product_tag"}
+                                            value={blog.product_tag}
+                                            onChange={(e) =>
+                                              onProductTagClick(e)
+                                            }
+                                          />
+                                          <label
+                                            className="form-check-label"
+                                            htmlFor="fruit"
+                                          >
+                                            {blog.product_tag}
+                                          </label>
+                                        </div>
+                                        {/* <div className="category-name">
                                                             <h5
                                                             // onClick={onBlogSearch}
                                                             >{blog.product_tag}</h5>
                                                            </div> */}
-                                                </li>
+                                      </li>
 
-                                                {/* <li>
+                                      {/* <li>
                                                    <Link to="/" >Meat</Link>
                                                 </li>
 
@@ -650,17 +658,17 @@ console.log("?///////////"+JSON.stringify(blogData))
                                                 <li>
                                                    <Link to="/" >Most Expensive Fruit</Link>
                                                 </li> */}
-                                                </>
-                                                )
-                                              })}
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
-                        {/* <Accordion>
+                                    </>
+                                  );
+                                })}
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                  {/* <Accordion>
                             <Accordion.Item eventKey="2">
                                 <Accordion.Header>
                                 Trending Products
@@ -732,7 +740,7 @@ console.log("?///////////"+JSON.stringify(blogData))
                                 </Accordion.Body>
                             </Accordion.Item>
                         </Accordion> */}
-                        </div>
+                </div>
               </div>
             </div>
           </div>

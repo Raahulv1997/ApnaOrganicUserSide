@@ -30,14 +30,10 @@ const Header = (props) => {
   const open_Category = () => {
     setclick(true);
   };
-  // const wee = [moment().startOf('week'), moment().endOf('week')]
-  // console.log("---well"+wee)
   let cartup = localStorage.getItem("cartupdate");
   if (cartup === true) {
     setapicall(true);
   }
-  // console.log("-----apics"+localStorage.getItem("cartupdate") )
-  // console.log("BBBBBBBBBBBBBBBBBBB--------"+JSON.stringify(pdata))
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -86,9 +82,8 @@ const Header = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
-            console.log(JSON.stringify(data) + "data");
             let ProductTotal = 0;
-            if (data) {
+            if (data.length !== 0) {
               data.map((cdata) => {
                 ProductTotal +=
                   cdata.quantity * Number(cdata.product_price) -
@@ -123,7 +118,7 @@ const Header = (props) => {
       } catch (err) {}
     }
     getCartData();
-  }, [apicall, cartup, props.addcart]);
+  }, [apicall, cartup, props.addcart, props.deleteCart]);
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -253,34 +248,6 @@ const Header = (props) => {
                     {/* </NavLink> */}
                   </div>
                   <div className="rightside-menu">
-                    {/* <div className="dropdown-dollar">
-                      <Dropdown>
-                        <Dropdown.Toggle variant="white" id="dropdown-basic">
-                          Language
-                          <i className="fa-solid fa-angle-down"></i>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <Dropdown.Item>English</Dropdown.Item>
-                          <Dropdown.Item>Hindi</Dropdown.Item>
-                          <Dropdown.Item>Gujarati</Dropdown.Item>
-                          <Dropdown.Item>Arbic</Dropdown.Item>
-                          <Dropdown.Item>Rusia</Dropdown.Item>
-                          <Dropdown.Item>Chinese</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                      <Dropdown>
-                        <Dropdown.Toggle variant="white" id="dropdown-basic">
-                          Dollar
-                          <i className="fa-solid fa-angle-down"></i>
-                        </Dropdown.Toggle>
-                        <Dropdown.Menu>
-                          <Dropdown.Item>USD</Dropdown.Item>
-                          <Dropdown.Item> INR</Dropdown.Item>
-                          <Dropdown.Item>EUR</Dropdown.Item>
-                          <Dropdown.Item>AUD</Dropdown.Item>
-                        </Dropdown.Menu>
-                      </Dropdown>
-                    </div> */}
                     <div className="option-list">
                       <ul className="m-0">
                         <li>
@@ -311,14 +278,13 @@ const Header = (props) => {
                         {/* cart view */}
                         <li className="onhover-dropdown ">
                           <NavLink to="/cart" className="header-icon bag-icon ">
-                            <small className="badge-number">
-                              {pdata.length === 0 ||
-                              pdata.length === "" ||
-                              pdata.length === "0"
-                                ? "0"
-                                : pdata.length}
-                            </small>
-
+                            {pdata.length === 0 ||
+                            pdata.length === "" ||
+                            pdata.length === "0" ? null : (
+                              <small className="badge-number">
+                                {pdata.length}
+                              </small>
+                            )}
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </NavLink>
                           <div className="onhover-div">

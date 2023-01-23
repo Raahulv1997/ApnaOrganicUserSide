@@ -1,5 +1,5 @@
-import React  from "react";
-import { json, Link,useNavigate} from "react-router-dom";
+import React from "react";
+import { json, Link, useNavigate } from "react-router-dom";
 import { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
@@ -11,7 +11,7 @@ import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
 import Product from "../../Photos/product/2.png";
 import { MdOutlineDashboard, MdOutlinePrivacyTip } from "react-icons/md";
-import { BsHandbag} from "react-icons/bs";
+import { BsHandbag } from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
 import { GoLocation, GoMail } from "react-icons/go";
 import { RiAccountCircleLine } from "react-icons/ri";
@@ -19,13 +19,13 @@ import Col from "react-bootstrap/Col";
 import { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-import {demo} from '../../Photos/demo.jpg';
+import { demo } from "../../Photos/demo.jpg";
 
 function Account() {
-  const useridd = localStorage.getItem("userid")
-  const userpass =localStorage.getItem("upassword")
-const navigate = useNavigate();
-  const func=()=>{}
+  const useridd = localStorage.getItem("userid");
+  const userpass = localStorage.getItem("upassword");
+  const navigate = useNavigate();
+  const func = () => {};
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -38,8 +38,7 @@ const navigate = useNavigate();
   const [orderhistory, setorderhistory] = useState([]);
   const [totalorder, settotalorder] = useState('');
   const [cartupdateid, setcartupdateid] = useState('');
-
-
+  const [udata,setUdata]=useState([]);
   const [userdata, setuserdata] = useState(
     {
     user_id:useridd,
@@ -53,10 +52,12 @@ const navigate = useNavigate();
     address:"",
     address2:""
     });
+
  useEffect(()=>{
   axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
   .then(response => {
-    setuserdata(response.data[0])
+    setuserdata(response.data)
+    setUdata(response.data)
     // navigate('/your_account')
     // return response;
   }).catch(error => {
@@ -64,7 +65,6 @@ const navigate = useNavigate();
   Onwishlistclick();
   OnOrderclick();
  },[Password])
- 
 // wishlist
 const Onwishlistclick = () =>{
   axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
@@ -80,26 +80,25 @@ const Onwishlistclick = () =>{
 
 }
 
-// order history
-const OnOrderclick = () =>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/user_orders?user_id=${useridd}`)
-  .then(response => {
-    setorderhistory(response.data)
-     var  result = response.data.filter((thing, index, self) =>
-      index === self.findIndex((t) => (
-       ( t.order_id === thing.order_id ) 
-      )
-      )
-  )
-  settotalorder(result.length)
+  // order history
+  const OnOrderclick = () => {
+    axios
+      .get(`${process.env.REACT_APP_BASEURL}/user_orders?user_id=${useridd}`)
+      .then((response) => {
+        setorderhistory(response.data);
+        var result = response.data.filter(
+          (thing, index, self) =>
+            index === self.findIndex((t) => t.order_id === thing.order_id)
+        );
+        settotalorder(result.length);
 
-    // navigate('/your_account')
-    // return response;
-  }).catch(error => {
-  })
-  setclick(false)
-}
-// end order history
+        // navigate('/your_account')
+        // return response;
+      })
+      .catch((error) => {});
+    setclick(false);
+  };
+  // end order history
 
   // edit Profile
   const handleSubmit = (event) => {
@@ -108,114 +107,118 @@ const OnOrderclick = () =>{
     // const name = event.target.value;
     if (form.checkValidity() === false) {
       event.preventDefault();
-      event.stopPropagation()
+      event.stopPropagation();
     }
     // eslint-disable-next-line no-undef
-    axios.post(`${process.env.REACT_APP_BASEURL}/user_register`,userdata)
-    .then(response => {
-      setShow(false)
-    }).catch(error => {
-    })
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/user_register`, userdata)
+      .then((response) => {
+        setShow(false);
+      })
+      .catch((error) => {});
     setValidated(true);
   };
 
   const OnchangeFistname = (e) => {
     setuserdata({
-      ...userdata,
+      ...udata,
       [e.target.name]: e.target.value,
     });
   };
+  console.log("hh////////////"+JSON.stringify(userdata))
 
   // change Password
 
   const [changepass, setchangepass] = useState({
-    email:'',
-    password:'',
-    new_password:""
+    email: "",
+    password: "",
+    new_password: "",
   });
- const ChangepassShow = () => {
-   setchangepass((changepass) =>{ return {...changepass,  email : `${userdata.email}`}});
-  setPassword(true);
-}
-const OnchangePass = (e) => {
-  setchangepass({
-    ...changepass,
-    [e.target.name]: e.target.value,
+  const ChangepassShow = () => {
+    setchangepass((changepass) => {
+      return { ...changepass, email: `${userdata.email}` };
+    });
+    setPassword(true);
+  };
+  const OnchangePass = (e) => {
+    setchangepass({
+      ...changepass,
+      [e.target.name]: e.target.value,
+    });
+  };
+  const [formError, setFormError] = useState({
+    currentPass: "",
+    newPass: "",
+    confirmPass: "",
+    allPass: "",
   });
-};
-const [formError, setFormError] = useState({
-  currentPass: "",
-  newPass: "",
-  confirmPass: "",
-  allPass: "",
-});
-const handlePassSubmit = (event) => {
-  event.preventDefault();
-  if (
-    changepass.confirmpassword === undefined &&
-    changepass.new_password === undefined &&
-    changepass.password === undefined
-  ) {
-    setFormError({
-      allPass: "All field are required",
-    });
+  const handlePassSubmit = (event) => {
+    event.preventDefault();
+    if (
+      changepass.confirmpassword === undefined &&
+      changepass.new_password === undefined &&
+      changepass.password === undefined
+    ) {
+      setFormError({
+        allPass: "All field are required",
+      });
 
-    return false;
-  }
-  if (changepass.password === undefined) {
-    setFormError({
-      currentPass: "Please enter current password",
-    });
+      return false;
+    }
+    if (changepass.password === undefined) {
+      setFormError({
+        currentPass: "Please enter current password",
+      });
 
-    return false;
-  }
-  if (changepass.new_password === undefined) {
-    setFormError({
-      newPass: "Please enter New password",
-    });
-    return false;
-  }
+      return false;
+    }
+    if (changepass.new_password === undefined) {
+      setFormError({
+        newPass: "Please enter New password",
+      });
+      return false;
+    }
 
-  if (changepass.confirmpassword === undefined) {
-    setFormError({
-      confirmPass: "Please enter confirm password",
-    });
-    return false;
-  }
+    if (changepass.confirmpassword === undefined) {
+      setFormError({
+        confirmPass: "Please enter confirm password",
+      });
+      return false;
+    }
 
-  if (changepass.confirmpassword !== changepass.new_password) {
-    setFormError({
-      confirmPass: "Password & Confirm password not match",
-    });
-    return false;
-  }
-  if(changepass.confirmpassword === changepass.new_password){
-    axios.post(`${process.env.REACT_APP_BASEURL}/change_user_password`,
-    {
-    "email":changepass.email,
-    "password":changepass.password,
-    "new_password":changepass.new_password
-  })
-    .then(response => {
-      if(response === true){
-        localStorage.setItem("upassword", response.data.new_password)
-        setPassword(false)
-      }
-      // navigate('/your_account')
-      // return response;
-    }).catch(error => {
-    })
-  }
-  setFormError("");
-  ChangepassClose();
-};
-const ChangepassClose = () => setPassword(false);
+    if (changepass.confirmpassword !== changepass.new_password) {
+      setFormError({
+        confirmPass: "Password & Confirm password not match",
+      });
+      return false;
+    }
+    if (changepass.confirmpassword === changepass.new_password) {
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/change_user_password`, {
+          email: changepass.email,
+          password: changepass.password,
+          new_password: changepass.new_password,
+        })
+        .then((response) => {
+          if (response === true) {
+            localStorage.setItem("upassword", response.data.new_password);
+            setPassword(false);
+          }
+          // navigate('/your_account')
+          // return response;
+        })
+        .catch((error) => {});
+    }
+    setFormError("");
+    ChangepassClose();
+  };
+  const ChangepassClose = () => setPassword(false);
 
-// end change paassword
-const [click, setclick] = useState(false);
-const side_bar = () => {
-  setclick(true);
-};
+  // end change paassword
+  const [click, setclick] = useState(false);
+  const side_bar = () => {
+    setclick(true);
+  };
   //add address
   const [addNewAdderss, setaddNewAdderss] = useState(0);
   const [addAdderssvalidated, setaddAdderssValidated] = useState(false);
@@ -237,44 +240,43 @@ const side_bar = () => {
       [e.target.name]: e.target.value,
     });
   };
-// add to cart
-const AddToCart = (id ,discount , product_price , quantity ,product_id) =>{
-  axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`,{
-    "user_id":useridd,
-    "product_view_id":id,
-    "price":product_price,
-    "discount":discount,
-    "quantity":1,
-    "is_active":1
-  })
-  .then(response => {
-  let cartup =  localStorage.setItem("cartupdate",true);
-  setcartupdateid(cartup)
-  }).catch(error => {
-  })
-}
-// end add to cart
+  // add to cart
+  const AddToCart = (id, discount, product_price, quantity, product_id) => {
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
+        user_id: useridd,
+        product_view_id: id,
+        price: product_price,
+        discount: discount,
+        quantity: 1,
+        is_active: 1,
+      })
+      .then((response) => {
+        let cartup = localStorage.setItem("cartupdate", true);
+        setcartupdateid(cartup);
+      })
+      .catch((error) => {});
+  };
+  // end add to cart
 
+  const onProductClick = (id) => {
+    localStorage.setItem("orderid", id);
+    // localStorage.setItem("proid" , id)
+    navigate("/your_orders");
+  };
 
-const onProductClick = (id) =>{
-  localStorage.setItem("orderid" , id)
-  // localStorage.setItem("proid" , id)
-  navigate('/your_orders')
-}
-
-const OnImageClick = (id) =>{
-  // localStorage.setItem("orderid" , id)
-  // navigate('/your_orders')
-
-}
+  const OnImageClick = (id) => {
+    // localStorage.setItem("orderid" , id)
+    // navigate('/your_orders')
+  };
   return (
     <React.Fragment>
-      <Header addcart={AddToCart}/>
-      
+      <Header addcart={AddToCart} />
+
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
-        pageHref={"/"} 
+        pageHref={"/"}
       />
 
       <section className="user-dashboard-section section-b-space">
@@ -305,7 +307,9 @@ const OnImageClick = (id) =>{
 
                     <div className="profile-contain">
                       <div className="profile-name">
-                        <h3>{userdata.first_name} {userdata.last_name}</h3>
+                        <h3>
+                          {userdata.first_name} {userdata.last_name}
+                        </h3>
                         <h6 className="text-content">{userdata.email}</h6>
                       </div>
                     </div>
@@ -492,7 +496,9 @@ const OnImageClick = (id) =>{
                             <div className="dashboard-user-name">
                               <h6 className="text-content">
                                 Hello,{" "}
-                                <b className="text-title">{userdata.first_name} {userdata.last_name}</b>
+                                <b className="text-title">
+                                  {userdata.first_name} {userdata.last_name}
+                                </b>
                               </h6>
                               <p className="text-content">
                                 From your My Account Dashboard you have the
@@ -584,14 +590,14 @@ const OnImageClick = (id) =>{
                                   </h4>
                                 </div>
                                 <div className="dashboard-detail">
-                                  <h6 className="text-content"> {userdata.first_name} {userdata.last_name}</h6>
+                                  <h6 className="text-content">
+                                    {" "}
+                                    {userdata.first_name} {userdata.last_name}
+                                  </h6>
                                   <h6 className="text-content">
                                     {userdata.email}
                                   </h6>
-                                  <Link
-                                    to="#"
-                                    onClick={ChangepassShow}
-                                  >
+                                  <Link to="#" onClick={ChangepassShow}>
                                     Change Password
                                   </Link>
                                 </div>
@@ -639,7 +645,7 @@ const OnImageClick = (id) =>{
                                         Default Billing Address
                                       </h6>
                                       <h6 className="text-content">
-                                      {userdata.address}
+                                        {userdata.address}
                                       </h6>
                                       <Link
                                         to="#"
@@ -658,7 +664,7 @@ const OnImageClick = (id) =>{
                                         Default Shipping Address
                                       </h6>
                                       <h6 className="text-content">
-                                      {userdata.address2}
+                                        {userdata.address2}
                                       </h6>
                                       <Link
                                         to="#"
@@ -678,7 +684,7 @@ const OnImageClick = (id) =>{
                       </div>
                     </Tab.Pane>
                     {/* order history */}
-                    <Tab.Pane eventKey="second">  
+                    <Tab.Pane eventKey="second">
                       <div
                         className="tab-pane fade show"
                         id="pills-order"
@@ -692,153 +698,170 @@ const OnImageClick = (id) =>{
                               <svg className="icon-width bg-gray"></svg>
                             </span>
                           </div>
-                          {(orderhistory || []).map((data)=>{
-                            return(
-                          <div key={data.id}   className="order-contain">
-                            <div className="order-box dashboard-bg-box">
-   
-                              <div className="order-container">
-                                <div className="order-icon">
-                                  <i data-feather="box"></i>
-                                </div>
+                          {(orderhistory || []).map((data) => {
+                            return (
+                              <div key={data.id} className="order-contain">
+                                <div className="order-box dashboard-bg-box">
+                                  <div className="order-container">
+                                    <div className="order-icon">
+                                      <i data-feather="box"></i>
+                                    </div>
 
-  
+                                    <div className="order-detail">
+                                      <h4>
+                                        Status <span>{data.status}</span>
+                                      </h4>
+                                      <div
+                                        dangerouslySetInnerHTML={{
+                                          __html: data.product_description,
+                                        }}
+                                        className="editor"
+                                      ></div>
+                                    </div>
+                                  </div>
 
-                                <div className="order-detail">
-                                  <h4>
-                                    Status <span >{data.status}</span>
-                                  </h4>
-                                  <div dangerouslySetInnerHTML={{ __html: data.product_description }} className='editor'></div>
-                                </div>
-                                   
-                              </div>
-                              
-                              <div className="product-order-detail">
-                                <div
-                                onClick={()=>onProductClick(data.order_id
-                                  )}
-                                  className="order-image"
-                                >
-                                  <img
-                                    src={data.all_images?data.all_images :"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
-                                    className="lazyload"
-                                    alt=""
-                                    width={250}
-                                    onClick={OnImageClick(data.order_id)}
-                                  />
-                                </div>
-
-                                <div className="order-wrap">
-                                  <p >
-                                    <h3>{data.product_title_name}</h3>
-                                  </p>
-                                  <p className="text-content">
-                                  <div dangerouslySetInnerHTML={{ __html: data.product_description }} className='editor'></div>
-                                  </p>
-                                  <ul className="product-size p-0">
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Price :{" "}
-                                        </h6>
-                                        <h5>{data.mrp}</h5>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Rate :{data.rating}
-                                        </h6>
-                                        <div className="product-rating ms-2">
-                                          <ul className="rating">
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i
-                                                data-feather="star"
-                                                className="fill"
-                                              ></i>
-                                            </li>
-                                            <li>
-                                              <i data-feather="star"></i>
-                                            </li>
-                                          </ul>
-                                        </div>
-                                      </div>
-                                    </li>
-
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Sold By :{" "}
-                                        </h6>
-                                        <h5>{data.store_name}</h5>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Order Date :{" "}
-                                        </h6>
-                                        <h5>{moment(data.order_date).format('yyyy-MM-DD')}</h5>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Delivery Date :{" "}
-                                        </h6>
-                                        <h5>{data.delivery_date}</h5>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Stock :{" "}
-                                        </h6>
-                                        <h5>{data.quantity}</h5>
-                                      </div>
-                                    </li>
-                                    <li>
-                                      <div className="size-box">
-                                        <h6 className="text-content">
-                                          Quantity :{" "}
-                                        </h6>
-                                        {data.unit === 'gms' || data.unit === 'ml' || data.unit === 'piece'? 
-                                        <h5>{data.unit_quantity} {data.unit}</h5>
-                                        :  <h5>{data.size} {data.unit}
-                                         </h5>
+                                  <div className="product-order-detail">
+                                    <div
+                                      onClick={() =>
+                                        onProductClick(data.order_id)
+                                      }
+                                      className="order-image"
+                                    >
+                                      <img
+                                        src={
+                                          data.all_images
+                                            ? data.all_images
+                                            : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
                                         }
+                                        className="lazyload"
+                                        alt=""
+                                        width={250}
+                                        onClick={OnImageClick(data.order_id)}
+                                      />
+                                    </div>
 
-                                      </div>
-                                    </li>
-                                  </ul>
+                                    <div className="order-wrap">
+                                      <p>
+                                        <h3>{data.product_title_name}</h3>
+                                      </p>
+                                      <p className="text-content">
+                                        <div
+                                          dangerouslySetInnerHTML={{
+                                            __html: data.product_description,
+                                          }}
+                                          className="editor"
+                                        ></div>
+                                      </p>
+                                      <ul className="product-size p-0">
+                                        <li>
+                                          <div className="size-box">
+                                            <h6 className="text-content">
+                                              Price :{" "}
+                                            </h6>
+                                            <h5>{data.mrp}</h5>
+                                          </div>
+                                        </li>
+
+                                        <li>
+                                          <div className="size-box">
+                                            <h6 className="text-content">
+                                              Rate :{data.rating}
+                                            </h6>
+                                            <div className="product-rating ms-2">
+                                              <ul className="rating">
+                                                <li>
+                                                  <i
+                                                    data-feather="star"
+                                                    className="fill"
+                                                  ></i>
+                                                </li>
+                                                <li>
+                                                  <i
+                                                    data-feather="star"
+                                                    className="fill"
+                                                  ></i>
+                                                </li>
+                                                <li>
+                                                  <i
+                                                    data-feather="star"
+                                                    className="fill"
+                                                  ></i>
+                                                </li>
+                                                <li>
+                                                  <i
+                                                    data-feather="star"
+                                                    className="fill"
+                                                  ></i>
+                                                </li>
+                                                <li>
+                                                  <i data-feather="star"></i>
+                                                </li>
+                                              </ul>
+                                            </div>
+                                          </div>
+                                        </li>
+
+                                        <li>
+                                          <div className="size-box">
+                                            <h6 className="text-content">
+                                              Sold By :{" "}
+                                            </h6>
+                                            <h5>{data.store_name}</h5>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div className="size-box">
+                                            <h6 className="text-content">
+                                              Order Date :{" "}
+                                            </h6>
+                                            <h5>
+                                              {moment(data.order_date).format(
+                                                "yyyy-MM-DD"
+                                              )}
+                                            </h5>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div className="size-box">
+                                            <h6 className="text-content">
+                                              Delivery Date :{" "}
+                                            </h6>
+                                            <h5>{data.delivery_date}</h5>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div className="size-box">
+                                            <h6 className="text-content">
+                                              Stock :{" "}
+                                            </h6>
+                                            <h5>{data.quantity}</h5>
+                                          </div>
+                                        </li>
+                                        <li>
+                                          <div className="size-box">
+                                            <h6 className="text-content">
+                                              Quantity :{" "}
+                                            </h6>
+                                            {data.unit === "gms" ||
+                                            data.unit === "ml" ||
+                                            data.unit === "piece" ? (
+                                              <h5>
+                                                {data.unit_quantity} {data.unit}
+                                              </h5>
+                                            ) : (
+                                              <h5>
+                                                {data.size} {data.unit}
+                                              </h5>
+                                            )}
+                                          </div>
+                                        </li>
+                                      </ul>
+                                    </div>
+                                  </div>
                                 </div>
                               </div>
-                          
-                            </div>
-
-                            
-                          </div>
-                          )
-                            })}
+                            );
+                          })}
                         </div>
                       </div>
                     </Tab.Pane>
@@ -860,98 +883,123 @@ const OnImageClick = (id) =>{
                             </span>
                           </div>
                           <div className="row g-sm-4 g-3">
-                          {(wishlistdata || []).map((wdata) =>{
-                                return(
-                            <div key={wdata.id} className="col-xxl-3 col-lg-6 col-md-4 col-sm-6">
-                              
+                            {(wishlistdata || []).map((wdata) => {
+                              return (
+                                <div
+                                  key={wdata.id}
+                                  className="col-xxl-3 col-lg-6 col-md-4 col-sm-6"
+                                >
                                   <div className="product-box-3 theme-bg-white h-100">
-                                  <div className="product-header">
-                                    <div className="product-image">
-                                      <div onClick={()=> onProductClick(wdata.product_id)}>
-                                        <img
-                                          src={wdata.all_images?wdata.all_images :"https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
-                                          className="img-fluid  lazyload"
-                                          alt=""
-                                        />
-                                      </div>
-  
-                                      <div className="product-header-top">
-                                        <button className="btn wishlist-button close_button">
-                                          <i data-feather="x"></i>
-                                        </button>
+                                    <div className="product-header">
+                                      <div className="product-image">
+                                        <div
+                                          onClick={() =>
+                                            onProductClick(wdata.product_id)
+                                          }
+                                        >
+                                          <img
+                                            src={
+                                              wdata.all_images
+                                                ? wdata.all_images
+                                                : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                            }
+                                            className="img-fluid  lazyload"
+                                            alt=""
+                                          />
+                                        </div>
+
+                                        <div className="product-header-top">
+                                          <button className="btn wishlist-button close_button">
+                                            <i data-feather="x"></i>
+                                          </button>
+                                        </div>
                                       </div>
                                     </div>
-                                  </div>
-  
-                                  <div className="product-footer">
-                                    <div className="product-detail">
-                                      <span className="span-name">{wdata.product_title_name}</span>
-                                      <Link to="/order_detail">
-                                        <h5 className="name mb-0"
-                                dangerouslySetInnerHTML={{__html:  wdata.product_description}}
-    
-                                        />
-                                      </Link>
-                                      <p className="text-content  mb-2"
-                                       dangerouslySetInnerHTML={{__html:  wdata.other_introduction}}
-                                      />
-                                       
-                                     
-                                      <h6 className="unit mt-1">250 ml</h6>
-                                      <h5 className="price">
-                                        <span className="theme-color">
-                                        {wdata.product_price}₹
+
+                                    <div className="product-footer">
+                                      <div className="product-detail">
+                                        <span className="span-name">
+                                          {wdata.product_title_name}
                                         </span>
-                                        <del>{wdata.mrp}₹</del>
-                                      </h5>
-                                      <div className="add-to-cart-box mt-2">
-                                        <button className="btn btn-add-cart addcart-button" onClick={(e)=>AddToCart(wdata.id , wdata.discount , wdata.product_price , wdata.quantity , wdata.is_active, wdata.product_id)}>
-                                          Add
-                                          <i className="fa-solid fa-plus"></i>
-                                        </button>
-                                        <div className="cart_qty qty-box">
-                                          <div className="input-group">
-                                            <button
-                                              type="button"
-                                              className="qty-left-minus"
-                                              data-type="minus"
-                                              data-field=""
-                                            >
-                                              <i
-                                                className="fa fa-minus"
-                                                aria-hidden="true"
-                                              ></i>
-                                            </button>
-                                            <input
-                                              className="form-control input-number qty-input"
-                                              type="text"
-                                              name="quantity"
-                                              value="0"
-                                              onChange={func}
-                                            />
-                                            <button
-                                              type="button"
-                                              className="qty-right-plus"
-                                              data-type="plus"
-                                              data-field=""
-                                            >
-                                              <i
-                                                className="fa fa-plus"
-                                                aria-hidden="true"
-                                              ></i>
-                                            </button>
+                                        <Link to="/order_detail">
+                                          <h5
+                                            className="name mb-0"
+                                            dangerouslySetInnerHTML={{
+                                              __html: wdata.product_description,
+                                            }}
+                                          />
+                                        </Link>
+                                        <p
+                                          className="text-content  mb-2"
+                                          dangerouslySetInnerHTML={{
+                                            __html: wdata.other_introduction,
+                                          }}
+                                        />
+
+                                        <h6 className="unit mt-1">250 ml</h6>
+                                        <h5 className="price">
+                                          <span className="theme-color">
+                                            {wdata.product_price}₹
+                                          </span>
+                                          <del>{wdata.mrp}₹</del>
+                                        </h5>
+                                        <div className="add-to-cart-box mt-2">
+                                          <button
+                                            className="btn btn-add-cart addcart-button"
+                                            onClick={(e) =>
+                                              AddToCart(
+                                                wdata.id,
+                                                wdata.discount,
+                                                wdata.product_price,
+                                                wdata.quantity,
+                                                wdata.is_active,
+                                                wdata.product_id
+                                              )
+                                            }
+                                          >
+                                            Add
+                                            <i className="fa-solid fa-plus"></i>
+                                          </button>
+                                          <div className="cart_qty qty-box">
+                                            <div className="input-group">
+                                              <button
+                                                type="button"
+                                                className="qty-left-minus"
+                                                data-type="minus"
+                                                data-field=""
+                                              >
+                                                <i
+                                                  className="fa fa-minus"
+                                                  aria-hidden="true"
+                                                ></i>
+                                              </button>
+                                              <input
+                                                className="form-control input-number qty-input"
+                                                type="text"
+                                                name="quantity"
+                                                value="0"
+                                                onChange={func}
+                                              />
+                                              <button
+                                                type="button"
+                                                className="qty-right-plus"
+                                                data-type="plus"
+                                                data-field=""
+                                              >
+                                                <i
+                                                  className="fa fa-plus"
+                                                  aria-hidden="true"
+                                                ></i>
+                                              </button>
+                                            </div>
                                           </div>
                                         </div>
                                       </div>
                                     </div>
                                   </div>
                                 </div>
-                                
-                             
-                            </div>
-)
-})}
-                            
+                              );
+                            })}
                           </div>
                         </div>
                       </div>
@@ -1258,15 +1306,16 @@ const OnImageClick = (id) =>{
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colSpan="2">{userdata.first_name} {userdata.last_name}</td>
+                                          <td colSpan="2">
+                                            {userdata.first_name}{" "}
+                                            {userdata.last_name}
+                                          </td>
                                         </tr>
 
                                         <tr>
                                           <td>Address :</td>
                                           <td>
-                                            <p>
-                                             {userdata.address}
-                                            </p>
+                                            <p>{userdata.address}</p>
                                           </td>
                                         </tr>
 
@@ -1306,7 +1355,7 @@ const OnImageClick = (id) =>{
                               </div>
                             </div>
 
-                             <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
+                            <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
                               <div className="address-box">
                                 <div>
                                   <div className="form-check">
@@ -1326,15 +1375,16 @@ const OnImageClick = (id) =>{
                                     <table className="table">
                                       <tbody>
                                         <tr>
-                                          <td colSpan="2">{userdata.first_name} {userdata.last_name}</td>
+                                          <td colSpan="2">
+                                            {userdata.first_name}{" "}
+                                            {userdata.last_name}
+                                          </td>
                                         </tr>
 
                                         <tr>
                                           <td>Address :</td>
                                           <td>
-                                            <p>
-                                              {userdata.address2}
-                                            </p>
+                                            <p>{userdata.address2}</p>
                                           </td>
                                         </tr>
 
@@ -1345,8 +1395,7 @@ const OnImageClick = (id) =>{
 
                                         <tr>
                                           <td>Phone :</td>
-                                          <td>+{userdata.phone_no}
-</td>
+                                          <td>+{userdata.phone_no}</td>
                                         </tr>
                                       </tbody>
                                     </table>
@@ -1374,8 +1423,6 @@ const OnImageClick = (id) =>{
                                 </div>
                               </div>
                             </div>
-
-                          
                           </div>
                         </div>
                       </div>
@@ -1404,7 +1451,9 @@ const OnImageClick = (id) =>{
                             </div>
                             <div className="profile-name-detail">
                               <div className="d-sm-flex align-items-center d-block">
-                                <h3>{userdata.first_name} {userdata.last_name}</h3>
+                                <h3>
+                                  {userdata.first_name} {userdata.last_name}
+                                </h3>
                                 <div className="product-rating profile-rating">
                                   <ul className="rating">
                                     <li>
@@ -1502,9 +1551,7 @@ const OnImageClick = (id) =>{
                                       </tr>
                                       <tr>
                                         <td>Address :</td>
-                                        <td>
-                                        {userdata.address}
-                                        </td>
+                                        <td>{userdata.address}</td>
                                       </tr>
                                     </tbody>
                                   </table>
@@ -1521,7 +1568,7 @@ const OnImageClick = (id) =>{
                                         <td>Email :</td>
                                         <td>
                                           <Link to="#">
-                                          {userdata.email}
+                                            {userdata.email}
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
@@ -1536,7 +1583,7 @@ const OnImageClick = (id) =>{
                                         <td>Password :</td>
                                         <td>
                                           <Link to="#">
-                                          {userdata.password}
+                                            {userdata.password}
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
@@ -1589,7 +1636,6 @@ const OnImageClick = (id) =>{
                                   <input
                                     className="form-check-input"
                                     type="checkbox"
-                             
                                     id="redio1"
                                   />
                                   <label
@@ -1692,7 +1738,6 @@ const OnImageClick = (id) =>{
                       </div>
                     </Tab.Pane>
                     {/* end privacy history */}
-                    
                   </Tab.Content>
                 </div>
               </div>
@@ -1717,7 +1762,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="text"
                     placeholder="Name"
-                    value={userdata.first_name}
+                    value={udata.first_name}
                     name={"first_name"}
                     onChange={OnchangeFistname}
                     required
@@ -1737,7 +1782,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="text"
                     placeholder="Name"
-                    value={userdata.last_name}
+                    value={udata.last_name}
                     name={"last_name"}
                     onChange={OnchangeFistname}
                     required
@@ -1758,7 +1803,7 @@ const OnImageClick = (id) =>{
                     type="email"
                     placeholder="Email Address"
                     required
-                    value={userdata.email}
+                    value={udata.email}
                     name={"email"}
                     // onChange={OnchangeFistname}
                   />
@@ -1795,7 +1840,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="number"
                     placeholder="Mobile"
-                    value={userdata.phone_no}
+                    value={udata.phone_no}
                     name={"phone_no"}
                     onChange={OnchangeFistname}
                     required
@@ -1817,7 +1862,7 @@ const OnImageClick = (id) =>{
                     type="location"
                     placeholder="Add Address"
                     required
-                    value={userdata.address}
+                    value={udata.address}
                     name={"address"}
                     onChange={OnchangeFistname}
                   />
@@ -1836,7 +1881,7 @@ const OnImageClick = (id) =>{
                   <Form.Control
                     type="location"
                     placeholder="Add Address2"
-                    value={userdata.address2}
+                    value={udata.address2}
                     name={"address2"}
                     onChange={OnchangeFistname}
                   />
@@ -1851,13 +1896,19 @@ const OnImageClick = (id) =>{
                   aria-label="Product Type"
                   className="adminselectbox"
                   required
-                  value={userdata.gender}
+                  value={udata.gender}
                   name={"gender"}
                   onChange={OnchangeFistname}
                 >
-                  <option value={""} onChange={func}>Gender</option>
-                  <option value="Male" onChange={func}>Male</option>
-                  <option value="Female" onChange={func}>Female</option>
+                  <option value={""} onChange={func}>
+                    Gender
+                  </option>
+                  <option value="Male" onChange={func}>
+                    Male
+                  </option>
+                  <option value="Female" onChange={func}>
+                    Female
+                  </option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid" className="h6">
                   Please select producttype
@@ -1872,7 +1923,7 @@ const OnImageClick = (id) =>{
                     <Form.Control
                       type="date"
                       placeholder="Product Quantity"
-                      value={moment(userdata.date_of_birth).format('yyyy-MM-DD')}
+                      value={moment(udata.date_of_birth).format('yyyy-MM-DD')}
                       name={"date_of_birth"}
                       onChange={OnchangeFistname}
                       required
@@ -1903,21 +1954,23 @@ const OnImageClick = (id) =>{
         </Form>
       </Modal>
 
-      <Modal size="md" show={Password} onHide={ChangepassClose} className="changePass_modal">
+      <Modal
+        size="md"
+        show={Password}
+        onHide={ChangepassClose}
+        className="changePass_modal"
+      >
         <Form noValidate onSubmit={handlePassSubmit}>
-      
           <Modal.Header closeButton>
             <Modal.Title>Change Password</Modal.Title>
-            
           </Modal.Header>
           <Modal.Body>
             <div className="row p-md-3 m-0">
-            <div className="col-12">
+              <div className="col-12">
                 <Form.Group
                   className="mb-3 aos_input"
                   controlId="validationCustom01"
                 >
-
                   <Form.Label>Email</Form.Label>
                   <Form.Control
                     type="email"
@@ -1933,7 +1986,6 @@ const OnImageClick = (id) =>{
                   className="mb-3 aos_input"
                   controlId="validationCustom01"
                 >
-
                   <Form.Label>Current Password</Form.Label>
                   <Form.Control
                     type="password"
@@ -1941,7 +1993,6 @@ const OnImageClick = (id) =>{
                     value={changepass.password}
                     name={"password"}
                     onChange={OnchangePass}
-
                   />
                   <p className="error-message">{formError.currentPass}</p>
                 </Form.Group>
@@ -1961,25 +2012,27 @@ const OnImageClick = (id) =>{
                   />
                   <p className="error-message">{formError.newPass}</p>
                 </Form.Group>
-                </div>
-                <div className="col-12">
-                  <Form.Group
-                    className="mb-3 aos_input"
-                    controlId="formBasicEmail"
-                  >
-                    <Form.Label>Confirm Password</Form.Label>
-                    <Form.Control
-                      type="password"
-                      placeholder="Confirm Password"
-                      value={changepass.confirm_password}
-                      name={"confirmpassword"}
-                      onChange={OnchangePass}
-                    />
-                    </Form.Group>
-                    <p className="error-message">{formError.confirmPass}{formError.allPass}</p>
-                </div>
               </div>
-           
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Confirm Password</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="Confirm Password"
+                    value={changepass.confirm_password}
+                    name={"confirmpassword"}
+                    onChange={OnchangePass}
+                  />
+                </Form.Group>
+                <p className="error-message">
+                  {formError.confirmPass}
+                  {formError.allPass}
+                </p>
+              </div>
+            </div>
           </Modal.Body>
 
           <Modal.Footer>

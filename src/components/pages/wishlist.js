@@ -10,9 +10,9 @@ import { useNavigate } from "react-router-dom";
 
 function Wishlist(all_images) {
   const useridd = localStorage.getItem("userid");
-  const[apicall,setapicall]=useState(false);
+  const [apicall, setapicall] = useState(false);
   const [wishlist, setWishList] = useState([]);
-  const [wishlistocart,setwishlistocart] = useState('')
+  const [wishlistocart, setwishlistocart] = useState("");
   const navigate = useNavigate();
 
   var product = data.product;
@@ -24,11 +24,10 @@ function Wishlist(all_images) {
           .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
           .then((response) => {
             let data = response.data;
-            if(data.message !=='empty'){
+            if (data.message !== "empty") {
               setWishList(data);
               setapicall(false);
             }
-         
           });
       } catch (err) {}
     }
@@ -37,7 +36,7 @@ function Wishlist(all_images) {
   }, [apicall]);
 
   // function incrementCount(id,wishlistid) {
-   
+
   //   let cardadd = wishlist.find((item) => item.id === wishlistid);
   //   console.log("----"+JSON.stringify(cardadd))
   //   setwishlistocart(cardadd);
@@ -56,7 +55,7 @@ function Wishlist(all_images) {
 
   // product box
 
-  const AddToCart = (id,saleprice,productMRF,wishlistid,count) => {
+  const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     let cnt = 1;
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
@@ -75,16 +74,16 @@ function Wishlist(all_images) {
   };
   // wlist = window.location.pathname;
 
-  const AddToWishList = (id,wishlistt,wishlistid) => {
-      axios
-        .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-          product_id: `${wishlistid}`,
-          user_id: `${useridd}`,
-        })
-        .then((response) => {
-          let data = response.data;
-          setapicall(true);
-        });
+  const AddToWishList = (id, wishlistt, wishlistid) => {
+    axios
+      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
+        product_id: `${wishlistid}`,
+        user_id: `${useridd}`,
+      })
+      .then((response) => {
+        let data = response.data;
+        setapicall(true);
+      });
   };
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
@@ -104,35 +103,36 @@ function Wishlist(all_images) {
             aria-labelledby="all-tab"
           >
             <div className="row w-100">
-              {wishlist?
-              wishlist.map((wlist) => {
-                return (
-                  <div
-                    key={wlist.id}
-                    className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                  >
-                    <ProductBox
-                      image={product.all_images}
-                      name={wlist.product_title_name}
-                      productPrice={wlist.product_price}
-                      productMRF={wlist.sale_price}
-                      productid={wlist.product_id}
-                      saleprice={wlist.sale_price}
-                      wishlistid={wlist.id}
-                      rating={wlist.rating}
-                      discount={wlist.discount}
-                      special_offer={wlist.special_offer}
-                      clickProduct={clickProduct}
-                      AddToWishList={AddToWishList}
-                      AddToCart={AddToCart}
-                      wishlistocart={wishlistocart}
-                      allimages={wlist.all_images}
-                    />
-                    
-                  </div>
-                );
-              })
-            :null}
+              {wishlist
+                ? wishlist.map((wlist) => {
+                    console.log("---" + JSON.stringify(wishlist));
+
+                    return (
+                      <div
+                        key={wlist.id}
+                        className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
+                      >
+                        <ProductBox
+                          image={product.all_images}
+                          name={wlist.product_title_name}
+                          productPrice={wlist.product_price}
+                          productMRF={wlist.sale_price}
+                          productid={wlist.product_id}
+                          saleprice={wlist.sale_price}
+                          wishlistid={wlist.id}
+                          rating={wlist.rating}
+                          discount={wlist.discount}
+                          special_offer={wlist.special_offer}
+                          clickProduct={clickProduct}
+                          AddToWishList={AddToWishList}
+                          AddToCart={AddToCart}
+                          wishlistocart={wishlistocart}
+                          allimages={wlist.all_images}
+                        />
+                      </div>
+                    );
+                  })
+                : null}
             </div>
           </div>
         </div>
@@ -377,7 +377,7 @@ function Wishlist(all_images) {
           </div>
         </div>
       </div>
-
+      {/* 
       <div className="theme-option">
         <div className="setting-box">
           <button className="btn setting-button">
@@ -441,7 +441,7 @@ function Wishlist(all_images) {
             <i className="fas fa-chevron-up"></i>
           </Link>
         </div>
-      </div>
+      </div> */}
       <Footer />
     </React.Fragment>
   );

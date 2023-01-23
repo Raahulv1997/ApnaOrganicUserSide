@@ -23,11 +23,13 @@ const Cart = (all_images) => {
   const [quantity, setQuantity] = useState([]);
   const [CouponDis, setCouponDis] = useState(0);
   const [Couponid, setCouponid] = useState(0);
+  const [Couponmsg, setCouponmsg] = useState(false);
+  const [Couponvalidmsg, setCouponvalidmsg] = useState(false);
+
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
   const currentdate = moment().format();
-  
 
   const incrementCount = (id, quantity) => {
     let inc = quantity + 1;
@@ -79,24 +81,21 @@ const Cart = (all_images) => {
             let data = response.data;
             let ProductTotal = 0;
             data.map((cdata) => {
-              ProductTotal +=
-              (
-                cdata.quantity * Number(cdata.sale_price)
-              )
+              ProductTotal += cdata.quantity * Number(cdata.sale_price);
             });
             setProductPriceTotal(ProductTotal);
             setCartData(data);
             setapicall(false);
-            
+
             // setapicall(false);
           });
       } catch (err) {}
     }
 
     getCartData();
-  }, [apicall,quantity]);
+  }, [apicall, quantity]);
   // end Cart Detail
-  
+
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
@@ -127,8 +126,8 @@ const Cart = (all_images) => {
 
   // payement
   const onProccedClick = () => {
-    localStorage.setItem("coupon",(CouponDis).toFixed(2))
-    localStorage.setItem("couponid",Couponid)
+    localStorage.setItem("coupon", CouponDis.toFixed(2));
+    localStorage.setItem("couponid", Couponid);
     navigate("/checkout");
   };
   // end payment
@@ -137,27 +136,34 @@ const Cart = (all_images) => {
   let discountpercent;
   const func = (e) => {
     setapicall(true);
-    setcouponname(e.target.value);
-    discountpercent = coupondata.filter(
-      (item) =>
-        item.code === e.target.value && ProductPriceTotal >= item.minimum_amount
-    );
+    if (e.target.value === "" || e.target.value === null) {
+      setCouponmsg(true);
+    } else {
+      setCouponmsg(false);
+
+      setcouponname(e.target.value);
+      discountpercent = coupondata.filter(
+        (item) =>
+          item.code === e.target.value &&
+          ProductPriceTotal >= item.minimum_amount
+      );
+    }
   };
 
   const CheckCoupon = () => {
-  setapicall(true);
+    setapicall(true);
     discountpercent = coupondata.filter(
       (item) =>
         item.code === couponname && ProductPriceTotal >= item.minimum_amount
     );
-if(discountpercent.length !== 0){
-  let discntcoupn = Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
-    setCouponDis(discntcoupn);
-    setCouponid(discountpercent[0].id)
-}
-else{
-  setCouponDis(0);
-}
+    if (discountpercent.length !== 0) {
+      let discntcoupn =
+        Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
+      setCouponDis(discntcoupn);
+      setCouponid(discountpercent[0].id);
+    } else {
+      setCouponDis(0);
+    }
   };
 
   const handleClose = () => {
@@ -187,23 +193,47 @@ else{
   const onCouponClick = () => {
     setapicall(true);
     setShow(true);
- 
   };
   const OnApplyClick = () => {
     CheckCoupon();
-    let discntcoupn =  Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
-    setCouponDis(discntcoupn);
-    setCouponid(discountpercent[0].id)
-
+    if (
+      couponname === "" ||
+      couponname === null ||
+      discountpercent === "undefined" ||
+      discountpercent.length === 0
+    ) {
+      setCouponvalidmsg(true);
+      setCouponDis(0);
+    } else {
+      setCouponvalidmsg(false);
+      setcouponname("");
+      let discntcoupn =
+        Number(ProductPriceTotal * discountpercent[0].percentage) / 100;
+      setCouponDis(discntcoupn);
+      setCouponid(discountpercent[0].id);
+    }
   };
   // end coupon list
 
   // discount and shipping
   let ShippingCharge = 0.0;
   // end
+
+  // copy coupon
+  const onApplyButtonClick = (id) => {
+    axios
+      .get(`${process.env.REACT_APP_BASEURL}/coupon?coupon_id=${id}`)
+      .then((response) => {
+        let data = response.data[0];
+        setcouponname(data.code);
+        setShow(false);
+      })
+      .catch((error) => {});
+  };
+  // end copy coupon
   return (
     <Fragment>
-      <Header />
+      <Header deleteCart={deleteCart} />
       <Breadcumb pageName={"Cart"} pageTitle={"Cart page"} pageHref={"/"} />
       {/* <!-- Cart Section Start --> */}
       <section className="cart-section section-b-space">
@@ -306,10 +336,7 @@ else{
                                 </del>
                                 <b>
                                   {" "}
-                                  ₹
-                                  {Number(
-                                    cdata.product_price 
-                                  ).toFixed(2)}{" "}
+                                  ₹{Number(cdata.product_price).toFixed(2)}{" "}
                                 </b>
                               </h5>
                               {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
@@ -323,7 +350,6 @@ else{
                               </h6>
                             </td>
                             <td className="price">
-                            
                               <h6 className="">
                                 Gst:{Number(cdata.gst).toFixed(2)}%
                               </h6>
@@ -335,29 +361,34 @@ else{
                               </h6>
                             </td>
                             <td className="price">
-                                      <div className="">
-                                      <h6 className="">
-                                Mtax:{Number(cdata.manufacturers_sales_tax).toFixed(2)}%
-                              </h6>
-                              <h6 className="">
-                                WTax:{Number(cdata.wholesale_sales_tax).toFixed(2)}%
-                              </h6>
-                                      
-                                     
-                              <h6 className="">
-                                VTax:{Number(cdata.value_added_tax).toFixed(2)}%
-                              </h6>
-                              <h6 className="">
-                                RTax:{Number(cdata.retails_sales_tax).toFixed(2)}%
-                              </h6>
+                              <div className="">
+                                <h6 className="">
+                                  Mtax:
+                                  {Number(
+                                    cdata.manufacturers_sales_tax
+                                  ).toFixed(2)}
+                                  %
+                                </h6>
+                                <h6 className="">
+                                  WTax:
+                                  {Number(cdata.wholesale_sales_tax).toFixed(2)}
+                                  %
+                                </h6>
+
+                                <h6 className="">
+                                  VTax:
+                                  {Number(cdata.value_added_tax).toFixed(2)}%
+                                </h6>
+                                <h6 className="">
+                                  RTax:
+                                  {Number(cdata.retails_sales_tax).toFixed(2)}%
+                                </h6>
                               </div>
                             </td>
                             <td className="price">
                               <h4 className="table-title text-content">
                                 Taxable Value: ₹
-                                {Number(
-                                    cdata.product_price 
-                                  ).toFixed(2)}
+                                {Number(cdata.product_price).toFixed(2)}
                               </h4>
                               {cdata.sgst === null
                                 ? (cdata.sgst = "0")
@@ -365,73 +396,47 @@ else{
                               {cdata.cgst === null
                                 ? (cdata.cgst = "0")
                                 : cdata.cgst === cdata.cgst}
-                                <h4 className="table-title text-content">
-                               Total Tax: 
+                              <h4 className="table-title text-content">
+                                Total Tax:
                                 {(
-                                          Number(
-                                            cdata.gst )  +
-                                          Number(
-                                            cdata.cgst ) +
-                                          Number(
-                                            cdata.sgst ) 
-                                            +
-                                          Number(
-                                            cdata.wholesale_sales_tax )
-                                            +
-                                          Number(
-                                            cdata.manufacturers_sales_tax ) 
-                                            +
-                                          Number(
-                                            cdata.retails_sales_tax )
-                                            +
-                                          Number(
-                                            cdata.value_added_tax ) 
-                                        ).toFixed(2)}%
+                                  Number(cdata.gst) +
+                                  Number(cdata.cgst) +
+                                  Number(cdata.sgst) +
+                                  Number(cdata.wholesale_sales_tax) +
+                                  Number(cdata.manufacturers_sales_tax) +
+                                  Number(cdata.retails_sales_tax) +
+                                  Number(cdata.value_added_tax)
+                                ).toFixed(2)}
+                                %
                               </h4>
                               <h4 className="table-title text-content">
                                 Tax: ₹
                                 {(
-                                          (Number(
-                                            cdata.product_price ) *
-                                            cdata.gst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price ) *
-                                            cdata.cgst) /
-                                            100 +
-                                          (Number(
-                                            cdata.product_price ) *
-                                            cdata.sgst) /
-                                            100
-                                            +
-                                          (Number(
-                                            cdata.product_price ) *
-                                            cdata.wholesale_sales_tax) /
-                                            100
-                                            +
-                                          (Number(
-                                            cdata.product_price ) *
-                                            cdata.manufacturers_sales_tax) /
-                                            100
-                                            +
-                                          (Number(
-                                            cdata.product_price ) *
-                                            cdata.retails_sales_tax) /
-                                            100
-                                            +
-                                          (Number(
-                                            cdata.product_price ) *
-                                            cdata.value_added_tax) /
-                                            100
-                                        ).toFixed(2)}
+                                  (Number(cdata.product_price) * cdata.gst) /
+                                    100 +
+                                  (Number(cdata.product_price) * cdata.cgst) /
+                                    100 +
+                                  (Number(cdata.product_price) * cdata.sgst) /
+                                    100 +
+                                  (Number(cdata.product_price) *
+                                    cdata.wholesale_sales_tax) /
+                                    100 +
+                                  (Number(cdata.product_price) *
+                                    cdata.manufacturers_sales_tax) /
+                                    100 +
+                                  (Number(cdata.product_price) *
+                                    cdata.retails_sales_tax) /
+                                    100 +
+                                  (Number(cdata.product_price) *
+                                    cdata.value_added_tax) /
+                                    100
+                                ).toFixed(2)}
                               </h4>
                             </td>
                             <td className="price">
                               <h4 className="table-title text-content">
                                 Sale Price: ₹
-                                {(
-                                  Number(cdata.sale_price) 
-                                ).toFixed(2)}
+                                {Number(cdata.sale_price).toFixed(2)}
                               </h4>
                             </td>
 
@@ -446,7 +451,10 @@ else{
                                       data-type="minus"
                                       data-field=""
                                       onClick={() =>
-                                        decrementCount(cdata.cart_id, cdata.quantity)
+                                        decrementCount(
+                                          cdata.cart_id,
+                                          cdata.quantity
+                                        )
                                       }
                                     >
                                       <i className="fa-regular fa-minus"></i>
@@ -464,7 +472,10 @@ else{
                                       data-type="plus"
                                       data-field=""
                                       onClick={() =>
-                                        incrementCount(cdata.cart_id, cdata.quantity)
+                                        incrementCount(
+                                          cdata.cart_id,
+                                          cdata.quantity
+                                        )
                                       }
                                     >
                                       <i className="fa-regular fa-plus"></i>
@@ -480,7 +491,7 @@ else{
                               </h4>
                               <h5>
                                 {(
-                                  cdata.quantity * Number(cdata.sale_price) 
+                                  cdata.quantity * Number(cdata.sale_price)
                                 ).toFixed(2)}
                               </h5>
                             </td>
@@ -538,7 +549,9 @@ else{
                         id="exampleFormControlInput1"
                         placeholder="Enter Coupon Code Here..."
                         onChange={(e) => func(e)}
+                        value={couponname}
                       />
+
                       <button
                         className="btn-apply"
                         onClick={() => OnApplyClick()}
@@ -546,6 +559,15 @@ else{
                         Apply
                       </button>
                     </div>
+                    {Couponmsg === true ? (
+                      <span className="text text-danger">
+                        Please Select a Coupon
+                      </span>
+                    ) : Couponvalidmsg === true ? (
+                      <span className="text text-danger">
+                        Please Select a Valid Coupon
+                      </span>
+                    ) : null}
                   </div>
                   <ul className="p-0">
                     <li>
@@ -667,6 +689,8 @@ else{
                         {data.percentage}%
                       </Badge>
                       <Badge
+                        className="btn-apply"
+                        onClick={(id) => onApplyButtonClick(data.id)}
                         bg={
                           ProductPriceTotal < data.minimum_amount
                             ? "secondary"
