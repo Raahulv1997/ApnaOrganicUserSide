@@ -42,7 +42,7 @@ function Wishlist(all_images) {
               setWishList(data);
               setapicall(false);
             } else if (response.data.message === "empty") {
-              setWishList(response.data.message);
+              setWishList([]);
             }
           });
       } catch (err) {}
@@ -116,7 +116,7 @@ function Wishlist(all_images) {
             aria-labelledby="all-tab"
           >
             <div className="row w-100">
-              {wishlist !== "empty"
+              {wishlist
                 ? wishlist.map((wlist) => {
                     // console.log("---" + JSON.stringify(wishlist));
 
