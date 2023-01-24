@@ -59,7 +59,6 @@ const token=localStorage.getItem("token")
   axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,
   { user_id: '' },
   { headers: {
-  
     user_token:`${token}`
   }})
 // console.log("----------"+user_token)
@@ -88,7 +87,7 @@ const Onwishlistclick = () =>{
     }
   })
   .then(response => {
-    if(response.data.message !=='header error'){
+    if(response.data[0].message !=='header error'){
       setwishlistdata(response.data)
     }
     // navigate('/your_account')
@@ -102,7 +101,12 @@ const Onwishlistclick = () =>{
   // order history
   const OnOrderclick = () => {
     axios
-      .get(`${process.env.REACT_APP_BASEURL}/user_orders?user_id=${useridd}`)
+      .get(`${process.env.REACT_APP_BASEURL}/orders`,{
+        user_id:""
+      },{
+        headers: {
+          user_token:`${token}`}
+      })
       .then((response) => {
         setorderhistory(response.data[0]);
         var result = response.data.filter(
@@ -132,8 +136,7 @@ const Onwishlistclick = () =>{
     axios
       .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata,
         { headers: {
-  
-          user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+          user_token:`${token}`
         }}
       )
       .then((response) => {
@@ -269,12 +272,17 @@ const Onwishlistclick = () =>{
   const AddToCart = (id, discount, product_price, quantity, product_id) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id: useridd,
+        user_id:"",
         product_view_id: id,
         price: product_price,
         discount: discount,
         quantity: 1,
         is_active: 1,
+      },
+      {
+        headers: {
+          user_token: token,
+        },
       })
       .then((response) => {
         let cartup = localStorage.setItem("cartupdate", true);

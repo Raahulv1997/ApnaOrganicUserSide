@@ -28,8 +28,8 @@ function Wishlist(all_images) {
           }, 
           {
             headers: {
-            user_token:`${token}`
-      }})
+            user_token:token
+         }})
           .then((response) => {
             let data = response.data;
             if (data.response !== "header error") {
@@ -58,7 +58,7 @@ function Wishlist(all_images) {
         is_active: 1,
       },
       { headers: {
-        user_token:`${token}`
+        user_token:token
       }})
       .then((response) => {
         let data = response.data;
@@ -76,7 +76,7 @@ function Wishlist(all_images) {
         
       },
       { headers: {
-        user_token:`${token}`
+        user_token:token
       }})
 
       .then((response) => {

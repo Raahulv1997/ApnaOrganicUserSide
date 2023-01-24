@@ -53,13 +53,13 @@ const Checkout = (props) => {
   let CouponDis = localStorage.getItem("coupon");
   let CouponId = localStorage.getItem("couponid");
   // end discount and shipping
-
+const token =localStorage.getItem("token");
   var address = data2.address;
   const func = (e) => {
     setDeliveryMethod(e.target.value);
   };
-  const incrementCount = (id, quantity) => {
-    let inc = quantity + 1;
+  const incrementCount = (id, order_quantity) => {
+    let inc = order_quantity + 1;
     axios
       .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
         id: id,
@@ -77,10 +77,10 @@ const Checkout = (props) => {
       });
   };
 
-  const decrementCount = (id, quantity) => {
+  const decrementCount = (id, order_quantity) => {
     let dec;
-    if (quantity > 0) {
-      dec = quantity - 1;
+    if (order_quantity > 0) {
+      dec = order_quantity - 1;
     } else {
       return false;
     }
@@ -108,7 +108,13 @@ const Checkout = (props) => {
   useEffect(() => {
     try {
       axios
-        .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
+        .put(`${process.env.REACT_APP_BASEURL}/cart`,{
+          user_id:"",
+        },{
+          headers: {
+          user_token:token
+      }
+        })
         .then((response) => {
           let data = response.data;
           let ProductTotal = 0;
@@ -124,7 +130,7 @@ const Checkout = (props) => {
           let Saleprice = 0;
           data.map((cdata) => {
             // totalprice
-            ProductTotal += cdata.quantity * Number(cdata.sale_price);
+            ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
             // end totalprice
             if (cdata.gst === null) {
               cdata.gst = "0";
@@ -200,11 +206,14 @@ const Checkout = (props) => {
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
-        id: id,
-        user_id: user_id,
-      })
+        cart_id: id,
+        user_id: "",
+      },
+      {headers: {
+        user_token:token
+  }})
       .then((response) => {
-        let data = response.data;
+        let data = response.data[0];
         setapicall(true);
       });
   };
@@ -213,8 +222,13 @@ const Checkout = (props) => {
   const SaveForLater = (id) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-        user_id: `${useridd}`,
+        user_id: "",
         product_view_id: `${id}`,
+      },
+      {
+        headers: {
+          user_token: token,
+        },
       })
       .then((response) => {
         let data = response.data;
@@ -227,7 +241,12 @@ const Checkout = (props) => {
   // delivery address
   const DeliveryClick = () => {
     axios
-      .get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
+      .get(`${process.env.REACT_APP_BASEURL}/user_details`,{
+        user_id:"",
+      },
+      { headers: {
+        user_token:token,
+      }})
       .then((response) => {
         setuserdata(response.data);
         // navigate('/your_account')
@@ -444,7 +463,7 @@ const Checkout = (props) => {
 
                                                 <li className="text-content">
                                                   <span className="text-title">
-                                                    Quatity:{cdata.quantity}
+                                                    Quatity:{cdata.order_quantity}
                                                   </span>
                                                 </li>
 
@@ -656,7 +675,7 @@ const Checkout = (props) => {
                                                   onClick={() =>
                                                     decrementCount(
                                                       cdata.cart_id,
-                                                      cdata.quantity
+                                                      cdata.order_quantity
                                                     )
                                                   }
                                                 >
@@ -666,7 +685,7 @@ const Checkout = (props) => {
                                                   className="form-control input-number qty-input mx-2"
                                                   type="text"
                                                   name="quantity"
-                                                  value={cdata.quantity}
+                                                  value={cdata.order_quantity}
                                                   onChange={func}
                                                 />
                                                 <button
@@ -677,7 +696,7 @@ const Checkout = (props) => {
                                                   onClick={() =>
                                                     incrementCount(
                                                       cdata.cart_id,
-                                                      cdata.quantity
+                                                      cdata.order_quantity
                                                     )
                                                   }
                                                 >
@@ -694,7 +713,7 @@ const Checkout = (props) => {
                                           </h4>
                                           <h5>
                                             {(
-                                              cdata.quantity *
+                                              cdata.order_quantity *
                                               Number(cdata.sale_price)
                                             ).toFixed(2)}
                                           </h5>
@@ -720,7 +739,7 @@ const Checkout = (props) => {
                                             className="remove close_button btn"
                                             onClick={() =>
                                               deleteCart(
-                                                cdata.id,
+                                                cdata.cart_id,
                                                 cdata.user_id
                                               )
                                             }

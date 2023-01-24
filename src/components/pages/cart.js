@@ -81,8 +81,9 @@ const Cart = (all_images) => {
           .put(`${process.env.REACT_APP_BASEURL}/cart`,{
             user_id:""
           }, 
-          {headers: {
-            user_token:`${token}`
+          {
+            headers: {
+            user_token:token
           }})
           .then((response) => {
             let data = response.data;
@@ -110,10 +111,10 @@ const Cart = (all_images) => {
         user_id: "",
       },
       {headers: {
-        user_token:`${token}`
+        user_token:token
   }})
       .then((response) => {
-        let data = response.data;
+        let data = response.data[0];
         setapicall(true);
         CheckCoupon();
       });
@@ -126,7 +127,7 @@ const Cart = (all_images) => {
         user_id: "",
         product_view_id:`${id}`,
       },{headers: {
-        user_token: `${token}`
+        user_token: token
       }})
       .then((response) => {
         let data = response.data;
@@ -524,7 +525,7 @@ const Cart = (all_images) => {
                                 type="button"
                                 className="remove close_button btn px-0"
                                 onClick={() =>
-                                  deleteCart(cdata.id, cdata.user_id)
+                                  deleteCart(cdata.cart_id, cdata.user_id)
                                 }
                               >
                                 remove

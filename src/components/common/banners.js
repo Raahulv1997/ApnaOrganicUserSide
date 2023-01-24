@@ -139,7 +139,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             },
             {
               headers: {
-                user_token: token,
+                user_token: `${token}`
               },
             }
           )
