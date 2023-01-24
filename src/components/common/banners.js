@@ -80,7 +80,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       useridd === undefined ||
       useridd === "null" ||
       useridd === "" ||
-      useridd === null
+      useridd === null ||
+      useridd === true
     ) {
       navigate("/login");
     } else {
@@ -92,7 +93,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           discount: `${productMRF}`,
           quantity: count,
           is_active: 1,
-        })
+        },
+        { headers: {
+  
+          user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+        }})
         .then((response) => {
           let data = response.data;
           setCount(0);
@@ -112,7 +117,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       useridd === undefined ||
       useridd === "null" ||
       useridd === "" ||
-      useridd === null
+      useridd === null ||
+      useridd === true
     ) {
       navigate("/login");
     } else {
@@ -152,7 +158,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       useridd === "null" ||
       useridd === "" ||
       useridd === null ||
-      useridd === undefined
+      useridd === undefined ||
+      useridd === true
     ) {
       homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`;
     } else {
@@ -293,37 +300,33 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             <div className="col-xxl-3 ratio_65">
               <div className="row g-4">
                 <div className="col-xxl-12 col-sm-6">
-                  {showbanner.map((img) => {
-                    return (
-                      <>
-                        <div className="home-contain">
-                          {img.banner_location === "home_page_right_side(2)" ? (
-                            <>
-                              <a href="shop-left-sidebar.html">
-                                <img
-                                  src={img.image}
-                                  className="img-fluid bg-img lazyload"
-                                  alt="image"
-                                  name="image"
-                                />
-                              </a>
-
-                              <div className="home-detail  p-center text-center">
-                                <div>
-                                  <h3 className="text-center text-white">
-                                    {img.title}
-                                  </h3>
-                                  <h4 className="text-center text-white">
-                                    {img.description}
-                                  </h4>
-                                </div>
-                              </div>
-                            </>
-                          ) : null}
-                        </div>
-                      </>
-                    );
-                  })}
+                {showbanner.map((img)=>{
+                return(
+                  <>
+                  <div className="home-contain" >
+                  {img.banner_location==='home_page_right_side(1)'?
+                  <>
+                    <a href="shop-left-sidebar.html">
+                     
+                      <img
+                        src={img.image}
+                        className="img-fluid bg-img lazyload"
+                        alt="image"
+                        name="image"
+                      />
+                    </a>
+                    
+                    <div className="home-detail  p-center text-center">
+                      <div>
+                        <h3 className="text-center text-white">{img.title}</h3>
+                        <h4 className="text-center text-white">{img.description}</h4>
+                      </div>
+                    </div>
+                    </>:null}
+                  </div>
+                  </>
+              )
+            })}
                 </div>
 
                 <div className="col-xxl-12 col-sm-6">
@@ -425,6 +428,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                           AddToWishList={AddToWishList}
                           AddToCart={AddToCart}
                           allimages={product.all_images}
+                          cart={product.cart}
                         />
                       </div>
                     );

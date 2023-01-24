@@ -2,420 +2,487 @@ import React, { Fragment, useState } from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import { Link, NavLink } from "react-router-dom";
-import blog1 from '../../Photos/blog/1.jpg';
-import blog2 from '../../Photos/blog/2.jpg';
-import blog3 from '../../Photos/blog/3.jpg';
-import blog4 from '../../Photos/blog/4.jpg';
-import user1 from '../../Photos/user/1.jpg';
-import user2 from '../../Photos/user/2.jpg';
-import user3 from '../../Photos/user/3.jpg';
-import veg23 from '../../Photos/vegetable/product/23.png';
-import veg24 from '../../Photos/vegetable/product/24.png';
-import veg26 from '../../Photos/vegetable/product/26.png';
-import Accordion from 'react-bootstrap/Accordion';
+import blog1 from "../../Photos/blog/1.jpg";
+import blog2 from "../../Photos/blog/2.jpg";
+import blog3 from "../../Photos/blog/3.jpg";
+import blog4 from "../../Photos/blog/4.jpg";
+import user1 from "../../Photos/user/1.jpg";
+import user2 from "../../Photos/user/2.jpg";
+import user3 from "../../Photos/user/3.jpg";
+import veg23 from "../../Photos/vegetable/product/23.png";
+import veg24 from "../../Photos/vegetable/product/24.png";
+import veg26 from "../../Photos/vegetable/product/26.png";
+import Accordion from "react-bootstrap/Accordion";
 import axios from "axios";
-import { useEffect} from "react";
+import { useEffect } from "react";
 const BlogDetail = () => {
-const[apicall,setapicall]=useState([]);
-const blodid=localStorage.getItem("idd");
-console.log("blod___________--------------id"+JSON.stringify(blodid))
-const[blogDetails,setBlogDetails]=useState([]);
-useEffect(() => {
+  const [apicall, setapicall] = useState([]);
+  const blodid = localStorage.getItem("idd");
+  console.log("blod___________--------------id" + JSON.stringify(blodid));
+  const [blogDetails, setBlogDetails] = useState([]);
+  useEffect(() => {
     function getBlogDetails() {
       try {
         axios
-          .post(`${process.env.REACT_APP_BASEURL}/blogs`,
-          {
-                "id":`${blodid}`,
-                "for_":"admin",
-                "recent":"",
-                "category":[],
-                "product_tag":""
-              })
+          .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
+            id: `${blodid}`,
+            for_: "admin",
+            recent: "",
+            category: [],
+            product_tag: "",
+          })
           .then((response) => {
             let data = response.data[0];
             setBlogDetails(data);
             setapicall(false);
-
           });
       } catch (err) {}
     }
 
     getBlogDetails();
   }, [apicall]);
-    // useEffect(() => {
-    //     axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
-    //     {
-    //     "id":`${blodid}`,
-    //     "for_":"user",
-    //     "recent":"",
-    //     "category":[],
-    //     "product_tag":""
-    //   }).then ((response) => {
-    //   let data= response.data;
-    //   setBlogDetails(data)
-    //   setId(id);
-    // //   console.log("blog IDDDDDDDDDDDDDD"+JSON.stringify(data.id));
-    
-    //   console.log("GGGGGGGGGGGGGGG______________----"+JSON.stringify(blogDetails));
-    
-    //     setapicall(false);
-    //     })
-    //   }, [apicall]);
-    console.log("b;loggggggggggggggggg-------------"+JSON.stringify(blogDetails))
-    return (
-        <Fragment>
-        <Header />
-        {/* <!-- Breadcrumb Section Start --> */}
-        <section className="breadscrumb-section pt-0">
-          <div className="container-fluid-lg">
-            <div className="row">
-              <div className="col-12">
-                <div className="breadscrumb-contain">
-                  <h2>{blogDetails.title}</h2>
-                  <nav>
-                    <ol className="breadcrumb mb-0">
-                      <li className="breadcrumb-item">
-                        <NavLink to="/blog_list">
-                          <i className="fa-solid fa-house"></i>
-                        </NavLink>
-                      </li>
-  
-                      <li className="breadcrumb-item active">
-                       {blogDetails.title}
-                      </li>
-                    </ol>
-                  </nav>
-                </div>
+  // useEffect(() => {
+  //     axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
+  //     {
+  //     "id":`${blodid}`,
+  //     "for_":"user",
+  //     "recent":"",
+  //     "category":[],
+  //     "product_tag":""
+  //   }).then ((response) => {
+  //   let data= response.data;
+  //   setBlogDetails(data)
+  //   setId(id);
+  // //   console.log("blog IDDDDDDDDDDDDDD"+JSON.stringify(data.id));
+
+  //   console.log("GGGGGGGGGGGGGGG______________----"+JSON.stringify(blogDetails));
+
+  //     setapicall(false);
+  //     })
+  //   }, [apicall]);
+  console.log(
+    "b;loggggggggggggggggg-------------" + JSON.stringify(blogDetails)
+  );
+  return (
+    <Fragment>
+      <Header />
+      {/* <!-- Breadcrumb Section Start --> */}
+      <section className="breadscrumb-section pt-0">
+        <div className="container-fluid-lg">
+          <div className="row">
+            <div className="col-12">
+              <div className="breadscrumb-contain">
+                <h2>{blogDetails.title}</h2>
+                <nav>
+                  <ol className="breadcrumb mb-0">
+                    <li className="breadcrumb-item">
+                      <NavLink to="/blog_list">
+                        <i className="fa-solid fa-house"></i>
+                      </NavLink>
+                    </li>
+
+                    <li className="breadcrumb-item active">
+                      {blogDetails.title}
+                    </li>
+                  </ol>
+                </nav>
               </div>
             </div>
           </div>
-        </section>
-        {/* <!-- Breadcrumb Section End --> */}
-  {/* ---Blog Detail Page Start-- */}
-        <section className="blog-section section-b-space">
+        </div>
+      </section>
+      {/* <!-- Breadcrumb Section End --> */}
+      {/* ---Blog Detail Page Start-- */}
+      <section className="blog-section section-b-space">
         <div className="container-fluid-lg">
-            <div className="row g-sm-4 g-3">
-                <div className="col-xxl-3 col-xl-4 col-lg-5">
-                    <div className="left-sidebar-box">
-                        <div className="left-search-box">
-                            <div className="search-box">
-                                <input type="search" className="form-control" id="exampleFormControlInput4"
-                                    placeholder="Search...."/>
-                            </div>
-                        </div>
-{/* --Sidebar */}          
-<div className="accordion left-accordion-box" id="accordionPanelsStayOpenExample">
-    
-                       <Accordion>
-                        <Accordion.Item eventKey="2">
-                            <Accordion.Header>
-                            Recent Post
-                            </Accordion.Header>
-                            <Accordion.Body>
-                            <div id="panelsStayOpen-collapseOne"className="accordion-collapse collapse show"
-                                    aria-labelledby="panelsStayOpen-headingOne">
-                            <div className="accordion-body pt-0">
-                                        <div className="recent-post-box">
-                                            <div className="recent-box">
-                                                <Link to="/" className="recent-image">
-                                                    <img src={blog1}
-                                                        className="img-fluid  lazyload" alt=""/>
-                                                </Link>
-
-                                                <div className="recent-detail">
-                                                <Link to="/">
-                                                        <h5 className="recent-name">Green onion knife and salad placed</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                            <Link to="/" className="recent-image">
-                                                    <img src={blog2}
-                                                       className="img-fluid  lazyload" alt=""/>
-                                                </Link>
-
-                                                <div className="recent-detail">
-                                                <Link to="/">
-                                                        <h5 className="recent-name">Health and skin for your organic</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                            <Link to="/" className="recent-image">
-                                                    <img src={blog3}
-                                                       className="img-fluid  lazyload" alt=""/>
-                                                </Link>
-
-                                                <div className="recent-detail">
-                                                <Link to="/">
-                                                        <h5 className="recent-name">Organics mix masala fresh & soft</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-
-                                            <div className="recent-box">
-                                            <Link to="/" className="recent-image">
-                                                    <img src={blog4}
-                                                        className="img-fluid  lazyload" alt=""/>
-                                                </Link>
-
-                                                <div className="recent-detail">
-                                                <Link to="/" >
-                                                        <h5 className="recent-name">Fresh organics brand and picnic</h5>
-                                                    </Link>
-                                                    <h6>25 Jan, 2022 <i data-feather="thumbs-up"></i></h6>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    </div>
-                            </Accordion.Body>
-                        </Accordion.Item>
-                        </Accordion>
-                        <Accordion>
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>
-                                Category
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                <div id="panelsStayOpen-collapseTwo" className="accordion-collapse collapse collapse show"
-                                    aria-labelledby="panelsStayOpen-headingTwo">
-                                    <div className="accordion-body p-0">
-                                        <div className="category-list-box">
-                                            <ul>
-                                                <li>
-                                                <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Latest Recipes</h5>
-                                                            <span>10</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Diet Food</h5>
-                                                            <span>6</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Low calorie Items</h5>
-                                                            <span>8</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Cooking Method</h5>
-                                                            <span>9</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Dairy Free</h5>
-                                                            <span>12</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-
-                                                <li>
-                                                    <Link to="/" >
-                                                        <div className="category-name">
-                                                            <h5>Vegetarian Food</h5>
-                                                            <span>10</span>
-                                                        </div>
-                                                    </Link>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
-                        <Accordion>
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>
-                                Product Tags
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                <div id="panelsStayOpen-collapseThree" className="accordion-collapse collapse collapse show"
-                                    aria-labelledby="panelsStayOpen-headingThree">
-                                    <div className="accordion-body pt-0">
-                                        <div className="product-tags-box">
-                                            <ul>
-
-                                                <li>
-                                                <Link to="/" >Fruit Cutting</Link>
-                                                </li>
-
-                                                <li>
-                                                   <Link to="/" >Meat</Link>
-                                                </li>
-
-                                                <li>
-                                                   <Link to="/" >organic</Link>
-                                                </li>
-
-                                                <li>
-                                                   <Link to="/" >cake</Link>
-                                                </li>
-
-                                                <li>
-                                                   <Link to="/" >pick fruit</Link>
-                                                </li>
-
-                                                <li>
-                                                   <Link to="/" >backery</Link>
-                                                </li>
-
-                                                <li>
-                                                   <Link to="/" >organix food</Link>
-                                                </li>
-
-                                                <li>
-                                                   <Link to="/" >Most Expensive Fruit</Link>
-                                                </li>
-                                            </ul>
-                                        </div>
-                                    </div>
-                                </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
-                        <Accordion>
-                            <Accordion.Item eventKey="2">
-                                <Accordion.Header>
-                                Trending Products
-                                </Accordion.Header>
-                                <Accordion.Body>
-                                <div id="panelsStayOpen-collapseFour" className="accordion-collapse collapse collapse show"
-                                    aria-labelledby="panelsStayOpen-headingFour">
-                                    <div className="accordion-body">
-                                        <ul className="product-list product-list-2 border-0 p-0">
-                                            <li>
-                                                <div className="offer-product">
-                                                <Link to="/"  className="offer-image">
-                                                        <img src={veg23}
-                                                          className=" lazyload" alt=""/>
-                                                    </Link>
-
-                                                    <div className="offer-detail">
-                                                        <div>
-                                                        <Link to="/" >
-                                                                <h6 className="name">Meatigo Premium Goat Curry</h6>
-                                                            </Link>
-                                                            <span>450 G</span>
-                                                            <h6 className="price theme-color">$ 70.00</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li>
-                                                <div className="offer-product">
-                                                    <Link to="/"  className="offer-image">
-                                                        <img src={veg24}
-                                                           className=" lazyload" alt=""/>
-                                                    </Link>
-
-                                                    <div className="offer-detail">
-                                                        <div>
-                                                            <Link to="/" >
-                                                                <h6 className="name">Dates Medjoul Premium Imported</h6>
-                                                            </Link>
-                                                            <span>450 G</span>
-                                                            <h6 className="price theme-color">$ 40.00</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-
-                                            <li className="mb-0">
-                                                <div className="offer-product">
-                                                    <Link to="/"  className="offer-image">
-                                                        <img src={veg26}
-                                                            className=" lazyload" alt=""/>
-                                                    </Link>
-
-                                                    <div className="offer-detail">
-                                                        <div>
-                                                            <Link to="/" >
-                                                                <h6 className="name">Apple Red Premium Imported</h6>
-                                                            </Link>
-                                                            <span>1 KG</span>
-                                                            <h6 className="price theme-color">$ 80.00</h6>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </li>
-                                        </ul>
-                                    </div>
-                                </div>
-                                </Accordion.Body>
-                            </Accordion.Item>
-                        </Accordion>
-                        </div>
-                        {/* Sidebar end--- */}
-                    </div>
+          <div className="row g-sm-4 g-3">
+            <div className="col-xxl-3 col-xl-4 col-lg-5">
+              <div className="left-sidebar-box">
+                <div className="left-search-box">
+                  <div className="search-box">
+                    <input
+                      type="search"
+                      className="form-control"
+                      id="exampleFormControlInput4"
+                      placeholder="Search...."
+                    />
+                  </div>
                 </div>
+                {/* --Sidebar */}
+                <div
+                  className="accordion left-accordion-box"
+                  id="accordionPanelsStayOpenExample"
+                >
+                  <Accordion>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>Recent Post</Accordion.Header>
+                      <Accordion.Body>
+                        <div
+                          id="panelsStayOpen-collapseOne"
+                          className="accordion-collapse collapse show"
+                          aria-labelledby="panelsStayOpen-headingOne"
+                        >
+                          <div className="accordion-body pt-0">
+                            <div className="recent-post-box">
+                              <div className="recent-box">
+                                <Link to="/" className="recent-image">
+                                  <img
+                                    src={blog1}
+                                    className="img-fluid  lazyload"
+                                    alt=""
+                                  />
+                                </Link>
 
-                <div className="col-xxl-9 col-xl-8 col-lg-7 ratio_50">
-                    <div className="blog-detail-image rounded-3 mb-4">
-                       
-                        <img src={blogDetails.image}className="bg-img w-100  lazyload" alt=""/>
-                        <div className="blog-image-contain">
-                            {/* <ul className="contain-list">
+                                <div className="recent-detail">
+                                  <Link to="/">
+                                    <h5 className="recent-name">
+                                      Green onion knife and salad placed
+                                    </h5>
+                                  </Link>
+                                  <h6>
+                                    25 Jan, 2022{" "}
+                                    <i data-feather="thumbs-up"></i>
+                                  </h6>
+                                </div>
+                              </div>
+
+                              <div className="recent-box">
+                                <Link to="/" className="recent-image">
+                                  <img
+                                    src={blog2}
+                                    className="img-fluid  lazyload"
+                                    alt=""
+                                  />
+                                </Link>
+
+                                <div className="recent-detail">
+                                  <Link to="/">
+                                    <h5 className="recent-name">
+                                      Health and skin for your organic
+                                    </h5>
+                                  </Link>
+                                  <h6>
+                                    25 Jan, 2022{" "}
+                                    <i data-feather="thumbs-up"></i>
+                                  </h6>
+                                </div>
+                              </div>
+
+                              <div className="recent-box">
+                                <Link to="/" className="recent-image">
+                                  <img
+                                    src={blog3}
+                                    className="img-fluid  lazyload"
+                                    alt=""
+                                  />
+                                </Link>
+
+                                <div className="recent-detail">
+                                  <Link to="/">
+                                    <h5 className="recent-name">
+                                      Organics mix masala fresh & soft
+                                    </h5>
+                                  </Link>
+                                  <h6>
+                                    25 Jan, 2022{" "}
+                                    <i data-feather="thumbs-up"></i>
+                                  </h6>
+                                </div>
+                              </div>
+
+                              <div className="recent-box">
+                                <Link to="/" className="recent-image">
+                                  <img
+                                    src={blog4}
+                                    className="img-fluid  lazyload"
+                                    alt=""
+                                  />
+                                </Link>
+
+                                <div className="recent-detail">
+                                  <Link to="/">
+                                    <h5 className="recent-name">
+                                      Fresh organics brand and picnic
+                                    </h5>
+                                  </Link>
+                                  <h6>
+                                    25 Jan, 2022{" "}
+                                    <i data-feather="thumbs-up"></i>
+                                  </h6>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                  <Accordion>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>Category</Accordion.Header>
+                      <Accordion.Body>
+                        <div
+                          id="panelsStayOpen-collapseTwo"
+                          className="accordion-collapse collapse collapse show"
+                          aria-labelledby="panelsStayOpen-headingTwo"
+                        >
+                          <div className="accordion-body p-0">
+                            <div className="category-list-box">
+                              <ul>
+                                <li>
+                                  <Link to="/">
+                                    <div className="category-name">
+                                      <h5>Latest Recipes</h5>
+                                      <span>10</span>
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">
+                                    <div className="category-name">
+                                      <h5>Diet Food</h5>
+                                      <span>6</span>
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">
+                                    <div className="category-name">
+                                      <h5>Low calorie Items</h5>
+                                      <span>8</span>
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">
+                                    <div className="category-name">
+                                      <h5>Cooking Method</h5>
+                                      <span>9</span>
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">
+                                    <div className="category-name">
+                                      <h5>Dairy Free</h5>
+                                      <span>12</span>
+                                    </div>
+                                  </Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">
+                                    <div className="category-name">
+                                      <h5>Vegetarian Food</h5>
+                                      <span>10</span>
+                                    </div>
+                                  </Link>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                  <Accordion>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>Product Tags</Accordion.Header>
+                      <Accordion.Body>
+                        <div
+                          id="panelsStayOpen-collapseThree"
+                          className="accordion-collapse collapse collapse show"
+                          aria-labelledby="panelsStayOpen-headingThree"
+                        >
+                          <div className="accordion-body pt-0">
+                            <div className="product-tags-box">
+                              <ul>
+                                <li>
+                                  <Link to="/">Fruit Cutting</Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">Meat</Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">organic</Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">cake</Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">pick fruit</Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">backery</Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">organix food</Link>
+                                </li>
+
+                                <li>
+                                  <Link to="/">Most Expensive Fruit</Link>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                  <Accordion>
+                    <Accordion.Item eventKey="2">
+                      <Accordion.Header>Trending Products</Accordion.Header>
+                      <Accordion.Body>
+                        <div
+                          id="panelsStayOpen-collapseFour"
+                          className="accordion-collapse collapse collapse show"
+                          aria-labelledby="panelsStayOpen-headingFour"
+                        >
+                          <div className="accordion-body">
+                            <ul className="product-list product-list-2 border-0 p-0">
+                              <li>
+                                <div className="offer-product">
+                                  <Link to="/" className="offer-image">
+                                    <img
+                                      src={veg23}
+                                      className=" lazyload"
+                                      alt=""
+                                    />
+                                  </Link>
+
+                                  <div className="offer-detail">
+                                    <div>
+                                      <Link to="/">
+                                        <h6 className="name">
+                                          Meatigo Premium Goat Curry
+                                        </h6>
+                                      </Link>
+                                      <span>450 G</span>
+                                      <h6 className="price theme-color">
+                                        $ 70.00
+                                      </h6>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+
+                              <li>
+                                <div className="offer-product">
+                                  <Link to="/" className="offer-image">
+                                    <img
+                                      src={veg24}
+                                      className=" lazyload"
+                                      alt=""
+                                    />
+                                  </Link>
+
+                                  <div className="offer-detail">
+                                    <div>
+                                      <Link to="/">
+                                        <h6 className="name">
+                                          Dates Medjoul Premium Imported
+                                        </h6>
+                                      </Link>
+                                      <span>450 G</span>
+                                      <h6 className="price theme-color">
+                                        $ 40.00
+                                      </h6>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+
+                              <li className="mb-0">
+                                <div className="offer-product">
+                                  <Link to="/" className="offer-image">
+                                    <img
+                                      src={veg26}
+                                      className=" lazyload"
+                                      alt=""
+                                    />
+                                  </Link>
+
+                                  <div className="offer-detail">
+                                    <div>
+                                      <Link to="/">
+                                        <h6 className="name">
+                                          Apple Red Premium Imported
+                                        </h6>
+                                      </Link>
+                                      <span>1 KG</span>
+                                      <h6 className="price theme-color">
+                                        $ 80.00
+                                      </h6>
+                                    </div>
+                                  </div>
+                                </div>
+                              </li>
+                            </ul>
+                          </div>
+                        </div>
+                      </Accordion.Body>
+                    </Accordion.Item>
+                  </Accordion>
+                </div>
+                {/* Sidebar end--- */}
+              </div>
+            </div>
+
+            <div className="col-xxl-9 col-xl-8 col-lg-7 ratio_50">
+              <div className="blog-detail-image rounded-3 mb-4">
+                <img
+                  src={blogDetails.image}
+                  className="bg-img w-100  lazyload"
+                  alt=""
+                />
+                <div className="blog-image-contain">
+                  {/* <ul className="contain-list">
                                 <li>backpack</li>
                                 <li>life style</li>
                                 <li>organic</li>
                             </ul> */}
-                            <h2>{blogDetails.title}</h2>
-                            <ul className="contain-comment-list">
-                                <li>
-                                    {/* <div className="user-list">
+                  <h2>{blogDetails.title}</h2>
+                  <ul className="contain-comment-list">
+                    <li>
+                      {/* <div className="user-list">
                                         <i data-feather="user"></i>
                                         <span>Caroline</span>
                                     </div> */}
-                                </li>
+                    </li>
 
-                                <li>
-                                    <div className="user-list">
-                                        <i data-feather="calendar"></i>
-                                        <span>{blogDetails.publish_date}</span>
-                                    </div>
-                                </li>
+                    <li>
+                      <div className="user-list">
+                        <i data-feather="calendar"></i>
+                        <span>{blogDetails.publish_date}</span>
+                      </div>
+                    </li>
 
-                                <li>
-                                    {/* <div className="user-list">
+                    <li>
+                      {/* <div className="user-list">
                                         <i data-feather="message-square"></i>
                                         <span>82 Comment</span>
                                     </div> */}
-                                </li>
-                            </ul>
-                        </div>
-                    </div>
+                    </li>
+                  </ul>
+                </div>
+              </div>
 
-                    <div className="blog-detail-contain">
-                        <p><span className="first">E</span> {blogDetails.description}</p>
+              <div className="blog-detail-contain">
+                <p>
+                  <span className="first">E</span> {blogDetails.description}
+                </p>
 
-                        {/* <p>Let's unpack that later everyone thinks the soup tastes better after theyâ€™ve pissed in it
+                {/* <p>Let's unpack that later everyone thinks the soup tastes better after theyâ€™ve pissed in it
                             pivot, re-inventing the wheel, and it's not hard guys. Market-facing pushback back of the
                             net, for pro-sumer software let's see if we can dovetail these two projects but turn the
                             crank for they have downloaded gmail and seems to be working for now. This is not the hill i
@@ -424,7 +491,7 @@ useEffect(() => {
                             can you put it into a banner that is not alarming, but eye catching and not too giant. That
                             is a good problem to have dog and pony show we're ahead of the curve on that one.</p> */}
 
-                        {/* <p> Waste of
+                {/* <p> Waste of
                             resources can you run this by clearance? hot johnny coming through driving the
                             initiative
                             forward our competitors are jumping the shark. Unlock meaningful moments of relaxation.
@@ -440,12 +507,12 @@ useEffect(() => {
                             expectations,
                             on-brand but completeley fresh we can't hear you.</p> */}
 
-                        <div className="blog-details-quote">
-                            <h3>{blogDetails.title}</h3>
-                            <h5>- Denny Dose</h5>
-                        </div>
+                <div className="blog-details-quote">
+                  <h3>{blogDetails.title}</h3>
+                  <h5>- Denny Dose</h5>
+                </div>
 
-                        {/* <p>Agile currying favour pulling teeth collaboration through advanced technlogy. Everyone thinks
+                {/* <p>Agile currying favour pulling teeth collaboration through advanced technlogy. Everyone thinks
                             the soup tastes better after theyâ€™ve pissed in it can you put it on my calendar?.
                             Low-hanging fruit. Data-point blue sky yet first-order optimal strategies shotgun approach.
                             Land it in region. Idea shower prairie dogging a set of certitudes based on deductions
@@ -454,7 +521,7 @@ useEffect(() => {
                             new version clean and sexy. Back of the net we need a recap by eod, cob or whatever comes
                             first for we need evergreen content.</p> */}
 
-                        {/* <p className="mb-0">We need to harvest synergy effects land it in region nor time to open the
+                {/* <p className="mb-0">We need to harvest synergy effects land it in region nor time to open the
                             kimono, but we need to touch base off-line before we fire the new ux experience. Moving the
                             goalposts. Lean into that problem we need to get all stakeholders up to speed and in the
                             right place. Get all your ducks in a row this proposal is a win-win situation which will
@@ -464,9 +531,9 @@ useEffect(() => {
                             commitment to the cause . Service as core &innovations as power makes our brand meeting
                             assassin core competencies run it up the flagpole, ping the boss and circle back but zoom
                             meeting at 2:30 today.</p> */}
-                    </div>
+              </div>
 
-                    {/* <div className="comment-box overflow-hidden">
+              {/* <div className="comment-box overflow-hidden">
                         <div className="leave-title">
                             <h3>Comments</h3>
                         </div>
@@ -545,7 +612,7 @@ useEffect(() => {
                         </div>
                     </div> */}
 
-                    {/* <div className="leave-box">
+              {/* <div className="leave-box">
                         <div className="leave-title mt-0">
                             <h3>Leave Comment</h3>
                         </div>
@@ -597,14 +664,14 @@ useEffect(() => {
                                 Comment</button>
                         </div>
                     </div> */}
-                </div>
             </div>
+          </div>
         </div>
-    </section>
-{/* blog detail page end */}
+      </section>
+      {/* blog detail page end */}
       <Footer />
     </Fragment>
-    );
-}
+  );
+};
 
 export default BlogDetail;
