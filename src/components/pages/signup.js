@@ -3,6 +3,8 @@ import Banner from "../../Photos/login.png";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import axios from "axios";
+import Spinner from "react-bootstrap/Spinner";
+import Countdown from "react-countdown";
 // import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
 import { useState } from "react";
@@ -11,10 +13,25 @@ const Singup = () => {
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [emailerror, setemailerror] = useState("");
-
   const [otperror, setOtperror] = useState(false);
   const [passval, setpassval] = useState("");
   const [validated, setValidated] = useState(false);
+  // countdown
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      setOtperror("resend");
+      // Render a complete state
+      // return <Completionist />;
+    } else {
+      // Render a countdown
+      return (
+        <h4 className="mt-2 ms-2 text-danger mx-3">
+          {hours}:{minutes}:{seconds}
+        </h4>
+      );
+    }
+  };
+  // end countdown
   const handleSubmit = (event) => {
     const form = event.currentTarget;
     if (form.checkValidity() === false) {
@@ -27,18 +44,17 @@ const Singup = () => {
   const SignUpUser = (e) => {
     e.preventDefault();
     setemail(e.target.email.value);
-    // alert("SINGNNN"+email)
+    setemailerror("spinner");
     axios
       .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
         email: e.target.email.value,
       })
       .then((response) => {
-        if (response.data.response=== "Email Already Exist") {
+        if (response.data.response === "Email Already Exist") {
           setemailerror("Already");
-          e.target.email.value = "";
           e.target.password.value = "";
         } else {
-          setotp(response.data);
+          setotp("signup");
           setemailerror("");
         }
         return response;
@@ -47,37 +63,42 @@ const Singup = () => {
   };
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
+    if (otperror === "resend") {
+      setpassval("");
+    }
+    setemailerror("");
   };
   const OnOTpChange = (e) => {
     setotp(e.target.value);
+    setemailerror("");
+    setOtperror("");
   };
   const VerifyOTP = (e) => {
     e.preventDefault();
     // if (e.target.otpinput.value == otp) {
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
-        email: email,
-        otp: Number(otp),
-        password: passval,
-      })
-      .then((response) => {
-        if (response.data.message === "otp not matched") {
-          setOtperror(true);
-        } else {
-          localStorage.setItem("userid", response.data.user_id.insertId);
-         
-
-          localStorage.setItem("token",response.data.token)
-          // console.log("tokennnnnnn------"+response.data.token)
-          // console.log("rrrrrrrrtokennnnnnnnrrrrr"+response.data.insertId.userid)
-
-          localStorage.setItem("upassword", passval);
-          navigate("/your_account");
-          return response;
-        }
-      })
-      .catch((error) => {});
-    console.log(otp);
+    if (otp === "" || otp === "signup") {
+      setOtperror("blank");
+    } else {
+      setOtperror("timer");
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
+          email: email,
+          otp: Number(otp),
+          password: passval,
+        })
+        .then((response) => {
+          if (response.data.message === "otp not matched") {
+            setOtperror("invalid otp");
+          } else {
+            localStorage.setItem("userid", response.data.user_id.insertId);
+            localStorage.setItem("token", response.data.token);
+            localStorage.setItem("upassword", passval);
+            navigate("/your_account");
+            return response;
+          }
+        })
+        .catch((error) => {});
+    }
   };
 
   return (
@@ -104,19 +125,12 @@ const Singup = () => {
                 <div className="input-box">
                   <form
                     className="row g-4"
-                    onSubmit={otp === 0 ? SignUpUser : VerifyOTP}
+                    onSubmit={
+                      otp === 0 || otperror === "resend"
+                        ? SignUpUser
+                        : VerifyOTP
+                    }
                   >
-                    {/* <div className="col-12">
-                      <div className="form-floating theme-form-floating">
-                        <input
-                          type="text"
-                          className="form-control"
-                          id="fullname"
-                          placeholder="Full Name"
-                        />
-                        <label htmlFor="fullname">Full Name</label>
-                      </div>
-                    </div> */}
                     <div className="col-12">
                       <div className="form-floating theme-form-floating">
                         <input
@@ -128,13 +142,13 @@ const Singup = () => {
                           placeholder="Email Address"
                           name="emailid"
                           required
+                          onChange={(e) => onPasswordChange(e)}
                         />{" "}
-                        
-                        {emailerror === "" ? null : (
+                        {emailerror === "Already" ? (
                           <p className="text-danger">
                             User Already Exist. Please Login
                           </p>
-                        )}
+                        ) : null}
                         <input
                           type="number"
                           className={
@@ -149,8 +163,16 @@ const Singup = () => {
                           {otp === 0 ? "Email Address" : "Enter OTP"}
                         </label>
                       </div>
-                      {otperror ? (
+                      {otperror === "timer" ? (
+                        <Countdown
+                          date={Date.now() + 30000}
+                          renderer={renderer}
+                        />
+                      ) : null}
+                      {otperror === "invalid otp" ? (
                         <p className="text-danger">{"Invalid Otp"}</p>
+                      ) : otperror === "blank" ? (
+                        <p className="text-danger">{"Please Fill Otp"}</p>
                       ) : null}
                     </div>
                     {otp === 0 ? (
@@ -192,9 +214,36 @@ const Singup = () => {
                     </div>
 
                     <div className="col-12">
-                      <button className="btn btn-animation w-100" type="submit">
-                        {otp === 0 ? "Sign Up" : "Verify Otp"}
-                      </button>
+                      {emailerror === "spinner" ? (
+                        <button
+                          className="btn btn-animation w-100"
+                          type="submit"
+                          disabled
+                        >
+                          <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Loading...</span>
+                          </Spinner>
+                        </button>
+                      ) : otperror === "timer" ? (
+                        <button
+                          className="btn btn-animation w-100"
+                          type="submit"
+                          disabled
+                        >
+                          {otp === 0 ? "Sign Up" : "Verify Otp"}
+                        </button>
+                      ) : (
+                        <button
+                          className="btn btn-animation w-100"
+                          type="submit"
+                        >
+                          {otp === 0
+                            ? "Sign Up"
+                            : otperror === "resend"
+                            ? "Resend"
+                            : "Verify Otp"}
+                        </button>
+                      )}
                     </div>
                   </form>
                 </div>
