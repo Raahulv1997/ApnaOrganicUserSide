@@ -29,19 +29,23 @@ const Cart = (all_images) => {
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
-  const token=localStorage.getItem("token")
-  console.log("token______---------"+token)
+  const token = localStorage.getItem("token");
   const currentdate = moment().format();
-
-  const incrementCount = (id, quantity) => {
-    let inc = quantity + 1;
+  const incrementCount = (id, order_quantity) => {
+    let inc = order_quantity + 1;
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        id: id,
-        quantity: inc,
-      })
-      // console.log("ID PLEASEEEEEEEEEE"+id)
-
+      .put(
+        `${process.env.REACT_APP_BASEURL}/cart_update`,
+        {
+          cart_id: id,
+          quantity: inc,
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
 
@@ -51,18 +55,28 @@ const Cart = (all_images) => {
         CheckCoupon();
       });
   };
-  const decrementCount = (id, quantity) => {
+  const decrementCount = (id, order_quantity) => {
     let dec;
-    if (quantity > 0) {
-      dec = quantity - 1;
+    if (order_quantity > 0 || order_quantity != 1) {
+      dec = order_quantity - 1;
+    } else if ((order_quantity = 1)) {
+      dec = order_quantity;
     } else {
       return false;
     }
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        id: id,
-        quantity: dec,
-      })
+      .put(
+        `${process.env.REACT_APP_BASEURL}/cart_update`,
+        {
+          cart_id: id,
+          quantity: dec,
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         setapicall(true);
         let data = response.data;
@@ -78,12 +92,17 @@ const Cart = (all_images) => {
     function getCartData() {
       try {
         axios
-          .put(`${process.env.REACT_APP_BASEURL}/cart`,{
-            user_id:""
-          }, 
-          {headers: {
-            user_token:`${token}`
-          }})
+          .put(
+            `${process.env.REACT_APP_BASEURL}/cart`,
+            {
+              user_id: "",
+            },
+            {
+              headers: {
+                user_token: `${token}`,
+              },
+            }
+          )
           .then((response) => {
             let data = response.data;
             let ProductTotal = 0;
@@ -93,7 +112,6 @@ const Cart = (all_images) => {
             setProductPriceTotal(ProductTotal);
             setCartData(data);
             setapicall(false);
-            console.log("oooooo"+JSON.stringify(data))
             // setapicall(false);
           });
       } catch (err) {}
@@ -105,13 +123,18 @@ const Cart = (all_images) => {
 
   const deleteCart = (id, user_id) => {
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
-        cart_id: id,
-        user_id: "",
-      },
-      {headers: {
-        user_token:`${token}`
-  }})
+      .put(
+        `${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,
+        {
+          cart_id: id,
+          user_id: "",
+        },
+        {
+          headers: {
+            user_token: `${token}`,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
         setapicall(true);
@@ -122,12 +145,18 @@ const Cart = (all_images) => {
   // Save For later
   const AddToWishList = (id) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-        user_id: "",
-        product_view_id:`${id}`,
-      },{headers: {
-        user_token: `${token}`
-      }})
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+        {
+          user_id: "",
+          product_view_id: `${id}`,
+        },
+        {
+          headers: {
+            user_token: `${token}`,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
         // setData(response.data);
@@ -465,15 +494,16 @@ const Cart = (all_images) => {
                                       onClick={() =>
                                         decrementCount(
                                           cdata.cart_id,
-                                          cdata.quantity
+                                          cdata.order_quantity
                                         )
                                       }
                                     >
                                       <i className="fa-regular fa-minus"></i>
                                     </button>
                                     <input
+                                      min={1}
                                       className="form-control input-number qty-input"
-                                      type="text"
+                                      type="number"
                                       name="quantity"
                                       value={cdata.order_quantity}
                                       onChange={func}
@@ -486,7 +516,7 @@ const Cart = (all_images) => {
                                       onClick={() =>
                                         incrementCount(
                                           cdata.cart_id,
-                                          cdata.quantity
+                                          cdata.order_quantity
                                         )
                                       }
                                     >
@@ -503,7 +533,8 @@ const Cart = (all_images) => {
                               </h4>
                               <h5>
                                 {(
-                                  cdata.quantity * Number(cdata.sale_price)
+                                  cdata.order_quantity *
+                                  Number(cdata.sale_price)
                                 ).toFixed(2)}
                               </h5>
                             </td>
@@ -524,7 +555,7 @@ const Cart = (all_images) => {
                                 type="button"
                                 className="remove close_button btn px-0"
                                 onClick={() =>
-                                  deleteCart(cdata.id, cdata.user_id)
+                                  deleteCart(cdata.cart_id, cdata.user_id)
                                 }
                               >
                                 remove
