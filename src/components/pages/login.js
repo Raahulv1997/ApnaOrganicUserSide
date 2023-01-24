@@ -51,7 +51,7 @@ const Login = ({ logIn }) => {
         ) {
           localStorage.setItem("userid", response.data.user_id);
           console.log("----fromelse-------" + from);
-          // navigate('/');
+          navigate("/");
           //  setError(false);
         } else {
           localStorage.setItem("userid", response.data.user_id);
