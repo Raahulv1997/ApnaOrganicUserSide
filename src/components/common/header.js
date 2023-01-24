@@ -41,7 +41,9 @@ const Header = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
-            setCategoryData(data);
+            if (data.response !== "") {
+              setCategoryData(data);
+            }
             setapicall(false);
           });
       } catch (err) {}
