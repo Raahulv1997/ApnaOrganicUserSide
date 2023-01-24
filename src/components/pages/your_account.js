@@ -23,6 +23,8 @@ import { demo } from "../../Photos/demo.jpg";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
+  localStorage.getItem("token")
+
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
   const func = () => {};
@@ -63,8 +65,9 @@ function Account() {
 // console.log("----------"+user_token)
 
   .then(response => {
-    setuserdata(response.data)
-    setUdata(response.data)
+    let data=response.data[0];
+    setuserdata(data)
+    setUdata(data)
     // localStorage.getItem("token")
 
     // navigate('/your_account')
@@ -121,7 +124,7 @@ const Onwishlistclick = () =>{
     }
     // eslint-disable-next-line no-undef
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/user_register`, userdata,
+      .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata,
         { headers: {
   
           user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
@@ -136,12 +139,12 @@ const Onwishlistclick = () =>{
   };
 
   const OnchangeFistname = (e) => {
-    setuserdata({
+    setUdata({
       ...udata,
       [e.target.name]: e.target.value,
     });
   };
-  console.log("hh--------"+JSON.stringify(userdata))
+  console.log("hh--------"+JSON.stringify(udata))
 
   // change Password
 

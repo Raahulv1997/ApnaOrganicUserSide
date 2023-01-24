@@ -87,7 +87,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
     } else {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-          user_id: `${useridd}`,
+          user_id:"",
           product_view_id: `${id}`,
           price: `${saleprice}`,
           discount: `${productMRF}`,
@@ -95,17 +95,18 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           is_active: 1,
         },
         { headers: {
-  
-          user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
-        }})
+          user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+        }}
+        )
         .then((response) => {
           let data = response.data;
+          console.log("ADDCART" + data);
+
           setCount(0);
           // setaddcartid(id)
           setData(data);
           setapicall(true);
-          localStorage.setItem("cartupdate", true);
-          console.log("ADDCART" + true);
+          // localStorage.setItem("cartupdate", true);
         });
     }
   };
@@ -128,11 +129,14 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
             {
               product_id: `${id}`,
-              user_id: `${useridd}`,
-            }
+              user_id: "",
+            },
+            { headers: {
+              user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+        }}
           )
           .then((response) => {
-            let data = response.data;
+            let data = response.data[0];
             setData(response.data);
             setWlistData("add");
             setapicall(true);
@@ -140,11 +144,14 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       } else {
         axios
           .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-            user_id: `${useridd}`,
-            product_view_id: `${id}`,
-          })
+            user_id:"",
+            product_view_id:`${id}`,
+          },
+          { headers: {
+            user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+          }})
           .then((response) => {
-            let data = response.data;
+            let data = response.data[0];
             setData(response.data);
             setWlistData("remove");
             setapicall(true);
