@@ -62,7 +62,7 @@ const token =localStorage.getItem("token");
     let inc = order_quantity + 1;
     axios
       .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        id: id,
+        cart_id: id,
         quantity: inc,
       })
       // console.log("ID PLEASEEEEEEEEEE"+id)
@@ -72,7 +72,7 @@ const token =localStorage.getItem("token");
 
         setapicall(true);
         // setCartData(data);
-        setQuantity((quantity = quantity + 1));
+        // setQuantity((quantity = quantity + 1));
         // CheckCoupon();
       });
   };
@@ -87,13 +87,13 @@ const token =localStorage.getItem("token");
 
     axios
       .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        id: id,
+        cart_id: id,
         quantity: dec,
       })
       .then((response) => {
         setapicall(true);
         let data = response.data;
-        setQuantity((quantity = quantity - 1));
+        // setQuantity((quantity = quantity - 1));
       });
   };
   // single order add
