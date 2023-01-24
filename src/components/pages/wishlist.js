@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function Wishlist(all_images) {
   const useridd = localStorage.getItem("userid");
+  const token=localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
   const [wishlist, setWishList] = useState([]);
   const [wishlistocart, setwishlistocart] = useState("");
@@ -25,8 +26,9 @@ function Wishlist(all_images) {
           .post(`${process.env.REACT_APP_BASEURL}/wishlist`,{
             user_id:"",
           }, 
-          {headers: {
-            user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+          {
+            headers: {
+            user_token:`${token}`
       }})
           .then((response) => {
             let data = response.data;
@@ -56,7 +58,7 @@ function Wishlist(all_images) {
         is_active: 1,
       },
       { headers: {
-        user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+        user_token:`${token}`
       }})
       .then((response) => {
         let data = response.data;
@@ -66,7 +68,7 @@ function Wishlist(all_images) {
   };
   // wlist = window.location.pathname;
 
-  const AddToWishList = ( id,wishlistt, wishlistid) => {
+  const AddToWishList = (wishlistt, wishlistid) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
         // product_id: `${wishlistid}`,
@@ -74,7 +76,7 @@ function Wishlist(all_images) {
         
       },
       { headers: {
-        user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+        user_token:`${token}`
       }})
 
       .then((response) => {

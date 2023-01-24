@@ -151,7 +151,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
           }})
           .then((response) => {
-            let data = response.data[0];
+            let data = response.data;
             setData(response.data);
             setWlistData("remove");
             setapicall(true);

@@ -54,13 +54,13 @@ function Account() {
     address:"",
     address2:""
     });
-
+const token=localStorage.getItem("token")
  useEffect(()=>{
   axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,
   { user_id: '' },
   { headers: {
   
-    user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+    user_token:`${token}`
   }})
 // console.log("----------"+user_token)
 
@@ -80,9 +80,15 @@ function Account() {
 
 // wishlist
 const Onwishlistclick = () =>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
+  axios.get(`${process.env.REACT_APP_BASEURL}/wishlist`,{
+    user_id:""
+  },{
+    headers: {
+      user_token:`${token}`
+    }
+  })
   .then(response => {
-    if(response.data.message !=='empty'){
+    if(response.data.message !=='header error'){
       setwishlistdata(response.data)
     }
     // navigate('/your_account')

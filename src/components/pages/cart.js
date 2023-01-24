@@ -29,7 +29,8 @@ const Cart = (all_images) => {
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
-  localStorage.getItem("token")
+  const token=localStorage.getItem("token")
+  console.log("token______---------"+token)
   const currentdate = moment().format();
 
   const incrementCount = (id, quantity) => {
@@ -80,8 +81,8 @@ const Cart = (all_images) => {
           .put(`${process.env.REACT_APP_BASEURL}/cart`,{
             user_id:""
           }, 
-          { headers: {
-            user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+          {headers: {
+            user_token:`${token}`
           }})
           .then((response) => {
             let data = response.data;
@@ -108,8 +109,8 @@ const Cart = (all_images) => {
         cart_id: id,
         user_id: "",
       },
-      { headers: {
-        user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+      {headers: {
+        user_token:`${token}`
   }})
       .then((response) => {
         let data = response.data;
@@ -122,9 +123,11 @@ const Cart = (all_images) => {
   const AddToWishList = (id) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-        user_id: `${useridd}`,
-        product_view_id: `${id}`,
-      })
+        user_id: "",
+        product_view_id:`${id}`,
+      },{headers: {
+        user_token: `${token}`
+      }})
       .then((response) => {
         let data = response.data;
         // setData(response.data);
