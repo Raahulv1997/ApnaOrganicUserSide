@@ -75,50 +75,50 @@ const Header = (props) => {
     e.preventDefault();
     navigate(`/shop?search=${search}`);
   };
-  useEffect(() => {
-    function getCartData() {
-      try {
-        axios
-          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
-          .then((response) => {
-            let data = response.data;
-            let ProductTotal = 0;
-            if (data.length !== 0) {
-              data.map((cdata) => {
-                ProductTotal +=
-                  cdata.quantity * Number(cdata.product_price) -
-                  (cdata.product_price * cdata.discount) / 100 +
-                  (Number(
-                    cdata.product_price -
-                      (cdata.product_price * cdata.discount) / 100
-                  ) *
-                    cdata.gst) /
-                    100 +
-                  (Number(
-                    cdata.product_price -
-                      (cdata.product_price * cdata.discount) / 100
-                  ) *
-                    cdata.cgst) /
-                    100 +
-                  (Number(
-                    cdata.product_price -
-                      (cdata.product_price * cdata.discount) / 100
-                  ) *
-                    cdata.sgst) /
-                    100;
-              });
-            }
+  // useEffect(() => {
+  //   function getCartData() {
+  //     try {
+  //       axios
+  //         .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
+  //         .then((response) => {
+  //           let data = response.data;
+  //           let ProductTotal = 0;
+  //           if (data.length !== 0) {
+  //             data.map((cdata) => {
+  //               ProductTotal +=
+  //                 cdata.quantity * Number(cdata.product_price) -
+  //                 (cdata.product_price * cdata.discount) / 100 +
+  //                 (Number(
+  //                   cdata.product_price -
+  //                     (cdata.product_price * cdata.discount) / 100
+  //                 ) *
+  //                   cdata.gst) /
+  //                   100 +
+  //                 (Number(
+  //                   cdata.product_price -
+  //                     (cdata.product_price * cdata.discount) / 100
+  //                 ) *
+  //                   cdata.cgst) /
+  //                   100 +
+  //                 (Number(
+  //                   cdata.product_price -
+  //                     (cdata.product_price * cdata.discount) / 100
+  //                 ) *
+  //                   cdata.sgst) /
+  //                   100;
+  //             });
+  //           }
 
-            setProductPriceTotal(ProductTotal);
-            setPdata(data);
+  //           setProductPriceTotal(ProductTotal);
+  //           setPdata(data);
 
-            setapicall(false);
-            localStorage.removeItem("cartupdate");
-          });
-      } catch (err) {}
-    }
-    getCartData();
-  }, [apicall, cartup, props.addcart, props.deleteCart]);
+  //           setapicall(false);
+  //           localStorage.removeItem("cartupdate");
+  //         });
+  //     } catch (err) {}
+  //   }
+  //   getCartData();
+  // }, [apicall, cartup, props.addcart, props.deleteCart]);
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {

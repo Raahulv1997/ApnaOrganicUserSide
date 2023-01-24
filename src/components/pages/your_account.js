@@ -41,7 +41,7 @@ function Account() {
   const [udata,setUdata]=useState([]);
   const [userdata, setuserdata] = useState(
     {
-    user_id:useridd,
+    user_id:"",
     first_name:"",
     last_name:"",
     //password:"",
@@ -54,10 +54,19 @@ function Account() {
     });
 
  useEffect(()=>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/user_details?user_id=${useridd}`)
+  axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,
+  { user_id: '' },
+  { headers: {
+  
+    user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+  }})
+// console.log("----------"+user_token)
+
   .then(response => {
     setuserdata(response.data)
     setUdata(response.data)
+    // localStorage.getItem("token")
+
     // navigate('/your_account')
     // return response;
   }).catch(error => {
@@ -65,6 +74,7 @@ function Account() {
   Onwishlistclick();
   OnOrderclick();
  },[Password])
+
 // wishlist
 const Onwishlistclick = () =>{
   axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
@@ -85,7 +95,7 @@ const Onwishlistclick = () =>{
     axios
       .get(`${process.env.REACT_APP_BASEURL}/user_orders?user_id=${useridd}`)
       .then((response) => {
-        setorderhistory(response.data);
+        setorderhistory(response.data[0]);
         var result = response.data.filter(
           (thing, index, self) =>
             index === self.findIndex((t) => t.order_id === thing.order_id)
@@ -111,8 +121,14 @@ const Onwishlistclick = () =>{
     }
     // eslint-disable-next-line no-undef
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/user_register`, userdata)
+      .post(`${process.env.REACT_APP_BASEURL}/user_register`, userdata,
+        { headers: {
+  
+          user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+        }}
+      )
       .then((response) => {
+       if(response.data.message==="updated user profile")
         setShow(false);
       })
       .catch((error) => {});
@@ -125,7 +141,7 @@ const Onwishlistclick = () =>{
       [e.target.name]: e.target.value,
     });
   };
-  console.log("hh////////////"+JSON.stringify(userdata))
+  console.log("hh--------"+JSON.stringify(userdata))
 
   // change Password
 

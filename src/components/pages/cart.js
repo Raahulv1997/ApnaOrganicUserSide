@@ -81,7 +81,7 @@ const Cart = (all_images) => {
             let data = response.data;
             let ProductTotal = 0;
             data.map((cdata) => {
-              ProductTotal += cdata.quantity * Number(cdata.sale_price);
+              ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
             });
             setProductPriceTotal(ProductTotal);
             setCartData(data);
@@ -272,7 +272,7 @@ const Cart = (all_images) => {
 
                                     <li className="text-content">
                                       <span className="text-title">
-                                        Quatity:{cdata.quantity}
+                                        Quatity:{cdata.order_quantity}
                                       </span>
                                     </li>
 
@@ -453,7 +453,7 @@ const Cart = (all_images) => {
                                       onClick={() =>
                                         decrementCount(
                                           cdata.cart_id,
-                                          cdata.quantity
+                                          cdata.order_quantity
                                         )
                                       }
                                     >
@@ -463,7 +463,7 @@ const Cart = (all_images) => {
                                       className="form-control input-number qty-input"
                                       type="text"
                                       name="quantity"
-                                      value={cdata.quantity}
+                                      value={cdata.order_quantity}
                                       onChange={func}
                                     />
                                     <button
@@ -474,7 +474,7 @@ const Cart = (all_images) => {
                                       onClick={() =>
                                         incrementCount(
                                           cdata.cart_id,
-                                          cdata.quantity
+                                          cdata.order_quantity
                                         )
                                       }
                                     >

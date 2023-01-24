@@ -33,8 +33,8 @@ const Singup = () => {
         email: e.target.email.value,
       })
       .then((response) => {
-        if (response.data === false) {
-          setemailerror("already");
+        if (response.data.response=== "Email Already Exist") {
+          setemailerror("Already");
           e.target.email.value = "";
           e.target.password.value = "";
         } else {
@@ -61,10 +61,16 @@ const Singup = () => {
         password: passval,
       })
       .then((response) => {
-        if (response.data.message === "please check credential") {
+        if (response.data.message === "otp not matched") {
           setOtperror(true);
         } else {
-          localStorage.setItem("userid", response.data.insertId);
+          localStorage.setItem("userid", response.data.user_id.insertId);
+         
+
+          localStorage.setItem("token",response.data.token)
+          // console.log("tokennnnnnn------"+response.data.token)
+          // console.log("rrrrrrrrtokennnnnnnnrrrrr"+response.data.insertId.userid)
+
           localStorage.setItem("upassword", passval);
           navigate("/your_account");
           return response;
@@ -123,9 +129,10 @@ const Singup = () => {
                           name="emailid"
                           required
                         />{" "}
+                        
                         {emailerror === "" ? null : (
                           <p className="text-danger">
-                            {"User Already Exist. Please Login"}
+                            User Already Exist. Please Login
                           </p>
                         )}
                         <input

@@ -26,13 +26,15 @@ import SellerSignUp from "./components/pages/sellersignup";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
 function App() {
-  let useridds = localStorage.getItem("userid")
+
   const [userLogged, setUserLogged] = useState(
-    JSON.parse(localStorage.getItem("userid"))
+    localStorage.getItem("userid"),
+    localStorage.getItem("token")
   );
 
   useEffect(() => {
     localStorage.setItem("userid", JSON.stringify(userLogged));
+    localStorage.setItem("token", JSON.stringify(userLogged))
   }, [userLogged]);
 
   const logIn = () => setUserLogged(true);
