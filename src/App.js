@@ -33,7 +33,7 @@ function App() {
   );
 
   useEffect(() => {
-    localStorage.setItem("userid", JSON.stringify(userLogged));
+    // localStorage.setItem("userid", JSON.stringify(userLogged));
     localStorage.setItem("token", JSON.stringify(userLogged))
   }, [userLogged]);
 

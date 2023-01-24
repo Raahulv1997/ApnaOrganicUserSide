@@ -13,6 +13,7 @@ function Wishlist(all_images) {
   const [apicall, setapicall] = useState(false);
   const [wishlist, setWishList] = useState([]);
   const [wishlistocart, setwishlistocart] = useState("");
+  const[id,setId]=useState('');
   const navigate = useNavigate();
 
   var product = data.product;
@@ -21,12 +22,19 @@ function Wishlist(all_images) {
     function getWishList() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
+          .post(`${process.env.REACT_APP_BASEURL}/wishlist`,{
+            user_id:"",
+          }, 
+          {headers: {
+            user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+      }})
           .then((response) => {
             let data = response.data;
-            if (data.message !== "empty") {
+            if (data.response !== "header error") {
               setWishList(data);
               setapicall(false);
+              setId(data.id);
+              console.log("TTTTTTT))))))________"+data.id)
             }
           });
       } catch (err) {}
@@ -35,37 +43,21 @@ function Wishlist(all_images) {
     getWishList();
   }, [apicall]);
 
-  // function incrementCount(id,wishlistid) {
-
-  //   let cardadd = wishlist.find((item) => item.id === wishlistid);
-  //   console.log("----"+JSON.stringify(cardadd))
-  //   setwishlistocart(cardadd);
-  //   count = count + 1;
-  //   setCount(count);
-  //   setapicall(true);
-  // }
-  // const decrementCount = (id,wishlistid) => {
-  //   let cardadd = wishlist.find((item) => item.id === wishlistid);
-  //   setwishlistocart(cardadd);
-  //   if (count > 0) {
-  //     setCount((count) => count - 1);
-  //   }
-  // };
-  // end product quantity
-
-  // product box
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     let cnt = 1;
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id: `${useridd}`,
+        user_id: "",
         product_view_id: `${wishlistid}`,
         price: `${saleprice}`,
         discount: `${productMRF}`,
         quantity: count === 0 ? cnt : count,
         is_active: 1,
-      })
+      },
+      { headers: {
+        user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+      }})
       .then((response) => {
         let data = response.data;
         setapicall(true);
@@ -74,21 +66,29 @@ function Wishlist(all_images) {
   };
   // wlist = window.location.pathname;
 
-  const AddToWishList = (id, wishlistt, wishlistid) => {
+  const AddToWishList = ( id,wishlistt, wishlistid) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-        product_id: `${wishlistid}`,
-        user_id: `${useridd}`,
-      })
+        // product_id: `${wishlistid}`,
+        id:id,
+        
+      },
+      { headers: {
+        user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+      }})
+
       .then((response) => {
         let data = response.data;
         setapicall(true);
+  console.log("iddddddd-------"+id)
+
       });
   };
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
+  console.log("ooooooo======="+JSON.stringify(wishlist))
   return (
     <React.Fragment>
       <Header />
@@ -105,7 +105,7 @@ function Wishlist(all_images) {
             <div className="row w-100">
               {wishlist
                 ? wishlist.map((wlist) => {
-                    console.log("---" + JSON.stringify(wishlist));
+                    // console.log("---" + JSON.stringify(wishlist));
 
                     return (
                       <div

@@ -29,6 +29,7 @@ const Cart = (all_images) => {
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
+  localStorage.getItem("token")
   const currentdate = moment().format();
 
   const incrementCount = (id, quantity) => {
@@ -76,7 +77,12 @@ const Cart = (all_images) => {
     function getCartData() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
+          .put(`${process.env.REACT_APP_BASEURL}/cart`,{
+            user_id:""
+          }, 
+          { headers: {
+            user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+          }})
           .then((response) => {
             let data = response.data;
             let ProductTotal = 0;
@@ -86,7 +92,7 @@ const Cart = (all_images) => {
             setProductPriceTotal(ProductTotal);
             setCartData(data);
             setapicall(false);
-
+            console.log("oooooo"+JSON.stringify(data))
             // setapicall(false);
           });
       } catch (err) {}
@@ -99,9 +105,12 @@ const Cart = (all_images) => {
   const deleteCart = (id, user_id) => {
     axios
       .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
-        id: id,
-        user_id: `${user_id}`,
-      })
+        cart_id: id,
+        user_id: "",
+      },
+      { headers: {
+        user_token:'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+  }})
       .then((response) => {
         let data = response.data;
         setapicall(true);
@@ -453,7 +462,7 @@ const Cart = (all_images) => {
                                       onClick={() =>
                                         decrementCount(
                                           cdata.cart_id,
-                                          cdata.order_quantity
+                                          cdata.quantity
                                         )
                                       }
                                     >
@@ -474,7 +483,7 @@ const Cart = (all_images) => {
                                       onClick={() =>
                                         incrementCount(
                                           cdata.cart_id,
-                                          cdata.order_quantity
+                                          cdata.quantity
                                         )
                                       }
                                     >
