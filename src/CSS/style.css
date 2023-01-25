@@ -21887,7 +21887,7 @@ header .offcanvas-backdrop {
 
 .log-in-section::after {
   content: "";
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
