@@ -42,7 +42,7 @@ const Header = (props) => {
           .put(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
-            if (data.response !== "") {
+            if (data.response !== "invalid_url") {
               setCategoryData(data);
             }
             setapicall(false);
