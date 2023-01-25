@@ -35,14 +35,9 @@ function Wishlist(all_images) {
           )
           .then((response) => {
             let data = response.data;
-            if (
-              response.data !== "header error" ||
-              response.data.message !== "empty"
-            ) {
+            if (response.data[0].message !== "header error") {
               setWishList(data);
               setapicall(false);
-            } else if (response.data.message === "empty") {
-              setWishList([]);
             }
           });
       } catch (err) {}
@@ -116,36 +111,34 @@ function Wishlist(all_images) {
             aria-labelledby="all-tab"
           >
             <div className="row w-100">
-              {wishlist
-                ? wishlist.map((wlist) => {
-                    // console.log("---" + JSON.stringify(wishlist));
+              {(wishlist || []).map((wlist) => {
+                // console.log("---" + JSON.stringify(wishlist));
 
-                    return (
-                      <div
-                        key={wlist.id}
-                        className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                      >
-                        <ProductBox
-                          image={product.all_images}
-                          name={wlist.product_title_name}
-                          productPrice={wlist.product_price}
-                          productMRF={wlist.sale_price}
-                          productid={wlist.product_id}
-                          saleprice={wlist.sale_price}
-                          wishlistid={wlist.id}
-                          rating={wlist.rating}
-                          discount={wlist.discount}
-                          special_offer={wlist.special_offer}
-                          clickProduct={clickProduct}
-                          AddToWishList={AddToWishList}
-                          AddToCart={AddToCart}
-                          wishlistocart={wishlistocart}
-                          allimages={wlist.all_images}
-                        />
-                      </div>
-                    );
-                  })
-                : null}
+                return (
+                  <div
+                    key={wlist.id}
+                    className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
+                  >
+                    <ProductBox
+                      image={product.all_images}
+                      name={wlist.product_title_name}
+                      productPrice={wlist.product_price}
+                      productMRF={wlist.sale_price}
+                      productid={wlist.product_id}
+                      saleprice={wlist.sale_price}
+                      wishlistid={wlist.id}
+                      rating={wlist.rating}
+                      discount={wlist.discount}
+                      special_offer={wlist.special_offer}
+                      clickProduct={clickProduct}
+                      AddToWishList={AddToWishList}
+                      AddToCart={AddToCart}
+                      wishlistocart={wishlistocart}
+                      allimages={wlist.all_images}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>
