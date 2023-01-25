@@ -5,7 +5,7 @@ const AuthWrapper = () => {
 
   const location = useLocation(); // current location
 
-  const userLogged = JSON.parse(localStorage.getItem("userid"));
+  const userLogged = localStorage.getItem("token");
   
   return userLogged
     ? <Outlet />

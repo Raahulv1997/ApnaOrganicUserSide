@@ -24,7 +24,7 @@ const Login = ({ logIn }) => {
   const onSubmitClick = (e) => {
     const { from } = state || {};
     axios
-      .post(`http://192.168.29.108:5000/user_login`, credentailval)
+      .post(`${process.env.REACT_APP_BASEURL}/user_login`, credentailval)
       .then((response) => {
         console.log("--" + response.data.message);
         if (response.data.message === "check_credintials") {
@@ -50,13 +50,24 @@ const Login = ({ logIn }) => {
           credentailval.user_email !== ""
         ) {
           localStorage.setItem("userid", response.data.user_id);
+          localStorage.setItem("token", response.data.token);
+          console.log(
+            "--====USERRRRRRRR=======TOKEN-----" + response.data.user_id
+          );
+
+          console.log("--===========TOKEN-----" + response.data.token);
+
           console.log("----fromelse-------" + from);
           navigate("/");
           //  setError(false);
         } else {
           localStorage.setItem("userid", response.data.user_id);
+          localStorage.setItem("token", response.data.token);
+
           const { from } = state || {};
           // callback to update state
+          console.log("--===========TOKEN-----" + response.data.token);
+
           console.log("----from-------" + response.data.user_id);
           console.log("-------from.pathname----" + from.pathname);
           console.log("----state-------" + state);

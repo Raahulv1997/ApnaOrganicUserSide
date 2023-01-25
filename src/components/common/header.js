@@ -31,20 +31,23 @@ const Header = (props) => {
     setclick(true);
   };
   let cartup = localStorage.getItem("cartupdate");
+  const token = localStorage.getItem("token");
   if (cartup === true) {
     setapicall(true);
   }
   useEffect(() => {
     function getCategoryData() {
-      // try {
-      //   axios
-      //     .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
-      //     .then((response) => {
-      //       let data = response.data;
-      //       setCategoryData(data);
-      //       setapicall(false);
-      //     });
-      // } catch (err) {}
+      try {
+        axios
+          .put(`${process.env.REACT_APP_BASEURL}/get_all_category`)
+          .then((response) => {
+            let data = response.data;
+
+            setCategoryData(data);
+
+            setapicall(false);
+          });
+      } catch (err) {}
     }
 
     getCategoryData();
@@ -79,11 +82,21 @@ const Header = (props) => {
     function getCartData() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/cart?user_id=${useridd}`)
+          .put(
+            `${process.env.REACT_APP_BASEURL}/cart`,
+            {
+              user_id: "",
+            },
+            {
+              headers: {
+                user_token: token,
+              },
+            }
+          )
           .then((response) => {
             let data = response.data;
             let ProductTotal = 0;
-            if (data.length !== 0) {
+            if (data.response !== "invalid_url") {
               data.map((cdata) => {
                 ProductTotal +=
                   cdata.quantity * Number(cdata.product_price) -
@@ -121,10 +134,18 @@ const Header = (props) => {
   }, [apicall, cartup, props.addcart, props.deleteCart]);
   const deleteCart = (id, user_id) => {
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
-        id: id,
-        user_id: user_id,
-      })
+      .put(
+        `${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,
+        {
+          cart_id: id,
+          user_id: "",
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
         setapicall(true);
@@ -351,7 +372,10 @@ const Header = (props) => {
                                         <button
                                           className="close-button"
                                           onClick={() =>
-                                            deleteCart(data.id, data.user_id)
+                                            deleteCart(
+                                              data.cart_id,
+                                              data.user_id
+                                            )
                                           }
                                         >
                                           <i className="fa-solid fa-xmark"></i>
