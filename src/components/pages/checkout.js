@@ -60,6 +60,7 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
+  console.log("ooo====-----"+TotalTax)
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
     axios
@@ -1759,7 +1760,7 @@ const Checkout = (props) => {
             ? "Please Fill Address First"
             : "Added Successfully "
         }
-        text={ordervalidation === "fill address" ? "" : " Order Added"}
+        text={ordervalidation === "fill address" ? "" : "Order Added"}
         onConfirm={
           ordervalidation === "fill address"
             ? (account) => closeProductAlert(account)

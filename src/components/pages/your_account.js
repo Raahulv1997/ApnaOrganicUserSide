@@ -116,7 +116,8 @@ function Account() {
         },
       })
       .then((response) => {
-        setorderhistory(response.data[0]);
+        let data=response.data[0];
+        setorderhistory(response.data);
         var result = response.data.filter(
           (thing, index, self) =>
             index === self.findIndex((t) => t.order_id === thing.order_id)
