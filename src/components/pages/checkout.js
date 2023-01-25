@@ -61,10 +61,18 @@ const Checkout = (props) => {
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        cart_id: id,
-        quantity: inc,
-      })
+      .put(
+        `${process.env.REACT_APP_BASEURL}/cart_update`,
+        {
+          cart_id: id,
+          quantity: inc,
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       // console.log("ID PLEASEEEEEEEEEE"+id)
 
       .then((response) => {
@@ -86,10 +94,18 @@ const Checkout = (props) => {
     }
 
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        cart_id: id,
-        quantity: dec,
-      })
+      .put(
+        `${process.env.REACT_APP_BASEURL}/cart_update`,
+        {
+          cart_id: id,
+          quantity: dec,
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         setapicall(true);
         let data = response.data;
@@ -1153,12 +1169,12 @@ const Checkout = (props) => {
 
                       <div className="button-group">
                         <ul className="button-group-list">
-                          <li>
+                          {/* <li>
                             <button className="btn btn-light shopping-button backward-btn text-dark">
                               <i className="fa-solid fa-arrow-left-long ms-0"></i>
                               Return To Delivery Address
                             </button>
-                          </li>
+                          </li> */}
 
                           <li>
                             <button className="btn btn-animation proceed-btn">
