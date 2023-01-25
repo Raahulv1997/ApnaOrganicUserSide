@@ -42,9 +42,9 @@ const Header = (props) => {
           .put(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
-            if (data.response !== "invalid_url") {
-              setCategoryData(data);
-            }
+
+            setCategoryData(data);
+
             setapicall(false);
           });
       } catch (err) {}
@@ -96,7 +96,7 @@ const Header = (props) => {
           .then((response) => {
             let data = response.data;
             let ProductTotal = 0;
-            if (data.length !== "") {
+            if (data.response !== "invalid_url") {
               data.map((cdata) => {
                 ProductTotal +=
                   cdata.quantity * Number(cdata.product_price) -
