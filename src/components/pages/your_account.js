@@ -23,7 +23,8 @@ import { demo } from "../../Photos/demo.jpg";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
-  localStorage.getItem("token")
+  localStorage.getItem("token");
+  const [apicall, setapicall] = useState(false);
 
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
@@ -38,86 +39,81 @@ function Account() {
   const addAdderssShow = () => setaddAdderss(true);
   const [wishlistdata, setwishlistdata] = useState([]);
   const [orderhistory, setorderhistory] = useState([]);
-  const [totalorder, settotalorder] = useState('');
-  const [cartupdateid, setcartupdateid] = useState('');
-  const [udata,setUdata]=useState([]);
-  const [userdata, setuserdata] = useState(
-    {
-    user_id:"",
-    first_name:"",
-    last_name:"",
+  const [totalorder, settotalorder] = useState("");
+  const [cartupdateid, setcartupdateid] = useState("");
+  const [udata, setUdata] = useState([]);
+  const [userdata, setuserdata] = useState({
+    user_id: "",
+    first_name: "",
+    last_name: "",
     //password:"",
-    email:"",
-    phone_no:"",
-    gender:"",
-    date_of_birth:"",
-    address:"",
-    address2:""
-    });
-const token=localStorage.getItem("token")
- useEffect(()=>{
-  axios.put(`${process.env.REACT_APP_BASEURL}/user_details`,
-  {user_id:""},
-  {
-  headers: {
-      user_token: token,
-    },
-  })
-console.log("----------"+token)
+    email: "",
+    phone_no: "",
+    gender: "",
+    date_of_birth: "",
+    address: "",
+    address2: "",
+  });
+  const token = localStorage.getItem("token");
+  useEffect(() => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASEURL}/user_details`,
+        {user_id:""},
+        {
+          headers:{
+            user_token:token,
+          },
+        }
+      )
+      // console.log("----------"+user_token)
 
-  .then(response => {
-    let data=response.data;
-    setuserdata(data)
-    setUdata(data)
-    // localStorage.getItem("token")
+      .then((response) => {
+        let data = response.data[0];
+        setuserdata(data);
+        setUdata(data);
+        // localStorage.getItem("token")
 
-    // navigate('/your_account')
-    // return response;
-  }).catch(error => {
-  })
-  Onwishlistclick();
-  OnOrderclick();
- },[Password])
+        // navigate('/your_account')
+        // return response;
+      })
+      .catch((error) => {});
+    Onwishlistclick();
+    OnOrderclick();
+  }, [Password,apicall]);
 
-// wishlist
-const Onwishlistclick = () =>{
-  axios.post(`${process.env.REACT_APP_BASEURL}/wishlist`,{
-    user_id:""
-  },{
-    headers: {
-      user_token:`${token}`
-    }
-  })
-  .then(response => {
-    let data = response.data;
-            if (
-              response.data !== "header error" ||
-              response.data.message !== "empty"
-            ){
-              setwishlistdata(data);
-              // setapicall(false);
-            } else if (response.data.message === "empty") {
-              setwishlistdata([]);
-            }
-    // if(response.data[0].message !=='header error'){
-    //   setwishlistdata(response.data)
-    // }
-    // navigate('/your_account')
-    // return response;
-  }).catch(error => {
-  })
-  setclick(false)
-
-}
+  // wishlist
+  const Onwishlistclick = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASEURL}/wishlist`,
+        {
+          user_id: "",
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
+      .then((response) => {
+        if (response.data[0].message !== "header error") {
+          setwishlistdata(response.data);
+        }
+        // navigate('/your_account')
+        // return response;
+      })
+      .catch((error) => {});
+    setclick(false);
+  };
 
   // order history
   const OnOrderclick = () => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/order_deteils`,{
-        user_id:""
-      },{
+      .get(`${process.env.REACT_APP_BASEURL}/user_orders`, {
         headers: {
-          user_token:`${token}`}
+          user_token: token,
+        },
       })
       .then((response) => {
         setorderhistory(response.data[0]);
@@ -146,14 +142,13 @@ const Onwishlistclick = () =>{
     }
     // eslint-disable-next-line no-undef
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata,
-        { headers: {
-          user_token:`${token}`
-        }}
-      )
+      .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata, {
+        headers: {
+          user_token: `${token}`,
+        },
+      })
       .then((response) => {
-       if(response.data.message==="updated user profile")
-        setShow(false);
+        if (response.data.message === "updated user profile") setShow(false);
       })
       .catch((error) => {});
     setValidated(true);
@@ -165,7 +160,7 @@ const Onwishlistclick = () =>{
       [e.target.name]: e.target.value,
     });
   };
-  console.log("hh--------"+JSON.stringify(udata))
+  console.log("hh--------" + JSON.stringify(udata));
 
   // change Password
 
@@ -283,19 +278,22 @@ const Onwishlistclick = () =>{
   // add to cart
   const AddToCart = (id, discount, product_price,quantity, product_id) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id:"",
-        product_view_id: id,
-        price: product_price,
-        discount: discount,
-        quantity: 1,
-        is_active: 1,
-      },
-      {
-        headers: {
-          user_token: token,
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_to_cart`,
+        {
+          user_id: "",
+          product_view_id: id,
+          price: product_price,
+          discount: discount,
+          quantity: 1,
+          is_active: 1,
         },
-      })
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         let cartup = localStorage.setItem("cartupdate", true);
         setcartupdateid(cartup);
@@ -1906,7 +1904,6 @@ const Onwishlistclick = () =>{
                   <Form.Control
                     type="location"
                     placeholder="Add Address"
-                    required
                     value={udata.address}
                     name={"address"}
                     onChange={OnchangeFistname}
@@ -1965,14 +1962,14 @@ const Onwishlistclick = () =>{
                     Date of Birth
                   </Form.Label>
                   <Col sm="12">
-                    <Form.Control
-                      type="date"
-                      placeholder="Product Quantity"
-                      value={moment(udata.date_of_birth).format('yyyy-MM-DD')}
-                      name={"date_of_birth"}
-                      onChange={OnchangeFistname}
-                      required
-                    />
+                  <Form.Control
+                     name={"date_of_birth"}
+                    type="date"
+                    value={moment(udata.date_of_birth).format("yyyy-MM-DD")}
+                    onChange={OnchangeFistname}
+                    required
+                    placeholder="Product Quantity"
+                  />
                     <Form.Control.Feedback type="invalid">
                       Please choose date of birth
                     </Form.Control.Feedback>

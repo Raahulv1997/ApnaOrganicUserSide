@@ -57,7 +57,7 @@ function Orders() {
     
   },[])
   const UserData = () =>{
-    axios.put(`${process.env.REACT_APP_BASEURL}/user_details`,{
+    axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,{
       user_id:"",
     },
     { headers: {
