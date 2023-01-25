@@ -2,18 +2,18 @@ import React, { useEffect, useState } from "react";
 import "./App.css";
 import Home from "./home";
 import Cart from "./components/pages/cart";
-import Checkout from './components/pages/checkout';
-import Forgot from './components/pages/forgot';
-import Login from './components/pages/login';
-import Signup from './components/pages/signup';
-import Shop from './components/pages/shop';
-import Aboutus from './components/pages/aboutus';
-import Contactus from './components/pages/contactus';
-import Faq from './components/pages/faq';
-import Termcondition from './components/pages/term_condition'
+import Checkout from "./components/pages/checkout";
+import Forgot from "./components/pages/forgot";
+import Login from "./components/pages/login";
+import Signup from "./components/pages/signup";
+import Shop from "./components/pages/shop";
+import Aboutus from "./components/pages/aboutus";
+import Contactus from "./components/pages/contactus";
+import Faq from "./components/pages/faq";
+import Termcondition from "./components/pages/term_condition";
 import ProductDetail from "./components/pages/product-detail";
 import { Route, BrowserRouter, Routes } from "react-router-dom";
-import Wishlist from './components/pages/wishlist'
+import Wishlist from "./components/pages/wishlist";
 import Tracking from "./components/pages/order_tracking";
 import Orders from "./components/pages/your_orders";
 import Account from "./components/pages/your_account";
@@ -26,15 +26,14 @@ import SellerSignUp from "./components/pages/sellersignup";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
 function App() {
-
   const [userLogged, setUserLogged] = useState(
-    localStorage.getItem("userid"),
+    // localStorage.getItem("userid"),
     localStorage.getItem("token")
   );
 
   useEffect(() => {
-    localStorage.setItem("userid", JSON.stringify(userLogged));
-    localStorage.setItem("token", JSON.stringify(userLogged))
+    // localStorage.setItem("userid", JSON.stringify(userLogged));
+    localStorage.setItem("token", userLogged);
   }, [userLogged]);
 
   const logIn = () => setUserLogged(true);
@@ -43,17 +42,16 @@ function App() {
   return (
     <BrowserRouter>
       <Routes>
-
         <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login logIn={logIn}/>} />
+        <Route path="/login" element={<Login logIn={logIn} />} />
         {/* <Route path="/login" element={<Login />} /> */}
 
         <Route path="/shop" element={<Shop />} />
         <Route path="/signup" element={<Signup />} />
         <Route path="/forgot" element={<Forgot />} />
-        <Route path='/sellersignup' element={<SellerSignUp/>}/>
+        <Route path="/sellersignup" element={<SellerSignUp />} />
 
-        <Route element={<AuthWrapper/>}>
+        <Route element={<AuthWrapper />}>
           <Route path="/product-detail" element={<ProductDetail />} />
           <Route path="/cart" element={<Cart />} />
           <Route path="/checkout" element={<Checkout />} />
@@ -70,8 +68,6 @@ function App() {
           <Route path="/blog_detail" element={<BlogDetail />} />
           <Route path="/otp_verification" element={<Otp />} />
         </Route>
-
-
       </Routes>
     </BrowserRouter>
   );

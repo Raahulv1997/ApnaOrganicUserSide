@@ -23,6 +23,8 @@ import { demo } from "../../Photos/demo.jpg";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
+  localStorage.getItem("token")
+
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
   const func = () => {};
@@ -52,19 +54,19 @@ function Account() {
     address:"",
     address2:""
     });
-
+const token=localStorage.getItem("token")
  useEffect(()=>{
   axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,
   { user_id: '' },
   { headers: {
-  
-    user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+    user_token:`${token}`
   }})
 // console.log("----------"+user_token)
 
   .then(response => {
-    setuserdata(response.data)
-    setUdata(response.data)
+    let data=response.data[0];
+    setuserdata(data)
+    setUdata(data)
     // localStorage.getItem("token")
 
     // navigate('/your_account')
@@ -77,9 +79,15 @@ function Account() {
 
 // wishlist
 const Onwishlistclick = () =>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
+  axios.get(`${process.env.REACT_APP_BASEURL}/wishlist`,{
+    user_id:""
+  },{
+    headers: {
+      user_token:`${token}`
+    }
+  })
   .then(response => {
-    if(response.data.message !=='empty'){
+    if(response.data[0].message !=='header error'){
       setwishlistdata(response.data)
     }
     // navigate('/your_account')
@@ -93,7 +101,12 @@ const Onwishlistclick = () =>{
   // order history
   const OnOrderclick = () => {
     axios
-      .get(`${process.env.REACT_APP_BASEURL}/user_orders?user_id=${useridd}`)
+      .get(`${process.env.REACT_APP_BASEURL}/orders`,{
+        user_id:""
+      },{
+        headers: {
+          user_token:`${token}`}
+      })
       .then((response) => {
         setorderhistory(response.data[0]);
         var result = response.data.filter(
@@ -121,10 +134,9 @@ const Onwishlistclick = () =>{
     }
     // eslint-disable-next-line no-undef
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/user_register`, userdata,
+      .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata,
         { headers: {
-  
-          user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
+          user_token:`${token}`
         }}
       )
       .then((response) => {
@@ -136,12 +148,12 @@ const Onwishlistclick = () =>{
   };
 
   const OnchangeFistname = (e) => {
-    setuserdata({
+    setUdata({
       ...udata,
       [e.target.name]: e.target.value,
     });
   };
-  console.log("hh--------"+JSON.stringify(userdata))
+  console.log("hh--------"+JSON.stringify(udata))
 
   // change Password
 
@@ -260,12 +272,17 @@ const Onwishlistclick = () =>{
   const AddToCart = (id, discount, product_price, quantity, product_id) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id: useridd,
+        user_id:"",
         product_view_id: id,
         price: product_price,
         discount: discount,
         quantity: 1,
         is_active: 1,
+      },
+      {
+        headers: {
+          user_token: token,
+        },
       })
       .then((response) => {
         let cartup = localStorage.setItem("cartupdate", true);

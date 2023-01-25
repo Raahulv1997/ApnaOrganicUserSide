@@ -16,6 +16,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
   let useridd = localStorage.getItem("userid");
+  let token = localStorage.getItem("token");
+
   const [apicall, setapicall] = useState(false);
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
@@ -24,43 +26,43 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
   // var product = data.product;
-  useEffect(() => {
-    function getRating() {
-      try {
-        axios
-          .post(
-            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
-            {
-              product_search: {
-                search: `${productType}`,
-                price_from: "",
-                price_to: "",
-                id: "",
-                product_title_name: "",
-                sale_price: "",
-                short_by_updated_on: "",
-              },
-            }
-          )
-          .then((response) => {
-            let data = response.data;
-            setProductData(response.data.results);
-            localStorage.setItem("reviewid", response.data.results.id);
+  // useEffect(() => {
+  //   function getRating() {
+  //     try {
+  //       axios
+  //         .post(
+  //           `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+  //           {
+  //             product_search: {
+  //               search: `${productType}`,
+  //               price_from: "",
+  //               price_to: "",
+  //               id: "",
+  //               product_title_name: "",
+  //               sale_price: "",
+  //               short_by_updated_on: "",
+  //             },
+  //           }
+  //         )
+  //         .then((response) => {
+  //           let data = response.data;
+  //           setProductData(response.data.results);
+  //           localStorage.setItem("reviewid", response.data.results.id);
 
-            setapicall(false);
-            {
-              response.data.results.map((product) => {
-                return setcatArray((catArray) => [
-                  ...catArray,
-                  product.product_type,
-                ]);
-              });
-            }
-          });
-      } catch (err) {}
-    }
-    getRating();
-  }, []);
+  //           setapicall(false);
+  //           {
+  //             response.data.results.map((product) => {
+  //               return setcatArray((catArray) => [
+  //                 ...catArray,
+  //                 product.product_type,
+  //               ]);
+  //             });
+  //           }
+  //         });
+  //     } catch (err) {}
+  //   }
+  //   getRating();
+  // }, []);
 
   useEffect(() => {
     const result = catArray.filter(
@@ -86,26 +88,31 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       navigate("/login");
     } else {
       axios
-        .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-          user_id: `${useridd}`,
-          product_view_id: `${id}`,
-          price: `${saleprice}`,
-          discount: `${productMRF}`,
-          quantity: count,
-          is_active: 1,
-        },
-        { headers: {
-  
-          user_token: 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6ODgsImlhdCI6MTY3NDQ2Mjk2M30.tQj-WI-QVoVDIDV5n0LfPJTfbVe2Q0ua-3owaHGhm8c'
-        }})
+        .post(
+          `${process.env.REACT_APP_BASEURL}/add_to_cart`,
+          {
+            user_id: "",
+            product_view_id: `${id}`,
+            price: `${saleprice}`,
+            discount: `${productMRF}`,
+            quantity: count,
+            is_active: 1,
+          },
+          {
+            headers: {
+              user_token: token,
+            },
+          }
+        )
         .then((response) => {
           let data = response.data;
+          console.log("ADDCART" + data);
+
           setCount(0);
           // setaddcartid(id)
           setData(data);
           setapicall(true);
-          localStorage.setItem("cartupdate", true);
-          console.log("ADDCART" + true);
+          // localStorage.setItem("cartupdate", true);
         });
     }
   };
@@ -128,21 +135,34 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
             {
               product_id: `${id}`,
-              user_id: `${useridd}`,
+              user_id: "",
+            },
+            {
+              headers: {
+                user_token: `${token}`
+              },
             }
           )
           .then((response) => {
-            let data = response.data;
+            let data = response.data[0];
             setData(response.data);
             setWlistData("add");
             setapicall(true);
           });
       } else {
         axios
-          .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-            user_id: `${useridd}`,
-            product_view_id: `${id}`,
-          })
+          .post(
+            `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+            {
+              user_id: "",
+              product_view_id: `${id}`,
+            },
+            {
+              headers: {
+                user_token: `${token}`,
+              },
+            }
+          )
           .then((response) => {
             let data = response.data;
             setData(response.data);
@@ -153,41 +173,71 @@ const Benners = (props, productPrice, productMRF, name, image) => {
     }
   };
   useEffect(() => {
+    console.log("---tokenn  " + token);
     let homeurl;
     if (
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null ||
-      useridd === undefined ||
-      useridd === true
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === undefined ||
+      token === true
     ) {
-      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id`;
+      function getProductData() {
+        try {
+          axios
+            .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`, {
+              product_search: {
+                search: `${productType}`,
+                price_from: "",
+                price_to: "",
+                id: "",
+                product_title_name: "",
+                sale_price: "",
+                short_by_updated_on: "",
+              },
+            })
+            .then((response) => {
+              let data = response.data;
+              setProductData(response.data.results);
+              // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+              setapicall(false);
+            });
+        } catch (err) {}
+      }
+      getProductData();
     } else {
-      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`;
+      function getProductData() {
+        try {
+          axios
+            .post(
+              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+              {
+                product_search: {
+                  search: `${productType}`,
+                  price_from: "",
+                  price_to: "",
+                  id: "",
+                  product_title_name: "",
+                  sale_price: "",
+                  short_by_updated_on: "",
+                },
+              },
+              {
+                headers: {
+                  user_token: token,
+                },
+              }
+            )
+            .then((response) => {
+              let data = response.data;
+              setProductData(response.data.results);
+              // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+              setapicall(false);
+            });
+        } catch (err) {}
+      }
+      getProductData();
     }
-    function getProductData() {
-      try {
-        axios
-          .post(`${homeurl}`, {
-            product_search: {
-              search: `${productType}`,
-              price_from: "",
-              price_to: "",
-              id: "",
-              product_title_name: "",
-              sale_price: "",
-              short_by_updated_on: "",
-            },
-          })
-          .then((response) => {
-            let data = response.data;
-            setProductData(response.data.results);
-            // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
-            setapicall(false);
-          });
-      } catch (err) {}
-    }
-    getProductData();
   }, [productType, apicall]);
   const clickProduct = (productid, id) => {
     localStorage.setItem("proid", productid);
@@ -300,33 +350,37 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             <div className="col-xxl-3 ratio_65">
               <div className="row g-4">
                 <div className="col-xxl-12 col-sm-6">
-                {showbanner.map((img)=>{
-                return(
-                  <>
-                  <div className="home-contain" >
-                  {img.banner_location==='home_page_right_side(1)'?
-                  <>
-                    <a href="shop-left-sidebar.html">
-                     
-                      <img
-                        src={img.image}
-                        className="img-fluid bg-img lazyload"
-                        alt="image"
-                        name="image"
-                      />
-                    </a>
-                    
-                    <div className="home-detail  p-center text-center">
-                      <div>
-                        <h3 className="text-center text-white">{img.title}</h3>
-                        <h4 className="text-center text-white">{img.description}</h4>
-                      </div>
-                    </div>
-                    </>:null}
-                  </div>
-                  </>
-              )
-            })}
+                  {showbanner.map((img) => {
+                    return (
+                      <>
+                        <div className="home-contain">
+                          {img.banner_location === "home_page_right_side(1)" ? (
+                            <>
+                              <a href="shop-left-sidebar.html">
+                                <img
+                                  src={img.image}
+                                  className="img-fluid bg-img lazyload"
+                                  alt="image"
+                                  name="image"
+                                />
+                              </a>
+
+                              <div className="home-detail  p-center text-center">
+                                <div>
+                                  <h3 className="text-center text-white">
+                                    {img.title}
+                                  </h3>
+                                  <h4 className="text-center text-white">
+                                    {img.description}
+                                  </h4>
+                                </div>
+                              </div>
+                            </>
+                          ) : null}
+                        </div>
+                      </>
+                    );
+                  })}
                 </div>
 
                 <div className="col-xxl-12 col-sm-6">
