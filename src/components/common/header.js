@@ -36,15 +36,15 @@ const Header = (props) => {
   }
   useEffect(() => {
     function getCategoryData() {
-      try {
-        axios
-          .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
-          .then((response) => {
-            let data = response.data;
-            setCategoryData(data);
-            setapicall(false);
-          });
-      } catch (err) {}
+      // try {
+      //   axios
+      //     .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
+      //     .then((response) => {
+      //       let data = response.data;
+      //       setCategoryData(data);
+      //       setapicall(false);
+      //     });
+      // } catch (err) {}
     }
 
     getCategoryData();
