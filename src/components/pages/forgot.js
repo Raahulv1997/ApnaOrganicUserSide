@@ -9,58 +9,56 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 const Forgot = () => {
   const navigate = useNavigate();
-  const[email,setEmail]=useState([]);
+  const [email, setEmail] = useState([]);
   const [otp, setotp] = useState(0);
   const [otperror, setOtperror] = useState(false);
   const [passval, setpassval] = useState("");
-  const handleFormChange =(e)=>{
+  const handleFormChange = (e) => {
     setEmail(e.target.value);
-    
+
     // setForgotInfo({...forgotInfo,[e.target.name]: e.target.value})
-  }
+  };
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
-    console.log("----pass"+e.target.value)
-
+    console.log("----pass" + e.target.value);
   };
-  const OnOtpChange = (e)=>{
-    setotp(e.target.value)
-    console.log("----otp"+e.target.value)
-  }
-  const forgotPassword=()=>{
-    axios.post(`http://192.168.29.108:5000/user_forgot_password`,{
-      email:`${email}`
-    }).then(response => {
-      // sessionStorage.setItem("useridd" , response.data.user_id)
-      navigate('/forgot')
-      // localStorage.setItem("useridd" , response.data.user_id)
-      // navigate('/login')
-     
-      // return response;
-    })
-  }
+  const OnOtpChange = (e) => {
+    setotp(e.target.value);
+    console.log("----otp" + e.target.value);
+  };
+  const forgotPassword = () => {
+    axios
+      .post(`http://192.168.29.108:5000/user_forgot_password`, {
+        email: `${email}`,
+      })
+      .then((response) => {
+        // sessionStorage.setItem("useridd" , response.data.user_id)
+        navigate("/forgot");
+        // localStorage.setItem("useridd" , response.data.user_id)
+        // navigate('/login')
+
+        // return response;
+      });
+  };
   const VerifyOTP = (e) => {
     e.preventDefault();
-      axios
-        .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
-          email: email,
-          otp: Number(otp),
-          password: passval,
-        })
-        .then((response) => {
-          if(response.data.message === 'please check credential'){
-            setOtperror(true);
-          }
-          else{
-            sessionStorage.setItem("userid", response.data.insertId);
-            sessionStorage.setItem("upassword", passval);
-            // navigate("/your_account");
-            // return response;
-          }
-          
-        })
-        .catch((error) => {});
-    
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
+        email: email,
+        otp: Number(otp),
+        password: passval,
+      })
+      .then((response) => {
+        if (response.data.message === "please check credential") {
+          setOtperror(true);
+        } else {
+          localStorage.setItem("userid", response.data.insertId);
+          localStorage.setItem("upassword", passval);
+          // navigate("/your_account");
+          // return response;
+        }
+      })
+      .catch((error) => {});
   };
   return (
     <Fragment>
@@ -72,7 +70,7 @@ const Forgot = () => {
           <div className="row">
             <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
               <div className="image-contain">
-                <img src={Banner} className="img-fluid" alt=""/>
+                <img src={Banner} className="img-fluid" alt="" />
               </div>
             </div>
             <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto">
@@ -82,9 +80,12 @@ const Forgot = () => {
                     <h3>Welcome To Apna Organic</h3>
                     <h4>Forgot your password</h4>
                   </div>
-                 
+
                   <div className="input-box">
-                    <form className="row g-4"  onSubmit={otp === 0 ? forgotPassword : VerifyOTP}>
+                    <form
+                      className="row g-4"
+                      onSubmit={otp === 0 ? forgotPassword : VerifyOTP}
+                    >
                       <div className="col-12">
                         <div className="form-floating theme-form-floating log-in-form">
                           <input
@@ -92,39 +93,41 @@ const Forgot = () => {
                             className="form-control"
                             id="email"
                             placeholder="Email Address"
-                            onChange={(e) => handleFormChange(e)} value={email} name={'email'}
+                            onChange={(e) => handleFormChange(e)}
+                            value={email}
+                            name={"email"}
                           />
                           <label htmlFor="email">Email Address</label>
                         </div>
                         <div className="col-12 mt-3">
-                        <button
-                          className="btn btn-animation w-100"
-                          type="button" onClick={forgotPassword}
-                        >
-                          Forgot Password
-                        </button>
-                      </div>
+                          <button
+                            className="btn btn-animation w-100"
+                            type="button"
+                            onClick={forgotPassword}
+                          >
+                            Forgot Password
+                          </button>
+                        </div>
                       </div>
                       <div className="log-in-title">
-                      <h4>Enter one time otp</h4>
-                    <h5 className="text-content">
-                      A code has been sent to your email
-                    </h5>
-                  </div>
+                        <h4>Enter one time otp</h4>
+                        <h5 className="text-content">
+                          A code has been sent to your email
+                        </h5>
+                      </div>
                       <div
-                    id="otp"
-                    className="inputs d-flex flex-row justify-content-center"
-                  >
-                    <input
-                      className={"form-control"}
-                      type="text"
-                      id="first"
-                      placeholder="Enter Otp"
-                      onChange={(e)=>OnOtpChange(e)}
-                    />
-                    
-                  </div>
-                  {/* <div className="col-12 mt-3">
+                        id="otp"
+                        className="inputs d-flex flex-row justify-content-center"
+                      >
+                        <input
+                          className={"form-control"}
+                          type="text"
+                          id="first"
+                          placeholder="Enter Otp"
+                          onChange={(e) => OnOtpChange(e)}
+                        />
+                      </div>
+                      {/* <div className="col-12 mt-3">
                         <button
                           className="btn btn-animation w-100"
                           type="button" onClick={VerifyOTP}
@@ -132,13 +135,12 @@ const Forgot = () => {
                           VerifyOTP
                         </button>
                       </div> */}
-                  {/* {otp === 0 ? ( */}
+                      {/* {otp === 0 ? ( */}
                       <div className="col-12">
                         <div className="form-floating theme-form-floating">
-                        <div className="log-in-title">
-                      <h4>Enter New Password</h4>
-                    
-                  </div>
+                          <div className="log-in-title">
+                            <h4>Enter New Password</h4>
+                          </div>
                           <input
                             type="password"
                             name="password"
@@ -149,11 +151,12 @@ const Forgot = () => {
                           />
                         </div>
                       </div>
-                    {/* ) : null} */}
+                      {/* ) : null} */}
                       <div className="col-12 mt-3">
                         <button
                           className="btn btn-animation w-100"
-                          type="button" onClick={VerifyOTP}
+                          type="button"
+                          onClick={VerifyOTP}
                         >
                           Change Password
                         </button>

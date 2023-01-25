@@ -49,22 +49,24 @@ const Login = ({ logIn }) => {
           response.data.message !== "password not matched" &&
           credentailval.user_email !== ""
         ) {
-          localStorage.setItem("userid", response.data.user_id);
-          localStorage.setItem("token", response.data.token)
-          console.log("--====USERRRRRRRR=======TOKEN-----" + response.data.user_id);
-          
-          console.log("--===========TOKEN-----" +response.data.token);
+          // localStorage.setItem("userid", response.data.user_id);
+          localStorage.setItem("token", response.data.token);
+          console.log(
+            "--====USERRRRRRRR=======TOKEN-----" + response.data.user_id
+          );
+
+          console.log("--===========TOKEN-----" + response.data.token);
 
           console.log("----fromelse-------" + from);
           navigate("/");
           //  setError(false);
         } else {
-          localStorage.setItem("userid", response.data.user_id);
-          localStorage.setItem("token", response.data.token)
+          // localStorage.setItem("userid", response.data.user_id);
+          localStorage.setItem("token", response.data.token);
 
           const { from } = state || {};
           // callback to update state
-          console.log("--===========TOKEN-----" +response.data.token);
+          console.log("--===========TOKEN-----" + response.data.token);
 
           console.log("----from-------" + response.data.user_id);
           console.log("-------from.pathname----" + from.pathname);

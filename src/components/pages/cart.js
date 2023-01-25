@@ -56,7 +56,10 @@ const Cart = (all_images) => {
       });
   };
   const decrementCount = (id, order_quantity) => {
+    console.log("-order_quantity---" + order_quantity);
+
     let dec;
+
     if (order_quantity > 0 || order_quantity != 1) {
       dec = order_quantity - 1;
     } else if ((order_quantity = 1)) {
