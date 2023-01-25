@@ -64,6 +64,7 @@ const Cart = (all_images) => {
     } else {
       return false;
     }
+    console.log("quntityyyyyyy"+order_quantity)
     axios
       .put(
         `${process.env.REACT_APP_BASEURL}/cart_update`,

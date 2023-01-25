@@ -56,15 +56,17 @@ function Account() {
     });
 const token=localStorage.getItem("token")
  useEffect(()=>{
-  axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,
-  { user_id: '' },
-  { headers: {
-    user_token:`${token}`
-  }})
-// console.log("----------"+user_token)
+  axios.put(`${process.env.REACT_APP_BASEURL}/user_details`,
+  {user_id:""},
+  {
+  headers: {
+      user_token: token,
+    },
+  })
+console.log("----------"+token)
 
   .then(response => {
-    let data=response.data[0];
+    let data=response.data;
     setuserdata(data)
     setUdata(data)
     // localStorage.getItem("token")
@@ -79,7 +81,7 @@ const token=localStorage.getItem("token")
 
 // wishlist
 const Onwishlistclick = () =>{
-  axios.get(`${process.env.REACT_APP_BASEURL}/wishlist`,{
+  axios.post(`${process.env.REACT_APP_BASEURL}/wishlist`,{
     user_id:""
   },{
     headers: {
@@ -87,9 +89,19 @@ const Onwishlistclick = () =>{
     }
   })
   .then(response => {
-    if(response.data[0].message !=='header error'){
-      setwishlistdata(response.data)
-    }
+    let data = response.data;
+            if (
+              response.data !== "header error" ||
+              response.data.message !== "empty"
+            ){
+              setwishlistdata(data);
+              // setapicall(false);
+            } else if (response.data.message === "empty") {
+              setwishlistdata([]);
+            }
+    // if(response.data[0].message !=='header error'){
+    //   setwishlistdata(response.data)
+    // }
     // navigate('/your_account')
     // return response;
   }).catch(error => {
@@ -101,7 +113,7 @@ const Onwishlistclick = () =>{
   // order history
   const OnOrderclick = () => {
     axios
-      .get(`${process.env.REACT_APP_BASEURL}/orders`,{
+      .post(`${process.env.REACT_APP_BASEURL}/order_deteils`,{
         user_id:""
       },{
         headers: {
@@ -269,7 +281,7 @@ const Onwishlistclick = () =>{
     });
   };
   // add to cart
-  const AddToCart = (id, discount, product_price, quantity, product_id) => {
+  const AddToCart = (id, discount, product_price,quantity, product_id) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
         user_id:"",

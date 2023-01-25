@@ -17,6 +17,8 @@ const Checkout = (props) => {
   const navigate = useNavigate();
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
+const token =localStorage.getItem("token");
+
   let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
   const [navtab, setnavtab] = useState(false);
@@ -53,7 +55,6 @@ const Checkout = (props) => {
   let CouponDis = localStorage.getItem("coupon");
   let CouponId = localStorage.getItem("couponid");
   // end discount and shipping
-const token =localStorage.getItem("token");
   var address = data2.address;
   const func = (e) => {
     setDeliveryMethod(e.target.value);
@@ -241,7 +242,7 @@ const token =localStorage.getItem("token");
   // delivery address
   const DeliveryClick = () => {
     axios
-      .get(`${process.env.REACT_APP_BASEURL}/user_details`,{
+      .put(`${process.env.REACT_APP_BASEURL}/user_details`,{
         user_id:"",
       },
       { headers: {
@@ -1176,12 +1177,12 @@ const token =localStorage.getItem("token");
                                   <li key={data.id}>
                                     <h4>
                                       {Number(data.sale_price).toFixed(2)}{" "}
-                                      <span>X {data.quantity}</span>
+                                      <span>X {data.order_quantity}</span>
                                     </h4>
                                     <h4 className="price">
                                       ₹
                                       {(
-                                        data.quantity * Number(data.sale_price)
+                                        data.order_quantity * Number(data.sale_price)
                                       ).toFixed(2)}
                                     </h4>
                                   </li>
