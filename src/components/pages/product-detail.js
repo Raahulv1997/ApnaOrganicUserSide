@@ -14,6 +14,7 @@ import Form from 'react-bootstrap/Form';
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 const ProductDetail = ({ logIn }) => {
   const useridd = localStorage.getItem("userid");
+  const token=localStorage.getItem("token");
   const [apicall, setapicall] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
   const [productprice, setProductprice] = useState();
@@ -100,12 +101,17 @@ const ProductDetail = ({ logIn }) => {
 
   const AddToCart = () => {
     axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-      user_id: `${useridd}`,
+      user_id: "",
       product_view_id: `${Id}`,
       price: `${productDetails.product_verient[0].product_price}`,
       discount: `${productDetails.product_verient[0].discount}`,
       quantity: `${count}`,
       is_active: 1
+    },
+    {
+      headers: {
+        user_token: `${token}`,
+      },
     })
       .then((response) => {
         let data = response.data;
@@ -117,11 +123,15 @@ const ProductDetail = ({ logIn }) => {
   const AddToWishList = () => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-        user_id: `${useridd}`,
+        user_id: "",
         product_view_id: `${Id}`,
         price: `${productDetails.product_verient[0].product_price}`,
         discount: `${productDetails.product_verient[0].discount}`,
 
+      }, {
+        headers: {
+          user_token: `${token}`,
+        },
       })
       .then((response) => {
         let data = response.data;

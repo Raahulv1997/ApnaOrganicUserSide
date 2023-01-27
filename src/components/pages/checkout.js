@@ -17,6 +17,8 @@ const Checkout = (props) => {
   const navigate = useNavigate();
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
+
+
   let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
   const [navtab, setnavtab] = useState(false);
@@ -25,9 +27,8 @@ const Checkout = (props) => {
   const [DeliveryMethod, setDeliveryMethod] = useState("");
   const [userdata, setuserdata] = useState([]);
   const [DeliveyTab, setDeliveyTab] = useState("");
-
+  const [ordervalidation, setordervalidation] = useState(false);
   const [orderadd, setorderadd] = useState({
-    user_id: useridd,
     status: "placed",
     total_quantity: "",
     ref_no: "12345678",
@@ -53,18 +54,28 @@ const Checkout = (props) => {
   let CouponDis = localStorage.getItem("coupon");
   let CouponId = localStorage.getItem("couponid");
   // end discount and shipping
-const token =localStorage.getItem("token");
+  const token = localStorage.getItem("token");
   var address = data2.address;
   const func = (e) => {
     setDeliveryMethod(e.target.value);
+    setordervalidation(false);
   };
+  console.log("ooo====-----"+TotalTax)
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        cart_id: id,
-        quantity: inc,
-      })
+      .put(
+        `${process.env.REACT_APP_BASEURL}/cart_update`,
+        {
+          cart_id: id,
+          quantity: inc,
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       // console.log("ID PLEASEEEEEEEEEE"+id)
 
       .then((response) => {
@@ -86,10 +97,18 @@ const token =localStorage.getItem("token");
     }
 
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/cart_update`, {
-        cart_id: id,
-        quantity: dec,
-      })
+      .put(
+        `${process.env.REACT_APP_BASEURL}/cart_update`,
+        {
+          cart_id: id,
+          quantity: dec,
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         setapicall(true);
         let data = response.data;
@@ -108,13 +127,17 @@ const token =localStorage.getItem("token");
   useEffect(() => {
     try {
       axios
-        .put(`${process.env.REACT_APP_BASEURL}/cart`,{
-          user_id:"",
-        },{
-          headers: {
-          user_token:token
-      }
-        })
+        .put(
+          `${process.env.REACT_APP_BASEURL}/cart`,
+          {
+            user_id: "",
+          },
+          {
+            headers: {
+              user_token: token,
+            },
+          }
+        )
         .then((response) => {
           let data = response.data;
           let ProductTotal = 0;
@@ -205,13 +228,18 @@ const token =localStorage.getItem("token");
   }, [apicall, DeliveryMethod]);
   const deleteCart = (id, user_id) => {
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_cart`, {
-        cart_id: id,
-        user_id: "",
-      },
-      {headers: {
-        user_token:token
-  }})
+      .put(
+        `${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,
+        {
+          cart_id: id,
+          user_id: "",
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data[0];
         setapicall(true);
@@ -221,15 +249,18 @@ const token =localStorage.getItem("token");
   // Save For later
   const SaveForLater = (id) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-        user_id: "",
-        product_view_id: `${id}`,
-      },
-      {
-        headers: {
-          user_token: token,
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+        {
+          user_id: "",
+          product_view_id: `${id}`,
         },
-      })
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
         // setData(response.data);
@@ -241,14 +272,19 @@ const token =localStorage.getItem("token");
   // delivery address
   const DeliveryClick = () => {
     axios
-      .get(`${process.env.REACT_APP_BASEURL}/user_details`,{
-        user_id:"",
-      },
-      { headers: {
-        user_token:token,
-      }})
+      .post(
+        `${process.env.REACT_APP_BASEURL}/user_details`,
+        {
+          user_id: "",
+        },
+        {
+          headers: {
+            user_token: token,
+          },
+        }
+      )
       .then((response) => {
-        setuserdata(response.data);
+        setuserdata(response.data[0]);
         // navigate('/your_account')
         // return response;
       })
@@ -269,21 +305,41 @@ const token =localStorage.getItem("token");
   };
   // end payment
   const onOrderAdd = () => {
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd)
-      .then((response) => {
-        localStorage.setItem("orderid", response.data.order_id);
-        setProductAlert(true);
-        // return response;
-      })
-      .catch((error) => {});
+    if (DeliveryMethod === "") {
+      setordervalidation("deliverymethod");
+    } else {
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd, {
+          headers: {
+            user_token: token,
+          },
+        })
+        .then((response) => {
+          if (response.data.message === "please complete your profil first") {
+            setordervalidation("fill address");
+            setProductAlert(true);
+          } else {
+            localStorage.setItem("orderid", response.data.order_id);
+            setProductAlert(true);
+            setordervalidation(false);
+          }
+
+          // return response;
+        })
+        .catch((error) => {});
+    }
   };
   // end order add
 
   // sweetalert
-  const closeProductAlert = () => {
+  const closeProductAlert = (e) => {
     setProductAlert(false);
-    navigate("/your_orders");
+    if (e === "order") {
+      navigate("/your_orders");
+    }
+    if (ordervalidation === "fill address" || e === "account") {
+      navigate("/your_account");
+    }
   };
   // end sweetalert
   return (
@@ -359,35 +415,7 @@ const token =localStorage.getItem("token");
                           </Nav.Link>
                         </Nav.Item>
                       </div>
-                      {/* <div className="col-6 col-md-12 my-2">
-                        <Nav.Item>
-                          <Nav.Link eventKey="third">
-                            <li className="nav-link" role="presentation">
-                              <div
-                                className="nav-item"
-                                id="delivery-option"
-                                data-bs-toggle="tab"
-                                data-bs-target="#d-options"
-                                role="tab"
-                              >
-                                <div className="nav-item-box">
-                                  <div>
-                                    <span>STEP 3</span>
-                                    <h4>Delivery Options</h4>
-                                  </div>
-                                  <lord-icon
-                                    target=".nav-item"
-                                    src="https://cdn.lordicon.com/jyijxczt.json"
-                                    trigger="loop-on-hover"
-                                    colors="primary:#3a3347,secondary:#0baf9a,tertiary:#ebe6ef,quaternary:#646e78"
-                                    className="lord-icon"
-                                  ></lord-icon>
-                                </div>
-                              </div>
-                            </li>
-                          </Nav.Link>
-                        </Nav.Item>
-                      </div> */}
+
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
                           <Nav.Link eventKey="fourth">
@@ -463,7 +491,8 @@ const token =localStorage.getItem("token");
 
                                                 <li className="text-content">
                                                   <span className="text-title">
-                                                    Quatity:{cdata.order_quantity}
+                                                    Quatity:
+                                                    {cdata.order_quantity}
                                                   </span>
                                                 </li>
 
@@ -801,13 +830,10 @@ const token =localStorage.getItem("token");
                       </div>
                       <div className="row">
                         <div className="col-12 col-md-6">
-                          {userdata
-                            ? userdata.map((address) => {
-                                return (
-                                  <div key={address.id} className="">
-                                    <div className="delivery-address-box">
-                                      <div>
-                                        {/* <div className="form-check">
+                          <div key={userdata.id} className="">
+                            <div className="delivery-address-box">
+                              <div>
+                                {/* <div className="form-check">
                                           <input
                                             className="form-check-input"
                                             type="radio"
@@ -816,55 +842,49 @@ const token =localStorage.getItem("token");
                                           />
                                         </div> */}
 
-                                        <div className="label">
-                                          <label>Office</label>
-                                        </div>
-                                        <ul
-                                          key={address.id}
-                                          className="delivery-address-detail"
-                                        >
-                                          <li>
-                                            <h4 className="fw-500">
-                                              {address.first_name}{" "}
-                                              {address.last_name}
-                                            </h4>
-                                          </li>
-                                          <li>
-                                            <p className="text-content">
-                                              <span className="text-title">
-                                                Address:{address.address}
-                                              </span>
-                                            </p>
-                                          </li>
-                                          {/* <li>
+                                <div className="label">
+                                  <label>Home</label>
+                                </div>
+                                <ul
+                                  key={userdata.id}
+                                  className="delivery-address-detail"
+                                >
+                                  <li>
+                                    <h4 className="fw-500">
+                                      {userdata.first_name} {userdata.last_name}
+                                    </h4>
+                                  </li>
+                                  <li>
+                                    <p className="text-content">
+                                      <span className="text-title">
+                                        Address:{userdata.address}
+                                      </span>
+                                    </p>
+                                  </li>
+                                  {/* <li>
                                         <h6 className="text-content">
                                           <span className="text-title">
                                             Pin Code :{address.pincode}
                                           </span>
                                         </h6>
                                       </li> */}
-                                          <li>
-                                            <h6 className="text-content mb-0">
-                                              <span className="text-title">
-                                                Phone :{address.phone_no}
-                                              </span>
-                                            </h6>
-                                          </li>
-                                        </ul>
-                                      </div>
-                                    </div>
-                                  </div>
-                                );
-                              })
-                            : null}
+                                  <li>
+                                    <h6 className="text-content mb-0">
+                                      <span className="text-title">
+                                        Phone :{userdata.phone_no}
+                                      </span>
+                                    </h6>
+                                  </li>
+                                </ul>
+                              </div>
+                            </div>
+                          </div>
                         </div>
                         <div className="col-12 col-md-6">
-                          {userdata.map((address) => {
-                            return (
-                              <div key={address.id} className="">
-                                <div className="delivery-address-box">
-                                  <div>
-                                    {/* <div className="form-check">
+                          <div key={userdata.id} className="">
+                            <div className="delivery-address-box">
+                              <div>
+                                {/* <div className="form-check">
                                       <input
                                         className="form-check-input"
                                         type="radio"
@@ -873,46 +893,43 @@ const token =localStorage.getItem("token");
                                       />
                                     </div> */}
 
-                                    <div className="label">
-                                      <label>Home</label>
-                                    </div>
-                                    <ul
-                                      key={address.id}
-                                      className="delivery-address-detail"
-                                    >
-                                      <li>
-                                        <h4 className="fw-500">
-                                          {address.first_name}{" "}
-                                          {address.last_name}
-                                        </h4>
-                                      </li>
-                                      <li>
-                                        <p className="text-content">
-                                          <span className="text-title">
-                                            Address:{address.address2}
-                                          </span>
-                                        </p>
-                                      </li>
-                                      {/* <li>
+                                <div className="label">
+                                  <label>Office</label>
+                                </div>
+                                <ul
+                                  key={userdata.id}
+                                  className="delivery-address-detail"
+                                >
+                                  <li>
+                                    <h4 className="fw-500">
+                                      {userdata.first_name} {userdata.last_name}
+                                    </h4>
+                                  </li>
+                                  <li>
+                                    <p className="text-content">
+                                      <span className="text-title">
+                                        Address:{userdata.address2}
+                                      </span>
+                                    </p>
+                                  </li>
+                                  {/* <li>
                                         <h6 className="text-content">
                                           <span className="text-title">
                                             Pin Code :{address.pincode}
                                           </span>
                                         </h6>
                                       </li> */}
-                                      <li>
-                                        <h6 className="text-content mb-0">
-                                          <span className="text-title">
-                                            Phone :{address.phone_no}
-                                          </span>
-                                        </h6>
-                                      </li>
-                                    </ul>
-                                  </div>
-                                </div>
+                                  <li>
+                                    <h6 className="text-content mb-0">
+                                      <span className="text-title">
+                                        Phone :{userdata.phone_no}
+                                      </span>
+                                    </h6>
+                                  </li>
+                                </ul>
                               </div>
-                            );
-                          })}
+                            </div>
+                          </div>
                         </div>
                       </div>
                       {/* <div className="button-group">
@@ -931,6 +948,17 @@ const token =localStorage.getItem("token");
                           </li>
                         </ul>
                       </div> */}
+                      {userdata.address === "" || userdata.address2 === "" ? (
+                        <div className="text-center my-4 text-danger">
+                          <h3>{"Please Add Address To Place An Order"}</h3>
+                          <button
+                            className="btn btn-animation proceed-btn"
+                            onClick={() => navigate("/your_account")}
+                          >
+                            Your Account
+                          </button>
+                        </div>
+                      ) : null}
                     </Tab.Pane>
                     {/* End Delivery Address*/}
 
@@ -946,6 +974,7 @@ const token =localStorage.getItem("token");
                                   <div className="shipment-detail">
                                     <div className="form-check custom-form-check">
                                       <input
+                                        required
                                         className="form-check-input mt-0"
                                         type="radio"
                                         value="choice1"
@@ -1018,6 +1047,7 @@ const token =localStorage.getItem("token");
                                   <div className="shipment-detail">
                                     <div className="form-check custom-form-check">
                                       <input
+                                        required
                                         className="form-check-input mt-0"
                                         type="radio"
                                         value="choice2"
@@ -1142,12 +1172,12 @@ const token =localStorage.getItem("token");
 
                       <div className="button-group">
                         <ul className="button-group-list">
-                          <li>
+                          {/* <li>
                             <button className="btn btn-light shopping-button backward-btn text-dark">
                               <i className="fa-solid fa-arrow-left-long ms-0"></i>
                               Return To Delivery Address
                             </button>
-                          </li>
+                          </li> */}
 
                           <li>
                             <button className="btn btn-animation proceed-btn">
@@ -1176,12 +1206,12 @@ const token =localStorage.getItem("token");
                                   <li key={data.id}>
                                     <h4>
                                       {Number(data.sale_price).toFixed(2)}{" "}
-                                      <span>X {data.quantity}</span>
+                                      <span>X {data.order_quantity}</span>
                                     </h4>
                                     <h4 className="price">
                                       ₹
                                       {(
-                                        data.quantity * Number(data.sale_price)
+                                        data.order_quantity * Number(data.sale_price)
                                       ).toFixed(2)}
                                     </h4>
                                   </li>
@@ -1685,6 +1715,11 @@ const token =localStorage.getItem("token");
                                 </Accordion.Item>
                               </Accordion>
                             </div>
+                            {ordervalidation === "deliverymethod" ? (
+                              <p className="text-danger h6">
+                                Please Select Payment Method To Place An Order
+                              </p>
+                            ) : null}
                           </div>
                         </div>
                       </div>
@@ -1720,9 +1755,17 @@ const token =localStorage.getItem("token");
       {/* <!-- Checkout section End --> */}
       <SweetAlert
         show={ProductAlert}
-        title="Added Successfully "
-        text=" Order Added"
-        onConfirm={closeProductAlert}
+        title={
+          ordervalidation === "fill address"
+            ? "Please Fill Address First"
+            : "Added Successfully "
+        }
+        text={ordervalidation === "fill address" ? "" : "Order Added"}
+        onConfirm={
+          ordervalidation === "fill address"
+            ? (account) => closeProductAlert(account)
+            : (order) => closeProductAlert(order)
+        }
       />
 
       <Footer />

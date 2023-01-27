@@ -2,22 +2,20 @@ import React from "react";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
 import Footer from "../common/footer";
-import Product1 from "../../Photos/vegetable/product/1.png";
-import Product2 from "../../Photos/vegetable/product/2.png";
-import Product3 from "../../Photos/vegetable/product/3.png";
 import Profile from "../../Photos/user.jpg";
 import { useState,useEffect} from "react";
 import axios from "axios";
 import { AiOutlineFileText } from "react-icons/ai";
 import { BsTelephoneFill, BsFillEnvelopeFill } from "react-icons/bs";
-import Form from 'react-bootstrap/Form';
 import moment from "moment";
 import {  useNavigate } from "react-router-dom";
 function Orders() {
   const navigate = useNavigate();
   let totalorder=0;
   let orderid = localStorage.getItem("orderid")
-  let userid= localStorage.getItem("userid")
+  let userid= localStorage.getItem("userid");
+  const token =localStorage.getItem("token");
+
   const[order,setOrder]=useState([]);
   const[productorder,setproductOrder]=useState([]);
   const [amt,setAmt]=useState("")
@@ -31,21 +29,23 @@ function Orders() {
     const OnSearchChangee = (e) => {
       setsearchDataa({ ...searchdataa, [e.target.name]: e.target.value })
     }
-   
-    const onStatusChangee = (e) => {
-      // e.prevantDefault();
-      setchangstatuss(e.target.value)
-      axios.put("http://192.168.29.108:5000/order_status_change", {
-      status_change:e.target.value,
-      id:`${orderid}`
-        }).then((response) => {
-        // setapicall(true)
-      }).catch(function (error) {
-        console.log(error);
-      });
-    }
+    // const onStatusChangee = (e) => {
+    //   // e.prevantDefault();
+    //   setchangstatuss(e.target.value)
+    //   axios.put(`${process.env.REACT_APP_BASEURL}/order_status_change`, {
+    //   status_change:e.target.value,
+    //   id:`${orderid}`
+    //     }).then((response) => {
+    //     // setapicall(true)
+    //   }).catch(function (error) {
+    //     console.log(error);
+    //   });
+    // }
   useEffect(()=>{
-    axios.get(`http://192.168.29.108:5000/order_deteils?id=${orderid}`).then((response) => {
+    axios.post(`${process.env.REACT_APP_BASEURL}/order_deteils?id=${orderid}`, 
+    { headers: {
+      user_token:token,
+    }}).then((response) => {
       setOrder(response.data);
       setproductOrder(response.data.product_types)
       UserData();
@@ -57,7 +57,12 @@ function Orders() {
     
   },[])
   const UserData = () =>{
-    axios.get(`http://192.168.29.108:5000/user_details?user_id=${userid}`).then((response) => {
+    axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,{
+      user_id:"",
+    },
+    { headers: {
+      user_token:token,
+    }}).then((response) => {
       let data = response.data;
       setUser(data);
       console.log("______uuuuserdataa_____"+JSON.stringify(response.data))

@@ -165,7 +165,7 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
-
+console.log("yyyyyyyy-----------"+searchText)
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -223,11 +223,10 @@ const Shop = (props) => {
       });
     }
   };
-  console.log("-----pdkedkf" + JSON.stringify(sortingfilter));
   // END SORTING
 
   useEffect(() => {
-    console.log("---tokenn  " + token);
+    // console.log("---tokenn  " + token);
     let homeurl;
     if (
       token === "null" ||
