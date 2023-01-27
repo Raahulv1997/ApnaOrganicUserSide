@@ -18,7 +18,6 @@ const Checkout = (props) => {
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
 
-
   let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
   const [navtab, setnavtab] = useState(false);
@@ -60,7 +59,7 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
-  console.log("ooo====-----"+TotalTax)
+  console.log("ooo====-----" + TotalTax);
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
     axios
@@ -614,7 +613,7 @@ const Checkout = (props) => {
                                               %
                                             </h6>
                                             <h6 className="">
-                                              RTax:
+                                              RTax: :{" "}
                                               {Number(
                                                 cdata.retails_sales_tax
                                               ).toFixed(2)}
@@ -1211,7 +1210,8 @@ const Checkout = (props) => {
                                     <h4 className="price">
                                       ₹
                                       {(
-                                        data.order_quantity * Number(data.sale_price)
+                                        data.order_quantity *
+                                        Number(data.sale_price)
                                       ).toFixed(2)}
                                     </h4>
                                   </li>
