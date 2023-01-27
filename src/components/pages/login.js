@@ -8,8 +8,9 @@ import "../../CSS/style.css";
 import axios from "axios";
 
 const Login = ({ logIn }) => {
-  const [error, setError] = useState(true);
-  const [loginerror, setLoginerror] = useState(true);
+
+  const [Emailerror, setEmailError] = useState(false);
+  const [loginerror, setLoginerror] = useState(false);
   const [passworderror, setpassworderror] = useState(false);
 
   const { state } = useLocation();
@@ -19,57 +20,126 @@ const Login = ({ logIn }) => {
     user_password: "",
   });
   const onCredentialChange = (e) => {
+    setLoginerror(false);
+    setEmailError(false)
+    setpassworderror(false)
+   
+
     setcredentailval({ ...credentailval, [e.target.name]: e.target.value });
+ 
   };
+ const FuctionCall=()=>{
+  const { from } = state || {};
+  axios
+    .post(`${process.env.REACT_APP_BASEURL}/user_login`, credentailval)
+    .then((response) => {
+
+      // if(credentailval.user_email==""){
+     
+      //   setEmailError(true)
+      // }
+     if(credentailval.user_password==""){
+       setEmailError(false)
+        setpassworderror(true)
+      }
+     else if (response.data.message == "email not exist") {
+        // e.target.user_email.value = "";
+        // e.target.user_password.value = "";
+      if(loginerror=="check"){
+        setLoginerror(false);
+      }
+      else{
+        setLoginerror(true)
+      }
+        
+        // alert("kkkkk")
+      }
+      else if(response.data.message == "password not matched"){
+        setpassworderror("Not Matched")
+      }
+      else{
+        localStorage.setItem("userid", response.data.user_id);
+         localStorage.setItem("token", response.data.token);
+         navigate("/");
+      }
+
+      // if (response.data === false) {
+      //   setError(false);
+      // } else if (credentailval.user_password === "") {
+      //   console.log(
+      //     "----credentailval.user_password-------" +
+      //       from +
+      //       credentailval.user_password
+      //   );
+      //   setpassworderror(true);
+      // } else if (response.data.message === "password not matched") {
+      //   setError(false);
+      // } else if (
+      //   from === undefined &&
+      //   response.data.message !== "password not matched" &&
+      //   credentailval.user_email !== ""
+      // ) {
+      //   localStorage.setItem("userid", response.data.user_id);
+      //   localStorage.setItem("token", response.data.token);
+      //   console.log(
+      //     "--====USERRRRRRRR=======TOKEN-----" + response.data.user_id
+      //   );
+
+      //   console.log("--===========TOKEN-----" + response.data.token);
+
+      //   console.log("----fromelse-------" + from);
+      //   navigate("/");
+      //   //  setError(false);
+      // } else {
+      //   localStorage.setItem("userid", response.data.user_id);
+      //   localStorage.setItem("token", response.data.token);
+
+      //   const { from } = state || {};
+      //   // callback to update state
+      //   console.log("--===========TOKEN-----" + response.data.token);
+
+      //   console.log("----from-------" + response.data.user_id);
+      //   console.log("-------from.pathname----" + from.pathname);
+      //   console.log("----state-------" + state);
+      //   logIn();
+      //   // redirect back to protected route being accessed
+      //   navigate(from.pathname, { replace: true });
+      //   // }
+      //   // setError(false);
+      // }
+
+      // return response;
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+ }
+
   const onSubmitClick = (e) => {
-    const { from } = state || {};
-    axios
-      .post(`http://192.168.29.108:5000/user_login`, credentailval)
-      .then((response) => {
-        console.log("--" + response.data.message);
-        if (response.data.message === "check_credintials") {
-          e.target.user_email.value = "";
-          e.target.user_password.value = "";
+  
+    
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
 
-          setLoginerror(false);
-        }
-        if (response.data === false) {
-          setError(false);
-        } else if (credentailval.user_password === "") {
-          console.log(
-            "----credentailval.user_password-------" +
-              from +
-              credentailval.user_password
-          );
-          setpassworderror(true);
-        } else if (response.data.message === "password not matched") {
-          setError(false);
-        } else if (
-          from === undefined &&
-          response.data.message !== "password not matched" &&
-          credentailval.user_email !== ""
-        ) {
-          localStorage.setItem("userid", response.data.user_id);
-          console.log("----fromelse-------" + from);
-          navigate("/");
-          //  setError(false);
-        } else {
-          localStorage.setItem("userid", response.data.user_id);
-          const { from } = state || {};
-          // callback to update state
-          console.log("----from-------" + response.data.user_id);
-          console.log("-------from.pathname----" + from.pathname);
-          console.log("----state-------" + state);
-          logIn();
-          // redirect back to protected route being accessed
-          navigate(from.pathname, { replace: true });
-          // }
-          // setError(false);
-        }
-
-        // return response;
-      })
-      .catch((error) => {});
+      var rst = regex.test(credentailval.user_email)
+           
+      if(credentailval.user_email==""){
+     
+        setEmailError(true)
+      }
+     else if(rst !==true)
+      {
+   
+        setEmailError("invalid url")
+        // setEmailError(true)
+    }
+      else{
+        
+        FuctionCall()
+      
+        
+      }
+    
+   
   };
 
   return (
@@ -110,12 +180,25 @@ const Login = ({ logIn }) => {
                       <label htmlFor="email" className="bg-transparent">
                         Email
                       </label>
-                      {loginerror === false ? (
+                    
+                     {Emailerror === true ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
-                          Please Sign In First
+                          Please Enter Email....!!!!!!
                         </p>
                       ) : null}
+                       {/* {Emailerror === "valid url" ? (
+                        <p className="mt-1 ms-2 text-danger" type="invalid">
+                          Valid Email....!!!!!!
+                        </p>
+                      ) : null} */}
+                         {Emailerror === "invalid url" ? (
+                        <p className="mt-1 ms-2 text-danger" type="invalid">
+                          InValid Email....!!!!!!
+                        </p>
+                      ) : null}
+                 
                     </div>
+                   
                   </div>
 
                   <div className="col-12">
@@ -129,13 +212,22 @@ const Login = ({ logIn }) => {
                         onChange={(e) => onCredentialChange(e)}
                         value={credentailval.user_password}
                       />
-                      {error === false ? (
+                      {  
+                      passworderror === true ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
-                          Please Enter Correct Password
+                          Please Enter Password...... !!!!
                         </p>
-                      ) : passworderror === true ? (
+                      ) : null}
+
+                          {loginerror === true ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
-                          Please Enter Password
+                          Account Does not Exist....!!!!
+                        </p>
+                      ) : null}
+
+                  {passworderror === "Not Matched" ? (
+                        <p className="mt-1 ms-2 text-danger" type="invalid">
+                      Please Fill the valid password !!!!
                         </p>
                       ) : null}
                       <label htmlFor="password" className="bg-transparent">

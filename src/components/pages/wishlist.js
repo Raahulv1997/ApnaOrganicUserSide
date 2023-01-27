@@ -10,6 +10,7 @@ import { useNavigate } from "react-router-dom";
 
 function Wishlist(all_images) {
   const useridd = localStorage.getItem("userid");
+  const token = localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
   const [wishlist, setWishList] = useState([]);
   const [wishlistocart, setwishlistocart] = useState("");
@@ -21,10 +22,20 @@ function Wishlist(all_images) {
     function getWishList() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/wishlist?user_id=${useridd}`)
+          .post(
+            `${process.env.REACT_APP_BASEURL}/wishlist`,
+            {
+              user_id: "",
+            },
+            {
+              headers: {
+                user_token: token,
+              },
+            }
+          )
           .then((response) => {
             let data = response.data;
-            if (data.message !== "empty") {
+            if (response.data[0].message !== "header error") {
               setWishList(data);
               setapicall(false);
             }
@@ -35,37 +46,25 @@ function Wishlist(all_images) {
     getWishList();
   }, [apicall]);
 
-  // function incrementCount(id,wishlistid) {
-
-  //   let cardadd = wishlist.find((item) => item.id === wishlistid);
-  //   console.log("----"+JSON.stringify(cardadd))
-  //   setwishlistocart(cardadd);
-  //   count = count + 1;
-  //   setCount(count);
-  //   setapicall(true);
-  // }
-  // const decrementCount = (id,wishlistid) => {
-  //   let cardadd = wishlist.find((item) => item.id === wishlistid);
-  //   setwishlistocart(cardadd);
-  //   if (count > 0) {
-  //     setCount((count) => count - 1);
-  //   }
-  // };
-  // end product quantity
-
-  // product box
-
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     let cnt = 1;
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-        user_id: `${useridd}`,
-        product_view_id: `${wishlistid}`,
-        price: `${saleprice}`,
-        discount: `${productMRF}`,
-        quantity: count === 0 ? cnt : count,
-        is_active: 1,
-      })
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_to_cart`,
+        {
+          user_id: "",
+          product_view_id: `${wishlistid}`,
+          price: `${saleprice}`,
+          discount: `${productMRF}`,
+          quantity: count === 0 ? cnt : count,
+          is_active: 1,
+        },
+        {
+          headers: {
+            user_token: `${token}`,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
         setapicall(true);
@@ -76,10 +75,19 @@ function Wishlist(all_images) {
 
   const AddToWishList = (id, wishlistt, wishlistid) => {
     axios
-      .put(`${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`, {
-        product_id: `${wishlistid}`,
-        user_id: `${useridd}`,
-      })
+      .put(
+        `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+        {
+          // product_id: `${wishlistid}`,
+          id: wishlistid,
+        },
+        {
+          headers: {
+            user_token: `${token}`,
+          },
+        }
+      )
+
       .then((response) => {
         let data = response.data;
         setapicall(true);
@@ -103,36 +111,34 @@ function Wishlist(all_images) {
             aria-labelledby="all-tab"
           >
             <div className="row w-100">
-              {wishlist
-                ? wishlist.map((wlist) => {
-                    console.log("---" + JSON.stringify(wishlist));
+              {(wishlist || []).map((wlist) => {
+                // console.log("---" + JSON.stringify(wishlist));
 
-                    return (
-                      <div
-                        key={wlist.id}
-                        className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
-                      >
-                        <ProductBox
-                          image={product.all_images}
-                          name={wlist.product_title_name}
-                          productPrice={wlist.product_price}
-                          productMRF={wlist.sale_price}
-                          productid={wlist.product_id}
-                          saleprice={wlist.sale_price}
-                          wishlistid={wlist.id}
-                          rating={wlist.rating}
-                          discount={wlist.discount}
-                          special_offer={wlist.special_offer}
-                          clickProduct={clickProduct}
-                          AddToWishList={AddToWishList}
-                          AddToCart={AddToCart}
-                          wishlistocart={wishlistocart}
-                          allimages={wlist.all_images}
-                        />
-                      </div>
-                    );
-                  })
-                : null}
+                return (
+                  <div
+                    key={wlist.id}
+                    className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
+                  >
+                    <ProductBox
+                      image={product.all_images}
+                      name={wlist.product_title_name}
+                      productPrice={wlist.product_price}
+                      productMRF={wlist.sale_price}
+                      productid={wlist.product_id}
+                      saleprice={wlist.sale_price}
+                      wishlistid={wlist.id}
+                      rating={wlist.rating}
+                      discount={wlist.discount}
+                      special_offer={wlist.special_offer}
+                      clickProduct={clickProduct}
+                      AddToWishList={AddToWishList}
+                      AddToCart={AddToCart}
+                      wishlistocart={wishlistocart}
+                      allimages={wlist.all_images}
+                    />
+                  </div>
+                );
+              })}
             </div>
           </div>
         </div>

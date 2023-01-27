@@ -57,7 +57,7 @@ const Shop = (props) => {
   });
 
   // CALCULATIO OF PAGINATION:-
-
+  const token=localStorage.getItem("token")
   const indexOfLastRecord = currentPage * recordsPerPage;
   console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -79,12 +79,16 @@ const Shop = (props) => {
       let cnt = 1;
       axios
         .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-          user_id: `${useridd}`,
+          user_id:"",
           product_view_id: `${id}`,
           price: `${saleprice}`,
           discount: `${productMRF}`,
           quantity: count === 0 ? cnt : count,
           is_active: 1,
+        },{
+          headers: {
+            user_token: token,
+          },
         })
         .then((response) => {
           let data = response.data;
@@ -110,7 +114,11 @@ const Shop = (props) => {
             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
             {
               product_id: `${id}`,
-              user_id: `${useridd}`,
+              user_id: "",
+            },{
+              headers: {
+                user_token: token,
+              },
             }
           )
           .then((response) => {
@@ -124,8 +132,12 @@ const Shop = (props) => {
       } else {
         axios
           .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-            user_id: `${useridd}`,
+            user_id: "",
             product_view_id: `${id}`,
+          },{
+            headers: {
+              user_token: token,
+            },
           })
           .then((response) => {
             let data = response.data;
@@ -153,7 +165,7 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
-
+console.log("yyyyyyyy-----------"+searchText)
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -211,61 +223,106 @@ const Shop = (props) => {
       });
     }
   };
-  console.log("-----pdkedkf" + JSON.stringify(sortingfilter));
   // END SORTING
 
   useEffect(() => {
+    // console.log("---tokenn  " + token);
     let homeurl;
     if (
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null ||
-      useridd === undefined ||
-      useridd === true
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === undefined ||
+      token === true
     ) {
-      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}&user_id`;
+      function getProductData(){
+        try{
+           axios.post(`${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`, {
+            product_search: {
+              search: `${searchText}`,
+              price_from: `${pricefilter.from_product_price}`,
+              price_to: `${pricefilter.to_product_price}`,
+              id: `${sortingfilter.latest}`,
+              product_title_name: `${sortingfilter.aproduct}`,
+              sale_price: `${sortingfilter.hprice}`,
+              short_by_updated_on: "",
+              product_type: [],
+              colors: [],
+              size: [],
+              brand: brandfilter,
+              discount: discountfilter,
+              rating: ratingfilter,
+              category: [searchCat],
+            },
+          })
+          .then((response) => {
+            let data = response.data;
+            console.log(response.data.results);
+            setProdData(data.results);
+  
+            if (
+              searchCat.length === 0 &&
+              ratingfilter.length === 0 &&
+              brandfilter.length === 0 &&
+              discountfilter.length === 0 &&
+              pricefilter.from_product_price === "" &&
+              pricefilter.to_product_price === ""
+            ) {
+              setCategoryfilterData(data.results);
+            }
+            setapicall(false);
+          });
+        } catch (err) {}
+      }
+      getProductData();
+      // homeurl = ;
     } else {
-      homeurl = `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}&user_id=${useridd}`;
+      function getProductData(){
+        try{
+           axios.post(`${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`, {
+            product_search: {
+              search: `${searchText}`,
+              price_from: `${pricefilter.from_product_price}`,
+              price_to: `${pricefilter.to_product_price}`,
+              id: `${sortingfilter.latest}`,
+              product_title_name: `${sortingfilter.aproduct}`,
+              sale_price: `${sortingfilter.hprice}`,
+              short_by_updated_on: "",
+              product_type: [],
+              colors: [],
+              size: [],
+              brand: brandfilter,
+              discount: discountfilter,
+              rating: ratingfilter,
+              category: [searchCat],
+            },
+          }, {
+            headers: {
+              user_token: token,
+            },
+          })
+          .then((response) => {
+            let data = response.data;
+            console.log(response.data.results);
+            setProdData(data.results);
+  
+            if (
+              searchCat.length === 0 &&
+              ratingfilter.length === 0 &&
+              brandfilter.length === 0 &&
+              discountfilter.length === 0 &&
+              pricefilter.from_product_price === "" &&
+              pricefilter.to_product_price === ""
+            ) {
+              setCategoryfilterData(data.results);
+            }
+            setapicall(false);
+          })
+        }catch (err) {}
+      }
+      getProductData();
     }
-    try {
-      axios
-        .post(`${homeurl}`, {
-          product_search: {
-            search: `${searchText}`,
-            price_from: `${pricefilter.from_product_price}`,
-            price_to: `${pricefilter.to_product_price}`,
-            id: `${sortingfilter.latest}`,
-            product_title_name: `${sortingfilter.aproduct}`,
-            sale_price: `${sortingfilter.hprice}`,
-            short_by_updated_on: "",
-            product_type: [],
-            colors: [],
-            size: [],
-            brand: brandfilter,
-            discount: discountfilter,
-            rating: ratingfilter,
-            category: [searchCat],
-          },
-        })
-        .then((response) => {
-          let data = response.data;
-          console.log(response.data.results);
-          setProdData(data.results);
-
-          if (
-            searchCat.length === 0 &&
-            ratingfilter.length === 0 &&
-            brandfilter.length === 0 &&
-            discountfilter.length === 0 &&
-            pricefilter.from_product_price === "" &&
-            pricefilter.to_product_price === ""
-          ) {
-            setCategoryfilterData(data.results);
-          }
-          setapicall(false);
-        });
-    } catch (err) {}
-  }, [
+  },[
     categoryNamedata,
     ratingfilter,
     brandfilter,
@@ -277,29 +334,8 @@ const Shop = (props) => {
     sortingfilter,
     recordsPerPage,
     currentPage,
-  ]);
-  // end product list
-
-  //   category
-  // useEffect(() => {
-  //   try {
-  //     axios
-  //       .get(`${process.env.REACT_APP_BASEURL}/category?category=${indval}`)
-  //       .then((response) => {
-  //         let data = response.data;
-  //         console.log("----"+JSON.stringify(data))
-  //         const filtercategorydata = data.filter(
-  //           (thing, index, self) =>
-  //             index ===
-  //             self.findIndex(
-  //               (t) => t.root_category_name == thing.root_category_name
-  //             )
-  //         );
-  //         setCategoryData(filtercategorydata);
-  //         // setsearchData(data);
-  //       });
-  //   } catch (err) {}
-  // }, [apicall]);
+  ])
+ 
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -425,7 +461,6 @@ const Shop = (props) => {
       }
     }
   };
-  // console.log("consoleeMERAAAAAAAAAAAAAAAAAeeeeee"+JSON.stringify(prodData))
 
   const OnClearAllClick = (e) => {
     showcategorydata = [];
