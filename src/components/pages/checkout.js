@@ -357,7 +357,7 @@ const Checkout = (props) => {
                     <div className="row my-md-0 my-4 mx-0">
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey="first">
+                          <Nav.Link>
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -387,7 +387,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey="second">
+                          <Nav.Link>
                             <li className="nav-link" role="presentation">
                               <div
                                 onClick={() => DeliveryClick()}
@@ -418,7 +418,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey="fourth">
+                          <Nav.Link>
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -809,9 +809,20 @@ const Checkout = (props) => {
                               Continue Delivery Address
                             </button>
                           </li> */}
+                          <li>
+                          <button
+                              // onClick={() => onOrderAdd()}
+                              className="btn btn-animation"
+                            >
+                              Next
+                            </button>
+                          </li>
                         </ul>
                       </div>
                     </Tab.Pane>
+
+
+
                     {/* End Shopping Cart */}
 
                     {/* Delivery Address*/}
