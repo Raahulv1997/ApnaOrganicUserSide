@@ -14,6 +14,7 @@ import SweetAlert from "sweetalert-react";
 import "sweetalert/dist/sweetalert.css";
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
+  // const[pAlert,setPalert]=useState(false);
   const navigate = useNavigate();
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
@@ -28,7 +29,9 @@ const Checkout = (props) => {
   const [userdata, setuserdata] = useState([]);
   const [DeliveyTab, setDeliveyTab] = useState("");
   const [ordervalidation, setordervalidation] = useState(false);
+
   const [orderadd, setorderadd] = useState({
+    user_id:"",
     status: "placed",
     total_quantity: "",
     ref_no: "12345678",
@@ -60,7 +63,7 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
-  console.log("ooo====-----"+TotalTax)
+  console.log("ooo====-----"+DeliveyTab)
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
     axios
@@ -341,6 +344,8 @@ const Checkout = (props) => {
       navigate("/your_account");
     }
   };
+
+ 
   // end sweetalert
   return (
     <Fragment>
@@ -357,7 +362,7 @@ const Checkout = (props) => {
                     <div className="row my-md-0 my-4 mx-0">
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link>
+                          <Nav.Link eventKey={"first"}>
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -387,7 +392,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link>
+                          <Nav.Link eventKey={"second"}>
                             <li className="nav-link" role="presentation">
                               <div
                                 onClick={() => DeliveryClick()}
@@ -418,7 +423,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link>
+                          <Nav.Link eventKey={"fourth"}>
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -787,7 +792,7 @@ const Checkout = (props) => {
 
                       <div className="button-group">
                         <ul className="button-group-list">
-                          {/* <li>
+                          <li>
                             <Link to="/">
                               <butoon
                                 className="btn btn-light shopping-button text-dark"
@@ -797,24 +802,16 @@ const Checkout = (props) => {
                                 Continue Shopping
                               </butoon>
                             </Link>
-                          </li> */}
+                          </li> 
 
-                          {/* <li>
-                            <button
+                           <li>
+                            <button eventKey={"second"}
                               className="btn btn-animation proceed-btn"
                               onClick={() => {
                                 setDeliveyTab("second");
                               }}
                             >
                               Continue Delivery Address
-                            </button>
-                          </li> */}
-                          <li>
-                          <button
-                              // onClick={() => onOrderAdd()}
-                              className="btn btn-animation"
-                            >
-                              Next
                             </button>
                           </li>
                         </ul>
@@ -844,14 +841,14 @@ const Checkout = (props) => {
                           <div key={userdata.id} className="">
                             <div className="delivery-address-box">
                               <div>
-                                {/* <div className="form-check">
+                                <div className="form-check">
                                           <input
                                             className="form-check-input"
                                             type="radio"
                                             name="jack"
                                             id="flexRadioDefault1"
                                           />
-                                        </div> */}
+                                        </div>
 
                                 <div className="label">
                                   <label>Home</label>
@@ -895,14 +892,14 @@ const Checkout = (props) => {
                           <div key={userdata.id} className="">
                             <div className="delivery-address-box">
                               <div>
-                                {/* <div className="form-check">
+                                <div className="form-check">
                                       <input
                                         className="form-check-input"
                                         type="radio"
                                         name="jack"
                                         id="flexRadioDefault1"
                                       />
-                                    </div> */}
+                                    </div>
 
                                 <div className="label">
                                   <label>Office</label>
@@ -943,7 +940,7 @@ const Checkout = (props) => {
                           </div>
                         </div>
                       </div>
-                      {/* <div className="button-group">
+                      <div className="button-group">
                         <ul className="button-group-list">
                           <li>
                             <button className="btn btn-light shopping-button backward-btn text-dark">
@@ -958,7 +955,7 @@ const Checkout = (props) => {
                             </button>
                           </li>
                         </ul>
-                      </div> */}
+                      </div>
                       {userdata.address === "" || userdata.address2 === "" ? (
                         <div className="text-center my-4 text-danger">
                           <h3>{"Please Add Address To Place An Order"}</h3>
@@ -974,7 +971,7 @@ const Checkout = (props) => {
                     {/* End Delivery Address*/}
 
                     {/* Delivery Option*/}
-                    <Tab.Pane eventKey="third">
+                    {/* <Tab.Pane eventKey="third">
                       <h2 className="tab-title">Delivery Option</h2>
                       <div className="row g-4">
                         <div className="col-12">
@@ -1188,7 +1185,7 @@ const Checkout = (props) => {
                               <i className="fa-solid fa-arrow-left-long ms-0"></i>
                               Return To Delivery Address
                             </button>
-                          </li> */}
+                          </li> 
 
                           <li>
                             <button className="btn btn-animation proceed-btn">
@@ -1197,7 +1194,7 @@ const Checkout = (props) => {
                           </li>
                         </ul>
                       </div>
-                    </Tab.Pane>
+                    </Tab.Pane> */}
                     {/* End Delivery Option*/}
 
                     {/* Payment Option */}

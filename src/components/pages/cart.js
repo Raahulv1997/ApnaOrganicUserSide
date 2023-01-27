@@ -25,7 +25,7 @@ const Cart = (all_images) => {
   const [Couponid, setCouponid] = useState(0);
   const [Couponmsg, setCouponmsg] = useState(false);
   const [Couponvalidmsg, setCouponvalidmsg] = useState(false);
-
+  const[msg,setMsg]=useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
@@ -108,15 +108,23 @@ const Cart = (all_images) => {
             }
           )
           .then((response) => {
-            let data = response.data;
+            let data = response.data
+            if(response.data.response==="cart_empty")
+            {
+              setMsg(false);
+              setapicall(false);
+
+            }
+            else{
+              let ProductTotal = 0;
+              data.map((cdata) => {
+                ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
+              });
+              setProductPriceTotal(ProductTotal);
+              setCartData(data);
+              setapicall(false);
+            }
             
-            let ProductTotal = 0;
-            data.map((cdata) => {
-              ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
-            });
-            setProductPriceTotal(ProductTotal);
-            setCartData(data);
-            setapicall(false);
             // setapicall(false);
           });
       } catch (err) {}
@@ -288,7 +296,10 @@ const Cart = (all_images) => {
             <div className="col-xxl-9">
               <div className="cart-table">
                 <div className="table-responsive-xl">
+                {msg===false?<h2 className="text-dark text-center">Add Product In Cart </h2>:null}
+
                   <table className="table">
+
                     {cartdata.map((cdata) => {
                       return (
                         <tbody key={cdata.id}>
