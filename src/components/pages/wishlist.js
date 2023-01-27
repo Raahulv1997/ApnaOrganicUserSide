@@ -11,6 +11,8 @@ import { useNavigate } from "react-router-dom";
 function Wishlist(all_images) {
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
+  const [msg, setMsg] = useState(true);
+
   const [apicall, setapicall] = useState(false);
   const [wishlist, setWishList] = useState([]);
   const [wishlistocart, setwishlistocart] = useState("");
@@ -35,7 +37,12 @@ function Wishlist(all_images) {
           )
           .then((response) => {
             let data = response.data;
-            if (response.data[0].message !== "header error") {
+            if(response.data.message === "empty") {
+              setMsg(false);
+             
+            }
+            else
+            {
               setWishList(data);
               setapicall(false);
             }
@@ -44,7 +51,7 @@ function Wishlist(all_images) {
     }
 
     getWishList();
-  }, [apicall]);
+  },[apicall]);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     let cnt = 1;
@@ -110,12 +117,12 @@ function Wishlist(all_images) {
             role="tabpanel"
             aria-labelledby="all-tab"
           >
+             {msg===false?<h2 className="text-dark text-center">Add Product In wishlist </h2>:null}
             <div className="row w-100">
-              {(wishlist || []).map((wlist) => {
+             {(wishlist || []).map((wlist) => {
                 // console.log("---" + JSON.stringify(wishlist));
-
-                return (
-                  <div
+                    return (
+                   <div
                     key={wlist.id}
                     className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                   >
@@ -138,8 +145,10 @@ function Wishlist(all_images) {
                     />
                   </div>
                 );
+            
               })}
             </div>
+
           </div>
         </div>
       </div>
