@@ -17,6 +17,7 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
+import data from "../pages/data";
 const Header = (props) => {
   const useridd = localStorage.getItem("userid");
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
@@ -42,9 +43,7 @@ const Header = (props) => {
           .put(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
-
             setCategoryData(data);
-
             setapicall(false);
           });
       } catch (err) {}
@@ -78,7 +77,17 @@ const Header = (props) => {
     e.preventDefault();
     navigate(`/shop?search=${search}`);
   };
+
   useEffect(() => {
+    if (
+      token === undefined ||
+      token === "null" ||
+      token === "" ||
+      token === null
+    ) {
+    } else {
+      getCartData();
+    }
     function getCartData() {
       try {
         axios
@@ -96,7 +105,12 @@ const Header = (props) => {
           .then((response) => {
             let data = response.data;
             let ProductTotal = 0;
-            if (data.response !== "cart_empty") {
+            if (
+              data.response === "cart_empty" ||
+              data.response === "header error" ||
+              data.error === "Please authenticate using a valid token"
+            ) {
+            } else {
               data.map((cdata) => {
                 ProductTotal +=
                   cdata.quantity * Number(cdata.product_price) -
@@ -121,16 +135,9 @@ const Header = (props) => {
                     100;
               });
             }
-
-            // setProductPriceTotal(ProductTotal);
-            // setPdata(data);
-            // console.log("88888888888"+JSON.stringify(data))
-            // setapicall(false);
-            // localStorage.removeItem("cartupdate");
           });
       } catch (err) {}
     }
-    getCartData();
   }, [apicall, cartup, props.addcart, props.deleteCart]);
   const deleteCart = (id, user_id) => {
     axios
@@ -154,7 +161,6 @@ const Header = (props) => {
   const OnLogoutClick = () => {
     localStorage.removeItem("userid");
     localStorage.removeItem("token");
-
   };
   return (
     <Fragment>
@@ -236,10 +242,10 @@ const Header = (props) => {
                       className="btn theme-bg-color ms-3 fire-button"
                     > */}
 
-                    {useridd === undefined ||
-                    useridd === "null" ||
-                    useridd === "" ||
-                    useridd === null ? (
+                    {token === undefined ||
+                    token === "null" ||
+                    token === "" ||
+                    token === null ? (
                       <Link to="/login">
                         <span>Login </span>
                       </Link>
@@ -300,7 +306,10 @@ const Header = (props) => {
 
                         {/* cart view */}
                         <li className="onhover-dropdown ">
-                          <NavLink to="/cart" className="header-icon bag-icon ">
+                          <div
+                            className="header-icon bag-icon"
+                            onClick={() => navigate("/cart")}
+                          >
                             {pdata.length === 0 ||
                             pdata.length === "" ||
                             pdata.length === "0" ? null : (
@@ -309,7 +318,7 @@ const Header = (props) => {
                               </small>
                             )}
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
-                          </NavLink>
+                          </div>
                           <div className="onhover-div">
                             <ul
                               className="cart-list "
@@ -319,19 +328,19 @@ const Header = (props) => {
                                 return (
                                   <li key={pdata.id}>
                                     <div className="drop-cart ">
-                                      <Link to="/" className="drop-image">
-                                        <img
-                                          src={data.all_images}
-                                          className="lazyload"
-                                          alt="image"
-                                          name="image"
-                                        />
-                                      </Link>
+                                      {/* <Link to="/" className="drop-image"> */}
+                                      <img
+                                        src={data.all_images}
+                                        className="lazyload"
+                                        alt="image"
+                                        name="image"
+                                      />
+                                      {/* </Link> */}
 
                                       <div className="drop-contain">
-                                        <Link to="/">
-                                          <h5>{data.product_title_name}</h5>
-                                        </Link>
+                                        {/* <Link to="/"> */}
+                                        <h5>{data.product_title_name}</h5>
+                                        {/* </Link> */}
                                         <h6>
                                           <span className="im=block">
                                             {data.quantity}x

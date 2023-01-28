@@ -79,11 +79,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
-      useridd === undefined ||
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null ||
-      useridd === true
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === undefined ||
+      token === true
     ) {
       navigate("/login");
     } else {
@@ -121,11 +121,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
 
   const AddToWishList = (id, wishlistt, wishlistid) => {
     if (
-      useridd === undefined ||
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null ||
-      useridd === true
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === undefined ||
+      token === true
     ) {
       navigate("/login");
     } else {
@@ -139,7 +139,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             },
             {
               headers: {
-                user_token: `${token}`
+                user_token: `${token}`,
               },
             }
           )
@@ -173,7 +173,6 @@ const Benners = (props, productPrice, productMRF, name, image) => {
     }
   };
   useEffect(() => {
-    console.log("---tokenn  " + token);
     let homeurl;
     if (
       token === "null" ||

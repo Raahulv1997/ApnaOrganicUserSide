@@ -21,6 +21,15 @@ function Wishlist(all_images) {
   var product = data.product;
   const func = () => {};
   useEffect(() => {
+    if (
+      token === undefined ||
+      token === "null" ||
+      token === "" ||
+      token === null
+    ) {
+    } else {
+      getWishList();
+    }
     function getWishList() {
       try {
         axios
@@ -37,21 +46,20 @@ function Wishlist(all_images) {
           )
           .then((response) => {
             let data = response.data;
-            if(response.data.message === "empty") {
+            if (
+              response.data.message === "empty" ||
+              response.data.response === "header error" ||
+              response.data.error === "Please authenticate using a valid token"
+            ) {
               setMsg(false);
-             
-            }
-            else
-            {
+            } else {
               setWishList(data);
               setapicall(false);
             }
           });
       } catch (err) {}
     }
-
-    getWishList();
-  },[apicall]);
+  }, [apicall]);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     let cnt = 1;
@@ -117,12 +125,16 @@ function Wishlist(all_images) {
             role="tabpanel"
             aria-labelledby="all-tab"
           >
-             {msg===false?<h2 className="text-dark text-center">Add Product In wishlist </h2>:null}
+            {msg === false ? (
+              <h2 className="text-dark text-center">
+                Add Product In wishlist{" "}
+              </h2>
+            ) : null}
             <div className="row w-100">
-             {(wishlist || []).map((wlist) => {
+              {(wishlist || []).map((wlist) => {
                 // console.log("---" + JSON.stringify(wishlist));
-                    return (
-                   <div
+                return (
+                  <div
                     key={wlist.id}
                     className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
                   >
@@ -145,10 +157,8 @@ function Wishlist(all_images) {
                     />
                   </div>
                 );
-            
               })}
             </div>
-
           </div>
         </div>
       </div>
