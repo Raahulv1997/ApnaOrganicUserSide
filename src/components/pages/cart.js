@@ -25,7 +25,7 @@ const Cart = (all_images) => {
   const [Couponid, setCouponid] = useState(0);
   const [Couponmsg, setCouponmsg] = useState(false);
   const [Couponvalidmsg, setCouponvalidmsg] = useState(false);
-  const[msg,setMsg]=useState(true);
+  const [msg, setMsg] = useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
@@ -56,8 +56,6 @@ const Cart = (all_images) => {
       });
   };
   const decrementCount = (id, order_quantity) => {
-    console.log("-order_quantity---" + order_quantity);
-
     let dec;
 
     if (order_quantity > 0 || order_quantity != 1) {
@@ -67,7 +65,6 @@ const Cart = (all_images) => {
     } else {
       return false;
     }
-    console.log("quntityyyyyyy"+order_quantity)
     axios
       .put(
         `${process.env.REACT_APP_BASEURL}/cart_update`,
@@ -108,14 +105,11 @@ const Cart = (all_images) => {
             }
           )
           .then((response) => {
-            let data = response.data
-            if(response.data.response==="cart_empty")
-            {
+            let data = response.data;
+            if (response.data.response === "cart_empty") {
               setMsg(false);
               setapicall(false);
-
-            }
-            else{
+            } else {
               let ProductTotal = 0;
               data.map((cdata) => {
                 ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
@@ -124,7 +118,7 @@ const Cart = (all_images) => {
               setCartData(data);
               setapicall(false);
             }
-            
+
             // setapicall(false);
           });
       } catch (err) {}
@@ -296,10 +290,13 @@ const Cart = (all_images) => {
             <div className="col-xxl-9">
               <div className="cart-table">
                 <div className="table-responsive-xl">
-                {msg===false?<h2 className="text-dark text-center">Add Product In Cart </h2>:null}
+                  {msg === false ? (
+                    <h2 className="text-dark text-center">
+                      Add Product In Cart{" "}
+                    </h2>
+                  ) : null}
 
                   <table className="table">
-
                     {cartdata.map((cdata) => {
                       return (
                         <tbody key={cdata.id}>
