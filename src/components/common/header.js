@@ -153,6 +153,8 @@ const Header = (props) => {
   };
   const OnLogoutClick = () => {
     localStorage.removeItem("userid");
+    localStorage.removeItem("token");
+
   };
   return (
     <Fragment>
