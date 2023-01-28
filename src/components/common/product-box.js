@@ -37,7 +37,7 @@ const ProductBox = ({
 }) => {
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
-  
+
   let [count, setCount] = useState(1);
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
@@ -50,7 +50,6 @@ const ProductBox = ({
     setAlert(false);
   };
 
-  
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
@@ -97,26 +96,36 @@ const ProductBox = ({
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
-          {// !ratingg? null :
-          (ratingbox || []).map((rat, i) => {
-            return ratingg - rat >= 0 ? (
-              <li color="#ffb321" key={i}>
-                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-              </li>
-            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
-              <li color="#ffb321">
-                <FaStarHalfAlt
-                  icon="star"
-                  className="feather"
-                  fill={"#ffb321"}
-                />
-              </li>
-            ) : ratingg - rat <= -1 ? (
-              <li color="#ffb321">
-                <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
-              </li>
-            ) : null;
-          })}
+          {
+            // !ratingg? null :
+            (ratingbox || []).map((rat, i) => {
+              return ratingg - rat >= 0 ? (
+                <li color="#ffb321" key={i}>
+                  <FaStar
+                    icon="star"
+                    className="feather fill"
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+                <li color="#ffb321">
+                  <FaStarHalfAlt
+                    icon="star"
+                    className="feather"
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : ratingg - rat <= -1 ? (
+                <li color="#ffb321">
+                  <FaRegStar
+                    icon="star"
+                    className="feather "
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : null;
+            })
+          }
         </ul>
         <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
@@ -158,7 +167,7 @@ const ProductBox = ({
               </div>
             </div>
           </div>
-          {(cart === null) || (token==="null") ? (
+          {cart === null || token === "null" || !token ? (
             <>
               <button
                 className="buy-button buy-button-2 btn btn-cart"
