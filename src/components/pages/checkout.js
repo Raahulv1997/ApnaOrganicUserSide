@@ -12,6 +12,8 @@ import axios from "axios";
 import moment from "moment";
 import SweetAlert from "sweetalert-react";
 import "sweetalert/dist/sweetalert.css";
+import Spinner from "react-bootstrap/Spinner";
+
 import { Button } from "bootstrap";
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
@@ -64,7 +66,7 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
-  console.log("ooo====-----" + DeliveyTab);
+  // console.log("ooo====-----" + DeliveyTab);
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
     axios
@@ -230,6 +232,7 @@ const Checkout = (props) => {
           setTotalTax(Totaltaxes);
           setCartData(data);
           setapicall(false);
+          setValidation(true);
         });
     } catch (err) {}
   }, [apicall, DeliveryMethod]);
@@ -278,6 +281,7 @@ const Checkout = (props) => {
 
   // delivery address
   const DeliveryClick = () => {
+    setCurrentTab((prev) => prev + 1)
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/user_details`,
@@ -291,13 +295,22 @@ const Checkout = (props) => {
         }
       )
       .then((response) => {
-        setuserdata(response.data[0]);
+        let data=response.data[0]
+        setuserdata(data);
+
+  //       setCurrentTab(data)
+  // console.log("oooo----------"+JSON.stringify(data))
+
         // navigate('/your_account')
         // return response;
       })
       .catch((error) => {});
   };
+  console.log("oooo-fffffffffffffff---------"+JSON.stringify(userdata))
+
   // end delivery address
+
+// console.log("777000005555555555555ssssssssssssss----------"+JSON.stringify(cartdata))
 
   // payment
   const getPaymentData = () => {
@@ -467,8 +480,8 @@ const Checkout = (props) => {
                       <div className="cart-table p-0">
                         <div className="table-responsive">
                           <table className="table">
-                            {validation===false?<h4 className="text-center">Add Poduct In Shopping Cart</h4>:null}
-                            {cartdata
+                            {validation===false?<h4 className="text-center">Add Poduct In Shopping Cart</h4>:
+                            cartdata
                               ? cartdata.map((cdata) => {
 
                                   return (
@@ -811,13 +824,15 @@ const Checkout = (props) => {
                           </li>
 
                            <li>
-                            <button
+                            {validation===false?<button className="btn btn-animation proceed-btn" disabled 
+          > Continue Delivery Address</button>:<button
           className="btn btn-animation proceed-btn"
-          disabled={validation===false? currentTab === 2:false}
-          onClick={() => setCurrentTab((prev) => prev + 1)}
+          disabled={currentTab === 2}
+          onClick={() => DeliveryClick()}
         >
           Continue Delivery Address
-        </button>
+        </button>}
+                            
                           
                             {/* <button eventKey={"second"}
                               className="btn btn-animation proceed-btn"
@@ -853,14 +868,14 @@ const Checkout = (props) => {
                           <div key={userdata.id} className="">
                             <div className="delivery-address-box">
                               <div>
-                                <div className="form-check">
+                                {/* <div className="form-check">
                                   <input
                                     className="form-check-input"
                                     type="radio"
                                     name="jack"
                                     id="flexRadioDefault1"
                                   />
-                                </div>
+                                </div> */}
 
                                 <div className="label">
                                   <label>Home</label>
@@ -904,14 +919,14 @@ const Checkout = (props) => {
                           <div key={userdata.id} className="">
                             <div className="delivery-address-box">
                               <div>
-                                <div className="form-check">
+                                {/* <div className="form-check">
                                   <input
                                     className="form-check-input"
                                     type="radio"
                                     name="jack"
                                     id="flexRadioDefault1"
                                   />
-                                </div>
+                                </div> */}
 
                                 <div className="label">
                                   <label>Office</label>
@@ -955,35 +970,20 @@ const Checkout = (props) => {
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
+                          
                           <button
-          className="btn btn-light shopping-button backward-btn text-dark"
-          disabled={currentTab === 0}
-          onClick={() => setCurrentTab((prev) => prev - 1)}
-        >
-           <i className="fa-solid fa-arrow-left-long ms-0"></i>
-                              Return To Shopping Cart
-        </button>
-                            {/* <button className="btn btn-light shopping-button backward-btn text-dark">
-                              <i className="fa-solid fa-arrow-left-long ms-0"></i>
-                              Return To Shopping Cart
-                            </button> */}
+                      className="btn btn-light shopping-button backward-btn text-dark"
+                      disabled={currentTab === 0}
+                      onClick={() => setCurrentTab((prev) => prev - 1)}
+                    >
+                       <i className="fa-solid fa-arrow-left-long ms-0"></i>
+                      Return To Shopping Cart
+                    </button>
+                           
                           </li>
 
-                          <li>
-                          <button
-          className="btn btn-animation proceed-btn"
-          disabled={currentTab === 3}
-          onClick={() => setCurrentTab((prev) => prev + 1)}
-        >
-          Continue Payment Option
-        </button>
-                            {/* <button className="btn btn-animation proceed-btn">
-                              Continue Delivery Option
-                            </button> */}
-                          </li>
-                        </ul>
-                      </div>
-                      {userdata.address === "" || userdata.address2 === "" ? (
+                         <li>
+                         {userdata.address===""||userdata.address2===""?(
                         <div className="text-center my-4 text-danger">
                           <h3>{"Please Add Address To Place An Order"}</h3>
                           <button
@@ -993,7 +993,31 @@ const Checkout = (props) => {
                             Your Account
                           </button>
                         </div>
-                      ) : null}
+                      ):<button
+                      className="btn btn-animation proceed-btn"
+                      disabled={currentTab === 3}
+                      onClick={() => setCurrentTab((prev) => prev + 1)}
+                    >
+                      Continue Payment Option
+                    </button>}
+                          
+                             {/* <button className="btn btn-animation proceed-btn">
+                              Continue Delivery Option
+                            </button> */}
+                          </li> 
+                        </ul>
+                      </div>
+                      {/* {userdata.address === "" || userdata.address2 === "" ? (
+                        <div className="text-center my-4 text-danger">
+                          <h3>{"Please Add Address To Place An Order"}</h3>
+                          <button
+                            className="btn btn-animation proceed-btn"
+                            onClick={() => navigate("/your_account")}
+                          >
+                            Your Account
+                          </button>
+                        </div>
+                      ) : null} */}
                     </Tab.Pane>
                     {/* End Delivery Address*/}
 
@@ -1782,6 +1806,9 @@ const Checkout = (props) => {
                               onClick={() => onOrderAdd()}
                               className="btn btn-animation"
                             >
+                               {/* <Spinner animation="border" role="status">
+                            <span className="visually-hidden">Done</span>
+                          </Spinner> */}
                               Done
                             </button>
                           </li>

@@ -135,10 +135,13 @@ const Header = (props) => {
                     100;
               });
             }
+ 
+            setPdata(data)
           });
       } catch (err) {}
     }
   }, [apicall, cartup, props.addcart, props.deleteCart]);
+  // console.log("**********"+JSON.stringify(pdata))
   const deleteCart = (id, user_id) => {
     axios
       .put(
@@ -331,7 +334,7 @@ const Header = (props) => {
                                       {/* <Link to="/" className="drop-image"> */}
                                       <img
                                         src={data.all_images}
-                                        className="lazyload"
+                                        className="lazyload h-50 w-50"
                                         alt="image"
                                         name="image"
                                       />
