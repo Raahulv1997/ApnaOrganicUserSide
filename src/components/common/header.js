@@ -96,7 +96,7 @@ const Header = (props) => {
           .then((response) => {
             let data = response.data;
             let ProductTotal = 0;
-            if (data.response !== "invalid_url") {
+            if (data.response !== "cart_empty") {
               data.map((cdata) => {
                 ProductTotal +=
                   cdata.quantity * Number(cdata.product_price) -
@@ -122,11 +122,11 @@ const Header = (props) => {
               });
             }
 
-            setProductPriceTotal(ProductTotal);
-            setPdata(data);
-
-            setapicall(false);
-            localStorage.removeItem("cartupdate");
+            // setProductPriceTotal(ProductTotal);
+            // setPdata(data);
+            // console.log("88888888888"+JSON.stringify(data))
+            // setapicall(false);
+            // localStorage.removeItem("cartupdate");
           });
       } catch (err) {}
     }
