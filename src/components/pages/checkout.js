@@ -11,7 +11,7 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import SweetAlert from "sweetalert-react";
-import "sweetalert/dist/sweetalert.css";
+// import "sweetalert/dist/sweetalert.css";
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
   // const[pAlert,setPalert]=useState(false);
@@ -62,7 +62,7 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
-  console.log("ooo====-----" + TotalTax);
+  console.log("ooo====-----" + DeliveyTab);
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
     axios
@@ -617,7 +617,7 @@ const Checkout = (props) => {
                                               %
                                             </h6>
                                             <h6 className="">
-                                              RTax: :{" "}
+                                              RTax:
                                               {Number(
                                                 cdata.retails_sales_tax
                                               ).toFixed(2)}
