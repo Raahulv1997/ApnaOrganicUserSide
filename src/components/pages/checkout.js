@@ -11,7 +11,8 @@ import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import moment from "moment";
 import SweetAlert from "sweetalert-react";
-// import "sweetalert/dist/sweetalert.css";
+import "sweetalert/dist/sweetalert.css";
+import { Button } from "bootstrap";
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
   // const[pAlert,setPalert]=useState(false);
@@ -19,6 +20,7 @@ const Checkout = (props) => {
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
 
+  const [currentTab, setCurrentTab] = useState(0);
   let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
   const [navtab, setnavtab] = useState(false);
@@ -28,7 +30,7 @@ const Checkout = (props) => {
   const [userdata, setuserdata] = useState([]);
   const [DeliveyTab, setDeliveyTab] = useState("");
   const [ordervalidation, setordervalidation] = useState(false);
-
+  const [validation,setValidation]=useState(false)
   const [orderadd, setorderadd] = useState({
     user_id: "",
     status: "placed",
@@ -142,6 +144,9 @@ const Checkout = (props) => {
         )
         .then((response) => {
           let data = response.data;
+          if(response.data.response==="cart_empty"){
+            setValidation(false);
+          }
           let ProductTotal = 0;
           let Totaltaxes = 0;
           let Totalgst = 0;
@@ -338,6 +343,7 @@ const Checkout = (props) => {
     setProductAlert(false);
     if (e === "order") {
       navigate("/your_orders");
+
     }
     if (ordervalidation === "fill address" || e === "account") {
       navigate("/your_account");
@@ -353,14 +359,14 @@ const Checkout = (props) => {
       <section className="checkout-section section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-sm-4 g-3 checkout-section">
-            <Tab.Container id="left-tabs-example" defaultActiveKey={"first"}>
+            <Tab.Container  activeKey={currentTab} id="controlled-tab-example">
               <Row>
                 <div className="col-xxl-3 col-lg-4">
                   <Nav className="flex-column custom-navtab">
                     <div className="row my-md-0 my-4 mx-0">
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={"first"}>
+                          <Nav.Link eventKey={0} disabled={currentTab !== 0}>
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -390,7 +396,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={"second"}>
+                          <Nav.Link eventKey={1}  disabled={currentTab !== 1}>
                             <li className="nav-link" role="presentation">
                               <div
                                 onClick={() => DeliveryClick()}
@@ -421,7 +427,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={"fourth"}>
+                          <Nav.Link eventKey={2}  disabled={currentTab !== 2}>
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -456,13 +462,15 @@ const Checkout = (props) => {
                 <div className="col-xxl-9 col-lg-8">
                   <Tab.Content>
                     {/* Shopping Cart */}
-                    <Tab.Pane eventKey="first">
+                    <Tab.Pane eventKey="0">
                       <h2 className="tab-title">Shopping Cart</h2>
                       <div className="cart-table p-0">
                         <div className="table-responsive">
                           <table className="table">
+                            {validation===false?<h4 className="text-center">Add Poduct In Shopping Cart</h4>:null}
                             {cartdata
                               ? cartdata.map((cdata) => {
+
                                   return (
                                     <tbody key={cdata.id}>
                                       <tr className="product-box-contain">
@@ -802,16 +810,23 @@ const Checkout = (props) => {
                             </Link>
                           </li>
 
-                          <li>
+                           <li>
                             <button
-                              eventKey={"second"}
+          className="btn btn-animation proceed-btn"
+          disabled={validation===false? currentTab === 2:false}
+          onClick={() => setCurrentTab((prev) => prev + 1)}
+        >
+          Continue Delivery Address
+        </button>
+                          
+                            {/* <button eventKey={"second"}
                               className="btn btn-animation proceed-btn"
                               onClick={() => {
                                 setDeliveyTab("second");
                               }}
                             >
                               Continue Delivery Address
-                            </button>
+                            </button> */}
                           </li>
                         </ul>
                       </div>
@@ -820,7 +835,7 @@ const Checkout = (props) => {
                     {/* End Shopping Cart */}
 
                     {/* Delivery Address*/}
-                    <Tab.Pane eventKey={"second"}>
+                    <Tab.Pane eventKey={"1"}>
                       <div className="d-flex align-items-center mb-3">
                         <h2 className="tab-title mb-0">Delivery Address</h2>
                         {/* <button
@@ -940,16 +955,31 @@ const Checkout = (props) => {
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
-                            <button className="btn btn-light shopping-button backward-btn text-dark">
+                          <button
+          className="btn btn-light shopping-button backward-btn text-dark"
+          disabled={currentTab === 0}
+          onClick={() => setCurrentTab((prev) => prev - 1)}
+        >
+           <i className="fa-solid fa-arrow-left-long ms-0"></i>
+                              Return To Shopping Cart
+        </button>
+                            {/* <button className="btn btn-light shopping-button backward-btn text-dark">
                               <i className="fa-solid fa-arrow-left-long ms-0"></i>
                               Return To Shopping Cart
-                            </button>
+                            </button> */}
                           </li>
 
                           <li>
-                            <button className="btn btn-animation proceed-btn">
+                          <button
+          className="btn btn-animation proceed-btn"
+          disabled={currentTab === 3}
+          onClick={() => setCurrentTab((prev) => prev + 1)}
+        >
+          Continue Payment Option
+        </button>
+                            {/* <button className="btn btn-animation proceed-btn">
                               Continue Delivery Option
-                            </button>
+                            </button> */}
                           </li>
                         </ul>
                       </div>
@@ -1195,7 +1225,7 @@ const Checkout = (props) => {
                     {/* End Delivery Option*/}
 
                     {/* Payment Option */}
-                    <Tab.Pane eventKey="fourth">
+                    <Tab.Pane eventKey="2">
                       <h2 className="tab-title">Payment Option</h2>
                       <div className="row g-sm-4 g-2">
                         <div className="col-xxl-4 col-lg-12 col-md-5 order-xxl-2 order-lg-1 order-md-2">
@@ -1733,10 +1763,18 @@ const Checkout = (props) => {
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
-                            <button className="btn btn-light shopping-button backward-btn text-dark">
+                          <button
+          className="btn btn-light shopping-button backward-btn text-dark"
+          disabled={currentTab === 0}
+          onClick={() => setCurrentTab((prev) => prev - 1)}
+        >
+           <i className="fa-solid fa-arrow-left-long ms-0"></i>
+                              Return To Delivery Option
+        </button>
+                            {/* <button className="btn btn-light shopping-button backward-btn text-dark">
                               <i className="fa-solid fa-arrow-left-long ms-0"></i>
                               Return To Delivery Option
-                            </button>
+                            </button> */}
                           </li>
 
                           <li>

@@ -34,7 +34,6 @@ function App() {
 
   const logIn = () => setUserLogged(true);
   const logOut = () => setUserLogged(false);
-  console.log("---authapijss  " + userLogged);
 
   return (
     <BrowserRouter>

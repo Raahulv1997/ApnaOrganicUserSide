@@ -5,18 +5,17 @@ const AuthWrapper = () => {
   const location = useLocation(); // current location
 
   const userLogged = localStorage.getItem("token");
-  console.log("---auth  " + userLogged);
   return userLogged === null ||
     userLogged === "" ||
     userLogged === undefined ||
     userLogged === "null" ? (
-    <Outlet />
-  ) : (
     <Navigate
       to="/login"
       replace
       state={{ from: location }} // <-- pass location in route state
     />
+  ) : (
+    <Outlet />
   );
 };
 

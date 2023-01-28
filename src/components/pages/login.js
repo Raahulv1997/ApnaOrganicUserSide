@@ -56,13 +56,6 @@ const Login = ({ logIn }) => {
         ) {
           localStorage.setItem("userid", response.data.user_id);
           localStorage.setItem("token", response.data.token);
-          console.log(
-            "--====USERRRRRRRR=======TOKEN-----" + response.data.user_id
-          );
-
-          console.log("--===========TOKEN-----" + response.data.token);
-
-          console.log("----fromelse-------" + from);
           navigate("/");
           //  setError(false);
         } else {
@@ -71,11 +64,7 @@ const Login = ({ logIn }) => {
 
           const { from } = state || {};
           // callback to update state
-          console.log("--===========TOKEN-----" + response.data.token);
 
-          console.log("----from-------" + response.data.user_id);
-          console.log("-------from.pathname----" + from.pathname);
-          console.log("----state-------" + state);
           logIn();
           // redirect back to protected route being accessed
           navigate(from.pathname, { replace: true });
@@ -246,7 +235,7 @@ const Login = ({ logIn }) => {
                       </label>
                     </div>
                   </div>
-                  <div className="col-12">
+                  <div className="col-12 my-2">
                     <div className="forgot-box">
                       <div className="form-check ps-0 m-0 remember-box">
                         <input
