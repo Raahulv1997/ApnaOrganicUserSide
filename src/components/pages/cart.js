@@ -90,6 +90,15 @@ const Cart = (all_images) => {
 
   // Cart Detail
   useEffect(() => {
+    if (
+      token === undefined ||
+      token === "null" ||
+      token === "" ||
+      token === null
+    ) {
+    } else {
+      getCartData();
+    }
     function getCartData() {
       try {
         axios
@@ -123,8 +132,6 @@ const Cart = (all_images) => {
           });
       } catch (err) {}
     }
-
-    getCartData();
   }, [apicall, quantity]);
   // end Cart Detail
 

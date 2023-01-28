@@ -21,23 +21,20 @@ import BlogList from "./components/pages/blog_list";
 import BlogDetail from "./components/pages/blog_detail";
 import Otp from "./components/pages/otp_verification";
 import Careers from "./components/pages/careers";
-import AuthWrapper from "./components/pages/authwrapper";
+import AuthWrapper from "./components/authwrapper";
 import SellerSignUp from "./components/pages/sellersignup";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
 function App() {
-  const [userLogged, setUserLogged] = useState(
-    // localStorage.getItem("userid"),
-    localStorage.getItem("token")
-  );
+  const [userLogged, setUserLogged] = useState(localStorage.getItem("token"));
 
   useEffect(() => {
-    // localStorage.setItem("userid", JSON.stringify(userLogged));
     localStorage.setItem("token", userLogged);
   }, [userLogged]);
 
   const logIn = () => setUserLogged(true);
   const logOut = () => setUserLogged(false);
+  console.log("---authapijss  " + userLogged);
 
   return (
     <BrowserRouter>

@@ -21,6 +21,15 @@ function Wishlist(all_images) {
   var product = data.product;
   const func = () => {};
   useEffect(() => {
+    if (
+      token === undefined ||
+      token === "null" ||
+      token === "" ||
+      token === null
+    ) {
+    } else {
+      getWishList();
+    }
     function getWishList() {
       try {
         axios
@@ -50,8 +59,6 @@ function Wishlist(all_images) {
           });
       } catch (err) {}
     }
-
-    getWishList();
   }, [apicall]);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
