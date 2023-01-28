@@ -2,12 +2,8 @@ import React from "react";
 //import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "./header";
-import SweetAlert from "sweetalert-react";
-import "sweetalert/dist/sweetalert.css";
+// import "sweetalert/dist/sweetalert.css";
 
 // function AddCart(props){
 // }
@@ -36,11 +32,11 @@ const ProductBox = ({
   cart,
 }) => {
   const useridd = localStorage.getItem("userid");
-  
+
   let [count, setCount] = useState(1);
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
-  const func = (e) => {};
+  const func = (e) => { };
 
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
@@ -51,7 +47,11 @@ const ProductBox = ({
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
-      <div className="product-image">
+      <div className="product-image" style={{
+        backgroundImage: `url(${allimages
+          ? allimages
+          : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"})`
+      }}>
         <div className="ribbon_div">
           {special_offer == 0 || special_offer == "" ? null : (
             <span className="special_offer mb-1">{special_offer}%</span>
@@ -80,7 +80,7 @@ const ProductBox = ({
 
         {/* {image==""|| image==null|| image==undefined? */}
         <a onClick={() => clickProduct(productid, id)}>
-          <img
+          {/* <img
             src={
               allimages
                 ? allimages
@@ -88,32 +88,32 @@ const ProductBox = ({
             }
             className="mt-5 "
             alt=""
-          />
+          /> */}
         </a>
       </div>
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
           {// !ratingg? null :
-          (ratingbox || []).map((rat, i) => {
-            return ratingg - rat >= 0 ? (
-              <li color="#ffb321" key={i}>
-                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-              </li>
-            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
-              <li color="#ffb321">
-                <FaStarHalfAlt
-                  icon="star"
-                  className="feather"
-                  fill={"#ffb321"}
-                />
-              </li>
-            ) : ratingg - rat <= -1 ? (
-              <li color="#ffb321">
-                <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
-              </li>
-            ) : null;
-          })}
+            (ratingbox || []).map((rat, i) => {
+              return ratingg - rat >= 0 ? (
+                <li color="#ffb321" key={i}>
+                  <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
+                </li>
+              ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+                <li color="#ffb321">
+                  <FaStarHalfAlt
+                    icon="star"
+                    className="feather"
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : ratingg - rat <= -1 ? (
+                <li color="#ffb321">
+                  <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
+                </li>
+              ) : null;
+            })}
         </ul>
         <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
