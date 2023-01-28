@@ -52,7 +52,7 @@ const Login = ({ logIn }) => {
         setLoginerror(true)
       }
         
-        // alert("kkkkk")
+      
       }
       else if(response.data.message == "password not matched"){
         setpassworderror("Not Matched")

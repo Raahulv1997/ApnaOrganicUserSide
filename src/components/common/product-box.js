@@ -36,6 +36,7 @@ const ProductBox = ({
   cart,
 }) => {
   const useridd = localStorage.getItem("userid");
+  const token = localStorage.getItem("token");
   
   let [count, setCount] = useState(1);
   const [alert, setAlert] = useState(false);
@@ -48,6 +49,8 @@ const ProductBox = ({
   const closeProductAlert = () => {
     setAlert(false);
   };
+
+  
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
@@ -155,7 +158,7 @@ const ProductBox = ({
               </div>
             </div>
           </div>
-          {cart === null ? (
+          {(cart === null) || (token==="null") ? (
             <>
               <button
                 className="buy-button buy-button-2 btn btn-cart"
