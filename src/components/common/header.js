@@ -27,6 +27,8 @@ const Header = (props) => {
   const navigate = useNavigate();
   const [click, setclick] = useState(false);
   const [search, setsearch] = useState([]);
+  const [msg, setMsg] = useState(true);
+
   // const [cat_list, setcat_list] = useState(false);
   const open_Category = () => {
     setclick(true);
@@ -111,7 +113,7 @@ const Header = (props) => {
               data.response === "header error" ||
               data.error === "Please authenticate using a valid token"
             ) {
-              // console.log("data--"+data.response)
+              setMsg(false);
             } else {
               data.map((cdata) => {
                 ProductTotal +=
@@ -250,7 +252,7 @@ const Header = (props) => {
                     token === "null" ||
                     token === "" ||
                     token === null ||
-                    token === true ? (
+                    token === "true" ? (
                       <Link to="/login">
                         <span>Login </span>
                       </Link>
@@ -329,8 +331,12 @@ const Header = (props) => {
                               className="cart-list "
                               style={{ flexDirection: "column" }}
                             >
-                              {(pdata || []).map((data) => {
+                              {msg===false?<h6 className="text-dark text-center">
+                      Empty Cart
+                    </h6>:
+                              pdata.map((data) => {
                                 return (
+
                                   <li key={pdata.id}>
                                     <div className="drop-cart ">
                                       {/* <Link to="/" className="drop-image"> */}
