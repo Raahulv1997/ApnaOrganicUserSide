@@ -389,14 +389,14 @@ const ProductDetail = ({ logIn }) => {
                             <li key={details.id}>
 
                               <Link onClick={() => {
-                                alert("sizee")
+                      
                                 OnProductprice(details.product_price, details.mrp, details.size, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id
                                 )
                               } } 
                                 className={size == details.size && varientId == details.id ? "active" : null}
                               >
                                 
-                                {details.size}{console.log(" size ---"+size )} {console.log(" size from API  ---"+details.size ) }
+                                {details.size}
                                  {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
                               </Link>
                             </li>
@@ -412,11 +412,11 @@ const ProductDetail = ({ logIn }) => {
                               return (
                             <li>
                               
-                              <Link onClick={() => {alert("color")
+                              <Link onClick={() => {
                                OnProductColor(details.colors, details.product_price, details.mrp, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id) }}
                                 className={colors == details.colors && varientId == details.id ? "active" : null}
                               >
-                                {details.colors} {console.log(" colors ---"+colors )} {console.log(" color from API  ---"+details.colors ) }
+                                {details.colors}
                               </Link>
                             </li>
                             
