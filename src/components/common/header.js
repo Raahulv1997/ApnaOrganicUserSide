@@ -104,7 +104,7 @@ const Header = (props) => {
           )
           .then((response) => {
             let data = response.data;
-           
+
             let ProductTotal = 0;
             if (
               data.response === "cart_empty" ||
@@ -136,10 +136,8 @@ const Header = (props) => {
                     cdata.sgst) /
                     100;
               });
-              setPdata(data)
+              setPdata(data);
             }
- 
-          
           });
       } catch (err) {}
     }
@@ -251,7 +249,8 @@ const Header = (props) => {
                     {token === undefined ||
                     token === "null" ||
                     token === "" ||
-                    token === null ? (
+                    token === null ||
+                    token === true ? (
                       <Link to="/login">
                         <span>Login </span>
                       </Link>

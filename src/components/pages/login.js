@@ -27,7 +27,6 @@ const Login = ({ logIn }) => {
   };
   const FuctionCall = () => {
     const { from } = state || {};
-    console.log(from + " v  vv");
 
     axios
       .post(`${process.env.REACT_APP_BASEURL}/user_login`, credentailval)
@@ -70,65 +69,11 @@ const Login = ({ logIn }) => {
           // }
           // setError(false);
         }
-
-        // else {
-        //   localStorage.setItem("userid", response.data.user_id);
-        //   localStorage.setItem("token", response.data.token);
-        //   navigate("/");
-        // }
-
-        // if (response.data === false) {
-        //   setError(false);
-        // } else if (credentailval.user_password === "") {
-        //   console.log(
-        //     "----credentailval.user_password-------" +
-        //       from +
-        //       credentailval.user_password
-        //   );
-        //   setpassworderror(true);
-        // } else if (response.data.message === "password not matched") {
-        //   setError(false);
-        // } else if (
-        //   from === undefined &&
-        //   response.data.message !== "password not matched" &&
-        //   credentailval.user_email !== ""
-        // ) {
-        //   localStorage.setItem("userid", response.data.user_id);
-        //   localStorage.setItem("token", response.data.token);
-        //   console.log(
-        //     "--====USERRRRRRRR=======TOKEN-----" + response.data.user_id
-        //   );
-
-        //   console.log("--===========TOKEN-----" + response.data.token);
-
-        //   console.log("----fromelse-------" + from);
-        //   navigate("/");
-        //   //  setError(false);
-        // } else {
-        //   localStorage.setItem("userid", response.data.user_id);
-        //   localStorage.setItem("token", response.data.token);
-
-        //   const { from } = state || {};
-        //   // callback to update state
-        //   console.log("--===========TOKEN-----" + response.data.token);
-
-        //   console.log("----from-------" + response.data.user_id);
-        //   console.log("-------from.pathname----" + from.pathname);
-        //   console.log("----state-------" + state);
-        //   logIn();
-        //   // redirect back to protected route being accessed
-        //   navigate(from.pathname, { replace: true });
-        //   // }
-        //   // setError(false);
-        // }
-
-        // return response;
       })
       .catch((error) => {
         console.log(error);
       });
   };
-  // console.log("token---"+ token)
 
   const onSubmitClick = (e) => {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
