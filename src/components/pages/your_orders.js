@@ -13,6 +13,7 @@ function Orders() {
   const navigate = useNavigate();
   let totalorder=0;
   let orderid = localStorage.getItem("orderid")
+  console.log("hhhhhhhhhhh"+orderid)
   let userid= localStorage.getItem("userid");
   const token =localStorage.getItem("token");
 
@@ -42,20 +43,24 @@ function Orders() {
     //   });
     // }
   useEffect(()=>{
-    axios.post(`${process.env.REACT_APP_BASEURL}/order_deteils?id=${orderid}`, 
+    axios.post(`${process.env.REACT_APP_BASEURL}/order_deteils`,{
+      id:`${orderid}`
+    },
     { headers: {
       user_token:token,
     }}).then((response) => {
+      let data=response.data
       setOrder(response.data);
       setproductOrder(response.data.product_types)
       UserData();
-      // console.log("______uuuuu_____"+JSON.stringify(response.data))
+      console.log("______AAAAAAAAAAAAAAAAAAa_____"+JSON.stringify(response.data))
       // setapicall(false)
     }).catch(function (error) {
       console.log(error);
     });
     
   },[])
+  console.log("oooooo"+order)
   const UserData = () =>{
     axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,{
       user_id:"",
@@ -72,7 +77,7 @@ function Orders() {
     });
   }
 
-
+// console.log("--------------"+JSON.stringify(user))
  var total=0;
  var sub_total=0;
  var total_tax=0;

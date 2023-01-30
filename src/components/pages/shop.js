@@ -175,7 +175,7 @@ const Shop = (props) => {
     } else {
       setsearchText(searchparams.get("search"));
     }
-  }, [searchText]);
+  }, [searchparams]);
   console.log("yyyyyyyy-----------" + searchText);
   useEffect(() => {
     if (

@@ -45,7 +45,7 @@ const ProductBox = ({
   const closeProductAlert = () => {
     setAlert(false);
   };
-
+console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
@@ -60,34 +60,41 @@ const ProductBox = ({
         // }}
       >
         <div className="ribbon_div">
-          {special_offer == 0 || special_offer == "" ? null : (
+          {/* {special_offer == 0 || special_offer == "" ? null : (
             <span className="special_offer mb-1">{special_offer}%</span>
-          )}
-          {discount == 0 || discount == "" ? null : (
+          )} */}
+          {discount == 0 ||
+          discount == "" ||
+          discount == null ||
+          discount == "0" ? null : (
             <span className="discount_ribbon mb-1">{discount}%</span>
           )}
         </div>
         <div className="label-flex">
+          {window.location.pathname ==="/wishlist"?<button className="btn p-0 wishlist btn-wishlist notifi-wishlist"
+           onClick={() => AddToWishList(id, wishlistt, wishlistid)}>
+            &times;
+          </button>:
           <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
             {wishlistt > 0 ? (
               <i
                 className="fa-regular fa-heart"
                 style={{ color: "red" }}
-                onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+                onClick={() => AddToWishList(id,wishlistt,wishlistid)}
               ></i>
             ) : (
               <i
                 className="fa-regular fa-heart"
-                style={{ color: "" }}
+                style={{ color:"" }}
                 onClick={() => AddToWishList(id, wishlistt, wishlistid)}
               ></i>
             )}
-          </button>
+          </button>}
         </div>
 
         {/* {image==""|| image==null|| image==undefined? */}
-        <a onClick={() => clickProduct(productid, id) }>
-         
+       
+        <a onClick={() => clickProduct(productid, id)}>
           <img
             src={
               allimages
@@ -99,7 +106,6 @@ const ProductBox = ({
           />
         </a>
       </div>
-
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
           {
@@ -178,7 +184,6 @@ const ProductBox = ({
               <button
                 className="buy-button buy-button-2 btn btn-cart"
                 onClick={() =>
-                  
                   AddToCart(id, saleprice, productMRF, wishlistid, count)
                 }
               >

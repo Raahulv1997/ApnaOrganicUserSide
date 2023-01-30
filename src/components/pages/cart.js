@@ -27,36 +27,42 @@ const Cart = (all_images) => {
   const [Couponvalidmsg, setCouponvalidmsg] = useState(false);
   const [msg, setMsg] = useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
+  const [totalqty, settotalqty] = useState(false);
+
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
   const currentdate = moment().format();
-  const incrementCount = (id, order_quantity) => {
+  const incrementCount = (id, order_quantity, qty) => {
     let inc = order_quantity + 1;
-    axios
-      .put(
-        `${process.env.REACT_APP_BASEURL}/cart_update`,
-        {
-          cart_id: id,
-          quantity: inc,
-        },
-        {
-          headers: {
-            user_token: token,
+    if (order_quantity !== qty) {
+      axios
+        .put(
+          `${process.env.REACT_APP_BASEURL}/cart_update`,
+          {
+            cart_id: id,
+            quantity: inc,
           },
-        }
-      )
-      .then((response) => {
-        let data = response.data;
+          {
+            headers: {
+              user_token: token,
+            },
+          }
+        )
+        .then((response) => {
+          let data = response.data;
+          setapicall(true);
+          settotalqty(false);
 
-        setapicall(true);
-        // setCartData(data);
-        // setQuantity((quantity = quantity + 1));
-        CheckCoupon();
-      });
+          CheckCoupon();
+        });
+    } else {
+      settotalqty(true);
+    }
   };
   const decrementCount = (id, order_quantity) => {
     let dec;
+    settotalqty(false);
 
     if (order_quantity > 1 || order_quantity !== 1) {
       dec = order_quantity - 1;
@@ -540,7 +546,8 @@ const Cart = (all_images) => {
                                         onClick={() =>
                                           incrementCount(
                                             cdata.cart_id,
-                                            cdata.order_quantity
+                                            cdata.order_quantity,
+                                            cdata.quantity
                                           )
                                         }
                                       >
@@ -549,6 +556,14 @@ const Cart = (all_images) => {
                                     </div>
                                   </div>
                                 </div>
+                                {totalqty === true ? (
+                                  <p
+                                    className="mt-1 ms-2 text-danger"
+                                    type="invalid"
+                                  >
+                                    Cannot add more then total qty
+                                  </p>
+                                ) : null}
                               </td>
 
                               <td className="subtotal">

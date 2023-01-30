@@ -430,7 +430,7 @@ function Account() {
                           </li>
                         </Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
+                      {/* <Nav.Item>
                         <Nav.Link eventKey="card">
                           {" "}
                           <li className="nav-item" role="presentation">
@@ -450,7 +450,7 @@ function Account() {
                             </button>
                           </li>
                         </Nav.Link>
-                      </Nav.Item>
+                      </Nav.Item> */}
                       <Nav.Item>
                         <Nav.Link eventKey="address">
                           {" "}
@@ -493,7 +493,7 @@ function Account() {
                           </li>
                         </Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
+                      {/* <Nav.Item>
                         <Nav.Link eventKey="privacy">
                           {" "}
                           <li className="nav-item" role="presentation">
@@ -513,7 +513,7 @@ function Account() {
                             </button>
                           </li>
                         </Nav.Link>
-                      </Nav.Item>
+                      </Nav.Item> */}
                     </Nav>
                   </Row>
                 </div>
@@ -787,7 +787,7 @@ function Account() {
                                         className="lazyload"
                                         alt=""
                                         width={250}
-                                        onClick={OnImageClick(data.order_id)}
+                                        // onClick={OnImageClick(data.order_id)}
                                       />
                                     </div>
 
@@ -900,9 +900,7 @@ function Account() {
                                                 {data.unit_quantity} {data.unit}
                                               </h5>
                                             ) : (
-                                              <h5>
-                                                {data.size} {data.unit}
-                                              </h5>
+                                              <h5>{data.size}</h5>
                                             )}
                                           </div>
                                         </li>
@@ -994,7 +992,7 @@ function Account() {
                                           </span>
                                           <del>{wdata.mrp}₹</del>
                                         </h5>
-                                        <div className="add-to-cart-box mt-2">
+                                        {/* <div className="add-to-cart-box mt-2">
                                           <button
                                             className="btn btn-add-cart addcart-button"
                                             onClick={(e) =>
@@ -1044,7 +1042,7 @@ function Account() {
                                               </button>
                                             </div>
                                           </div>
-                                        </div>
+                                        </div> */}
                                       </div>
                                     </div>
                                   </div>
@@ -1338,7 +1336,7 @@ function Account() {
                             <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
                               <div className="address-box">
                                 <div>
-                                  <div className="form-check">
+                                  {/* <div className="form-check">
                                     <input
                                       className="form-check-input"
                                       type="radio"
@@ -1347,7 +1345,7 @@ function Account() {
                                       checked
                                       onChange={func}
                                     />
-                                  </div>
+                                  </div> */}
 
                                   <div className="label">
                                     <label>Home</label>
@@ -1409,14 +1407,14 @@ function Account() {
                             <div className="col-xxl-4 col-xl-6 col-lg-12 col-md-6">
                               <div className="address-box">
                                 <div>
-                                  <div className="form-check">
+                                  {/* <div className="form-check">
                                     <input
                                       className="form-check-input"
                                       type="radio"
                                       name="jack"
                                       id="flexRadioDefault3"
                                     />
-                                  </div>
+                                  </div> */}
 
                                   <div className="label">
                                     <label>Office</label>
@@ -1463,14 +1461,14 @@ function Account() {
                                     <i data-feather="edit"></i>
                                     Edit
                                   </button>
-                                  <button
+                                  {/* <button
                                     className="btn btn-sm add-button w-100"
                                     data-bs-toggle="modal"
                                     data-bs-target="#removeProfile"
                                   >
                                     <i data-feather="trash-2"></i>
                                     Remove
-                                  </button>
+                                  </button> */}
                                 </div>
                               </div>
                             </div>

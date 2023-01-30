@@ -27,6 +27,8 @@ const Header = (props) => {
   const navigate = useNavigate();
   const [click, setclick] = useState(false);
   const [search, setsearch] = useState([]);
+  const [msg, setMsg] = useState(true);
+
   // const [cat_list, setcat_list] = useState(false);
   const open_Category = () => {
     setclick(true);
@@ -113,7 +115,7 @@ const Header = (props) => {
               data.response === "header error" ||
               data.error === "Please authenticate using a valid token"
             ) {
-              // console.log("data--"+data.response)
+              setMsg(false);
             } else {
               data.map((cdata) => {
                 ProductTotal +=
@@ -253,7 +255,7 @@ const Header = (props) => {
                     token === "null" ||
                     token === "" ||
                     token === null ||
-                    token === true ? (
+                    token === "true" ? (
                       <Link to="/login">
                         <span>Login </span>
                       </Link>
@@ -332,78 +334,84 @@ const Header = (props) => {
                               className="cart-list "
                               style={{ flexDirection: "column" }}
                             >
-                              {(pdata || []).map((data) => {
-                                return (
-                                  <li key={pdata.id}>
-                                    <div className="drop-cart ">
-                                      {/* <Link to="/" className="drop-image"> */}
-                                      <img
-                                        src={data.all_images}
-                                        className="lazyload h-50 w-50"
-                                        alt="image"
-                                        name="image"
-                                      />
-                                      {/* </Link> */}
-
-                                      <div className="drop-contain">
-                                        {/* <Link to="/"> */}
-                                        <h5>{data.product_title_name}</h5>
+                              {msg === false ? (
+                                <h6 className="text-dark text-center">
+                                  Empty Cart
+                                </h6>
+                              ) : (
+                                pdata.map((data) => {
+                                  return (
+                                    <li key={pdata.id}>
+                                      <div className="drop-cart ">
+                                        {/* <Link to="/" className="drop-image"> */}
+                                        <img
+                                          src={data.all_images}
+                                          className="lazyload h-50 w-50"
+                                          alt="image"
+                                          name="image"
+                                        />
                                         {/* </Link> */}
-                                        <h6>
-                                          <span className="im=block">
-                                            {data.quantity}x
-                                          </span>{" "}
-                                          <span>
-                                            ₹
-                                            {(
-                                              Number(data.product_price) -
-                                              (data.product_price *
-                                                data.discount) /
-                                                100 +
-                                              (Number(
-                                                data.product_price -
-                                                  (data.product_price *
-                                                    data.discount) /
-                                                    100
-                                              ) *
-                                                data.gst) /
-                                                100 +
-                                              (Number(
-                                                data.product_price -
-                                                  (data.product_price *
-                                                    data.discount) /
-                                                    100
-                                              ) *
-                                                data.cgst) /
-                                                100 +
-                                              (Number(
-                                                data.product_price -
-                                                  (data.product_price *
-                                                    data.discount) /
-                                                    100
-                                              ) *
-                                                data.sgst) /
-                                                100
-                                            ).toFixed(2)}
-                                          </span>
-                                          {/* <span>{data.sale_price}</span> */}
-                                        </h6>
-                                        <button
-                                          className="close-button"
-                                          onClick={() =>
-                                            deleteCart(
-                                              data.cart_id,
-                                              data.user_id
-                                            )
-                                          }
-                                        >
-                                          <i className="fa-solid fa-xmark"></i>
-                                        </button>
+
+                                        <div className="drop-contain">
+                                          {/* <Link to="/"> */}
+                                          <h5>{data.product_title_name}</h5>
+                                          {/* </Link> */}
+                                          <h6>
+                                            <span className="im=block">
+                                              {data.quantity}x
+                                            </span>{" "}
+                                            <span>
+                                              ₹
+                                              {(
+                                                Number(data.product_price) -
+                                                (data.product_price *
+                                                  data.discount) /
+                                                  100 +
+                                                (Number(
+                                                  data.product_price -
+                                                    (data.product_price *
+                                                      data.discount) /
+                                                      100
+                                                ) *
+                                                  data.gst) /
+                                                  100 +
+                                                (Number(
+                                                  data.product_price -
+                                                    (data.product_price *
+                                                      data.discount) /
+                                                      100
+                                                ) *
+                                                  data.cgst) /
+                                                  100 +
+                                                (Number(
+                                                  data.product_price -
+                                                    (data.product_price *
+                                                      data.discount) /
+                                                      100
+                                                ) *
+                                                  data.sgst) /
+                                                  100
+                                              ).toFixed(2)}
+                                            </span>
+                                            {/* <span>{data.sale_price}</span> */}
+                                          </h6>
+                                          <button
+                                            className="close-button"
+                                            onClick={() =>
+                                              deleteCart(
+                                                data.cart_id,
+                                                data.user_id
+                                              )
+                                            }
+                                          >
+                                            <i className="fa-solid fa-xmark"></i>
+                                          </button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </li>
-                                );
-                              })}
+                                    </li>
+                                  );
+                                })
+                              )}
                             </ul>
                             <div className="price-box">
                               <h5>Price :</h5>
