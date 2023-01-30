@@ -104,12 +104,14 @@ const Header = (props) => {
           )
           .then((response) => {
             let data = response.data;
+           
             let ProductTotal = 0;
             if (
               data.response === "cart_empty" ||
               data.response === "header error" ||
               data.error === "Please authenticate using a valid token"
             ) {
+              // console.log("data--"+data.response)
             } else {
               data.map((cdata) => {
                 ProductTotal +=
@@ -134,9 +136,10 @@ const Header = (props) => {
                     cdata.sgst) /
                     100;
               });
+              setPdata(data)
             }
  
-            setPdata(data)
+          
           });
       } catch (err) {}
     }
