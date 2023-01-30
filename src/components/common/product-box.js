@@ -51,19 +51,22 @@ console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
         className="product-image"
-        style={{
-          backgroundImage: `url(${
-            allimages
-              ? allimages
-              : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
-          })`,
-        }}
+        // style={{
+        //   backgroundImage: `url(${
+        //     allimages
+        //       ? allimages
+        //       : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+        //   })`,
+        // }}
       >
         <div className="ribbon_div">
-          {special_offer == 0 || special_offer == "" ? null : (
+          {/* {special_offer == 0 || special_offer == "" ? null : (
             <span className="special_offer mb-1">{special_offer}%</span>
-          )}
-          {discount == 0 || discount == "" ? null : (
+          )} */}
+          {discount == 0 ||
+          discount == "" ||
+          discount == null ||
+          discount == "0" ? null : (
             <span className="discount_ribbon mb-1">{discount}%</span>
           )}
         </div>
@@ -92,7 +95,7 @@ console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
         {/* {image==""|| image==null|| image==undefined? */}
        
         <a onClick={() => clickProduct(productid, id)}>
-          {/* <img
+          <img
             src={
               allimages
                 ? allimages
@@ -100,7 +103,7 @@ console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
             }
             className="mt-5 "
             alt=""
-          /> */}
+          />
         </a>
       </div>
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
@@ -151,7 +154,7 @@ console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
               <div
                 className="qty-left-minus"
                 onClick={() =>
-                  count === 0 ? setCount(count) : setCount(count - 1)
+                  count === 1 ? setCount(count) : setCount(count - 1)
                 }
                 data-type="minus"
                 data-field=""
