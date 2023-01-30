@@ -32,7 +32,7 @@ const Checkout = (props) => {
   const [userdata, setuserdata] = useState([]);
   const [DeliveyTab, setDeliveyTab] = useState("");
   const [ordervalidation, setordervalidation] = useState(false);
-  const [validation,setValidation]=useState(false)
+  const [validation, setValidation] = useState(false)
   const [orderadd, setorderadd] = useState({
     user_id: "",
     status: "placed",
@@ -146,7 +146,7 @@ const Checkout = (props) => {
         )
         .then((response) => {
           let data = response.data;
-          if(response.data.response==="cart_empty"){
+          if (response.data.response === "cart_empty") {
             setValidation(false);
           }
           let ProductTotal = 0;
@@ -234,7 +234,7 @@ const Checkout = (props) => {
           setapicall(false);
           setValidation(true);
         });
-    } catch (err) {}
+    } catch (err) { }
   }, [apicall, DeliveryMethod]);
   const deleteCart = (id, user_id) => {
     axios
@@ -295,22 +295,22 @@ const Checkout = (props) => {
         }
       )
       .then((response) => {
-        let data=response.data[0]
+        let data = response.data[0]
         setuserdata(data);
 
-  //       setCurrentTab(data)
-  // console.log("oooo----------"+JSON.stringify(data))
+        //       setCurrentTab(data)
+        // console.log("oooo----------"+JSON.stringify(data))
 
         // navigate('/your_account')
         // return response;
       })
-      .catch((error) => {});
+      .catch((error) => { });
   };
-  console.log("oooo-fffffffffffffff---------"+JSON.stringify(userdata))
+  console.log("oooo-fffffffffffffff---------" + JSON.stringify(userdata))
 
   // end delivery address
 
-// console.log("777000005555555555555ssssssssssssss----------"+JSON.stringify(cartdata))
+  // console.log("777000005555555555555ssssssssssssss----------"+JSON.stringify(cartdata))
 
   // payment
   const getPaymentData = () => {
@@ -346,7 +346,7 @@ const Checkout = (props) => {
 
           // return response;
         })
-        .catch((error) => {});
+        .catch((error) => { });
     }
   };
   // end order add
@@ -372,7 +372,7 @@ const Checkout = (props) => {
       <section className="checkout-section section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-sm-4 g-3 checkout-section">
-            <Tab.Container  activeKey={currentTab} id="controlled-tab-example">
+            <Tab.Container activeKey={currentTab} id="controlled-tab-example">
               <Row>
                 <div className="col-xxl-3 col-lg-4">
                   <Nav className="flex-column custom-navtab">
@@ -409,7 +409,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={1}  disabled={currentTab !== 1}>
+                          <Nav.Link eventKey={1} disabled={currentTab !== 1}>
                             <li className="nav-link" role="presentation">
                               <div
                                 onClick={() => DeliveryClick()}
@@ -440,7 +440,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={2}  disabled={currentTab !== 2}>
+                          <Nav.Link eventKey={2} disabled={currentTab !== 2}>
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -480,9 +480,9 @@ const Checkout = (props) => {
                       <div className="cart-table p-0">
                         <div className="table-responsive">
                           <table className="table">
-                            {validation===false?<h4 className="text-center">Add Poduct In Shopping Cart</h4>:
-                            cartdata
-                              ? cartdata.map((cdata) => {
+                            {validation === false ? <h4 className="text-center">Add Poduct In Shopping Cart</h4> :
+                              cartdata
+                                ? cartdata.map((cdata) => {
 
                                   return (
                                     <tbody key={cdata.id}>
@@ -554,7 +554,7 @@ const Checkout = (props) => {
                                                         type="text"
                                                         name="quantity"
                                                         value="1"
-                                                        // onChange={func}
+                                                      // onChange={func}
                                                       />
                                                       <button
                                                         type="button"
@@ -682,25 +682,25 @@ const Checkout = (props) => {
                                             {(
                                               (Number(cdata.product_price) *
                                                 cdata.gst) /
-                                                100 +
+                                              100 +
                                               (Number(cdata.product_price) *
                                                 cdata.cgst) /
-                                                100 +
+                                              100 +
                                               (Number(cdata.product_price) *
                                                 cdata.sgst) /
-                                                100 +
+                                              100 +
                                               (Number(cdata.product_price) *
                                                 cdata.wholesale_sales_tax) /
-                                                100 +
+                                              100 +
                                               (Number(cdata.product_price) *
                                                 cdata.manufacturers_sales_tax) /
-                                                100 +
+                                              100 +
                                               (Number(cdata.product_price) *
                                                 cdata.retails_sales_tax) /
-                                                100 +
+                                              100 +
                                               (Number(cdata.product_price) *
                                                 cdata.value_added_tax) /
-                                                100
+                                              100
                                             ).toFixed(2)}
                                           </h4>
                                         </td>
@@ -804,7 +804,7 @@ const Checkout = (props) => {
                                     </tbody>
                                   );
                                 })
-                              : null}
+                                : null}
                           </table>
                         </div>
                       </div>
@@ -823,17 +823,17 @@ const Checkout = (props) => {
                             </Link>
                           </li>
 
-                           <li>
-                            {validation===false?<button className="btn btn-animation proceed-btn" disabled 
-          > Continue Delivery Address</button>:<button
-          className="btn btn-animation proceed-btn"
-          disabled={currentTab === 2}
-          onClick={() => DeliveryClick()}
-        >
-          Continue Delivery Address
-        </button>}
-                            
-                          
+                          <li>
+                            {validation === false ? <button className="btn btn-animation proceed-btn" disabled
+                            > Continue Delivery Address</button> : <button
+                              className="btn btn-animation proceed-btn"
+                              disabled={currentTab === 2}
+                              onClick={() => DeliveryClick()}
+                            >
+                              Continue Delivery Address
+                            </button>}
+
+
                             {/* <button eventKey={"second"}
                               className="btn btn-animation proceed-btn"
                               onClick={() => {
@@ -970,41 +970,41 @@ const Checkout = (props) => {
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
-                          
-                          <button
-                      className="btn btn-light shopping-button backward-btn text-dark"
-                      disabled={currentTab === 0}
-                      onClick={() => setCurrentTab((prev) => prev - 1)}
-                    >
-                       <i className="fa-solid fa-arrow-left-long ms-0"></i>
-                      Return To Shopping Cart
-                    </button>
-                           
+
+                            <button
+                              className="btn btn-light shopping-button backward-btn text-dark"
+                              disabled={currentTab === 0}
+                              onClick={() => setCurrentTab((prev) => prev - 1)}
+                            >
+                              <i className="fa-solid fa-arrow-left-long ms-0"></i>
+                              Return To Shopping Cart
+                            </button>
+
                           </li>
 
-                         <li>
-                         {userdata.address===""||userdata.address2===""?(
-                        <div className="text-center my-4 text-danger">
-                          <h3>{"Please Add Address To Place An Order"}</h3>
-                          <button
-                            className="btn btn-animation proceed-btn"
-                            onClick={() => navigate("/your_account")}
-                          >
-                            Your Account
-                          </button>
-                        </div>
-                      ):<button
-                      className="btn btn-animation proceed-btn"
-                      disabled={currentTab === 3}
-                      onClick={() => setCurrentTab((prev) => prev + 1)}
-                    >
-                      Continue Payment Option
-                    </button>}
-                          
-                             {/* <button className="btn btn-animation proceed-btn">
+                          <li>
+                            {userdata.address === "" || userdata.address2 === "" ? (
+                              <div className="text-center my-4 text-danger">
+                                <h3>{"Please Add Address To Place An Order"}</h3>
+                                <button
+                                  className="btn btn-animation proceed-btn"
+                                  onClick={() => navigate("/your_account")}
+                                >
+                                  Your Account
+                                </button>
+                              </div>
+                            ) : <button
+                              className="btn btn-animation proceed-btn"
+                              disabled={currentTab === 3}
+                              onClick={() => setCurrentTab((prev) => prev + 1)}
+                            >
+                              Continue Payment Option
+                            </button>}
+
+                            {/* <button className="btn btn-animation proceed-btn">
                               Continue Delivery Option
                             </button> */}
-                          </li> 
+                          </li>
                         </ul>
                       </div>
                       {/* {userdata.address === "" || userdata.address2 === "" ? (
@@ -1787,14 +1787,14 @@ const Checkout = (props) => {
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
-                          <button
-          className="btn btn-light shopping-button backward-btn text-dark"
-          disabled={currentTab === 0}
-          onClick={() => setCurrentTab((prev) => prev - 1)}
-        >
-           <i className="fa-solid fa-arrow-left-long ms-0"></i>
+                            <button
+                              className="btn btn-light shopping-button backward-btn text-dark"
+                              disabled={currentTab === 0}
+                              onClick={() => setCurrentTab((prev) => prev - 1)}
+                            >
+                              <i className="fa-solid fa-arrow-left-long ms-0"></i>
                               Return To Delivery Option
-        </button>
+                            </button>
                             {/* <button className="btn btn-light shopping-button backward-btn text-dark">
                               <i className="fa-solid fa-arrow-left-long ms-0"></i>
                               Return To Delivery Option
@@ -1806,7 +1806,7 @@ const Checkout = (props) => {
                               onClick={() => onOrderAdd()}
                               className="btn btn-animation"
                             >
-                               {/* <Spinner animation="border" role="status">
+                              {/* <Spinner animation="border" role="status">
                             <span className="visually-hidden">Done</span>
                           </Spinner> */}
                               Done
