@@ -55,7 +55,7 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
-
+console.log("data--"+JSON.stringify (prodData))
   // CALCULATIO OF PAGINATION:-
   const token=localStorage.getItem("token")
   const indexOfLastRecord = currentPage * recordsPerPage;
