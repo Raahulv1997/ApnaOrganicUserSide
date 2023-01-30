@@ -89,10 +89,12 @@ const Forgot = () => {
             setemailerror("all blank");
           } else if (response.data.message === "otp not matched") {
             setemailerror("otp not matched");
+          } else if (response.data.message === "email address not matched") {
+            setemailerror("email not found");
           } else {
             localStorage.setItem("userid", response.data.insertId);
             localStorage.setItem("upassword", passval);
-            // navigate("/your_account");
+            navigate("/login");
             // return response;
           }
         })
