@@ -63,7 +63,6 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   //   }
   //   getRating();
   // }, []);
-
   useEffect(() => {
     const result = catArray.filter(
       (thing, index, self) => index === self.findIndex((t) => t === thing)
@@ -79,11 +78,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
-      useridd === undefined ||
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null ||
-      useridd === true
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === undefined ||
+      token === true
     ) {
       navigate("/login");
     } else {
@@ -121,11 +120,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
 
   const AddToWishList = (id, wishlistt, wishlistid) => {
     if (
-      useridd === undefined ||
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null ||
-      useridd === true
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === undefined ||
+      token === true
     ) {
       navigate("/login");
     } else {
@@ -134,12 +133,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           .put(
             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
             {
-              product_id: `${id}`,
-              user_id: "",
+              id: id,
             },
             {
               headers: {
-                user_token: `${token}`
+                user_token: `${token}`,
               },
             }
           )
@@ -173,7 +171,6 @@ const Benners = (props, productPrice, productMRF, name, image) => {
     }
   };
   useEffect(() => {
-    console.log("---tokenn  " + token);
     let homeurl;
     if (
       token === "null" ||
@@ -199,7 +196,6 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             .then((response) => {
               let data = response.data;
               setProductData(response.data.results);
-              // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
               setapicall(false);
             });
         } catch (err) {}
@@ -231,7 +227,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             .then((response) => {
               let data = response.data;
               setProductData(response.data.results);
-              // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+              console.log(
+                "getdataaaaaaaaa" + JSON.stringify(response.data.results)
+              );
               setapicall(false);
             });
         } catch (err) {}
@@ -239,6 +237,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       getProductData();
     }
   }, [productType, apicall]);
+
   const clickProduct = (productid, id) => {
     localStorage.setItem("proid", productid);
     localStorage.setItem("variantid", id);
@@ -262,7 +261,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   // end product box
   return (
     <Fragment>
-      <Header />
+      <Header addcart={AddToCart} />
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">

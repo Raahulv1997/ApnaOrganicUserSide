@@ -40,7 +40,10 @@ const Singup = () => {
     }
     setValidated(true);
   };
+
+
   const navigate = useNavigate();
+
   const SignUpUser = (e) => {
     e.preventDefault();
     setemail(e.target.email.value);
@@ -61,6 +64,7 @@ const Singup = () => {
       })
       .catch((error) => {});
   };
+
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
     if (otperror === "resend") {
@@ -73,6 +77,8 @@ const Singup = () => {
     setemailerror("");
     setOtperror("");
   };
+
+
   const VerifyOTP = (e) => {
     e.preventDefault();
     // if (e.target.otpinput.value == otp) {
@@ -175,6 +181,7 @@ const Singup = () => {
                         <p className="text-danger">{"Please Fill Otp"}</p>
                       ) : null}
                     </div>
+
                     {otp === 0 ? (
                       <div className="col-12">
                         <div className="form-floating theme-form-floating">
@@ -293,6 +300,9 @@ const Singup = () => {
 
                 <div className="sign-up-box">
                   <h4>Already have an account?</h4>
+
+                  
+                  
                   <button
                     onClick={() => {
                       navigate("/login");

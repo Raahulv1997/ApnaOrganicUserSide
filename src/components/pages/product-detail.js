@@ -7,14 +7,16 @@ import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { json, Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+
 const ProductDetail = ({ logIn }) => {
   const useridd = localStorage.getItem("userid");
   const token=localStorage.getItem("token");
+  
   const [apicall, setapicall] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
   const [productprice, setProductprice] = useState();
@@ -24,7 +26,7 @@ const ProductDetail = ({ logIn }) => {
   const [mfd, setMfd] = useState('');
   const [exp, setExp] = useState('');
   const [qut, setQut] = useState('');
-  const [Id, setId] = useState();
+  const [Id, setId] = useState("");
   const [image, setImage] = useState([]);
   // const[image,setImage]=useState('');
   // const[review,setReview]=useState([]);
@@ -75,6 +77,7 @@ const ProductDetail = ({ logIn }) => {
           .get(`http://192.168.29.108:5000/product_details?id=${proid}`)
           .then((response) => {
             let data = response.data;
+            console.log("product Data-----"+ JSON.stringify(data))
             setProductDetails(data);
             setProductprice(data.product_verient[0].product_price);
             setMrp(data.product_verient[0].mrp);
@@ -87,13 +90,14 @@ const ProductDetail = ({ logIn }) => {
             setId(data.product_verient[0].id);
             setImage(data.product_verient[0].product_image_path);
             setapicall(false);
-            setproductColor(data.product_verient[0].colors, data.product_verient[0].product_price, data.product_verient[0].mrp, data.product_verient[0].manufacturing_date, data.product_verient[0].expire_date, data.product_verient[0].quantity, varientId, proid);
+            OnProductColor(data.product_verient[0].colors, data.product_verient[0].product_price, data.product_verient[0].mrp, data.product_verient[0].manufacturing_date, data.product_verient[0].expire_date, data.product_verient[0].quantity, varientId, proid);
           });
       } catch (err) { }
     }
 
     getProductDetails();
   }, [apicall]);
+
   const result = showImage.filter((thing, index, self) =>
     index == self.findIndex((t) => (
       t.product_image_path == thing.product_image_path
@@ -142,7 +146,11 @@ const ProductDetail = ({ logIn }) => {
       });
   }
 
-  const setproductprice = (product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
+
+  const OnProductprice = (product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
+    localStorage.setItem("variantid", id);
+    localStorage.setItem("proid", productid);
+   
     setProductprice(product_price);
     setMrp(mrpp);
     setSize(sizee);
@@ -150,19 +158,25 @@ const ProductDetail = ({ logIn }) => {
     setExp(expp);
     setQut(quantityy)
     setId(id);
-    try {
+    
+      console.log("productID-----"+productid)
+      console.log("veriant ID-----"+id)
       axios
-        .get(`http://192.168.29.108:5000/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+        .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
         .then((response) => {
           let data = response.data;
+           console.log("product veriant image--"+ JSON.stringify(data))
           setapicall(false);
           setShowImages(data);
 
+        }).catch(function (error) {
+          console.log("errrrrr-----"+error)
         });
-    } catch (err) { }
+
 
   }
-  const setproductColor = (color, product_price, mrpp, mfdd, expp, quantityy, id, productid) => {
+  
+  const OnProductColor = (color, product_price, mrpp, mfdd, expp, quantityy, id, productid) => {
     localStorage.setItem("variantid", id);
     localStorage.setItem("proid", productid);
 
@@ -175,9 +189,11 @@ const ProductDetail = ({ logIn }) => {
     setId(id);
     try {
       axios
-        .get(`http://192.168.29.108:5000/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+        .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
         .then((response) => {
+
           let data = response.data;
+          // console.log("data----"+JSON.stringify (data))
           setapicall(false);
           setShowImages(data);
 
@@ -362,36 +378,55 @@ const ProductDetail = ({ logIn }) => {
                       <div className="product-title">
                         <h4>{productDetails.product_verient[0].unit === 'gms' ? 'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : result ? "" : null || productDetails.product_verient[0].colors === 'red' ? 'Colors' : productDetails.product_verient[0].colors === 'black' ? '' : productDetails.product_verient[0].colors === 'yellow' ? '' : productDetails.product_verient[0].colors === 'green' ? '' : productDetails.product_verient[0].colors === 'blue' ? 'Colors' : null} </h4>
                       </div>
-                      {(productDetails.product_verient).map((details) => {
-                        return (
+                      
 
                           <ul className="select-packege" >
-
+                          {productDetails.product_verient[0].size ?
+                          <p className="mb-0 mt-2"> {'Size:'}</p> : null}
+                          {(productDetails.product_verient).map((details) => {
+                        return (
+                          
                             <li key={details.id}>
 
                               <Link onClick={() => {
-                                setproductprice(details.product_price, details.mrp, details.size, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id
+                                alert("sizee")
+                                OnProductprice(details.product_price, details.mrp, details.size, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id
                                 )
-                              }}
-                                className={size == details.size ? "active" : null}
+                              } } 
+                                className={size == details.size && varientId == details.id ? "active" : null}
                               >
-                                {details.size}
+                                
+                                {details.size}{console.log(" size ---"+size )} {console.log(" size from API  ---"+details.size ) }
+                                 {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
                               </Link>
                             </li>
-                            <li>
-                              <Link onClick={() => { setproductColor(details.colors, details.product_price, details.mrp, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id) }}
-                                className={colors == details.colors ? "active" : null}
-                              >
-                                {details.colors}
-                              </Link>
-                            </li>
+                            );
+                          })}
+
 
                           </ul>
+                           <ul className="select-packege" >
+                           {productDetails.product_verient[0].colors ?
+                         <p className="mb-0 mt-2">{'Color:'}</p> :null} 
+                            {(productDetails.product_verient).map((details) => {
+                              return (
+                            <li>
+                              
+                              <Link onClick={() => {alert("color")
+                               OnProductColor(details.colors, details.product_price, details.mrp, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id) }}
+                                className={colors == details.colors && varientId == details.id ? "active" : null}
+                              >
+                                {details.colors} {console.log(" colors ---"+colors )} {console.log(" color from API  ---"+details.colors ) }
+                              </Link>
+                            </li>
+                            
+  );
+})}
+                          </ul>
 
-                        );
-                      })}
+                       
                     </div> : null}
-                  <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
+                  {/* <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                     <div className="product-title">
                       <h4>Hurry up! Sales Ends In</h4>
                     </div>
@@ -429,7 +464,7 @@ const ProductDetail = ({ logIn }) => {
                         </div>
                       </li>
                     </ul>
-                  </div>
+                  </div> */}
                   <div className="note-box product-packege">
                     <div className="cart_qty qty-box product-qty">
                       <div className="input-group">
@@ -461,12 +496,6 @@ const ProductDetail = ({ logIn }) => {
                       </div>
                     </div>
 
-                    <button className="btn btn-dark">
-                      <Link to="/cart">
-                        {/* <i data-feather="heart"></i> */}
-                        <span className="text-white" onClick={() => AddToCart()}> Add To Cart</span>
-                      </Link>
-                    </button>
                   </div>
                   <div className="row mt-4">
                     <div className="col-6 col-xl-3">
@@ -477,11 +506,11 @@ const ProductDetail = ({ logIn }) => {
                         </Link>
                       </button>
                     </div>
-                    <div className="col-6 col-xl-3">
+
+                    <div className="col-6 col-xl-3 ">
                       <button className="btn btn-dark ">
-                        <Link to="/" >
-                          {/* <i data-feather="shuffle"></i> */}
-                          <span className="text-white ">Add To Compare</span>
+                      <Link to="/cart">
+                          <span className="text-white" onClick={() => AddToCart()}> Add To Cart</span>
                         </Link>
                       </button>
                     </div>

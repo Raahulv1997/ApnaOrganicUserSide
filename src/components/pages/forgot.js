@@ -6,59 +6,100 @@ import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Countdown from "react-countdown";
+
 import axios from "axios";
 const Forgot = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState([]);
   const [otp, setotp] = useState(0);
   const [otperror, setOtperror] = useState(false);
+  const [emailerror, setemailerror] = useState(false);
   const [passval, setpassval] = useState("");
+  // countdown
+  const renderer = ({ hours, minutes, seconds, completed }) => {
+    if (completed) {
+      setemailerror("resend");
+      // Render a complete state
+      // return <Completionist />;
+    } else {
+      // Render a countdown
+      return (
+        <h4 className="mt-2 ms-2 text-danger mx-3">
+          {hours}:{minutes}:{seconds}
+        </h4>
+      );
+    }
+  };
+  // end countdown
   const handleFormChange = (e) => {
     setEmail(e.target.value);
-
+    setemailerror("");
     // setForgotInfo({...forgotInfo,[e.target.name]: e.target.value})
   };
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
-    console.log("----pass" + e.target.value);
+    setemailerror("");
   };
   const OnOtpChange = (e) => {
     setotp(e.target.value);
-    console.log("----otp" + e.target.value);
+    setemailerror("");
   };
   const forgotPassword = () => {
-    axios
-      .post(`http://192.168.29.108:5000/user_forgot_password`, {
-        email: `${email}`,
-      })
-      .then((response) => {
-        // sessionStorage.setItem("useridd" , response.data.user_id)
-        navigate("/forgot");
-        // localStorage.setItem("useridd" , response.data.user_id)
-        // navigate('/login')
-
-        // return response;
-      });
+    if (email === "") {
+      setemailerror("invalid address");
+    } else {
+      setemailerror("timer");
+      axios
+        .post(`http://192.168.29.108:5000/user_forgot_password`, {
+          email: `${email}`,
+        })
+        .then((response) => {
+          if (response.data.message === "User Not Found") {
+            setemailerror("email not found");
+          } else if (
+            response.data.message === "Send otp in Gmail Succesfully"
+          ) {
+            setemailerror("timer");
+          }
+          // navigate("/forgot");
+          // localStorage.setItem("useridd" , response.data.user_id)
+          // navigate('/login')
+          // return response;
+        });
+    }
   };
   const VerifyOTP = (e) => {
-    e.preventDefault();
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
-        email: email,
-        otp: Number(otp),
-        password: passval,
-      })
-      .then((response) => {
-        if (response.data.message === "please check credential") {
-          setOtperror(true);
-        } else {
-          localStorage.setItem("userid", response.data.insertId);
-          localStorage.setItem("upassword", passval);
-          // navigate("/your_account");
-          // return response;
-        }
-      })
-      .catch((error) => {});
+    if (email === "") {
+      setemailerror("invalid address");
+    } else if (otp === "") {
+      setemailerror("blank otp");
+    } else if (passval === "") {
+      setemailerror("blank pass");
+    } else {
+      e.preventDefault();
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/otp_verification`, {
+          email: email,
+          otp: Number(otp),
+          password: passval,
+        })
+        .then((response) => {
+          if (response.data.response === "please fill all input fields") {
+            setemailerror("all blank");
+          } else if (response.data.message === "otp not matched") {
+            setemailerror("otp not matched");
+          } else if (response.data.message === "email address not matched") {
+            setemailerror("email not found");
+          } else {
+            localStorage.setItem("userid", response.data.insertId);
+            localStorage.setItem("upassword", passval);
+            navigate("/login");
+            // return response;
+          }
+        })
+        .catch((error) => {});
+    }
   };
   return (
     <Fragment>
@@ -89,6 +130,7 @@ const Forgot = () => {
                       <div className="col-12">
                         <div className="form-floating theme-form-floating log-in-form">
                           <input
+                            disabled={emailerror === "timer" ? true : false}
                             type="email"
                             className="form-control"
                             id="email"
@@ -99,13 +141,31 @@ const Forgot = () => {
                           />
                           <label htmlFor="email">Email Address</label>
                         </div>
+                        {emailerror === "email not found" ? (
+                          <p className="mt-1 ms-2 text-danger" type="invalid">
+                            Please Fill the valid Email !!!!
+                          </p>
+                        ) : emailerror === "invalid address" ? (
+                          <p className="mt-1 ms-2 text-danger" type="invalid">
+                            Please Fill the Email First!!!!
+                          </p>
+                        ) : null}
+                        {emailerror === "timer" ? (
+                          <Countdown
+                            date={Date.now() + 30000}
+                            renderer={renderer}
+                          />
+                        ) : null}
                         <div className="col-12 mt-3">
                           <button
+                            disabled={emailerror === "timer" ? true : false}
                             className="btn btn-animation w-100"
                             type="button"
                             onClick={forgotPassword}
                           >
-                            Forgot Password
+                            {emailerror === "resend"
+                              ? "Resend"
+                              : "Forgot Password"}
                           </button>
                         </div>
                       </div>
@@ -127,6 +187,15 @@ const Forgot = () => {
                           onChange={(e) => OnOtpChange(e)}
                         />
                       </div>
+                      {emailerror === "blank otp" ? (
+                        <p className="mt-1 ms-2 text-danger" type="invalid">
+                          Please Write Otp!!!!
+                        </p>
+                      ) : emailerror === "otp not matched" ? (
+                        <p className="mt-1 ms-2 text-danger" type="invalid">
+                          Please Fill Correct Otp!!!!
+                        </p>
+                      ) : null}
                       {/* <div className="col-12 mt-3">
                         <button
                           className="btn btn-animation w-100"
@@ -150,6 +219,15 @@ const Forgot = () => {
                             onChange={(e) => onPasswordChange(e)}
                           />
                         </div>
+                        {emailerror === "blank pass" ? (
+                          <p className="mt-1 ms-2 text-danger" type="invalid">
+                            Please Write Password!!!!
+                          </p>
+                        ) : emailerror === "all blank" ? (
+                          <p className="mt-1 ms-2 text-danger" type="invalid">
+                            Please Fill All Field!!!!
+                          </p>
+                        ) : null}
                       </div>
                       {/* ) : null} */}
                       <div className="col-12 mt-3">

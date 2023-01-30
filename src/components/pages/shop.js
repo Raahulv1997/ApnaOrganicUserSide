@@ -55,41 +55,46 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
-
+  console.log("data--" + JSON.stringify(prodData));
   // CALCULATIO OF PAGINATION:-
-  const token=localStorage.getItem("token")
+  const token = localStorage.getItem("token");
   const indexOfLastRecord = currentPage * recordsPerPage;
-  console.log(indexOfLastRecord);
+  // console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  console.log(indexOfFirstRecord);
+  // console.log(indexOfFirstRecord);
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
   const nPages = Math.ceil(prodData.length / recordsPerPage);
-  console.log(nPages);
-  console.log("pagep", prodData);
+  // console.log(nPages);
+  // console.log("pagep", prodData);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
-      useridd === undefined ||
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null
+      token === undefined ||
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === true
     ) {
       navigate("/login");
     } else {
       let cnt = 1;
       axios
-        .post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-          user_id:"",
-          product_view_id: `${id}`,
-          price: `${saleprice}`,
-          discount: `${productMRF}`,
-          quantity: count === 0 ? cnt : count,
-          is_active: 1,
-        },{
-          headers: {
-            user_token: token,
+        .post(
+          `${process.env.REACT_APP_BASEURL}/add_to_cart`,
+          {
+            user_id: "",
+            product_view_id: `${id}`,
+            price: `${saleprice}`,
+            discount: `${productMRF}`,
+            quantity: count === 0 ? cnt : count,
+            is_active: 1,
           },
-        })
+          {
+            headers: {
+              user_token: token,
+            },
+          }
+        )
         .then((response) => {
           let data = response.data;
           setData(data);
@@ -101,10 +106,11 @@ const Shop = (props) => {
   };
   const AddToWishList = (id, wishlistt) => {
     if (
-      useridd === undefined ||
-      useridd === "null" ||
-      useridd === "" ||
-      useridd === null
+      token === undefined ||
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === true
     ) {
       navigate("/login");
     } else {
@@ -115,7 +121,8 @@ const Shop = (props) => {
             {
               product_id: `${id}`,
               user_id: "",
-            },{
+            },
+            {
               headers: {
                 user_token: token,
               },
@@ -131,14 +138,18 @@ const Shop = (props) => {
           });
       } else {
         axios
-          .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-            user_id: "",
-            product_view_id: `${id}`,
-          },{
-            headers: {
-              user_token: token,
+          .post(
+            `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+            {
+              user_id: "",
+              product_view_id: `${id}`,
             },
-          })
+            {
+              headers: {
+                user_token: token,
+              },
+            }
+          )
           .then((response) => {
             let data = response.data;
             setData(response.data);
@@ -165,7 +176,7 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
-console.log("yyyyyyyy-----------"+searchText)
+  console.log("yyyyyyyy-----------" + searchText);
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -235,94 +246,103 @@ console.log("yyyyyyyy-----------"+searchText)
       token === undefined ||
       token === true
     ) {
-      function getProductData(){
-        try{
-           axios.post(`${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`, {
-            product_search: {
-              search: `${searchText}`,
-              price_from: `${pricefilter.from_product_price}`,
-              price_to: `${pricefilter.to_product_price}`,
-              id: `${sortingfilter.latest}`,
-              product_title_name: `${sortingfilter.aproduct}`,
-              sale_price: `${sortingfilter.hprice}`,
-              short_by_updated_on: "",
-              product_type: [],
-              colors: [],
-              size: [],
-              brand: brandfilter,
-              discount: discountfilter,
-              rating: ratingfilter,
-              category: [searchCat],
-            },
-          })
-          .then((response) => {
-            let data = response.data;
-            console.log(response.data.results);
-            setProdData(data.results);
-  
-            if (
-              searchCat.length === 0 &&
-              ratingfilter.length === 0 &&
-              brandfilter.length === 0 &&
-              discountfilter.length === 0 &&
-              pricefilter.from_product_price === "" &&
-              pricefilter.to_product_price === ""
-            ) {
-              setCategoryfilterData(data.results);
-            }
-            setapicall(false);
-          });
+      function getProductData() {
+        try {
+          axios
+            .post(
+              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              {
+                product_search: {
+                  search: `${searchText}`,
+                  price_from: `${pricefilter.from_product_price}`,
+                  price_to: `${pricefilter.to_product_price}`,
+                  id: `${sortingfilter.latest}`,
+                  product_title_name: `${sortingfilter.aproduct}`,
+                  sale_price: `${sortingfilter.hprice}`,
+                  short_by_updated_on: "",
+                  product_type: [],
+                  colors: [],
+                  size: [],
+                  brand: brandfilter,
+                  discount: discountfilter,
+                  rating: ratingfilter,
+                  category: [searchCat],
+                },
+              }
+            )
+            .then((response) => {
+              let data = response.data;
+              console.log(response.data.results);
+              setProdData(data.results);
+
+              if (
+                searchCat.length === 0 &&
+                ratingfilter.length === 0 &&
+                brandfilter.length === 0 &&
+                discountfilter.length === 0 &&
+                pricefilter.from_product_price === "" &&
+                pricefilter.to_product_price === ""
+              ) {
+                setCategoryfilterData(data.results);
+              }
+              setapicall(false);
+            });
         } catch (err) {}
       }
       getProductData();
       // homeurl = ;
     } else {
-      function getProductData(){
-        try{
-           axios.post(`${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`, {
-            product_search: {
-              search: `${searchText}`,
-              price_from: `${pricefilter.from_product_price}`,
-              price_to: `${pricefilter.to_product_price}`,
-              id: `${sortingfilter.latest}`,
-              product_title_name: `${sortingfilter.aproduct}`,
-              sale_price: `${sortingfilter.hprice}`,
-              short_by_updated_on: "",
-              product_type: [],
-              colors: [],
-              size: [],
-              brand: brandfilter,
-              discount: discountfilter,
-              rating: ratingfilter,
-              category: [searchCat],
-            },
-          }, {
-            headers: {
-              user_token: token,
-            },
-          })
-          .then((response) => {
-            let data = response.data;
-            console.log(response.data.results);
-            setProdData(data.results);
-  
-            if (
-              searchCat.length === 0 &&
-              ratingfilter.length === 0 &&
-              brandfilter.length === 0 &&
-              discountfilter.length === 0 &&
-              pricefilter.from_product_price === "" &&
-              pricefilter.to_product_price === ""
-            ) {
-              setCategoryfilterData(data.results);
-            }
-            setapicall(false);
-          })
-        }catch (err) {}
+      function getProductData() {
+        try {
+          axios
+            .post(
+              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              {
+                product_search: {
+                  search: `${searchText}`,
+                  price_from: `${pricefilter.from_product_price}`,
+                  price_to: `${pricefilter.to_product_price}`,
+                  id: `${sortingfilter.latest}`,
+                  product_title_name: `${sortingfilter.aproduct}`,
+                  sale_price: `${sortingfilter.hprice}`,
+                  short_by_updated_on: "",
+                  product_type: [],
+                  colors: [],
+                  size: [],
+                  brand: brandfilter,
+                  discount: discountfilter,
+                  rating: ratingfilter,
+                  category: [searchCat],
+                },
+              },
+              {
+                headers: {
+                  user_token: token,
+                },
+              }
+            )
+            .then((response) => {
+              let data = response.data;
+              console.log(response.data.results);
+              setProdData(data.results);
+
+              if (
+                searchCat.length === 0 &&
+                ratingfilter.length === 0 &&
+                brandfilter.length === 0 &&
+                discountfilter.length === 0 &&
+                pricefilter.from_product_price === "" &&
+                pricefilter.to_product_price === ""
+              ) {
+                setCategoryfilterData(data.results);
+              }
+              setapicall(false);
+            });
+        } catch (err) {}
       }
       getProductData();
     }
-  },[
+  }, [
     categoryNamedata,
     ratingfilter,
     brandfilter,
@@ -334,8 +354,8 @@ console.log("yyyyyyyy-----------"+searchText)
     sortingfilter,
     recordsPerPage,
     currentPage,
-  ])
- 
+  ]);
+
   useEffect(() => {
     function getCategoryData() {
       try {

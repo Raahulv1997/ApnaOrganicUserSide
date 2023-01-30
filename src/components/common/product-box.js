@@ -2,12 +2,8 @@ import React from "react";
 //import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useState } from "react";
-import axios from "axios";
-import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Header from "./header";
-import SweetAlert from "sweetalert-react";
-import "sweetalert/dist/sweetalert.css";
+// import "sweetalert/dist/sweetalert.css";
 
 // function AddCart(props){
 // }
@@ -36,7 +32,8 @@ const ProductBox = ({
   cart,
 }) => {
   const useridd = localStorage.getItem("userid");
-  
+  const token = localStorage.getItem("token");
+
   let [count, setCount] = useState(1);
   const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
@@ -48,10 +45,20 @@ const ProductBox = ({
   const closeProductAlert = () => {
     setAlert(false);
   };
+
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
-      <div className="product-image">
+      <div
+        className="product-image"
+        // style={{
+        //   backgroundImage: `url(${
+        //     allimages
+        //       ? allimages
+        //       : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+        //   })`,
+        // }}
+      >
         <div className="ribbon_div">
           {special_offer == 0 || special_offer == "" ? null : (
             <span className="special_offer mb-1">{special_offer}%</span>
@@ -79,7 +86,8 @@ const ProductBox = ({
         </div>
 
         {/* {image==""|| image==null|| image==undefined? */}
-        <a onClick={() => clickProduct(productid, id)}>
+        <a onClick={() => clickProduct(productid, id) }>
+         
           <img
             src={
               allimages
@@ -94,26 +102,36 @@ const ProductBox = ({
 
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
-          {// !ratingg? null :
-          (ratingbox || []).map((rat, i) => {
-            return ratingg - rat >= 0 ? (
-              <li color="#ffb321" key={i}>
-                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-              </li>
-            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
-              <li color="#ffb321">
-                <FaStarHalfAlt
-                  icon="star"
-                  className="feather"
-                  fill={"#ffb321"}
-                />
-              </li>
-            ) : ratingg - rat <= -1 ? (
-              <li color="#ffb321">
-                <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
-              </li>
-            ) : null;
-          })}
+          {
+            // !ratingg? null :
+            (ratingbox || []).map((rat, i) => {
+              return ratingg - rat >= 0 ? (
+                <li color="#ffb321" key={i}>
+                  <FaStar
+                    icon="star"
+                    className="feather fill"
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+                <li color="#ffb321">
+                  <FaStarHalfAlt
+                    icon="star"
+                    className="feather"
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : ratingg - rat <= -1 ? (
+                <li color="#ffb321">
+                  <FaRegStar
+                    icon="star"
+                    className="feather "
+                    fill={"#ffb321"}
+                  />
+                </li>
+              ) : null;
+            })
+          }
         </ul>
         <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
@@ -130,7 +148,7 @@ const ProductBox = ({
               <div
                 className="qty-left-minus"
                 onClick={() =>
-                  count === 0 ? setCount(count) : setCount(count - 1)
+                  count === 1 ? setCount(count) : setCount(count - 1)
                 }
                 data-type="minus"
                 data-field=""
@@ -155,11 +173,12 @@ const ProductBox = ({
               </div>
             </div>
           </div>
-          {cart === null ? (
+          {cart === null || token === "null" || !token ? (
             <>
               <button
                 className="buy-button buy-button-2 btn btn-cart"
                 onClick={() =>
+                  
                   AddToCart(id, saleprice, productMRF, wishlistid, count)
                 }
               >

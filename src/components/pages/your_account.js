@@ -25,13 +25,18 @@ function Account() {
   const useridd = localStorage.getItem("userid");
   localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
-
+  const currentdate = moment().format("yyyy-MM-DD");
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
   const func = () => {};
   const [show, setShow] = useState(false);
-  const handleClose = () => setShow(false);
-  const handleShow = () => setShow(true);
+  const handleClose = () => {
+    setShow(false);
+  };
+  const handleShow = () => {
+    setValidated(false);
+    setShow(true);
+  };
   const [Password, setPassword] = useState(false);
   const [validated, setValidated] = useState(false);
   const [addAdderss, setaddAdderss] = useState(false);
@@ -59,15 +64,13 @@ function Account() {
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/user_details`,
-        {user_id:""},
+        { user_id: "" },
         {
-          headers:{
-            user_token:token,
+          headers: {
+            user_token: token,
           },
         }
       )
-      // console.log("----------"+user_token)
-
       .then((response) => {
         let data = response.data[0];
         setuserdata(data);
@@ -80,7 +83,7 @@ function Account() {
       .catch((error) => {});
     Onwishlistclick();
     OnOrderclick();
-  }, [Password,apicall]);
+  }, [Password, apicall]);
 
   // wishlist
   const Onwishlistclick = () => {
@@ -116,7 +119,7 @@ function Account() {
         },
       })
       .then((response) => {
-        let data=response.data[0];
+        let data = response.data[0];
         setorderhistory(response.data);
         var result = response.data.filter(
           (thing, index, self) =>
@@ -140,19 +143,24 @@ function Account() {
     if (form.checkValidity() === false) {
       event.preventDefault();
       event.stopPropagation();
+      setValidated(true);
+    } else {
+      // eslint-disable-next-line no-undef
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata, {
+          headers: {
+            user_token: `${token}`,
+          },
+        })
+        .then((response) => {
+          if (response.data.message === "updated user profile") {
+            setShow(false);
+            setapicall(true);
+            setValidated(false);
+          }
+        })
+        .catch((error) => {});
     }
-    // eslint-disable-next-line no-undef
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata, {
-        headers: {
-          user_token: `${token}`,
-        },
-      })
-      .then((response) => {
-        if (response.data.message === "updated user profile") setShow(false);
-      })
-      .catch((error) => {});
-    setValidated(true);
   };
 
   const OnchangeFistname = (e) => {
@@ -161,7 +169,6 @@ function Account() {
       [e.target.name]: e.target.value,
     });
   };
-  console.log("hh--------" + JSON.stringify(udata));
 
   // change Password
 
@@ -277,7 +284,7 @@ function Account() {
     });
   };
   // add to cart
-  const AddToCart = (id, discount, product_price,quantity, product_id) => {
+  const AddToCart = (id, discount, product_price, quantity, product_id) => {
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/add_to_cart`,
@@ -1720,7 +1727,7 @@ function Account() {
                             </div>
 
                             <button className="btn theme-bg-color btn-md fw-bold mt-4 text-white">
-                              Save Changes
+                              Update
                             </button>
                           </div>
 
@@ -1954,7 +1961,7 @@ function Account() {
                   </option>
                 </Form.Select>
                 <Form.Control.Feedback type="invalid" className="h6">
-                  Please select producttype
+                  Please select gender
                 </Form.Control.Feedback>
               </div>
               <div className="col-4">
@@ -1963,14 +1970,15 @@ function Account() {
                     Date of Birth
                   </Form.Label>
                   <Col sm="12">
-                  <Form.Control
-                     name={"date_of_birth"}
-                    type="date"
-                    value={moment(udata.date_of_birth).format("yyyy-MM-DD")}
-                    onChange={OnchangeFistname}
-                    required
-                    placeholder="Product Quantity"
-                  />
+                    <Form.Control
+                      max={currentdate}
+                      name={"date_of_birth"}
+                      type="date"
+                      value={moment(udata.date_of_birth).format("yyyy-MM-DD")}
+                      onChange={OnchangeFistname}
+                      required
+                      placeholder="Product Quantity"
+                    />
                     <Form.Control.Feedback type="invalid">
                       Please choose date of birth
                     </Form.Control.Feedback>
@@ -1991,7 +1999,7 @@ function Account() {
               // onClick={handleSubmit}
               type="submit"
             >
-              Save Change
+              Update
             </button>
           </Modal.Footer>
         </Form>
