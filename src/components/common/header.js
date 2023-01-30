@@ -972,10 +972,11 @@ const Header = (props) => {
                               <Link
                                 className="dropdown-item"
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/cart"
                                 }
@@ -986,10 +987,11 @@ const Header = (props) => {
                             <li>
                               <Link
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/your_account"
                                 }
@@ -1012,10 +1014,11 @@ const Header = (props) => {
                               <Link
                                 className="dropdown-item"
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/checkout"
                                 }
@@ -1069,10 +1072,11 @@ const Header = (props) => {
                             <li>
                               <Link
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/wishlist"
                                 }
