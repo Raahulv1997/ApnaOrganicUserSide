@@ -25,10 +25,9 @@ const Header = (props) => {
   const [categorydata, setCategoryData] = useState([]);
   const [pdata, setPdata] = useState([]);
   const navigate = useNavigate();
+  let [searcherror, setsearcherror] = useState(false);
   const [click, setclick] = useState(false);
   const [search, setsearch] = useState([]);
-  const [msg, setMsg] = useState(true);
-
   // const [cat_list, setcat_list] = useState(false);
   const open_Category = () => {
     setclick(true);
@@ -77,9 +76,13 @@ const Header = (props) => {
 
   const searchProduct = (e) => {
     e.preventDefault();
-    navigate(`/shop?search=${search}`);
+    if (search.length === 0) {
+      setsearcherror(true);
+    } else {
+      navigate(`/shop?search=${search}`);
+    }
   };
-
+  console.log(search);
   useEffect(() => {
     if (
       token === undefined ||
@@ -115,7 +118,7 @@ const Header = (props) => {
               data.response === "header error" ||
               data.error === "Please authenticate using a valid token"
             ) {
-              setMsg(false);
+              // console.log("data--"+data.response)
             } else {
               data.map((cdata) => {
                 ProductTotal +=
@@ -206,8 +209,10 @@ const Header = (props) => {
                       <div className="center-box">
                         <div className="searchbar-box order-xl-1 d-none d-xl-block">
                           <input
+                            required
                             onChange={(e) => {
                               setsearch(e.target.value);
+                              setsearcherror(false);
                             }}
                             type="search"
                             className="form-control"
@@ -230,16 +235,21 @@ const Header = (props) => {
                         </div>
                         {/* <div className="location-box-2">
                           <button
-                            className="btn location-button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#locationModal"
+                          className="btn location-button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#locationModal"
                           >
-                            <i className="fa-regular fa-location-dot"></i>
-                            <span className="locat-name">Your Location</span>
-                            <i className="fa-solid fa-angle-down"></i>
+                          <i className="fa-regular fa-location-dot"></i>
+                          <span className="locat-name">Your Location</span>
+                          <i className="fa-solid fa-angle-down"></i>
                           </button>
                         </div> */}
                       </div>
+                      {searcherror === true ? (
+                        <small className="text-danger">
+                          please fill the feild
+                        </small>
+                      ) : null}
                     </form>
                   </div>
                   <div className="right-nav">
@@ -255,7 +265,7 @@ const Header = (props) => {
                     token === "null" ||
                     token === "" ||
                     token === null ||
-                    token === "true" ? (
+                    token === true ? (
                       <Link to="/login">
                         <span>Login </span>
                       </Link>
@@ -334,84 +344,78 @@ const Header = (props) => {
                               className="cart-list "
                               style={{ flexDirection: "column" }}
                             >
-                              {msg === false ? (
-                                <h6 className="text-dark text-center">
-                                  Empty Cart
-                                </h6>
-                              ) : (
-                                pdata.map((data) => {
-                                  return (
-                                    <li key={pdata.id}>
-                                      <div className="drop-cart ">
-                                        {/* <Link to="/" className="drop-image"> */}
-                                        <img
-                                          src={data.all_images}
-                                          className="lazyload h-50 w-50"
-                                          alt="image"
-                                          name="image"
-                                        />
-                                        {/* </Link> */}
+                              {(pdata || []).map((data) => {
+                                return (
+                                  <li key={pdata.id}>
+                                    <div className="drop-cart ">
+                                      {/* <Link to="/" className="drop-image"> */}
+                                      <img
+                                        src={data.all_images}
+                                        className="lazyload h-50 w-50"
+                                        alt="image"
+                                        name="image"
+                                      />
+                                      {/* </Link> */}
 
-                                        <div className="drop-contain">
-                                          {/* <Link to="/"> */}
-                                          <h5>{data.product_title_name}</h5>
-                                          {/* </Link> */}
-                                          <h6>
-                                            <span className="im=block">
-                                              {data.quantity}x
-                                            </span>{" "}
-                                            <span>
-                                              ₹
-                                              {(
-                                                Number(data.product_price) -
-                                                (data.product_price *
-                                                  data.discount) /
-                                                  100 +
-                                                (Number(
-                                                  data.product_price -
-                                                    (data.product_price *
-                                                      data.discount) /
-                                                      100
-                                                ) *
-                                                  data.gst) /
-                                                  100 +
-                                                (Number(
-                                                  data.product_price -
-                                                    (data.product_price *
-                                                      data.discount) /
-                                                      100
-                                                ) *
-                                                  data.cgst) /
-                                                  100 +
-                                                (Number(
-                                                  data.product_price -
-                                                    (data.product_price *
-                                                      data.discount) /
-                                                      100
-                                                ) *
-                                                  data.sgst) /
-                                                  100
-                                              ).toFixed(2)}
-                                            </span>
-                                            {/* <span>{data.sale_price}</span> */}
-                                          </h6>
-                                          <button
-                                            className="close-button"
-                                            onClick={() =>
-                                              deleteCart(
-                                                data.cart_id,
-                                                data.user_id
-                                              )
-                                            }
-                                          >
-                                            <i className="fa-solid fa-xmark"></i>
-                                          </button>
-                                        </div>
+                                      <div className="drop-contain">
+                                        {/* <Link to="/"> */}
+                                        <h5>{data.product_title_name}</h5>
+                                        {/* </Link> */}
+                                        <h6>
+                                          <span className="im=block">
+                                            {data.quantity}x
+                                          </span>{" "}
+                                          <span>
+                                            ₹
+                                            {(
+                                              Number(data.product_price) -
+                                              (data.product_price *
+                                                data.discount) /
+                                                100 +
+                                              (Number(
+                                                data.product_price -
+                                                  (data.product_price *
+                                                    data.discount) /
+                                                    100
+                                              ) *
+                                                data.gst) /
+                                                100 +
+                                              (Number(
+                                                data.product_price -
+                                                  (data.product_price *
+                                                    data.discount) /
+                                                    100
+                                              ) *
+                                                data.cgst) /
+                                                100 +
+                                              (Number(
+                                                data.product_price -
+                                                  (data.product_price *
+                                                    data.discount) /
+                                                    100
+                                              ) *
+                                                data.sgst) /
+                                                100
+                                            ).toFixed(2)}
+                                          </span>
+                                          {/* <span>{data.sale_price}</span> */}
+                                        </h6>
+                                        <button
+                                          className="close-button"
+                                          onClick={() =>
+                                            deleteCart(
+                                              data.cart_id,
+                                              data.user_id
+                                            )
+                                          }
+                                        >
+                                          <i className="fa-solid fa-xmark"></i>
+                                        </button>
                                       </div>
-                                    </li>
-                                  );
-                                })
-                              )}
+                                    </div>
+                                  </li>
+                                );
+                              })}
                             </ul>
                             <div className="price-box">
                               <h5>Price :</h5>
