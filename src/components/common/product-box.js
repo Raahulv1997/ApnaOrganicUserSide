@@ -45,7 +45,6 @@ const ProductBox = ({
   const closeProductAlert = () => {
     setAlert(false);
   };
-console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
@@ -179,7 +178,8 @@ console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
               </div>
             </div>
           </div>
-          {cart === null || token === "null" || !token ? (
+           {window.location.pathname==="/wishlist"?"":
+          cart === null || token === "null" || !token ? (
             <>
               <button
                 className="buy-button buy-button-2 btn btn-cart"
@@ -190,15 +190,15 @@ console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
                 <i className="fa-regular fa-cart-shopping"></i>
               </button>
             </>
-          ) : (
-            <button
-              className="btn text-light btn-warning"
-              // onClick={() => setAlert(true)}
-              onClick={() => navigate("/cart")}
-            >
-              {"Buy"}
-            </button>
-          )}
+          ) : 
+          (<button
+            className="btn text-light btn-warning"
+            // onClick={() => setAlert(true)}
+            onClick={() => navigate("/cart")}
+          >
+            {"Buy"}
+          </button>)
+          }
         </div>
       </div>
       {/* <SweetAlert
