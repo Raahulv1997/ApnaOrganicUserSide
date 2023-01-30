@@ -59,13 +59,13 @@ const Shop = (props) => {
   // CALCULATIO OF PAGINATION:-
   const token=localStorage.getItem("token")
   const indexOfLastRecord = currentPage * recordsPerPage;
-  console.log(indexOfLastRecord);
+  // console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
-  console.log(indexOfFirstRecord);
+  // console.log(indexOfFirstRecord);
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
   const nPages = Math.ceil(prodData.length / recordsPerPage);
-  console.log(nPages);
-  console.log("pagep", prodData);
+  // console.log(nPages);
+  // console.log("pagep", prodData);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
