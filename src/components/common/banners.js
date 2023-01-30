@@ -133,8 +133,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           .put(
             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
             {
-              product_id: `${id}`,
-              user_id: "",
+              id: id,
             },
             {
               headers: {
@@ -262,7 +261,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   // end product box
   return (
     <Fragment>
-      <Header />
+      <Header addcart={AddToCart} />
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
