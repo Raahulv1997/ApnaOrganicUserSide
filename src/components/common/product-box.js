@@ -51,13 +51,13 @@ const ProductBox = ({
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
         className="product-image"
-        style={{
-          backgroundImage: `url(${
-            allimages
-              ? allimages
-              : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
-          })`,
-        }}
+        // style={{
+        //   backgroundImage: `url(${
+        //     allimages
+        //       ? allimages
+        //       : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+        //   })`,
+        // }}
       >
         <div className="ribbon_div">
           {special_offer == 0 || special_offer == "" ? null : (
@@ -86,8 +86,9 @@ const ProductBox = ({
         </div>
 
         {/* {image==""|| image==null|| image==undefined? */}
-        <a onClick={() => clickProduct(productid, id)}>
-          {/* <img
+        <a onClick={() => clickProduct(productid, id) }>
+         
+          <img
             src={
               allimages
                 ? allimages
@@ -95,7 +96,7 @@ const ProductBox = ({
             }
             className="mt-5 "
             alt=""
-          /> */}
+          />
         </a>
       </div>
 
@@ -177,6 +178,7 @@ const ProductBox = ({
               <button
                 className="buy-button buy-button-2 btn btn-cart"
                 onClick={() =>
+                  
                   AddToCart(id, saleprice, productMRF, wishlistid, count)
                 }
               >

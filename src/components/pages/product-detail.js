@@ -7,11 +7,12 @@ import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
-import { Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import { json, Link, NavLink, useLocation, useNavigate } from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import Form from 'react-bootstrap/Form';
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+
 const ProductDetail = ({ logIn }) => {
   const useridd = localStorage.getItem("userid");
   const token=localStorage.getItem("token");
@@ -190,7 +191,9 @@ const ProductDetail = ({ logIn }) => {
       axios
         .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
         .then((response) => {
+
           let data = response.data;
+          // console.log("data----"+JSON.stringify (data))
           setapicall(false);
           setShowImages(data);
 
