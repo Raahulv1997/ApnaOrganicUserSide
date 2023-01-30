@@ -327,6 +327,8 @@ const Checkout = (props) => {
   const onOrderAdd = () => {
     if (DeliveryMethod === "") {
       setordervalidation("deliverymethod");
+      setordervalidation("spinner");
+
     } else {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd, {
@@ -1802,6 +1804,7 @@ const Checkout = (props) => {
                           </li>
 
                           <li>
+                            
                             <button
                               onClick={() => onOrderAdd()}
                               className="btn btn-animation"
