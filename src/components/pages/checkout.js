@@ -743,7 +743,8 @@ const Checkout = (props) => {
                                                 onClick={() =>
                                                   incrementCount(
                                                     cdata.cart_id,
-                                                    cdata.order_quantity
+                                                    cdata.order_quantity,
+                                                    cdata.quantity
                                                   )
                                                 }
                                               >

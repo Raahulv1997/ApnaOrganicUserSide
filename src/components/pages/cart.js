@@ -33,6 +33,12 @@ const Cart = (all_images) => {
   const currentdate = moment().format();
   const incrementCount = (id, order_quantity) => {
     let inc = order_quantity + 1;
+
+    if (order_quantity > 1 || order_quantity !== 1) {
+      inc = order_quantity - 1;
+    } else {
+      inc = order_quantity;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASEURL}/cart_update`,
