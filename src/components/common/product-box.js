@@ -60,10 +60,13 @@ const ProductBox = ({
         // }}
       >
         <div className="ribbon_div">
-          {special_offer == 0 || special_offer == "" ? null : (
+          {/* {special_offer == 0 || special_offer == "" ? null : (
             <span className="special_offer mb-1">{special_offer}%</span>
-          )}
-          {discount == 0 || discount == "" ? null : (
+          )} */}
+          {discount == 0 ||
+          discount == "" ||
+          discount == null ||
+          discount == "0" ? null : (
             <span className="discount_ribbon mb-1">{discount}%</span>
           )}
         </div>
@@ -86,8 +89,7 @@ const ProductBox = ({
         </div>
 
         {/* {image==""|| image==null|| image==undefined? */}
-        <a onClick={() => clickProduct(productid, id) }>
-         
+        <a onClick={() => clickProduct(productid, id)}>
           <img
             src={
               allimages
@@ -178,7 +180,6 @@ const ProductBox = ({
               <button
                 className="buy-button buy-button-2 btn btn-cart"
                 onClick={() =>
-                  
                   AddToCart(id, saleprice, productMRF, wishlistid, count)
                 }
               >

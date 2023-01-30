@@ -81,9 +81,11 @@ const Header = (props) => {
   useEffect(() => {
     if (
       token === undefined ||
+      token === "true" ||
       token === "null" ||
       token === "" ||
-      token === null
+      token === null ||
+      token === true
     ) {
     } else {
       getCartData();
@@ -247,6 +249,7 @@ const Header = (props) => {
                     > */}
 
                     {token === undefined ||
+                    token === "true" ||
                     token === "null" ||
                     token === "" ||
                     token === null ||
@@ -973,6 +976,7 @@ const Header = (props) => {
                                 className="dropdown-item"
                                 to={
                                   token === undefined ||
+                                  token === "true" ||
                                   token === "null" ||
                                   token === "" ||
                                   token === null ||
@@ -988,6 +992,7 @@ const Header = (props) => {
                               <Link
                                 to={
                                   token === undefined ||
+                                  token === "true" ||
                                   token === "null" ||
                                   token === "" ||
                                   token === null ||
@@ -1015,6 +1020,7 @@ const Header = (props) => {
                                 className="dropdown-item"
                                 to={
                                   token === undefined ||
+                                  token === "true" ||
                                   token === "null" ||
                                   token === "" ||
                                   token === null ||
@@ -1073,6 +1079,7 @@ const Header = (props) => {
                               <Link
                                 to={
                                   token === undefined ||
+                                  token === "true" ||
                                   token === "null" ||
                                   token === "" ||
                                   token === null ||
