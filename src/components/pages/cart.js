@@ -57,16 +57,12 @@ const Cart = (all_images) => {
   };
   const decrementCount = (id, order_quantity) => {
     let dec;
-    console.log("---ORDER" + order_quantity);
-    if (order_quantity > 0 || order_quantity != 1) {
-      dec = order_quantity - 1;
-    } else if ((order_quantity = 1)) {
-      dec = order_quantity;
-    } else {
-      return false;
-    }
-    console.log("---dec" + dec);
 
+    if (order_quantity > 1 || order_quantity !== 1) {
+      dec = order_quantity - 1;
+    } else {
+      dec = order_quantity;
+    }
     axios
       .put(
         `${process.env.REACT_APP_BASEURL}/cart_update`,
