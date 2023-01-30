@@ -104,7 +104,7 @@ const Header = (props) => {
           )
           .then((response) => {
             let data = response.data;
-           
+
             let ProductTotal = 0;
             if (
               data.response === "cart_empty" ||
@@ -136,10 +136,8 @@ const Header = (props) => {
                     cdata.sgst) /
                     100;
               });
-              setPdata(data)
+              setPdata(data);
             }
- 
-          
           });
       } catch (err) {}
     }
@@ -251,7 +249,8 @@ const Header = (props) => {
                     {token === undefined ||
                     token === "null" ||
                     token === "" ||
-                    token === null ? (
+                    token === null ||
+                    token === true ? (
                       <Link to="/login">
                         <span>Login </span>
                       </Link>
@@ -973,10 +972,11 @@ const Header = (props) => {
                               <Link
                                 className="dropdown-item"
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/cart"
                                 }
@@ -987,10 +987,11 @@ const Header = (props) => {
                             <li>
                               <Link
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/your_account"
                                 }
@@ -1013,10 +1014,11 @@ const Header = (props) => {
                               <Link
                                 className="dropdown-item"
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/checkout"
                                 }
@@ -1070,10 +1072,11 @@ const Header = (props) => {
                             <li>
                               <Link
                                 to={
-                                  useridd === undefined ||
-                                  useridd === "null" ||
-                                  useridd === "" ||
-                                  useridd === null
+                                  token === undefined ||
+                                  token === "null" ||
+                                  token === "" ||
+                                  token === null ||
+                                  token === true
                                     ? "/login"
                                     : "/wishlist"
                                 }
