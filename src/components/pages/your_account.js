@@ -311,14 +311,15 @@ function Account() {
   // end add to cart
 
   const onProductClick = (id) => {
-    localStorage.setItem("orderid", id);
-    // localStorage.setItem("proid" , id)
-    navigate("/your_orders");
+    console.log("___" + id);
+    // localStorage.setItem("orderid", id);
+    localStorage.setItem("proid", id);
+    navigate("/product-detail");
   };
 
   const OnImageClick = (id) => {
-    // localStorage.setItem("orderid" , id)
-    // navigate('/your_orders')
+    localStorage.setItem("orderid", id);
+    navigate("/your_orders");
   };
   return (
     <React.Fragment>
@@ -774,7 +775,7 @@ function Account() {
                                   <div className="product-order-detail">
                                     <div
                                       onClick={() =>
-                                        onProductClick(data.order_id)
+                                        OnImageClick(data.order_id)
                                       }
                                       className="order-image"
                                     >
@@ -816,7 +817,7 @@ function Account() {
                                         <li>
                                           <div className="size-box">
                                             <h6 className="text-content">
-                                              Rate :{data.rating}
+                                              Rating :{data.rating}
                                             </h6>
                                             <div className="product-rating ms-2">
                                               <ul className="rating">
