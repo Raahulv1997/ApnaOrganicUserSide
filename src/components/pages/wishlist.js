@@ -129,7 +129,7 @@ function Wishlist(all_images) {
               <h2 className="text-dark text-center">
                 Add Product In wishlist{" "}
               </h2>
-            ) : null}
+            ) : 
             <div className="row w-100">
               {(wishlist || []).map((wlist) => {
                 // console.log("---" + JSON.stringify(wishlist));
@@ -158,7 +158,7 @@ function Wishlist(all_images) {
                   </div>
                 );
               })}
-            </div>
+            </div>}
           </div>
         </div>
       </div>
