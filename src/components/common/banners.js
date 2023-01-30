@@ -63,7 +63,6 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   //   }
   //   getRating();
   // }, []);
-
   useEffect(() => {
     const result = catArray.filter(
       (thing, index, self) => index === self.findIndex((t) => t === thing)
@@ -198,7 +197,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             .then((response) => {
               let data = response.data;
               setProductData(response.data.results);
-              // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+              console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
               setapicall(false);
             });
         } catch (err) {}
@@ -230,7 +229,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             .then((response) => {
               let data = response.data;
               setProductData(response.data.results);
-              // console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
+              console.log("getdataaaaaaaaa"+JSON.stringify(response.data.results))
               setapicall(false);
             });
         } catch (err) {}
@@ -238,6 +237,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       getProductData();
     }
   }, [productType, apicall]);
+ console.log("getdata----"+productData)
+
   const clickProduct = (productid, id) => {
     localStorage.setItem("proid", productid);
     localStorage.setItem("variantid", id);

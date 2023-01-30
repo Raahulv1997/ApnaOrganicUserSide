@@ -61,7 +61,6 @@ const Login = ({ logIn }) => {
         } else {
           localStorage.setItem("userid", response.data.user_id);
           localStorage.setItem("token", response.data.token);
-
           const { from } = state || {};
           // callback to update state
 
@@ -129,6 +128,7 @@ const Login = ({ logIn }) => {
         console.log(error);
       });
   };
+  // console.log("token---"+ token)
 
   const onSubmitClick = (e) => {
     var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;

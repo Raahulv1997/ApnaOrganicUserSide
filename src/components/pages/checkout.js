@@ -327,7 +327,7 @@ const Checkout = (props) => {
   const onOrderAdd = () => {
     if (DeliveryMethod === "") {
       setordervalidation("deliverymethod");
-      setordervalidation("spinner");
+   
 
     } else {
       axios
@@ -985,7 +985,9 @@ const Checkout = (props) => {
                           </li>
 
                          <li>
-                         {userdata.address===""||userdata.address2===""?(
+                         {userdata.address===""||userdata.address2===""||userdata.address===null||
+                         userdata.address2===null||userdata.address===undefined||
+                         userdata.address2===undefined?(
                         <div className="text-center my-4 text-danger">
                           <h3>{"Please Add Address To Place An Order"}</h3>
                           <button
@@ -1804,16 +1806,26 @@ const Checkout = (props) => {
                           </li>
 
                           <li>
-                            
-                            <button
+                          {/* <button
                               onClick={() => onOrderAdd()}
                               className="btn btn-animation"
+                              
+                            >Done</button> */}
+                            {ordervalidation==="deliverymethod"?<button
+                              onClick={() => onOrderAdd()}
+                              className="btn btn-animation"
+                              
                             >
-                               {/* <Spinner animation="border" role="status">
+                            <Spinner animation="border" role="status">
                             <span className="visually-hidden">Done</span>
-                          </Spinner> */}
-                              Done
-                            </button>
+                          </Spinner>
+                            </button>:<button
+                              onClick={() => onOrderAdd()}
+                              className="btn btn-animation"
+                              
+                            >Done</button>}
+                            
+                           
                           </li>
                         </ul>
                       </div>
@@ -1827,7 +1839,7 @@ const Checkout = (props) => {
         </div>
       </section>
       {/* <!-- Checkout section End --> */}
-      <SweetAlert
+      {/* <SweetAlert
         show={ProductAlert}
         title={
           ordervalidation === "fill address"
@@ -1840,7 +1852,7 @@ const Checkout = (props) => {
             ? (account) => closeProductAlert(account)
             : (order) => closeProductAlert(order)
         }
-      />
+      /> */}
 
       <Footer />
     </Fragment>
