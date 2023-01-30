@@ -55,7 +55,7 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
-  console.log("data--" + JSON.stringify(prodData));
+  // console.log("data--" + JSON.stringify(prodData));
   // CALCULATIO OF PAGINATION:-
   const token = localStorage.getItem("token");
   const indexOfLastRecord = currentPage * recordsPerPage;
@@ -100,7 +100,7 @@ const Shop = (props) => {
           setData(data);
           setapicall(true);
           localStorage.setItem("cartupdate", true);
-          console.log("ADDCART" + true);
+          // console.log("ADDCART" + true);
         });
     }
   };
@@ -130,7 +130,6 @@ const Shop = (props) => {
           )
           .then((response) => {
             let data = response.data;
-            console.log();
             setData(response.data);
             setWlistData("add");
             setapicall(true);
@@ -175,8 +174,8 @@ const Shop = (props) => {
     } else {
       setsearchText(searchparams.get("search"));
     }
-  }, [searchparams]);
-  console.log("yyyyyyyy-----------" + searchText);
+  }, [searchText]);
+  // console.log("yyyyyyyy-----------" + searchText);
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -272,7 +271,7 @@ const Shop = (props) => {
             )
             .then((response) => {
               let data = response.data;
-              console.log(response.data.results);
+              // console.log(response.data.results);
               setProdData(data.results);
 
               if (
@@ -323,9 +322,8 @@ const Shop = (props) => {
             )
             .then((response) => {
               let data = response.data;
-              console.log(response.data.results);
+              // console.log(response.data.results);
               setProdData(data.results);
-
               if (
                 searchCat.length === 0 &&
                 ratingfilter.length === 0 &&
@@ -336,7 +334,7 @@ const Shop = (props) => {
               ) {
                 setCategoryfilterData(data.results);
               }
-              setapicall(false);
+              setapicall(true);
             });
         } catch (err) {}
       }
@@ -427,7 +425,6 @@ const Shop = (props) => {
   };
   const onPriceFilterAdd = (e) => {
     setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
-    showcategorydata.push(e.target.value);
   };
   const onDiscountFilterAdd = (e) => {
     const value =
