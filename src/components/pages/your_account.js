@@ -1997,6 +1997,7 @@ function Account() {
                       required
                       placeholder="Product Quantity"
                     />
+                    {JSON.stringify(udata.date_of_birth)}
                     <Form.Control.Feedback type="invalid">
                       Please choose date of birth
                     </Form.Control.Feedback>
