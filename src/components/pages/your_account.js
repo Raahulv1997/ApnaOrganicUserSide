@@ -301,6 +301,7 @@ function Account() {
     let name = e.target.value;
     setEmail(name);
   };
+
   // add to cart
   const AddToCart = (id, discount, product_price, quantity, product_id) => {
     axios
@@ -326,10 +327,11 @@ function Account() {
       })
       .catch((error) => {});
   };
+
   // end add to cart
 
   const onProductClick = (id) => {
-    console.log("___" + id);
+    // console.log("___" + id);
     // localStorage.setItem("orderid", id);
     localStorage.setItem("proid", id);
     navigate("/product-detail");
@@ -342,7 +344,6 @@ function Account() {
   return (
     <React.Fragment>
       <Header addcart={AddToCart} />
-
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
