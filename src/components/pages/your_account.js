@@ -1991,7 +1991,7 @@ function Account() {
                       max={currentdate}
                       name={"date_of_birth"}
                       type="date"
-                      value={moment(udata.date_of_birth).format("yyyy-MM-DD")}
+                      value={moment(udata.date_of_birth).format("YYYY-MM-DD")}
                       onChange={OnchangeFistname}
                       required
                       placeholder="Product Quantity"
