@@ -170,92 +170,113 @@ function Account() {
     });
   };
 
-  // change Password
+  // change Password:
 
-  const [changepass, setchangepass] = useState({
-    email: "",
-    password: "",
-    new_password: "",
-  });
-  const ChangepassShow = () => {
-    setchangepass((changepass) => {
-      return { ...changepass, email: `${userdata.email}` };
-    });
-    setPassword(true);
+  //States to use in change password :-
+  const [email, setEmail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [oldPasswordError, setOldPasswordError] = useState("");
+  const [newPasswordError, setNewPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  // Onchange function of new password :-
+  const handleOldPasswordChange = (e) => {
+    setOldPassword(e.target.value);
+    if (!e.target.value) {
+      setOldPasswordError("Old password is required");
+    } else {
+      setOldPasswordError("");
+    }
   };
-  const OnchangePass = (e) => {
-    setchangepass({
-      ...changepass,
-      [e.target.name]: e.target.value,
-    });
+
+  // Onchange function of new password :-
+  const handleNewPasswordChange = (e) => {
+    setNewPassword(e.target.value);
+    if (!e.target.value) {
+      setNewPasswordError("New password is required");
+    } else if (e.target.value.length < 8) {
+      setNewPasswordError("New password must be at least 8 characters");
+    } else {
+      setNewPasswordError("");
+    }
   };
-  const [formError, setFormError] = useState({
-    currentPass: "",
-    newPass: "",
-    confirmPass: "",
-    allPass: "",
-  });
-  const handlePassSubmit = (event) => {
-    event.preventDefault();
+
+  // Onchange function of confirm new password :-
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    if (!e.target.value) {
+      setConfirmPasswordError("Confirm password is required");
+    } else if (e.target.value !== newPassword) {
+      setConfirmPasswordError("Confirm password must match with new password");
+    } else {
+      setConfirmPasswordError("");
+    }
+  };
+
+  // Function to change the password with the validation and api part :-
+  const handlePassSubmit = (e) => {
+    e.preventDefault();
+    if (!oldPassword) {
+      setOldPasswordError("Old password is required");
+    }
+    if (!newPassword) {
+      setNewPasswordError("New password is required");
+    } else if (newPassword.length < 8) {
+      setNewPasswordError("New password must be at least 8 characters");
+    }
+    if (!confirmPassword) {
+      setConfirmPasswordError("Confirm password is required");
+    } else if (confirmPassword !== newPassword) {
+      setConfirmPasswordError("Confirm password must match with new password");
+    }
     if (
-      changepass.confirmpassword === undefined &&
-      changepass.new_password === undefined &&
-      changepass.password === undefined
+      oldPassword &&
+      newPassword &&
+      newPassword.length >= 8 &&
+      confirmPassword &&
+      confirmPassword === newPassword
     ) {
-      setFormError({
-        allPass: "All field are required",
-      });
-
-      return false;
-    }
-    if (changepass.password === undefined) {
-      setFormError({
-        currentPass: "Please enter current password",
-      });
-
-      return false;
-    }
-    if (changepass.new_password === undefined) {
-      setFormError({
-        newPass: "Please enter New password",
-      });
-      return false;
-    }
-
-    if (changepass.confirmpassword === undefined) {
-      setFormError({
-        confirmPass: "Please enter confirm password",
-      });
-      return false;
-    }
-
-    if (changepass.confirmpassword !== changepass.new_password) {
-      setFormError({
-        confirmPass: "Password & Confirm password not match",
-      });
-      return false;
-    }
-    if (changepass.confirmpassword === changepass.new_password) {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/change_user_password`, {
-          email: changepass.email,
-          password: changepass.password,
-          new_password: changepass.new_password,
+          email: email,
+          password: oldPassword,
+          new_password: newPassword,
         })
         .then((response) => {
-          if (response === true) {
+          console.log(response.data);
+          if (response.data === false) {
+            setOldPasswordError("Old password is incorrect");
+          } else if (response.data === true) {
             localStorage.setItem("upassword", response.data.new_password);
             setPassword(false);
+            setOldPasswordError("");
+            setNewPasswordError("");
+            setConfirmPasswordError("");
+            ChangepassClose();
           }
-          // navigate('/your_account')
-          // return response;
         })
         .catch((error) => {});
     }
-    setFormError("");
-    ChangepassClose();
   };
-  const ChangepassClose = () => setPassword(false);
+
+  // To show the update password popup modal :-
+  const ChangepassShow = () => {
+    setEmail(userdata.email);
+    setPassword(true);
+  };
+
+  // To close the update password popup modal :-
+  const ChangepassClose = () => {
+    setPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setOldPasswordError("");
+    setNewPasswordError("");
+    setConfirmPasswordError("");
+    setPassword(false);
+  };
 
   // end change paassword
   const [click, setclick] = useState(false);
@@ -278,10 +299,7 @@ function Account() {
 
   const OnaddAdderss = (e) => {
     let name = e.target.value;
-    setaddNewAdderss({
-      ...changepass,
-      [e.target.name]: e.target.value,
-    });
+    setEmail(name);
   };
   // add to cart
   const AddToCart = (id, discount, product_price, quantity, product_id) => {
@@ -2025,10 +2043,10 @@ function Account() {
                   <Form.Control
                     type="email"
                     placeholder="Email"
-                    value={changepass.email}
+                    value={email}
                     name={"email"}
+                    disabled
                   />
-                  <p className="error-message">{formError.currentPass}</p>
                 </Form.Group>
               </div>
               <div className="col-12">
@@ -2040,11 +2058,13 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="Current password"
-                    value={changepass.password}
+                    value={oldPassword}
                     name={"password"}
-                    onChange={OnchangePass}
+                    onChange={handleOldPasswordChange}
                   />
-                  <p className="error-message">{formError.currentPass}</p>
+                  {oldPasswordError && (
+                    <p className="error-message">{oldPasswordError}</p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-12">
@@ -2056,11 +2076,13 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="New Password"
-                    value={changepass.new_password}
+                    value={newPassword}
                     name={"new_password"}
-                    onChange={OnchangePass}
+                    onChange={handleNewPasswordChange}
                   />
-                  <p className="error-message">{formError.newPass}</p>
+                  {newPasswordError && (
+                    <p className="error-message">{newPasswordError}</p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-12">
@@ -2072,15 +2094,14 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="Confirm Password"
-                    value={changepass.confirm_password}
+                    value={confirmPassword}
                     name={"confirmpassword"}
-                    onChange={OnchangePass}
+                    onChange={handleConfirmPasswordChange}
                   />
                 </Form.Group>
-                <p className="error-message">
-                  {formError.confirmPass}
-                  {formError.allPass}
-                </p>
+                {confirmPasswordError && (
+                  <p className="error-message">{confirmPasswordError}</p>
+                )}
               </div>
             </div>
           </Modal.Body>
