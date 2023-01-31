@@ -207,7 +207,9 @@ const ProductBox = ({
               </div>
             </div>
           </div>
-          {cart === null || token === "null" || !token ? (
+          {window.location.pathname === "/wishlist" ? (
+            ""
+          ) : cart === null || token === "null" || !token ? (
             <>
               <button
                 className="buy-button buy-button-2 btn btn-cart"

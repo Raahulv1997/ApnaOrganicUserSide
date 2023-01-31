@@ -53,14 +53,14 @@ function Orders() {
       setOrder(response.data);
       setproductOrder(response.data.product_types)
       UserData();
-      console.log("______AAAAAAAAAAAAAAAAAAa_____"+JSON.stringify(response.data))
+      console.log("______AAAAAAAAAAAAAAAAAAa_____"+JSON.stringify(response.data.product_types))
       // setapicall(false)
     }).catch(function (error) {
       console.log(error);
     });
     
   },[])
-  console.log("oooooo"+order)
+  console.log("oooooo"+JSON.stringify(order))
   const UserData = () =>{
     axios.post(`${process.env.REACT_APP_BASEURL}/user_details`,{
       user_id:"",
