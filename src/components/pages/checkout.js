@@ -357,15 +357,25 @@ const Checkout = (props) => {
           if (response.data.message === "Send mail Succesfully") {
             setSpinner(false);
             setordervalidation("");
-            // setProductAlert(true);
+            
             localStorage.setItem("orderid", response.data.order_id);
+            setProductAlert(false);
 
             navigate("/your_orders");
+          }
+          else if (response.data.order==="order_count_0")
+          {
+            alert("hellloooooooo")
+            navigate("/your_orders");
+            // setProductAlert(true);
+            // console.log("huuuuuuuuu-----"+ProductAlert)
           }
 
           // return response;
         })
         .catch((error) => {});
+        setProductAlert(false);
+
     }
   };
   // end order add
@@ -373,12 +383,6 @@ const Checkout = (props) => {
   // sweetalert
   const closeProductAlert = (e) => {
     setProductAlert(false);
-    if (e === "order") {
-      navigate("/your_orders");
-    }
-    if (ordervalidation === "fill address" || e === "account") {
-      navigate("/your_account");
-    }
   };
 
   // end sweetalert
@@ -1856,20 +1860,12 @@ const Checkout = (props) => {
         </div>
       </section>
       {/* <!-- Checkout section End --> */}
-      {/* <SweetAlert
+      <SweetAlert
         show={ProductAlert}
-        title={
-          ordervalidation === "fill address"
-            ? "Please Fill Address First"
-            : "Added Successfully "
-        }
-        text={ordervalidation === "fill address" ? "" : "Order Added"}
-        onConfirm={
-          ordervalidation === "fill address"
-            ? (account) => closeProductAlert(account)
-            : (order) => closeProductAlert(order)
-        }
-      /> */}
+        title={"order not placed try again"}
+        text={"order not placed"}
+        onConfirm={()=>setProductAlert(false)}
+      />
 
       <Footer />
     </Fragment>
