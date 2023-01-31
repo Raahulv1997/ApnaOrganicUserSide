@@ -69,7 +69,7 @@ const ProductDetail = ({ logIn }) => {
   const func = () => {};
 
   let proid = localStorage.getItem("proid");
-  console.log("---------------proidddd---" + proid);
+  // console.log("---------------proidddd---" + proid);
 
   let varientId = localStorage.getItem("variantid");
   useEffect(() => {
@@ -79,7 +79,7 @@ const ProductDetail = ({ logIn }) => {
           .get(`http://192.168.29.108:5000/product_details?id=${proid}`)
           .then((response) => {
             let data = response.data;
-            console.log("product Data-----" + JSON.stringify(data));
+            console.log("product Data-----" + data);
             setProductDetails(data);
             setProductprice(data.product_verient[0].product_price);
             setMrp(data.product_verient[0].mrp);
@@ -183,20 +183,20 @@ const ProductDetail = ({ logIn }) => {
     setQut(quantityy);
     setId(id);
 
-    console.log("productID-----" + productid);
-    console.log("veriant ID-----" + id);
+    // console.log("productID-----" + productid);
+    // console.log("veriant ID-----" + id);
     axios
       .get(
         `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
       })
       .catch(function (error) {
-        console.log("errrrrr-----" + error);
+        console.log(error);
       });
   };
 
@@ -284,7 +284,7 @@ const ProductDetail = ({ logIn }) => {
       .then((response) => {
         let data = response.data;
         setShowBanner(response.data);
-        console.log("BANNERRRR------" + JSON.stringify(showbanner));
+        // console.log("BANNERRRR------" + JSON.stringify(showbanner));
         // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       });
   }, [apicall]);

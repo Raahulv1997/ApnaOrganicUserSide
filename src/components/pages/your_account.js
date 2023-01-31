@@ -184,35 +184,19 @@ function Account() {
   // Onchange function of new password :-
   const handleOldPasswordChange = (e) => {
     setOldPassword(e.target.value);
-    if (!e.target.value) {
-      setOldPasswordError("Old password is required");
-    } else {
-      setOldPasswordError("");
-    }
+    setOldPasswordError("");
   };
 
   // Onchange function of new password :-
   const handleNewPasswordChange = (e) => {
     setNewPassword(e.target.value);
-    if (!e.target.value) {
-      setNewPasswordError("New password is required");
-    } else if (e.target.value.length < 8) {
-      setNewPasswordError("New password must be at least 8 characters");
-    } else {
-      setNewPasswordError("");
-    }
+    setNewPasswordError("");
   };
 
   // Onchange function of confirm new password :-
   const handleConfirmPasswordChange = (e) => {
     setConfirmPassword(e.target.value);
-    if (!e.target.value) {
-      setConfirmPasswordError("Confirm password is required");
-    } else if (e.target.value !== newPassword) {
-      setConfirmPasswordError("Confirm password must match with new password");
-    } else {
-      setConfirmPasswordError("");
-    }
+    setConfirmPasswordError("");
   };
 
   // Function to change the password with the validation and api part :-
@@ -220,16 +204,27 @@ function Account() {
     e.preventDefault();
     if (!oldPassword) {
       setOldPasswordError("Old password is required");
+    } else {
+      setOldPasswordError("");
     }
     if (!newPassword) {
       setNewPasswordError("New password is required");
-    } else if (newPassword.length < 8) {
-      setNewPasswordError("New password must be at least 8 characters");
+    } else if (
+      newPassword < 8 ||
+      newPassword !== /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    ) {
+      setNewPasswordError(
+        "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
+      );
+    } else {
+      setNewPasswordError("");
     }
     if (!confirmPassword) {
       setConfirmPasswordError("Confirm password is required");
     } else if (confirmPassword !== newPassword) {
       setConfirmPasswordError("Confirm password must match with new password");
+    } else {
+      setConfirmPasswordError("");
     }
     if (
       oldPassword &&

@@ -74,7 +74,6 @@ const ProductBox = ({
           )}
         </div>
         <div className="ribbon_div mt-4">
-          11
           {is_featured == 0 ||
           is_featured == "" ||
           is_featured == null ||
@@ -83,7 +82,6 @@ const ProductBox = ({
           )}
         </div>
         <div className="ribbon_div mt-5">
-          22
           {is_special_offer == 0 ||
           is_special_offer == "" ||
           is_special_offer == null ||
