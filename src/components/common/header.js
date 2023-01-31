@@ -36,21 +36,21 @@ const Header = (props) => {
   if (cartup === true) {
     setapicall(true);
   }
-  useEffect(() => {
-    function getCategoryData() {
-      try {
-        axios
-          .put(`${process.env.REACT_APP_BASEURL}/get_all_category`)
-          .then((response) => {
-            let data = response.data;
-            setCategoryData(data);
-            setapicall(false);
-          });
-      } catch (err) {}
-    }
+  // useEffect(() => {
+  //   function getCategoryData() {
+  //     try {
+  //       axios
+  //         .put(`${process.env.REACT_APP_BASEURL}/get_all_category`)
+  //         .then((response) => {
+  //           let data = response.data;
+  //           setCategoryData(data);
+  //           setapicall(false);
+  //         });
+  //     } catch (err) {}
+  //   }
 
-    getCategoryData();
-  }, [apicall]);
+  //   getCategoryData();
+  // }, [apicall]);
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
