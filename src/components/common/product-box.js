@@ -30,6 +30,8 @@ const ProductBox = ({
   AddToCart,
   allimages,
   cart,
+  is_featured,
+  is_special_offer,
 }) => {
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
@@ -45,6 +47,8 @@ const ProductBox = ({
   const closeProductAlert = () => {
     setAlert(false);
   };
+  // console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
+
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
@@ -69,30 +73,55 @@ const ProductBox = ({
             <span className="discount_ribbon mb-1">{discount}%</span>
           )}
         </div>
+        <div className="ribbon_div mt-4">
+          11
+          {is_featured == 0 ||
+          is_featured == "" ||
+          is_featured == null ||
+          is_featured == "0" ? null : (
+            <span className="is_featured_ribbon mb-1">{is_featured}%</span>
+          )}
+        </div>
+        <div className="ribbon_div mt-5">
+          22
+          {is_special_offer == 0 ||
+          is_special_offer == "" ||
+          is_special_offer == null ||
+          is_special_offer == "0" ? null : (
+            <span className="is_special_offer_ribbon mb-1">
+              {is_special_offer}%
+            </span>
+          )}
+        </div>
         <div className="label-flex">
-          {window.location.pathname ==="/wishlist"?<button className="btn p-0 wishlist btn-wishlist notifi-wishlist"
-           onClick={() => AddToWishList(id, wishlistt, wishlistid)}>
-            &times;
-          </button>:
-          <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-            {wishlistt > 0 ? (
-              <i
-                className="fa-regular fa-heart"
-                style={{ color: "red" }}
-                onClick={() => AddToWishList(id,wishlistt,wishlistid)}
-              ></i>
-            ) : (
-              <i
-                className="fa-regular fa-heart"
-                style={{ color:"" }}
-                onClick={() => AddToWishList(id, wishlistt, wishlistid)}
-              ></i>
-            )}
-          </button>}
+          {window.location.pathname === "/wishlist" ? (
+            <button
+              className="btn p-0 wishlist btn-wishlist notifi-wishlist"
+              onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+            >
+              &times;
+            </button>
+          ) : (
+            <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
+              {wishlistt > 0 ? (
+                <i
+                  className="fa-regular fa-heart"
+                  style={{ color: "red" }}
+                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+                ></i>
+              ) : (
+                <i
+                  className="fa-regular fa-heart"
+                  style={{ color: "" }}
+                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+                ></i>
+              )}
+            </button>
+          )}
         </div>
 
         {/* {image==""|| image==null|| image==undefined? */}
-       
+
         <a onClick={() => clickProduct(productid, id)}>
           <img
             src={
@@ -178,8 +207,9 @@ const ProductBox = ({
               </div>
             </div>
           </div>
-           {window.location.pathname==="/wishlist"?"":
-          cart === null || token === "null" || !token ? (
+          {window.location.pathname === "/wishlist" ? (
+            ""
+          ) : cart === null || token === "null" || !token ? (
             <>
               <button
                 className="buy-button buy-button-2 btn btn-cart"
@@ -190,15 +220,15 @@ const ProductBox = ({
                 <i className="fa-regular fa-cart-shopping"></i>
               </button>
             </>
-          ) : 
-          (<button
-            className="btn text-light btn-warning"
-            // onClick={() => setAlert(true)}
-            onClick={() => navigate("/cart")}
-          >
-            {"Buy"}
-          </button>)
-          }
+          ) : (
+            <button
+              className="btn text-light btn-warning"
+              // onClick={() => setAlert(true)}
+              onClick={() => navigate("/cart")}
+            >
+              {"Buy"}
+            </button>
+          )}
         </div>
       </div>
       {/* <SweetAlert

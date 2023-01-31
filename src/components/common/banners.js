@@ -480,6 +480,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                           AddToCart={AddToCart}
                           allimages={product.all_images}
                           cart={product.cart}
+                          is_featured={product.is_featured}
+                          is_special_offer={product.is_special_offer}
                         />
                       </div>
                     );
