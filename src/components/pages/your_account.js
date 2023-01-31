@@ -393,12 +393,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-order-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-order"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-order"
+                              // id="pills-order-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-order"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -414,12 +414,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-order-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-order"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-order"
+                              // id="pills-order-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-order"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => OnOrderclick()}
                             >
@@ -435,13 +435,13 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-wishlist-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-wishlist"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-wishlist"
-                              aria-selected="false"
+                              // id="pills-wishlist-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-wishlist"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-wishlist"
+                              // aria-selected="false"
                               onClick={() => Onwishlistclick()}
                             >
                               <AiOutlineHeart className="mx-2" />
@@ -477,12 +477,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-address-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-address"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-address"
+                              // id="pills-address-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-address"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-address"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -498,12 +498,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-profile-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-profile"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-profile"
+                              // id="pills-profile-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-profile"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-profile"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
