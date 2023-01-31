@@ -1635,30 +1635,21 @@ function Account() {
                                     <tbody>
                                       <tr>
                                         <td>Email :</td>
-                                        <td>
-                                          <Link to="#">
-                                            {userdata.email}
-                                            <span
-                                              data-bs-toggle="modal"
-                                              data-bs-target="#editProfile"
-                                              onClick={handleShow}
-                                            >
-                                              Edit
-                                            </span>
-                                          </Link>
-                                        </td>
+                                        <td>{userdata.email}</td>
                                       </tr>
                                       <tr>
                                         <td>Password :</td>
                                         <td>
                                           <Link to="#">
-                                            {userdata.password}
+                                            <span className="text-dark">
+                                              ********
+                                            </span>
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
                                               onClick={ChangepassShow}
                                             >
-                                              Edit
+                                              Change Password
                                             </span>
                                           </Link>
                                         </td>
