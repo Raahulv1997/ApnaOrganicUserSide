@@ -240,7 +240,7 @@ function Account() {
           new_password: newPassword,
         })
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           if (response.data === false) {
             setOldPasswordError("Old password is incorrect");
           } else if (response.data === true) {

@@ -66,6 +66,12 @@ const Forgot = () => {
           // localStorage.setItem("useridd" , response.data.user_id)
           // navigate('/login')
           // return response;
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.message === "Request failed with status code 513") {
+            setemailerror("email not found");
+          }
         });
     }
   };
@@ -103,7 +109,6 @@ const Forgot = () => {
   };
   return (
     <Fragment>
-      <Header />
       <Breadcumb pageName={"Forgot Passwrod"} pageTitle={"Forgot Passwrod"} />
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space forgot-section">
@@ -221,17 +226,18 @@ const Forgot = () => {
                         </div>
                         {emailerror === "blank pass" ? (
                           <p className="mt-1 ms-2 text-danger" type="invalid">
-                            Please Write Password!!!!
+                            Please enter your password !
                           </p>
                         ) : emailerror === "all blank" ? (
                           <p className="mt-1 ms-2 text-danger" type="invalid">
-                            Please Fill All Field!!!!
+                            please fill all input fields !
                           </p>
                         ) : null}
                       </div>
                       {/* ) : null} */}
                       <div className="col-12 mt-3">
                         <button
+                          disabled={emailerror === "timer" ? true : false}
                           className="btn btn-animation w-100"
                           type="button"
                           onClick={VerifyOTP}
