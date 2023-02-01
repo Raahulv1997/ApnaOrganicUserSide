@@ -71,7 +71,7 @@ const ProductDetail = ({ logIn }) => {
   const func = () => {};
 
   let proid = localStorage.getItem("proid");
-  console.log("---------------proidddd---" + proid);
+  // console.log("---------------proidddd---" + proid);
 
   let varientId = localStorage.getItem("variantid");
   console.log("---------------veriant ---" + varientId);
@@ -220,20 +220,20 @@ const ProductDetail = ({ logIn }) => {
           setapicall(false);
           setShowImages(data);
 
-    console.log("productID-----" + productid);
-    console.log("veriant ID-----" + id);
+    // console.log("productID-----" + productid);
+    // console.log("veriant ID-----" + id);
     axios
       .get(
         `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
       })
       .catch(function (error) {
-        console.log("errrrrr-----" + error);
+        console.log(error);
       });
         });
 
@@ -317,7 +317,7 @@ const ProductDetail = ({ logIn }) => {
       .then((response) => {
         let data = response.data;
         setShowBanner(response.data);
-        console.log("BANNERRRR------" + JSON.stringify(showbanner));
+        // console.log("BANNERRRR------" + JSON.stringify(showbanner));
         // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       });
   }, [apicall]);

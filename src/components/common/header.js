@@ -148,7 +148,7 @@ const Header = (props) => {
           });
       } catch (err) {}
     }
-  }, [apicall, cartup, props.addcart, props.deleteCart]);
+  }, [apicall, cartup, props.addcart, props.deleteCart,deleteCart]);
   // console.log("**********"+JSON.stringify(pdata))
   const deleteCart = (id, user_id) => {
     axios

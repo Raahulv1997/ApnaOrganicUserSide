@@ -3,6 +3,7 @@ import React from "react";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import "sweetalert/dist/sweetalert.css";
 
 // function AddCart(props){
@@ -33,6 +34,8 @@ const ProductBox = ({
   is_featured,
   is_special_offer,
 }) => {
+  const [totalqty, settotalqty] = useState(false);
+
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
 
@@ -74,7 +77,6 @@ const ProductBox = ({
           )}
         </div>
         <div className="ribbon_div mt-4">
-          11
           {is_featured == 0 ||
           is_featured == "" ||
           is_featured == null ||
@@ -83,7 +85,6 @@ const ProductBox = ({
           )}
         </div>
         <div className="ribbon_div mt-5">
-          22
           {is_special_offer == 0 ||
           is_special_offer == "" ||
           is_special_offer == null ||
@@ -167,11 +168,11 @@ const ProductBox = ({
             })
           }
         </ul>
-        <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
+        <Link to="/product_detail" className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
           <h5 className="name m-0">{brand}</h5>
-        </a>
+        </Link>
         <h5 className="price theme-color m-0 mb-2">
           {"₹" + saleprice.toFixed(2)}{" "}
           <del className="text-muted small">{"₹" + productMRF.toFixed(2)}</del>
@@ -197,6 +198,7 @@ const ProductBox = ({
                 min={1}
                 onChange={func}
               />
+               
               <div
                 className="qty-right-plus"
                 onClick={() => setCount(count + 1)}
@@ -205,6 +207,14 @@ const ProductBox = ({
               >
                 <i className="fa-regular fa-plus"></i>
               </div>
+              {totalqty === true ? (
+              <p
+              className="mt-1 ms-2 text-danger"
+              type="invalid"
+              >
+              Cannot add more then total qty
+              </p>
+              ) : null}
             </div>
           </div>
           {window.location.pathname === "/wishlist" ? (

@@ -41,18 +41,20 @@ const Singup = () => {
     setValidated(true);
   };
 
-
   const navigate = useNavigate();
 
   const SignUpUser = (e) => {
     e.preventDefault();
-    setemail(e.target.email.value);
+    setemailerror("");
+    let email = e.target.email.value;
+    setemail(email);
     setemailerror("spinner");
     axios
       .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
         email: e.target.email.value,
       })
       .then((response) => {
+        console.log(response);
         if (response.data.response === "Email Already Exist") {
           setemailerror("Already");
           e.target.password.value = "";
@@ -62,7 +64,12 @@ const Singup = () => {
         }
         return response;
       })
-      .catch((error) => {});
+      .catch((error) => {
+        console.log(error);
+        if (error.message === "Request failed with status code 513") {
+          setemailerror("Wrong");
+        }
+      });
   };
 
   const onPasswordChange = (e) => {
@@ -77,7 +84,6 @@ const Singup = () => {
     setemailerror("");
     setOtperror("");
   };
-
 
   const VerifyOTP = (e) => {
     e.preventDefault();
@@ -155,6 +161,9 @@ const Singup = () => {
                             User Already Exist. Please Login
                           </p>
                         ) : null}
+                        {emailerror === "Wrong" ? (
+                          <p className="text-danger">Invalid Email</p>
+                        ) : null}
                         <input
                           type="number"
                           className={
@@ -176,9 +185,11 @@ const Singup = () => {
                         />
                       ) : null}
                       {otperror === "invalid otp" ? (
-                        <p className="text-danger">{"Invalid Otp"}</p>
+                        <p className="text-danger mt-3 fs-6">{"Invalid Otp"}</p>
                       ) : otperror === "blank" ? (
-                        <p className="text-danger">{"Please Fill Otp"}</p>
+                        <p className="text-danger  mt-3 fs-6">
+                          {"Please Fill Otp"}
+                        </p>
                       ) : null}
                     </div>
 
@@ -301,8 +312,6 @@ const Singup = () => {
                 <div className="sign-up-box">
                   <h4>Already have an account?</h4>
 
-                  
-                  
                   <button
                     onClick={() => {
                       navigate("/login");
