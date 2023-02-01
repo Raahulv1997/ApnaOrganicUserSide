@@ -189,6 +189,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                 price_from: "",
                 price_to: "",
                 id: "",
+                is_delete: ["1"],
                 product_title_name: "",
                 sale_price: "",
                 short_by_updated_on: "",
@@ -196,7 +197,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             })
             .then((response) => {
               let data = response.data;
-              // console.log("product data---"+ JSON.stringify (data))
+               console.log("product data---"+ JSON.stringify (data))
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -215,6 +216,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                   price_from: "",
                   price_to: "",
                   id: "",
+                  is_delete: ["1"],
                   product_title_name: "",
                   sale_price: "",
                   short_by_updated_on: "",

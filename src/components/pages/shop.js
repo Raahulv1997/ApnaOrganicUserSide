@@ -262,6 +262,7 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
+                 
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
@@ -308,6 +309,7 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
+                
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
