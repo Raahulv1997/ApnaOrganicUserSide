@@ -734,8 +734,8 @@ const ProductDetail = ({ logIn }) => {
                               
                               <Link onClick={() => {
                                OnProductColor( productDetails.product_verient.sale_price, details, productDetails.product_verient.product_price, productDetails.product_verient.mrp, productDetails.product_verient.manufacturing_date, productDetails.product_verient.expire_date, productDetails.product_verient.quantity, productDetails.product_verient.id, productDetails.product_verient.product_id)
-
-                              //  setapicall(true)
+                             
+                               setapicall(true)
                                }}
                                 // className={colors == details.colors && varientId == details.id ? "active" : null}
                               >
