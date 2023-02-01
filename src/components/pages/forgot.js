@@ -109,7 +109,6 @@ const Forgot = () => {
   };
   return (
     <Fragment>
-      <Header />
       <Breadcumb pageName={"Forgot Passwrod"} pageTitle={"Forgot Passwrod"} />
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space forgot-section">

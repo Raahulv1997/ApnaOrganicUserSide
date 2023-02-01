@@ -115,7 +115,6 @@ const Singup = () => {
 
   return (
     <Fragment>
-      <Header />
       {/* <Breadcumb pageName={"Register"} pageTitle={"Register"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space">
