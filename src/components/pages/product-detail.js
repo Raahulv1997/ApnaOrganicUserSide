@@ -21,11 +21,13 @@ import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const ProductDetail = ({ logIn }) => {
   const useridd = localStorage.getItem("userid");
-  const token = localStorage.getItem("token");
-
+  const token=localStorage.getItem("token");
+  // const proDuctID=localStorage.getItem("porid");
+  
   const [apicall, setapicall] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
   const [productprice, setProductprice] = useState();
+  const [saleprice, setsaleprice] = useState();
   const [mrp, setMrp] = useState();
   const [size, setSize] = useState();
   const [colors, setColors] = useState("");
@@ -72,6 +74,7 @@ const ProductDetail = ({ logIn }) => {
   // console.log("---------------proidddd---" + proid);
 
   let varientId = localStorage.getItem("variantid");
+  console.log("---------------veriant ---" + varientId);
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -79,18 +82,19 @@ const ProductDetail = ({ logIn }) => {
           .get(`http://192.168.29.108:5000/product_details?id=${proid}`)
           .then((response) => {
             let data = response.data;
-            console.log("product Data-----" + data);
+            console.log("product Data-----"+ JSON.stringify(data.product_verient))
             setProductDetails(data);
-            setProductprice(data.product_verient[0].product_price);
-            setMrp(data.product_verient[0].mrp);
-            setColors(data.product_verient[0].colors);
-            setDiscount(data.product_verient[0].discount);
-            setSize(data.product_verient[0].size);
-            setMfd(data.product_verient[0].manufacturing_date);
-            setExp(data.product_verient[0].expire_date);
-            setQut(data.product_verient[0].quantity);
-            setId(data.product_verient[0].id);
-            setImage(data.product_verient[0].product_image_path);
+            // setProductprice(data.product_verient.product_price);
+            // setsaleprice(data.product_verient.sale_price)
+            // setMrp(data.product_verient.mrp);
+            // setColors(data.product_verient.colors);
+            // setDiscount(data.product_verient.discount);
+            // setSize(data.product_verient.size);
+            // setMfd(data.product_verient.manufacturing_date);
+            // setExp(data.product_verient.expire_date);
+            // setQut(data.product_verient.quantity)
+            setId(data.product_verient.id);
+            // setImage(data.product_verient[0].product_image_path);
             setapicall(false);
             OnProductColor(
               data.product_verient[0].colors,
@@ -107,13 +111,43 @@ const ProductDetail = ({ logIn }) => {
     }
 
     getProductDetails();
+    getVeriantDetails(varientId,proid);
   }, [apicall]);
 
-  const result = showImage.filter(
-    (thing, index, self) =>
-      index ==
-      self.findIndex((t) => t.product_image_path == thing.product_image_path)
-  );
+  const getVeriantDetails=(varientId,proid)=>{
+
+    // localStorage.setItem("variantid", id);
+    // localStorage.setItem("proid", productid);
+
+
+    try {
+      axios
+        .get(`http://192.168.29.108:5000/products_pricing?id=${varientId}&product_id=${proid}`)
+        .then((response) => {
+          let data = response.data[0];
+          console.log("veriant Data-----"+ JSON.stringify(data))
+          setProductprice(data.product_price);
+          setsaleprice(Number (data.sale_price).toFixed(2))
+          setMrp(data.mrp);
+          setColors(data.colors);
+          setDiscount(data.discount);
+          setSize(data.size);
+          setMfd(data.manufacturing_date);
+          setExp(data.expire_date);
+           setQut(data.quantity)
+           setId(data.id);
+        });
+    } catch (err) { }
+  }
+
+
+  
+
+
+  const result = showImage.filter((thing, index, self) =>
+    index == self.findIndex((t) => (
+      t.product_image_path == thing.product_image_path
+    )))
 
   const AddToCart = () => {
     axios
@@ -162,26 +196,29 @@ const ProductDetail = ({ logIn }) => {
       .catch(function (error) {});
   };
 
-  const OnProductprice = (
-    product_price,
-    mrpp,
-    sizee,
-    mfdd,
-    expp,
-    quantityy,
-    id,
-    productid
-  ) => {
-    localStorage.setItem("variantid", id);
-    localStorage.setItem("proid", productid);
 
+  const OnProductprice = ( SalePrice, product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
+    // localStorage.setItem("variantid", id);
+    // localStorage.setItem("proid", productid);
+   
     setProductprice(product_price);
+    setsaleprice(Number (SalePrice).toFixed(2))
     setMrp(mrpp);
     setSize(sizee);
     setMfd(mfdd);
     setExp(expp);
     setQut(quantityy);
     setId(id);
+    
+      console.log("productID-----"+productid)
+      console.log("veriant ID-----"+id)
+      axios
+        .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+        .then((response) => {
+          let data = response.data;
+            console.log("product veriant image--"+ JSON.stringify(data))
+          setapicall(false);
+          setShowImages(data);
 
     // console.log("productID-----" + productid);
     // console.log("veriant ID-----" + id);
@@ -198,36 +235,32 @@ const ProductDetail = ({ logIn }) => {
       .catch(function (error) {
         console.log(error);
       });
-  };
+        });
 
-  const OnProductColor = (
-    color,
-    product_price,
-    mrpp,
-    mfdd,
-    expp,
-    quantityy,
-    id,
-    productid
-  ) => {
-    localStorage.setItem("variantid", id);
-    localStorage.setItem("proid", productid);
 
+  }
+  
+  const OnProductColor = ( Salepricee,color, product_price, mrpp, mfdd, expp, quantityy, veriantid, productid) => {
+    console.log("product id in  color function-----"+productid)
+    console.log("veriant id in color function-----"+veriantid)
+    // localStorage.setItem("variantid", id);
+    // localStorage.setItem("proid", productid);
+    setsaleprice(Number (Salepricee).toFixed(2))
     setColors(color);
     setProductprice(product_price);
     setMrp(mrpp);
     setMfd(mfdd);
     setExp(expp);
     setQut(quantityy);
-    setId(id);
+    setId(veriantid);
     try {
       axios
         .get(
-          `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+          `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${veriantid}`
         )
         .then((response) => {
           let data = response.data;
-          // console.log("data----"+JSON.stringify (data))
+   
           setapicall(false);
           setShowImages(data);
         });
@@ -288,7 +321,8 @@ const ProductDetail = ({ logIn }) => {
         // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       });
   }, [apicall]);
-  const result1 = ratingbox.filter(
+
+ const result1 = ratingbox.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
   );
@@ -355,15 +389,18 @@ const ProductDetail = ({ logIn }) => {
                 data-wow-delay="0.1s"
               >
                 <div className="right-box-contain">
-                  <h6 className="offer-top">{discount}%</h6>
+                    <h6 className="offer-top" >{discount}%</h6>
                   <h2 className="name">{productDetails.product_title_name}</h2>
                   {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                   <div className="price-rating">
                     <h3 className="theme-color price">
-                      {productprice}
-                      <del className="text-content">{mrp}</del>
-                      {""}
-                      <span className="offer theme-color">{discount}%off</span>
+                      {saleprice}
+                      <del className="text-content">
+                        {mrp}
+                      </del>{""}
+                      <span className="offer theme-color">
+                          {discount} %off
+                      </span>
                       {/* <h3 className="text-dark">Taxs</h3>
                             <h5>Gst:{productDetails.gst}</h5>
                             <h5>Cgst:{productDetails.cgst}</h5>
@@ -451,25 +488,13 @@ const ProductDetail = ({ logIn }) => {
                         {productDetails.product_verient.map((details) => {
                           return (
                             <li key={details.id}>
-                              <Link
-                                onClick={() => {
-                                  OnProductprice(
-                                    details.product_price,
-                                    details.mrp,
-                                    details.size,
-                                    details.manufacturing_date,
-                                    details.expire_date,
-                                    details.quantity,
-                                    details.id,
-                                    details.product_id
-                                  );
-                                }}
-                                className={
-                                  size == details.size &&
-                                  varientId == details.id
-                                    ? "active"
-                                    : null
-                                }
+
+                              <Link onClick={() => {
+                      
+                                OnProductprice(details.sale_price,details.product_price, details.mrp, details.size, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id
+                                )
+                              } } 
+                                className={size == details.size && varientId == details.id ? "active" : null}
                               >
                                 {details.size}
                                 {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
@@ -485,25 +510,10 @@ const ProductDetail = ({ logIn }) => {
                         {productDetails.product_verient.map((details) => {
                           return (
                             <li>
-                              <Link
-                                onClick={() => {
-                                  OnProductColor(
-                                    details.colors,
-                                    details.product_price,
-                                    details.mrp,
-                                    details.manufacturing_date,
-                                    details.expire_date,
-                                    details.quantity,
-                                    details.id,
-                                    details.product_id
-                                  );
-                                }}
-                                className={
-                                  colors == details.colors &&
-                                  varientId == details.id
-                                    ? "active"
-                                    : null
-                                }
+                              
+                              <Link onClick={() => {
+                               OnProductColor( details.sale_price, details.colors, details.product_price, details.mrp, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id) }}
+                                className={colors == details.colors && varientId == details.id ? "active" : null}
                               >
                                 {details.colors}
                               </Link>
@@ -639,7 +649,7 @@ const ProductDetail = ({ logIn }) => {
                           </Link>
                         </li>
                         <li>
-                          SKU : <Link to="/">SDFVW65467</Link>
+                          Veriant ID :  <Link to="/" >{Id}</Link>
                         </li>
                         <li>
                           MFG : <Link to="/">{mfd}</Link>

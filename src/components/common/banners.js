@@ -196,6 +196,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             })
             .then((response) => {
               let data = response.data;
+              // console.log("product data---"+ JSON.stringify (data))
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -227,7 +228,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             )
             .then((response) => {
               let data = response.data;
+              // console.log("product data---"+ JSON.stringify (data))
               setProductData(response.data.results);
+              // console.log(
+              //   "getdataaaaaaaaa" + JSON.stringify(response.data.results)
+              // );
               setapicall(false);
             });
         } catch (err) {}
@@ -237,11 +242,15 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   }, [productType, apicall]);
 
   const clickProduct = (productid, id) => {
+    // console.log( "prodduct id---"+productid)
+    // console.log( "veriant id---"+id)
+
     localStorage.setItem("proid", productid);
     localStorage.setItem("variantid", id);
-
+    // console.log( "pppppppppppp"+ localStorage.getItem("proid"))
     navigate("/product-detail");
   };
+
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
@@ -467,7 +476,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                           image={product.image}
                           name={product.product_title_name}
                           productPrice={product.product_price}
-                          productMRF={product.sale_price}
+                          productMRF={product.mrp}
                           productid={product.product_id}
                           discount={product.discount}
                           special_offer={product.special_offer}
