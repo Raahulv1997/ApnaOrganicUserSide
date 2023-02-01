@@ -1345,7 +1345,7 @@ const Shop = (props) => {
               </div>
             </div>
             <div className="col-xxl-9 col-lg-8 wow fadeInUp">
-              {/* <div className="show-button">
+              <div className="show-button">
                 <div className="filter-button-group mt-0">
                   <div
                     className="filter-button d-inline-block d-lg-none"
@@ -1409,7 +1409,7 @@ const Shop = (props) => {
                     </Form.Select>
                   </div>
                 </div>
-              </div> */}
+              </div>
               <div className="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
                 {prodData.map((product) => {
                   return (
@@ -1438,8 +1438,8 @@ const Shop = (props) => {
                   );
                 })}
               </div>
-              
-              {/* <div className="d-flex justify-content-center">
+
+              <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"
                   nPages={nPages}
@@ -1447,7 +1447,7 @@ const Shop = (props) => {
                   setCurrentPage={setCurrentPage}
                   recordsPerPage={recordsPerPage}
                 />
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
