@@ -15,13 +15,14 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
-import Pagination from "./Pagination";
+// import Pagination from "./Pagination";
 
 let showcategorydata = [];
 
 const Shop = (props) => {
   const [prodData, setProdData] = useState([]);
   const [click, setclick] = useState(false);
+  const [noData, setNoData] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
   const useridd = localStorage.getItem("userid");
@@ -189,11 +190,22 @@ const Shop = (props) => {
         ...categoryNamedata,
         searchparams.get("category"),
       ]);
+      setbrandfilter([]);
+      setratingfilter([]);
+      setdiscountfilter([]);
+      setpricefilter({
+        ...pricefilter,
+        to_product_price: "",
+        from_product_price: "",
+      });
     }
   }, [searchCat, searchparams]);
   // var product = data.product;
   //   product list
-
+  // console.log("---brand" + JSON.stringify(brandfilter));
+  // console.log("---price" + JSON.stringify(pricefilter));
+  // console.log("---discount" + JSON.stringify(discountfilter));
+  // console.log("---rating" + JSON.stringify(ratingfilter));
   // SORTING
   const onSortingChange = (e) => {
     if (e.target.value === "latest") {
@@ -249,7 +261,8 @@ const Shop = (props) => {
         try {
           axios
             .post(
-              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -271,7 +284,7 @@ const Shop = (props) => {
             )
             .then((response) => {
               let data = response.data;
-              // console.log(response.data.results);
+              console.log(response.data.results, "100001");
               setProdData(data.results);
 
               if (
@@ -295,7 +308,8 @@ const Shop = (props) => {
         try {
           axios
             .post(
-              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -322,8 +336,13 @@ const Shop = (props) => {
             )
             .then((response) => {
               let data = response.data;
-              // console.log(response.data.results);
+              console.log(data.results, "20002");
               setProdData(data.results);
+              if (data.results.length == 0) {
+                setNoData(true);
+              } else {
+                setNoData(false);
+              }
               if (
                 searchCat.length === 0 &&
                 ratingfilter.length === 0 &&
@@ -334,7 +353,7 @@ const Shop = (props) => {
               ) {
                 setCategoryfilterData(data.results);
               }
-              setapicall(true);
+              setapicall(false);
             });
         } catch (err) {}
       }
@@ -361,6 +380,7 @@ const Shop = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
+            console.log(data, "30003");
             setCategoryData(data);
             setapicall(false);
           });
@@ -1410,36 +1430,46 @@ const Shop = (props) => {
                   </div>
                 </div>
               </div>
-              <div className="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
-                {prodData.map((product) => {
-                  return (
-                    <div key={product.id}>
-                      <ProductBox
-                        // image={product.image}
-                        id={product.id}
-                        name={product.product_title_name}
-                        productMRF={product.sale_price}
-                        productPrice={product.product_price}
-                        productid={product.product_id}
-                        rating={product.rating}
-                        discount={product.discount}
-                        brand={product.brand}
-                        category={product.category}
-                        producttype={product.product_type}
-                        saleprice={product.sale_price}
-                        clickProduct={clickProduct}
-                        AddToCart={AddToCart}
-                        AddToWishList={AddToWishList}
-                        wishlistt={product.wishlist}
-                        allimages={product.all_images}
-                        cart={product.cart}
-                      />
-                    </div>
-                  );
-                })}
-              </div>
+              {noData === true ? (
+                <div className="d-flex justify-content-center mt-5 pt-5">
+                  <p className="d-flex justify-content-center mt-5 pt-5">
+                    <b className="d-flex justify-content-center mt-5 pt-5 display-4">
+                      No Data Found
+                    </b>
+                  </p>
+                </div>
+              ) : (
+                <div className="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                  {prodData.map((product) => {
+                    return (
+                      <div key={product.id}>
+                        <ProductBox
+                          // image={product.image}
+                          id={product.id}
+                          name={product.product_title_name}
+                          productMRF={product.sale_price}
+                          productPrice={product.product_price}
+                          productid={product.product_id}
+                          rating={product.rating}
+                          discount={product.discount}
+                          brand={product.brand}
+                          category={product.category}
+                          producttype={product.product_type}
+                          saleprice={product.sale_price}
+                          clickProduct={clickProduct}
+                          AddToCart={AddToCart}
+                          AddToWishList={AddToWishList}
+                          wishlistt={product.wishlist}
+                          allimages={product.all_images}
+                          cart={product.cart}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
 
-              <div className="d-flex justify-content-center">
+              {/* <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"
                   nPages={nPages}
@@ -1447,7 +1477,7 @@ const Shop = (props) => {
                   setCurrentPage={setCurrentPage}
                   recordsPerPage={recordsPerPage}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>
