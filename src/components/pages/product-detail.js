@@ -7,10 +7,16 @@ import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
-import { json, Link, NavLink, useLocation, useNavigate } from "react-router-dom";
+import {
+  json,
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
-import Form from 'react-bootstrap/Form';
+import Form from "react-bootstrap/Form";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const ProductDetail = ({ logIn }) => {
@@ -24,10 +30,10 @@ const ProductDetail = ({ logIn }) => {
   const [saleprice, setsaleprice] = useState();
   const [mrp, setMrp] = useState();
   const [size, setSize] = useState();
-  const [colors, setColors] = useState('');
-  const [mfd, setMfd] = useState('');
-  const [exp, setExp] = useState('');
-  const [qut, setQut] = useState('');
+  const [colors, setColors] = useState("");
+  const [mfd, setMfd] = useState("");
+  const [exp, setExp] = useState("");
+  const [qut, setQut] = useState("");
   const [Id, setId] = useState("");
   const [image, setImage] = useState([]);
   // const[image,setImage]=useState('');
@@ -38,22 +44,20 @@ const ProductDetail = ({ logIn }) => {
   const [reviewData, setReviewData] = useState([]);
   const [showbanner, setShowBanner] = useState([]);
 
-  const [Rrating, setRrating] = useState('');
+  const [Rrating, setRrating] = useState("");
   const [Searchreview, setSearchReview] = useState({
-    "product_name": "",
-    "category_type": "",
-    "status": ""
+    product_name: "",
+    category_type: "",
+    status: "",
   });
   const [rating, setRating] = useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(productDetails.rating);
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
-  let [count, setCount] = useState(0);
+  let [count, setCount] = useState(1);
   const { state } = useLocation();
   const navigate = useNavigate();
-
-
 
   function incrementCount() {
     count = count + 1;
@@ -61,17 +65,16 @@ const ProductDetail = ({ logIn }) => {
   }
   const decrementCount = () => {
     if (count > 0) {
-      setCount(count => count - 1);
+      setCount((count) => count - 1);
     }
   };
-  const func = () => {
-
-  }
+  const func = () => {};
 
   let proid = localStorage.getItem("proid");
-  console.log("---------------proidddd---" + proid)
+  console.log("---------------proidddd---" + proid);
 
-  let varientId = localStorage.getItem("variantid")
+  let varientId = localStorage.getItem("variantid");
+  console.log("---------------veriant ---" + varientId);
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -91,18 +94,27 @@ const ProductDetail = ({ logIn }) => {
             // setExp(data.product_verient.expire_date);
             // setQut(data.product_verient.quantity)
             setId(data.product_verient.id);
-            setImage(data.product_verient[0].product_image_path);
+            // setImage(data.product_verient[0].product_image_path);
             setapicall(false);
-            OnProductColor(data.product_verient[0].colors, data.product_verient[0].product_price, data.product_verient[0].mrp, data.product_verient[0].manufacturing_date, data.product_verient[0].expire_date, data.product_verient[0].quantity, varientId, proid);
+            OnProductColor(
+              data.product_verient[0].colors,
+              data.product_verient[0].product_price,
+              data.product_verient[0].mrp,
+              data.product_verient[0].manufacturing_date,
+              data.product_verient[0].expire_date,
+              data.product_verient[0].quantity,
+              varientId,
+              proid
+            );
           });
-      } catch (err) { }
+      } catch (err) {}
     }
 
     getProductDetails();
     getVeriantDetails(varientId,proid);
   }, [apicall]);
 
-  const getVeriantDetails=(id,productid)=>{
+  const getVeriantDetails=(varientId,proid)=>{
 
     // localStorage.setItem("variantid", id);
     // localStorage.setItem("proid", productid);
@@ -110,7 +122,7 @@ const ProductDetail = ({ logIn }) => {
 
     try {
       axios
-        .get(`http://192.168.29.108:5000/products_pricing?id=${id}&product_id=${productid}`)
+        .get(`http://192.168.29.108:5000/products_pricing?id=${varientId}&product_id=${proid}`)
         .then((response) => {
           let data = response.data[0];
           console.log("veriant Data-----"+ JSON.stringify(data))
@@ -138,47 +150,51 @@ const ProductDetail = ({ logIn }) => {
     )))
 
   const AddToCart = () => {
-    axios.post(`${process.env.REACT_APP_BASEURL}/add_to_cart`, {
-      user_id: "",
-      product_view_id: `${Id}`,
-      price: `${productDetails.product_verient[0].product_price}`,
-      discount: `${productDetails.product_verient[0].discount}`,
-      quantity: `${count}`,
-      is_active: 1
-    },
-    {
-      headers: {
-        user_token: `${token}`,
-      },
-    })
+    axios
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_to_cart`,
+        {
+          user_id: "",
+          product_view_id: `${Id}`,
+          price: `${productDetails.product_verient[0].product_price}`,
+          discount: `${productDetails.product_verient[0].discount}`,
+          quantity: `${count}`,
+          is_active: 1,
+        },
+        {
+          headers: {
+            user_token: `${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        let data = response.data;
+        setapicall(true);
+      });
+  };
+  const AddToWishList = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+        {
+          user_id: "",
+          product_view_id: `${Id}`,
+          price: `${productDetails.product_verient[0].product_price}`,
+          discount: `${productDetails.product_verient[0].discount}`,
+        },
+        {
+          headers: {
+            user_token: `${token}`,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
         setProductDetails(data.results);
-        setId();
-        setapicall(true);
-      });
-  }
-  const AddToWishList = () => {
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_product_wishlist`, {
-        user_id: "",
-        product_view_id: `${Id}`,
-        price: `${productDetails.product_verient[0].product_price}`,
-        discount: `${productDetails.product_verient[0].discount}`,
-
-      }, {
-        headers: {
-          user_token: `${token}`,
-        },
-      })
-      .then((response) => {
-        let data = response.data;
-        setProductDetails(data.results)
         setapicall(true);
       })
-      .catch(function (error) {
-      });
-  }
+      .catch(function (error) {});
+  };
 
 
   const OnProductprice = ( SalePrice, product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
@@ -191,7 +207,7 @@ const ProductDetail = ({ logIn }) => {
     setSize(sizee);
     setMfd(mfdd);
     setExp(expp);
-    setQut(quantityy)
+    setQut(quantityy);
     setId(id);
     
       console.log("productID-----"+productid)
@@ -200,18 +216,33 @@ const ProductDetail = ({ logIn }) => {
         .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
         .then((response) => {
           let data = response.data;
-          //  console.log("product veriant image--"+ JSON.stringify(data))
+            console.log("product veriant image--"+ JSON.stringify(data))
           setapicall(false);
           setShowImages(data);
 
-        }).catch(function (error) {
-          console.log("errrrrr-----"+error)
+    console.log("productID-----" + productid);
+    console.log("veriant ID-----" + id);
+    axios
+      .get(
+        `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+      )
+      .then((response) => {
+        let data = response.data;
+        console.log("product veriant image--" + JSON.stringify(data));
+        setapicall(false);
+        setShowImages(data);
+      })
+      .catch(function (error) {
+        console.log("errrrrr-----" + error);
+      });
         });
 
 
   }
   
-  const OnProductColor = ( Salepricee,color, product_price, mrpp, mfdd, expp, quantityy, id, productid) => {
+  const OnProductColor = ( Salepricee,color, product_price, mrpp, mfdd, expp, quantityy, veriantid, productid) => {
+    console.log("product id in  color function-----"+productid)
+    console.log("veriant id in color function-----"+veriantid)
     // localStorage.setItem("variantid", id);
     // localStorage.setItem("proid", productid);
     setsaleprice(Number (Salepricee).toFixed(2))
@@ -220,85 +251,80 @@ const ProductDetail = ({ logIn }) => {
     setMrp(mrpp);
     setMfd(mfdd);
     setExp(expp);
-    setQut(quantityy)
-    setId(id);
+    setQut(quantityy);
+    setId(veriantid);
     try {
       axios
-        .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+        .get(
+          `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${veriantid}`
+        )
         .then((response) => {
-
           let data = response.data;
    
           setapicall(false);
           setShowImages(data);
-
         });
-    } catch (err) { }
+    } catch (err) {}
     // setImage(product_image_namee);
-
-  }
+  };
   useEffect(() => {
-    axios.post(`${process.env.REACT_APP_BASEURL}/review_list`, {
-      product_name: "",
-      category_type: "",
-      status: ""
-    }).then((response) => {
-      let data = response.data;
-      setReviewData(response.data)
-      setRrating(data);
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/review_list`, {
+        product_name: "",
+        category_type: "",
+        status: "",
+      })
+      .then((response) => {
+        let data = response.data;
+        setReviewData(response.data);
+        setRrating(data);
 
-      // setSearchReview(response.data)
-      setapicall(false);
-    })
+        // setSearchReview(response.data)
+        setapicall(false);
+      });
   }, [apicall]);
 
   // console.log("CONSOLEE"+JSON.stringify(Rrating))
 
   const handleFormChange = (e) => {
     setaddreviewdata({ ...addreviewdata, [e.target.name]: e.target.value });
-
   };
   const onRatingChange = (e) => {
-    setRrating(e.target.value)
-    console.log("onRatingChange" + JSON.stringify((e.target.value)))
-
-
-  }
+    setRrating(e.target.value);
+    console.log("onRatingChange" + JSON.stringify(e.target.value));
+  };
   const AddReview = (e) => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/review_rating`,
-        {
-          user_id: `${useridd}`,
-          user_name: "mayur",
-          product_id: `${Id}`,
-          product_name: `${addreviewdata.product_name}`,
-          category_type: `${addreviewdata.category_type}`,
-          review_date: `${addreviewdata.review_date}`,
-          review_rating: `${Rrating}`,
-          comment: `${addreviewdata.comment}`
-        }
-      )
-      .then((response) => {
-      });
-  }
+      .post(`${process.env.REACT_APP_BASEURL}/review_rating`, {
+        user_id: `${useridd}`,
+        user_name: "mayur",
+        product_id: `${Id}`,
+        product_name: `${addreviewdata.product_name}`,
+        category_type: `${addreviewdata.category_type}`,
+        review_date: `${addreviewdata.review_date}`,
+        review_rating: `${Rrating}`,
+        comment: `${addreviewdata.comment}`,
+      })
+      .then((response) => {});
+  };
   useEffect(() => {
-    axios.post(`${process.env.REACT_APP_BASEURL}/banner_list`,
-      {
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
         banner_id: "",
         title: "",
-        banner_location: ""
-      }).then((response) => {
-        let data = response.data;
-        setShowBanner(response.data)
-        console.log("BANNERRRR------" + JSON.stringify(showbanner))
-        // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
+        banner_location: "",
       })
+      .then((response) => {
+        let data = response.data;
+        setShowBanner(response.data);
+        console.log("BANNERRRR------" + JSON.stringify(showbanner));
+        // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
+      });
   }, [apicall]);
 
  const result1 = ratingbox.filter(
     (thing, index, self) =>
-      index ===
-      self.findIndex((t, x) => t.review_rating == thing.review_rating)
+      index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
   );
   return (
     <Fragment>
@@ -333,32 +359,35 @@ const ProductDetail = ({ logIn }) => {
           <div className="row">
             <div className="col-xl-8 col-lg-7 wow fadeInUp"></div>
             <div className="row g-6">
-
               <div className="col-xl-6 sm-2 col-lg-7">
-
                 <Carousel variant="dark">
                   {showImage.map((images) => {
-
                     return (
-
                       <Carousel.Item>
-                        {images.product_verient_id == varientId || images.productid == proid ?
+                        {images.product_verient_id == varientId ||
+                        images.productid == proid ? (
                           <img
                             className="d-block"
-                            src={images.product_image_path ? images.product_image_path : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"}
+                            src={
+                              images.product_image_path
+                                ? images.product_image_path
+                                : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                            }
                             alt="First slide"
                             name={images.product_image_name}
                             style={{ height: "750px", width: "750px" }}
-                          /> : null}
+                          />
+                        ) : null}
                       </Carousel.Item>
-                    )
+                    );
                   })}
                 </Carousel>
-
               </div>
 
-              <div className="col-12 col-md-6 wow fadeInUp"
-                data-wow-delay="0.1s">
+              <div
+                className="col-12 col-md-6 wow fadeInUp"
+                data-wow-delay="0.1s"
+              >
                 <div className="right-box-contain">
                     <h6 className="offer-top" >{discount}%</h6>
                   <h2 className="name">{productDetails.product_title_name}</h2>
@@ -384,7 +413,11 @@ const ProductDetail = ({ logIn }) => {
                           (ratingbox || []).map((rat, i) => {
                             return ratingg - rat >= 0 ? (
                               <li color="#ffb321" key={i}>
-                                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
+                                <FaStar
+                                  icon="star"
+                                  className="feather fill"
+                                  fill={"#ffb321"}
+                                />
                               </li>
                             ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
                               <li color="#ffb321">
@@ -396,32 +429,64 @@ const ProductDetail = ({ logIn }) => {
                               </li>
                             ) : ratingg - rat <= -1 ? (
                               <li color="#ffb321">
-                                <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
+                                <FaRegStar
+                                  icon="star"
+                                  className="feather "
+                                  fill={"#ffb321"}
+                                />
                               </li>
                             ) : null;
-                          })}
+                          })
+                        }
                       </ul>
                     </div>
                   </div>
-                  <button className="btn" style={{ backgroundColor: colors }}>{colors}</button>
+                  <button className="btn" style={{ backgroundColor: colors }}>
+                    {colors}
+                  </button>
                   <div className="procuct-contain">
-                    <p dangerouslySetInnerHTML={{ __html: productDetails.product_description }} />
-
+                    <p
+                      dangerouslySetInnerHTML={{
+                        __html: productDetails.product_description,
+                      }}
+                    />
                   </div>
 
-                  {productDetails.product_verient ?
+                  {productDetails.product_verient ? (
                     <div className="product-packege">
                       <div className="product-title">
-                        <h4>{productDetails.product_verient[0].unit === 'gms' ? 'Weight' : productDetails.product_verient[0].unit === 'pcs' ? 'Piece' : result ? "" : null || productDetails.product_verient[0].colors === 'red' ? 'Colors' : productDetails.product_verient[0].colors === 'black' ? '' : productDetails.product_verient[0].colors === 'yellow' ? '' : productDetails.product_verient[0].colors === 'green' ? '' : productDetails.product_verient[0].colors === 'blue' ? 'Colors' : null} </h4>
+                        <h4>
+                          {productDetails.product_verient[0].unit === "gms"
+                            ? "Weight"
+                            : productDetails.product_verient[0].unit === "pcs"
+                            ? "Piece"
+                            : result
+                            ? ""
+                            : null ||
+                              productDetails.product_verient[0].colors === "red"
+                            ? "Colors"
+                            : productDetails.product_verient[0].colors ===
+                              "black"
+                            ? ""
+                            : productDetails.product_verient[0].colors ===
+                              "yellow"
+                            ? ""
+                            : productDetails.product_verient[0].colors ===
+                              "green"
+                            ? ""
+                            : productDetails.product_verient[0].colors ===
+                              "blue"
+                            ? "Colors"
+                            : null}{" "}
+                        </h4>
                       </div>
-                      
 
-                          <ul className="select-packege" >
-                          {productDetails.product_verient[0].size ?
-                          <p className="mb-0 mt-2"> {'Size:'}</p> : null}
-                          {(productDetails.product_verient).map((details) => {
-                        return (
-                          
+                      <ul className="select-packege">
+                        {productDetails.product_verient[0].size ? (
+                          <p className="mb-0 mt-2"> {"Size:"}</p>
+                        ) : null}
+                        {productDetails.product_verient.map((details) => {
+                          return (
                             <li key={details.id}>
 
                               <Link onClick={() => {
@@ -431,21 +496,19 @@ const ProductDetail = ({ logIn }) => {
                               } } 
                                 className={size == details.size && varientId == details.id ? "active" : null}
                               >
-                                
                                 {details.size}
-                                 {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
+                                {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
                               </Link>
                             </li>
-                            );
-                          })}
-
-
-                          </ul>
-                           <ul className="select-packege" >
-                           {productDetails.product_verient[0].colors ?
-                         <p className="mb-0 mt-2">{'Color:'}</p> :null} 
-                            {(productDetails.product_verient).map((details) => {
-                              return (
+                          );
+                        })}
+                      </ul>
+                      <ul className="select-packege">
+                        {productDetails.product_verient[0].colors ? (
+                          <p className="mb-0 mt-2">{"Color:"}</p>
+                        ) : null}
+                        {productDetails.product_verient.map((details) => {
+                          return (
                             <li>
                               
                               <Link onClick={() => {
@@ -455,13 +518,11 @@ const ProductDetail = ({ logIn }) => {
                                 {details.colors}
                               </Link>
                             </li>
-                            
-  );
-})}
-                          </ul>
-
-                       
-                    </div> : null}
+                          );
+                        })}
+                      </ul>
+                    </div>
+                  ) : null}
                   {/* <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                     <div className="product-title">
                       <h4>Hurry up! Sales Ends In</h4>
@@ -517,7 +578,8 @@ const ProductDetail = ({ logIn }) => {
                           className="form-control input-number qty-input"
                           type="text"
                           name="quantity"
-                          value={count} onChange={func}
+                          value={count}
+                          onChange={func}
                         />
                         <button
                           type="button"
@@ -528,26 +590,35 @@ const ProductDetail = ({ logIn }) => {
                         >
                           <i className="fa fa-plus" aria-hidden="true"></i>
                         </button>
-
                       </div>
                     </div>
-
                   </div>
                   <div className="row mt-4">
                     <div className="col-6 col-xl-3">
                       <button className="btn btn-dark">
                         <Link to="/wishlist">
                           {/* <i data-feather="heart"></i> */}
-                          <span className="text-white" onClick={() => AddToWishList()}>Add To Wishlist</span>
+                          <span
+                            className="text-white"
+                            onClick={() => AddToWishList()}
+                          >
+                            Add To Wishlist
+                          </span>
                         </Link>
                       </button>
                     </div>
 
                     <div className="col-6 col-xl-3 ">
                       <button className="btn btn-dark ">
-                      <Link to="/cart">
-                          <span className="text-white" onClick={() => AddToCart()}> Add To Cart</span>
-                        </Link>
+                        <div>
+                          <span
+                            className="text-white"
+                            onClick={() => AddToCart()}
+                          >
+                            {" "}
+                            Add To Cart
+                          </span>
+                        </div>
                       </button>
                     </div>
                   </div>
@@ -568,34 +639,34 @@ const ProductDetail = ({ logIn }) => {
                       <ul className="product-info-list product-info-list-2 ">
                         <li>
                           Type :{" "}
-                          <Link to="/" >{productDetails.product_type}</Link>
+                          <Link to="/">{productDetails.product_type}</Link>
                         </li>
                         <li>
                           Taxs :{" "}
-                          <Link to="/" >Gst:{productDetails.gst} , Sgst:{productDetails.sgst},Cgst:{productDetails.cgst}</Link>
+                          <Link to="/">
+                            Gst:{productDetails.gst} , Sgst:
+                            {productDetails.sgst},Cgst:{productDetails.cgst}
+                          </Link>
                         </li>
                         <li>
                           Veriant ID :  <Link to="/" >{Id}</Link>
                         </li>
                         <li>
-                          MFG :  <Link to="/" >{mfd}</Link>
+                          MFG : <Link to="/">{mfd}</Link>
                         </li>
                         <li>
-                          EXP :  <Link to="/" >{exp}</Link>
+                          EXP : <Link to="/">{exp}</Link>
                         </li>
                         <li>
-                          Stock :{" "}
-                          <Link to="/" >{qut}</Link>
+                          Stock : <Link to="/">{qut}</Link>
                         </li>
                         <li>
-                          Tags :  <Link to="/" >Cake,</Link>{" "}
-                          <Link to="/" >Backery</Link>
+                          Tags : <Link to="/">Cake,</Link>{" "}
+                          <Link to="/">Backery</Link>
                         </li>
                       </ul>
                     </div>
                   </div>
-
-
                 </div>
                 {/* );
                   })} */}
@@ -632,20 +703,24 @@ const ProductDetail = ({ logIn }) => {
                             <div className="desh-title">
                               <h5>Organic:</h5>
                             </div>
-                            <p dangerouslySetInnerHTML={{ __html: productDetails.product_description }} />
+                            <p
+                              dangerouslySetInnerHTML={{
+                                __html: productDetails.product_description,
+                              }}
+                            />
                           </div>
 
                           <div className="banner-contain nav-desh">
                             {showbanner.map((img) => {
                               return (
                                 <>
-                                  {img.banner_location === 'home_page_right_side(2)' ?
+                                  {img.banner_location ===
+                                  "home_page_right_side(2)" ? (
                                     <>
                                       <img
                                         src={img.image}
                                         className="bg-img lazyload w-100"
                                         alt="image"
-                                        
                                       />
                                       <div className="banner-details p-center banner-b-space w-100 text-center">
                                         <div>
@@ -658,11 +733,11 @@ const ProductDetail = ({ logIn }) => {
                                           </p>
                                         </div>
                                       </div>
-                                    </> : null}
+                                    </>
+                                  ) : null}
                                 </>
-                              )
+                              );
                             })}
-
                           </div>
 
                           {/* <div className="nav-desh">
@@ -682,7 +757,13 @@ const ProductDetail = ({ logIn }) => {
                       eventKey="Additional info"
                       title="Additional info"
                     >
-                      {<p dangerouslySetInnerHTML={{ __html: productDetails.other_introduction }} />}
+                      {
+                        <p
+                          dangerouslySetInnerHTML={{
+                            __html: productDetails.other_introduction,
+                          }}
+                        />
+                      }
                     </Tab>
 
                     <Tab
@@ -691,7 +772,6 @@ const ProductDetail = ({ logIn }) => {
                       eventKey="Care Instuctions"
                       title="Care Instuctions"
                     >
-
                       <div className="information-box">
                         <ul>
                           <li>
@@ -791,7 +871,6 @@ const ProductDetail = ({ logIn }) => {
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                               >
-
                                                 68%
                                               </div>
                                             </div>
@@ -911,37 +990,34 @@ const ProductDetail = ({ logIn }) => {
 
                           <div className="col-xl-6">
                             <div className="review-title">
-
                               <h4 className="fw-500">Add a review</h4>
                             </div>
                             <div className="d-flex">
-                            <div className="product-rating">
-                            <div className="col-md-12">
-                                <Form.Select
-                                  aria-label="Search by category"
-                                  className="adminselectbox"
-                                  placeholder="Search by category"
-                                  onChange={(e) => onRatingChange(e)} name={'review_rating'}
-                                  value={addreviewdata.review_rating}
-                                >
-
-                                  <option value={''}>Select Star</option>
-                                  {result1.map((rdata, i) => {
-                                    return (
-                                      <>
-                                  <option value="1">1 Star</option>
-                                  <option value="2">2 Star</option>
-                                  <option value="3">3 Star</option>
-                                  <option value="4">4 Star</option>
-                                  <option value="5">5 Star</option>
-                                      </>
-                                  
-                                  )
-                                })}
-                                </Form.Select>
-                                {/* <div className="form-floating theme-form-floating"> */}
-
-                              </div>
+                              <div className="product-rating">
+                                <div className="col-md-12">
+                                  <Form.Select
+                                    aria-label="Search by category"
+                                    className="adminselectbox"
+                                    placeholder="Search by category"
+                                    onChange={(e) => onRatingChange(e)}
+                                    name={"review_rating"}
+                                    value={addreviewdata.review_rating}
+                                  >
+                                    <option value={""}>Select Star</option>
+                                    {result1.map((rdata, i) => {
+                                      return (
+                                        <>
+                                          <option value="1">1 Star</option>
+                                          <option value="2">2 Star</option>
+                                          <option value="3">3 Star</option>
+                                          <option value="4">4 Star</option>
+                                          <option value="5">5 Star</option>
+                                        </>
+                                      );
+                                    })}
+                                  </Form.Select>
+                                  {/* <div className="form-floating theme-form-floating"> */}
+                                </div>
                               </div>
                               {/* <div className="product-rating">
 
@@ -986,7 +1062,6 @@ const ProductDetail = ({ logIn }) => {
                                     onChange={(e) => handleFormChange(e)}
                                     value={addreviewdata.user_name}
                                     placeholder="Name"
-
                                   />
                                   <label htmlFor="name">Your Name</label>
                                 </div>
@@ -1002,7 +1077,6 @@ const ProductDetail = ({ logIn }) => {
                                     placeholder="Product Name"
                                     onChange={(e) => handleFormChange(e)}
                                     value={addreviewdata.product_name}
-
                                   />
                                   <label htmlFor="name">Product Name</label>
                                 </div>
@@ -1013,17 +1087,17 @@ const ProductDetail = ({ logIn }) => {
                                   aria-label="Search by category"
                                   className="adminselectbox"
                                   placeholder="Search by category"
-                                  onChange={(e) => handleFormChange(e)} name={'category_type'}
+                                  onChange={(e) => handleFormChange(e)}
+                                  name={"category_type"}
                                   value={addreviewdata.category_type}
                                 >
-                                  <option value={''}>Select Categories</option>
+                                  <option value={""}>Select Categories</option>
 
                                   <option value="cloth">cloth</option>
                                   <option value="food">Fish & Meat</option>
                                   <option value="baby care">Baby Care</option>
                                 </Form.Select>
                                 {/* <div className="form-floating theme-form-floating"> */}
-
                               </div>
 
                               <div className="col-md-6">
@@ -1031,7 +1105,7 @@ const ProductDetail = ({ logIn }) => {
                                 <Form.Select
                                   aria-label="Search by Status"
                                   className="adminselectbox"
-                                  name='status'
+                                  name="status"
                                   onChange={(e) => handleFormChange(e)}
                                   value={addreviewdata.status}
                                 >
@@ -1084,10 +1158,7 @@ const ProductDetail = ({ logIn }) => {
                                 >
                                   Add Review
                                 </NavLink>
-
                               </div>
-
-
                             </div>
                           </div>
                         </div>
@@ -1099,12 +1170,11 @@ const ProductDetail = ({ logIn }) => {
                           </h4>
                         </div>
 
-                        {reviewData.map(rdataa => {
+                        {reviewData.map((rdataa) => {
                           let ratingg = Number(rdataa.review_rating);
 
                           return (
                             <>
-
                               <div className="review-people">
                                 <ul className="review-list">
                                   <li>
@@ -1120,9 +1190,7 @@ const ProductDetail = ({ logIn }) => {
                                       </div>
 
                                       <div className="people-comment">
-                                        <Link to="/" >
-                                          {rdataa.user_name}
-                                        </Link>
+                                        <Link to="/">{rdataa.user_name}</Link>
                                         <div className="date-time d-flex d-flex justify-content-between">
                                           <h6 className="text-content">
                                             {rdataa.review_date}
@@ -1132,27 +1200,41 @@ const ProductDetail = ({ logIn }) => {
                                             <ul className="rating ">
                                               {
                                                 // !ratingg? null :
-                                                (ratingbox || []).map((rat, i) => {
-
-                                                  return ratingg - rat >= 0 ? (
-                                                    <li color="#ffb321" key={i}>
-                                                      <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
-                                                    </li>
-                                                  ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
-                                                    <li color="#ffb321">
-                                                      <FaStarHalfAlt
-                                                        icon="star"
-                                                        className="feather"
-                                                        fill={"#ffb321"}
-                                                      />
-                                                    </li>
-                                                  ) : ratingg - rat <= -1 ? (
-                                                    <li color="#ffb321">
-                                                      <FaRegStar icon="star" className="feather" fill={"#ffb321"} />
-                                                    </li>
-                                                  ) : null;
-                                                })}
-
+                                                (ratingbox || []).map(
+                                                  (rat, i) => {
+                                                    return ratingg - rat >=
+                                                      0 ? (
+                                                      <li
+                                                        color="#ffb321"
+                                                        key={i}
+                                                      >
+                                                        <FaStar
+                                                          icon="star"
+                                                          className="feather fill"
+                                                          fill={"#ffb321"}
+                                                        />
+                                                      </li>
+                                                    ) : ratingg - rat < 0 &&
+                                                      ratingg - rat > -1 ? (
+                                                      <li color="#ffb321">
+                                                        <FaStarHalfAlt
+                                                          icon="star"
+                                                          className="feather"
+                                                          fill={"#ffb321"}
+                                                        />
+                                                      </li>
+                                                    ) : ratingg - rat <= -1 ? (
+                                                      <li color="#ffb321">
+                                                        <FaRegStar
+                                                          icon="star"
+                                                          className="feather"
+                                                          fill={"#ffb321"}
+                                                        />
+                                                      </li>
+                                                    ) : null;
+                                                  }
+                                                )
+                                              }
                                             </ul>
                                           </div>
                                         </div>
@@ -1160,17 +1242,16 @@ const ProductDetail = ({ logIn }) => {
                                         <div className="reply">
                                           <p className="w-100">
                                             {rdataa.comment}
-                                            <Link to="/" >Reply</Link>
+                                            <Link to="/">Reply</Link>
                                           </p>
                                         </div>
-                                      
                                       </div>
                                     </div>
                                   </li>
                                 </ul>
                               </div>
                             </>
-                          )
+                          );
                         })}
                       </div>
                     </Tab>

@@ -25,6 +25,7 @@ import AuthWrapper from "./components/authwrapper";
 import SellerSignUp from "./components/pages/sellersignup";
 // import Benners from "./components/common/banners";
 // import Header from "./components/common/header";
+
 function App() {
   const [userLogged, setUserLogged] = useState(localStorage.getItem("token"));
 

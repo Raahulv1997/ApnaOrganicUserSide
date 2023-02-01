@@ -19796,7 +19796,7 @@ header .offcanvas-backdrop {
 
 .log-in-section::after {
   content: "";
-  position: absolute;
+  position: fixed;
   width: 100%;
   height: 100%;
   top: 0;
@@ -25699,6 +25699,16 @@ header .offcanvas-backdrop {
 .product_box .ribbon_div .discount_ribbon {
   background: red;
 }
+
+.product_box .ribbon_div .is_featured_ribbon {
+  background: lightseagreen;
+}
+
+.product_box .ribbon_div .is_special_offer_ribbon {
+  background:  darkorange;
+  ;
+}
+
 
 .product_box .ribbon_div .special_offer {
   background: green;

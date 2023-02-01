@@ -63,6 +63,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   //   }
   //   getRating();
   // }, []);
+  console.log("showww-------------0000"+JSON.stringify(productData))
   useEffect(() => {
     const result = catArray.filter(
       (thing, index, self) => index === self.findIndex((t) => t === thing)
@@ -116,7 +117,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
     }
   };
 
-  // wlist = window.location.pathname;
+
 
   const AddToWishList = (id, wishlistt, wishlistid) => {
     if (
@@ -488,6 +489,8 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                           AddToCart={AddToCart}
                           allimages={product.all_images}
                           cart={product.cart}
+                          is_featured={product.is_featured}
+                          is_special_offer={product.is_special_offer}
                         />
                       </div>
                     );

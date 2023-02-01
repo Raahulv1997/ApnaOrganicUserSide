@@ -25,6 +25,7 @@ const Header = (props) => {
   const [categorydata, setCategoryData] = useState([]);
   const [pdata, setPdata] = useState([]);
   const navigate = useNavigate();
+  let [searcherror, setsearcherror] = useState(false);
   const [click, setclick] = useState(false);
   const [search, setsearch] = useState([]);
   // const [cat_list, setcat_list] = useState(false);
@@ -75,9 +76,13 @@ const Header = (props) => {
 
   const searchProduct = (e) => {
     e.preventDefault();
-    navigate(`/shop?search=${search}`);
+    if (search.length === 0) {
+      setsearcherror(true);
+    } else {
+      navigate(`/shop?search=${search}`);
+    }
   };
-
+  console.log(search);
   useEffect(() => {
     if (
       token === undefined ||
@@ -204,8 +209,10 @@ const Header = (props) => {
                       <div className="center-box">
                         <div className="searchbar-box order-xl-1 d-none d-xl-block">
                           <input
+                            required
                             onChange={(e) => {
                               setsearch(e.target.value);
+                              setsearcherror(false);
                             }}
                             type="search"
                             className="form-control"
@@ -228,16 +235,21 @@ const Header = (props) => {
                         </div>
                         {/* <div className="location-box-2">
                           <button
-                            className="btn location-button"
-                            data-bs-toggle="modal"
-                            data-bs-target="#locationModal"
+                          className="btn location-button"
+                          data-bs-toggle="modal"
+                          data-bs-target="#locationModal"
                           >
-                            <i className="fa-regular fa-location-dot"></i>
-                            <span className="locat-name">Your Location</span>
-                            <i className="fa-solid fa-angle-down"></i>
+                          <i className="fa-regular fa-location-dot"></i>
+                          <span className="locat-name">Your Location</span>
+                          <i className="fa-solid fa-angle-down"></i>
                           </button>
                         </div> */}
                       </div>
+                      {searcherror === true ? (
+                        <small className="text-danger">
+                          please fill the feild
+                        </small>
+                      ) : null}
                     </form>
                   </div>
                   <div className="right-nav">
