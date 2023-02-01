@@ -170,92 +170,108 @@ function Account() {
     });
   };
 
-  // change Password
+  // change Password:
 
-  const [changepass, setchangepass] = useState({
-    email: "",
-    password: "",
-    new_password: "",
-  });
-  const ChangepassShow = () => {
-    setchangepass((changepass) => {
-      return { ...changepass, email: `${userdata.email}` };
-    });
-    setPassword(true);
+  //States to use in change password :-
+  const [email, setEmail] = useState("");
+  const [oldPassword, setOldPassword] = useState("");
+  const [newPassword, setNewPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [oldPasswordError, setOldPasswordError] = useState("");
+  const [newPasswordError, setNewPasswordError] = useState("");
+  const [confirmPasswordError, setConfirmPasswordError] = useState("");
+
+  // Onchange function of new password :-
+  const handleOldPasswordChange = (e) => {
+    setOldPassword(e.target.value);
+    setOldPasswordError("");
   };
-  const OnchangePass = (e) => {
-    setchangepass({
-      ...changepass,
-      [e.target.name]: e.target.value,
-    });
+
+  // Onchange function of new password :-
+  const handleNewPasswordChange = (e) => {
+    setNewPassword(e.target.value);
+    setNewPasswordError("");
   };
-  const [formError, setFormError] = useState({
-    currentPass: "",
-    newPass: "",
-    confirmPass: "",
-    allPass: "",
-  });
-  const handlePassSubmit = (event) => {
-    event.preventDefault();
-    if (
-      changepass.confirmpassword === undefined &&
-      changepass.new_password === undefined &&
-      changepass.password === undefined
+
+  // Onchange function of confirm new password :-
+  const handleConfirmPasswordChange = (e) => {
+    setConfirmPassword(e.target.value);
+    setConfirmPasswordError("");
+  };
+
+  // Function to change the password with the validation and api part :-
+  const handlePassSubmit = (e) => {
+    e.preventDefault();
+    if (!oldPassword) {
+      setOldPasswordError("Old password is required");
+    } else {
+      setOldPasswordError("");
+    }
+    if (!newPassword) {
+      setNewPasswordError("New password is required");
+    } else if (
+      newPassword < 8 ||
+      newPassword !== /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
     ) {
-      setFormError({
-        allPass: "All field are required",
-      });
-
-      return false;
+      setNewPasswordError(
+        "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
+      );
+    } else {
+      setNewPasswordError("");
     }
-    if (changepass.password === undefined) {
-      setFormError({
-        currentPass: "Please enter current password",
-      });
-
-      return false;
+    if (!confirmPassword) {
+      setConfirmPasswordError("Confirm password is required");
+    } else if (confirmPassword !== newPassword) {
+      setConfirmPasswordError("Confirm password must match with new password");
+    } else {
+      setConfirmPasswordError("");
     }
-    if (changepass.new_password === undefined) {
-      setFormError({
-        newPass: "Please enter New password",
-      });
-      return false;
-    }
-
-    if (changepass.confirmpassword === undefined) {
-      setFormError({
-        confirmPass: "Please enter confirm password",
-      });
-      return false;
-    }
-
-    if (changepass.confirmpassword !== changepass.new_password) {
-      setFormError({
-        confirmPass: "Password & Confirm password not match",
-      });
-      return false;
-    }
-    if (changepass.confirmpassword === changepass.new_password) {
+    if (
+      oldPassword &&
+      newPassword &&
+      newPassword.length >= 8 &&
+      confirmPassword &&
+      confirmPassword === newPassword
+    ) {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/change_user_password`, {
-          email: changepass.email,
-          password: changepass.password,
-          new_password: changepass.new_password,
+          email: email,
+          password: oldPassword,
+          new_password: newPassword,
         })
         .then((response) => {
-          if (response === true) {
+          console.log(response.data);
+          if (response.data === false) {
+            setOldPasswordError("Old password is incorrect");
+          } else if (response.data === true) {
             localStorage.setItem("upassword", response.data.new_password);
             setPassword(false);
+            setOldPasswordError("");
+            setNewPasswordError("");
+            setConfirmPasswordError("");
+            ChangepassClose();
           }
-          // navigate('/your_account')
-          // return response;
         })
         .catch((error) => {});
     }
-    setFormError("");
-    ChangepassClose();
   };
-  const ChangepassClose = () => setPassword(false);
+
+  // To show the update password popup modal :-
+  const ChangepassShow = () => {
+    setEmail(userdata.email);
+    setPassword(true);
+  };
+
+  // To close the update password popup modal :-
+  const ChangepassClose = () => {
+    setPassword("");
+    setNewPassword("");
+    setConfirmPassword("");
+    setOldPasswordError("");
+    setNewPasswordError("");
+    setConfirmPasswordError("");
+    setPassword(false);
+  };
 
   // end change paassword
   const [click, setclick] = useState(false);
@@ -278,11 +294,9 @@ function Account() {
 
   const OnaddAdderss = (e) => {
     let name = e.target.value;
-    setaddNewAdderss({
-      ...changepass,
-      [e.target.name]: e.target.value,
-    });
+    setEmail(name);
   };
+
   // add to cart
   const AddToCart = (id, discount, product_price, quantity, product_id) => {
     axios
@@ -308,10 +322,11 @@ function Account() {
       })
       .catch((error) => {});
   };
+
   // end add to cart
 
   const onProductClick = (id) => {
-    console.log("___" + id);
+    // console.log("___" + id);
     // localStorage.setItem("orderid", id);
     localStorage.setItem("proid", id);
     navigate("/product-detail");
@@ -324,7 +339,6 @@ function Account() {
   return (
     <React.Fragment>
       <Header addcart={AddToCart} />
-
       <Breadcumb
         pageName={"Your Account"}
         pageTitle={"Your Account"}
@@ -374,12 +388,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-order-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-order"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-order"
+                              // id="pills-order-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-order"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -395,12 +409,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-order-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-order"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-order"
+                              // id="pills-order-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-order"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => OnOrderclick()}
                             >
@@ -416,13 +430,13 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-wishlist-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-wishlist"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-wishlist"
-                              aria-selected="false"
+                              // id="pills-wishlist-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-wishlist"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-wishlist"
+                              // aria-selected="false"
                               onClick={() => Onwishlistclick()}
                             >
                               <AiOutlineHeart className="mx-2" />
@@ -458,12 +472,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-address-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-address"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-address"
+                              // id="pills-address-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-address"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-address"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -479,12 +493,12 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              id="pills-profile-tab"
-                              data-bs-toggle="pill"
-                              data-bs-target="#pills-profile"
-                              type="button"
-                              role="tab"
-                              aria-controls="pills-profile"
+                              // id="pills-profile-tab"
+                              // data-bs-toggle="pill"
+                              // data-bs-target="#pills-profile"
+                              // type="button"
+                              // role="tab"
+                              // aria-controls="pills-profile"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -1616,30 +1630,21 @@ function Account() {
                                     <tbody>
                                       <tr>
                                         <td>Email :</td>
-                                        <td>
-                                          <Link to="#">
-                                            {userdata.email}
-                                            <span
-                                              data-bs-toggle="modal"
-                                              data-bs-target="#editProfile"
-                                              onClick={handleShow}
-                                            >
-                                              Edit
-                                            </span>
-                                          </Link>
-                                        </td>
+                                        <td>{userdata.email}</td>
                                       </tr>
                                       <tr>
                                         <td>Password :</td>
                                         <td>
                                           <Link to="#">
-                                            {userdata.password}
+                                            <span className="text-dark">
+                                              ********
+                                            </span>
                                             <span
                                               data-bs-toggle="modal"
                                               data-bs-target="#editProfile"
                                               onClick={ChangepassShow}
                                             >
-                                              Edit
+                                              Change Password
                                             </span>
                                           </Link>
                                         </td>
@@ -1973,7 +1978,7 @@ function Account() {
                       max={currentdate}
                       name={"date_of_birth"}
                       type="date"
-                      value={moment(udata.date_of_birth).format("yyyy-MM-DD")}
+                      value={moment(udata.date_of_birth).format("YYYY-MM-DD")}
                       onChange={OnchangeFistname}
                       required
                       placeholder="Product Quantity"
@@ -2025,10 +2030,10 @@ function Account() {
                   <Form.Control
                     type="email"
                     placeholder="Email"
-                    value={changepass.email}
+                    value={email}
                     name={"email"}
+                    disabled
                   />
-                  <p className="error-message">{formError.currentPass}</p>
                 </Form.Group>
               </div>
               <div className="col-12">
@@ -2040,11 +2045,13 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="Current password"
-                    value={changepass.password}
+                    value={oldPassword}
                     name={"password"}
-                    onChange={OnchangePass}
+                    onChange={handleOldPasswordChange}
                   />
-                  <p className="error-message">{formError.currentPass}</p>
+                  {oldPasswordError && (
+                    <p className="error-message">{oldPasswordError}</p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-12">
@@ -2056,11 +2063,13 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="New Password"
-                    value={changepass.new_password}
+                    value={newPassword}
                     name={"new_password"}
-                    onChange={OnchangePass}
+                    onChange={handleNewPasswordChange}
                   />
-                  <p className="error-message">{formError.newPass}</p>
+                  {newPasswordError && (
+                    <p className="error-message">{newPasswordError}</p>
+                  )}
                 </Form.Group>
               </div>
               <div className="col-12">
@@ -2072,15 +2081,14 @@ function Account() {
                   <Form.Control
                     type="password"
                     placeholder="Confirm Password"
-                    value={changepass.confirm_password}
+                    value={confirmPassword}
                     name={"confirmpassword"}
-                    onChange={OnchangePass}
+                    onChange={handleConfirmPasswordChange}
                   />
                 </Form.Group>
-                <p className="error-message">
-                  {formError.confirmPass}
-                  {formError.allPass}
-                </p>
+                {confirmPasswordError && (
+                  <p className="error-message">{confirmPasswordError}</p>
+                )}
               </div>
             </div>
           </Modal.Body>

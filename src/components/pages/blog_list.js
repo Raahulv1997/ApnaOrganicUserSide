@@ -27,11 +27,9 @@ const BlogList = () => {
   };
   const onRecentClick = (e) => {
     setRecent(e.target.value);
-    console.log("fffffffffffffffffffff" + JSON.stringify(recent));
   };
   const onProductTagClick = (e) => {
     setProductTag(e.target.value);
-    console.log("fffffffffffffffffffff" + JSON.stringify(productTag));
   };
   useEffect(() => {
     onCategorySearch();
@@ -58,7 +56,6 @@ const BlogList = () => {
       } catch (err) {}
     }
   };
-  console.log("hhhhhhhhhhhhhhh" + productTag);
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
@@ -79,14 +76,12 @@ const BlogList = () => {
         setcatData(response.data);
 
         setId(data.id);
-        console.log("blog IDDDDDDDDDDDDDD" + JSON.stringify(data.id));
         // console.log("blog"+JSON.stringify(blogData));
 
         setapicall(false);
       });
   }, [apicall]);
 
-  console.log("?///////////" + JSON.stringify(blogData));
   return (
     <Fragment>
       <Header />

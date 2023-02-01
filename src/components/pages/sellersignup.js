@@ -14,7 +14,7 @@ const SellerSignUp = () => {
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [forgotemail, setforgotemail] = useState("");
-
+  let [hide, setHide] = useState(false);
   const [emailerror, setemailerror] = useState("");
   const [Signup, setSignup] = useState(false);
   const [otperror, setOtperror] = useState(false);
@@ -430,135 +430,154 @@ const SellerSignUp = () => {
       <section className="log-in-section section-b-space">
         <div className="container-fluid-lg w-100">
           <div className="row">
-            <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
-              <Form
-                className=""
-                noValidate
-                validated={validated}
-                onSubmit={(e) => UpdateVendorClick(e)}
-              >
-                <div className="image-contain">
-                  {loginpage === true || forgotpage === true ? (
-                    <img src={Banner} className="img-fluid" alt="" />
-                  ) : (
-                    <div className="row p-3 m-0">
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom01"
-                        >
-                          <Form.Label>Owner Name</Form.Label>
-                          <Form.Control
-                            onChange={(e) => handleFormChange(e)}
-                            value={addvendordata.owner_name}
-                            required
-                            type="text"
-                            placeholder="Owner Name"
-                            name={"owner_name"}
-                          />
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill owner name
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom02"
-                        >
-                          <Form.Label>Shop Name</Form.Label>
-                          <Form.Control
-                            onChange={(e) => handleFormChange(e)}
-                            value={addvendordata.shop_name}
-                            required
-                            type="text"
-                            placeholder="Shop Name"
-                            name={"shop_name"}
-                          />
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill shop name
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom03"
-                        >
-                          <Form.Label>Mobile</Form.Label>
-                          <Form.Control
-                            onChange={(e) => handleFormChange(e)}
-                            value={addvendordata.mobile}
-                            required
-                            type="number"
-                            min={1}
-                            placeholder="Mobile"
-                            name={"mobile"}
-                          />
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill mobile
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom04"
-                        >
-                          <Form.Label>Email</Form.Label>
-                          <Form.Control
-                            onChange={(e) => handleFormChange(e)}
-                            value={addvendordata.email}
-                            type="email"
-                            placeholder="Email"
-                            name={"email"}
-                          />
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill email
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom05"
-                        >
-                          <Form.Label>Shop Address</Form.Label>
-                          <Form.Control
-                            className="vendor_address"
-                            as="textarea"
-                            rows={3}
-                            placeholder="Address"
-                            name={"shop_address"}
-                            onChange={(e) => handleFormChange(e)}
-                            value={addvendordata.shop_address}
-                            required
-                          />
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill address
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom06"
-                        >
-                          <Form.Label>GSTN</Form.Label>
-                          <Form.Control
-                            onChange={(e) => handleFormChange(e)}
-                            value={addvendordata.gstn}
-                            required
-                            type="text"
-                            placeholder="GSTN"
-                            name={"gstn"}
-                          />
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill gstn
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      {/* <div className="col-md-6">
+            {hide === true ? (
+              <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
+                <Form
+                  className=""
+                  noValidate
+                  validated={validated}
+                  onSubmit={(e) => UpdateVendorClick(e)}
+                >
+                  <div className="image-contain">
+                    {loginpage === true || forgotpage === true ? (
+                      <img src={Banner} className="img-fluid" alt="" />
+                    ) : (
+                      <div className="row p-3 m-0">
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom01"
+                          >
+                            <Form.Label>Owner Name</Form.Label>
+                            <Form.Control
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.owner_name}
+                              required
+                              type="text"
+                              placeholder="Owner Name"
+                              name={"owner_name"}
+                            />
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill owner name
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom02"
+                          >
+                            <Form.Label>Shop Name</Form.Label>
+                            <Form.Control
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.shop_name}
+                              required
+                              type="text"
+                              placeholder="Shop Name"
+                              name={"shop_name"}
+                            />
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill shop name
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom03"
+                          >
+                            <Form.Label>Mobile</Form.Label>
+                            <Form.Control
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.mobile}
+                              required
+                              type="number"
+                              min={1}
+                              placeholder="Mobile"
+                              name={"mobile"}
+                            />
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill mobile
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom04"
+                          >
+                            <Form.Label>Email</Form.Label>
+                            <Form.Control
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.email}
+                              type="email"
+                              placeholder="Email"
+                              name={"email"}
+                            />
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill email
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom05"
+                          >
+                            <Form.Label>Shop Address</Form.Label>
+                            <Form.Control
+                              className="vendor_address"
+                              as="textarea"
+                              rows={3}
+                              placeholder="Address"
+                              name={"shop_address"}
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.shop_address}
+                              required
+                            />
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill address
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom06"
+                          >
+                            <Form.Label>GSTN</Form.Label>
+                            <Form.Control
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.gstn}
+                              required
+                              type="text"
+                              placeholder="GSTN"
+                              name={"gstn"}
+                            />
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill gstn
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        {/* <div className="col-md-6">
                 <Form.Group
                   className="mb-3 aos_input"
                   controlId="validationCustom06"
@@ -616,402 +635,430 @@ const SellerSignUp = () => {
                   </Form.Control.Feedback>
                 </Form.Group>
               </div> */}
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom06"
-                        >
-                          <Form.Label>Avaliable</Form.Label>
-                          <Form.Select
-                            size="sm"
-                            aria-label="Default select example"
-                            onChange={(e) => handleFormChange(e)}
-                            name="availability"
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom06"
                           >
-                            <option
-                              value=""
-                              selected={
-                                addvendordata.availability === "" ? true : false
-                              }
-                            >
-                              Select
-                            </option>
-                            <option
-                              value="close"
-                              selected={
-                                addvendordata.availability === "close"
-                                  ? true
-                                  : false
-                              }
-                            >
-                              close
-                            </option>
-                            <option
-                              value="update"
-                              selected={
-                                addvendordata.availability === "update"
-                                  ? true
-                                  : false
-                              }
-                            >
-                              update
-                            </option>
-                            <option
-                              value="block"
-                              selected={
-                                addvendordata.availability === "block"
-                                  ? true
-                                  : false
-                              }
-                            >
-                              Block
-                            </option>
-                            <option
-                              value="delete"
-                              selected={
-                                addvendordata.availability === "delete"
-                                  ? true
-                                  : false
-                              }
-                            >
-                              Delete
-                            </option>
-                          </Form.Select>
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill gstn
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom06"
-                        >
-                          <Form.Label>Store Type</Form.Label>
-                          <Form.Select
-                            size="sm"
-                            aria-label="Default select example"
-                            onChange={(e) => handleFormChange(e)}
-                            name="store_type"
-                          >
-                            <option
-                              value=""
-                              selected={
-                                addvendordata.store_type === "" ? true : false
-                              }
-                            >
-                              Select
-                            </option>
-                            <option
-                              value="shoese"
-                              selected={
-                                addvendordata.store_type === "shoese"
-                                  ? true
-                                  : false
-                              }
-                            >
-                              Pending
-                            </option>
-                            <option
-                              value="Cloths"
-                              selected={
-                                addvendordata.store_type === "Cloths"
-                                  ? true
-                                  : false
-                              }
-                            >
-                              Active
-                            </option>
-                          </Form.Select>
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill gstn
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom07"
-                        >
-                          <Form.Label>Geolocation</Form.Label>
-                          <Form.Control
-                            onChange={(e) => handleFormChange(e)}
-                            required
-                            type="location"
-                            placeholder="Geolocation"
-                            name={"geolocation"}
-                            value={addvendordata.geolocation}
-                          />
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill name
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom10"
-                        >
-                          <Form.Label>Document Name</Form.Label>
-                          <InputGroup className="" size="sm">
-                            <Form.Control
-                              onChange={(e) => onDocumentNamechange(e)}
-                              value={addtag}
-                              placeholder="document_name"
-                              name={"document_name"}
-                              onClick={(event) => {
-                                if (event.key === "Enter") {
-                                  onDocuAddclick();
-                                }
-                              }}
-                            />
-                            <Button
-                              variant="outline-success"
-                              className="addcategoryicon"
-                              onClick={() => onDocuAddclick()}
+                            <Form.Label>Avaliable</Form.Label>
+                            <Form.Select
                               size="sm"
+                              aria-label="Default select example"
+                              onChange={(e) => handleFormChange(e)}
+                              name="availability"
                             >
-                              +
-                            </Button>
-                          </InputGroup>
-                          {Docnamearray === undefined ||
-                          Docnamearray === null ||
-                          Docnamearray === "" ? null : (
-                            <div className="d-flex align-items-center tagselectbox mt-2">
-                              {Docnamearray.map((seotags, i) => {
-                                return (
-                                  <>
-                                    <Badge
-                                      className="tagselecttitle mb-0"
-                                      bg="success"
-                                    >
-                                      {seotags === null || seotags === undefined
-                                        ? ""
-                                        : seotags}
-
-                                      <GiCancel
-                                        className=" mx-0 ms-1 btncancel"
-                                        onClick={() => DocuRemoveClick(seotags)}
-                                      />
-                                    </Badge>
-                                  </>
-                                );
-                              })}
-                            </div>
-                          )}
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please fill document name
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
-
-                      {/* social media links -------------------------------------------------------------------------*/}
-
-                      <div className="my-3 inputsection_box">
-                        <h5 className="m-0">Add Social Media Link</h5>
-                        <div className=" mt-0 mb-3">
-                          <Table className="align-middle">
-                            <thead>
-                              <tr>
-                                <th>Social Media</th>
-                                <th>Link</th>
-                                <th></th>
-                              </tr>
-                            </thead>
-                            <tbody>
-                              <tr>
-                                <td className="text-center col-4">
-                                  <InputGroup className="">
-                                    <Form.Control
-                                      value={headerval}
-                                      type="text"
-                                      sm="9"
-                                      min={"1"}
-                                      onChange={oncustomheadChange}
-                                      name={"header"}
-                                      className={
-                                        customvalidated === true
-                                          ? "border-danger"
-                                          : null
-                                      }
-                                    />
-                                  </InputGroup>
-                                </td>
-                                <td className="col-4">
-                                  <InputGroup className="">
-                                    <Form.Control
-                                      className={
-                                        customvalidated === true
-                                          ? "border-danger"
-                                          : null
-                                      }
-                                      value={descval}
-                                      name={"description"}
-                                      type="text"
-                                      sm="9"
-                                      min={"1"}
-                                      onChange={oncustomdescChange}
-                                      onKeyPress={(event) => {
-                                        if (event.key === "Enter") {
-                                          handleAddClick();
-                                        }
-                                      }}
-                                    />
-                                  </InputGroup>
-                                </td>
-                                <td className="">
-                                  <Button
-                                    variant="outline-success"
-                                    className="addcategoryicon"
-                                    onClick={() => handleAddClick()}
-                                    size="sm"
-                                  >
-                                    +
-                                  </Button>
-                                </td>
-                              </tr>
-                              {customarray
-                                ? (customarray || []).map((variantdata, i) => {
-                                    let v = JSON.stringify(variantdata);
-                                    let st = v.split(":");
-                                    let pro = st[0].replace(/[{}]/g, "");
-                                    let link = st[1].replace(/[{}]/g, "");
-
-                                    return (
-                                      <tr className="">
-                                        <td className=" text-center">
-                                          <InputGroup className="">
-                                            <Form.Control
-                                              value={JSON.parse(pro)}
-                                              type="text"
-                                              sm="9"
-                                              min={"1"}
-                                              onChange={oncustomheadChange}
-                                              name={"custom_input_header"}
-                                              required
-                                            />
-                                          </InputGroup>
-                                        </td>
-                                        <td className="text-center">
-                                          <InputGroup className="">
-                                            <Form.Control
-                                              required
-                                              value={JSON.parse(link)}
-                                              name={"custom_input_desc"}
-                                              type="text"
-                                              sm="9"
-                                              min={"1"}
-                                              onChange={oncustomdescChange}
-                                              onKeyPress={(event) => {
-                                                if (event.key === "Enter") {
-                                                  handleAddClick();
-                                                }
-                                              }}
-                                            />
-                                          </InputGroup>
-                                        </td>
-                                        <td className="">
-                                          <Button
-                                            variant="text-danger"
-                                            className="addcategoryicon text-danger"
-                                            onClick={() =>
-                                              handleRemoveClick(variantdata)
-                                            }
-                                            size="sm"
-                                          >
-                                            &times;
-                                          </Button>
-                                        </td>
-                                      </tr>
-                                    );
-                                  })
-                                : null}
-                            </tbody>
-                          </Table>
+                              <option
+                                value=""
+                                selected={
+                                  addvendordata.availability === ""
+                                    ? true
+                                    : false
+                                }
+                              >
+                                Select
+                              </option>
+                              <option
+                                value="close"
+                                selected={
+                                  addvendordata.availability === "close"
+                                    ? true
+                                    : false
+                                }
+                              >
+                                close
+                              </option>
+                              <option
+                                value="update"
+                                selected={
+                                  addvendordata.availability === "update"
+                                    ? true
+                                    : false
+                                }
+                              >
+                                update
+                              </option>
+                              <option
+                                value="block"
+                                selected={
+                                  addvendordata.availability === "block"
+                                    ? true
+                                    : false
+                                }
+                              >
+                                Block
+                              </option>
+                              <option
+                                value="delete"
+                                selected={
+                                  addvendordata.availability === "delete"
+                                    ? true
+                                    : false
+                                }
+                              >
+                                Delete
+                              </option>
+                            </Form.Select>
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill gstn
+                            </Form.Control.Feedback>
+                          </Form.Group>
                         </div>
-                        {/* );
-                })} */}
-                        {/* --------------------------------------------- */}
-                      </div>
-                      {/* end social media link */}
-                      <div classImg="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom08"
-                        >
-                          <Form.Label>Shop Logo</Form.Label>
-                          <Form.Control
-                            onChange={(e) => ImgFormChange(e)}
-                            type="file"
-                            placeholder="Shop_logo"
-                            name={"shop_logo"}
-                          />
-                          {addvendordata.shop_logo ? (
-                            <img src={addvendordata.shop_logo} width={"50px"} />
-                          ) : null}
-                          <Form.Control.Feedback type="invalid" className="h6">
-                            Please upload document
-                          </Form.Control.Feedback>
-                        </Form.Group>
-                      </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom06"
+                          >
+                            <Form.Label>Store Type</Form.Label>
+                            <Form.Select
+                              size="sm"
+                              aria-label="Default select example"
+                              onChange={(e) => handleFormChange(e)}
+                              name="store_type"
+                            >
+                              <option
+                                value=""
+                                selected={
+                                  addvendordata.store_type === "" ? true : false
+                                }
+                              >
+                                Select
+                              </option>
+                              <option
+                                value="shoese"
+                                selected={
+                                  addvendordata.store_type === "shoese"
+                                    ? true
+                                    : false
+                                }
+                              >
+                                Pending
+                              </option>
+                              <option
+                                value="Cloths"
+                                selected={
+                                  addvendordata.store_type === "Cloths"
+                                    ? true
+                                    : false
+                                }
+                              >
+                                Active
+                              </option>
+                            </Form.Select>
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill gstn
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom07"
+                          >
+                            <Form.Label>Geolocation</Form.Label>
+                            <Form.Control
+                              onChange={(e) => handleFormChange(e)}
+                              required
+                              type="location"
+                              placeholder="Geolocation"
+                              name={"geolocation"}
+                              value={addvendordata.geolocation}
+                            />
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill name
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom10"
+                          >
+                            <Form.Label>Document Name</Form.Label>
+                            <InputGroup className="" size="sm">
+                              <Form.Control
+                                onChange={(e) => onDocumentNamechange(e)}
+                                value={addtag}
+                                placeholder="document_name"
+                                name={"document_name"}
+                                onClick={(event) => {
+                                  if (event.key === "Enter") {
+                                    onDocuAddclick();
+                                  }
+                                }}
+                              />
+                              <Button
+                                variant="outline-success"
+                                className="addcategoryicon"
+                                onClick={() => onDocuAddclick()}
+                                size="sm"
+                              >
+                                +
+                              </Button>
+                            </InputGroup>
+                            {Docnamearray === undefined ||
+                            Docnamearray === null ||
+                            Docnamearray === "" ? null : (
+                              <div className="d-flex align-items-center tagselectbox mt-2">
+                                {Docnamearray.map((seotags, i) => {
+                                  return (
+                                    <>
+                                      <Badge
+                                        className="tagselecttitle mb-0"
+                                        bg="success"
+                                      >
+                                        {seotags === null ||
+                                        seotags === undefined
+                                          ? ""
+                                          : seotags}
 
-                      <div className="col-md-6">
-                        <Form.Group
-                          className="mb-3 aos_input"
-                          controlId="validationCustom09"
-                        >
-                          <Form.Label>Documents Upload </Form.Label>
-                          <Form.Control
-                            multiple
-                            type="file"
-                            placeholder="multiple document upload"
-                            name={"img_64"}
-                            onChange={(e) => imguploadchange(e)}
-                          />
-                        </Form.Group>
-                      </div>
-                      <Table className="vendordoc_image_table">
-                        <tbody className="vendordoc_image_table_body">
-                          {newImageUrls ? (
-                            <tr className="d-flex flex-wrap">
-                              {newImageUrls.map((imgg, i) => {
-                                return (
-                                  <td className="imgprivew_box">
-                                    <img
-                                      src={imgg.documents_path}
-                                      key={i}
-                                      alt="apna_organic"
-                                      width={80}
-                                      height={100}
-                                    />
-                                    <span
-                                      className="cross_icon"
-                                      onClick={() =>
-                                        onImgRemove(
-                                          imgg.vendor_doc_id,
-                                          imgg.vendor_id
-                                        )
-                                      }
-                                    >
-                                      X
-                                    </span>
+                                        <GiCancel
+                                          className=" mx-0 ms-1 btncancel"
+                                          onClick={() =>
+                                            DocuRemoveClick(seotags)
+                                          }
+                                        />
+                                      </Badge>
+                                    </>
+                                  );
+                                })}
+                              </div>
+                            )}
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please fill document name
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+
+                        {/* social media links -------------------------------------------------------------------------*/}
+
+                        <div className="my-3 inputsection_box">
+                          <h5 className="m-0">Add Social Media Link</h5>
+                          <div className=" mt-0 mb-3">
+                            <Table className="align-middle">
+                              <thead>
+                                <tr>
+                                  <th>Social Media</th>
+                                  <th>Link</th>
+                                  <th></th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                <tr>
+                                  <td className="text-center col-4">
+                                    <InputGroup className="">
+                                      <Form.Control
+                                        value={headerval}
+                                        type="text"
+                                        sm="9"
+                                        min={"1"}
+                                        onChange={oncustomheadChange}
+                                        name={"header"}
+                                        className={
+                                          customvalidated === true
+                                            ? "border-danger"
+                                            : null
+                                        }
+                                      />
+                                    </InputGroup>
                                   </td>
-                                );
-                              })}
-                            </tr>
-                          ) : null}
-                        </tbody>
-                      </Table>
-                    </div>
+                                  <td className="col-4">
+                                    <InputGroup className="">
+                                      <Form.Control
+                                        className={
+                                          customvalidated === true
+                                            ? "border-danger"
+                                            : null
+                                        }
+                                        value={descval}
+                                        name={"description"}
+                                        type="text"
+                                        sm="9"
+                                        min={"1"}
+                                        onChange={oncustomdescChange}
+                                        onKeyPress={(event) => {
+                                          if (event.key === "Enter") {
+                                            handleAddClick();
+                                          }
+                                        }}
+                                      />
+                                    </InputGroup>
+                                  </td>
+                                  <td className="">
+                                    <Button
+                                      variant="outline-success"
+                                      className="addcategoryicon"
+                                      onClick={() => handleAddClick()}
+                                      size="sm"
+                                    >
+                                      +
+                                    </Button>
+                                  </td>
+                                </tr>
+                                {customarray
+                                  ? (customarray || []).map(
+                                      (variantdata, i) => {
+                                        let v = JSON.stringify(variantdata);
+                                        let st = v.split(":");
+                                        let pro = st[0].replace(/[{}]/g, "");
+                                        let link = st[1].replace(/[{}]/g, "");
+
+                                        return (
+                                          <tr className="">
+                                            <td className=" text-center">
+                                              <InputGroup className="">
+                                                <Form.Control
+                                                  value={JSON.parse(pro)}
+                                                  type="text"
+                                                  sm="9"
+                                                  min={"1"}
+                                                  onChange={oncustomheadChange}
+                                                  name={"custom_input_header"}
+                                                  required
+                                                />
+                                              </InputGroup>
+                                            </td>
+                                            <td className="text-center">
+                                              <InputGroup className="">
+                                                <Form.Control
+                                                  required
+                                                  value={JSON.parse(link)}
+                                                  name={"custom_input_desc"}
+                                                  type="text"
+                                                  sm="9"
+                                                  min={"1"}
+                                                  onChange={oncustomdescChange}
+                                                  onKeyPress={(event) => {
+                                                    if (event.key === "Enter") {
+                                                      handleAddClick();
+                                                    }
+                                                  }}
+                                                />
+                                              </InputGroup>
+                                            </td>
+                                            <td className="">
+                                              <Button
+                                                variant="text-danger"
+                                                className="addcategoryicon text-danger"
+                                                onClick={() =>
+                                                  handleRemoveClick(variantdata)
+                                                }
+                                                size="sm"
+                                              >
+                                                &times;
+                                              </Button>
+                                            </td>
+                                          </tr>
+                                        );
+                                      }
+                                    )
+                                  : null}
+                              </tbody>
+                            </Table>
+                          </div>
+                          {/* );
+                })} */}
+                          {/* --------------------------------------------- */}
+                        </div>
+                        {/* end social media link */}
+                        <div classImg="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom08"
+                          >
+                            <Form.Label>Shop Logo</Form.Label>
+                            <Form.Control
+                              onChange={(e) => ImgFormChange(e)}
+                              type="file"
+                              placeholder="Shop_logo"
+                              name={"shop_logo"}
+                            />
+                            {addvendordata.shop_logo ? (
+                              <img
+                                src={addvendordata.shop_logo}
+                                width={"50px"}
+                              />
+                            ) : null}
+                            <Form.Control.Feedback
+                              type="invalid"
+                              className="h6"
+                            >
+                              Please upload document
+                            </Form.Control.Feedback>
+                          </Form.Group>
+                        </div>
+
+                        <div className="col-md-6">
+                          <Form.Group
+                            className="mb-3 aos_input"
+                            controlId="validationCustom09"
+                          >
+                            <Form.Label>Documents Upload </Form.Label>
+                            <Form.Control
+                              multiple
+                              type="file"
+                              placeholder="multiple document upload"
+                              name={"img_64"}
+                              onChange={(e) => imguploadchange(e)}
+                            />
+                          </Form.Group>
+                        </div>
+                        <Table className="vendordoc_image_table">
+                          <tbody className="vendordoc_image_table_body">
+                            {newImageUrls ? (
+                              <tr className="d-flex flex-wrap">
+                                {newImageUrls.map((imgg, i) => {
+                                  return (
+                                    <td className="imgprivew_box">
+                                      <img
+                                        src={imgg.documents_path}
+                                        key={i}
+                                        alt="apna_organic"
+                                        width={80}
+                                        height={100}
+                                      />
+                                      <span
+                                        className="cross_icon"
+                                        onClick={() =>
+                                          onImgRemove(
+                                            imgg.vendor_doc_id,
+                                            imgg.vendor_id
+                                          )
+                                        }
+                                      >
+                                        X
+                                      </span>
+                                    </td>
+                                  );
+                                })}
+                              </tr>
+                            ) : null}
+                          </tbody>
+                        </Table>
+                      </div>
+                    )}
+                  </div>
+                  {loginpage === true || forgotpage === true ? null : (
+                    <button className={"mx-4 btn btn-success"} type={"submit"}>
+                      {"Update Vendor"}
+                    </button>
                   )}
-                </div>
-                {loginpage === true || forgotpage === true ? null : (
-                  <button className={"mx-4 btn btn-success"} type={"submit"}>
-                    {"Update Vendor"}
-                  </button>
-                )}
-              </Form>
-            </div>
+                </Form>
+              </div>
+            ) : (
+              <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto"></div>
+            )}
 
             {/* LOGIN */}
 

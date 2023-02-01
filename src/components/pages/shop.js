@@ -1438,40 +1438,7 @@ const Shop = (props) => {
                   );
                 })}
               </div>
-              {/* <nav className="custome-pagination">
-                <ul className="pagination justify-content-center">
-                  <li className="page-item disabled">
-                    <Link
-                      to=""
-                      className="page-link"
-                      tabIndex="-1"
-                      aria-disabled="true"
-                    >
-                      <i className="fa-solid fa-angles-left"></i>
-                    </Link>
-                  </li>
-                  <li className="page-item active">
-                    <Link to="" className="page-link">
-                      1
-                    </Link>
-                  </li>
-                  <li className="page-item" aria-current="page">
-                    <Link to="" className="page-link">
-                      2
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link to="" className="page-link">
-                      3
-                    </Link>
-                  </li>
-                  <li className="page-item">
-                    <Link to="" className="page-link">
-                      <i className="fa-solid fa-angles-right"></i>
-                    </Link>
-                  </li>
-                </ul>
-              </nav> */}
+
               <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"

@@ -3,6 +3,7 @@ import React from "react";
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 // import "sweetalert/dist/sweetalert.css";
 
 // function AddCart(props){
@@ -30,7 +31,11 @@ const ProductBox = ({
   AddToCart,
   allimages,
   cart,
+  is_featured,
+  is_special_offer,
 }) => {
+  const [totalqty, settotalqty] = useState(false);
+
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
 
@@ -45,6 +50,8 @@ const ProductBox = ({
   const closeProductAlert = () => {
     setAlert(false);
   };
+  // console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
+
   // end sweetalert
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
@@ -69,30 +76,53 @@ const ProductBox = ({
             <span className="discount_ribbon mb-1">{discount}%</span>
           )}
         </div>
+        <div className="ribbon_div mt-4">
+          {is_featured == 0 ||
+          is_featured == "" ||
+          is_featured == null ||
+          is_featured == "0" ? null : (
+            <span className="is_featured_ribbon mb-1">{is_featured}%</span>
+          )}
+        </div>
+        <div className="ribbon_div mt-5">
+          {is_special_offer == 0 ||
+          is_special_offer == "" ||
+          is_special_offer == null ||
+          is_special_offer == "0" ? null : (
+            <span className="is_special_offer_ribbon mb-1">
+              {is_special_offer}%
+            </span>
+          )}
+        </div>
         <div className="label-flex">
-          {window.location.pathname ==="/wishlist"?<button className="btn p-0 wishlist btn-wishlist notifi-wishlist"
-           onClick={() => AddToWishList(id, wishlistt, wishlistid)}>
-            &times;
-          </button>:
-          <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-            {wishlistt > 0 ? (
-              <i
-                className="fa-regular fa-heart"
-                style={{ color: "red" }}
-                onClick={() => AddToWishList(id,wishlistt,wishlistid)}
-              ></i>
-            ) : (
-              <i
-                className="fa-regular fa-heart"
-                style={{ color:"" }}
-                onClick={() => AddToWishList(id, wishlistt, wishlistid)}
-              ></i>
-            )}
-          </button>}
+          {window.location.pathname === "/wishlist" ? (
+            <button
+              className="btn p-0 wishlist btn-wishlist notifi-wishlist"
+              onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+            >
+              &times;
+            </button>
+          ) : (
+            <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
+              {wishlistt > 0 ? (
+                <i
+                  className="fa-regular fa-heart"
+                  style={{ color: "red" }}
+                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+                ></i>
+              ) : (
+                <i
+                  className="fa-regular fa-heart"
+                  style={{ color: "" }}
+                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+                ></i>
+              )}
+            </button>
+          )}
         </div>
 
         {/* {image==""|| image==null|| image==undefined? */}
-       
+
         <a onClick={() => clickProduct(productid, id)}>
           <img
             src={
@@ -138,11 +168,11 @@ const ProductBox = ({
             })
           }
         </ul>
-        <a className="m-0 mb-2" onClick={() => clickProduct(productid)}>
+        <Link to="/product_detail" className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
           <h5 className="name m-0">{brand}</h5>
-        </a>
+        </Link>
         <h5 className="price theme-color m-0 mb-2">
           {"₹" + saleprice.toFixed(2)}{" "}
           <del className="text-muted small">{"₹" + productMRF.toFixed(2)}</del>
@@ -168,6 +198,7 @@ const ProductBox = ({
                 min={1}
                 onChange={func}
               />
+               
               <div
                 className="qty-right-plus"
                 onClick={() => setCount(count + 1)}
@@ -176,10 +207,19 @@ const ProductBox = ({
               >
                 <i className="fa-regular fa-plus"></i>
               </div>
+              {totalqty === true ? (
+              <p
+              className="mt-1 ms-2 text-danger"
+              type="invalid"
+              >
+              Cannot add more then total qty
+              </p>
+              ) : null}
             </div>
           </div>
-           {window.location.pathname==="/wishlist"?"":
-          cart === null || token === "null" || !token ? (
+          {window.location.pathname === "/wishlist" ? (
+            ""
+          ) : cart === null || token === "null" || !token ? (
             <>
               <button
                 className="buy-button buy-button-2 btn btn-cart"
@@ -190,15 +230,15 @@ const ProductBox = ({
                 <i className="fa-regular fa-cart-shopping"></i>
               </button>
             </>
-          ) : 
-          (<button
-            className="btn text-light btn-warning"
-            // onClick={() => setAlert(true)}
-            onClick={() => navigate("/cart")}
-          >
-            {"Buy"}
-          </button>)
-          }
+          ) : (
+            <button
+              className="btn text-light btn-warning"
+              // onClick={() => setAlert(true)}
+              onClick={() => navigate("/cart")}
+            >
+              {"Buy"}
+            </button>
+          )}
         </div>
       </div>
       {/* <SweetAlert

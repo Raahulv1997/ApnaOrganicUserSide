@@ -151,71 +151,74 @@ const Checkout = (props) => {
           if (response.data.response === "cart_empty") {
             setValidation(false);
           }
-          let ProductTotal = 0;
-          let Totaltaxes = 0;
-          let Totalgst = 0;
-          let Totalcgst = 0;
-          let Totalsgst = 0;
-          let Totalmtax = 0;
-          let Totalvtax = 0;
-          let Totalwtax = 0;
-          let Totalrtax = 0;
-          let TotalTaxableValue = 0;
-          let Saleprice = 0;
-          data.map((cdata) => {
-            // totalprice
-            ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
-            // end totalprice
-            if (cdata.gst === null) {
-              cdata.gst = "0";
-            }
-            if (cdata.sgst === null) {
-              cdata.sgst = "0";
-            }
-            if (cdata.cgst === null) {
-              cdata.cgst = "0";
-            }
-
-            // gst
-            Totalgst += (Number(cdata.product_price) * cdata.gst) / 100;
-            // end gst
-
-            // cgst
-            Totalcgst += (Number(cdata.product_price) * cdata.cgst) / 100;
-            // end cgst
-
-            // sgst
-            Totalsgst += (Number(cdata.product_price) * cdata.sgst) / 100;
-            // end sgst
-            Totalmtax +=
-              (Number(cdata.product_price) * cdata.manufacturers_sales_tax) /
-              100;
-            Totalvtax +=
-              (Number(cdata.product_price) * cdata.value_added_tax) / 100;
-            Totalrtax +=
-              (Number(cdata.product_price) * cdata.retails_sales_tax) / 100;
-            Totalwtax +=
-              (Number(cdata.product_price) * cdata.wholesale_sales_tax) / 100;
-
-            // totaltax
-            Totaltaxes +=
-              Totalgst +
-              Totalcgst +
-              Totalsgst +
-              Totalmtax +
-              Totalvtax +
-              Totalrtax +
-              Totalwtax;
-            // end totaltax
-
-            // totaltaxable value
-            TotalTaxableValue += cdata.product_price;
-            // end totaltaxable value
-
-            // saleprice
-            Saleprice = Number(cdata.sale_price).toFixed(2);
-            // end saleprice
-          });
+          else
+          {
+            let ProductTotal = 0;
+            let Totaltaxes = 0;
+            let Totalgst = 0;
+            let Totalcgst = 0;
+            let Totalsgst = 0;
+            let Totalmtax = 0;
+            let Totalvtax = 0;
+            let Totalwtax = 0;
+            let Totalrtax = 0;
+            let TotalTaxableValue = 0;
+            let Saleprice = 0;
+            data.map((cdata) => {
+              // totalprice
+              ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
+              // end totalprice
+              if (cdata.gst === null) {
+                cdata.gst = "0";
+              }
+              if (cdata.sgst === null) {
+                cdata.sgst = "0";
+              }
+              if (cdata.cgst === null) {
+                cdata.cgst = "0";
+              }
+  
+              // gst
+              Totalgst += (Number(cdata.product_price) * cdata.gst) / 100;
+              // end gst
+  
+              // cgst
+              Totalcgst += (Number(cdata.product_price) * cdata.cgst) / 100;
+              // end cgst
+  
+              // sgst
+              Totalsgst += (Number(cdata.product_price) * cdata.sgst) / 100;
+              // end sgst
+              Totalmtax +=
+                (Number(cdata.product_price) * cdata.manufacturers_sales_tax) /
+                100;
+              Totalvtax +=
+                (Number(cdata.product_price) * cdata.value_added_tax) / 100;
+              Totalrtax +=
+                (Number(cdata.product_price) * cdata.retails_sales_tax) / 100;
+              Totalwtax +=
+                (Number(cdata.product_price) * cdata.wholesale_sales_tax) / 100;
+  
+              // totaltax
+              Totaltaxes +=
+                Totalgst +
+                Totalcgst +
+                Totalsgst +
+                Totalmtax +
+                Totalvtax +
+                Totalrtax +
+                Totalwtax;
+              // end totaltax
+  
+              // totaltaxable value
+              TotalTaxableValue += cdata.product_price;
+              // end totaltaxable value
+  
+              // saleprice
+              Saleprice = Number(cdata.sale_price).toFixed(2);
+              // end saleprice
+            });
+              
           setorderadd({
             ...orderadd,
             total_amount: ProductTotal - CouponDis + ShippingCharge,
@@ -235,6 +238,9 @@ const Checkout = (props) => {
           setCartData(data);
           setapicall(false);
           setValidation(true);
+          }
+      
+        
         });
     } catch (err) {}
   }, [apicall, DeliveryMethod]);
@@ -354,18 +360,32 @@ const Checkout = (props) => {
           },
         })
         .then((response) => {
-          if (response.data.message === "Send mail Succesfully") {
+          if(response.data.order==="order_count_0"){
+            setProductAlert(true);
+
+          }
+        else  if (response.data.message ==="Send mail Succesfully") {
             setSpinner(false);
             setordervalidation("");
-            // setProductAlert(true);
+            
             localStorage.setItem("orderid", response.data.order_id);
+            setProductAlert(false);
 
             navigate("/your_orders");
           }
+           
+          // else
+          // {
+          //   alert("hellloooooooo")
+          //   navigate("/your_orders");
+          //   // console.log("huuuuuuuuu-----"+ProductAlert)
+          // }
 
           // return response;
         })
         .catch((error) => {});
+        setProductAlert(false);
+
     }
   };
   // end order add
@@ -373,12 +393,7 @@ const Checkout = (props) => {
   // sweetalert
   const closeProductAlert = (e) => {
     setProductAlert(false);
-    if (e === "order") {
-      navigate("/your_orders");
-    }
-    if (ordervalidation === "fill address" || e === "account") {
-      navigate("/your_account");
-    }
+    setSpinner(false);
   };
 
   // end sweetalert
@@ -1856,20 +1871,12 @@ const Checkout = (props) => {
         </div>
       </section>
       {/* <!-- Checkout section End --> */}
-      {/* <SweetAlert
+      <SweetAlert
         show={ProductAlert}
-        title={
-          ordervalidation === "fill address"
-            ? "Please Fill Address First"
-            : "Added Successfully "
-        }
-        text={ordervalidation === "fill address" ? "" : "Order Added"}
-        onConfirm={
-          ordervalidation === "fill address"
-            ? (account) => closeProductAlert(account)
-            : (order) => closeProductAlert(order)
-        }
-      /> */}
+        title={"order not placed try again"}
+        text={"order not placed"}
+        onConfirm={()=>closeProductAlert()}
+      />
 
       <Footer />
     </Fragment>
