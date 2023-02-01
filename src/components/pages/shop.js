@@ -284,7 +284,7 @@ const Shop = (props) => {
             )
             .then((response) => {
               let data = response.data;
-              console.log(response.data.results, "100001");
+              // console.log(response.data.results, "100001");
               setProdData(data.results);
 
               if (
@@ -336,7 +336,7 @@ const Shop = (props) => {
             )
             .then((response) => {
               let data = response.data;
-              console.log(data.results, "20002");
+              // console.log(data.results, "20002");
               setProdData(data.results);
               if (data.results.length == 0) {
                 setNoData(true);
@@ -380,7 +380,7 @@ const Shop = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
-            console.log(data, "30003");
+            // console.log(data, "30003");
             setCategoryData(data);
             setapicall(false);
           });

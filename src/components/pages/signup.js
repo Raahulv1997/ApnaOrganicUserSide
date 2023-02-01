@@ -54,7 +54,7 @@ const Singup = () => {
         email: e.target.email.value,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.data.response === "Email Already Exist") {
           setemailerror("Already");
           e.target.password.value = "";
