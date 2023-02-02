@@ -133,7 +133,8 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
         .get(`${process.env.REACT_APP_BASEURL}/products_pricing?id=${varientId}&product_id=${proid}`)
         .then((response) => {
           let data = response.data[0];
-          //  console.log("veriantData----"+ JSON.stringify (data))
+            console.log("veriantData----"+ JSON.stringify (data))
+            
             setProductprice(Number(data.product_price.toFixed(2)));
           setsaleprice(Number(data.sale_price).toFixed(2))
           setMrp( Number(data.mrp).toFixed(2));
@@ -164,7 +165,21 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
        
 
           let result8 =  data.product_verient.filter((item) => item.colors === colorValue)
-           setGetSizeOnColor(result8)
+          // console.log("jjjjj"+JSON.stringify(result8))
+          setGetSizeOnColor(result8)
+
+          // setProductprice(getSizOnclor.product_price);
+          // setsaleprice(getSizOnclor.sale_price)
+          // setMrp( getSizOnclor.mrp);
+          // setColors(getSizOnclor.colors);
+          // setDiscount(getSizOnclor.discount);
+          // setUnitQwanity(getSizOnclor.unit_quantity)
+          // setSize(getSizOnclor.size);
+          // setMfd(getSizOnclor.manufacturing_date);
+          // setExp(getSizOnclor.expire_date);
+          //  setQut(getSizOnclor.quantity)
+          
+          
          
         });
     } catch (err) {}
@@ -622,7 +637,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
   {productDetails.product_verient[0].size ? (
     <p className="mb-0 mt-2"> {"Size:"}</p>
   ) : null}
- {/* { console.log("product Data----------"+ JSON.stringify(getSizOnclor)) } */}
+ { console.log("product Data----------"+ JSON.stringify(getSizOnclor)) }
   {
 getSizOnclor.map((details) => {
 
