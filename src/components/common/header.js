@@ -20,6 +20,8 @@ import axios from "axios";
 import data from "../pages/data";
 const Header = (props) => {
   const useridd = localStorage.getItem("userid");
+  const [msg, setMsg] = useState(true);
+
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [apicall, setapicall] = useState(false);
   const [categorydata, setCategoryData] = useState([]);
@@ -117,7 +119,8 @@ const Header = (props) => {
               data.response === "header error" ||
               data.error === "Please authenticate using a valid token"
             ) {
-              // console.log("data--"+data.response)
+              setMsg(false);
+              // setapicall(false);
             } else {
               data.map((cdata) => {
                 ProductTotal +=
@@ -143,11 +146,13 @@ const Header = (props) => {
                     100;
               });
               setPdata(data);
+              setMsg(true);
+              
             }
           });
       } catch (err) {}
     }
-  }, [apicall, cartup, props.addcart, props.deleteCart]);
+  }, [apicall,cartup, props.addcart, props.deleteCart]);
   // console.log("**********"+JSON.stringify(pdata))
   const deleteCart = (id, user_id) => {
     axios
@@ -325,6 +330,7 @@ const Header = (props) => {
 
                         {/* cart view */}
                         <li className="onhover-dropdown ">
+                          
                           <div
                             className="header-icon bag-icon"
                             onClick={() => navigate("/cart")}
@@ -343,7 +349,12 @@ const Header = (props) => {
                               className="cart-list "
                               style={{ flexDirection: "column" }}
                             >
-                              {(pdata || []).map((data) => {
+                              {msg=== false? (
+                    <h4 className="text-dark text-center">
+                      Empty cart{" "}
+                    </h4>
+                  ):
+                              pdata.map((data) => {
                                 return (
                                   <li key={pdata.id}>
                                     <div className="drop-cart ">
