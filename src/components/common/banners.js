@@ -63,7 +63,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   //   }
   //   getRating();
   // }, []);
-  console.log("showww-------------0000"+JSON.stringify(productData))
+  // console.log("showww-------------0000"+JSON.stringify(productData))
   useEffect(() => {
     const result = catArray.filter(
       (thing, index, self) => index === self.findIndex((t) => t === thing)
@@ -197,7 +197,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             })
             .then((response) => {
               let data = response.data;
-               console.log("product data---"+ JSON.stringify (data))
+              
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -205,41 +205,48 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       }
       getProductData();
     } else {
-      function getProductData() {
-        try {
-          axios
-            .post(
-              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
-              {
-                product_search: {
-                  search: `${productType}`,
-                  price_from: "",
-                  price_to: "",
-                  id: "",
-                  is_delete: ["1"],
-                  product_title_name: "",
-                  sale_price: "",
-                  short_by_updated_on: "",
+      if(token){
+        function getProductData() {
+        
+          try {
+            axios
+              .post(
+                `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+                {
+                  product_search: {
+                    search: `${productType}`,
+                    price_from: "",
+                    price_to: "",
+                    id: "",
+                    is_delete: ["1"],
+                    product_title_name: "",
+                    sale_price: "",
+                    short_by_updated_on: "",
+                  },
                 },
-              },
-              {
-                headers: {
-                  user_token: token,
-                },
-              }
-            )
-            .then((response) => {
-              let data = response.data;
-              // console.log("product data---"+ JSON.stringify (data))
-              setProductData(response.data.results);
-              // console.log(
-              //   "getdataaaaaaaaa" + JSON.stringify(response.data.results)
-              // );
-              setapicall(false);
-            });
-        } catch (err) {}
+                {
+                  headers: {
+                    user_token: token,
+                  },
+                }
+              )
+              .then((response) => {
+                let data = response.data;
+                
+                console.log("product data---"+ JSON.stringify(data))
+                setProductData(response.data.results);
+                // console.log(
+                //   "getdataaaaaaaaa" + JSON.stringify(response.data.results)
+                // );
+                setapicall(false);
+              });
+          } catch (err) {}
+        }
+        getProductData();
+      }else{
+        alert("No token saved")
       }
-      getProductData();
+     
     }
   }, [productType, apicall]);
 
