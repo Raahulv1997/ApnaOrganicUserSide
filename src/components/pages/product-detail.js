@@ -179,6 +179,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
 
   
   const AddToCart = () => {
+ 
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/add_to_cart`,
@@ -198,6 +199,8 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
       )
       .then((response) => {
         let data = response.data;
+        console.log("dta-------"+JSON.stringify(data))
+        navigate("/cart")
         setapicall(true);
       });
   };
@@ -619,7 +622,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
   {productDetails.product_verient[0].size ? (
     <p className="mb-0 mt-2"> {"Size:"}</p>
   ) : null}
- { console.log("product Data----------"+ JSON.stringify(getSizOnclor)) }
+ {/* { console.log("product Data----------"+ JSON.stringify(getSizOnclor)) } */}
   {
 getSizOnclor.map((details) => {
 
@@ -810,7 +813,7 @@ getSizOnclor.map((details) => {
                             className="text-white"
                             onClick={() => AddToCart()}
                           >
-                            {" "}
+                            
                             Add To Cart
                           </span>
                         </div>
