@@ -54,7 +54,7 @@ const Singup = () => {
         email: e.target.email.value,
       })
       .then((response) => {
-        console.log(response);
+        // console.log(response);
         if (response.data.response === "Email Already Exist") {
           setemailerror("Already");
           e.target.password.value = "";
@@ -115,7 +115,6 @@ const Singup = () => {
 
   return (
     <Fragment>
-      <Header />
       {/* <Breadcumb pageName={"Register"} pageTitle={"Register"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space">

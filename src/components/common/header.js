@@ -41,7 +41,7 @@ const Header = (props) => {
     function getCategoryData() {
       try {
         axios
-          .put(`${process.env.REACT_APP_BASEURL}/get_all_category`)
+          .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
             setCategoryData(data);
@@ -57,7 +57,6 @@ const Header = (props) => {
       index ===
       self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
   );
-
   const level1category = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -82,7 +81,7 @@ const Header = (props) => {
       navigate(`/shop?search=${search}`);
     }
   };
-  console.log(search);
+  // console.log(search);
   useEffect(() => {
     if (
       token === undefined ||
@@ -454,7 +453,10 @@ const Header = (props) => {
             <div className="col-12">
               <div className="main-nav">
                 <div className="header-nav-left">
-                  <button className="dropdown-category dropdown-category-2">
+                  <button
+                    className="dropdown-category dropdown-category-2"
+                    onClick={() => open_Category()}
+                  >
                     <i className="fa-sharp fa-solid fa-bars pe-2 mt-1"></i>
                     <span>All Categories</span>
                   </button>
@@ -462,8 +464,8 @@ const Header = (props) => {
                   <div
                     className={
                       click === true
-                        ? "category-dropdown show"
-                        : "category-dropdown"
+                        ? "category-dropdown"
+                        : "category-dropdown d-none"
                     }
                   >
                     <div className="category-title">
@@ -682,7 +684,7 @@ const Header = (props) => {
                           <Link
                             className="nav-link dropdown-toggle  ps-xl-2 ps-0"
                             to="/"
-                            data-bs-toggle="dropdown"
+                            // data-bs-toggle="dropdown"
                           >
                             Home
                           </Link>
