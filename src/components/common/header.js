@@ -43,7 +43,11 @@ const Header = (props) => {
     function getCategoryData() {
       try {
         axios
-          .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
+          .get(`${process.env.REACT_APP_BASEURL}/get_all_category`, {
+            headers: {
+              user_token: token,
+            },
+          })
           .then((response) => {
             let data = response.data;
             setCategoryData(data);

@@ -46,6 +46,7 @@ function Wishlist(all_images) {
           )
           .then((response) => {
             let data = response.data;
+
             if (
               response.data.message === "empty" ||
               response.data.response === "header error" ||
