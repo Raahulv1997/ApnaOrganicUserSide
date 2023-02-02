@@ -81,7 +81,7 @@ const ProductBox = ({
           is_featured == "" ||
           is_featured == null ||
           is_featured == "0" ? null : (
-            <span className="is_featured_ribbon mb-1">{is_featured}%</span>
+            <span className="is_featured_ribbon mb-1">{"F"}</span>
           )}
         </div>
         <div className="ribbon_div mt-5">
@@ -90,7 +90,7 @@ const ProductBox = ({
           is_special_offer == null ||
           is_special_offer == "0" ? null : (
             <span className="is_special_offer_ribbon mb-1">
-              {is_special_offer}%
+              {"S"}%
             </span>
           )}
         </div>
