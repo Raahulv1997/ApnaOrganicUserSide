@@ -194,11 +194,11 @@ const Forgot = () => {
                       </div>
                       {emailerror === "blank otp" ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
-                          Please Write Otp!!!!
+                          Please enter your otp !
                         </p>
                       ) : emailerror === "otp not matched" ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
-                          Please Fill Correct Otp!!!!
+                          Please Fill Correct Otp !
                         </p>
                       ) : null}
                       {/* <div className="col-12 mt-3">
