@@ -47,6 +47,7 @@ function Account() {
   const [totalorder, settotalorder] = useState("");
   const [cartupdateid, setcartupdateid] = useState("");
   const [udata, setUdata] = useState([]);
+  const [dob,setdob]=useState([]);
   const [userdata, setuserdata] = useState({
     user_id: "",
     first_name: "",
@@ -59,6 +60,11 @@ function Account() {
     address: "",
     address2: "",
   });
+  const date_of_birth = "1999-01-04T18:30:00.000Z"
+    const DATE = date_of_birth.replace('T18:30:00.000Z', '')
+    console.log("555%%%%%%%%%%55555"+DATE)
+
+
   const token = localStorage.getItem("token");
   useEffect(() => {
     axios
@@ -75,6 +81,9 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
+        // setdob(data.date_of_birth);
+        // console.log("-********&&&&&&&&---------"+JSON.stringify(data.date_of_birth))
+         
         // localStorage.getItem("token")
 
         // navigate('/your_account')
@@ -84,6 +93,8 @@ function Account() {
     Onwishlistclick();
     OnOrderclick();
   }, [Password, apicall]);
+console.log("888888888888"+JSON.stringify(userdata))
+console.log("88888---------------------8888888"+JSON.stringify(udata))
 
   // wishlist
   const Onwishlistclick = () => {
@@ -149,7 +160,7 @@ function Account() {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata, {
           headers: {
-            user_token: `${token}`,
+            user_token: token,
           },
         })
         .then((response) => {
@@ -169,6 +180,16 @@ function Account() {
       [e.target.name]: e.target.value,
     });
   };
+  const onDateChange = (e) => {
+    let mdate = moment(e.target.value).format("YYYY-MM-DD");
+  console.log("DATE________------------"+JSON.stringify(mdate))
+
+    setdob({
+      ...dob,
+      [e.target.name]: mdate,
+    });
+  };
+  console.log("DATE________------------"+JSON.stringify(dob))
 
   // change Password:
 
@@ -336,6 +357,8 @@ function Account() {
     localStorage.setItem("orderid", id);
     navigate("/your_orders");
   };
+
+  // console.log("DATE====---------"+udata.date_of_birth)
   return (
     <React.Fragment>
       <Header addcart={AddToCart} />
@@ -882,7 +905,7 @@ function Account() {
                                             </h6>
                                             <h5>
                                               {moment(data.order_date).format(
-                                                "yyyy-MM-DD"
+                                                "YYYY-MM-DDThh:mm:00.000"
                                               )}
                                             </h5>
                                           </div>
@@ -1602,7 +1625,8 @@ function Account() {
                                       </tr>
                                       <tr>
                                         <td>Birthday :</td>
-                                        <td>{userdata.date_of_birth}</td>
+                                        <td>
+                                        {moment(userdata.date_of_birth).format("YYYY-MM-DD")}</td>
                                       </tr>
                                       <tr>
                                         <td>Phone Number :</td>
@@ -1977,9 +2001,9 @@ function Account() {
                     <Form.Control
                       max={currentdate}
                       name={"date_of_birth"}
-                      type="date"
-                      value={moment(udata.date_of_birth).format("YYYY-MM-DD")}
-                      onChange={OnchangeFistname}
+                      type={"date"}
+                      value={dob.date_of_birth}
+                      onChange={onDateChange}
                       required
                       placeholder="Product Quantity"
                     />

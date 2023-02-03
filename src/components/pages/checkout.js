@@ -54,6 +54,7 @@ const Checkout = (props) => {
     vendor_id: "1",
     order_product: [],
   });
+  console.log("=============="+JSON.stringify(cartdata))
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [SalePricee, setSalePricee] = useState(0);
   const [TotalTax, setTotalTax] = useState(0);
