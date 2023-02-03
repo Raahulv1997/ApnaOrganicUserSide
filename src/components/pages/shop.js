@@ -21,6 +21,7 @@ let showcategorydata = [];
 
 const Shop = (props) => {
   const [prodData, setProdData] = useState([]);
+  const [totaldata, settotaldata] = useState("");
   const [click, setclick] = useState(false);
   const [noData, setNoData] = useState(false);
   const [searchText, setsearchText] = useState("");
@@ -56,14 +57,15 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
-  // CALCULATIO OF PAGINATION:-
   const token = localStorage.getItem("token");
+
+  // CALCULATIO OF PAGINATION:-
   const indexOfLastRecord = currentPage * recordsPerPage;
   // console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   // console.log(indexOfFirstRecord);
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
-  const nPages = 5; //  Math.ceil(prodData.length / recordsPerPage);
+  const nPages = Math.ceil(totaldata / recordsPerPage);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
@@ -186,6 +188,7 @@ const Shop = (props) => {
         ...categoryNamedata,
         searchparams.get("category"),
       ]);
+      setcheckboxfilter(true);
       setbrandfilter([]);
       setratingfilter([]);
       setdiscountfilter([]);
@@ -289,6 +292,7 @@ const Shop = (props) => {
               let data = response.data;
               // console.log(response.data.results, "100001");
               setProdData(data.results);
+              settotaldata(data.pagination.totaldata);
 
               if (
                 searchCat.length === 0 &&
@@ -342,6 +346,7 @@ const Shop = (props) => {
               let data = response.data;
               // console.log(data.results, "20002");
               setProdData(data.results);
+              settotaldata(data.pagination.totaldata);
               if (data.results.length == 0) {
                 setNoData(true);
               } else {
@@ -392,6 +397,7 @@ const Shop = (props) => {
     }
     getCategoryData();
   }, [apicall]);
+
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -513,7 +519,7 @@ const Shop = (props) => {
       from_product_price: "",
     });
     setdiscountfilter("");
-    setbrandfilter("");
+    setbrandfilter([]);
     setratingfilter("");
     setapicall(true);
   };
@@ -829,10 +835,14 @@ const Shop = (props) => {
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"
-                                        type="checkbox"
+                                        type={"checkbox"}
                                         id="veget"
                                         name={"brand"}
-                                        // checked={checkboxfilter ===  true ? false : true}
+                                        // checked={
+                                        //   checkboxfilter === true
+                                        //     ? "Checked"
+                                        //     : "Not checked"
+                                        // }
                                         value={data.brand}
                                         onChange={(e) => onBrandFilterAdd(e)}
                                       />

@@ -15,15 +15,17 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
     <div>
       <nav aria-label="Page navigation example">
         <ul className="pagination">
+          {/* To change page perivous page :- */}
           <li className="page-item">
             <Link
               onClick={prevPage}
-              className="page-link"
+              className={currentPage === 1 ? "page-link d-none" : "page-link"}
               tabIndex="-1"
               aria-disabled="true"
             >
               <i className="fa-solid fa-angles-left"></i>
             </Link>
+            {/* No of pagination:- */}
           </li>{" "}
           {nPages.map((pgNumber) => {
             return (
@@ -36,15 +38,21 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
                 <Link
                   to=""
                   className="page-link"
-                  onClick={() => setCurrentPage(pgNumber - 1)}
+                  onClick={() => setCurrentPage(pgNumber)}
                 >
                   {pgNumber}
                 </Link>
               </li>
             );
           })}
+          {/* To change page next page :- */}
           <li className="page-item">
-            <Link onClick={nextPage} className="page-link">
+            <Link
+              onClick={nextPage}
+              className={
+                currentPage === nPages.length ? "page-link d-none" : "page-link"
+              }
+            >
               <i className="fa-solid fa-angles-right"></i>
             </Link>
           </li>

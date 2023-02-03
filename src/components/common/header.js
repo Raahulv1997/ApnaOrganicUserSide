@@ -172,10 +172,11 @@ const Header = (props) => {
         setapicall(true);
       });
   };
+  // Clear local storage on logout :-
   const OnLogoutClick = () => {
-    localStorage.removeItem("userid");
-    localStorage.removeItem("token");
+    localStorage.clear();
   };
+
   return (
     <Fragment>
       {/* <!-- Header Start --> */}
