@@ -210,8 +210,7 @@ const Header = (props) => {
 /* <!--Function for remove token on logout --> */
 
   const OnLogoutClick = () => {
-    localStorage.removeItem("userid");
-    localStorage.removeItem("token");
+    localStorage.clear();
   };
 /* <!--End this section--> */
 

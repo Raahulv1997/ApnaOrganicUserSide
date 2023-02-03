@@ -15,19 +15,20 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
-// import Pagination from "./Pagination";
+import Pagination from "./Pagination";
 
 let showcategorydata = [];
 
 const Shop = (props) => {
   const [prodData, setProdData] = useState([]);
+  const [totaldata, settotaldata] = useState("");
   const [click, setclick] = useState(false);
   const [noData, setNoData] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
   const useridd = localStorage.getItem("userid");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setrecordsPerPage] = useState(5);
+  const [recordsPerPage, setrecordsPerPage] = useState(2);
   const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
@@ -56,17 +57,15 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
-  // console.log("data--" + JSON.stringify(prodData));
-  // CALCULATIO OF PAGINATION:-
   const token = localStorage.getItem("token");
+
+  // CALCULATIO OF PAGINATION:-
   const indexOfLastRecord = currentPage * recordsPerPage;
   // console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   // console.log(indexOfFirstRecord);
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
-  const nPages = Math.ceil(prodData.length / recordsPerPage);
-  // console.log(nPages);
-  // console.log("pagep", prodData);
+  const nPages = Math.ceil(totaldata / recordsPerPage);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
@@ -176,7 +175,6 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
-  // console.log("yyyyyyyy-----------" + searchText);
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -190,6 +188,7 @@ const Shop = (props) => {
         ...categoryNamedata,
         searchparams.get("category"),
       ]);
+      setcheckboxfilter(true);
       setbrandfilter([]);
       setratingfilter([]);
       setdiscountfilter([]);
@@ -202,10 +201,7 @@ const Shop = (props) => {
   }, [searchCat, searchparams]);
   // var product = data.product;
   //   product list
-  // console.log("---brand" + JSON.stringify(brandfilter));
-  // console.log("---price" + JSON.stringify(pricefilter));
-  // console.log("---discount" + JSON.stringify(discountfilter));
-  // console.log("---rating" + JSON.stringify(ratingfilter));
+
   // SORTING
   const onSortingChange = (e) => {
     if (e.target.value === "latest") {
@@ -247,8 +243,17 @@ const Shop = (props) => {
   };
   // END SORTING
 
+  //Function to set the pagination no. dynamic :-
+  let [page, setPage] = useState([]);
   useEffect(() => {
-    // console.log("---tokenn  " + token);
+    let pages = [];
+    for (let i = 1; i <= nPages; i++) {
+      pages.push(i);
+    }
+    setPage(pages);
+  }, [prodData]);
+
+  useEffect(() => {
     let homeurl;
     if (
       token === "null" ||
@@ -261,8 +266,8 @@ const Shop = (props) => {
         try {
           axios
             .post(
-              // `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
-              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -275,7 +280,7 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
-                 
+
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
@@ -287,6 +292,7 @@ const Shop = (props) => {
               let data = response.data;
               // console.log(response.data.results, "100001");
               setProdData(data.results);
+              settotaldata(data.pagination.totaldata);
 
               if (
                 searchCat.length === 0 &&
@@ -309,8 +315,8 @@ const Shop = (props) => {
         try {
           axios
             .post(
-              // `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
-              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -323,7 +329,7 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
-                
+
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
@@ -340,6 +346,7 @@ const Shop = (props) => {
               let data = response.data;
               // console.log(data.results, "20002");
               setProdData(data.results);
+              settotaldata(data.pagination.totaldata);
               if (data.results.length == 0) {
                 setNoData(true);
               } else {
@@ -390,6 +397,7 @@ const Shop = (props) => {
     }
     getCategoryData();
   }, [apicall]);
+
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -511,7 +519,7 @@ const Shop = (props) => {
       from_product_price: "",
     });
     setdiscountfilter("");
-    setbrandfilter("");
+    setbrandfilter([]);
     setratingfilter("");
     setapicall(true);
   };
@@ -827,10 +835,14 @@ const Shop = (props) => {
                                     <div className="form-check ps-0 m-0 category-list-box">
                                       <input
                                         className="checkbox_animated"
-                                        type="checkbox"
+                                        type={"checkbox"}
                                         id="veget"
                                         name={"brand"}
-                                        // checked={checkboxfilter ===  true ? false : true}
+                                        // checked={
+                                        //   checkboxfilter === true
+                                        //     ? "Checked"
+                                        //     : "Not checked"
+                                        // }
                                         value={data.brand}
                                         onChange={(e) => onBrandFilterAdd(e)}
                                       />
@@ -1471,15 +1483,15 @@ const Shop = (props) => {
                 </div>
               )}
 
-              {/* <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"
-                  nPages={nPages}
+                  nPages={page}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                   recordsPerPage={recordsPerPage}
                 />
-              </div> */}
+              </div>
             </div>
           </div>
         </div>
