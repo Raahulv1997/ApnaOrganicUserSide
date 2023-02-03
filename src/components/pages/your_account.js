@@ -60,13 +60,13 @@ function Account() {
     address: "",
     address2: "",
   });
-  const date_of_birth = "1999-01-04T18:30:00.000Z"
-    const DATE = date_of_birth.replace('T18:30:00.000Z', '')
-    console.log("555%%%%%%%%%%55555"+DATE)
+ 
+    // console.log("555%%%%%%%%%%55555"+DATE)
 
 
   const token = localStorage.getItem("token");
   useEffect(() => {
+    
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/user_details`,
@@ -81,8 +81,10 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
-        // setdob(data.date_of_birth);
-        // console.log("-********&&&&&&&&---------"+JSON.stringify(data.date_of_birth))
+        let date_of_birth = "1999-01-04T18:30:00.000Z"
+        let DATE = date_of_birth.replace('T18:30:00.000Z', '')
+        setdob(DATE);
+        console.log("-********&&&&&&&&---------"+JSON.stringify(DATE))
          
         // localStorage.getItem("token")
 
@@ -2002,7 +2004,7 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
                       max={currentdate}
                       name={"date_of_birth"}
                       type={"date"}
-                      value={dob.date_of_birth}
+                      value={dob.DATE}
                       onChange={onDateChange}
                       required
                       placeholder="Product Quantity"
