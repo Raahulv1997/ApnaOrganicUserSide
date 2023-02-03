@@ -22,6 +22,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
         <ul className="pagination">
           <li className="page-item disabled">
             <Link
+            to=""
               onClick={prevPage}
               className="page-link"
               tabIndex="-1"
@@ -49,7 +50,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
             ) : null;
           })}
           <li className="page-item">
-            <Link onClick={nextPage} className="page-link">
+            <Link onClick={nextPage} className="page-link" to="">
               <i className="fa-solid fa-angles-right"></i>
             </Link>
           </li>

@@ -17,7 +17,6 @@ const BlogList = () => {
   const [apicall, setapicall] = useState([]);
   const [blogData, setBlogData] = useState([]);
   const [catData, setcatData] = useState([]);
-
   const [searchCategory, setSearchCategory] = useState("");
   const [recent, setRecent] = useState("");
   const [productTag, setProductTag] = useState("");
@@ -34,9 +33,7 @@ const BlogList = () => {
   useEffect(() => {
     onCategorySearch();
   }, [searchCategory, recent, productTag]);
-  // console.log(">>>>>>>>>>>>>>"+JSON.stringify(searchCategory))
   const onCategorySearch = () => {
-    // let categoryname = e.target.value;
     if (searchCategory.category ? categoryArray : "")
       categoryArray.push(searchCategory.category);
     if (categoryArray !== "") {
@@ -447,27 +444,27 @@ const BlogList = () => {
               <nav className="custome-pagination">
                 <ul className="pagination justify-content-center">
                   <li className="page-item disabled">
-                    <Link className="page-link" to="#" tabindex="-1">
+                    <Link className="page-link" to="" tabindex="-1">
                       <i className="fa-solid fa-angles-left"></i>
                     </Link>
                   </li>
                   <li className="page-item active">
-                    <Link className="page-link" to="#">
+                    <Link className="page-link" to="">
                       1
                     </Link>
                   </li>
                   <li className="page-item" aria-current="page">
-                    <Link className="page-link" to="#">
+                    <Link className="page-link" to="">
                       2
                     </Link>
                   </li>
                   <li className="page-item">
-                    <Link className="page-link" to="#">
+                    <Link className="page-link" to="">
                       3
                     </Link>
                   </li>
                   <li className="page-item">
-                    <Link className="page-link" to="#">
+                    <Link className="page-link" to="">
                       <i className="fa-solid fa-angles-right"></i>
                     </Link>
                   </li>
@@ -507,7 +504,7 @@ const BlogList = () => {
                                 <>
                                   <div className="recent-post-box">
                                     <div className="recent-box">
-                                      <Link to="" className="recent-image">
+                                      <Link to="/blog_detail" className="recent-image">
                                         <img
                                           src={blog.image}
                                           className="img-fluid  lazyload"

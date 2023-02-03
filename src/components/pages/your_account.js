@@ -9,7 +9,6 @@ import Footer from "../common/footer";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-import Product from "../../Photos/product/2.png";
 import { MdOutlineDashboard, MdOutlinePrivacyTip } from "react-icons/md";
 import { BsHandbag } from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
@@ -19,13 +18,12 @@ import Col from "react-bootstrap/Col";
 import { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-import { demo } from "../../Photos/demo.jpg";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
   localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
-  const currentdate = moment().format("yyyy-MM-DD");
+  const currentdate = moment().format("YYYY-MM-DD");
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
   const func = () => {};
@@ -47,12 +45,10 @@ function Account() {
   const [totalorder, settotalorder] = useState("");
   const [cartupdateid, setcartupdateid] = useState("");
   const [udata, setUdata] = useState([]);
-  const [dob,setdob]=useState([]);
   const [userdata, setuserdata] = useState({
     user_id: "",
     first_name: "",
     last_name: "",
-    //password:"",
     email: "",
     phone_no: "",
     gender: "",
@@ -61,7 +57,6 @@ function Account() {
     address2: "",
   });
  
-    // console.log("555%%%%%%%%%%55555"+DATE)
 
 
   const token = localStorage.getItem("token");
@@ -81,22 +76,12 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
-        let date_of_birth = "1999-01-04T18:30:00.000Z"
-        let DATE = date_of_birth.replace('T18:30:00.000Z', '')
-        setdob(DATE);
-        console.log("-********&&&&&&&&---------"+JSON.stringify(DATE))
-         
-        // localStorage.getItem("token")
 
-        // navigate('/your_account')
-        // return response;
       })
       .catch((error) => {});
     Onwishlistclick();
     OnOrderclick();
   }, [Password, apicall]);
-console.log("888888888888"+JSON.stringify(userdata))
-console.log("88888---------------------8888888"+JSON.stringify(udata))
 
   // wishlist
   const Onwishlistclick = () => {
@@ -182,16 +167,7 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
       [e.target.name]: e.target.value,
     });
   };
-  const onDateChange = (e) => {
-    let mdate = moment(e.target.value).format("YYYY-MM-DD");
-  console.log("DATE________------------"+JSON.stringify(mdate))
 
-    setdob({
-      ...dob,
-      [e.target.name]: mdate,
-    });
-  };
-  console.log("DATE________------------"+JSON.stringify(dob))
 
   // change Password:
 
@@ -349,8 +325,7 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
   // end add to cart
 
   const onProductClick = (id) => {
-    // console.log("___" + id);
-    // localStorage.setItem("orderid", id);
+
     localStorage.setItem("proid", id);
     navigate("/product-detail");
   };
@@ -360,7 +335,6 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
     navigate("/your_orders");
   };
 
-  // console.log("DATE====---------"+udata.date_of_birth)
   return (
     <React.Fragment>
       <Header addcart={AddToCart} />
@@ -413,12 +387,6 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-order-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-order"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -434,12 +402,6 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-order-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-order"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => OnOrderclick()}
                             >
@@ -455,13 +417,6 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-wishlist-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-wishlist"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-wishlist"
-                              // aria-selected="false"
                               onClick={() => Onwishlistclick()}
                             >
                               <AiOutlineHeart className="mx-2" />
@@ -497,12 +452,6 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-address-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-address"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-address"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -518,12 +467,6 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-profile-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-profile"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-profile"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -2004,8 +1947,8 @@ console.log("88888---------------------8888888"+JSON.stringify(udata))
                       max={currentdate}
                       name={"date_of_birth"}
                       type={"date"}
-                      value={dob.DATE}
-                      onChange={onDateChange}
+                      value={udata.date_of_birth}
+                      onChange={OnchangeFistname}
                       required
                       placeholder="Product Quantity"
                     />

@@ -1373,7 +1373,7 @@ const Shop = (props) => {
                     className="filter-button d-inline-block d-lg-none"
                     onClick={sidebar}
                   >
-                    <Link>
+                    <Link to="">
                       <i className="fa-solid fa-filter"></i> Filter Menu
                     </Link>
                   </div>
