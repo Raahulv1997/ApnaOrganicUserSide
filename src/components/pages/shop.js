@@ -15,7 +15,7 @@ import Badge from "react-bootstrap/Badge";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
-// import Pagination from "./Pagination";
+import Pagination from "./Pagination";
 
 let showcategorydata = [];
 
@@ -27,7 +27,7 @@ const Shop = (props) => {
   const [searchCat, setsearchCat] = useState([]);
   const useridd = localStorage.getItem("userid");
   const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setrecordsPerPage] = useState(5);
+  const [recordsPerPage, setrecordsPerPage] = useState(2);
   const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
@@ -56,7 +56,6 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
-  // console.log("data--" + JSON.stringify(prodData));
   // CALCULATIO OF PAGINATION:-
   const token = localStorage.getItem("token");
   const indexOfLastRecord = currentPage * recordsPerPage;
@@ -64,9 +63,7 @@ const Shop = (props) => {
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   // console.log(indexOfFirstRecord);
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
-  const nPages = Math.ceil(prodData.length / recordsPerPage);
-  // console.log(nPages);
-  // console.log("pagep", prodData);
+  const nPages = 5; //  Math.ceil(prodData.length / recordsPerPage);
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
@@ -176,7 +173,6 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
-  // console.log("yyyyyyyy-----------" + searchText);
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -202,10 +198,7 @@ const Shop = (props) => {
   }, [searchCat, searchparams]);
   // var product = data.product;
   //   product list
-  // console.log("---brand" + JSON.stringify(brandfilter));
-  // console.log("---price" + JSON.stringify(pricefilter));
-  // console.log("---discount" + JSON.stringify(discountfilter));
-  // console.log("---rating" + JSON.stringify(ratingfilter));
+
   // SORTING
   const onSortingChange = (e) => {
     if (e.target.value === "latest") {
@@ -247,8 +240,17 @@ const Shop = (props) => {
   };
   // END SORTING
 
+  //Function to set the pagination no. dynamic :-
+  let [page, setPage] = useState([]);
   useEffect(() => {
-    // console.log("---tokenn  " + token);
+    let pages = [];
+    for (let i = 1; i <= nPages; i++) {
+      pages.push(i);
+    }
+    setPage(pages);
+  }, [prodData]);
+
+  useEffect(() => {
     let homeurl;
     if (
       token === "null" ||
@@ -261,8 +263,8 @@ const Shop = (props) => {
         try {
           axios
             .post(
-              // `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
-              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -275,7 +277,7 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
-                 
+
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
@@ -309,8 +311,8 @@ const Shop = (props) => {
         try {
           axios
             .post(
-              // `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
-              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+              `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -323,7 +325,7 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
-                
+
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
@@ -1471,15 +1473,15 @@ const Shop = (props) => {
                 </div>
               )}
 
-              {/* <div className="d-flex justify-content-center">
+              <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"
-                  nPages={nPages}
+                  nPages={page}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                   recordsPerPage={recordsPerPage}
                 />
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

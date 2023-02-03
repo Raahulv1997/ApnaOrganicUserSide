@@ -2,17 +2,12 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Pagination({ nPages, currentPage, setCurrentPage }) {
-  // const pageNumbers = () => {
-  //   let page = [];
-  //   for (let i = 1; i <= nPages; i++) {
-  //     page.push(i);
-  //   }
-  //   return page;
-  // };
-  let pageNumbers = [1, 2, 3, 4];
+  //Function to go to next page with pagination :-
   const nextPage = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);
   };
+
+  //Function to go to previous page with pagination :-
   const prevPage = () => {
     if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
@@ -20,7 +15,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
     <div>
       <nav aria-label="Page navigation example">
         <ul className="pagination">
-          <li className="page-item disabled">
+          <li className="page-item">
             <Link
               onClick={prevPage}
               className="page-link"
@@ -30,8 +25,8 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
               <i className="fa-solid fa-angles-left"></i>
             </Link>
           </li>{" "}
-          {pageNumbers.map((pgNumber) => {
-            return nPages < pgNumber ? (
+          {nPages.map((pgNumber) => {
+            return (
               <li
                 className={`page-item${
                   currentPage == pgNumber ? "active" : ""
@@ -43,10 +38,10 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
                   className="page-link"
                   onClick={() => setCurrentPage(pgNumber - 1)}
                 >
-                  {pgNumber - 1}
+                  {pgNumber}
                 </Link>
               </li>
-            ) : null;
+            );
           })}
           <li className="page-item">
             <Link onClick={nextPage} className="page-link">
