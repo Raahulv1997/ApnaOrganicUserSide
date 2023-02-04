@@ -18,6 +18,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
           {/* To change page perivous page :- */}
           <li className="page-item">
             <Link
+            to=""
               onClick={prevPage}
               className={currentPage === 1 ? "page-link d-none" : "page-link"}
               tabIndex="-1"

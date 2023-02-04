@@ -10,7 +10,9 @@ import "../../CSS/style.css";
 import axios from "axios";
 import Header from "./header";
 import { Link } from "react-router-dom";
-const Benners = (props, productPrice, productMRF, name, image) => {
+const Benners = () => {
+
+/* <!--Start all state section--> */
   const [productData, setProductData] = useState([]);
   const [productType, setProductType] = useState([]);
   const [catArray, setcatArray] = useState([]);
@@ -22,9 +24,15 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
   const [showbanner, setShowBanner] = useState([]);
-  const [Imgarray, setImgArray] = useState([]);
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
+
+
+/* <!--End all state section--> */
+
+
+
+
   // var product = data.product;
   // useEffect(() => {
   //   function getRating() {
@@ -64,6 +72,10 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   //   getRating();
   // }, []);
   // console.log("showww-------------0000"+JSON.stringify(productData))
+
+
+  /* <!--Function for map category and same category not show again--> */
+
   useEffect(() => {
     const result = catArray.filter(
       (thing, index, self) => index === self.findIndex((t) => t === thing)
@@ -71,11 +83,10 @@ const Benners = (props, productPrice, productMRF, name, image) => {
     setunCatArr(result);
   }, [catArray]);
 
-  // product quantity
+  /* <!--End this section--> */
 
-  // end product quantity
 
-  // product box
+  /* <!--Add to cart--API Call--> */
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
@@ -109,17 +120,18 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           console.log("ADDCART" + data);
 
           setCount(0);
-          // setaddcartid(id)
           setData(data);
           setapicall(true);
-          // localStorage.setItem("cartupdate", true);
         });
     }
   };
+/* <!--End this section--> */
 
 
+/* <!--Add to wishlist--API Call--> */
 
-  const AddToWishList = (id, wishlistt, wishlistid) => {
+
+  const AddToWishList = (id, wishlistt) => {
     if (
       token === "null" ||
       token === "" ||
@@ -171,6 +183,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       }
     }
   };
+/* <!--End this section--> */
+
+
+
+/* <!--Show product data--API Call--> */
   useEffect(() => {
     let homeurl;
     if (
@@ -235,9 +252,6 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                 
                 console.log("product data---"+ JSON.stringify(data))
                 setProductData(response.data.results);
-                // console.log(
-                //   "getdataaaaaaaaa" + JSON.stringify(response.data.results)
-                // );
                 setapicall(false);
               });
           } catch (err) {}
@@ -249,16 +263,22 @@ const Benners = (props, productPrice, productMRF, name, image) => {
      
     }
   }, [productType, apicall]);
+/* <!--End this section--> */
+
+
+
+/* <!--Function for set token and navigate from product details page--> */
 
   const clickProduct = (productid, id) => {
-    // console.log( "prodduct id---"+productid)
-    // console.log( "veriant id---"+id)
-
     localStorage.setItem("proid", productid);
     localStorage.setItem("variantid", id);
-    // console.log( "pppppppppppp"+ localStorage.getItem("proid"))
     navigate("/product-detail");
   };
+/* <!--End this section--> */
+
+
+
+/* <!--Show banner--Api Call--> */
 
   useEffect(() => {
     axios
@@ -270,14 +290,22 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       .then((response) => {
         let data = response.data;
         setShowBanner(response.data);
-        // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       });
   }, [apicall]);
+/* <!--End this section--> */
 
-  // end product box
+
+
+
+
+/* <!--Start body of banner page--> */
+
   return (
     <Fragment>
       <Header addcart={AddToCart} />
+
+      {/*<!--Start banner section-->*/}
+
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
@@ -293,7 +321,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                             className="img-fluid bg-img lazyload "
                             alt="image"
                             name="image"
-                            // style={{width:"700px",height:"600px"}}
+                            
                           />
                           <div className="home-detail w-50 p-center-left">
                             <div>
@@ -301,14 +329,14 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                                 ORGANIC
                               </h3>
                               <h1 className="fw-bold w-100 text-white">
-                                {/* 100% Fresh */}
+                                
                                 {img.title}
                               </h1>
                               <h3 className="text-content fw-light text-white">
                                 Fruit & Vegetables
                               </h3>
                               <p className="d-sm-block d-none text-white">
-                                {/* Free shipping on all your order. we deliver you enjoy */}
+                                
                                 {img.description}
                               </p>
                               <Link to={img.banner_url}>
@@ -435,12 +463,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           </div>
         </div>
       </section>
+     {/*<!--End banner section-->*/}
 
-      {/* <!-- Product Sction Start --> */}
-      {/* <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
+ {/*<!--Show product section-->*/} 
       <div className="all_catagrey_tabs">
         <section className="product-section">
           <div className="container-fluid-lg">
@@ -510,8 +535,11 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           </div>
         </section>
       </div>
+ {/*<!--End show product section-->*/} 
 
-      {/* <!-- Product Sction Start --> */}
+
+
+      {/* <!--Show top product--> */}
       <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
@@ -521,6 +549,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       </section>
       {/* <!-- Product Sction End --> */}
       {/* <!-- Banner Section Start --> */}
+
+ {/*<!--Start top product banner-->*/} 
+
       <section className="banner-section">
         <div className="container-fluid-lg">
           <div className="row">
@@ -567,7 +598,12 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           </div>
         </div>
       </section>
+ {/*<!--End top product banner-->*/} 
+
     </Fragment>
   );
 };
+
+ {/*<!--End bannner page section-->*/} 
+
 export default Benners;

@@ -413,7 +413,7 @@ const Checkout = (props) => {
                     <div className="row my-md-0 my-4 mx-0">
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={0} disabled={currentTab !== 0}>
+                          <Nav.Link eventKey={0} disabled={currentTab !== 0} to="">
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -443,7 +443,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={1} disabled={currentTab !== 1}>
+                          <Nav.Link eventKey={1} disabled={currentTab !== 1} to="">
                             <li className="nav-link" role="presentation">
                               <div
                                 onClick={() => DeliveryClick()}
@@ -474,7 +474,7 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={2} disabled={currentTab !== 2}>
+                          <Nav.Link eventKey={2} disabled={currentTab !== 2} to="">
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"

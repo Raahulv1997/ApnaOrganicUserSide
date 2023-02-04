@@ -9,6 +9,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Accordion from "react-bootstrap/Accordion";
+import { CiBellOn } from "react-icons/ci";
 import {
   AiOutlineHome,
   AiOutlineSearch,
@@ -17,11 +18,10 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
-import data from "../pages/data";
 const Header = (props) => {
+  /* <!--Start all state section--> */
   const useridd = localStorage.getItem("userid");
   const [msg, setMsg] = useState(true);
-
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [apicall, setapicall] = useState(false);
   const [categorydata, setCategoryData] = useState([]);
@@ -30,15 +30,28 @@ const Header = (props) => {
   let [searcherror, setsearcherror] = useState(false);
   const [click, setclick] = useState(false);
   const [search, setsearch] = useState([]);
-  // const [cat_list, setcat_list] = useState(false);
+  const [notification,setNotification]=useState([]);
+
+/* <!--End all state section--> */
+
+
+/* <!--Function for all category show on top--> */
+
   const open_Category = () => {
     setclick(true);
   };
+/* <!--End this section--> */
+
+
+
   let cartup = localStorage.getItem("cartupdate");
   const token = localStorage.getItem("token");
   if (cartup === true) {
     setapicall(true);
   }
+
+/* <!--Show all category--Api Call--> */
+  
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -58,6 +71,11 @@ const Header = (props) => {
 
     getCategoryData();
   }, [apicall]);
+/* <!--End this section--> */
+
+
+/* <!--Function for map data and not show same data again--> */
+
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -78,7 +96,10 @@ const Header = (props) => {
         (t, x) => t.down2_category_name == thing.down2_category_name
       )
   );
+/* <!--End this section--> */
 
+
+/* <!--Function for search product--> */
   const searchProduct = (e) => {
     e.preventDefault();
     if (search.length === 0) {
@@ -87,7 +108,11 @@ const Header = (props) => {
       navigate(`/shop?search=${search}`);
     }
   };
-  // console.log(search);
+/* <!--End this section--> */
+
+
+/* <!--Get cart data--Api call--> */
+
   useEffect(() => {
     if (
       token === undefined ||
@@ -124,7 +149,6 @@ const Header = (props) => {
               data.error === "Please authenticate using a valid token"
             ) {
               setMsg(false);
-              // setapicall(false);
             } else {
               data.map((cdata) => {
                 ProductTotal +=
@@ -156,9 +180,12 @@ const Header = (props) => {
           });
       } catch (err) {}
     }
-  }, [apicall,cartup, props.addcart, props.deleteCart]);
-  // console.log("**********"+JSON.stringify(pdata))
-  const deleteCart = (id, user_id) => {
+  }, [apicall,cartup, props.addcart, props.deleteCart,props.getNotification]);
+/* <!--End this section--> */
+
+/* <!--Product delete from cart--Api call--> */
+  
+  const deleteCart = (id) => {
     axios
       .put(
         `${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,
@@ -177,14 +204,48 @@ const Header = (props) => {
         setapicall(true);
       });
   };
-  // Clear local storage on logout :-
+
+/* <!--End this section--> */
+
+/* <!--Function for remove token on logout --> */
+
   const OnLogoutClick = () => {
     localStorage.clear();
   };
+/* <!--End this section--> */
 
+/* <!--Notification Show--Api call--> */
+
+useEffect(() => {
+  function getNotification(){
+    try{
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/notification`,
+        {
+          "actor_type":"user",
+           "actor_id":"88"
+      })
+        .then((response) => {
+          let data = response.data;
+          
+          setNotification(data)
+          setapicall(false);
+        });
+    } catch (err) {}
+  }
+  getNotification();
+
+}, [apicall]);
+console.log("iii-------------"+JSON.stringify(notification))
+/* <!--End all api call section--> */
+
+
+/* <!--Start body of header section--> */
   return (
     <Fragment>
-      {/* <!-- Header Start --> */}
+
+{/* <!--Search bar section start--> */}
+
       <header className="header-2">
         <div className="top-nav top-header sticky-header sticky-header-3">
           <div className="container-fluid-lg">
@@ -289,7 +350,10 @@ const Header = (props) => {
                     <div className="nav-number"></div>
 
                     <Link to="/sellersignup">
-                      <span className="text-primary">Become A Seller </span>
+                      <span className="text-primary">Become A Seller
+                      
+                      </span>
+                            
                     </Link>
 
                     {/* </NavLink> */}
@@ -325,6 +389,30 @@ const Header = (props) => {
                           </Link>
                         </li>
                         <li className="onhover-dropdown">
+
+                        <div
+                            className="header-icon bag-icon"
+                            onClick={() => navigate("/")}
+                          >
+                            {notification.length === 0 ||
+                            notification.length === "" ||
+                            notification.length === "0" ? null : (
+                              <small className="badge-number">
+                                {notification.length}
+
+                              </small>
+                            )}
+                            <CiBellOn className="icon_color"/>
+                          </div>
+                          {notification.map((mssg)=>{
+                            return(
+                             <div className="onhover-div">
+                            <h6>{mssg.message}</h6>
+                          </div>
+                            )
+                          })}
+                        </li>
+                        <li className="onhover-dropdown">
                           <Link
                             to="/wishlist"
                             className="header-icon swap-icon"
@@ -334,8 +422,7 @@ const Header = (props) => {
                         </li>
 
                         {/* cart view */}
-                        <li className="onhover-dropdown ">
-                          
+                        <li className="onhover-dropdown">
                           <div
                             className="header-icon bag-icon"
                             onClick={() => navigate("/cart")}
@@ -355,10 +442,10 @@ const Header = (props) => {
                               style={{ flexDirection: "column" }}
                             >
                               {msg=== false? (
-                    <h4 className="text-dark text-center">
-                      Empty cart{" "}
-                    </h4>
-                  ):
+                             <h4 className="text-dark text-center">
+                              Empty cart{" "}
+                             </h4>
+                             ):
                               pdata.map((data) => {
                                 return (
                                   <li key={pdata.id}>
@@ -1162,6 +1249,9 @@ const Header = (props) => {
         </div>
         {/* end category */}
       </header>
+
+{/* <!--End search bar section start--> */}
+
       <div className="mobile-menu d-md-none d-block mobile-cart">
         <ul className="p-0">
           <li className="mobile-category" onClick={open_Category}>
@@ -1198,8 +1288,9 @@ const Header = (props) => {
           </li>
         </ul>
       </div>
-      {/* <!-- Header End --> */}
     </Fragment>
   );
 };
+      {/* <!-- Header End --> */}
+
 export default Header;
