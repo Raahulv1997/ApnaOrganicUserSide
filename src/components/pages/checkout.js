@@ -14,7 +14,7 @@ import SweetAlert from "sweetalert-react";
 import "sweetalert/dist/sweetalert.css";
 import Spinner from "react-bootstrap/Spinner";
 
-import { Button } from "bootstrap";
+
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
   // const[pAlert,setPalert]=useState(false);

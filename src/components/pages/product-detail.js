@@ -135,9 +135,9 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
           let data = response.data[0];
             console.log("veriantData----"+ JSON.stringify (data))
             
-            setProductprice(Number(data.product_price.toFixed(2)));
-          setsaleprice(Number(data.sale_price).toFixed(2))
-          setMrp( Number(data.mrp).toFixed(2));
+            setProductprice(parseFloat(data.product_price.toFixed(2)));
+          setsaleprice(parseFloat(data.sale_price).toFixed(2))
+          setMrp( parseFloat(data.mrp).toFixed(2));
           setColors(data.colors);
           setDiscount(data.discount);
           setUnitQwanity(data.unit_quantity)
@@ -250,15 +250,15 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
     // localStorage.setItem("variantid", id);
     // localStorage.setItem("proid", productid);
    
-    setProductprice(product_price);
-    setsaleprice(Number(SalePrice).toFixed(2))
-    setMrp(mrpp);
+    // setProductprice(product_price);
+    // setsaleprice(Number(SalePrice).toFixed(2))
+    // setMrp(mrpp);
    
-    setSize(sizee);
-    setMfd(mfdd);
-    setExp(expp);
-    setQut(quantityy);
-    setId(id);
+    // setSize(sizee);
+    // setMfd(mfdd);
+    // setExp(expp);
+    // setQut(quantityy);
+    // setId(id);
     
       // console.log("productID-----"+productid)
       // console.log("veriant ID-----"+id)
@@ -295,9 +295,9 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
     // localStorage.setItem("variantid", id);
     // localStorage.setItem("proid", productid);
    
-    setProductprice(product_price);
-    setsaleprice(Number (SalePrice).toFixed(2))
-    setMrp(mrpp);
+    setProductprice(parseFloat (product_price).toFixed(2));
+    setsaleprice(parseFloat (SalePrice).toFixed(2))
+    setMrp(parseFloat (mrpp).toFixed(2));
    setUnitQwanity(unitQwanityy)
     setSize(sizee);
     setMfd(mfdd);
@@ -342,10 +342,10 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
     console.log("veriant id in color function-----"+veriantid)
     // localStorage.setItem("variantid", id);
     // localStorage.setItem("proid", productid);
-    setsaleprice(Number (Salepricee).toFixed(2))
+    setsaleprice(parseFloat(Salepricee).toFixed(2))
     setColors(color);
     setProductprice(product_price);
-    setMrp(mrpp);
+    setMrp(parseFloat (mrpp).toFixed(2));
     setMfd(mfdd);
     setExp(expp);
     setQut(quantityy);
@@ -525,13 +525,13 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
                   {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                   <div className="price-rating">
                     <h3 className="theme-color price">
-                      {Number(saleprice)}
+                      {(saleprice)}
            
                       <del className="text-content">
                         {(mrp)}
                       </del>
                       <span className="offer theme-color">
-                          {Number(discount)} %off
+                          {(discount)} %off
                       </span>
                       {/* <h3 className="text-dark">Taxs</h3>
                             <h5>Gst:{productDetails.gst}</h5>
