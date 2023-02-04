@@ -83,7 +83,7 @@ const Cart = () => {
       .then((response) => {
         setapicall(true);
         let data = response.data;
-   
+
         CheckCoupon();
       });
   };
@@ -151,7 +151,6 @@ const Cart = () => {
         let data = response.data[0];
         CheckCoupon();
         setapicall(true);
-
       });
   };
 
@@ -291,8 +290,8 @@ const Cart = () => {
       <section className="cart-section section-b-space">
         <div className="container-fluid-lg p-0">
           <div className="row g-sm-5 g-3 ">
-            <div className="col-xxl-9">
-              <div className="cart-table">
+            <div className="col-xxl-9 ">
+              <div className="cart-table container-fluid ">
                 <div className="table-responsive-xl">
                   {msg === false ? (
                     <h2 className="text-dark text-center">

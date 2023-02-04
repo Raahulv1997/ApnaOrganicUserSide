@@ -26,9 +26,10 @@ const Shop = (props) => {
   const [noData, setNoData] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
+  const [branchArr, setbranchArr] = useState([]);
   const useridd = localStorage.getItem("userid");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setrecordsPerPage] = useState(2);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [recordsPerPage, setrecordsPerPage] = useState(12);
   const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
@@ -247,13 +248,14 @@ const Shop = (props) => {
   let [page, setPage] = useState([]);
   useEffect(() => {
     let pages = [];
-    for (let i = 1; i <= nPages; i++) {
+    for (let i = 0; i < nPages; i++) {
       pages.push(i);
     }
     setPage(pages);
   }, [prodData]);
 
   useEffect(() => {
+    console.log(showcategorydata);
     let homeurl;
     if (
       token === "null" ||
@@ -277,14 +279,12 @@ const Shop = (props) => {
                   product_title_name: `${sortingfilter.aproduct}`,
                   sale_price: `${sortingfilter.hprice}`,
                   short_by_updated_on: "",
-                  product_type: [],
                   colors: [],
                   size: [],
-
+                  category: [searchCat],
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
-                  category: [searchCat],
                 },
               }
             )
@@ -527,7 +527,22 @@ const Shop = (props) => {
   // end category
 
   //   BRAND
-  const filtercategorydata = categoryfilterdata.filter(
+
+  //  Called api to get the brand list :-
+  useEffect(() => {
+    axios
+      .get("http://192.168.29.108:5000/brand_list")
+      .then((res) => {
+        console.log(res.data);
+        setbranchArr(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  // Filter for the brand array :-
+  const filtercategorydata = branchArr.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.brand == thing.brand)
   );
@@ -538,6 +553,7 @@ const Shop = (props) => {
   // );
 
   // END BRANDz
+
   return (
     <Fragment>
       <Header />
@@ -833,19 +849,27 @@ const Shop = (props) => {
                                 return (
                                   <li key={data.id}>
                                     <div className="form-check ps-0 m-0 category-list-box">
-                                      <input
-                                        className="checkbox_animated"
-                                        type={"checkbox"}
-                                        id="veget"
-                                        name={"brand"}
-                                        // checked={
-                                        //   checkboxfilter === true
-                                        //     ? "Checked"
-                                        //     : "Not checked"
-                                        // }
-                                        value={data.brand}
-                                        onChange={(e) => onBrandFilterAdd(e)}
-                                      />
+                                      {brandfilter.includes(data.brand) ? (
+                                        <input
+                                          className="checkbox_animated"
+                                          type={"checkbox"}
+                                          id="veget"
+                                          name={"brand"}
+                                          checked
+                                          value={data.brand}
+                                          onChange={(e) => onBrandFilterAdd(e)}
+                                        />
+                                      ) : (
+                                        <input
+                                          className="checkbox_animated"
+                                          type={"checkbox"}
+                                          id="veget"
+                                          name={"brand"}
+                                          value={data.brand}
+                                          onChange={(e) => onBrandFilterAdd(e)}
+                                        />
+                                      )}
+
                                       <label
                                         className="form-check-label"
                                         htmlFor="veget"
