@@ -2,54 +2,69 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 function Pagination({ nPages, currentPage, setCurrentPage }) {
-  // const pageNumbers = () => {
-  //   let page = [];
-  //   for (let i = 1; i <= nPages; i++) {
-  //     page.push(i);
-  //   }
-  //   return page;
-  // };
-  let pageNumbers = [1, 2, 3, 4];
+  //Function to go to next page with pagination :-
   const nextPage = () => {
     if (currentPage !== nPages) setCurrentPage(currentPage + 1);
   };
+
+  //Function to go to previous page with pagination :-
   const prevPage = () => {
     if (currentPage !== 1) setCurrentPage(currentPage - 1);
   };
   return (
     <div>
-      <nav aria-label="Page navigation example">
-        <ul className="pagination">
-          <li className="page-item disabled">
+      <nav aria-label="Page navigation example ">
+        <ul className="pagination mt-5">
+          {/* To change page perivous page :- */}
+          <li className="page-item">
             <Link
+              to=""
               onClick={prevPage}
-              className="page-link"
+              className={
+                currentPage === 1
+                  ? "page-link d-none text-success"
+                  : "page-link text-success"
+              }
               tabIndex="-1"
               aria-disabled="true"
             >
               <i className="fa-solid fa-angles-left"></i>
             </Link>
+            {/* No of pagination:- */}
           </li>{" "}
-          {pageNumbers.map((pgNumber) => {
-            return nPages < pgNumber ? (
+          {nPages.map((pgNumber) => {
+            return (
               <li
                 className={`page-item${
-                  currentPage == pgNumber ? "active" : ""
+                  currentPage == pgNumber ? "active " : "text-success"
                 } `}
                 key={pgNumber}
               >
                 <Link
                   to=""
-                  className="page-link"
-                  onClick={() => setCurrentPage(pgNumber - 1)}
+                  // className="page-link "
+                  onClick={() => setCurrentPage(pgNumber)}
+                  className={`page-link ${
+                    currentPage == pgNumber
+                      ? "active bg-success"
+                      : "text-success"
+                  } `}
                 >
-                  {pgNumber - 1}
+                  {pgNumber + 1}
                 </Link>
               </li>
-            ) : null;
+            );
           })}
+          {/* To change page next page :- */}
           <li className="page-item">
-            <Link onClick={nextPage} className="page-link">
+            <Link
+              onClick={nextPage}
+              className={
+                currentPage === nPages.length
+                  ? "page-link d-none text-success"
+                  : "page-link text-success"
+              }
+            >
               <i className="fa-solid fa-angles-right"></i>
             </Link>
           </li>

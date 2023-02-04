@@ -5,7 +5,6 @@ import Header from "../common/header";
 import Badge from "react-bootstrap/Badge";
 import ListGroup from "react-bootstrap/ListGroup";
 import Button from "react-bootstrap/Button";
-//import ProductImg1 from "../../Photos/product/1.png";
 import Breadcumb from "../common/beadcumb";
 import { data1 } from "./data";
 import "../../CSS/style.css";
@@ -13,7 +12,7 @@ import { Link, NavLink, useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-const Cart = (all_images) => {
+const Cart = () => {
   const navigate = useNavigate();
   const [show, setShow] = useState("");
   const [apicall, setapicall] = useState(false);
@@ -28,7 +27,6 @@ const Cart = (all_images) => {
   const [msg, setMsg] = useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [totalqty, settotalqty] = useState(false);
-
   var product1 = data1.product1;
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
@@ -85,9 +83,7 @@ const Cart = (all_images) => {
       .then((response) => {
         setapicall(true);
         let data = response.data;
-        // setCartData(data);
-        // quantity = quantity- 1;
-        // setQuantity((quantity = quantity - 1));
+
         CheckCoupon();
       });
   };
@@ -129,10 +125,8 @@ const Cart = (all_images) => {
               });
               setProductPriceTotal(ProductTotal);
               setCartData(data);
-              setapicall(false);
+              setapicall(true);
             }
-
-            // setapicall(false);
           });
       } catch (err) {}
     }
@@ -155,8 +149,8 @@ const Cart = (all_images) => {
       )
       .then((response) => {
         let data = response.data[0];
-        setapicall(true);
         CheckCoupon();
+        setapicall(true);
       });
   };
 
@@ -177,11 +171,9 @@ const Cart = (all_images) => {
       )
       .then((response) => {
         let data = response.data;
-        // setData(response.data);
         setapicall(true);
       });
   };
-  // };  End save For Later
 
   // payement
   const onProccedClick = () => {
@@ -298,8 +290,8 @@ const Cart = (all_images) => {
       <section className="cart-section section-b-space">
         <div className="container-fluid-lg p-0">
           <div className="row g-sm-5 g-3 ">
-            <div className="col-xxl-9">
-              <div className="cart-table">
+            <div className="col-xxl-9 ">
+              <div className="cart-table container-fluid ">
                 <div className="table-responsive-xl">
                   {msg === false ? (
                     <h2 className="text-dark text-center">

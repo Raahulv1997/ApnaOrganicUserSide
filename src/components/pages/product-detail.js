@@ -644,7 +644,7 @@ getSizOnclor.map((details) => {
     return (
       <li key={details.id}>
 
-        <Link onClick={() => {
+        <Link to="" onClick={() => {
 
          
           setVeriantId(details.id)
@@ -675,7 +675,7 @@ getSizOnclor.map((details) => {
     return (
       <li key={details.id}>
 
-        <Link onClick={() => {
+        <Link to="" onClick={() => {
 
           OnUnitQwantiity( details.unit, details.unit_quantity,details.sale_price,details.product_price, details.mrp, details.size, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id
           )
@@ -715,7 +715,7 @@ getSizOnclor.map((details) => {
                           return (
                             <li>
                               
-                              <Link onClick={() => {
+                              <Link to="" onClick={() => {
                                 setVeriantId(details.id)
                             
                                setSizeOn(true)

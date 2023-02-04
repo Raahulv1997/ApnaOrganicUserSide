@@ -9,7 +9,6 @@ import Footer from "../common/footer";
 import Nav from "react-bootstrap/Nav";
 import Row from "react-bootstrap/Row";
 import Tab from "react-bootstrap/Tab";
-import Product from "../../Photos/product/2.png";
 import { MdOutlineDashboard, MdOutlinePrivacyTip } from "react-icons/md";
 import { BsHandbag } from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
@@ -19,13 +18,12 @@ import Col from "react-bootstrap/Col";
 import { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
-import { demo } from "../../Photos/demo.jpg";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
   localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
-  const currentdate = moment().format("yyyy-MM-DD");
+  const currentdate = moment().format("YYYY-MM-DD");
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
   const func = () => {};
@@ -51,7 +49,6 @@ function Account() {
     user_id: "",
     first_name: "",
     last_name: "",
-    //password:"",
     email: "",
     phone_no: "",
     gender: "",
@@ -59,8 +56,12 @@ function Account() {
     address: "",
     address2: "",
   });
+ 
+
+
   const token = localStorage.getItem("token");
   useEffect(() => {
+    
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/user_details`,
@@ -75,10 +76,7 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
-        // localStorage.getItem("token")
 
-        // navigate('/your_account')
-        // return response;
       })
       .catch((error) => {});
     Onwishlistclick();
@@ -149,7 +147,7 @@ function Account() {
       axios
         .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata, {
           headers: {
-            user_token: `${token}`,
+            user_token: token,
           },
         })
         .then((response) => {
@@ -169,6 +167,7 @@ function Account() {
       [e.target.name]: e.target.value,
     });
   };
+
 
   // change Password:
 
@@ -326,8 +325,7 @@ function Account() {
   // end add to cart
 
   const onProductClick = (id) => {
-    // console.log("___" + id);
-    // localStorage.setItem("orderid", id);
+
     localStorage.setItem("proid", id);
     navigate("/product-detail");
   };
@@ -336,6 +334,7 @@ function Account() {
     localStorage.setItem("orderid", id);
     navigate("/your_orders");
   };
+
   return (
     <React.Fragment>
       <Header addcart={AddToCart} />
@@ -388,12 +387,6 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-order-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-order"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -409,12 +402,6 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-order-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-order"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-order"
                               aria-selected="false"
                               onClick={() => OnOrderclick()}
                             >
@@ -430,13 +417,6 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-wishlist-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-wishlist"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-wishlist"
-                              // aria-selected="false"
                               onClick={() => Onwishlistclick()}
                             >
                               <AiOutlineHeart className="mx-2" />
@@ -472,12 +452,6 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-address-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-address"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-address"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -493,12 +467,6 @@ function Account() {
                           <li className="nav-item" role="presentation">
                             <button
                               className="nav-link p-0"
-                              // id="pills-profile-tab"
-                              // data-bs-toggle="pill"
-                              // data-bs-target="#pills-profile"
-                              // type="button"
-                              // role="tab"
-                              // aria-controls="pills-profile"
                               aria-selected="false"
                               onClick={() => setclick(false)}
                             >
@@ -882,7 +850,7 @@ function Account() {
                                             </h6>
                                             <h5>
                                               {moment(data.order_date).format(
-                                                "yyyy-MM-DD"
+                                                "YYYY-MM-DDThh:mm:00.000"
                                               )}
                                             </h5>
                                           </div>
@@ -1602,7 +1570,8 @@ function Account() {
                                       </tr>
                                       <tr>
                                         <td>Birthday :</td>
-                                        <td>{userdata.date_of_birth}</td>
+                                        <td>
+                                        {moment(userdata.date_of_birth).format("YYYY-MM-DD")}</td>
                                       </tr>
                                       <tr>
                                         <td>Phone Number :</td>
@@ -1977,8 +1946,8 @@ function Account() {
                     <Form.Control
                       max={currentdate}
                       name={"date_of_birth"}
-                      type="date"
-                      value={moment(udata.date_of_birth).format("YYYY-MM-DD")}
+                      type={"date"}
+                      value={udata.date_of_birth}
                       onChange={OnchangeFistname}
                       required
                       placeholder="Product Quantity"
