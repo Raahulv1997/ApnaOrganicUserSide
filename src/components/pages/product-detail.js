@@ -21,6 +21,7 @@ import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const ProductDetail = ({ logIn }) => {
 
+
   var result6;
   var result8;
   
@@ -215,11 +216,65 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
       .then((response) => {
         let data = response.data;
         console.log("dta-------"+JSON.stringify(data))
-        navigate("/cart")
+        // navigate("/cart")
         setapicall(true);
       });
   };
+  // const AddToWishList = (id, wishlistt) => {
+  //   if (
+  //     token === "null" ||
+  //     token === "" ||
+  //     token === null ||
+  //     token === undefined ||
+  //     token === true
+  //   ) {
+  //     navigate("/login");
+  //   } else {
+  //     if (wishlistt > 0) {
+  //       axios
+  //         .put(
+  //           `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+  //           {
+  //             id: id,
+  //           },
+  //           {
+  //             headers: {
+  //               user_token: `${token}`,
+  //             },
+  //           }
+  //         )
+  //         .then((response) => {
+  //           let data = response.data[0];
+  //       setProductDetails(data.results);
 
+  //           // setData(response.data);
+  //           setWlistData("add");
+  //           setapicall(true);
+  //         });
+  //     } else {
+  //       axios
+  //         .post(
+  //           `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+  //           {
+  //             user_id: "",
+  //             product_view_id: `${id}`,
+  //           },
+  //           {
+  //             headers: {
+  //               user_token: `${token}`,
+  //             },
+  //           }
+  //         )
+  //         .then((response) => {
+  //           let data = response.data;
+  //           setProductDetails(data.results);
+
+  //           setWlistData("remove");
+  //           setapicall(true);
+  //         });
+  //     }
+  //   }
+  // };
   const AddToWishList = () => {
     axios
       .post(
@@ -808,8 +863,26 @@ getSizOnclor.map((details) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-6 col-xl-3">
-                      <button className="btn btn-dark">
-                        <Link to="/wishlist">
+                    {/* <button className="btn btn-dark">
+              {wishlistt > 0 ? (
+                 <span
+                 className="text-white"
+                 onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+               >
+                 Add To Wishlist
+               </span>
+              ) : (
+                <span
+                className="text-white"
+                onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+              >
+                Add To Wishlist
+              </span>
+              )}
+            </button> */}
+
+                     <button className="btn btn-dark">
+                        <Link to="">
                           {/* <i data-feather="heart"></i> */}
                           <span
                             className="text-white"
@@ -818,7 +891,7 @@ getSizOnclor.map((details) => {
                             Add To Wishlist
                           </span>
                         </Link>
-                      </button>
+                      </button> 
                     </div>
 
                     <div className="col-6 col-xl-3 ">

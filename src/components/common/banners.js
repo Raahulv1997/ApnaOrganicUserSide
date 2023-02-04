@@ -27,7 +27,7 @@ const Benners = () => {
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
 
-
+console.log("productData-----@@@@@@@@@-----"+JSON.stringify(productData))
 /* <!--End all state section--> */
 
 
@@ -183,9 +183,11 @@ const Benners = () => {
       }
     }
   };
+
 /* <!--End this section--> */
 
 
+console.log("DATAAA&&&&&&&________----------"+JSON.stringify(data))
 
 /* <!--Show product data--API Call--> */
   useEffect(() => {
