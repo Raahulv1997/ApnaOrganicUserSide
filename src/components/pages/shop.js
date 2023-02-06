@@ -17,9 +17,11 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
 import Pagination from "./Pagination";
 
+/*<-------Global varialable------->*/
 let showcategorydata = [];
 
 const Shop = (props) => {
+  /*<-----State Declaration----> */
   const [prodData, setProdData] = useState([]);
   const [totaldata, settotaldata] = useState("");
   const [click, setclick] = useState(false);
@@ -58,9 +60,11 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
+
+  /*<-----Token Declaration----> */
   const token = localStorage.getItem("token");
 
-  // CALCULATIO OF PAGINATION:-
+  /*<-----Pagination Calculator----> */
   const indexOfLastRecord = currentPage * recordsPerPage;
   // console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -68,6 +72,7 @@ const Shop = (props) => {
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
   const nPages = Math.ceil(totaldata / recordsPerPage);
 
+  /*<-----Adding to cart functionality----> */
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
       token === undefined ||
@@ -105,6 +110,8 @@ const Shop = (props) => {
         });
     }
   };
+
+  /*<-----Functionality of adding and deleting products from Wishlist----> */
   const AddToWishList = (id, wishlistt) => {
     if (
       token === undefined ||
@@ -161,6 +168,7 @@ const Shop = (props) => {
     }
   };
 
+  /*<-----Functionality to go to rpoduct details page----> */
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");

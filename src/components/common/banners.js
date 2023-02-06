@@ -11,12 +11,12 @@ import axios from "axios";
 import Header from "./header";
 import { Link } from "react-router-dom";
 const Benners = () => {
-
-/* <!--Start all state section--> */
+  /* <!--Start all state section--> */
   const [productData, setProductData] = useState([]);
   const [productType, setProductType] = useState([]);
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
+
   let useridd = localStorage.getItem("userid");
   let token = localStorage.getItem("token");
 
@@ -27,52 +27,47 @@ const Benners = () => {
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
 
-
-/* <!--End all state section--> */
-
-
-
+  /* <!--End all state section--> */
 
   // var product = data.product;
-  // useEffect(() => {
-  //   function getRating() {
-  //     try {
-  //       axios
-  //         .post(
-  //           `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
-  //           {
-  //             product_search: {
-  //               search: `${productType}`,
-  //               price_from: "",
-  //               price_to: "",
-  //               id: "",
-  //               product_title_name: "",
-  //               sale_price: "",
-  //               short_by_updated_on: "",
-  //             },
-  //           }
-  //         )
-  //         .then((response) => {
-  //           let data = response.data;
-  //           setProductData(response.data.results);
-  //           localStorage.setItem("reviewid", response.data.results.id);
+  useEffect(() => {
+    function getRating() {
+      try {
+        axios
+          .post(
+            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+            {
+              product_search: {
+                search: `${productType}`,
+                price_from: "",
+                price_to: "",
+                id: "",
+                product_title_name: "",
+                sale_price: "",
+                short_by_updated_on: "",
+              },
+            }
+          )
+          .then((response) => {
+            let data = response.data;
+            setProductData(response.data.results);
+            localStorage.setItem("reviewid", response.data.results.id);
 
-  //           setapicall(false);
-  //           {
-  //             response.data.results.map((product) => {
-  //               return setcatArray((catArray) => [
-  //                 ...catArray,
-  //                 product.product_type,
-  //               ]);
-  //             });
-  //           }
-  //         });
-  //     } catch (err) {}
-  //   }
-  //   getRating();
-  // }, []);
+            setapicall(false);
+            {
+              response.data.results.map((product) => {
+                return setcatArray((catArray) => [
+                  ...catArray,
+                  product.product_type,
+                ]);
+              });
+            }
+          });
+      } catch (err) {}
+    }
+    getRating();
+  }, []);
   // console.log("showww-------------0000"+JSON.stringify(productData))
-
 
   /* <!--Function for map category and same category not show again--> */
 
@@ -84,7 +79,6 @@ const Benners = () => {
   }, [catArray]);
 
   /* <!--End this section--> */
-
 
   /* <!--Add to cart--API Call--> */
 
@@ -125,11 +119,9 @@ const Benners = () => {
         });
     }
   };
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-/* <!--Add to wishlist--API Call--> */
-
+  /* <!--Add to wishlist--API Call--> */
 
   const AddToWishList = (id, wishlistt) => {
     if (
@@ -183,11 +175,9 @@ const Benners = () => {
       }
     }
   };
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-
-/* <!--Show product data--API Call--> */
+  /* <!--Show product data--API Call--> */
   useEffect(() => {
     let homeurl;
     if (
@@ -214,7 +204,7 @@ const Benners = () => {
             })
             .then((response) => {
               let data = response.data;
-              
+
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -222,9 +212,8 @@ const Benners = () => {
       }
       getProductData();
     } else {
-      if(token){
+      if (token) {
         function getProductData() {
-        
           try {
             axios
               .post(
@@ -249,36 +238,31 @@ const Benners = () => {
               )
               .then((response) => {
                 let data = response.data;
-                
-                console.log("product data---"+ JSON.stringify(data))
+
+                console.log("product data---" + JSON.stringify(data));
                 setProductData(response.data.results);
                 setapicall(false);
               });
           } catch (err) {}
         }
         getProductData();
-      }else{
-        alert("No token saved")
+      } else {
+        alert("No token saved");
       }
-     
     }
   }, [productType, apicall]);
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-
-/* <!--Function for set token and navigate from product details page--> */
+  /* <!--Function for set token and navigate from product details page--> */
 
   const clickProduct = (productid, id) => {
     localStorage.setItem("proid", productid);
     localStorage.setItem("variantid", id);
     navigate("/product-detail");
   };
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-
-/* <!--Show banner--Api Call--> */
+  /* <!--Show banner--Api Call--> */
 
   useEffect(() => {
     axios
@@ -292,13 +276,9 @@ const Benners = () => {
         setShowBanner(response.data);
       });
   }, [apicall]);
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-
-
-
-/* <!--Start body of banner page--> */
+  /* <!--Start body of banner page--> */
 
   return (
     <Fragment>
@@ -321,7 +301,6 @@ const Benners = () => {
                             className="img-fluid bg-img lazyload "
                             alt="image"
                             name="image"
-                            
                           />
                           <div className="home-detail w-50 p-center-left">
                             <div>
@@ -329,14 +308,12 @@ const Benners = () => {
                                 ORGANIC
                               </h3>
                               <h1 className="fw-bold w-100 text-white">
-                                
                                 {img.title}
                               </h1>
                               <h3 className="text-content fw-light text-white">
                                 Fruit & Vegetables
                               </h3>
                               <p className="d-sm-block d-none text-white">
-                                
                                 {img.description}
                               </p>
                               <Link to={img.banner_url}>
@@ -463,9 +440,9 @@ const Benners = () => {
           </div>
         </div>
       </section>
-     {/*<!--End banner section-->*/}
+      {/*<!--End banner section-->*/}
 
- {/*<!--Show product section-->*/} 
+      {/*<!--Show product section-->*/}
       <div className="all_catagrey_tabs">
         <section className="product-section">
           <div className="container-fluid-lg">
@@ -535,9 +512,7 @@ const Benners = () => {
           </div>
         </section>
       </div>
- {/*<!--End show product section-->*/} 
-
-
+      {/*<!--End show product section-->*/}
 
       {/* <!--Show top product--> */}
       <section className="product-section">
@@ -550,7 +525,7 @@ const Benners = () => {
       {/* <!-- Product Sction End --> */}
       {/* <!-- Banner Section Start --> */}
 
- {/*<!--Start top product banner-->*/} 
+      {/*<!--Start top product banner-->*/}
 
       <section className="banner-section">
         <div className="container-fluid-lg">
@@ -598,12 +573,13 @@ const Benners = () => {
           </div>
         </div>
       </section>
- {/*<!--End top product banner-->*/} 
-
+      {/*<!--End top product banner-->*/}
     </Fragment>
   );
 };
 
- {/*<!--End bannner page section-->*/} 
+{
+  /*<!--End bannner page section-->*/
+}
 
 export default Benners;
