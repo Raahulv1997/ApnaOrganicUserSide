@@ -189,7 +189,7 @@ const Shop = (props) => {
         ...categoryNamedata,
         searchparams.get("category"),
       ]);
-      setcheckboxfilter(true);
+      setcheckboxfilter(false);
       setbrandfilter([]);
       setratingfilter([]);
       setdiscountfilter([]);
@@ -255,7 +255,7 @@ const Shop = (props) => {
   }, [prodData]);
 
   useEffect(() => {
-    console.log(showcategorydata);
+    // console.log(showcategorydata);
     let homeurl;
     if (
       token === "null" ||
@@ -460,7 +460,8 @@ const Shop = (props) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     if (e.target.checked === true) {
-      setdiscountfilter((discountfilter) => [
+      setdiscountfilter((discountfilter, index) => [
+        setcheckboxfilter(index, true),
         ...discountfilter,
         e.target.value,
       ]);
@@ -469,6 +470,7 @@ const Shop = (props) => {
       setdiscountfilter(
         discountfilter.filter((item) => item !== e.target.value)
       );
+      setcheckboxfilter(false);
       const index = showcategorydata.indexOf(e.target.value);
       if (index > -1) {
         // only splice array when item is found
@@ -511,7 +513,7 @@ const Shop = (props) => {
 
   const OnClearAllClick = (e) => {
     showcategorydata = [];
-    setcheckboxfilter(true);
+    setcheckboxfilter(false);
     setCategoryNameData("");
     setpricefilter({
       ...pricefilter,
@@ -533,7 +535,7 @@ const Shop = (props) => {
     axios
       .get("http://192.168.29.108:5000/brand_list")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setbranchArr(res.data);
       })
       .catch((err) => {
@@ -1243,6 +1245,7 @@ const Shop = (props) => {
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault"
+                                    checked={checkboxfilter}
                                     name={"discount"}
                                     value={"5"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
@@ -1263,6 +1266,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault1"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"10"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1282,6 +1286,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault2"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"15"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1301,6 +1306,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault3"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"20"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1320,6 +1326,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault4"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"30"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
