@@ -17,9 +17,11 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
 import Pagination from "./Pagination";
 
+/*<-------Global varialable------->*/
 let showcategorydata = [];
 
 const Shop = (props) => {
+  /*<-----State Declaration----> */
   const [prodData, setProdData] = useState([]);
   const [totaldata, settotaldata] = useState("");
   const [click, setclick] = useState(false);
@@ -58,9 +60,12 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
+  let [page, setPage] = useState([]);
+
+  /*<-----Token Declaration----> */
   const token = localStorage.getItem("token");
 
-  // CALCULATIO OF PAGINATION:-
+  /*<-----Pagination Calculator----> */
   const indexOfLastRecord = currentPage * recordsPerPage;
   // console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
@@ -68,6 +73,7 @@ const Shop = (props) => {
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
   const nPages = Math.ceil(totaldata / recordsPerPage);
 
+  /*<-----Adding to cart functionality----> */
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
       token === undefined ||
@@ -105,6 +111,8 @@ const Shop = (props) => {
         });
     }
   };
+
+  /*<-----Functionality of adding and deleting products from Wishlist----> */
   const AddToWishList = (id, wishlistt) => {
     if (
       token === undefined ||
@@ -161,10 +169,13 @@ const Shop = (props) => {
     }
   };
 
+  /*<-----Functionality to go to poduct details page----> */
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
+
+  /*<-----Functionality to search products----> */
   useEffect(() => {
     if (
       searchparams.get("search") === null ||
@@ -176,6 +187,8 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
+
+  /*<-----Functionality to filter products by category----> */
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -189,7 +202,7 @@ const Shop = (props) => {
         ...categoryNamedata,
         searchparams.get("category"),
       ]);
-      setcheckboxfilter(true);
+      setcheckboxfilter(false);
       setbrandfilter([]);
       setratingfilter([]);
       setdiscountfilter([]);
@@ -203,7 +216,7 @@ const Shop = (props) => {
   // var product = data.product;
   //   product list
 
-  // SORTING
+  /*<-----Short functionality ----> */
   const onSortingChange = (e) => {
     if (e.target.value === "latest") {
       setsortingfilter({
@@ -242,10 +255,8 @@ const Shop = (props) => {
       });
     }
   };
-  // END SORTING
 
-  //Function to set the pagination no. dynamic :-
-  let [page, setPage] = useState([]);
+  /*<-----Set the pagination number functionality ----> */
   useEffect(() => {
     let pages = [];
     for (let i = 0; i < nPages; i++) {
@@ -254,8 +265,9 @@ const Shop = (props) => {
     setPage(pages);
   }, [prodData]);
 
+  /*<--------functionality to get the data and filter by parameters----------> */
   useEffect(() => {
-    console.log(showcategorydata);
+    // console.log(showcategorydata);
     let homeurl;
     if (
       token === "null" ||
@@ -382,6 +394,7 @@ const Shop = (props) => {
     currentPage,
   ]);
 
+  /*<--------functionality to get the data of category----------> */
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -398,12 +411,14 @@ const Shop = (props) => {
     getCategoryData();
   }, [apicall]);
 
+  /*<----Functionality to filter category data and get the data in an array---->*/
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
       self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
   );
 
+  /*<----Functionality to sub-filter 01 category data and get the data in an array---->*/
   const level1category = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -412,6 +427,7 @@ const Shop = (props) => {
       )
   );
 
+  /*<----Functionality to sub-filter 02 category data and get the data in an array---->*/
   const level2category = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -453,14 +469,19 @@ const Shop = (props) => {
       }
     }
   };
+
+  /*<----Functionality to get data filtered by price---->*/
   const onPriceFilterAdd = (e) => {
     setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
   };
+
+  /*<----Functionality to get data filtered by discount---->*/
   const onDiscountFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     if (e.target.checked === true) {
-      setdiscountfilter((discountfilter) => [
+      setdiscountfilter((discountfilter, index) => [
+        setcheckboxfilter(index, true),
         ...discountfilter,
         e.target.value,
       ]);
@@ -469,6 +490,7 @@ const Shop = (props) => {
       setdiscountfilter(
         discountfilter.filter((item) => item !== e.target.value)
       );
+      setcheckboxfilter(false);
       const index = showcategorydata.indexOf(e.target.value);
       if (index > -1) {
         // only splice array when item is found
@@ -476,6 +498,8 @@ const Shop = (props) => {
       }
     }
   };
+
+  /*<----Functionality to get data filtered by brand---->*/
   const onBrandFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -493,6 +517,7 @@ const Shop = (props) => {
     }
   };
 
+  /*<----Functionality to get data filtered by rating---->*/
   const onRatingFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -509,9 +534,10 @@ const Shop = (props) => {
     }
   };
 
+  /*<----Functionality to clear all the filters---->*/
   const OnClearAllClick = (e) => {
     showcategorydata = [];
-    setcheckboxfilter(true);
+    setcheckboxfilter(false);
     setCategoryNameData("");
     setpricefilter({
       ...pricefilter,
@@ -528,12 +554,12 @@ const Shop = (props) => {
 
   //   BRAND
 
-  //  Called api to get the brand list :-
+  /*<----Called api to get the brand list---->*/
   useEffect(() => {
     axios
       .get("http://192.168.29.108:5000/brand_list")
       .then((res) => {
-        console.log(res.data);
+        // console.log(res.data);
         setbranchArr(res.data);
       })
       .catch((err) => {
@@ -541,7 +567,7 @@ const Shop = (props) => {
       });
   }, []);
 
-  // Filter for the brand array :-
+  /*<----Functionality to get data filtered by rating---->*/
   const filtercategorydata = branchArr.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.brand == thing.brand)
@@ -1243,6 +1269,7 @@ const Shop = (props) => {
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault"
+                                    checked={checkboxfilter}
                                     name={"discount"}
                                     value={"5"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
@@ -1263,6 +1290,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault1"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"10"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1282,6 +1310,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault2"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"15"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1301,6 +1330,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault3"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"20"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1320,6 +1350,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault4"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"30"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
