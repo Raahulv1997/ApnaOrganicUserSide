@@ -184,7 +184,6 @@ const Header = (props) => {
 /* <!--End this section--> */
 
 /* <!--Product delete from cart--Api call--> */
-  
   const deleteCart = (id) => {
     axios
       .put(
@@ -202,8 +201,10 @@ const Header = (props) => {
       .then((response) => {
         let data = response.data;
         setapicall(true);
+        console.log("----****__"+apicall)
       });
   };
+
 
 /* <!--End this section--> */
 
@@ -216,27 +217,27 @@ const Header = (props) => {
 
 /* <!--Notification Show--Api call--> */
 
-useEffect(() => {
-  function getNotification(){
-    try{
-      axios
-        .post(`${process.env.REACT_APP_BASEURL}/notification`,
-        {
-          "actor_type":"user",
-           "actor_id":"88"
-      })
-        .then((response) => {
-          let data = response.data;
+// useEffect(() => {
+//   function getNotification(){
+//     try{
+//       axios
+//         .post(`${process.env.REACT_APP_BASEURL}/notification`,
+//         {
+//           "actor_type":"user",
+//            "actor_id":"88"
+//       })
+//         .then((response) => {
+//           let data = response.data;
           
-          setNotification(data)
-          setapicall(false);
-        });
-    } catch (err) {}
-  }
-  getNotification();
+//           setNotification(data)
+//           setapicall(false);
+//         });
+//     } catch (err) {}
+//   }
+//   getNotification();
 
-}, [apicall]);
-console.log("iii-------------"+JSON.stringify(notification))
+// }, [apicall]);
+// console.log("iii-------------"+JSON.stringify(notification))
 /* <!--End all api call section--> */
 
 

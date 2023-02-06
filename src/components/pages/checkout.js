@@ -54,7 +54,6 @@ const Checkout = (props) => {
     vendor_id: "1",
     order_product: [],
   });
-  console.log("=============="+JSON.stringify(cartdata))
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [SalePricee, setSalePricee] = useState(0);
   const [TotalTax, setTotalTax] = useState(0);
@@ -69,7 +68,6 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
-  // console.log("ooo====-----" + DeliveyTab);
   const incrementCount = (id, order_quantity, qty) => {
     let inc = order_quantity + 1;
     if (order_quantity !== qty) {

@@ -3,14 +3,13 @@ import BannerBox1 from "../../Photos/2.jpg";
 import BannerBox2 from "../../Photos/1.jpg";
 import Banner1 from "../../Photos/14.jpg";
 import ProductBox from "./product-box";
-import data from "../pages/data";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../CSS/style.css";
 import axios from "axios";
 import Header from "./header";
 import { Link } from "react-router-dom";
-const Benners = () => {
+const Benners = (props) => {
 
 /* <!--Start all state section--> */
   const [productData, setProductData] = useState([]);
@@ -27,11 +26,7 @@ const Benners = () => {
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
 
-console.log("productData-----@@@@@@@@@-----"+JSON.stringify(productData))
 /* <!--End all state section--> */
-
-
-
 
   // var product = data.product;
   // useEffect(() => {
@@ -82,6 +77,8 @@ console.log("productData-----@@@@@@@@@-----"+JSON.stringify(productData))
     );
     setunCatArr(result);
   }, [catArray]);
+console.log("CATEGORYYYYYYY00000----------"+JSON.stringify(unCatArr))
+console.log("CATEGORYYY------666666^^^^^^^^^^^-------YYYY00000----------"+JSON.stringify(catArray))
 
   /* <!--End this section--> */
 
@@ -187,7 +184,6 @@ console.log("productData-----@@@@@@@@@-----"+JSON.stringify(productData))
 /* <!--End this section--> */
 
 
-console.log("DATAAA&&&&&&&________----------"+JSON.stringify(data))
 
 /* <!--Show product data--API Call--> */
   useEffect(() => {
@@ -202,7 +198,7 @@ console.log("DATAAA&&&&&&&________----------"+JSON.stringify(data))
       function getProductData() {
         try {
           axios
-            .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`, {
+            .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=10`, {
               product_search: {
                 search: `${productType}`,
                 price_from: "",
@@ -252,8 +248,9 @@ console.log("DATAAA&&&&&&&________----------"+JSON.stringify(data))
               .then((response) => {
                 let data = response.data;
                 
-                console.log("product data---"+ JSON.stringify(data))
                 setProductData(response.data.results);
+                console.log("product data--555555555555555555555555-"+ JSON.stringify(data))
+
                 setapicall(false);
               });
           } catch (err) {}
@@ -265,6 +262,7 @@ console.log("DATAAA&&&&&&&________----------"+JSON.stringify(data))
      
     }
   }, [productType, apicall]);
+  console.log("******&&&&&&&&&-----------"+JSON.stringify(productData))
 /* <!--End this section--> */
 
 

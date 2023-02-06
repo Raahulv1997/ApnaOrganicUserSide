@@ -73,7 +73,7 @@ const ProductBox = ({
           is_special_offer == null ||
           is_special_offer == "0" ? null : (
             <span className="is_special_offer_ribbon mb-1">
-              {"S"}%
+              {"S"}
             </span>
           )}
         </div>

@@ -13,6 +13,7 @@ import { useState, useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
 const Cart = () => {
+  /* <!--Start all state section--> */
   const navigate = useNavigate();
   const [show, setShow] = useState("");
   const [apicall, setapicall] = useState(false);
@@ -27,10 +28,20 @@ const Cart = () => {
   const [msg, setMsg] = useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [totalqty, settotalqty] = useState(false);
+  /* <!--End all state section--> */
+
   var product1 = data1.product1;
+
+  /* <!--Get token section--> */
+
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
+  /* <!-- End this section--> */
+
   const currentdate = moment().format();
+
+/* <!----API Call--> */
+
   const incrementCount = (id, order_quantity, qty) => {
     let inc = order_quantity + 1;
     if (order_quantity !== qty) {
@@ -150,7 +161,8 @@ const Cart = () => {
       .then((response) => {
         let data = response.data[0];
         CheckCoupon();
-        setapicall(true);
+        setapicall(false);
+        console.log("+==========="+apicall)
 
       });
   };

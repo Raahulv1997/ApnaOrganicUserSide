@@ -19,7 +19,8 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
-const ProductDetail = ({ logIn }) => {
+  
+  const ProductDetail = ({ logIn ,wishlistt,wishlistid,id}) => {
 
 
   var result6;
@@ -29,6 +30,8 @@ const ProductDetail = ({ logIn }) => {
   const useridd = localStorage.getItem("userid");
   const token=localStorage.getItem("token");
   // const proDuctID=localStorage.getItem("porid");
+  const [wlistData, setWlistData] = useState("add");
+
   const[sizeOn,setSizeOn]=useState(false)
   const[ colorValue,setColorValue]=useState("")
   const[getSizOnclor,setGetSizeOnColor]=useState([])
@@ -85,6 +88,7 @@ const ProductDetail = ({ logIn }) => {
 const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
   // var varientId = localStorage.getItem("variantid");
   // console.log("---------------veriant ---" + varientId);
+  console.log("-----------WISHLIATTTTTTTT------"+JSON.stringify(productDetails))
   useEffect(() => {
     function getProductDetails() {
       
@@ -220,84 +224,85 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
         setapicall(true);
       });
   };
-  // const AddToWishList = (id, wishlistt) => {
-  //   if (
-  //     token === "null" ||
-  //     token === "" ||
-  //     token === null ||
-  //     token === undefined ||
-  //     token === true
-  //   ) {
-  //     navigate("/login");
-  //   } else {
-  //     if (wishlistt > 0) {
-  //       axios
-  //         .put(
-  //           `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
-  //           {
-  //             id: id,
-  //           },
-  //           {
-  //             headers: {
-  //               user_token: `${token}`,
-  //             },
-  //           }
-  //         )
-  //         .then((response) => {
-  //           let data = response.data[0];
-  //       setProductDetails(data.results);
+  const AddToWishList = (id, wishlistt) => {
+    if (
+      token === "null" ||
+      token === "" ||
+      token === null ||
+      token === undefined ||
+      token === true
+    ) {
+      navigate("/login");
+    } else {
+      if (wishlistt > 0) {
+        axios
+          .put(
+            `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+            {
+              id: id,
+            },
+            {
+              headers: {
+                user_token: `${token}`,
+              },
+            }
+          )
+          .then((response) => {
+            let data = response.data[0];
+        setProductDetails(data.results);
 
-  //           // setData(response.data);
-  //           setWlistData("add");
-  //           setapicall(true);
-  //         });
-  //     } else {
-  //       axios
-  //         .post(
-  //           `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
-  //           {
-  //             user_id: "",
-  //             product_view_id: `${id}`,
-  //           },
-  //           {
-  //             headers: {
-  //               user_token: `${token}`,
-  //             },
-  //           }
-  //         )
-  //         .then((response) => {
-  //           let data = response.data;
-  //           setProductDetails(data.results);
-
-  //           setWlistData("remove");
-  //           setapicall(true);
-  //         });
-  //     }
-  //   }
-  // };
-  const AddToWishList = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
-        {
-          user_id: "",
-          product_view_id: `${Id}`,
-          price: `${productDetails.product_verient[0].product_price}`,
-          discount: `${productDetails.product_verient[0].discount}`,
+            // setData(response.data);
+            setWlistData("add");
+            setapicall(true);
+          });
+      } else {
+        axios
+     .post(
+         `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+         {
+           user_id: "",
+           product_view_id: `${Id}`,
+           price: `${productDetails.product_verient[0].product_price}`,
+           discount: `${productDetails.product_verient[0].discount}`,
         },
         {
           headers: {
             user_token: `${token}`,
           },
         }
-      )
-      .then((response) => {
+     )
+       .then((response) => {
         let data = response.data;
-        setProductDetails(data.results);
-        setapicall(true);
-      })
+         setProductDetails(data.results);
+         setapicall(true);
+       })
       .catch(function (error) {});
+    }
   };
+}
+  // const AddToWishList = () => {
+  //   axios
+  //     .post(
+  //       `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+  //       {
+  //         user_id: "",
+  //         product_view_id: `${Id}`,
+  //         price: `${productDetails.product_verient[0].product_price}`,
+  //         discount: `${productDetails.product_verient[0].discount}`,
+  //       },
+  //       {
+  //         headers: {
+  //           user_token: `${token}`,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       let data = response.data;
+  //       setProductDetails(data.results);
+  //       setapicall(true);
+  //     })
+  //     .catch(function (error) {});
+  // };
 
 
   const OnProductprice = ( SalePrice, product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
@@ -321,7 +326,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
         .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
         .then((response) => {
           let data = response.data;
-            console.log("product veriant image--"+ JSON.stringify(data))
+            // console.log("product veriant image--"+ JSON.stringify(data))
           setapicall(false);
           setShowImages(data);
 
@@ -863,6 +868,21 @@ getSizOnclor.map((details) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-6 col-xl-3">
+                    <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
+              {wishlistt > 0 ? (
+                <i
+                  className="fa-regular fa-heart"
+                  style={{ color: "red" }}
+                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+                ></i>
+              ) : (
+                <i
+                  className="fa-regular fa-heart"
+                  style={{ color: "" }}
+                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+                ></i>
+              )}
+            </button>
                     {/* <button className="btn btn-dark">
               {wishlistt > 0 ? (
                  <span
@@ -881,9 +901,9 @@ getSizOnclor.map((details) => {
               )}
             </button> */}
 
-                     <button className="btn btn-dark">
+                     {/* <button className="btn btn-dark">
                         <Link to="">
-                          {/* <i data-feather="heart"></i> */}
+                          {/* <i data-feather="heart"></i> 
                           <span
                             className="text-white"
                             onClick={() => AddToWishList()}
@@ -891,7 +911,7 @@ getSizOnclor.map((details) => {
                             Add To Wishlist
                           </span>
                         </Link>
-                      </button> 
+                      </button>  */}
                     </div>
 
                     <div className="col-6 col-xl-3 ">
