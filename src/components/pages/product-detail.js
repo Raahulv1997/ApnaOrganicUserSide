@@ -73,16 +73,19 @@ import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  /*<-----Increment Functionality----> */
   function incrementCount() {
     count = count + 1;
     setCount(count);
   }
+
+  /*<-----Decrement Functionality----> */
   const decrementCount = () => {
     if (count > 0) {
       setCount((count) => count - 1);
     }
   };
-  const func = () => {};
+  // const func = () => {};
 
   var proid = localStorage.getItem("proid");
   // console.log("---------------proidddd---" + proid);
@@ -132,8 +135,8 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
 
   //  console.log("---------------proidddd---" + proid);
 
-  const getVeriantDetails=(varientId,proid)=>{
- 
+  /*<-----Functionality for veriant Data of product----> */
+  const getVeriantDetails = (varientId, proid) => {
     try {
       axios
         .get(`${process.env.REACT_APP_BASEURL}/products_pricing?id=${varientId}&product_id=${proid}&user_id=${useridd}`)
@@ -157,15 +160,12 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
           console.log("CART_____"+data.cart_)
           console.log("wishlisttttt-----_____"+data.wishlist)
 
-        });
-    } catch (err) { }
-  }
-console.log("----------"+productprice)
-  
- useEffect(()=>{
-  SelectProduct(colorValue)
- },[varientId])
+  /*<----color variant functionality---->*/
+  useEffect(() => {
+    SelectProduct(colorValue);
+  }, [varientId]);
 
+  /*<-----Data retrieval functionality for product details by size----> */
   function SelectProduct(colorValue) {
     
     try {
@@ -197,13 +197,14 @@ console.log("----------"+productprice)
 
   }
 
+  /*<-----Functionality to filter products data by image----> */
+  const result = showImage.filter(
+    (thing, index, self) =>
+      index ==
+      self.findIndex((t) => t.product_image_path == thing.product_image_path)
+  );
 
-  const result = showImage.filter((thing, index, self) =>
-    index == self.findIndex((t) => (
-      t.product_image_path == thing.product_image_path
-    )))
-
-  
+  /*<-----Functionality to Add to cart----> */
   const AddToCart = () => {
  
     axios
@@ -380,7 +381,19 @@ console.log("----------"+productprice)
   }
 
 
-   const OnUnitQwantiity = ( unitQwanityy,SalePrice, product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
+  /*<----Functionality to set price as per the quntity---->*/
+  const OnUnitQwantiity = (
+    unitQwanityy,
+    SalePrice,
+    product_price,
+    mrpp,
+    sizee,
+    mfdd,
+    expp,
+    quantityy,
+    id,
+    productid
+  ) => {
     // localStorage.setItem("variantid", id);
     // localStorage.setItem("proid", productid);
    
@@ -422,13 +435,20 @@ console.log("----------"+productprice)
         });
 
 
-  }
-  
-  
-  const OnProductColor = ( Salepricee,color, product_price, mrpp, mfdd, expp, quantityy, veriantid, productid) => {
-    
-    console.log("product id in  color function-----"+productid)
-    console.log("veriant id in color function-----"+veriantid)
+  /*<----Functionality to set price as per the color---->*/
+  const OnProductColor = (
+    Salepricee,
+    color,
+    product_price,
+    mrpp,
+    mfdd,
+    expp,
+    quantityy,
+    veriantid,
+    productid
+  ) => {
+    console.log("product id in  color function-----" + productid);
+    console.log("veriant id in color function-----" + veriantid);
     // localStorage.setItem("variantid", id);
     // localStorage.setItem("proid", productid);
     setsaleprice(Number (Salepricee).toFixed(2))
@@ -454,6 +474,7 @@ console.log("----------"+productprice)
     // setImage(product_image_namee);
   };
 
+  /*<----Functionality to get the data of reviews---->*/
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_list`, {
@@ -473,13 +494,18 @@ console.log("----------"+productprice)
 
   // console.log("CONSOLEE"+JSON.stringify(Rrating))
 
+  /*<----Onchange function of send review---->*/
   const handleFormChange = (e) => {
     setaddreviewdata({ ...addreviewdata, [e.target.name]: e.target.value });
   };
+
+  /*<----Onchange function of Rate---->*/
   const onRatingChange = (e) => {
     setRrating(e.target.value);
     console.log("onRatingChange" + JSON.stringify(e.target.value));
   };
+
+  /*<----Function to add the review---->*/
   const AddReview = (e) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_rating`, {
@@ -494,6 +520,8 @@ console.log("----------"+productprice)
       })
       .then((response) => {});
   };
+
+  /*<----Function to render the banner list---->*/
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
@@ -509,7 +537,8 @@ console.log("----------"+productprice)
       });
   }, [apicall]);
 
- const result1 = ratingbox.filter(
+  /*<-----Functionality to filter products data by rate----> */
+  const result1 = ratingbox.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
   );
@@ -881,7 +910,7 @@ getSizOnclor.map((details) => {
                           type="text"
                           name="quantity"
                           value={count}
-                          onChange={func}
+                          // onChange={func}
                         />
                         <button
                           type="button"

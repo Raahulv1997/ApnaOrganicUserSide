@@ -21,6 +21,7 @@ import axios from "axios";
 const Header = (props) => {
   /* <!--Start all state section--> */
   const useridd = localStorage.getItem("userid");
+
   const [msg, setMsg] = useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [apicall, setapicall] = useState(false);
@@ -135,7 +136,7 @@ const Header = (props) => {
           )
           .then((response) => {
             let data = response.data;
-            console.log(data.response);
+       
             let ProductTotal = 0;
             if (
               data.response === "cart_empty" ||
@@ -168,6 +169,8 @@ const Header = (props) => {
                     100;
               });
               setPdata(data);
+               
+              console.log("pdata-----"+JSON.stringify(data))
               setMsg(true);
             }
           });
@@ -194,6 +197,7 @@ const Header = (props) => {
       )
       .then((response) => {
         let data = response.data;
+        console.log("deleter cart----"+JSON.stringify(data.length))
         setapicall(true);
         console.log("----****__"+apicall)
       });
@@ -384,9 +388,10 @@ const Header = (props) => {
                           >
                             {notification.length === 0 ||
                             notification.length === "" ||
-                            notification.length === "0" ? null : (
+                            notification.length === "0"? null : (
                               <small className="badge-number">
-                                {notification.length}
+                       
+                                {notification.length }
                               </small>
                             )}
                             {/* <CiBellOn className="icon_color"/> */}
@@ -416,7 +421,7 @@ const Header = (props) => {
                           >
                             {pdata.length === 0 ||
                             pdata.length === "" ||
-                            pdata.length === "0" ? null : (
+                            pdata === "cart_empty"? null : (
                               <small className="badge-number">
                                 {pdata.length}
                               </small>

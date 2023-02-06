@@ -60,6 +60,7 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
+  let [page, setPage] = useState([]);
 
   /*<-----Token Declaration----> */
   const token = localStorage.getItem("token");
@@ -168,11 +169,13 @@ const Shop = (props) => {
     }
   };
 
-  /*<-----Functionality to go to rpoduct details page----> */
+  /*<-----Functionality to go to poduct details page----> */
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
+
+  /*<-----Functionality to search products----> */
   useEffect(() => {
     if (
       searchparams.get("search") === null ||
@@ -184,6 +187,8 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
+
+  /*<-----Functionality to filter products by category----> */
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -211,7 +216,7 @@ const Shop = (props) => {
   // var product = data.product;
   //   product list
 
-  // SORTING
+  /*<-----Short functionality ----> */
   const onSortingChange = (e) => {
     if (e.target.value === "latest") {
       setsortingfilter({
@@ -250,10 +255,8 @@ const Shop = (props) => {
       });
     }
   };
-  // END SORTING
 
-  //Function to set the pagination no. dynamic :-
-  let [page, setPage] = useState([]);
+  /*<-----Set the pagination number functionality ----> */
   useEffect(() => {
     let pages = [];
     for (let i = 0; i < nPages; i++) {
@@ -262,6 +265,7 @@ const Shop = (props) => {
     setPage(pages);
   }, [prodData]);
 
+  /*<--------functionality to get the data and filter by parameters----------> */
   useEffect(() => {
     // console.log(showcategorydata);
     let homeurl;
@@ -390,6 +394,7 @@ const Shop = (props) => {
     currentPage,
   ]);
 
+  /*<--------functionality to get the data of category----------> */
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -406,12 +411,14 @@ const Shop = (props) => {
     getCategoryData();
   }, [apicall]);
 
+  /*<----Functionality to filter category data and get the data in an array---->*/
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
       self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
   );
 
+  /*<----Functionality to sub-filter 01 category data and get the data in an array---->*/
   const level1category = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -420,6 +427,7 @@ const Shop = (props) => {
       )
   );
 
+  /*<----Functionality to sub-filter 02 category data and get the data in an array---->*/
   const level2category = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -461,9 +469,13 @@ const Shop = (props) => {
       }
     }
   };
+
+  /*<----Functionality to get data filtered by price---->*/
   const onPriceFilterAdd = (e) => {
     setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
   };
+
+  /*<----Functionality to get data filtered by discount---->*/
   const onDiscountFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -486,6 +498,8 @@ const Shop = (props) => {
       }
     }
   };
+
+  /*<----Functionality to get data filtered by brand---->*/
   const onBrandFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -503,6 +517,7 @@ const Shop = (props) => {
     }
   };
 
+  /*<----Functionality to get data filtered by rating---->*/
   const onRatingFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -519,6 +534,7 @@ const Shop = (props) => {
     }
   };
 
+  /*<----Functionality to clear all the filters---->*/
   const OnClearAllClick = (e) => {
     showcategorydata = [];
     setcheckboxfilter(false);
@@ -538,7 +554,7 @@ const Shop = (props) => {
 
   //   BRAND
 
-  //  Called api to get the brand list :-
+  /*<----Called api to get the brand list---->*/
   useEffect(() => {
     axios
       .get("http://192.168.29.108:5000/brand_list")
@@ -551,7 +567,7 @@ const Shop = (props) => {
       });
   }, []);
 
-  // Filter for the brand array :-
+  /*<----Functionality to get data filtered by rating---->*/
   const filtercategorydata = branchArr.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.brand == thing.brand)

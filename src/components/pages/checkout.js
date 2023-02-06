@@ -14,7 +14,6 @@ import SweetAlert from "sweetalert-react";
 import "sweetalert/dist/sweetalert.css";
 import Spinner from "react-bootstrap/Spinner";
 
-
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
   // const[pAlert,setPalert]=useState(false);
@@ -1300,8 +1299,8 @@ const Checkout = (props) => {
                             <ul className="summery-contain bg-white custom-height">
                               {(cartdata || []).map((data) => {
                                 return (
-                                  <li key={data.id}>
-                                    <h4 className="pe-5">
+                                  <li key={data.id} className="mx-3">
+                                    <h4>
                                       {Number(data.sale_price).toFixed(2)}{" "}
                                       <span>X {data.order_quantity}</span>
                                     </h4>
@@ -1318,31 +1317,31 @@ const Checkout = (props) => {
                             </ul>
 
                             <ul className="summery-total bg-white">
-                              <li>
+                              <li className="mx-3">
                                 <h4>Subtotal(Tax included)</h4>
                                 <h4 className="price">
                                   ₹{ProductPriceTotal.toFixed(2)}
                                 </h4>
                               </li>
 
-                              <li>
+                              <li className="mx-3">
                                 <h4>Shipping</h4>
                                 <h4 className="price">₹{ShippingCharge}</h4>
                               </li>
 
-                              <li>
+                              <li className="mx-3">
                                 <h4>Tax</h4>
                                 <h4 className="price text-danger">
                                   ₹{TotalTax.toFixed(2)}
                                 </h4>
                               </li>
 
-                              <li>
+                              <li className="mx-3">
                                 <h4>Coupon/Code</h4>
                                 <h4 className="price">₹{CouponDis}</h4>
                               </li>
 
-                              <li className="list-total">
+                              <li className="list-total mx-3">
                                 <h4>Total (Rupees)</h4>
                                 <h4 className="price">
                                   ₹
