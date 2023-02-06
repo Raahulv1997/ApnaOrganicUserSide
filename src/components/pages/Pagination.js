@@ -13,14 +13,18 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
   };
   return (
     <div>
-      <nav aria-label="Page navigation example">
-        <ul className="pagination">
+      <nav aria-label="Page navigation example ">
+        <ul className="pagination mt-5">
           {/* To change page perivous page :- */}
           <li className="page-item">
             <Link
-            to=""
+              to=""
               onClick={prevPage}
-              className={currentPage === 1 ? "page-link d-none" : "page-link"}
+              className={
+                currentPage === 1
+                  ? "page-link d-none text-success"
+                  : "page-link text-success"
+              }
               tabIndex="-1"
               aria-disabled="true"
             >
@@ -32,16 +36,21 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
             return (
               <li
                 className={`page-item${
-                  currentPage == pgNumber ? "active" : ""
+                  currentPage == pgNumber ? "active " : "text-success"
                 } `}
                 key={pgNumber}
               >
                 <Link
                   to=""
-                  className="page-link"
+                  // className="page-link "
                   onClick={() => setCurrentPage(pgNumber)}
+                  className={`page-link ${
+                    currentPage == pgNumber
+                      ? "active bg-success"
+                      : "text-success"
+                  } `}
                 >
-                  {pgNumber}
+                  {pgNumber + 1}
                 </Link>
               </li>
             );
@@ -51,7 +60,9 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
             <Link
               onClick={nextPage}
               className={
-                currentPage === nPages.length ? "page-link d-none" : "page-link"
+                currentPage === nPages.length
+                  ? "page-link d-none text-success"
+                  : "page-link text-success"
               }
             >
               <i className="fa-solid fa-angles-right"></i>

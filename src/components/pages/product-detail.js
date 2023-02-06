@@ -56,7 +56,8 @@ import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
   const [showImage, setShowImages] = useState([]);
   const [reviewData, setReviewData] = useState([]);
   const [showbanner, setShowBanner] = useState([]);
-
+  const [wishlist,setWishlist]=useState([]);
+  const[cart,setCart]=useState([]);
   const [Rrating, setRrating] = useState("");
   const [Searchreview, setSearchReview] = useState({
     product_name: "",
@@ -135,12 +136,12 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
  
     try {
       axios
-        .get(`${process.env.REACT_APP_BASEURL}/products_pricing?id=${varientId}&product_id=${proid}`)
+        .get(`${process.env.REACT_APP_BASEURL}/products_pricing?id=${varientId}&product_id=${proid}&user_id=${useridd}`)
         .then((response) => {
           let data = response.data[0];
             console.log("veriantData----"+ JSON.stringify (data))
             
-            setProductprice(Number(data.product_price.toFixed(2)));
+          setProductprice(Number(data.product_price.toFixed(2)));
           setsaleprice(Number(data.sale_price).toFixed(2))
           setMrp( Number(data.mrp).toFixed(2));
           setColors(data.colors);
@@ -149,12 +150,17 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
           setSize(data.size);
           setMfd(data.manufacturing_date);
           setExp(data.expire_date);
-           setQut(data.quantity)
-           setId(data.id);
+          setQut(data.quantity)
+          setId(data.id);
+          setWishlist(data.wishlist)
+          setCart(data.cart_)
+          console.log("CART_____"+data.cart_)
+          console.log("wishlisttttt-----_____"+data.wishlist)
+
         });
     } catch (err) { }
   }
-
+console.log("----------"+productprice)
   
  useEffect(()=>{
   SelectProduct(colorValue)
@@ -224,85 +230,108 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
         setapicall(true);
       });
   };
-  const AddToWishList = (id, wishlistt) => {
-    if (
-      token === "null" ||
-      token === "" ||
-      token === null ||
-      token === undefined ||
-      token === true
-    ) {
-      navigate("/login");
-    } else {
-      if (wishlistt > 0) {
-        axios
-          .put(
-            `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
-            {
-              id: id,
-            },
-            {
-              headers: {
-                user_token: `${token}`,
-              },
-            }
-          )
-          .then((response) => {
-            let data = response.data[0];
-        setProductDetails(data.results);
+//   const AddToWishList = (id, wishlistt) => {
+//     if (
+//       token === "null" ||
+//       token === "" ||
+//       token === null ||
+//       token === undefined ||
+//       token === true
+//     ) {
+//       navigate("/login");
+//     } else {
+//       if (wishlistt > 0) {
+//         axios
+//           .put(
+//             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+//             {
+//               id: id,
+//             },
+//             {
+//               headers: {
+//                 user_token: `${token}`,
+//               },
+//             }
+//           )
+//           .then((response) => {
+//             let data = response.data[0];
+//         setProductDetails(data.results);
 
-            // setData(response.data);
-            setWlistData("add");
-            setapicall(true);
-          });
-      } else {
-        axios
-     .post(
-         `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
-         {
-           user_id: "",
-           product_view_id: `${Id}`,
-           price: `${productDetails.product_verient[0].product_price}`,
-           discount: `${productDetails.product_verient[0].discount}`,
+//             // setData(response.data);
+//             setWlistData("add");
+//             setapicall(true);
+//           });
+//       } else {
+//         axios
+//      .post(
+//          `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+//          {
+//            user_id: "",
+//            product_view_id: `${Id}`,
+//            price: `${productDetails.product_verient[0].product_price}`,
+//            discount: `${productDetails.product_verient[0].discount}`,
+//         },
+//         {
+//           headers: {
+//             user_token: `${token}`,
+//           },
+//         }
+//      )
+//        .then((response) => {
+//         let data = response.data;
+//          setProductDetails(data.results);
+//          setapicall(true);
+//        })
+//       .catch(function (error) {});
+//     }
+//   };
+// }
+  const AddToWishList = () => {
+    axios
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+        {
+          user_id: "",
+          product_view_id: `${Id}`,
+          price: `${productDetails.product_verient[0].product_price}`,
+          discount: `${productDetails.product_verient[0].discount}`,
         },
         {
           headers: {
             user_token: `${token}`,
           },
         }
-     )
-       .then((response) => {
+      )
+      .then((response) => {
         let data = response.data;
-         setProductDetails(data.results);
-         setapicall(true);
-       })
+        setProductDetails(data.results);
+        setapicall(true);
+      })
       .catch(function (error) {});
-    }
   };
-}
-  // const AddToWishList = () => {
-  //   axios
-  //     .post(
-  //       `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
-  //       {
-  //         user_id: "",
-  //         product_view_id: `${Id}`,
-  //         price: `${productDetails.product_verient[0].product_price}`,
-  //         discount: `${productDetails.product_verient[0].discount}`,
-  //       },
-  //       {
-  //         headers: {
-  //           user_token: `${token}`,
-  //         },
-  //       }
-  //     )
-  //     .then((response) => {
-  //       let data = response.data;
-  //       setProductDetails(data.results);
-  //       setapicall(true);
-  //     })
-  //     .catch(function (error) {});
-  // };
+
+  const RemoveToWishList = () => {
+    axios
+              .put(
+                `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+                {
+                  id: id,
+                },
+                {
+                  headers: {
+                    user_token: `${token}`,
+                  },
+                }
+              )
+              .then((response) => {
+                let data = response.data[0];
+            setProductDetails(data.results);
+    
+                // setData(response.data);
+                setWlistData("add");
+                setapicall(true);
+              });
+  };
 
 
   const OnProductprice = ( SalePrice, product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
@@ -326,7 +355,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
         .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
         .then((response) => {
           let data = response.data;
-            // console.log("product veriant image--"+ JSON.stringify(data))
+            console.log("product veriant image--"+ JSON.stringify(data))
           setapicall(false);
           setShowImages(data);
 
@@ -868,21 +897,6 @@ getSizOnclor.map((details) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-6 col-xl-3">
-                    <button className="btn p-0 wishlist btn-wishlist notifi-wishlist">
-              {wishlistt > 0 ? (
-                <i
-                  className="fa-regular fa-heart"
-                  style={{ color: "red" }}
-                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
-                ></i>
-              ) : (
-                <i
-                  className="fa-regular fa-heart"
-                  style={{ color: "" }}
-                  onClick={() => AddToWishList(id, wishlistt, wishlistid)}
-                ></i>
-              )}
-            </button>
                     {/* <button className="btn btn-dark">
               {wishlistt > 0 ? (
                  <span
@@ -901,29 +915,53 @@ getSizOnclor.map((details) => {
               )}
             </button> */}
 
-                     {/* <button className="btn btn-dark">
+                      <button className="btn btn-dark">
                         <Link to="">
-                          {/* <i data-feather="heart"></i> 
-                          <span
+                          {/* <i data-feather="heart"></i> */}
+
+                          {wishlist === undefined || 
+                          
+                    wishlist === "" ||
+                    wishlist === null||
+                    wishlist==="null" ? <span
+                    className="text-white"
+                    onClick={() => AddToWishList()}
+                  >
+                    Add To Wishlist
+                  </span>:
+                  <span
                             className="text-white"
-                            onClick={() => AddToWishList()}
+                            onClick={() => RemoveToWishList()}
                           >
-                            Add To Wishlist
+                           Remove 
                           </span>
+                          }
+                          
                         </Link>
-                      </button>  */}
+                      </button>  
                     </div>
 
                     <div className="col-6 col-xl-3 ">
                       <button className="btn btn-dark ">
                         <div>
-                          <span
+                          { cart === undefined || 
+                          
+                          cart === "" ||
+                          cart === null||
+                          cart==="null"? <span
                             className="text-white"
                             onClick={() => AddToCart()}
                           >
                             
                             Add To Cart
-                          </span>
+                          </span>:  <button
+              className="btn text-light btn-warning"
+              onClick={() => navigate("/cart")}
+            >
+              {"Buy"}
+            </button>}
+                       
+                         
                         </div>
                       </button>
                     </div>

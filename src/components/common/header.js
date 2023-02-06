@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Accordion from "react-bootstrap/Accordion";
-import { CiBellOn } from "react-icons/ci";
+// import { CiBellOn } from "react-icons/ci";
 import {
   AiOutlineHome,
   AiOutlineSearch,
@@ -30,19 +30,16 @@ const Header = (props) => {
   let [searcherror, setsearcherror] = useState(false);
   const [click, setclick] = useState(false);
   const [search, setsearch] = useState([]);
-  const [notification,setNotification]=useState([]);
+  const [notification, setNotification] = useState([]);
 
-/* <!--End all state section--> */
+  /* <!--End all state section--> */
 
-
-/* <!--Function for all category show on top--> */
+  /* <!--Function for all category show on top--> */
 
   const open_Category = () => {
     setclick(true);
   };
-/* <!--End this section--> */
-
-
+  /* <!--End this section--> */
 
   let cartup = localStorage.getItem("cartupdate");
   const token = localStorage.getItem("token");
@@ -50,8 +47,8 @@ const Header = (props) => {
     setapicall(true);
   }
 
-/* <!--Show all category--Api Call--> */
-  
+  /* <!--Show all category--Api Call--> */
+
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -71,10 +68,9 @@ const Header = (props) => {
 
     getCategoryData();
   }, [apicall]);
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-/* <!--Function for map data and not show same data again--> */
+  /* <!--Function for map data and not show same data again--> */
 
   const result = categorydata.filter(
     (thing, index, self) =>
@@ -96,10 +92,9 @@ const Header = (props) => {
         (t, x) => t.down2_category_name == thing.down2_category_name
       )
   );
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-/* <!--Function for search product--> */
+  /* <!--Function for search product--> */
   const searchProduct = (e) => {
     e.preventDefault();
     if (search.length === 0) {
@@ -108,10 +103,9 @@ const Header = (props) => {
       navigate(`/shop?search=${search}`);
     }
   };
-/* <!--End this section--> */
+  /* <!--End this section--> */
 
-
-/* <!--Get cart data--Api call--> */
+  /* <!--Get cart data--Api call--> */
 
   useEffect(() => {
     if (
@@ -141,7 +135,7 @@ const Header = (props) => {
           )
           .then((response) => {
             let data = response.data;
-
+            console.log(data.response);
             let ProductTotal = 0;
             if (
               data.response === "cart_empty" ||
@@ -175,15 +169,15 @@ const Header = (props) => {
               });
               setPdata(data);
               setMsg(true);
-              
             }
           });
       } catch (err) {}
     }
-  }, [apicall,cartup, props.addcart, props.deleteCart,props.getNotification]);
-/* <!--End this section--> */
+  }, [apicall, cartup, props.addcart, props.deleteCart, props.getNotification]);
+  /* <!--End this section--> */
 
-/* <!--Product delete from cart--Api call--> */
+  /* <!--Product delete from cart--Api call--> */
+
   const deleteCart = (id) => {
     axios
       .put(
@@ -205,17 +199,14 @@ const Header = (props) => {
       });
   };
 
+  /* <!--End this section--> */
 
-/* <!--End this section--> */
-
-/* <!--Function for remove token on logout --> */
+  /* <!--Function for remove token on logout --> */
 
   const OnLogoutClick = () => {
     localStorage.clear();
   };
-/* <!--End this section--> */
-
-/* <!--Notification Show--Api call--> */
+  /* <!--End this section--> */
 
 // useEffect(() => {
 //   function getNotification(){
@@ -240,12 +231,12 @@ const Header = (props) => {
 // console.log("iii-------------"+JSON.stringify(notification))
 /* <!--End all api call section--> */
 
+  /* <!--End all api call section--> */
 
-/* <!--Start body of header section--> */
+  /* <!--Start body of header section--> */
   return (
     <Fragment>
-
-{/* <!--Search bar section start--> */}
+      {/* <!--Search bar section start--> */}
 
       <header className="header-2">
         <div className="top-nav top-header sticky-header sticky-header-3">
@@ -351,10 +342,7 @@ const Header = (props) => {
                     <div className="nav-number"></div>
 
                     <Link to="/sellersignup">
-                      <span className="text-primary">Become A Seller
-                      
-                      </span>
-                            
+                      <span className="text-primary">Become A Seller</span>
                     </Link>
 
                     {/* </NavLink> */}
@@ -390,8 +378,7 @@ const Header = (props) => {
                           </Link>
                         </li>
                         <li className="onhover-dropdown">
-
-                        <div
+                          <div
                             className="header-icon bag-icon"
                             onClick={() => navigate("/")}
                           >
@@ -400,17 +387,16 @@ const Header = (props) => {
                             notification.length === "0" ? null : (
                               <small className="badge-number">
                                 {notification.length}
-
                               </small>
                             )}
-                            <CiBellOn className="icon_color"/>
+                            {/* <CiBellOn className="icon_color"/> */}
                           </div>
-                          {notification.map((mssg)=>{
-                            return(
-                             <div className="onhover-div">
-                            <h6>{mssg.message}</h6>
-                          </div>
-                            )
+                          {notification.map((mssg) => {
+                            return (
+                              <div className="onhover-div">
+                                <h6>{mssg.message}</h6>
+                              </div>
+                            );
                           })}
                         </li>
                         <li className="onhover-dropdown">
@@ -442,83 +428,84 @@ const Header = (props) => {
                               className="cart-list "
                               style={{ flexDirection: "column" }}
                             >
-                              {msg=== false? (
-                             <h4 className="text-dark text-center">
-                              Empty cart{" "}
-                             </h4>
-                             ):
-                              pdata.map((data) => {
-                                return (
-                                  <li key={pdata.id}>
-                                    <div className="drop-cart ">
-                                      {/* <Link to="/" className="drop-image"> */}
-                                      <img
-                                        src={data.all_images}
-                                        className="lazyload h-50 w-50"
-                                        alt="image"
-                                        name="image"
-                                      />
-                                      {/* </Link> */}
-
-                                      <div className="drop-contain">
-                                        {/* <Link to="/"> */}
-                                        <h5>{data.product_title_name}</h5>
+                              {msg === false ? (
+                                <h4 className="text-dark text-center">
+                                  Empty cart{" "}
+                                </h4>
+                              ) : (
+                                pdata.map((data) => {
+                                  return (
+                                    <li key={pdata.id}>
+                                      <div className="drop-cart ">
+                                        {/* <Link to="/" className="drop-image"> */}
+                                        <img
+                                          src={data.all_images}
+                                          className="lazyload h-50 w-50"
+                                          alt="image"
+                                          name="image"
+                                        />
                                         {/* </Link> */}
-                                        <h6>
-                                          <span className="im=block">
-                                            {data.quantity}x
-                                          </span>{" "}
-                                          <span>
-                                            ₹
-                                            {(
-                                              Number(data.product_price) -
-                                              (data.product_price *
-                                                data.discount) /
-                                                100 +
-                                              (Number(
-                                                data.product_price -
-                                                  (data.product_price *
-                                                    data.discount) /
-                                                    100
-                                              ) *
-                                                data.gst) /
-                                                100 +
-                                              (Number(
-                                                data.product_price -
-                                                  (data.product_price *
-                                                    data.discount) /
-                                                    100
-                                              ) *
-                                                data.cgst) /
-                                                100 +
-                                              (Number(
-                                                data.product_price -
-                                                  (data.product_price *
-                                                    data.discount) /
-                                                    100
-                                              ) *
-                                                data.sgst) /
-                                                100
-                                            ).toFixed(2)}
-                                          </span>
-                                          {/* <span>{data.sale_price}</span> */}
-                                        </h6>
-                                        <button
-                                          className="close-button"
-                                          onClick={() =>
-                                            deleteCart(
-                                              data.cart_id,
-                                              data.user_id
-                                            )
-                                          }
-                                        >
-                                          <i className="fa-solid fa-xmark"></i>
-                                        </button>
+
+                                        <div className="drop-contain">
+                                          {/* <Link to="/"> */}
+                                          <h5>{data.product_title_name}</h5>
+                                          {/* </Link> */}
+                                          <h6>
+                                            <span className="im=block">
+                                              {data.quantity}x
+                                            </span>{" "}
+                                            <span>
+                                              ₹
+                                              {(
+                                                Number(data.product_price) -
+                                                (data.product_price *
+                                                  data.discount) /
+                                                  100 +
+                                                (Number(
+                                                  data.product_price -
+                                                    (data.product_price *
+                                                      data.discount) /
+                                                      100
+                                                ) *
+                                                  data.gst) /
+                                                  100 +
+                                                (Number(
+                                                  data.product_price -
+                                                    (data.product_price *
+                                                      data.discount) /
+                                                      100
+                                                ) *
+                                                  data.cgst) /
+                                                  100 +
+                                                (Number(
+                                                  data.product_price -
+                                                    (data.product_price *
+                                                      data.discount) /
+                                                      100
+                                                ) *
+                                                  data.sgst) /
+                                                  100
+                                              ).toFixed(2)}
+                                            </span>
+                                            {/* <span>{data.sale_price}</span> */}
+                                          </h6>
+                                          <button
+                                            className="close-button"
+                                            onClick={() =>
+                                              deleteCart(
+                                                data.cart_id,
+                                                data.user_id
+                                              )
+                                            }
+                                          >
+                                            <i className="fa-solid fa-xmark"></i>
+                                          </button>
+                                        </div>
                                       </div>
-                                    </div>
-                                  </li>
-                                );
-                              })}
+                                    </li>
+                                  );
+                                })
+                              )}
                             </ul>
                             <div className="price-box">
                               <h5>Price :</h5>
@@ -1251,7 +1238,7 @@ const Header = (props) => {
         {/* end category */}
       </header>
 
-{/* <!--End search bar section start--> */}
+      {/* <!--End search bar section start--> */}
 
       <div className="mobile-menu d-md-none d-block mobile-cart">
         <ul className="p-0">
@@ -1292,6 +1279,8 @@ const Header = (props) => {
     </Fragment>
   );
 };
-      {/* <!-- Header End --> */}
+{
+  /* <!-- Header End --> */
+}
 
 export default Header;

@@ -22,15 +22,18 @@ const Contactus = () => {
     subject: "",
     other: "",
   });
+  const [error, setError] = useState("");
 
   //   Function od on change of contact type :-
   const onContactTypeChange = (e) => {
     if (e.target.value === "Complainent") {
       setEnquire(false);
       setComplainent(true);
+      setError("");
     } else if (e.target.value === "Enquire") {
       setComplainent(false);
       setEnquire(true);
+      setError("");
     } else if (e.target.value === "select") {
       setComplainent(false);
       setEnquire(false);
@@ -95,44 +98,42 @@ const Contactus = () => {
   //   Api integration :-
   let Submit = (e) => {
     e.preventDefault();
-    let data = {
-      order_id: input === true ? ContactData.other : id,
-      first_name: ContactData.first_name,
-      last_name: ContactData.last_name,
-      contect_no: ContactData.contect_no,
-      email: ContactData.email,
-      subject: ContactData.subject,
-      description: ContactData.description,
-    };
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/add_complaint`, data, {
-        headers: {
-          user_token: token,
-        },
-      })
-      .then((response) => {
-        setContactData({
-          ...ContactData,
-          first_name: "",
-          last_name: "",
-          contect_no: "",
-          email: "",
-          subject: "",
-          description: "",
-          subject: "",
-          other: "",
+    if (id === null || id === "" || id === undefined) {
+      setError("Please select the contact type");
+    } else {
+      let data = {
+        order_id: input === true ? ContactData.other : id,
+        subject: ContactData.subject,
+        description: ContactData.description,
+      };
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/add_complaint`, data, {
+          headers: {
+            user_token: token,
+          },
+        })
+        .then((response) => {
+          console.log(JSON.stringify(response));
+          setContactData({
+            ...ContactData,
+            subject: "",
+            description: "",
+            subject: "",
+            other: "",
+          });
+          setid();
+          setEnquire(false);
+          setComplainent(false);
+          setorderId(false);
+          setInput(false);
+          setOrderData(false);
+          alert("Message sent Succesfully");
+        })
+        .catch((err) => {
+          console.log(err);
         });
-        setEnquire(false);
-        setComplainent(false);
-        setorderId(false);
-        setInput(false);
-        setOrderData(false);
-        alert("Message sent Succesfully");
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-    return false;
+      return false;
+    }
   };
   console.log(ContactData);
   return (
@@ -233,8 +234,8 @@ const Contactus = () => {
                 </div>
                 <div className="right-sidebar-box">
                   <div className="row">
-                    <div className="col-md-6">
-                      {/* <form onSubmit={formSubmit}></form> */}
+                    {/* <div className="col-md-6">
+                      <form onSubmit={formSubmit}></form>
                       <div className="mb-md-4 mb-3 custom-form">
                         <label
                           htmlFor="exampleFormControlInput"
@@ -257,9 +258,9 @@ const Contactus = () => {
                           <i className="fa-solid fa-user"></i>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="col-md-6">
+                    {/* <div className="col-md-6">
                       <div className="mb-md-4 mb-3 custom-form">
                         <label
                           htmlFor="exampleFormControlInput1"
@@ -282,9 +283,9 @@ const Contactus = () => {
                           <i className="fa-solid fa-user"></i>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="col-xxl-12 col-md-6">
+                    {/* <div className="col-xxl-12 col-md-6">
                       <div className="mb-md-4 mb-3 custom-form">
                         <label
                           htmlFor="exampleFormControlInput2"
@@ -307,9 +308,9 @@ const Contactus = () => {
                           <i className="fa-solid fa-envelope"></i>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
 
-                    <div className="col-xxl-12 col-md-6">
+                    {/* <div className="col-xxl-12 col-md-6">
                       <div className="mb-md-4 mb-3 custom-form">
                         <label
                           htmlFor="exampleFormControlInput3"
@@ -333,7 +334,7 @@ const Contactus = () => {
                           <i className="fa-solid fa-mobile-screen-button"></i>
                         </div>
                       </div>
-                    </div>
+                    </div> */}
                     {/* Select box to select the contact type :-  */}
                     <div className="col-xxl-12 col-md-6">
                       <div className="mb-md-4 mb-3 custom-form">
@@ -375,6 +376,9 @@ const Contactus = () => {
                           <i className="fa fa-address-card"></i>
                         </div>
                       </div>
+                      {Complainent === false || Enquire === false ? (
+                        <small className="text-danger">{error}</small>
+                      ) : null}
                     </div>
                     {/* Hide or show the sub-select box of "Contact type" of complainent :- */}
                     {Complainent === true ? (
@@ -421,7 +425,7 @@ const Contactus = () => {
                                 Other
                               </option>
                             </select>
-                            <i className="fa fa-address-card"></i>
+                            <i className="fa fa-comments"></i>
                           </div>
                         </div>
                       </div>
@@ -472,7 +476,7 @@ const Contactus = () => {
                                 Other
                               </option>
                             </select>
-                            <i className="fa fa-address-card"></i>
+                            <i className="fa fa-question-circle"></i>
                           </div>
                         </div>
                       </div>
@@ -520,7 +524,7 @@ const Contactus = () => {
                                 );
                               })}
                             </select>
-                            <i className="fa fa-address-card"></i>
+                            <i className="fab fa-first-order"></i>
                           </div>
                         </div>
                       </div>

@@ -9,11 +9,15 @@ import { useState, useEffect } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Badge, Button, InputGroup, Table } from "react-bootstrap";
 import { GiCancel } from "react-icons/gi";
-
+import Spinner from "react-bootstrap/Spinner";
+import Modal from 'react-bootstrap/Modal';
 const SellerSignUp = () => {
+  const [show, setShow] = useState(false);
+  const [spinner, setSpinner] = useState(false);
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [forgotemail, setforgotemail] = useState("");
+  let [formshow ,setformShow]=useState(true)
   let [hide, setHide] = useState(false);
   const [emailerror, setemailerror] = useState("");
   const [Signup, setSignup] = useState(false);
@@ -60,6 +64,28 @@ const SellerSignUp = () => {
   const [loginerror, setLoginerror] = useState(true);
   const { state } = useLocation();
 
+  //for close the   vendor request model 
+  const handleClose = () =>{setShow(false)       
+   setaddvendordata({
+    owner_name: "",
+    shop_name: "",
+    mobile: "",
+    email: "",
+    shop_address: "",
+    gstn: "",
+    geolocation: "",
+    store_type: "",
+    image: "",
+    status: "",
+    image: "",
+    document_name: [],
+    availability: "",
+    social_media_links: [],
+  });
+ 
+  navigate("/")
+}
+
   // SIGNUP
   const handleSubmit = (event) => {
     const form = event.currentTarget;
@@ -69,6 +95,9 @@ const SellerSignUp = () => {
     }
     setValidated(true);
   };
+
+
+  // click the sighup button
   const SignUpUser = (e) => {
     e.preventDefault();
     setemail(e.target.email.value);
@@ -82,25 +111,33 @@ const SellerSignUp = () => {
           setemailerror("Already Exist. Please Login");
           e.target.email.value = "";
         } else {
+          setSpinner("spinner");
           setotp(response.data);
         }
         return response;
       })
       .catch((error) => {});
   };
+
+  //set the password value
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
   };
+
+  //set the otp value in otp state
   const OnOTpChange = (e) => {
     setotp(e.target.value);
   };
   let vendorid = localStorage.getItem("vendorid");
+
+  //for get the vendor details 
   const OnVendorDetail = () => {
     if (vendorid === null || vendorid === "undefined" || vendorid === "") {
     } else {
       axios
         .get(`${process.env.REACT_APP_BASEURL}/vendors?id=${vendorid}`)
         .then((response) => {
+          console.log("vendordata---"+JSON.stringify(response.data[0]))
           setaddvendordata(response.data[0]);
           setFile("");
           setFileName("");
@@ -123,14 +160,40 @@ const SellerSignUp = () => {
         password: passval,
       })
       .then((response) => {
-        if (response.data.message === "please check credential") {
+    //     const insertId='';
+    //  const   vendor_token='';
+    var {response, vendor_token}=response.data
+    console.log(response)
+    console.log(vendor_token)
+    console.log(response.insertId)
+    console.log(response.message)
+    
+        if (response.message === "please check credential") {
           setOtperror(true);
         } else {
-          setotp(0);
-          setSignup(true);
-          // let vendorid=response.data.insertId;
-          localStorage.setItem("vendorid", response.data.insertId);
-          OnVendorDetail();
+          setSpinner("spinner");
+          setHide(true)
+          setformShow(false)
+          setotp(1)
+           setaddvendordata({
+            owner_name: "",
+            shop_name: "",
+            mobile: "",
+            email: "",
+            shop_address: "",
+            gstn: "",
+            geolocation: "",
+            store_type: "",
+            image: "",
+            status: "",
+            image: "",
+            document_name: [],
+            availability: "",
+            social_media_links: [],
+          });
+          localStorage.setItem("vendorid", response.insertId);
+          localStorage.setItem("vendor_token",vendor_token);
+          //  OnVendorDetail();
           // localStorage.setItem("upassword", passval);
           // navigate("/your_account");
         }
@@ -225,6 +288,7 @@ const SellerSignUp = () => {
           localStorage.setItem("vendorid", response.data.insertId);
           localStorage.setItem("vendorpassword", passval);
           // return response;
+          setSpinner("spinner");
           setloginpage(true);
         }
       })
@@ -326,7 +390,7 @@ const SellerSignUp = () => {
   };
   useEffect(() => {
     onImgView();
-    OnVendorDetail();
+    // OnVendorDetail();
   }, [apicall]);
   const onImgView = () => {
     if (
@@ -415,6 +479,8 @@ const SellerSignUp = () => {
       .put(`${process.env.REACT_APP_BASEURL}/vendor_update`, formData)
       .then((response) => {
         let data = response.data;
+        console.log("after update-----"+JSON.stringify (data))
+        setShow(true);
       })
       .catch(function (error) {
         console.log(error);
@@ -431,7 +497,7 @@ const SellerSignUp = () => {
         <div className="container-fluid-lg w-100">
           <div className="row">
             {hide === true ? (
-              <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block d-none ms-auto">
+              <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block justify-content-center ">
                 <Form
                   className=""
                   noValidate
@@ -1061,8 +1127,9 @@ const SellerSignUp = () => {
             )}
 
             {/* LOGIN */}
+           
 
-            {loginpage === true && forgotpage === false ? (
+            {loginpage === true && forgotpage === false && formshow===true ? (
               <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto log-in-box">
                 <div className="log-in-title">
                   <h3>Welcome To Apna Organic</h3>
@@ -1180,16 +1247,28 @@ const SellerSignUp = () => {
                 <div className="other-log-in"></div>
                 <div className="sign-up-box">
                   <h4>Don't have an account?</h4>
-                  <button
+                  {
+                    spinner === "spinner"? 
+                    <button
+                    onClick={() => setloginpage(false)}
+                    className="btn btn-success my-1"
+                  >
+                      <Spinner animation="border" role="status">
+                     <span className="visually-hidden"> Sign Up</span>
+                         </Spinner>
+                   
+                  </button>: <button
                     onClick={() => setloginpage(false)}
                     className="btn btn-success my-1"
                   >
                     Sign Up
                   </button>
+                  }
+                 
                 </div>
               </div>
             ) : //  LOGIN END
-            forgotpage === true ? (
+            forgotpage === true && formshow===true ? (
               //  FORGOT PAGE
               <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto">
                 <div className="d-flex align-items-center justify-content-center h-100">
@@ -1246,15 +1325,9 @@ const SellerSignUp = () => {
                             onChange={(e) => OnOtpChange(e)}
                           />
                         </div>
-                        {/* <div className="col-12 mt-3">
-          <button
-            className="btn btn-animation w-100"
-            type="button" onClick={VerifyOTP}
-          >
-            VerifyOTP
-          </button>
-        </div> */}
-                        {/* {otp === 0 ? ( */}
+           
+
+
                         <div className="col-12">
                           <div className="form-floating theme-form-floating">
                             <div className="log-in-title">
@@ -1286,7 +1359,7 @@ const SellerSignUp = () => {
                   </div>
                 </div>
               </div>
-            ) : (
+            ) : formshow===true? (
               // END FORGOT PAGE
               //  SIGNUP
               <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto">
@@ -1450,9 +1523,26 @@ const SellerSignUp = () => {
                   </div>
                 </div>
               </div>
-            )}
+            ):null}
 
+
+
+               
             <div className="col-xxl-7 col-xl-6 col-lg-6"></div>
+
+            <Modal show={show} onHide={handleClose}>
+        <Modal.Header closeButton>
+          <Modal.Title>Message for vendor</Modal.Title>
+        </Modal.Header>
+        <Modal.Body> Your Request now Pending wait for approved!</Modal.Body>
+        <Modal.Footer>
+          <Button variant="secondary" onClick={handleClose}>
+            OK
+          </Button>
+     
+        </Modal.Footer>
+      </Modal>
+
             {/* END SIGNUP */}
           </div>
         </div>
