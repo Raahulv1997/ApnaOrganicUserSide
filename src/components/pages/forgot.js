@@ -104,7 +104,12 @@ const Forgot = () => {
             // return response;
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error);
+          if (error.message === "Request failed with status code 513") {
+            setemailerror("email not found");
+          }
+        });
     }
   };
   return (
@@ -222,6 +227,7 @@ const Forgot = () => {
                             id="password"
                             placeholder="New Password"
                             onChange={(e) => onPasswordChange(e)}
+                            disabled={emailerror === "timer" ? true : false}
                           />
                         </div>
                         {emailerror === "blank pass" ? (
