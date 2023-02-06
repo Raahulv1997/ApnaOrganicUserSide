@@ -20,9 +20,11 @@ import Form from "react-bootstrap/Form";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
 const ProductDetail = ({ logIn }) => {
+  /*<-------Global varialable------->*/
   var result6;
   var result8;
 
+  /*<-----State Declaration----> */
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
   // const proDuctID=localStorage.getItem("porid");
@@ -66,22 +68,27 @@ const ProductDetail = ({ logIn }) => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  /*<-----Increment Functionality----> */
   function incrementCount() {
     count = count + 1;
     setCount(count);
   }
+
+  /*<-----Decrement Functionality----> */
   const decrementCount = () => {
     if (count > 0) {
       setCount((count) => count - 1);
     }
   };
-  const func = () => {};
+  // const func = () => {};
 
   var proid = localStorage.getItem("proid");
   // console.log("---------------proidddd---" + proid);
   const [varientId, setVeriantId] = useState(localStorage.getItem("variantid"));
   // var varientId = localStorage.getItem("variantid");
   // console.log("---------------veriant ---" + varientId);
+
+  /*<-----Data retrieval functionality for product details----> */
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -120,6 +127,7 @@ const ProductDetail = ({ logIn }) => {
 
   //  console.log("---------------proidddd---" + proid);
 
+  /*<-----Functionality for veriant Data of product----> */
   const getVeriantDetails = (varientId, proid) => {
     try {
       axios
@@ -145,10 +153,12 @@ const ProductDetail = ({ logIn }) => {
     } catch (err) {}
   };
 
+  /*<----color variant functionality---->*/
   useEffect(() => {
     SelectProduct(colorValue);
   }, [varientId]);
 
+  /*<-----Data retrieval functionality for product details by size----> */
   function SelectProduct(colorValue) {
     try {
       axios
@@ -176,12 +186,14 @@ const ProductDetail = ({ logIn }) => {
     } catch (err) {}
   }
 
+  /*<-----Functionality to filter products data by image----> */
   const result = showImage.filter(
     (thing, index, self) =>
       index ==
       self.findIndex((t) => t.product_image_path == thing.product_image_path)
   );
 
+  /*<-----Functionality to Add to cart----> */
   const AddToCart = () => {
     axios
       .post(
@@ -208,7 +220,7 @@ const ProductDetail = ({ logIn }) => {
       });
   };
 
-  //To add and remove the product to wishlist :-
+  /*<----Functionality to add and remove the product to wishlist---->*/
 
   const AddToWishList = () => {
     if (isAdding) {
@@ -309,6 +321,7 @@ const ProductDetail = ({ logIn }) => {
       });
   };
 
+  /*<----Functionality to set price as per the quntity---->*/
   const OnUnitQwantiity = (
     unitQwanityy,
     SalePrice,
@@ -364,6 +377,7 @@ const ProductDetail = ({ logIn }) => {
       });
   };
 
+  /*<----Functionality to set price as per the color---->*/
   const OnProductColor = (
     Salepricee,
     color,
@@ -402,6 +416,7 @@ const ProductDetail = ({ logIn }) => {
     // setImage(product_image_namee);
   };
 
+  /*<----Functionality to get the data of reviews---->*/
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_list`, {
@@ -421,13 +436,18 @@ const ProductDetail = ({ logIn }) => {
 
   // console.log("CONSOLEE"+JSON.stringify(Rrating))
 
+  /*<----Onchange function of send review---->*/
   const handleFormChange = (e) => {
     setaddreviewdata({ ...addreviewdata, [e.target.name]: e.target.value });
   };
+
+  /*<----Onchange function of Rate---->*/
   const onRatingChange = (e) => {
     setRrating(e.target.value);
     console.log("onRatingChange" + JSON.stringify(e.target.value));
   };
+
+  /*<----Function to add the review---->*/
   const AddReview = (e) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_rating`, {
@@ -442,6 +462,8 @@ const ProductDetail = ({ logIn }) => {
       })
       .then((response) => {});
   };
+
+  /*<----Function to render the banner list---->*/
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
@@ -457,6 +479,7 @@ const ProductDetail = ({ logIn }) => {
       });
   }, [apicall]);
 
+  /*<-----Functionality to filter products data by rate----> */
   const result1 = ratingbox.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
@@ -811,7 +834,7 @@ const ProductDetail = ({ logIn }) => {
                           type="text"
                           name="quantity"
                           value={count}
-                          onChange={func}
+                          // onChange={func}
                         />
                         <button
                           type="button"
