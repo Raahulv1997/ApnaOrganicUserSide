@@ -250,7 +250,7 @@ const Benners = () => {
               .then((response) => {
                 let data = response.data;
                 
-                console.log("product data---"+ JSON.stringify(data))
+                // console.log("product data---"+ JSON.stringify(data))
                 setProductData(response.data.results);
                 setapicall(false);
               });

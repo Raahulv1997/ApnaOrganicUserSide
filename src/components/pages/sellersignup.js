@@ -5,13 +5,15 @@ import Header from "../common/header";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import "../../CSS/style.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect,useRef  } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Badge, Button, InputGroup, Table } from "react-bootstrap";
 import { GiCancel } from "react-icons/gi";
 import Spinner from "react-bootstrap/Spinner";
 import Modal from 'react-bootstrap/Modal';
 const SellerSignUp = () => {
+  const[ customValidation,setCustomValidation]=useState(false)
+  const formRef = useRef();
   const [show, setShow] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [otp, setotp] = useState(0);
@@ -82,36 +84,35 @@ const SellerSignUp = () => {
     availability: "",
     social_media_links: [],
   });
- 
+  setnewImageUrls([])
   navigate("/")
 }
 
-  // SIGNUP
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
-  };
+  const handleClose1=()=>{
+    setShow(false)  
+  }
+
 
 
   // click the sighup button
   const SignUpUser = (e) => {
     e.preventDefault();
+    
     setemail(e.target.email.value);
+
     // alert("SINGNNN"+email)
+    setSpinner("spinner");
     axios
       .post(`${process.env.REACT_APP_BASEURL}/vendor_signup`, {
         email: e.target.email.value,
       })
       .then((response) => {
+        setSpinner(false);
         if (response.data.response === false) {
           setemailerror("Already Exist. Please Login");
           e.target.email.value = "";
         } else {
-          setSpinner("spinner");
+          setSpinner(false);
           setotp(response.data);
         }
         return response;
@@ -153,6 +154,7 @@ const SellerSignUp = () => {
   const VerifyOTP = (e) => {
     e.preventDefault();
     // if (e.target.otpinput.value == otp) {
+      setSpinner("spinner");
     axios
       .post(`${process.env.REACT_APP_BASEURL}/vendor_otp_verify`, {
         email: email,
@@ -160,6 +162,7 @@ const SellerSignUp = () => {
         password: passval,
       })
       .then((response) => {
+        setSpinner(false);
     //     const insertId='';
     //  const   vendor_token='';
     var {response, vendor_token}=response.data
@@ -171,7 +174,7 @@ const SellerSignUp = () => {
         if (response.message === "please check credential") {
           setOtperror(true);
         } else {
-          setSpinner("spinner");
+       
           setHide(true)
           setformShow(false)
           setotp(1)
@@ -191,6 +194,7 @@ const SellerSignUp = () => {
             availability: "",
             social_media_links: [],
           });
+          setnewImageUrls([])
           localStorage.setItem("vendorid", response.insertId);
           localStorage.setItem("vendor_token",vendor_token);
           //  OnVendorDetail();
@@ -214,6 +218,7 @@ const SellerSignUp = () => {
     setcredentailval({ ...credentailval, [e.target.name]: e.target.value });
   };
   const onSubmitClick = () => {
+ 
     const { from } = state || {};
     axios
       .post(`http://192.168.29.108:5000/vendor_login`, credentailval)
@@ -232,6 +237,7 @@ const SellerSignUp = () => {
           //  setError(false);
         } else {
           localStorage.setItem("vendorid", response.data.id);
+          // setSpinner("spinner");
           navigate("/");
           const { from } = state || {};
           // callback to update state
@@ -261,6 +267,7 @@ const SellerSignUp = () => {
     setforgototp(e.target.value);
   };
   const forgotPassword = () => {
+    setSpinner("spinner");
     axios
       .post(`http://192.168.29.108:5000/vendor_forgot_password`, {
         email: `${forgotemail}`,
@@ -275,6 +282,7 @@ const SellerSignUp = () => {
   };
   const VerifyfORGOTOTP = (e) => {
     e.preventDefault();
+    setSpinner("spinner");
     axios
       .post(`${process.env.REACT_APP_BASEURL}/vendor_otp_verify`, {
         email: forgotemail,
@@ -288,7 +296,7 @@ const SellerSignUp = () => {
           localStorage.setItem("vendorid", response.data.insertId);
           localStorage.setItem("vendorpassword", passval);
           // return response;
-          setSpinner("spinner");
+          
           setloginpage(true);
         }
       })
@@ -306,10 +314,12 @@ const SellerSignUp = () => {
   }, [Docnamearray]);
 
   const handleFormChange = (e) => {
+    setCustomValidation(false)
     setaddvendordata({
       ...addvendordata,
       [e.target.name]: e.target.value,
     });
+   
   };
 
   const onDocumentNamechange = (e) => {
@@ -453,38 +463,77 @@ const SellerSignUp = () => {
   // end social media link
 
   const UpdateVendorClick = (e) => {
-    let x = [addvendordata.document_name];
+    // const form = e.currentTarget;
     e.preventDefault();
-    const formData = new FormData();
 
-    let socialname = addvendordata.social_media_links;
-    let socialname_new = JSON.stringify(socialname);
-    formData.append("id", vendorid);
-    formData.append("image", file);
-    formData.append("filename", fileName);
-    formData.append("owner_name", addvendordata.owner_name);
-    formData.append("shop_name", addvendordata.shop_name);
-    formData.append("mobile", addvendordata.mobile);
-    formData.append("email", email);
-    formData.append("shop_address", addvendordata.shop_address);
-    formData.append("gstn", addvendordata.gstn);
-    formData.append("geolocation", addvendordata.geolocation);
-    formData.append("store_type", addvendordata.store_type);
-    formData.append("availability", addvendordata.availability);
-    formData.append("document_name", x);
-    formData.append("status", "pending");
-    formData.append("social_media_links", socialname_new);
+    // if (form.checkValidity() === false) {
+     
+    //     setValidated(true);
+    // }
+    if(addvendordata.owner_name===""){
+      setCustomValidation("ownernameEmpty")
+    }else if(addvendordata.shop_name===""){
+      setCustomValidation("shopnameEmpty")
+    }else if(addvendordata.mobile===""){
+      setCustomValidation("MobileEmpty")
+    }
+    else if(addvendordata.email===""){
 
-    axios
-      .put(`${process.env.REACT_APP_BASEURL}/vendor_update`, formData)
-      .then((response) => {
-        let data = response.data;
-        console.log("after update-----"+JSON.stringify (data))
-        setShow(true);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
+      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
+      var rst = regex.test(addvendordata.email);
+      if(rst !== true){
+        setCustomValidation("EmailEmpty")
+      }
+      setCustomValidation("EmailEmpty")
+
+    }else if(addvendordata.shop_address===""){
+      setCustomValidation("ShopAddressEmpty")
+    }else if(addvendordata.gstn===""){
+      setCustomValidation("GSTEmpty")
+    }else if(addvendordata.geolocation===""){
+      setCustomValidation("GeolocationEmpty")
+    }
+    
+    else {
+     
+      // e.stopPropagation();
+      let x = [addvendordata.document_name];
+      // e.preventDefault();
+      const formData = new FormData();
+  
+      let socialname = addvendordata.social_media_links;
+      let socialname_new = JSON.stringify(socialname);
+      formData.append("id", vendorid);
+      formData.append("image", file);
+      formData.append("filename", fileName);
+      formData.append("owner_name", addvendordata.owner_name);
+      formData.append("shop_name", addvendordata.shop_name);
+      formData.append("mobile", addvendordata.mobile);
+      formData.append("email", email);
+      formData.append("shop_address", addvendordata.shop_address);
+      formData.append("gstn", addvendordata.gstn);
+      formData.append("geolocation", addvendordata.geolocation);
+      formData.append("store_type", addvendordata.store_type);
+      formData.append("availability", addvendordata.availability);
+      formData.append("document_name", x);
+      formData.append("status", "pending");
+      formData.append("social_media_links", socialname_new);
+  
+      axios
+        .put(`${process.env.REACT_APP_BASEURL}/vendor_update`, formData)
+        .then((response) => {
+          let data = response.data;
+          console.log("after update-----"+JSON.stringify (data))
+          if(data.message==="Updated Vendor Profile"){
+            setShow(true);
+          }
+          
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    }
+   
   };
 
   // END VENDOR
@@ -499,9 +548,9 @@ const SellerSignUp = () => {
             {hide === true ? (
               <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block justify-content-center ">
                 <Form
-                  className=""
-                  noValidate
-                  validated={validated}
+                className=""
+                // validated={validated}
+                // ref={formRef}
                   onSubmit={(e) => UpdateVendorClick(e)}
                 >
                   <div className="image-contain">
@@ -512,135 +561,138 @@ const SellerSignUp = () => {
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom01"
-                          >
-                            <Form.Label>Owner Name</Form.Label>
+                            //  controlId="validationCustom01"
+                            >
+                            <Form.Label  >Owner Name <span className="text-danger">* </span></Form.Label>
                             <Form.Control
-                              onChange={(e) => handleFormChange(e)}
-                              value={addvendordata.owner_name}
-                              required
                               type="text"
                               placeholder="Owner Name"
+                              
                               name={"owner_name"}
-                            />
-                            <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill owner name
-                            </Form.Control.Feedback>
+                              onChange={(e) => handleFormChange(e)  }
+                              value={addvendordata.owner_name}
+                              // required
+                            />{customValidation==="ownernameEmpty"? <span className="text-danger">Please fill the Owner </span>:customValidation===false?"":null}
+                       
                           </Form.Group>
                         </div>
+                        
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom02"
+                            //  controlId="validationCustom02"
                           >
-                            <Form.Label>Shop Name</Form.Label>
+                            <Form.Label>Shop Name <span className="text-danger">* </span></Form.Label>
                             <Form.Control
-                              onChange={(e) => handleFormChange(e)}
-                              value={addvendordata.shop_name}
-                              required
                               type="text"
+                             
                               placeholder="Shop Name"
                               name={"shop_name"}
-                            />
-                            <Form.Control.Feedback
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.shop_name}
+                              //  required
+                            />{customValidation==="shopnameEmpty"? <span className="text-danger">Please fill the Shop name</span>:customValidation===false?"":null}
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please fill shop name
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom03"
+                            //  controlId="validationCustom03"
                           >
-                            <Form.Label>Mobile</Form.Label>
+                            <Form.Label >Mobile <span className="text-danger">* </span></Form.Label>
                             <Form.Control
-                              onChange={(e) => handleFormChange(e)}
-                              value={addvendordata.mobile}
-                              required
                               type="number"
-                              min={1}
+                              // min={1}
+                            
                               placeholder="Mobile"
                               name={"mobile"}
-                            />
-                            <Form.Control.Feedback
+                              onChange={(e) => handleFormChange(e)}
+                              value={addvendordata.mobile}
+                              // required
+                            />{customValidation==="MobileEmpty"? <span className="text-danger">Please fill the Mobile </span>:customValidation===false?"":null}
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please fill mobile
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom04"
+                            //  controlId="validationCustom04"
                           >
-                            <Form.Label>Email</Form.Label>
+                            <Form.Label >Email <span className="text-danger">* </span></Form.Label>
                             <Form.Control
-                              onChange={(e) => handleFormChange(e)}
-                              value={addvendordata.email}
-                              type="email"
-                              placeholder="Email"
-                              name={"email"}
-                            />
-                            <Form.Control.Feedback
+                            type="email" 
+                            
+                            placeholder="Email"
+                            name={"email"}
+                            onChange={(e) => handleFormChange(e)}                           
+                            value={addvendordata.email}
+                            // required
+                            />{customValidation==="EmailEmpty"?<span className="text-danger">Please fill the Email </span>:customValidation===false?"":null}
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please fill email
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom05"
+                            //  controlId="validationCustom05"
                           >
-                            <Form.Label>Shop Address</Form.Label>
+                            <Form.Label >Shop Address <span className="text-danger">* </span></Form.Label>
                             <Form.Control
                               className="vendor_address"
                               as="textarea"
                               rows={3}
+                           
                               placeholder="Address"
                               name={"shop_address"}
-                              onChange={(e) => handleFormChange(e)}
+                              onChange={(e) => handleFormChange(e)}                             
                               value={addvendordata.shop_address}
-                              required
-                            />
-                            <Form.Control.Feedback
+                              // required
+                            />{customValidation==="ShopAddressEmpty"? <span className="text-danger">Please fill the Shop Address </span>:customValidation===false?"":null}
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please fill address
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom06"
+                            // controlId="validationCustom06"
                           >
-                            <Form.Label>GSTN</Form.Label>
+                            <Form.Label >GSTN <span className="text-danger">* </span></Form.Label>
                             <Form.Control
-                              onChange={(e) => handleFormChange(e)}
-                              value={addvendordata.gstn}
-                              required
                               type="text"
+                           
                               placeholder="GSTN"
                               name={"gstn"}
-                            />
-                            <Form.Control.Feedback
+                              onChange={(e) => handleFormChange(e)}                             
+                              value={addvendordata.gstn}
+                              // required
+                            />{customValidation==="GSTEmpty"? <span className="text-danger">Please fill the GST NO. </span>:customValidation===false?"":null}
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
-                              Please fill gstn
-                            </Form.Control.Feedback>
+                              Please fill GSTN
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         {/* <div className="col-md-6">
@@ -704,7 +756,7 @@ const SellerSignUp = () => {
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom06"
+                            // controlId="validationCustom06"
                           >
                             <Form.Label>Avaliable</Form.Label>
                             <Form.Select
@@ -764,18 +816,18 @@ const SellerSignUp = () => {
                                 Delete
                               </option>
                             </Form.Select>
-                            <Form.Control.Feedback
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please fill gstn
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom06"
+                            // controlId="validationCustom06"
                           >
                             <Form.Label>Store Type</Form.Label>
                             <Form.Select
@@ -813,40 +865,41 @@ const SellerSignUp = () => {
                                 Active
                               </option>
                             </Form.Select>
-                            <Form.Control.Feedback
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please fill gstn
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom07"
+                            // controlId="validationCustom07"
                           >
-                            <Form.Label>Geolocation</Form.Label>
+                            <Form.Label >Geolocation <span className="text-danger">* </span></Form.Label>
                             <Form.Control
-                              onChange={(e) => handleFormChange(e)}
-                              required
-                              type="location"
-                              placeholder="Geolocation"
-                              name={"geolocation"}
+                                 type="location"
+                                 placeholder="Geolocation"
+                             name={"geolocation"}
+                              onChange={(e) => handleFormChange(e)}                             
+                            
                               value={addvendordata.geolocation}
-                            />
-                            <Form.Control.Feedback
+                              // required
+                            />{customValidation==="GeolocationEmpty"? <span className="text-danger">Please fill the Location </span>:customValidation===false?"":null}
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
-                              Please fill name
-                            </Form.Control.Feedback>
+                              Please fill  Geolocation
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom10"
+                            // controlId="validationCustom10"
                           >
                             <Form.Label>Document Name</Form.Label>
                             <InputGroup className="" size="sm">
@@ -898,12 +951,12 @@ const SellerSignUp = () => {
                                 })}
                               </div>
                             )}
-                            <Form.Control.Feedback
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please fill document name
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
 
@@ -931,22 +984,22 @@ const SellerSignUp = () => {
                                         min={"1"}
                                         onChange={oncustomheadChange}
                                         name={"header"}
-                                        className={
-                                          customvalidated === true
-                                            ? "border-danger"
-                                            : null
-                                        }
+                                        // className={
+                                        //   customvalidated === true
+                                        //     ? "border-danger"
+                                        //     : null
+                                        // }
                                       />
                                     </InputGroup>
                                   </td>
                                   <td className="col-4">
                                     <InputGroup className="">
                                       <Form.Control
-                                        className={
-                                          customvalidated === true
-                                            ? "border-danger"
-                                            : null
-                                        }
+                                        // className={
+                                        //   customvalidated === true
+                                        //     ? "border-danger"
+                                        //     : null
+                                        // }
                                         value={descval}
                                         name={"description"}
                                         type="text"
@@ -1041,7 +1094,7 @@ const SellerSignUp = () => {
                         <div classImg="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom08"
+                            // controlId="validationCustom08"
                           >
                             <Form.Label>Shop Logo</Form.Label>
                             <Form.Control
@@ -1056,19 +1109,19 @@ const SellerSignUp = () => {
                                 width={"50px"}
                               />
                             ) : null}
-                            <Form.Control.Feedback
+                            {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
                             >
                               Please upload document
-                            </Form.Control.Feedback>
+                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
 
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
-                            controlId="validationCustom09"
+                            //  controlId="validationCustom09"
                           >
                             <Form.Label>Documents Upload </Form.Label>
                             <Form.Control
@@ -1206,13 +1259,14 @@ const SellerSignUp = () => {
                   </div>
 
                   <div className="col-12">
-                    <button
+                      <button
                       className="btn btn-animation w-100 justify-content-center"
                       // type="submit"
                       onClick={(e) => onSubmitClick(e)}
                     >
                       Log In
                     </button>
+                
                   </div>
                   {/* </form> */}
                 </div>
@@ -1346,13 +1400,22 @@ const SellerSignUp = () => {
                         </div>
                         {/* ) : null} */}
                         <div className="col-12 mt-3">
-                          <button
+                          {spinner==="spinner"?  <button
+                            className="btn btn-animation w-100"
+                            type="button"
+                            onClick={VerifyfORGOTOTP}
+                          >
+                             <Spinner animation="border" role="status">
+                                  <span className="visually-hidden"> Change Password</span>
+                                </Spinner>
+                          </button>:   <button
                             className="btn btn-animation w-100"
                             type="button"
                             onClick={VerifyfORGOTOTP}
                           >
                             Change Password
-                          </button>
+                          </button>}
+                       
                         </div>
                       </form>
                     </div>
@@ -1454,12 +1517,21 @@ const SellerSignUp = () => {
                       </div>
 
                       <div className="col-12">
-                        <button
+                        {spinner==="spinner"?   <button
                           className="btn btn-animation w-100"
                           type="submit"
                         >
-                          {otp === 0 ? "Sign Up" : "Verify Otp"}
-                        </button>
+                             <Spinner animation="border" role="status">
+                                  <span className="visually-hidden"> {otp === 0 ? "Sign Up" : "Verify Otp"}</span>
+                                </Spinner> 
+                     
+                        </button>: <button
+                          className="btn btn-animation w-100"
+                          type="submit"
+                        >
+                                {otp === 0 ? "Sign Up" : "Verify Otp"}
+                        </button>}
+                       
                       </div>
                     </form>
                   </div>
@@ -1511,7 +1583,7 @@ const SellerSignUp = () => {
 
                   <div className="sign-up-box">
                     <h4>Already have an account?</h4>
-                    <button
+                     <button
                       onClick={() => {
                         setloginpage(true);
                       }}
@@ -1520,6 +1592,7 @@ const SellerSignUp = () => {
                       {" "}
                       Log In
                     </button>
+                  
                   </div>
                 </div>
               </div>
@@ -1530,7 +1603,7 @@ const SellerSignUp = () => {
                
             <div className="col-xxl-7 col-xl-6 col-lg-6"></div>
 
-            <Modal show={show} onHide={handleClose}>
+            <Modal show={show} onHide={handleClose1}>
         <Modal.Header closeButton>
           <Modal.Title>Message for vendor</Modal.Title>
         </Modal.Header>
