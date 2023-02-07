@@ -66,7 +66,6 @@ const Benners = () => {
     }
     getRating();
   }, []);
-  // console.log("showww-------------0000"+JSON.stringify(productData))
 
   /* <!--Function for map category and same category not show again--> */
 
@@ -76,8 +75,6 @@ const Benners = () => {
     );
     setunCatArr(result);
   }, [catArray]);
-console.log("CATEGORYYYYYYY00000----------"+JSON.stringify(unCatArr))
-console.log("CATEGORYYY------666666^^^^^^^^^^^-------YYYY00000----------"+JSON.stringify(catArray))
 
   /* <!--End this section--> */
 
@@ -112,8 +109,6 @@ console.log("CATEGORYYY------666666^^^^^^^^^^^-------YYYY00000----------"+JSON.s
         )
         .then((response) => {
           let data = response.data;
-          console.log("ADDCART" + data);
-
           setCount(0);
           setData(data);
           setapicall(true);
@@ -240,10 +235,7 @@ console.log("CATEGORYYY------666666^^^^^^^^^^^-------YYYY00000----------"+JSON.s
               .then((response) => {
                 let data = response.data;
 
-                console.log("product data---" + JSON.stringify(data));
                 setProductData(response.data.results);
-                console.log("product data--555555555555555555555555-"+ JSON.stringify(data))
-
                 setapicall(false);
               });
           } catch (err) {}
@@ -254,10 +246,7 @@ console.log("CATEGORYYY------666666^^^^^^^^^^^-------YYYY00000----------"+JSON.s
       }
     }
   }, [productType, apicall]);
-  console.log("******&&&&&&&&&-----------"+JSON.stringify(productData))
-/* <!--End this section--> */
-
-
+  /* <!--End this section--> */
 
   /* <!--Function for set token and navigate from product details page--> */
 
@@ -508,6 +497,7 @@ console.log("CATEGORYYY------666666^^^^^^^^^^^-------YYYY00000----------"+JSON.s
                           cart={product.cart}
                           is_featured={product.is_featured}
                           is_special_offer={product.is_special_offer}
+                          avgRatings={product.avgRatings}
                         />
                       </div>
                     );
