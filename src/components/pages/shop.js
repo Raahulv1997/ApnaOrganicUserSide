@@ -186,7 +186,7 @@ const Shop = (props) => {
     } else {
       setsearchText(searchparams.get("search"));
     }
-  }, [searchText]);
+  }, [searchText, searchparams]);
 
   /*<-----Functionality to filter products by category----> */
   useEffect(() => {
@@ -297,6 +297,7 @@ const Shop = (props) => {
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
+                  is_delete: ["1"],
                 },
               }
             )
@@ -1531,6 +1532,7 @@ const Shop = (props) => {
                           wishlistt={product.wishlist}
                           allimages={product.all_images}
                           cart={product.cart}
+                          avgRatings={product.avgRatings}
                         />
                       </div>
                     );

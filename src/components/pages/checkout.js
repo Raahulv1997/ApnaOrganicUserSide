@@ -941,7 +941,7 @@ const Checkout = (props) => {
                                   </li>
                                   <li>
                                     <p className="text-content">
-                                      <span className="text-title">
+                                      <span className="text-title text-break">
                                         Address:{userdata.address}
                                       </span>
                                     </p>
@@ -992,7 +992,7 @@ const Checkout = (props) => {
                                   </li>
                                   <li>
                                     <p className="text-content">
-                                      <span className="text-title">
+                                      <span className="text-title text-break">
                                         Address:{userdata.address2}
                                       </span>
                                     </p>

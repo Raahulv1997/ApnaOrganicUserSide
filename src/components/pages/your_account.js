@@ -58,12 +58,9 @@ function Account() {
     address: "",
     address2: "",
   });
- 
-
 
   const token = localStorage.getItem("token");
   useEffect(() => {
-    
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/user_details`,
@@ -78,7 +75,6 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
-
       })
       .catch((error) => {});
     // Onwishlistclick();
@@ -169,7 +165,6 @@ function Account() {
       [e.target.name]: e.target.value,
     });
   };
-
 
   // change Password:
 
@@ -332,7 +327,6 @@ function Account() {
   // end add to cart
 
   const onProductClick = (id) => {
-
     localStorage.setItem("proid", id);
     navigate("/product-detail");
   };
@@ -685,7 +679,7 @@ function Account() {
                                       <h6 className="text-content">
                                         Default Billing Address
                                       </h6>
-                                      <h6 className="text-content">
+                                      <h6 className="text-content text-break">
                                         {userdata.address}
                                       </h6>
                                       <Link
@@ -699,12 +693,12 @@ function Account() {
                                     </div>
                                   </div>
 
-                                  <div className="col-xxl-6">
+                                  <div className="col-xxl-6 ">
                                     <div className="dashboard-detail">
                                       <h6 className="text-content">
                                         Default Shipping Address
                                       </h6>
-                                      <h6 className="text-content">
+                                      <h6 className="text-content text-break">
                                         {userdata.address2}
                                       </h6>
                                       <Link
@@ -744,20 +738,10 @@ function Account() {
                               <div key={data.id} className="order-contain">
                                 <div className="order-box dashboard-bg-box">
                                   <div className="order-container">
-                                    <div className="order-icon">
-                                      <i data-feather="box"></i>
-                                    </div>
-
                                     <div className="order-detail">
                                       <h4>
                                         Status <span>{data.status}</span>
                                       </h4>
-                                      <div
-                                        dangerouslySetInnerHTML={{
-                                          __html: data.product_description,
-                                        }}
-                                        className="editor"
-                                      ></div>
                                     </div>
                                   </div>
 
@@ -770,9 +754,11 @@ function Account() {
                                     >
                                       <img
                                         src={
-                                          data.all_images
-                                            ? data.all_images
-                                            : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                          data.all_images === "" ||
+                                          data.all_images === "null" ||
+                                          data.all_images === null
+                                            ? "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                            : data.all_images
                                         }
                                         className="lazyload"
                                         alt=""
@@ -800,45 +786,6 @@ function Account() {
                                               Price :{" "}
                                             </h6>
                                             <h5>{data.mrp}</h5>
-                                          </div>
-                                        </li>
-
-                                        <li>
-                                          <div className="size-box">
-                                            <h6 className="text-content">
-                                              Rating :{data.rating}
-                                            </h6>
-                                            <div className="product-rating ms-2">
-                                              <ul className="rating">
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                              </ul>
-                                            </div>
                                           </div>
                                         </li>
 
@@ -873,15 +820,11 @@ function Account() {
                                         <li>
                                           <div className="size-box">
                                             <h6 className="text-content">
-                                              Stock :{" "}
-                                            </h6>
-                                            <h5>{data.quantity}</h5>
-                                          </div>
-                                        </li>
-                                        <li>
-                                          <div className="size-box">
-                                            <h6 className="text-content">
-                                              Quantity :{" "}
+                                              {data.unit === "gms" ||
+                                              data.unit === "ml" ||
+                                              data.unit === "piece"
+                                                ? "Quantity"
+                                                : "Size"}
                                             </h6>
                                             {data.unit === "gms" ||
                                             data.unit === "ml" ||
@@ -922,67 +865,75 @@ function Account() {
                             </span>
                           </div>
                           <div className="row g-sm-4 g-3">
-                            {(wishlistdata || []).map((wdata) => {
-                              return (
-                                <div
-                                  key={wdata.id}
-                                  className="col-xxl-3 col-lg-6 col-md-4 col-sm-6"
-                                >
-                                  <div className="product-box-3 theme-bg-white h-100">
-                                    <div className="product-header">
-                                      <div className="product-image">
-                                        <div
-                                          onClick={() =>
-                                            onProductClick(wdata.product_id)
-                                          }
-                                        >
-                                          <img
-                                            src={
-                                              wdata.all_images
-                                                ? wdata.all_images
-                                                : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                            {wishlistdata === "true" ? (
+                              <h2 className="text-dark text-center">
+                                Add Product In wishlist{" "}
+                              </h2>
+                            ) : (
+                              (wishlistdata || []).map((wdata) => {
+                                return (
+                                  <div
+                                    key={wdata.id}
+                                    className="col-xxl-3 col-lg-6 col-md-4 col-sm-6"
+                                  >
+                                    <div className="product-box-3 theme-bg-white h-100">
+                                      <div className="product-header">
+                                        <div className="product-image">
+                                          <div
+                                            onClick={() =>
+                                              onProductClick(wdata.product_id)
                                             }
-                                            className="img-fluid  lazyload"
-                                            alt=""
-                                          />
-                                        </div>
+                                          >
+                                            <img
+                                              src={
+                                                wdata.all_images === "" ||
+                                                wdata.all_images === "null" ||
+                                                wdata.all_images === null
+                                                  ? "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                                  : wdata.all_images
+                                              }
+                                              className="img-fluid  lazyload"
+                                              alt=""
+                                            />
+                                          </div>
 
-                                        <div className="product-header-top">
-                                          <button className="btn wishlist-button close_button">
-                                            <i data-feather="x"></i>
-                                          </button>
+                                          <div className="product-header-top">
+                                            <button className="btn wishlist-button close_button">
+                                              <i data-feather="x"></i>
+                                            </button>
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
 
-                                    <div className="product-footer">
-                                      <div className="product-detail">
-                                        <span className="span-name">
-                                          {wdata.product_title_name}
-                                        </span>
-                                        <Link to="/order_detail">
-                                          <h5
-                                            className="name mb-0"
+                                      <div className="product-footer">
+                                        <div className="product-detail">
+                                          <span className="span-name">
+                                            {wdata.product_title_name}
+                                          </span>
+                                          <Link to="/order_detail">
+                                            <h5
+                                              className="name mb-0"
+                                              dangerouslySetInnerHTML={{
+                                                __html:
+                                                  wdata.product_description,
+                                              }}
+                                            />
+                                          </Link>
+                                          <p
+                                            className="text-content  mb-2"
                                             dangerouslySetInnerHTML={{
-                                              __html: wdata.product_description,
+                                              __html: wdata.other_introduction,
                                             }}
                                           />
-                                        </Link>
-                                        <p
-                                          className="text-content  mb-2"
-                                          dangerouslySetInnerHTML={{
-                                            __html: wdata.other_introduction,
-                                          }}
-                                        />
 
-                                        <h6 className="unit mt-1">250 ml</h6>
-                                        <h5 className="price">
-                                          <span className="theme-color">
-                                            {wdata.product_price}₹
-                                          </span>
-                                          <del>{wdata.mrp}₹</del>
-                                        </h5>
-                                        {/* <div className="add-to-cart-box mt-2">
+                                          <h6 className="unit mt-1">250 ml</h6>
+                                          <h5 className="price">
+                                            <span className="theme-color">
+                                              {wdata.product_price}₹
+                                            </span>
+                                            <del>{wdata.mrp}₹</del>
+                                          </h5>
+                                          {/* <div className="add-to-cart-box mt-2">
                                           <button
                                             className="btn btn-add-cart addcart-button"
                                             onClick={(e) =>
@@ -1036,9 +987,9 @@ function Account() {
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            })}
+                                );
+                              })
+                            )}
                           </div>
                         </div>
                       </div>
@@ -1536,7 +1487,7 @@ function Account() {
                             <div className="location-profile">
                               <ul>
                                 <li>
-                                  <div className="location-box">
+                                  <div className="location-box text-break">
                                     <GoLocation />
                                     <h6>{userdata.address}</h6>
                                   </div>
@@ -1578,7 +1529,10 @@ function Account() {
                                       <tr>
                                         <td>Birthday :</td>
                                         <td>
-                                        {moment(userdata.date_of_birth).format("YYYY-MM-DD")}</td>
+                                          {moment(
+                                            userdata.date_of_birth
+                                          ).format("YYYY-MM-DD")}
+                                        </td>
                                       </tr>
                                       <tr>
                                         <td>Phone Number :</td>
@@ -1869,7 +1823,7 @@ function Account() {
                 >
                   <Form.Label>Mobile</Form.Label>
                   <Form.Control
-                    type="number"
+                    type="tel"
                     placeholder="Mobile"
                     value={udata.phone_no}
                     name={"phone_no"}
@@ -1895,6 +1849,7 @@ function Account() {
                     value={udata.address}
                     name={"address"}
                     onChange={OnchangeFistname}
+                    maxLength="100"
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1914,6 +1869,7 @@ function Account() {
                     value={udata.address2}
                     name={"address2"}
                     onChange={OnchangeFistname}
+                    maxLength="100"
                   />
                 </Form.Group>
               </div>

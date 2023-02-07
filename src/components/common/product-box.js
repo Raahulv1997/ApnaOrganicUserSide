@@ -22,6 +22,7 @@ const ProductBox = ({
   cart,
   is_featured,
   is_special_offer,
+  avgRatings,
 }) => {
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
@@ -31,11 +32,10 @@ const ProductBox = ({
   const func = (e) => {};
 
   let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = Number(rating);
+  let ratingg = Number(avgRatings);
 
+  /* <!--Start body of product box--> */
 
-/* <!--Start body of product box--> */
-  
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
@@ -72,9 +72,7 @@ const ProductBox = ({
           is_special_offer == "" ||
           is_special_offer == null ||
           is_special_offer == "0" ? null : (
-            <span className="is_special_offer_ribbon mb-1">
-              {"S"}
-            </span>
+            <span className="is_special_offer_ribbon mb-1">{"S"}</span>
           )}
         </div>
         <div className="label-flex">
@@ -104,7 +102,6 @@ const ProductBox = ({
           )}
         </div>
 
-
         <a onClick={() => clickProduct(productid, id)}>
           <img
             src={
@@ -119,37 +116,31 @@ const ProductBox = ({
       </div>
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
-          {
-            (ratingbox || []).map((rat, i) => {
-              return ratingg - rat >= 0 ? (
-                <li color="#ffb321" key={i}>
-                  <FaStar
-                    icon="star"
-                    className="feather fill"
-                    fill={"#ffb321"}
-                  />
-                </li>
-              ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
-                <li color="#ffb321">
-                  <FaStarHalfAlt
-                    icon="star"
-                    className="feather"
-                    fill={"#ffb321"}
-                  />
-                </li>
-              ) : ratingg - rat <= -1 ? (
-                <li color="#ffb321">
-                  <FaRegStar
-                    icon="star"
-                    className="feather "
-                    fill={"#ffb321"}
-                  />
-                </li>
-              ) : null;
-            })
-          }
+          {(ratingbox || []).map((rat, i) => {
+            return ratingg - rat >= 0 ? (
+              <li color="#ffb321" key={i}>
+                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
+              </li>
+            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+              <li color="#ffb321">
+                <FaStarHalfAlt
+                  icon="star"
+                  className="feather"
+                  fill={"#ffb321"}
+                />
+              </li>
+            ) : ratingg - rat <= -1 ? (
+              <li color="#ffb321">
+                <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
+              </li>
+            ) : null;
+          })}
         </ul>
-        <Link to="/product_detail" className="m-0 mb-2" onClick={() => clickProduct(productid)}>
+        <Link
+          to="/product_detail"
+          className="m-0 mb-2"
+          onClick={() => clickProduct(productid)}
+        >
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
           <h5 className="name m-0">{brand}</h5>
@@ -179,7 +170,7 @@ const ProductBox = ({
                 min={1}
                 onChange={func}
               />
-               
+
               <div
                 className="qty-right-plus"
                 onClick={() => setCount(count + 1)}
@@ -189,12 +180,9 @@ const ProductBox = ({
                 <i className="fa-regular fa-plus"></i>
               </div>
               {totalqty === true ? (
-              <p
-              className="mt-1 ms-2 text-danger"
-              type="invalid"
-              >
-              Cannot add more then total qty
-              </p>
+                <p className="mt-1 ms-2 text-danger" type="invalid">
+                  Cannot add more then total qty
+                </p>
               ) : null}
             </div>
           </div>

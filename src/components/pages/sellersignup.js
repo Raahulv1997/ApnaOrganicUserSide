@@ -5,21 +5,22 @@ import Header from "../common/header";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import "../../CSS/style.css";
-import { useState, useEffect,useRef  } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
 import { Badge, Button, InputGroup, Table } from "react-bootstrap";
 import { GiCancel } from "react-icons/gi";
 import Spinner from "react-bootstrap/Spinner";
-import Modal from 'react-bootstrap/Modal';
+import Modal from "react-bootstrap/Modal";
 const SellerSignUp = () => {
-  const[ customValidation,setCustomValidation]=useState(false)
+  const [customValidation, setCustomValidation] = useState(false);
+  const [SocialLink, setSocialLink] = useState(false);
   const formRef = useRef();
   const [show, setShow] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [forgotemail, setforgotemail] = useState("");
-  let [formshow ,setformShow]=useState(true)
+  let [formshow, setformShow] = useState(true);
   let [hide, setHide] = useState(false);
   const [emailerror, setemailerror] = useState("");
   const [Signup, setSignup] = useState(false);
@@ -66,38 +67,37 @@ const SellerSignUp = () => {
   const [loginerror, setLoginerror] = useState(true);
   const { state } = useLocation();
 
-  //for close the   vendor request model 
-  const handleClose = () =>{setShow(false)       
-   setaddvendordata({
-    owner_name: "",
-    shop_name: "",
-    mobile: "",
-    email: "",
-    shop_address: "",
-    gstn: "",
-    geolocation: "",
-    store_type: "",
-    image: "",
-    status: "",
-    image: "",
-    document_name: [],
-    availability: "",
-    social_media_links: [],
-  });
-  setnewImageUrls([])
-  navigate("/")
-}
+  //for close the   vendor request model
+  const handleClose = () => {
+    setShow(false);
+    setaddvendordata({
+      owner_name: "",
+      shop_name: "",
+      mobile: "",
+      email: "",
+      shop_address: "",
+      gstn: "",
+      geolocation: "",
+      store_type: "",
+      image: "",
+      status: "",
+      image: "",
+      document_name: [],
+      availability: "",
+      social_media_links: [],
+    });
+    setnewImageUrls([]);
+    navigate("/");
+  };
 
-  const handleClose1=()=>{
-    setShow(false)  
-  }
-
-
+  const handleClose1 = () => {
+    setShow(false);
+  };
 
   // click the sighup button
   const SignUpUser = (e) => {
     e.preventDefault();
-    
+
     setemail(e.target.email.value);
 
     // alert("SINGNNN"+email)
@@ -111,6 +111,9 @@ const SellerSignUp = () => {
         if (response.data.response === false) {
           setemailerror("Already Exist. Please Login");
           e.target.email.value = "";
+        } else if (response.data.message === "invalid address") {
+          setemailerror("invalid address");
+          setSpinner(false);
         } else {
           setSpinner(false);
           setotp(response.data);
@@ -131,14 +134,14 @@ const SellerSignUp = () => {
   };
   let vendorid = localStorage.getItem("vendorid");
 
-  //for get the vendor details 
+  //for get the vendor details
   const OnVendorDetail = () => {
     if (vendorid === null || vendorid === "undefined" || vendorid === "") {
     } else {
       axios
         .get(`${process.env.REACT_APP_BASEURL}/vendors?id=${vendorid}`)
         .then((response) => {
-          console.log("vendordata---"+JSON.stringify(response.data[0]))
+          console.log("vendordata---" + JSON.stringify(response.data[0]));
           setaddvendordata(response.data[0]);
           setFile("");
           setFileName("");
@@ -154,7 +157,7 @@ const SellerSignUp = () => {
   const VerifyOTP = (e) => {
     e.preventDefault();
     // if (e.target.otpinput.value == otp) {
-      setSpinner("spinner");
+    setSpinner("spinner");
     axios
       .post(`${process.env.REACT_APP_BASEURL}/vendor_otp_verify`, {
         email: email,
@@ -163,22 +166,17 @@ const SellerSignUp = () => {
       })
       .then((response) => {
         setSpinner(false);
-    //     const insertId='';
-    //  const   vendor_token='';
-    var {response, vendor_token}=response.data
-    console.log(response)
-    console.log(vendor_token)
-    console.log(response.insertId)
-    console.log(response.message)
-    
+        //     const insertId='';
+        //  const   vendor_token='';
+        var { response, vendor_token } = response.data;
+
         if (response.message === "please check credential") {
           setOtperror(true);
         } else {
-       
-          setHide(true)
-          setformShow(false)
-          setotp(1)
-           setaddvendordata({
+          setHide(true);
+          setformShow(false);
+          setotp(1);
+          setaddvendordata({
             owner_name: "",
             shop_name: "",
             mobile: "",
@@ -194,9 +192,9 @@ const SellerSignUp = () => {
             availability: "",
             social_media_links: [],
           });
-          setnewImageUrls([])
+          setnewImageUrls([]);
           localStorage.setItem("vendorid", response.insertId);
-          localStorage.setItem("vendor_token",vendor_token);
+          localStorage.setItem("vendor_token", vendor_token);
           //  OnVendorDetail();
           // localStorage.setItem("upassword", passval);
           // navigate("/your_account");
@@ -215,10 +213,10 @@ const SellerSignUp = () => {
     password: "",
   });
   const onCredentialChange = (e) => {
+    setError(true);
     setcredentailval({ ...credentailval, [e.target.name]: e.target.value });
   };
   const onSubmitClick = () => {
- 
     const { from } = state || {};
     axios
       .post(`http://192.168.29.108:5000/vendor_login`, credentailval)
@@ -295,8 +293,10 @@ const SellerSignUp = () => {
         } else {
           localStorage.setItem("vendorid", response.data.insertId);
           localStorage.setItem("vendorpassword", passval);
+          localStorage.setItem("vendortoken", response.data.vendor_token);
+
           // return response;
-          
+
           setloginpage(true);
         }
       })
@@ -314,12 +314,11 @@ const SellerSignUp = () => {
   }, [Docnamearray]);
 
   const handleFormChange = (e) => {
-    setCustomValidation(false)
+    setCustomValidation(false);
     setaddvendordata({
       ...addvendordata,
       [e.target.name]: e.target.value,
     });
-   
   };
 
   const onDocumentNamechange = (e) => {
@@ -426,10 +425,12 @@ const SellerSignUp = () => {
   //img code end-------------------------------------------------------------------------------------------------
   // social media link
   const oncustomheadChange = (e) => {
+    setSocialLink(false);
     setheaderval(e.target.value);
   };
 
   const oncustomdescChange = (e) => {
+    setSocialLink(false);
     setdescval(e.target.value);
   };
   useEffect(() => {
@@ -467,40 +468,41 @@ const SellerSignUp = () => {
     e.preventDefault();
 
     // if (form.checkValidity() === false) {
-     
+
     //     setValidated(true);
     // }
-    if(addvendordata.owner_name===""){
-      setCustomValidation("ownernameEmpty")
-    }else if(addvendordata.shop_name===""){
-      setCustomValidation("shopnameEmpty")
-    }else if(addvendordata.mobile===""){
-      setCustomValidation("MobileEmpty")
+    if (headerval === "") {
+      setSocialLink("HeaderBlank");
+    } else if (descval === "") {
+      setSocialLink("DesBlank");
+    } else if (addvendordata.owner_name === "") {
+      setCustomValidation("ownernameEmpty");
+    } else if (addvendordata.shop_name === "") {
+      setCustomValidation("shopnameEmpty");
+    } else if (addvendordata.mobile === "") {
+      setCustomValidation("MobileEmpty");
     }
-    else if(addvendordata.email===""){
 
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
-      var rst = regex.test(addvendordata.email);
-      if(rst !== true){
-        setCustomValidation("EmailEmpty")
-      }
-      setCustomValidation("EmailEmpty")
-
-    }else if(addvendordata.shop_address===""){
-      setCustomValidation("ShopAddressEmpty")
-    }else if(addvendordata.gstn===""){
-      setCustomValidation("GSTEmpty")
-    }else if(addvendordata.geolocation===""){
-      setCustomValidation("GeolocationEmpty")
-    }
-    
-    else {
-     
+    //  else if (addvendordata.email === "") {
+    //   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
+    //   var rst = regex.test(addvendordata.email);
+    //   if (rst !== true) {
+    //     setCustomValidation("EmailEmpty");
+    //   }
+    //   setCustomValidation("EmailEmpty");
+    // }
+    else if (addvendordata.shop_address === "") {
+      setCustomValidation("ShopAddressEmpty");
+    } else if (addvendordata.gstn === "") {
+      setCustomValidation("GSTEmpty");
+    } else if (addvendordata.geolocation === "") {
+      setCustomValidation("GeolocationEmpty");
+    } else {
       // e.stopPropagation();
       let x = [addvendordata.document_name];
       // e.preventDefault();
       const formData = new FormData();
-  
+
       let socialname = addvendordata.social_media_links;
       let socialname_new = JSON.stringify(socialname);
       formData.append("id", vendorid);
@@ -518,28 +520,26 @@ const SellerSignUp = () => {
       formData.append("document_name", x);
       formData.append("status", "pending");
       formData.append("social_media_links", socialname_new);
-  
+
       axios
         .put(`${process.env.REACT_APP_BASEURL}/vendor_update`, formData)
         .then((response) => {
           let data = response.data;
-          console.log("after update-----"+JSON.stringify (data))
-          if(data.message==="Updated Vendor Profile"){
+          console.log("after update-----" + JSON.stringify(data));
+          if (data.message === "Updated Vendor Profile") {
             setShow(true);
           }
-          
         })
         .catch(function (error) {
           console.log(error);
         });
     }
-   
   };
 
   // END VENDOR
   return (
     <Fragment>
-      <Header />
+      {/* <Header /> */}
       {/* <Breadcumb pageName={"Register"} pageTitle={"Register"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space">
@@ -548,9 +548,9 @@ const SellerSignUp = () => {
             {hide === true ? (
               <div className="col-xxl-6 col-xl-5 col-lg-6 d-lg-block justify-content-center ">
                 <Form
-                className=""
-                // validated={validated}
-                // ref={formRef}
+                  className=""
+                  // validated={validated}
+                  // ref={formRef}
                   onSubmit={(e) => UpdateVendorClick(e)}
                 >
                   <div className="image-contain">
@@ -562,42 +562,51 @@ const SellerSignUp = () => {
                           <Form.Group
                             className="mb-3 aos_input"
                             //  controlId="validationCustom01"
-                            >
-                            <Form.Label  >Owner Name <span className="text-danger">* </span></Form.Label>
+                          >
+                            <Form.Label>
+                              Owner Name <span className="text-danger">* </span>
+                            </Form.Label>
                             <Form.Control
                               type="text"
                               placeholder="Owner Name"
-                              
                               name={"owner_name"}
-                              onChange={(e) => handleFormChange(e)  }
+                              onChange={(e) => handleFormChange(e)}
                               value={addvendordata.owner_name}
                               // required
-                            />{customValidation==="ownernameEmpty"? <span className="text-danger">Please fill the Owner </span>:customValidation===false?"":null}
-                       
+                            />
+                            {customValidation === "ownernameEmpty" ? (
+                              <span className="text-danger">
+                                Please fill the Owner{" "}
+                              </span>
+                            ) : customValidation === false ? (
+                              ""
+                            ) : null}
                           </Form.Group>
                         </div>
-                        
+
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
                             //  controlId="validationCustom02"
                           >
-                            <Form.Label>Shop Name <span className="text-danger">* </span></Form.Label>
+                            <Form.Label>
+                              Shop Name <span className="text-danger">* </span>
+                            </Form.Label>
                             <Form.Control
                               type="text"
-                             
                               placeholder="Shop Name"
                               name={"shop_name"}
                               onChange={(e) => handleFormChange(e)}
                               value={addvendordata.shop_name}
                               //  required
-                            />{customValidation==="shopnameEmpty"? <span className="text-danger">Please fill the Shop name</span>:customValidation===false?"":null}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill shop name
-                            </Form.Control.Feedback> */}
+                            />
+                            {customValidation === "shopnameEmpty" ? (
+                              <span className="text-danger">
+                                Please fill the Shop name
+                              </span>
+                            ) : customValidation === false ? (
+                              ""
+                            ) : null}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
@@ -605,23 +614,26 @@ const SellerSignUp = () => {
                             className="mb-3 aos_input"
                             //  controlId="validationCustom03"
                           >
-                            <Form.Label >Mobile <span className="text-danger">* </span></Form.Label>
+                            <Form.Label>
+                              Mobile <span className="text-danger">* </span>
+                            </Form.Label>
                             <Form.Control
                               type="number"
                               // min={1}
-                            
+
                               placeholder="Mobile"
                               name={"mobile"}
                               onChange={(e) => handleFormChange(e)}
                               value={addvendordata.mobile}
                               // required
-                            />{customValidation==="MobileEmpty"? <span className="text-danger">Please fill the Mobile </span>:customValidation===false?"":null}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill mobile
-                            </Form.Control.Feedback> */}
+                            />
+                            {customValidation === "MobileEmpty" ? (
+                              <span className="text-danger">
+                                Please fill the Mobile{" "}
+                              </span>
+                            ) : customValidation === false ? (
+                              ""
+                            ) : null}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
@@ -629,22 +641,24 @@ const SellerSignUp = () => {
                             className="mb-3 aos_input"
                             //  controlId="validationCustom04"
                           >
-                            <Form.Label >Email <span className="text-danger">* </span></Form.Label>
+                            <Form.Label>
+                              Email <span className="text-danger">* </span>
+                            </Form.Label>
                             <Form.Control
-                            type="email" 
-                            
-                            placeholder="Email"
-                            name={"email"}
-                            onChange={(e) => handleFormChange(e)}                           
-                            value={addvendordata.email}
-                            // required
-                            />{customValidation==="EmailEmpty"?<span className="text-danger">Please fill the Email </span>:customValidation===false?"":null}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill email
-                            </Form.Control.Feedback> */}
+                              type="email"
+                              placeholder="Email"
+                              name={"email"}
+                              // onChange={(e) => handleFormChange(e)}
+                              value={email}
+                              // required
+                            />
+                            {/* {customValidation === "EmailEmpty" ? (
+                              <span className="text-danger">
+                                Please fill the Email{" "}
+                              </span>
+                            ) : customValidation === false ? (
+                              ""
+                            ) : null} */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
@@ -652,24 +666,27 @@ const SellerSignUp = () => {
                             className="mb-3 aos_input"
                             //  controlId="validationCustom05"
                           >
-                            <Form.Label >Shop Address <span className="text-danger">* </span></Form.Label>
+                            <Form.Label>
+                              Shop Address{" "}
+                              <span className="text-danger">* </span>
+                            </Form.Label>
                             <Form.Control
                               className="vendor_address"
                               as="textarea"
                               rows={3}
-                           
                               placeholder="Address"
                               name={"shop_address"}
-                              onChange={(e) => handleFormChange(e)}                             
+                              onChange={(e) => handleFormChange(e)}
                               value={addvendordata.shop_address}
                               // required
-                            />{customValidation==="ShopAddressEmpty"? <span className="text-danger">Please fill the Shop Address </span>:customValidation===false?"":null}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill address
-                            </Form.Control.Feedback> */}
+                            />
+                            {customValidation === "ShopAddressEmpty" ? (
+                              <span className="text-danger">
+                                Please fill the Shop Address{" "}
+                              </span>
+                            ) : customValidation === false ? (
+                              ""
+                            ) : null}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
@@ -677,82 +694,27 @@ const SellerSignUp = () => {
                             className="mb-3 aos_input"
                             // controlId="validationCustom06"
                           >
-                            <Form.Label >GSTN <span className="text-danger">* </span></Form.Label>
+                            <Form.Label>
+                              GSTN <span className="text-danger">* </span>
+                            </Form.Label>
                             <Form.Control
                               type="text"
-                           
                               placeholder="GSTN"
                               name={"gstn"}
-                              onChange={(e) => handleFormChange(e)}                             
+                              onChange={(e) => handleFormChange(e)}
                               value={addvendordata.gstn}
                               // required
-                            />{customValidation==="GSTEmpty"? <span className="text-danger">Please fill the GST NO. </span>:customValidation===false?"":null}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill GSTN
-                            </Form.Control.Feedback> */}
+                            />
+                            {customValidation === "GSTEmpty" ? (
+                              <span className="text-danger">
+                                Please fill the GST NO.{" "}
+                              </span>
+                            ) : customValidation === false ? (
+                              ""
+                            ) : null}
                           </Form.Group>
                         </div>
-                        {/* <div className="col-md-6">
-                <Form.Group
-                  className="mb-3 aos_input"
-                  controlId="validationCustom06"
-                >
-                  <Form.Label>Status</Form.Label>
-                  <Form.Select
-                    size="sm"
-                    aria-label="Default select example"
-                    onChange={(e) => handleFormChange(e)}
-                    name="status"
-                  >
-                     <option
-                      value=""
-                      selected={
-                        addvendordata.status === "" ? true : false
-                      }
-                    >
-                      Select
-                    </option>
-                    <option
-                      value="pending"
-                      selected={
-                        addvendordata.status === "pending" ? true : false
-                      }
-                    >
-                      Pending
-                    </option>
-                    <option
-                      value="active"
-                      selected={
-                        addvendordata.status === "active" ? true : false
-                      }
-                    >
-                      Active
-                    </option>
-                    <option
-                      value="blocked"
-                      selected={
-                        addvendordata.status === "blocked" ? true : false
-                      }
-                    >
-                      Block
-                    </option>
-                    <option
-                      value="in progress"
-                      selected={
-                        addvendordata.status === "in progress" ? true : false
-                      }
-                    >
-                      In Progress
-                    </option>
-                  </Form.Select>
-                  <Form.Control.Feedback type="invalid" className="h6">
-                    Please fill gstn
-                  </Form.Control.Feedback>
-                </Form.Group>
-              </div> */}
+
                         <div className="col-md-6">
                           <Form.Group
                             className="mb-3 aos_input"
@@ -865,12 +827,6 @@ const SellerSignUp = () => {
                                 Active
                               </option>
                             </Form.Select>
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill gstn
-                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
@@ -878,22 +834,25 @@ const SellerSignUp = () => {
                             className="mb-3 aos_input"
                             // controlId="validationCustom07"
                           >
-                            <Form.Label >Geolocation <span className="text-danger">* </span></Form.Label>
+                            <Form.Label>
+                              Geolocation{" "}
+                              <span className="text-danger">* </span>
+                            </Form.Label>
                             <Form.Control
-                                 type="location"
-                                 placeholder="Geolocation"
-                             name={"geolocation"}
-                              onChange={(e) => handleFormChange(e)}                             
-                            
+                              type="location"
+                              placeholder="Geolocation"
+                              name={"geolocation"}
+                              onChange={(e) => handleFormChange(e)}
                               value={addvendordata.geolocation}
                               // required
-                            />{customValidation==="GeolocationEmpty"? <span className="text-danger">Please fill the Location </span>:customValidation===false?"":null}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill  Geolocation
-                            </Form.Control.Feedback> */}
+                            />
+                            {customValidation === "GeolocationEmpty" ? (
+                              <span className="text-danger">
+                                Please fill the Location{" "}
+                              </span>
+                            ) : customValidation === false ? (
+                              ""
+                            ) : null}
                           </Form.Group>
                         </div>
                         <div className="col-md-6">
@@ -951,12 +910,6 @@ const SellerSignUp = () => {
                                 })}
                               </div>
                             )}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please fill document name
-                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
 
@@ -984,22 +937,12 @@ const SellerSignUp = () => {
                                         min={"1"}
                                         onChange={oncustomheadChange}
                                         name={"header"}
-                                        // className={
-                                        //   customvalidated === true
-                                        //     ? "border-danger"
-                                        //     : null
-                                        // }
                                       />
                                     </InputGroup>
                                   </td>
                                   <td className="col-4">
                                     <InputGroup className="">
                                       <Form.Control
-                                        // className={
-                                        //   customvalidated === true
-                                        //     ? "border-danger"
-                                        //     : null
-                                        // }
                                         value={descval}
                                         name={"description"}
                                         type="text"
@@ -1023,6 +966,29 @@ const SellerSignUp = () => {
                                     >
                                       +
                                     </Button>
+                                  </td>
+                                </tr>
+                                <tr>
+                                  <td>
+                                    {SocialLink == "HeaderBlank" ? (
+                                      <span className="text-danger">
+                                        {" "}
+                                        Please Fill ..!!{" "}
+                                      </span>
+                                    ) : SocialLink == false ? (
+                                      ""
+                                    ) : null}
+                                  </td>
+                                  <td>
+                                    {" "}
+                                    {SocialLink == "DesBlank" ? (
+                                      <span className="text-danger">
+                                        {" "}
+                                        Please Fill..!!{" "}
+                                      </span>
+                                    ) : SocialLink == false ? (
+                                      ""
+                                    ) : null}
                                   </td>
                                 </tr>
                                 {customarray
@@ -1109,12 +1075,6 @@ const SellerSignUp = () => {
                                 width={"50px"}
                               />
                             ) : null}
-                            {/* <Form.Control.Feedback
-                              type="invalid"
-                              className="h6"
-                            >
-                              Please upload document
-                            </Form.Control.Feedback> */}
                           </Form.Group>
                         </div>
 
@@ -1180,9 +1140,8 @@ const SellerSignUp = () => {
             )}
 
             {/* LOGIN */}
-           
 
-            {loginpage === true && forgotpage === false && formshow===true ? (
+            {loginpage === true && forgotpage === false && formshow === true ? (
               <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto log-in-box">
                 <div className="log-in-title">
                   <h3>Welcome To Apna Organic</h3>
@@ -1259,14 +1218,13 @@ const SellerSignUp = () => {
                   </div>
 
                   <div className="col-12">
-                      <button
+                    <button
                       className="btn btn-animation w-100 justify-content-center"
                       // type="submit"
                       onClick={(e) => onSubmitClick(e)}
                     >
                       Log In
                     </button>
-                
                   </div>
                   {/* </form> */}
                 </div>
@@ -1301,28 +1259,27 @@ const SellerSignUp = () => {
                 <div className="other-log-in"></div>
                 <div className="sign-up-box">
                   <h4>Don't have an account?</h4>
-                  {
-                    spinner === "spinner"? 
+                  {spinner === "spinner" ? (
                     <button
-                    onClick={() => setloginpage(false)}
-                    className="btn btn-success my-1"
-                  >
+                      onClick={() => setloginpage(false)}
+                      className="btn btn-success my-1"
+                    >
                       <Spinner animation="border" role="status">
-                     <span className="visually-hidden"> Sign Up</span>
-                         </Spinner>
-                   
-                  </button>: <button
-                    onClick={() => setloginpage(false)}
-                    className="btn btn-success my-1"
-                  >
-                    Sign Up
-                  </button>
-                  }
-                 
+                        <span className="visually-hidden"> Sign Up</span>
+                      </Spinner>
+                    </button>
+                  ) : (
+                    <button
+                      onClick={() => setloginpage(false)}
+                      className="btn btn-success my-1"
+                    >
+                      Sign Up
+                    </button>
+                  )}
                 </div>
               </div>
             ) : //  LOGIN END
-            forgotpage === true && formshow===true ? (
+            forgotpage === true && formshow === true ? (
               //  FORGOT PAGE
               <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto">
                 <div className="d-flex align-items-center justify-content-center h-100">
@@ -1379,8 +1336,6 @@ const SellerSignUp = () => {
                             onChange={(e) => OnOtpChange(e)}
                           />
                         </div>
-           
-
 
                         <div className="col-12">
                           <div className="form-floating theme-form-floating">
@@ -1400,29 +1355,35 @@ const SellerSignUp = () => {
                         </div>
                         {/* ) : null} */}
                         <div className="col-12 mt-3">
-                          {spinner==="spinner"?  <button
-                            className="btn btn-animation w-100"
-                            type="button"
-                            onClick={VerifyfORGOTOTP}
-                          >
-                             <Spinner animation="border" role="status">
-                                  <span className="visually-hidden"> Change Password</span>
-                                </Spinner>
-                          </button>:   <button
-                            className="btn btn-animation w-100"
-                            type="button"
-                            onClick={VerifyfORGOTOTP}
-                          >
-                            Change Password
-                          </button>}
-                       
+                          {spinner === "spinner" ? (
+                            <button
+                              className="btn btn-animation w-100"
+                              type="button"
+                              onClick={VerifyfORGOTOTP}
+                            >
+                              <Spinner animation="border" role="status">
+                                <span className="visually-hidden">
+                                  {" "}
+                                  Change Password
+                                </span>
+                              </Spinner>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-animation w-100"
+                              type="button"
+                              onClick={VerifyfORGOTOTP}
+                            >
+                              Change Password
+                            </button>
+                          )}
                         </div>
                       </form>
                     </div>
                   </div>
                 </div>
               </div>
-            ) : formshow===true? (
+            ) : formshow === true ? (
               // END FORGOT PAGE
               //  SIGNUP
               <div className="col-xxl-4 col-xl-5 col-lg-6 me-auto">
@@ -1455,6 +1416,10 @@ const SellerSignUp = () => {
                           {emailerror === "Already Exist. Please Login" ? (
                             <p className="text-danger">
                               {"Vendor Already Exist. Please Login"}
+                            </p>
+                          ) : emailerror === "invalid address" ? (
+                            <p className="mt-1 ms-2 text-danger" type="invalid">
+                              Please Enter Correct Email
                             </p>
                           ) : null}
                           <input
@@ -1517,21 +1482,26 @@ const SellerSignUp = () => {
                       </div>
 
                       <div className="col-12">
-                        {spinner==="spinner"?   <button
-                          className="btn btn-animation w-100"
-                          type="submit"
-                        >
-                             <Spinner animation="border" role="status">
-                                  <span className="visually-hidden"> {otp === 0 ? "Sign Up" : "Verify Otp"}</span>
-                                </Spinner> 
-                     
-                        </button>: <button
-                          className="btn btn-animation w-100"
-                          type="submit"
-                        >
+                        {spinner === "spinner" ? (
+                          <button
+                            className="btn btn-animation w-100"
+                            type="submit"
+                          >
+                            <Spinner animation="border" role="status">
+                              <span className="visually-hidden">
+                                {" "}
                                 {otp === 0 ? "Sign Up" : "Verify Otp"}
-                        </button>}
-                       
+                              </span>
+                            </Spinner>
+                          </button>
+                        ) : (
+                          <button
+                            className="btn btn-animation w-100"
+                            type="submit"
+                          >
+                            {otp === 0 ? "Sign Up" : "Verify Otp"}
+                          </button>
+                        )}
                       </div>
                     </form>
                   </div>
@@ -1583,7 +1553,7 @@ const SellerSignUp = () => {
 
                   <div className="sign-up-box">
                     <h4>Already have an account?</h4>
-                     <button
+                    <button
                       onClick={() => {
                         setloginpage(true);
                       }}
@@ -1592,29 +1562,27 @@ const SellerSignUp = () => {
                       {" "}
                       Log In
                     </button>
-                  
                   </div>
                 </div>
               </div>
-            ):null}
+            ) : null}
 
-
-
-               
             <div className="col-xxl-7 col-xl-6 col-lg-6"></div>
 
             <Modal show={show} onHide={handleClose1}>
-        <Modal.Header closeButton>
-          <Modal.Title>Message for vendor</Modal.Title>
-        </Modal.Header>
-        <Modal.Body> Your Request now Pending wait for approved!</Modal.Body>
-        <Modal.Footer>
-          <Button variant="secondary" onClick={handleClose}>
-            OK
-          </Button>
-     
-        </Modal.Footer>
-      </Modal>
+              <Modal.Header closeButton>
+                <Modal.Title>Message for vendor</Modal.Title>
+              </Modal.Header>
+              <Modal.Body>
+                {" "}
+                Your Request now Pending wait for approved!
+              </Modal.Body>
+              <Modal.Footer>
+                <Button variant="secondary" onClick={handleClose}>
+                  OK
+                </Button>
+              </Modal.Footer>
+            </Modal>
 
             {/* END SIGNUP */}
           </div>
