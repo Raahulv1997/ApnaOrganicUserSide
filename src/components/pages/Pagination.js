@@ -9,7 +9,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
 
   //Function to go to previous page with pagination :-
   const prevPage = () => {
-    if (currentPage !== 1) setCurrentPage(currentPage - 1);
+    if (currentPage !== 0) setCurrentPage(currentPage - 1);
   };
   return (
     <div>
@@ -21,7 +21,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
               to=""
               onClick={prevPage}
               className={
-                currentPage === 1
+                currentPage === 0
                   ? "page-link d-none text-success"
                   : "page-link text-success"
               }
@@ -60,7 +60,7 @@ function Pagination({ nPages, currentPage, setCurrentPage }) {
             <Link
               onClick={nextPage}
               className={
-                currentPage === nPages.length
+                currentPage === nPages.length - 1
                   ? "page-link d-none text-success"
                   : "page-link text-success"
               }
