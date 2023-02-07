@@ -1531,6 +1531,7 @@ const Shop = (props) => {
                           wishlistt={product.wishlist}
                           allimages={product.all_images}
                           cart={product.cart}
+                          avgRatings={product.avgRatings}
                         />
                       </div>
                     );
