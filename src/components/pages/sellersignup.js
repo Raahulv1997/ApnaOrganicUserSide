@@ -111,6 +111,9 @@ const SellerSignUp = () => {
         if (response.data.response === false) {
           setemailerror("Already Exist. Please Login");
           e.target.email.value = "";
+        } else if (response.data.message === "invalid address") {
+          setemailerror("invalid address");
+          setSpinner(false);
         } else {
           setSpinner(false);
           setotp(response.data);
@@ -166,10 +169,6 @@ const SellerSignUp = () => {
         //     const insertId='';
         //  const   vendor_token='';
         var { response, vendor_token } = response.data;
-        console.log(response);
-        console.log(vendor_token);
-        console.log(response.insertId);
-        console.log(response.message);
 
         if (response.message === "please check credential") {
           setOtperror(true);
@@ -214,6 +213,7 @@ const SellerSignUp = () => {
     password: "",
   });
   const onCredentialChange = (e) => {
+    setError(true);
     setcredentailval({ ...credentailval, [e.target.name]: e.target.value });
   };
   const onSubmitClick = () => {
@@ -539,7 +539,7 @@ const SellerSignUp = () => {
   // END VENDOR
   return (
     <Fragment>
-      <Header />
+      {/* <Header /> */}
       {/* <Breadcumb pageName={"Register"} pageTitle={"Register"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space">
@@ -1416,6 +1416,10 @@ const SellerSignUp = () => {
                           {emailerror === "Already Exist. Please Login" ? (
                             <p className="text-danger">
                               {"Vendor Already Exist. Please Login"}
+                            </p>
+                          ) : emailerror === "invalid address" ? (
+                            <p className="mt-1 ms-2 text-danger" type="invalid">
+                              Please Enter Correct Email
                             </p>
                           ) : null}
                           <input

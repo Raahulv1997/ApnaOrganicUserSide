@@ -297,6 +297,7 @@ const Shop = (props) => {
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
+                  is_delete: ["1"],
                 },
               }
             )
