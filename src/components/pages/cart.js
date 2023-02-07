@@ -40,7 +40,7 @@ const Cart = () => {
 
   const currentdate = moment().format();
 
-/* <!----API Call--> */
+  /* <!----API Call--> */
 
   const incrementCount = (id, order_quantity, qty) => {
     let inc = order_quantity + 1;
@@ -60,10 +60,10 @@ const Cart = () => {
         )
         .then((response) => {
           let data = response.data;
-          setapicall(true);
           settotalqty(false);
 
           CheckCoupon();
+          setapicall(false);
         });
     } else {
       settotalqty(true);
@@ -92,10 +92,10 @@ const Cart = () => {
         }
       )
       .then((response) => {
-        setapicall(true);
         let data = response.data;
 
         CheckCoupon();
+        setapicall(false);
       });
   };
 
@@ -162,8 +162,7 @@ const Cart = () => {
         let data = response.data[0];
         CheckCoupon();
         setapicall(false);
-        console.log("+==========="+apicall)
-
+        console.log("+===========" + apicall);
       });
   };
 
