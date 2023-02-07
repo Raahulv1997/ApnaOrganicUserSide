@@ -136,7 +136,7 @@ const Header = (props) => {
           )
           .then((response) => {
             let data = response.data;
-       
+
             let ProductTotal = 0;
             if (
               data.response === "cart_empty" ||
@@ -169,8 +169,7 @@ const Header = (props) => {
                     100;
               });
               setPdata(data);
-               
-              console.log("pdata-----"+JSON.stringify(data))
+
               setMsg(true);
             }
           });
@@ -197,9 +196,7 @@ const Header = (props) => {
       )
       .then((response) => {
         let data = response.data;
-        console.log("deleter cart----"+JSON.stringify(data.length))
         setapicall(true);
-        console.log("----****__"+apicall)
       });
   };
 
@@ -212,28 +209,28 @@ const Header = (props) => {
   };
   /* <!--End this section--> */
 
-// useEffect(() => {
-//   function getNotification(){
-//     try{
-//       axios
-//         .post(`${process.env.REACT_APP_BASEURL}/notification`,
-//         {
-//           "actor_type":"user",
-//            "actor_id":"88"
-//       })
-//         .then((response) => {
-//           let data = response.data;
-          
-//           setNotification(data)
-//           setapicall(false);
-//         });
-//     } catch (err) {}
-//   }
-//   getNotification();
+  // useEffect(() => {
+  //   function getNotification(){
+  //     try{
+  //       axios
+  //         .post(`${process.env.REACT_APP_BASEURL}/notification`,
+  //         {
+  //           "actor_type":"user",
+  //            "actor_id":"88"
+  //       })
+  //         .then((response) => {
+  //           let data = response.data;
 
-// }, [apicall]);
-// console.log("iii-------------"+JSON.stringify(notification))
-/* <!--End all api call section--> */
+  //           setNotification(data)
+  //           setapicall(false);
+  //         });
+  //     } catch (err) {}
+  //   }
+  //   getNotification();
+
+  // }, [apicall]);
+  // console.log("iii-------------"+JSON.stringify(notification))
+  /* <!--End all api call section--> */
 
   /* <!--End all api call section--> */
 
@@ -388,10 +385,9 @@ const Header = (props) => {
                           >
                             {notification.length === 0 ||
                             notification.length === "" ||
-                            notification.length === "0"? null : (
+                            notification.length === "0" ? null : (
                               <small className="badge-number">
-                       
-                                {notification.length }
+                                {notification.length}
                               </small>
                             )}
                             {/* <CiBellOn className="icon_color"/> */}
@@ -421,7 +417,7 @@ const Header = (props) => {
                           >
                             {pdata.length === 0 ||
                             pdata.length === "" ||
-                            pdata === "cart_empty"? null : (
+                            pdata === "cart_empty" ? null : (
                               <small className="badge-number">
                                 {pdata.length}
                               </small>

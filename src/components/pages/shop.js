@@ -186,7 +186,7 @@ const Shop = (props) => {
     } else {
       setsearchText(searchparams.get("search"));
     }
-  }, [searchText]);
+  }, [searchText, searchparams]);
 
   /*<-----Functionality to filter products by category----> */
   useEffect(() => {
