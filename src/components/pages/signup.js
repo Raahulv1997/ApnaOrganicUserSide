@@ -52,6 +52,8 @@ const Singup = () => {
   const navigate = useNavigate();
 
   const SignUpUser = (e) => {
+  //  let regex = (/[A-Z],[a-z],[\d`~!@#$%\^&*()+=|;:'",.<>\/?\\\-],[8,]/)
+  //  console.log("REJEXXXXXXX---------"+regex)
     e.preventDefault();
     setemailerror("");
     let email = e.target.email.value;
@@ -60,10 +62,9 @@ const Singup = () => {
     if (!passval) {
       setPasswordError("New password is required");
     }
+    
     else if (
-      passval < 8 ||
-      passval !== /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
-    )
+      passval < 8 &&passval !== /[A-Z]/&&passval!==/[a-z]/&&passval!==/[0-9]/&&passval!==/[d`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/)
     {
       setPasswordError(
         "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"

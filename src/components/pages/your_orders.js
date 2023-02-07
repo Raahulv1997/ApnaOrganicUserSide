@@ -417,7 +417,7 @@ function Orders() {
 
                     <div className="product_quantity">Sale Price-<br/>{ Number(orderdata.sale_price).toFixed(2)}₹</div>
                   
-                <div className="product_quantity">QTY-{orderdata.quantity}</div>
+                <div className="product_quantity">QTY-{orderdata.order_quantity}</div>
                 <div className="total_amount"> Total Price- <br/>{(Number(orderdata.sale_price)*Number(orderdata.quantity)).toFixed(2)}₹</div>
                
               </div>

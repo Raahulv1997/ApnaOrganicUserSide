@@ -66,9 +66,9 @@ import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
     status: "",
   });
   // const [rating, setRating] = useState([]);
-  // let ratingbox = [1, 2, 3, 4, 5];
-  // let ratingg = (productDetails.show_product_rating);
-  // console.log("&&&&&&&&&&%%%%%##########-------"+productDetails.show_product_rating)
+  let ratingbox = [1, 2, 3, 4, 5];
+  let ratingg = (productDetails.show_product_rating);
+  console.log("&&&&&&&&&&%%%%%##########-------"+productDetails.show_product_rating)
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(1);
@@ -506,10 +506,10 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
   }, [apicall]);
 
   /*<-----Functionality to filter products data by rate----> */
-  // const result1 = ratingbox.filter(
-  //   (thing, index, self) =>
-  //     index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
-  // );
+  const result1 = ratingbox.filter(
+    (thing, index, self) =>
+      index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
+  );
 
 
          
@@ -626,7 +626,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
                             <h5>Cgst:{productDetails.cgst}</h5>
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                     </h3>
-                    {/* <div className="product-rating custom-rate">
+                    <div className="product-rating custom-rate">
                       <ul className="rating p-0 m-0 mb-2">
                         {
                           // !ratingg? null :
@@ -659,7 +659,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
                           })
                         }
                       </ul>
-                    </div> */}
+                    </div>
                   </div>
                   <button className="btn" style={{ backgroundColor: colors }}>
                     {colors}
@@ -1316,7 +1316,7 @@ getSizOnclor.map((details) => {
                             <div className="review-title">
                               <h4 className="fw-500">Add a review</h4>
                             </div>
-                            {/* <div className="d-flex">
+                             <div className="d-flex">
                               <div className="product-rating">
                                 <div className="col-md-12">
                                   <Form.Select
@@ -1340,7 +1340,7 @@ getSizOnclor.map((details) => {
                                       );
                                     })}
                                   </Form.Select>
-                                  {/* <div className="form-floating theme-form-floating"> 
+                                  {/* <div className="form-floating theme-form-floating"> */}
                                 </div>
                               </div>
                               {/* <div className="product-rating">
@@ -1373,8 +1373,8 @@ getSizOnclor.map((details) => {
                                   })}
                                 </ul>
 
-                              </div> 
-                            </div> */}
+                              </div>  */}
+                            </div>
                             <div className="row g-4">
                               <div className="col-md-6">
                                 <div className="form-floating theme-form-floating">
@@ -1494,7 +1494,7 @@ getSizOnclor.map((details) => {
                           </h4>
                         </div>
 
-                        {/* {reviewData.map((rdataa) => {
+                        {reviewData.map((rdataa) => {
                           let ratingg = Number(rdataa.review_rating);
 
                           return (
@@ -1576,7 +1576,7 @@ getSizOnclor.map((details) => {
                               </div>
                             </>
                           );
-                        })} */}
+                        })}
                       </div>
                     </Tab>
                   </Tabs>

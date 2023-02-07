@@ -23,6 +23,8 @@ function Account() {
   const useridd = localStorage.getItem("userid");
   localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
+  const [msg, setMsg] = useState(true);
+
   const currentdate = moment().format("YYYY-MM-DD");
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
@@ -79,34 +81,34 @@ function Account() {
 
       })
       .catch((error) => {});
-    Onwishlistclick();
+    // Onwishlistclick();
     OnOrderclick();
   }, [Password, apicall]);
 
   // wishlist
-  const Onwishlistclick = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASEURL}/wishlist`,
-        {
-          user_id: "",
-        },
-        {
-          headers: {
-            user_token: token,
-          },
-        }
-      )
-      .then((response) => {
-        if (response.data[0].message !== "header error") {
-          setwishlistdata(response.data);
-        }
-        // navigate('/your_account')
-        // return response;
-      })
-      .catch((error) => {});
-    setclick(false);
-  };
+  // const Onwishlistclick = () => {
+  //   axios
+  //     .post(
+  //       `${process.env.REACT_APP_BASEURL}/wishlist`,
+  //       {
+  //         user_id: "",
+  //       },
+  //       {
+  //         headers: {
+  //           user_token: token,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       if (response.data[0].message !== "header error") {
+  //         setwishlistdata(response.data);
+  //       }
+  //       // navigate('/your_account')
+  //       // return response;
+  //     })
+  //     .catch((error) => {});
+  //   setclick(false);
+  // };
 
   // order history
   const OnOrderclick = () => {
@@ -200,6 +202,9 @@ function Account() {
 
   // Function to change the password with the validation and api part :-
   const handlePassSubmit = (e) => {
+    console.log("Passwordddd----------"+newPassword)
+    console.log("Passwordddd-----LEnghthhhhhhhh-----"+newPassword.length)
+
     e.preventDefault();
     if (!oldPassword) {
       setOldPasswordError("Old password is required");
@@ -209,8 +214,9 @@ function Account() {
     if (!newPassword) {
       setNewPasswordError("New password is required");
     } else if (
-      newPassword < 8 ||
-      newPassword !== /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+      // newPassword.length < 8 
+      // ||
+      newPassword === /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
     ) {
       setNewPasswordError(
         "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
@@ -229,6 +235,7 @@ function Account() {
       oldPassword &&
       newPassword &&
       newPassword.length >= 8 &&
+
       confirmPassword &&
       confirmPassword === newPassword
     ) {
@@ -411,7 +418,7 @@ function Account() {
                           </li>
                         </Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
+                      {/* <Nav.Item>
                         <Nav.Link eventKey="wishlist">
                           {" "}
                           <li className="nav-item" role="presentation">
@@ -424,7 +431,7 @@ function Account() {
                             </button>
                           </li>
                         </Nav.Link>
-                      </Nav.Item>
+                      </Nav.Item> */}
                       {/* <Nav.Item>
                         <Nav.Link eventKey="card">
                           {" "}
@@ -850,7 +857,7 @@ function Account() {
                                             </h6>
                                             <h5>
                                               {moment(data.order_date).format(
-                                                "YYYY-MM-DDThh:mm:00.000"
+                                                "YYYY-MM-DD"
                                               )}
                                             </h5>
                                           </div>
@@ -900,7 +907,7 @@ function Account() {
                     {/* end order history */}
                     {/* wishlist history */}
 
-                    <Tab.Pane eventKey="wishlist">
+                    {/* <Tab.Pane eventKey="wishlist">
                       <div
                         className="tab-pane fade show"
                         id="pills-wishlist"
@@ -1025,7 +1032,7 @@ function Account() {
                                               </button>
                                             </div>
                                           </div>
-                                        </div> */}
+                                        </div> 
                                       </div>
                                     </div>
                                   </div>
@@ -1035,7 +1042,7 @@ function Account() {
                           </div>
                         </div>
                       </div>
-                    </Tab.Pane>
+                    </Tab.Pane> */}
                     {/* end history */}
                     {/* card history */}
 
