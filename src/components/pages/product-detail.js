@@ -19,7 +19,7 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
-const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
+const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var result6;
   var result8;
 
@@ -60,9 +60,10 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
     category_type: "",
     status: "",
   });
-  const [rating, setRating] = useState([]);
-  let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = Number(productDetails.rating);
+  // const [rating, setRating] = useState([]);
+  // let ratingbox = [1, 2, 3, 4, 5];
+  // let ratingg = (productDetails.show_product_rating);
+  // console.log("&&&&&&&&&&%%%%%##########-------"+productDetails.show_product_rating)
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(1);
@@ -225,62 +226,26 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
         setapicall(true);
       });
   };
-  //   const AddToWishList = (id, wishlistt) => {
-  //     if (
-  //       token === "null" ||
-  //       token === "" ||
-  //       token === null ||
-  //       token === undefined ||
-  //       token === true
-  //     ) {
-  //       navigate("/login");
-  //     } else {
-  //       if (wishlistt > 0) {
-  //         axios
-  //           .put(
-  //             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
-  //             {
-  //               id: id,
-  //             },
-  //             {
-  //               headers: {
-  //                 user_token: `${token}`,
-  //               },
-  //             }
-  //           )
-  //           .then((response) => {
-  //             let data = response.data[0];
-  //         setProductDetails(data.results);
+  const deleteCart = (id, user_id) => {
+    axios
+      .put(
+        `${process.env.REACT_APP_BASEURL}/remove_product_from_cart`,
+        {
+          cart_id: id,
+          user_id: "",
+        },
+        {
+          headers: {
+            user_token: `${token}`,
+          },
+        }
+      )
+      .then((response) => {
+        let data = response.data[0];
+        setapicall(false);
+      });
+  };
 
-  //             // setData(response.data);
-  //             setWlistData("add");
-  //             setapicall(true);
-  //           });
-  //       } else {
-  //         axios
-  //      .post(
-  //          `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
-  //          {
-  //            user_id: "",
-  //            product_view_id: `${Id}`,
-  //            price: `${productDetails.product_verient[0].product_price}`,
-  //            discount: `${productDetails.product_verient[0].discount}`,
-  //         },
-  //         {
-  //           headers: {
-  //             user_token: `${token}`,
-  //           },
-  //         }
-  //      )
-  //        .then((response) => {
-  //         let data = response.data;
-  //          setProductDetails(data.results);
-  //          setapicall(true);
-  //        })
-  //       .catch(function (error) {});
-  //     }
-  //   };
-  // }
   const AddToWishList = () => {
     axios
       .post(
@@ -304,13 +269,13 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
       })
       .catch(function (error) {});
   };
-
-  const RemoveToWishList = () => {
+  const RemoveToWishList = (id, wishlistt, wishlistid) => {
     axios
       .put(
         `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
         {
-          id: id,
+          // product_id: `${wishlistid}`,
+          id: Id,
         },
         {
           headers: {
@@ -319,11 +284,8 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
         }
       )
       .then((response) => {
-        let data = response.data[0];
-        setProductDetails(data.results);
+        let data = response.data;
 
-        // setData(response.data);
-        setWlistData("add");
         setapicall(true);
       });
   };
@@ -541,10 +503,10 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
   }, [apicall]);
 
   /*<-----Functionality to filter products data by rate----> */
-  const result1 = ratingbox.filter(
-    (thing, index, self) =>
-      index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
-  );
+  // const result1 = ratingbox.filter(
+  //   (thing, index, self) =>
+  //     index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
+  // );
 
   // const result3 = productDetails.product_verient.filter((thing, index, self) =>
   // index == self.findIndex((t) => (
@@ -584,6 +546,8 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
             <div className="col-12">
               <div className="breadscrumb-contain">
                 <h2>{productDetails.product_title_name}</h2>
+                {console.log(productDetails.product_title_name)}
+
                 <nav>
                   <ol className="breadcrumb mb-0">
                     <li className="breadcrumb-item">
@@ -653,7 +617,7 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                             <h5>Cgst:{productDetails.cgst}</h5>
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                     </h3>
-                    <div className="product-rating custom-rate">
+                    {/* <div className="product-rating custom-rate">
                       <ul className="rating p-0 m-0 mb-2">
                         {
                           // !ratingg? null :
@@ -686,7 +650,7 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                           })
                         }
                       </ul>
-                    </div>
+                    </div> */}
                   </div>
                   <button className="btn" style={{ backgroundColor: colors }}>
                     {colors}
@@ -913,29 +877,12 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-6 col-xl-3">
-                      {/* <button className="btn btn-dark">
-              {wishlistt > 0 ? (
-                 <span
-                 className="text-white"
-                 onClick={() => AddToWishList(id, wishlistt, wishlistid)}
-               >
-                 Add To Wishlist
-               </span>
-              ) : (
-                <span
-                className="text-white"
-                onClick={() => AddToWishList(id, wishlistt, wishlistid)}
-              >
-                Add To Wishlist
-              </span>
-              )}
-            </button> */}
-
                       <button className="btn btn-dark">
                         <Link to="">
-                          {/* <i data-feather="heart"></i> */}
+                          <i data-feather="heart"></i>
 
-                          {wishlist === undefined ||
+                          {window.location.pathname === "/wishlist" ||
+                          wishlist === undefined ||
                           wishlist === "" ||
                           wishlist === null ||
                           wishlist === "null" ? (
@@ -948,7 +895,9 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                           ) : (
                             <span
                               className="text-white"
-                              onClick={() => RemoveToWishList()}
+                              onClick={() =>
+                                RemoveToWishList(id, wishlistt, wishlistid)
+                              }
                             >
                               Remove
                             </span>
@@ -1352,7 +1301,7 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                             <div className="review-title">
                               <h4 className="fw-500">Add a review</h4>
                             </div>
-                            <div className="d-flex">
+                            {/* <div className="d-flex">
                               <div className="product-rating">
                                 <div className="col-md-12">
                                   <Form.Select
@@ -1376,7 +1325,7 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                                       );
                                     })}
                                   </Form.Select>
-                                  {/* <div className="form-floating theme-form-floating"> */}
+                                  {/* <div className="form-floating theme-form-floating"> 
                                 </div>
                               </div>
                               {/* <div className="product-rating">
@@ -1409,8 +1358,8 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                                   })}
                                 </ul>
 
-                              </div> */}
-                            </div>
+                              </div> 
+                            </div> */}
                             <div className="row g-4">
                               <div className="col-md-6">
                                 <div className="form-floating theme-form-floating">
@@ -1530,7 +1479,7 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                           </h4>
                         </div>
 
-                        {reviewData.map((rdataa) => {
+                        {/* {reviewData.map((rdataa) => {
                           let ratingg = Number(rdataa.review_rating);
 
                           return (
@@ -1612,7 +1561,7 @@ const ProductDetail = ({ logIn, wishlistt, wishlistid, id }) => {
                               </div>
                             </>
                           );
-                        })}
+                        })} */}
                       </div>
                     </Tab>
                   </Tabs>
