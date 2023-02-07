@@ -56,12 +56,9 @@ function Account() {
     address: "",
     address2: "",
   });
- 
-
 
   const token = localStorage.getItem("token");
   useEffect(() => {
-    
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/user_details`,
@@ -76,7 +73,6 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
-
       })
       .catch((error) => {});
     Onwishlistclick();
@@ -167,7 +163,6 @@ function Account() {
       [e.target.name]: e.target.value,
     });
   };
-
 
   // change Password:
 
@@ -325,7 +320,6 @@ function Account() {
   // end add to cart
 
   const onProductClick = (id) => {
-
     localStorage.setItem("proid", id);
     navigate("/product-detail");
   };
@@ -678,7 +672,7 @@ function Account() {
                                       <h6 className="text-content">
                                         Default Billing Address
                                       </h6>
-                                      <h6 className="text-content">
+                                      <h6 className="text-content text-break">
                                         {userdata.address}
                                       </h6>
                                       <Link
@@ -692,12 +686,12 @@ function Account() {
                                     </div>
                                   </div>
 
-                                  <div className="col-xxl-6">
+                                  <div className="col-xxl-6 ">
                                     <div className="dashboard-detail">
                                       <h6 className="text-content">
                                         Default Shipping Address
                                       </h6>
-                                      <h6 className="text-content">
+                                      <h6 className="text-content text-break">
                                         {userdata.address2}
                                       </h6>
                                       <Link
@@ -1529,7 +1523,7 @@ function Account() {
                             <div className="location-profile">
                               <ul>
                                 <li>
-                                  <div className="location-box">
+                                  <div className="location-box text-break">
                                     <GoLocation />
                                     <h6>{userdata.address}</h6>
                                   </div>
@@ -1571,7 +1565,10 @@ function Account() {
                                       <tr>
                                         <td>Birthday :</td>
                                         <td>
-                                        {moment(userdata.date_of_birth).format("YYYY-MM-DD")}</td>
+                                          {moment(
+                                            userdata.date_of_birth
+                                          ).format("YYYY-MM-DD")}
+                                        </td>
                                       </tr>
                                       <tr>
                                         <td>Phone Number :</td>
@@ -1862,7 +1859,7 @@ function Account() {
                 >
                   <Form.Label>Mobile</Form.Label>
                   <Form.Control
-                    type="number"
+                    type="tel"
                     placeholder="Mobile"
                     value={udata.phone_no}
                     name={"phone_no"}
@@ -1888,6 +1885,7 @@ function Account() {
                     value={udata.address}
                     name={"address"}
                     onChange={OnchangeFistname}
+                    maxLength="100"
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1907,6 +1905,7 @@ function Account() {
                     value={udata.address2}
                     name={"address2"}
                     onChange={OnchangeFistname}
+                    maxLength="100"
                   />
                 </Form.Group>
               </div>
