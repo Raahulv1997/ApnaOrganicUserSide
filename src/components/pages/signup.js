@@ -13,9 +13,17 @@ const Singup = () => {
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [emailerror, setemailerror] = useState("");
-  const [otperror, setOtperror] = useState(false);
   const [passval, setpassval] = useState("");
+  const [PasswordError, setPasswordError] = useState("");
+
+  const [otperror, setOtperror] = useState(false);
   const [validated, setValidated] = useState(false);
+
+
+  // const handlePasswordChange = (e) => {
+  //   setPassword(e.target.value);
+  //   setPasswordError("");
+  // };
   // countdown
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
@@ -49,18 +57,38 @@ const Singup = () => {
     let email = e.target.email.value;
     setemail(email);
     setemailerror("spinner");
-    axios
+    if (!passval) {
+      setPasswordError("New password is required");
+    }
+    else if (
+      passval < 8 ||
+      passval !== /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+    )
+    {
+      setPasswordError(
+        "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
+      );
+    }
+    else {
+      setPasswordError("");
+    }
+    if(passval.length>=8){
+      axios
       .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
         email: e.target.email.value,
       })
       .then((response) => {
-        console.log(response);
+        console.log('kk');
         if (response.data.response === "Email Already Exist") {
           setemailerror("Already");
+          setPasswordError("");
+          
           e.target.password.value = "";
         } else {
           setotp("signup");
           setemailerror("");
+          setPasswordError("");
+          
         }
         return response;
       })
@@ -68,12 +96,19 @@ const Singup = () => {
         console.log(error);
         if (error.message === "Request failed with status code 513") {
           setemailerror("Wrong");
+          setPasswordError("");
+          
         }
       });
+      setPasswordError("");
+    }
+   
   };
 
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
+    setPasswordError("");
+
     if (otperror === "resend") {
       setpassval("");
     }
@@ -115,7 +150,6 @@ const Singup = () => {
 
   return (
     <Fragment>
-      <Header />
       {/* <Breadcumb pageName={"Register"} pageTitle={"Register"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space">
@@ -205,6 +239,9 @@ const Singup = () => {
                             placeholder="Password"
                             onChange={(e) => onPasswordChange(e)}
                           />
+                          {PasswordError && (
+                    <p className="error-message text-danger">{PasswordError}</p>
+                  )}
                           <label htmlFor="password">Password</label>
                         </div>
                       </div>

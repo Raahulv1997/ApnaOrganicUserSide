@@ -6,9 +6,6 @@ import blog1 from "../../Photos/blog/1.jpg";
 import blog2 from "../../Photos/blog/2.jpg";
 import blog3 from "../../Photos/blog/3.jpg";
 import blog4 from "../../Photos/blog/4.jpg";
-import user1 from "../../Photos/user/1.jpg";
-import user2 from "../../Photos/user/2.jpg";
-import user3 from "../../Photos/user/3.jpg";
 import veg23 from "../../Photos/vegetable/product/23.png";
 import veg24 from "../../Photos/vegetable/product/24.png";
 import veg26 from "../../Photos/vegetable/product/26.png";
@@ -20,6 +17,9 @@ const BlogDetail = () => {
   const blodid = localStorage.getItem("idd");
   console.log("blod___________--------------id" + JSON.stringify(blodid));
   const [blogDetails, setBlogDetails] = useState([]);
+
+/* <!--Get blog deatils--Api call--> */
+
   useEffect(() => {
     function getBlogDetails() {
       try {
@@ -41,28 +41,9 @@ const BlogDetail = () => {
 
     getBlogDetails();
   }, [apicall]);
-  // useEffect(() => {
-  //     axios.post(`${process.env.REACT_APP_BASEURL}/blogs`,
-  //     {
-  //     "id":`${blodid}`,
-  //     "for_":"user",
-  //     "recent":"",
-  //     "category":[],
-  //     "product_tag":""
-  //   }).then ((response) => {
-  //   let data= response.data;
-  //   setBlogDetails(data)
-  //   setId(id);
-  // //   console.log("blog IDDDDDDDDDDDDDD"+JSON.stringify(data.id));
 
-  //   console.log("GGGGGGGGGGGGGGG______________----"+JSON.stringify(blogDetails));
+/* <!--End this section--> */
 
-  //     setapicall(false);
-  //     })
-  //   }, [apicall]);
-  console.log(
-    "b;loggggggggggggggggg-------------" + JSON.stringify(blogDetails)
-  );
   return (
     <Fragment>
       <Header />

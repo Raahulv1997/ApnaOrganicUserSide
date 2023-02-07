@@ -14,7 +14,6 @@ import SweetAlert from "sweetalert-react";
 import "sweetalert/dist/sweetalert.css";
 import Spinner from "react-bootstrap/Spinner";
 
-import { Button } from "bootstrap";
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
   // const[pAlert,setPalert]=useState(false);
@@ -68,7 +67,6 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
-  // console.log("ooo====-----" + DeliveyTab);
   const incrementCount = (id, order_quantity, qty) => {
     let inc = order_quantity + 1;
     if (order_quantity !== qty) {
@@ -150,9 +148,7 @@ const Checkout = (props) => {
           let data = response.data;
           if (response.data.response === "cart_empty") {
             setValidation(false);
-          }
-          else
-          {
+          } else {
             let ProductTotal = 0;
             let Totaltaxes = 0;
             let Totalgst = 0;
@@ -177,15 +173,15 @@ const Checkout = (props) => {
               if (cdata.cgst === null) {
                 cdata.cgst = "0";
               }
-  
+
               // gst
               Totalgst += (Number(cdata.product_price) * cdata.gst) / 100;
               // end gst
-  
+
               // cgst
               Totalcgst += (Number(cdata.product_price) * cdata.cgst) / 100;
               // end cgst
-  
+
               // sgst
               Totalsgst += (Number(cdata.product_price) * cdata.sgst) / 100;
               // end sgst
@@ -198,7 +194,7 @@ const Checkout = (props) => {
                 (Number(cdata.product_price) * cdata.retails_sales_tax) / 100;
               Totalwtax +=
                 (Number(cdata.product_price) * cdata.wholesale_sales_tax) / 100;
-  
+
               // totaltax
               Totaltaxes +=
                 Totalgst +
@@ -209,38 +205,36 @@ const Checkout = (props) => {
                 Totalrtax +
                 Totalwtax;
               // end totaltax
-  
+
               // totaltaxable value
               TotalTaxableValue += cdata.product_price;
               // end totaltaxable value
-  
+
               // saleprice
               Saleprice = Number(cdata.sale_price).toFixed(2);
               // end saleprice
             });
-              
-          setorderadd({
-            ...orderadd,
-            total_amount: ProductTotal - CouponDis + ShippingCharge,
-            total_gst: Totalgst,
-            total_cgst: Totalcgst,
-            total_sgst: Totalsgst,
-            taxable_value: TotalTaxableValue,
-            discount_coupon_value: CouponDis,
-            discount_coupon: CouponId,
-            vendor_id: data.vendor_id,
-            payment_mode: DeliveryMethod,
-            order_product: cartdata,
-          });
-          setSalePricee(Saleprice);
-          setProductPriceTotal(ProductTotal);
-          setTotalTax(Totaltaxes);
-          setCartData(data);
-          setapicall(false);
-          setValidation(true);
+
+            setorderadd({
+              ...orderadd,
+              total_amount: ProductTotal - CouponDis + ShippingCharge,
+              total_gst: Totalgst,
+              total_cgst: Totalcgst,
+              total_sgst: Totalsgst,
+              taxable_value: TotalTaxableValue,
+              discount_coupon_value: CouponDis,
+              discount_coupon: CouponId,
+              vendor_id: data.vendor_id,
+              payment_mode: DeliveryMethod,
+              order_product: cartdata,
+            });
+            setSalePricee(Saleprice);
+            setProductPriceTotal(ProductTotal);
+            setTotalTax(Totaltaxes);
+            setCartData(data);
+            setapicall(false);
+            setValidation(true);
           }
-      
-        
         });
     } catch (err) {}
   }, [apicall, DeliveryMethod]);
@@ -360,20 +354,18 @@ const Checkout = (props) => {
           },
         })
         .then((response) => {
-          if(response.data.order==="order_count_0"){
+          if (response.data.order === "order_count_0") {
             setProductAlert(true);
-
-          }
-        else  if (response.data.message ==="Send mail Succesfully") {
+          } else if (response.data.message === "Send mail Succesfully") {
             setSpinner(false);
             setordervalidation("");
-            
+
             localStorage.setItem("orderid", response.data.order_id);
             setProductAlert(false);
 
             navigate("/your_orders");
           }
-           
+
           // else
           // {
           //   alert("hellloooooooo")
@@ -384,8 +376,7 @@ const Checkout = (props) => {
           // return response;
         })
         .catch((error) => {});
-        setProductAlert(false);
-
+      setProductAlert(false);
     }
   };
   // end order add
@@ -412,7 +403,11 @@ const Checkout = (props) => {
                     <div className="row my-md-0 my-4 mx-0">
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={0} disabled={currentTab !== 0}>
+                          <Nav.Link
+                            eventKey={0}
+                            disabled={currentTab !== 0}
+                            to=""
+                          >
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -442,7 +437,11 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={1} disabled={currentTab !== 1}>
+                          <Nav.Link
+                            eventKey={1}
+                            disabled={currentTab !== 1}
+                            to=""
+                          >
                             <li className="nav-link" role="presentation">
                               <div
                                 onClick={() => DeliveryClick()}
@@ -473,7 +472,11 @@ const Checkout = (props) => {
 
                       <div className="col-6 col-md-12 my-2">
                         <Nav.Item>
-                          <Nav.Link eventKey={2} disabled={currentTab !== 2}>
+                          <Nav.Link
+                            eventKey={2}
+                            disabled={currentTab !== 2}
+                            to=""
+                          >
                             <li className="nav-link" role="presentation">
                               <div
                                 className="nav-item"
@@ -1296,7 +1299,7 @@ const Checkout = (props) => {
                             <ul className="summery-contain bg-white custom-height">
                               {(cartdata || []).map((data) => {
                                 return (
-                                  <li key={data.id}>
+                                  <li key={data.id} className="mx-3">
                                     <h4>
                                       {Number(data.sale_price).toFixed(2)}{" "}
                                       <span>X {data.order_quantity}</span>
@@ -1314,31 +1317,31 @@ const Checkout = (props) => {
                             </ul>
 
                             <ul className="summery-total bg-white">
-                              <li>
+                              <li className="mx-3">
                                 <h4>Subtotal(Tax included)</h4>
                                 <h4 className="price">
                                   ₹{ProductPriceTotal.toFixed(2)}
                                 </h4>
                               </li>
 
-                              <li>
+                              <li className="mx-3">
                                 <h4>Shipping</h4>
                                 <h4 className="price">₹{ShippingCharge}</h4>
                               </li>
 
-                              <li>
+                              <li className="mx-3">
                                 <h4>Tax</h4>
                                 <h4 className="price text-danger">
                                   ₹{TotalTax.toFixed(2)}
                                 </h4>
                               </li>
 
-                              <li>
+                              <li className="mx-3">
                                 <h4>Coupon/Code</h4>
                                 <h4 className="price">₹{CouponDis}</h4>
                               </li>
 
-                              <li className="list-total">
+                              <li className="list-total mx-3">
                                 <h4>Total (Rupees)</h4>
                                 <h4 className="price">
                                   ₹
@@ -1875,7 +1878,7 @@ const Checkout = (props) => {
         show={ProductAlert}
         title={"order not placed try again"}
         text={"order not placed"}
-        onConfirm={()=>closeProductAlert()}
+        onConfirm={() => closeProductAlert()}
       />
 
       <Footer />

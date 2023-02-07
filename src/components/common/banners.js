@@ -3,18 +3,19 @@ import BannerBox1 from "../../Photos/2.jpg";
 import BannerBox2 from "../../Photos/1.jpg";
 import Banner1 from "../../Photos/14.jpg";
 import ProductBox from "./product-box";
-import data from "../pages/data";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../CSS/style.css";
 import axios from "axios";
 import Header from "./header";
 import { Link } from "react-router-dom";
-const Benners = (props, productPrice, productMRF, name, image) => {
+const Benners = () => {
+  /* <!--Start all state section--> */
   const [productData, setProductData] = useState([]);
   const [productType, setProductType] = useState([]);
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
+
   let useridd = localStorage.getItem("userid");
   let token = localStorage.getItem("token");
 
@@ -22,60 +23,65 @@ const Benners = (props, productPrice, productMRF, name, image) => {
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
   const [showbanner, setShowBanner] = useState([]);
-  const [Imgarray, setImgArray] = useState([]);
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
-  // var product = data.product;
-  // useEffect(() => {
-  //   function getRating() {
-  //     try {
-  //       axios
-  //         .post(
-  //           `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
-  //           {
-  //             product_search: {
-  //               search: `${productType}`,
-  //               price_from: "",
-  //               price_to: "",
-  //               id: "",
-  //               product_title_name: "",
-  //               sale_price: "",
-  //               short_by_updated_on: "",
-  //             },
-  //           }
-  //         )
-  //         .then((response) => {
-  //           let data = response.data;
-  //           setProductData(response.data.results);
-  //           localStorage.setItem("reviewid", response.data.results.id);
 
-  //           setapicall(false);
-  //           {
-  //             response.data.results.map((product) => {
-  //               return setcatArray((catArray) => [
-  //                 ...catArray,
-  //                 product.product_type,
-  //               ]);
-  //             });
-  //           }
-  //         });
-  //     } catch (err) {}
-  //   }
-  //   getRating();
-  // }, []);
-  console.log("showww-------------0000"+JSON.stringify(productData))
+  /* <!--End all state section--> */
+
+  // var product = data.product;
+  useEffect(() => {
+    function getRating() {
+      try {
+        axios
+          .post(
+            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+            {
+              product_search: {
+                search: `${productType}`,
+                price_from: "",
+                price_to: "",
+                id: "",
+                product_title_name: "",
+                sale_price: "",
+                short_by_updated_on: "",
+              },
+            }
+          )
+          .then((response) => {
+            let data = response.data;
+            setProductData(response.data.results);
+            localStorage.setItem("reviewid", response.data.results.id);
+
+            setapicall(false);
+            {
+              response.data.results.map((product) => {
+                return setcatArray((catArray) => [
+                  ...catArray,
+                  product.product_type,
+                ]);
+              });
+            }
+          });
+      } catch (err) {}
+    }
+    getRating();
+  }, []);
+  // console.log("showww-------------0000"+JSON.stringify(productData))
+
+  /* <!--Function for map category and same category not show again--> */
+
   useEffect(() => {
     const result = catArray.filter(
       (thing, index, self) => index === self.findIndex((t) => t === thing)
     );
     setunCatArr(result);
   }, [catArray]);
+console.log("CATEGORYYYYYYY00000----------"+JSON.stringify(unCatArr))
+console.log("CATEGORYYY------666666^^^^^^^^^^^-------YYYY00000----------"+JSON.stringify(catArray))
 
-  // product quantity
+  /* <!--End this section--> */
 
-  // end product quantity
-
-  // product box
+  /* <!--Add to cart--API Call--> */
 
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
@@ -109,17 +115,16 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           console.log("ADDCART" + data);
 
           setCount(0);
-          // setaddcartid(id)
           setData(data);
           setapicall(true);
-          // localStorage.setItem("cartupdate", true);
         });
     }
   };
+  /* <!--End this section--> */
 
+  /* <!--Add to wishlist--API Call--> */
 
-
-  const AddToWishList = (id, wishlistt, wishlistid) => {
+  const AddToWishList = (id, wishlistt) => {
     if (
       token === "null" ||
       token === "" ||
@@ -171,6 +176,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       }
     }
   };
+  /* <!--End this section--> */
+
+  /* <!--Show product data--API Call--> */
   useEffect(() => {
     let homeurl;
     if (
@@ -183,12 +191,13 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       function getProductData() {
         try {
           axios
-            .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`, {
+            .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=10`, {
               product_search: {
                 search: `${productType}`,
                 price_from: "",
                 price_to: "",
                 id: "",
+                is_delete: ["1"],
                 product_title_name: "",
                 sale_price: "",
                 short_by_updated_on: "",
@@ -196,6 +205,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
             })
             .then((response) => {
               let data = response.data;
+
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -203,45 +213,63 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       }
       getProductData();
     } else {
-      function getProductData() {
-        try {
-          axios
-            .post(
-              `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
-              {
-                product_search: {
-                  search: `${productType}`,
-                  price_from: "",
-                  price_to: "",
-                  id: "",
-                  product_title_name: "",
-                  sale_price: "",
-                  short_by_updated_on: "",
+      if (token) {
+        function getProductData() {
+          try {
+            axios
+              .post(
+                `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+                {
+                  product_search: {
+                    search: `${productType}`,
+                    price_from: "",
+                    price_to: "",
+                    id: "",
+                    is_delete: ["1"],
+                    product_title_name: "",
+                    sale_price: "",
+                    short_by_updated_on: "",
+                  },
                 },
-              },
-              {
-                headers: {
-                  user_token: token,
-                },
-              }
-            )
-            .then((response) => {
-              let data = response.data;
-              setProductData(response.data.results);
-              setapicall(false);
-            });
-        } catch (err) {}
+                {
+                  headers: {
+                    user_token: token,
+                  },
+                }
+              )
+              .then((response) => {
+                let data = response.data;
+
+                console.log("product data---" + JSON.stringify(data));
+                setProductData(response.data.results);
+                console.log("product data--555555555555555555555555-"+ JSON.stringify(data))
+
+                setapicall(false);
+              });
+          } catch (err) {}
+        }
+        getProductData();
+      } else {
+        alert("No token saved");
       }
-      getProductData();
     }
   }, [productType, apicall]);
+  console.log("******&&&&&&&&&-----------"+JSON.stringify(productData))
+/* <!--End this section--> */
+
+
+
+  /* <!--Function for set token and navigate from product details page--> */
 
   const clickProduct = (productid, id) => {
     localStorage.setItem("proid", productid);
     localStorage.setItem("variantid", id);
-
     navigate("/product-detail");
   };
+  /* <!--End this section--> */
+
+  /* <!--Show banner--Api Call--> */
+
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
@@ -252,14 +280,18 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       .then((response) => {
         let data = response.data;
         setShowBanner(response.data);
-        // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       });
   }, [apicall]);
+  /* <!--End this section--> */
 
-  // end product box
+  /* <!--Start body of banner page--> */
+
   return (
     <Fragment>
       <Header addcart={AddToCart} />
+
+      {/*<!--Start banner section-->*/}
+
       <section className="home-section-2 section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
@@ -275,7 +307,6 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                             className="img-fluid bg-img lazyload "
                             alt="image"
                             name="image"
-                            // style={{width:"700px",height:"600px"}}
                           />
                           <div className="home-detail w-50 p-center-left">
                             <div>
@@ -283,14 +314,12 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                                 ORGANIC
                               </h3>
                               <h1 className="fw-bold w-100 text-white">
-                                {/* 100% Fresh */}
                                 {img.title}
                               </h1>
                               <h3 className="text-content fw-light text-white">
                                 Fruit & Vegetables
                               </h3>
                               <p className="d-sm-block d-none text-white">
-                                {/* Free shipping on all your order. we deliver you enjoy */}
                                 {img.description}
                               </p>
                               <Link to={img.banner_url}>
@@ -417,12 +446,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           </div>
         </div>
       </section>
+      {/*<!--End banner section-->*/}
 
-      {/* <!-- Product Sction Start --> */}
-      {/* <section className="product-section">
-        <div className="container-fluid-lg">
-          <div className="title title-flex">
-            <h2 className="mb-lg-0 mb-2">Our Products</h2> */}
+      {/*<!--Show product section-->*/}
       <div className="all_catagrey_tabs">
         <section className="product-section">
           <div className="container-fluid-lg">
@@ -467,7 +493,7 @@ const Benners = (props, productPrice, productMRF, name, image) => {
                           image={product.image}
                           name={product.product_title_name}
                           productPrice={product.product_price}
-                          productMRF={product.sale_price}
+                          productMRF={product.mrp}
                           productid={product.product_id}
                           discount={product.discount}
                           special_offer={product.special_offer}
@@ -492,8 +518,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           </div>
         </section>
       </div>
+      {/*<!--End show product section-->*/}
 
-      {/* <!-- Product Sction Start --> */}
+      {/* <!--Show top product--> */}
       <section className="product-section">
         <div className="container-fluid-lg">
           <div className="title title-flex">
@@ -503,6 +530,9 @@ const Benners = (props, productPrice, productMRF, name, image) => {
       </section>
       {/* <!-- Product Sction End --> */}
       {/* <!-- Banner Section Start --> */}
+
+      {/*<!--Start top product banner-->*/}
+
       <section className="banner-section">
         <div className="container-fluid-lg">
           <div className="row">
@@ -549,7 +579,13 @@ const Benners = (props, productPrice, productMRF, name, image) => {
           </div>
         </div>
       </section>
+      {/*<!--End top product banner-->*/}
     </Fragment>
   );
 };
+
+{
+  /*<!--End bannner page section-->*/
+}
+
 export default Benners;

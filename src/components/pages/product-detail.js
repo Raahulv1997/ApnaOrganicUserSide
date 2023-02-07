@@ -19,15 +19,30 @@ import axios from "axios";
 import Form from "react-bootstrap/Form";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 
-const ProductDetail = ({ logIn }) => {
-  const useridd = localStorage.getItem("userid");
-  const token = localStorage.getItem("token");
+  
+  const ProductDetail = ({ logIn ,wishlistt,wishlistid,id}) => {
 
+
+  var result6;
+  var result8;
+  
+  
+  const useridd = localStorage.getItem("userid");
+  const token=localStorage.getItem("token");
+  // const proDuctID=localStorage.getItem("porid");
+  const [wlistData, setWlistData] = useState("add");
+
+  const[sizeOn,setSizeOn]=useState(false)
+  const[ colorValue,setColorValue]=useState("")
+  const[getSizOnclor,setGetSizeOnColor]=useState([])
+  const[mycolor,setMycolor]=useState()
   const [apicall, setapicall] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
   const [productprice, setProductprice] = useState();
+  const [saleprice, setsaleprice] = useState(0);
   const [mrp, setMrp] = useState();
   const [size, setSize] = useState();
+  const [unitQwanity,setUnitQwanity]=useState();
   const [colors, setColors] = useState("");
   const [mfd, setMfd] = useState("");
   const [exp, setExp] = useState("");
@@ -41,7 +56,8 @@ const ProductDetail = ({ logIn }) => {
   const [showImage, setShowImages] = useState([]);
   const [reviewData, setReviewData] = useState([]);
   const [showbanner, setShowBanner] = useState([]);
-
+  const [wishlist,setWishlist]=useState([]);
+  const[cart,setCart]=useState([]);
   const [Rrating, setRrating] = useState("");
   const [Searchreview, setSearchReview] = useState({
     product_name: "",
@@ -57,40 +73,45 @@ const ProductDetail = ({ logIn }) => {
   const { state } = useLocation();
   const navigate = useNavigate();
 
+  /*<-----Increment Functionality----> */
   function incrementCount() {
     count = count + 1;
     setCount(count);
   }
+
+  /*<-----Decrement Functionality----> */
   const decrementCount = () => {
     if (count > 0) {
       setCount((count) => count - 1);
     }
   };
-  const func = () => {};
+  // const func = () => {};
 
-  let proid = localStorage.getItem("proid");
+  var proid = localStorage.getItem("proid");
   // console.log("---------------proidddd---" + proid);
-
-  let varientId = localStorage.getItem("variantid");
+const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
+  // var varientId = localStorage.getItem("variantid");
+  // console.log("---------------veriant ---" + varientId);
+  console.log("-----------WISHLIATTTTTTTT------"+JSON.stringify(productDetails))
   useEffect(() => {
     function getProductDetails() {
+      
       try {
         axios
-          .get(`http://192.168.29.108:5000/product_details?id=${proid}`)
+          .get(`${process.env.REACT_APP_BASEURL}/product_details?id=${proid}`)
           .then((response) => {
             let data = response.data;
-            console.log("product Data-----" + data);
-            setProductDetails(data);
-            setProductprice(data.product_verient[0].product_price);
-            setMrp(data.product_verient[0].mrp);
-            setColors(data.product_verient[0].colors);
-            setDiscount(data.product_verient[0].discount);
-            setSize(data.product_verient[0].size);
-            setMfd(data.product_verient[0].manufacturing_date);
-            setExp(data.product_verient[0].expire_date);
-            setQut(data.product_verient[0].quantity);
-            setId(data.product_verient[0].id);
-            setImage(data.product_verient[0].product_image_path);
+        
+
+              result6 = data.product_verient.filter((thing, index, self) =>
+            index === self.findIndex((t) => (
+           t.colors == thing.colors 
+    )))
+    setMycolor(result6)
+
+   setProductDetails(data);
+   setId(data.product_verient.id);
+         
             setapicall(false);
             OnProductColor(
               data.product_verient[0].colors,
@@ -99,23 +120,96 @@ const ProductDetail = ({ logIn }) => {
               data.product_verient[0].manufacturing_date,
               data.product_verient[0].expire_date,
               data.product_verient[0].quantity,
-              varientId,
-              proid
+              proid,
+              varientId
             );
           });
       } catch (err) {}
+
     }
-
+  
     getProductDetails();
-  }, [apicall]);
+    getVeriantDetails(varientId,proid);
+   
+  }, [apicall,varientId]);
 
+  //  console.log("---------------proidddd---" + proid);
+
+  /*<-----Functionality for veriant Data of product----> */
+  const getVeriantDetails = (varientId, proid) => {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_BASEURL}/products_pricing?id=${varientId}&product_id=${proid}&user_id=${useridd}`)
+        .then((response) => {
+          let data = response.data[0];
+            console.log("veriantData----"+ JSON.stringify (data))
+            
+          setProductprice(Number(data.product_price.toFixed(2)));
+          setsaleprice(Number(data.sale_price).toFixed(2))
+          setMrp( Number(data.mrp).toFixed(2));
+          setColors(data.colors);
+          setDiscount(data.discount);
+          setUnitQwanity(data.unit_quantity)
+          setSize(data.size);
+          setMfd(data.manufacturing_date);
+          setExp(data.expire_date);
+          setQut(data.quantity)
+          setId(data.id);
+          setWishlist(data.wishlist)
+          setCart(data.cart_)
+          console.log("CART_____"+data.cart_)
+          console.log("wishlisttttt-----_____"+data.wishlist)});
+        } catch (err) {}
+    
+      }
+
+  /*<----color variant functionality---->*/
+  useEffect(() => {
+    SelectProduct(colorValue);
+  }, [varientId]);
+        
+  /*<-----Data retrieval functionality for product details by size----> */
+  function SelectProduct(colorValue) {
+    
+    try {
+      axios
+        .get(`${process.env.REACT_APP_BASEURL}/product_details?id=${proid}`)
+        .then((response) => {
+          let data = response.data;
+       
+
+          let result8 =  data.product_verient.filter((item) => item.colors === colorValue)
+          // console.log("jjjjj"+JSON.stringify(result8))
+          setGetSizeOnColor(result8)
+
+          // setProductprice(getSizOnclor.product_price);
+          // setsaleprice(getSizOnclor.sale_price)
+          // setMrp( getSizOnclor.mrp);
+          // setColors(getSizOnclor.colors);
+          // setDiscount(getSizOnclor.discount);
+          // setUnitQwanity(getSizOnclor.unit_quantity)
+          // setSize(getSizOnclor.size);
+          // setMfd(getSizOnclor.manufacturing_date);
+          // setExp(getSizOnclor.expire_date);
+          //  setQut(getSizOnclor.quantity)
+          
+          
+         
+        });
+    } catch (err) {}
+
+  }
+
+  /*<-----Functionality to filter products data by image----> */
   const result = showImage.filter(
     (thing, index, self) =>
       index ==
       self.findIndex((t) => t.product_image_path == thing.product_image_path)
   );
 
+  /*<-----Functionality to Add to cart----> */
   const AddToCart = () => {
+ 
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/add_to_cart`,
@@ -135,9 +229,67 @@ const ProductDetail = ({ logIn }) => {
       )
       .then((response) => {
         let data = response.data;
+        console.log("dta-------"+JSON.stringify(data))
+        // navigate("/cart")
         setapicall(true);
       });
   };
+//   const AddToWishList = (id, wishlistt) => {
+//     if (
+//       token === "null" ||
+//       token === "" ||
+//       token === null ||
+//       token === undefined ||
+//       token === true
+//     ) {
+//       navigate("/login");
+//     } else {
+//       if (wishlistt > 0) {
+//         axios
+//           .put(
+//             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+//             {
+//               id: id,
+//             },
+//             {
+//               headers: {
+//                 user_token: `${token}`,
+//               },
+//             }
+//           )
+//           .then((response) => {
+//             let data = response.data[0];
+//         setProductDetails(data.results);
+
+//             // setData(response.data);
+//             setWlistData("add");
+//             setapicall(true);
+//           });
+//       } else {
+//         axios
+//      .post(
+//          `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+//          {
+//            user_id: "",
+//            product_view_id: `${Id}`,
+//            price: `${productDetails.product_verient[0].product_price}`,
+//            discount: `${productDetails.product_verient[0].discount}`,
+//         },
+//         {
+//           headers: {
+//             user_token: `${token}`,
+//           },
+//         }
+//      )
+//        .then((response) => {
+//         let data = response.data;
+//          setProductDetails(data.results);
+//          setapicall(true);
+//        })
+//       .catch(function (error) {});
+//     }
+//   };
+// }
   const AddToWishList = () => {
     axios
       .post(
@@ -162,26 +314,54 @@ const ProductDetail = ({ logIn }) => {
       .catch(function (error) {});
   };
 
-  const OnProductprice = (
-    product_price,
-    mrpp,
-    sizee,
-    mfdd,
-    expp,
-    quantityy,
-    id,
-    productid
-  ) => {
-    localStorage.setItem("variantid", id);
-    localStorage.setItem("proid", productid);
+  const RemoveToWishList = () => {
+    axios
+              .put(
+                `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+                {
+                  id: id,
+                },
+                {
+                  headers: {
+                    user_token: `${token}`,
+                  },
+                }
+              )
+              .then((response) => {
+                let data = response.data[0];
+            setProductDetails(data.results);
+    
+                // setData(response.data);
+                setWlistData("add");
+                setapicall(true);
+              });
+  };
 
+
+  const OnProductprice = ( SalePrice, product_price, mrpp, sizee, mfdd, expp, quantityy, id, productid) => {
+
+    // localStorage.setItem("variantid", id);
+    // localStorage.setItem("proid", productid);
+   
     setProductprice(product_price);
+    setsaleprice(Number(SalePrice).toFixed(2))
     setMrp(mrpp);
+   
     setSize(sizee);
     setMfd(mfdd);
     setExp(expp);
     setQut(quantityy);
     setId(id);
+    
+      // console.log("productID-----"+productid)
+      // console.log("veriant ID-----"+id)
+      axios
+        .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+        .then((response) => {
+          let data = response.data;
+            console.log("product veriant image--"+ JSON.stringify(data))
+          setapicall(false);
+          setShowImages(data);
 
     // console.log("productID-----" + productid);
     // console.log("veriant ID-----" + id);
@@ -198,42 +378,106 @@ const ProductDetail = ({ logIn }) => {
       .catch(function (error) {
         console.log(error);
       });
-  };
+        });
 
-  const OnProductColor = (
-    color,
+
+  }
+
+
+  /*<----Functionality to set price as per the quntity---->*/
+  const OnUnitQwantiity = (
+    unitQwanityy,
+    SalePrice,
     product_price,
     mrpp,
+    sizee,
     mfdd,
     expp,
     quantityy,
     id,
     productid
   ) => {
-    localStorage.setItem("variantid", id);
-    localStorage.setItem("proid", productid);
+    // localStorage.setItem("variantid", id);
+    // localStorage.setItem("proid", productid);
+   
+    setProductprice(product_price);
+    setsaleprice(Number (SalePrice).toFixed(2))
+    setMrp(mrpp);
+   setUnitQwanity(unitQwanityy)
+    setSize(sizee);
+    setMfd(mfdd);
+    setExp(expp);
+    setQut(quantityy);
+    setId(id);
+    
+      console.log("productID-----"+productid)
+      console.log("veriant ID-----"+id)
+      axios
+        .get(`${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`)
+        .then((response) => {
+          let data = response.data;
+            console.log("product veriant image--"+ JSON.stringify(data))
+          setapicall(false);
+          setShowImages(data);
 
+    // console.log("productID-----" + productid);
+    // console.log("veriant ID-----" + id);
+    axios
+      .get(
+        `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+      )
+      .then((response) => {
+        let data = response.data;
+        // console.log("product veriant image--" + JSON.stringify(data));
+        setapicall(false);
+        setShowImages(data);
+      })
+      .catch(function (error) {
+        console.log(error);
+      });
+        });
+      }
+
+  /*<----Functionality to set price as per the color---->*/
+  const OnProductColor = (
+    Salepricee,
+    color,
+    product_price,
+    mrpp,
+    mfdd,
+    expp,
+    quantityy,
+    veriantid,
+    productid
+  ) => {
+    console.log("product id in  color function-----" + productid);
+    console.log("veriant id in color function-----" + veriantid);
+    // localStorage.setItem("variantid", id);
+    // localStorage.setItem("proid", productid);
+    setsaleprice(Number (Salepricee).toFixed(2))
     setColors(color);
     setProductprice(product_price);
     setMrp(mrpp);
     setMfd(mfdd);
     setExp(expp);
     setQut(quantityy);
-    setId(id);
+    setId(veriantid);
     try {
       axios
         .get(
-          `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+          `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${proid}&product_verient_id=${veriantid}`
         )
         .then((response) => {
           let data = response.data;
-          // console.log("data----"+JSON.stringify (data))
+          // console.log("veriantDataImage----"+ JSON.stringify (data))
           setapicall(false);
           setShowImages(data);
         });
     } catch (err) {}
     // setImage(product_image_namee);
   };
+
+  /*<----Functionality to get the data of reviews---->*/
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_list`, {
@@ -253,13 +497,18 @@ const ProductDetail = ({ logIn }) => {
 
   // console.log("CONSOLEE"+JSON.stringify(Rrating))
 
+  /*<----Onchange function of send review---->*/
   const handleFormChange = (e) => {
     setaddreviewdata({ ...addreviewdata, [e.target.name]: e.target.value });
   };
+
+  /*<----Onchange function of Rate---->*/
   const onRatingChange = (e) => {
     setRrating(e.target.value);
     console.log("onRatingChange" + JSON.stringify(e.target.value));
   };
+
+  /*<----Function to add the review---->*/
   const AddReview = (e) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_rating`, {
@@ -274,6 +523,8 @@ const ProductDetail = ({ logIn }) => {
       })
       .then((response) => {});
   };
+
+  /*<----Function to render the banner list---->*/
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
@@ -288,13 +539,48 @@ const ProductDetail = ({ logIn }) => {
         // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
       });
   }, [apicall]);
+
+  /*<-----Functionality to filter products data by rate----> */
   const result1 = ratingbox.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
   );
+
+
+         
+    // const result3 = productDetails.product_verient.filter((thing, index, self) =>
+    // index == self.findIndex((t) => (
+    //   t.size == thing.size
+    // )))
+    
+  
+    // console.log("result3-----"+result3)
+
+    // const result6 = productDetails.product_verient.filter((thing, index, self) =>
+    // index === self.findIndex((t) => (
+    //   t.size == thing.size 
+    // )))
+     
+    // {productDetails.product_verient.map((details) => {
+    //   return (
+     
+    //         console.log(details.color)
+       
+    //   );
+    // })}
+  // console.log("hhhhhhh--------"+JSON.stringify(productDetails.product_verient))
+  // const arr = productDetails.product_verient.map(object => object.colors)
+  
+// const ids = productDetails.product_verient.map(obj => {
+//   return obj.id;
+// });
+// console.log(ids); 
+
   return (
+    
     <Fragment>
       <Header />
+      
       {/* <!-- Breadcrumb Section Start --> */}
       <section className="breadscrumb-section pt-0">
         <div className="container-fluid-lg">
@@ -355,15 +641,19 @@ const ProductDetail = ({ logIn }) => {
                 data-wow-delay="0.1s"
               >
                 <div className="right-box-contain">
-                  <h6 className="offer-top">{discount}%</h6>
+                    <h6 className="offer-top" >{discount}%</h6>
                   <h2 className="name">{productDetails.product_title_name}</h2>
                   {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                   <div className="price-rating">
                     <h3 className="theme-color price">
-                      {productprice}
-                      <del className="text-content">{mrp}</del>
-                      {""}
-                      <span className="offer theme-color">{discount}%off</span>
+                      {Number(saleprice)}
+           
+                      <del className="text-content">
+                        {(mrp)}
+                      </del>
+                      <span className="offer theme-color">
+                          {Number(discount)} %off
+                      </span>
                       {/* <h3 className="text-dark">Taxs</h3>
                             <h5>Gst:{productDetails.gst}</h5>
                             <h5>Cgst:{productDetails.cgst}</h5>
@@ -415,14 +705,22 @@ const ProductDetail = ({ logIn }) => {
                     />
                   </div>
 
+
+
+                
+
                   {productDetails.product_verient ? (
                     <div className="product-packege">
                       <div className="product-title">
                         <h4>
                           {productDetails.product_verient[0].unit === "gms"
                             ? "Weight"
+                            : productDetails.product_verient[0].unit === "piece"
+                            ? "Piece"
                             : productDetails.product_verient[0].unit === "pcs"
                             ? "Piece"
+                            :productDetails.product_verient[0].unit === "ml"
+                            ?"Volume "
                             : result
                             ? ""
                             : null ||
@@ -443,74 +741,120 @@ const ProductDetail = ({ logIn }) => {
                             : null}{" "}
                         </h4>
                       </div>
+ 
+ 
 
-                      <ul className="select-packege">
-                        {productDetails.product_verient[0].size ? (
-                          <p className="mb-0 mt-2"> {"Size:"}</p>
-                        ) : null}
-                        {productDetails.product_verient.map((details) => {
-                          return (
-                            <li key={details.id}>
-                              <Link
-                                onClick={() => {
-                                  OnProductprice(
-                                    details.product_price,
-                                    details.mrp,
-                                    details.size,
-                                    details.manufacturing_date,
-                                    details.expire_date,
-                                    details.quantity,
-                                    details.id,
-                                    details.product_id
-                                  );
-                                }}
-                                className={
-                                  size == details.size &&
-                                  varientId == details.id
-                                    ? "active"
-                                    : null
-                                }
-                              >
-                                {details.size}
-                                {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
-                              </Link>
-                            </li>
-                          );
-                        })}
-                      </ul>
-                      <ul className="select-packege">
+
+
+     
+
+
+   
+
+
+   {
+  productDetails.product_verient[0].unit === "pcs"  ?  <ul className="select-packege">
+                        
+  {productDetails.product_verient[0].size ? (
+    <p className="mb-0 mt-2"> {"Size:"}</p>
+  ) : null}
+ { console.log("product Data----------"+ JSON.stringify(getSizOnclor)) }
+  {
+getSizOnclor.map((details) => {
+
+    return (
+      <li key={details.id}>
+
+        <Link to="" onClick={() => {
+
+         
+          setVeriantId(details.id)
+        } } 
+          className={size == details.size && varientId == details.id ? "active" : null}
+        >
+
+        {details.size}
+    
+        </Link>
+      </li>
+    );
+  } )
+   } 
+
+</ul>:null
+}
+                    
+
+{
+  productDetails.product_verient[0].unit === "ml"?  <ul className="select-packege">
+                        
+  {productDetails.product_verient[0].unit ? (
+    <p className="mb-0 mt-2"> {"Volume :"}</p>
+  ) : null}
+
+  {productDetails.product_verient.map((details) => {
+    return (
+      <li key={details.id}>
+
+        <Link to="" onClick={() => {
+
+          OnUnitQwantiity( details.unit, details.unit_quantity,details.sale_price,details.product_price, details.mrp, details.size, details.manufacturing_date, details.expire_date, details.quantity, details.id, details.product_id
+          )
+        } } 
+          className={unitQwanity == details.unit_quantity && varientId == details.id ? "active" : null}
+        >
+          
+             
+         {   details.unit_quantity} {details.unit==="ml"?"ML":details.unit==="grm"?"GRAM" :null}
+          
+          {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
+        </Link>
+      </li>
+    );
+  })}
+</ul>:null
+}
+
+
+
+
+
+
+
+
+
+
+  <ul className="select-packege">
+
+
                         {productDetails.product_verient[0].colors ? (
                           <p className="mb-0 mt-2">{"Color:"}</p>
                         ) : null}
-                        {productDetails.product_verient.map((details) => {
+                        {mycolor.map((details) => {
+                   
+                  
                           return (
                             <li>
-                              <Link
-                                onClick={() => {
-                                  OnProductColor(
-                                    details.colors,
-                                    details.product_price,
-                                    details.mrp,
-                                    details.manufacturing_date,
-                                    details.expire_date,
-                                    details.quantity,
-                                    details.id,
-                                    details.product_id
-                                  );
-                                }}
-                                className={
-                                  colors == details.colors &&
-                                  varientId == details.id
-                                    ? "active"
-                                    : null
-                                }
+                              
+                              <Link to="" onClick={() => {
+                                setVeriantId(details.id)
+                            
+                               setSizeOn(true)
+                                setColorValue(details.colors)
+                             
+                               }}
+                                 className={colors == details.colors && varientId == details.id ? "active" : null}
                               >
+
                                 {details.colors}
                               </Link>
                             </li>
                           );
                         })}
                       </ul>
+
+
+
                     </div>
                   ) : null}
                   {/* <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
@@ -569,7 +913,7 @@ const ProductDetail = ({ logIn }) => {
                           type="text"
                           name="quantity"
                           value={count}
-                          onChange={func}
+                          // onChange={func}
                         />
                         <button
                           type="button"
@@ -585,29 +929,71 @@ const ProductDetail = ({ logIn }) => {
                   </div>
                   <div className="row mt-4">
                     <div className="col-6 col-xl-3">
+                    {/* <button className="btn btn-dark">
+              {wishlistt > 0 ? (
+                 <span
+                 className="text-white"
+                 onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+               >
+                 Add To Wishlist
+               </span>
+              ) : (
+                <span
+                className="text-white"
+                onClick={() => AddToWishList(id, wishlistt, wishlistid)}
+              >
+                Add To Wishlist
+              </span>
+              )}
+            </button> */}
+
                       <button className="btn btn-dark">
-                        <Link to="/wishlist">
+                        <Link to="">
                           {/* <i data-feather="heart"></i> */}
-                          <span
+
+                          {wishlist === undefined || 
+                          
+                    wishlist === "" ||
+                    wishlist === null||
+                    wishlist==="null" ? <span
+                    className="text-white"
+                    onClick={() => AddToWishList()}
+                  >
+                    Add To Wishlist
+                  </span>:
+                  <span
                             className="text-white"
-                            onClick={() => AddToWishList()}
+                            onClick={() => RemoveToWishList()}
                           >
-                            Add To Wishlist
+                           Remove 
                           </span>
+                          }
+                          
                         </Link>
-                      </button>
+                      </button>  
                     </div>
 
                     <div className="col-6 col-xl-3 ">
                       <button className="btn btn-dark ">
                         <div>
-                          <span
+                          { cart === undefined || 
+                          
+                          cart === "" ||
+                          cart === null||
+                          cart==="null"? <span
                             className="text-white"
                             onClick={() => AddToCart()}
                           >
-                            {" "}
+                            
                             Add To Cart
-                          </span>
+                          </span>:  <button
+              className="btn text-light btn-warning"
+              onClick={() => navigate("/cart")}
+            >
+              {"Buy"}
+            </button>}
+                       
+                         
                         </div>
                       </button>
                     </div>
@@ -639,7 +1025,7 @@ const ProductDetail = ({ logIn }) => {
                           </Link>
                         </li>
                         <li>
-                          SKU : <Link to="/">SDFVW65467</Link>
+                          Veriant ID :  <Link to="/" >{Id}</Link>
                         </li>
                         <li>
                           MFG : <Link to="/">{mfd}</Link>

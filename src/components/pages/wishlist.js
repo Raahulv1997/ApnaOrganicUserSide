@@ -46,6 +46,7 @@ function Wishlist(all_images) {
           )
           .then((response) => {
             let data = response.data;
+
             if (
               response.data.message === "empty" ||
               response.data.response === "header error" ||
@@ -320,7 +321,7 @@ function Wishlist(all_images) {
                       </Link>
 
                       <Link
-                        to="shop-left-sidebar.html"
+                        to="/shop-left-sidebar.html"
                         className="deal-contain"
                       >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
@@ -333,7 +334,7 @@ function Wishlist(all_images) {
 
                   <li className="list-2">
                     <div className="deal-offer-contain">
-                      <Link to="shop-left-sidebar.html" className="deal-image">
+                      <Link to="/shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/11.png"
                           className="blur-up lazyload"
@@ -342,7 +343,7 @@ function Wishlist(all_images) {
                       </Link>
 
                       <Link
-                        to="shop-left-sidebar.html"
+                        to="/shop-left-sidebar.html"
                         className="deal-contain"
                       >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
@@ -355,7 +356,7 @@ function Wishlist(all_images) {
 
                   <li className="list-3">
                     <div className="deal-offer-contain">
-                      <Link to="shop-left-sidebar.html" className="deal-image">
+                      <Link to="/shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/12.png"
                           className="blur-up lazyload"
@@ -364,7 +365,7 @@ function Wishlist(all_images) {
                       </Link>
 
                       <Link
-                        to="shop-left-sidebar.html"
+                        to="/shop-left-sidebar.html"
                         className="deal-contain"
                       >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>
@@ -377,7 +378,7 @@ function Wishlist(all_images) {
 
                   <li className="list-1">
                     <div className="deal-offer-contain">
-                      <Link to="shop-left-sidebar.html" className="deal-image">
+                      <Link to="/shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/13.png"
                           className="blur-up lazyload"
@@ -386,7 +387,7 @@ function Wishlist(all_images) {
                       </Link>
 
                       <Link
-                        to="shop-left-sidebar.html"
+                        to="/shop-left-sidebar.html"
                         className="deal-contain"
                       >
                         <h5>Blended Instant Coffee 50 g Buy 1 Get 1 Free</h5>

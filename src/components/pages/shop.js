@@ -17,16 +17,21 @@ import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Form from "react-bootstrap/Form";
 import Pagination from "./Pagination";
 
+/*<-------Global varialable------->*/
 let showcategorydata = [];
 
 const Shop = (props) => {
+  /*<-----State Declaration----> */
   const [prodData, setProdData] = useState([]);
+  const [totaldata, settotaldata] = useState("");
   const [click, setclick] = useState(false);
+  const [noData, setNoData] = useState(false);
   const [searchText, setsearchText] = useState("");
   const [searchCat, setsearchCat] = useState([]);
+  const [branchArr, setbranchArr] = useState([]);
   const useridd = localStorage.getItem("userid");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [recordsPerPage, setrecordsPerPage] = useState(5);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [recordsPerPage, setrecordsPerPage] = useState(12);
   const navigate = useNavigate();
   const sidebar = () => {
     setclick(true);
@@ -55,18 +60,20 @@ const Shop = (props) => {
     aproduct: "",
     hprice: "",
   });
-  // console.log("data--" + JSON.stringify(prodData));
-  // CALCULATIO OF PAGINATION:-
+  let [page, setPage] = useState([]);
+
+  /*<-----Token Declaration----> */
   const token = localStorage.getItem("token");
+
+  /*<-----Pagination Calculator----> */
   const indexOfLastRecord = currentPage * recordsPerPage;
   // console.log(indexOfLastRecord);
   const indexOfFirstRecord = indexOfLastRecord - recordsPerPage;
   // console.log(indexOfFirstRecord);
   const currentRecords = prodData.slice(indexOfFirstRecord, indexOfLastRecord);
-  const nPages = Math.ceil(prodData.length / recordsPerPage);
-  // console.log(nPages);
-  // console.log("pagep", prodData);
+  const nPages = Math.ceil(totaldata / recordsPerPage);
 
+  /*<-----Adding to cart functionality----> */
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
       token === undefined ||
@@ -104,6 +111,8 @@ const Shop = (props) => {
         });
     }
   };
+
+  /*<-----Functionality of adding and deleting products from Wishlist----> */
   const AddToWishList = (id, wishlistt) => {
     if (
       token === undefined ||
@@ -160,10 +169,13 @@ const Shop = (props) => {
     }
   };
 
+  /*<-----Functionality to go to poduct details page----> */
   const clickProduct = (productid) => {
     localStorage.setItem("proid", productid);
     navigate("/product-detail");
   };
+
+  /*<-----Functionality to search products----> */
   useEffect(() => {
     if (
       searchparams.get("search") === null ||
@@ -175,7 +187,8 @@ const Shop = (props) => {
       setsearchText(searchparams.get("search"));
     }
   }, [searchText]);
-  // console.log("yyyyyyyy-----------" + searchText);
+
+  /*<-----Functionality to filter products by category----> */
   useEffect(() => {
     if (
       searchparams.get("category") === null ||
@@ -189,12 +202,21 @@ const Shop = (props) => {
         ...categoryNamedata,
         searchparams.get("category"),
       ]);
+      setcheckboxfilter(false);
+      setbrandfilter([]);
+      setratingfilter([]);
+      setdiscountfilter([]);
+      setpricefilter({
+        ...pricefilter,
+        to_product_price: "",
+        from_product_price: "",
+      });
     }
   }, [searchCat, searchparams]);
   // var product = data.product;
   //   product list
 
-  // SORTING
+  /*<-----Short functionality ----> */
   const onSortingChange = (e) => {
     if (e.target.value === "latest") {
       setsortingfilter({
@@ -233,10 +255,19 @@ const Shop = (props) => {
       });
     }
   };
-  // END SORTING
 
+  /*<-----Set the pagination number functionality ----> */
   useEffect(() => {
-    // console.log("---tokenn  " + token);
+    let pages = [];
+    for (let i = 0; i < nPages; i++) {
+      pages.push(i);
+    }
+    setPage(pages);
+  }, [prodData]);
+
+  /*<--------functionality to get the data and filter by parameters----------> */
+  useEffect(() => {
+    // console.log(showcategorydata);
     let homeurl;
     if (
       token === "null" ||
@@ -250,6 +281,7 @@ const Shop = (props) => {
           axios
             .post(
               `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -259,20 +291,20 @@ const Shop = (props) => {
                   product_title_name: `${sortingfilter.aproduct}`,
                   sale_price: `${sortingfilter.hprice}`,
                   short_by_updated_on: "",
-                  product_type: [],
                   colors: [],
                   size: [],
+                  category: [searchCat],
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
-                  category: [searchCat],
                 },
               }
             )
             .then((response) => {
               let data = response.data;
-              // console.log(response.data.results);
+              // console.log(response.data.results, "100001");
               setProdData(data.results);
+              settotaldata(data.pagination.totaldata);
 
               if (
                 searchCat.length === 0 &&
@@ -296,6 +328,7 @@ const Shop = (props) => {
           axios
             .post(
               `${process.env.REACT_APP_BASEURL}/home?page=${currentPage}&per_page=${recordsPerPage}`,
+              // `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
               {
                 product_search: {
                   search: `${searchText}`,
@@ -308,6 +341,7 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
+
                   brand: brandfilter,
                   discount: discountfilter,
                   rating: ratingfilter,
@@ -322,8 +356,14 @@ const Shop = (props) => {
             )
             .then((response) => {
               let data = response.data;
-              // console.log(response.data.results);
+              // console.log(data.results, "20002");
               setProdData(data.results);
+              settotaldata(data.pagination.totaldata);
+              if (data.results.length == 0) {
+                setNoData(true);
+              } else {
+                setNoData(false);
+              }
               if (
                 searchCat.length === 0 &&
                 ratingfilter.length === 0 &&
@@ -334,7 +374,7 @@ const Shop = (props) => {
               ) {
                 setCategoryfilterData(data.results);
               }
-              setapicall(true);
+              setapicall(false);
             });
         } catch (err) {}
       }
@@ -354,6 +394,7 @@ const Shop = (props) => {
     currentPage,
   ]);
 
+  /*<--------functionality to get the data of category----------> */
   useEffect(() => {
     function getCategoryData() {
       try {
@@ -361,6 +402,7 @@ const Shop = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/get_all_category`)
           .then((response) => {
             let data = response.data;
+            // console.log(data, "30003");
             setCategoryData(data);
             setapicall(false);
           });
@@ -368,12 +410,15 @@ const Shop = (props) => {
     }
     getCategoryData();
   }, [apicall]);
+
+  /*<----Functionality to filter category data and get the data in an array---->*/
   const result = categorydata.filter(
     (thing, index, self) =>
       index ===
       self.findIndex((t, x) => t.root_category_name == thing.root_category_name)
   );
 
+  /*<----Functionality to sub-filter 01 category data and get the data in an array---->*/
   const level1category = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -382,6 +427,7 @@ const Shop = (props) => {
       )
   );
 
+  /*<----Functionality to sub-filter 02 category data and get the data in an array---->*/
   const level2category = categorydata.filter(
     (thing, index, self) =>
       index ===
@@ -423,14 +469,19 @@ const Shop = (props) => {
       }
     }
   };
+
+  /*<----Functionality to get data filtered by price---->*/
   const onPriceFilterAdd = (e) => {
     setpricefilter({ ...pricefilter, [e.target.name]: e.target.value });
   };
+
+  /*<----Functionality to get data filtered by discount---->*/
   const onDiscountFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     if (e.target.checked === true) {
-      setdiscountfilter((discountfilter) => [
+      setdiscountfilter((discountfilter, index) => [
+        setcheckboxfilter(index, true),
         ...discountfilter,
         e.target.value,
       ]);
@@ -439,6 +490,7 @@ const Shop = (props) => {
       setdiscountfilter(
         discountfilter.filter((item) => item !== e.target.value)
       );
+      setcheckboxfilter(false);
       const index = showcategorydata.indexOf(e.target.value);
       if (index > -1) {
         // only splice array when item is found
@@ -446,6 +498,8 @@ const Shop = (props) => {
       }
     }
   };
+
+  /*<----Functionality to get data filtered by brand---->*/
   const onBrandFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -463,6 +517,7 @@ const Shop = (props) => {
     }
   };
 
+  /*<----Functionality to get data filtered by rating---->*/
   const onRatingFilterAdd = (e) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
@@ -479,9 +534,10 @@ const Shop = (props) => {
     }
   };
 
+  /*<----Functionality to clear all the filters---->*/
   const OnClearAllClick = (e) => {
     showcategorydata = [];
-    setcheckboxfilter(true);
+    setcheckboxfilter(false);
     setCategoryNameData("");
     setpricefilter({
       ...pricefilter,
@@ -489,7 +545,7 @@ const Shop = (props) => {
       from_product_price: "",
     });
     setdiscountfilter("");
-    setbrandfilter("");
+    setbrandfilter([]);
     setratingfilter("");
     setapicall(true);
   };
@@ -497,7 +553,22 @@ const Shop = (props) => {
   // end category
 
   //   BRAND
-  const filtercategorydata = categoryfilterdata.filter(
+
+  /*<----Called api to get the brand list---->*/
+  useEffect(() => {
+    axios
+      .get("http://192.168.29.108:5000/brand_list")
+      .then((res) => {
+        // console.log(res.data);
+        setbranchArr(res.data);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  }, []);
+
+  /*<----Functionality to get data filtered by rating---->*/
+  const filtercategorydata = branchArr.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.brand == thing.brand)
   );
@@ -508,6 +579,7 @@ const Shop = (props) => {
   // );
 
   // END BRANDz
+
   return (
     <Fragment>
       <Header />
@@ -803,15 +875,27 @@ const Shop = (props) => {
                                 return (
                                   <li key={data.id}>
                                     <div className="form-check ps-0 m-0 category-list-box">
-                                      <input
-                                        className="checkbox_animated"
-                                        type="checkbox"
-                                        id="veget"
-                                        name={"brand"}
-                                        // checked={checkboxfilter ===  true ? false : true}
-                                        value={data.brand}
-                                        onChange={(e) => onBrandFilterAdd(e)}
-                                      />
+                                      {brandfilter.includes(data.brand) ? (
+                                        <input
+                                          className="checkbox_animated"
+                                          type={"checkbox"}
+                                          id="veget"
+                                          name={"brand"}
+                                          checked
+                                          value={data.brand}
+                                          onChange={(e) => onBrandFilterAdd(e)}
+                                        />
+                                      ) : (
+                                        <input
+                                          className="checkbox_animated"
+                                          type={"checkbox"}
+                                          id="veget"
+                                          name={"brand"}
+                                          value={data.brand}
+                                          onChange={(e) => onBrandFilterAdd(e)}
+                                        />
+                                      )}
+
                                       <label
                                         className="form-check-label"
                                         htmlFor="veget"
@@ -1185,6 +1269,7 @@ const Shop = (props) => {
                                     className="checkbox_animated"
                                     type="checkbox"
                                     id="flexCheckDefault"
+                                    checked={checkboxfilter}
                                     name={"discount"}
                                     value={"5"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
@@ -1205,6 +1290,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault1"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"10"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1224,6 +1310,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault2"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"15"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1243,6 +1330,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault3"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"20"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1262,6 +1350,7 @@ const Shop = (props) => {
                                     type="checkbox"
                                     id="flexCheckDefault4"
                                     name={"discount"}
+                                    checked={checkboxfilter}
                                     value={"30"}
                                     onChange={(e) => onDiscountFilterAdd(e)}
                                   />
@@ -1345,13 +1434,13 @@ const Shop = (props) => {
               </div>
             </div>
             <div className="col-xxl-9 col-lg-8 wow fadeInUp">
-              {/* <div className="show-button">
+              <div className="show-button">
                 <div className="filter-button-group mt-0">
                   <div
                     className="filter-button d-inline-block d-lg-none"
                     onClick={sidebar}
                   >
-                    <Link>
+                    <Link to="">
                       <i className="fa-solid fa-filter"></i> Filter Menu
                     </Link>
                   </div>
@@ -1409,45 +1498,55 @@ const Shop = (props) => {
                     </Form.Select>
                   </div>
                 </div>
-              </div> */}
-              <div className="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
-                {prodData.map((product) => {
-                  return (
-                    <div key={product.id}>
-                      <ProductBox
-                        // image={product.image}
-                        id={product.id}
-                        name={product.product_title_name}
-                        productMRF={product.sale_price}
-                        productPrice={product.product_price}
-                        productid={product.product_id}
-                        rating={product.rating}
-                        discount={product.discount}
-                        brand={product.brand}
-                        category={product.category}
-                        producttype={product.product_type}
-                        saleprice={product.sale_price}
-                        clickProduct={clickProduct}
-                        AddToCart={AddToCart}
-                        AddToWishList={AddToWishList}
-                        wishlistt={product.wishlist}
-                        allimages={product.all_images}
-                        cart={product.cart}
-                      />
-                    </div>
-                  );
-                })}
               </div>
-              
-              {/* <div className="d-flex justify-content-center">
+              {noData === true ? (
+                <div className="d-flex justify-content-center mt-5 pt-5">
+                  <p className="d-flex justify-content-center mt-5 pt-5">
+                    <b className="d-flex justify-content-center mt-5 pt-5 display-4">
+                      No Data Found
+                    </b>
+                  </p>
+                </div>
+              ) : (
+                <div className="row g-sm-4 g-3 row-cols-xxl-4 row-cols-xl-3 row-cols-lg-2 row-cols-md-3 row-cols-2 product-list-section">
+                  {prodData.map((product) => {
+                    return (
+                      <div key={product.id}>
+                        <ProductBox
+                          // image={product.image}
+                          id={product.id}
+                          name={product.product_title_name}
+                          productMRF={product.sale_price}
+                          productPrice={product.product_price}
+                          productid={product.product_id}
+                          rating={product.rating}
+                          discount={product.discount}
+                          brand={product.brand}
+                          category={product.category}
+                          producttype={product.product_type}
+                          saleprice={product.sale_price}
+                          clickProduct={clickProduct}
+                          AddToCart={AddToCart}
+                          AddToWishList={AddToWishList}
+                          wishlistt={product.wishlist}
+                          allimages={product.all_images}
+                          cart={product.cart}
+                        />
+                      </div>
+                    );
+                  })}
+                </div>
+              )}
+
+              <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"
-                  nPages={nPages}
+                  nPages={page}
                   currentPage={currentPage}
                   setCurrentPage={setCurrentPage}
                   recordsPerPage={recordsPerPage}
                 />
-              </div> */}
+              </div>
             </div>
           </div>
         </div>

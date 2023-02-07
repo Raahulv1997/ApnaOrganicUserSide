@@ -1,25 +1,14 @@
 import React from "react";
-//import ProductImg1 from '../../Photos/media/mini-belle-pepper-mix.jpg'
 import { FaStar, FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "react-router-dom";
-// import "sweetalert/dist/sweetalert.css";
-
-// function AddCart(props){
-// }
-let wlist;
-
 const ProductBox = ({
   id,
   name,
-  image,
-  productPrice,
   productMRF,
   productid,
-  special_offer,
   discount,
-  producttype,
   brand,
   rating,
   category,
@@ -34,25 +23,19 @@ const ProductBox = ({
   is_featured,
   is_special_offer,
 }) => {
-  const [totalqty, settotalqty] = useState(false);
-
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
-
+  const [totalqty, settotalqty] = useState(false);
   let [count, setCount] = useState(1);
-  const [alert, setAlert] = useState(false);
   const navigate = useNavigate();
   const func = (e) => {};
 
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = Number(rating);
-  // sweetalert
-  const closeProductAlert = () => {
-    setAlert(false);
-  };
-  // console.log("WINSDOWWWWWWWW----------"+window.location.pathname)
 
-  // end sweetalert
+
+/* <!--Start body of product box--> */
+  
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
@@ -81,7 +64,7 @@ const ProductBox = ({
           is_featured == "" ||
           is_featured == null ||
           is_featured == "0" ? null : (
-            <span className="is_featured_ribbon mb-1">{is_featured}%</span>
+            <span className="is_featured_ribbon mb-1">{"F"}</span>
           )}
         </div>
         <div className="ribbon_div mt-5">
@@ -90,7 +73,7 @@ const ProductBox = ({
           is_special_offer == null ||
           is_special_offer == "0" ? null : (
             <span className="is_special_offer_ribbon mb-1">
-              {is_special_offer}%
+              {"S"}
             </span>
           )}
         </div>
@@ -121,7 +104,6 @@ const ProductBox = ({
           )}
         </div>
 
-        {/* {image==""|| image==null|| image==undefined? */}
 
         <a onClick={() => clickProduct(productid, id)}>
           <img
@@ -138,7 +120,6 @@ const ProductBox = ({
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
         <ul className="rating p-0 m-0 mb-2">
           {
-            // !ratingg? null :
             (ratingbox || []).map((rat, i) => {
               return ratingg - rat >= 0 ? (
                 <li color="#ffb321" key={i}>
@@ -233,7 +214,6 @@ const ProductBox = ({
           ) : (
             <button
               className="btn text-light btn-warning"
-              // onClick={() => setAlert(true)}
               onClick={() => navigate("/cart")}
             >
               {"Buy"}
@@ -241,13 +221,9 @@ const ProductBox = ({
           )}
         </div>
       </div>
-      {/* <SweetAlert
-        show={alert}
-        title="Already in Cart"
-        // text=" Order Added"
-        onConfirm={closeProductAlert}
-      /> */}
     </div>
   );
 };
+/* <!--End product box section--> */
+
 export default ProductBox;

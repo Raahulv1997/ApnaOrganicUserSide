@@ -18236,7 +18236,7 @@ header .offcanvas-backdrop {
 }
 
 .cart-table {
-  background-color: #f8f8f8;
+  /* background-color: #f8f8f8; */
   padding: calc(18px + (35 - 18) * ((100vw - 320px) / (1920 - 320))) calc(12px + (25 - 12) * ((100vw - 320px) / (1920 - 320)));
 }
 

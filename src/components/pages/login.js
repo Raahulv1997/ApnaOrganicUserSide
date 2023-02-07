@@ -25,6 +25,8 @@ const Login = ({ logIn }) => {
 
     setcredentailval({ ...credentailval, [e.target.name]: e.target.value });
   };
+
+  console.log("SHOW%%%%%%%###########-----"+JSON.stringify(credentailval))
   const FuctionCall = () => {
     const { from } = state || {};
 
@@ -92,7 +94,6 @@ const Login = ({ logIn }) => {
 
   return (
     <Fragment>
-      <Header />
       <Breadcumb pageName={"Login"} pageTitle={"Login"} pageHref={"/"} />
       {/* <!-- log in section start --> */}
       <section className="log-in-section background-image-2 section-b-space">
