@@ -158,13 +158,16 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
           setWishlist(data.wishlist)
           setCart(data.cart_)
           console.log("CART_____"+data.cart_)
-          console.log("wishlisttttt-----_____"+data.wishlist)
+          console.log("wishlisttttt-----_____"+data.wishlist)});
+        } catch (err) {}
+    
+      }
 
   /*<----color variant functionality---->*/
   useEffect(() => {
     SelectProduct(colorValue);
   }, [varientId]);
-
+        
   /*<-----Data retrieval functionality for product details by size----> */
   function SelectProduct(colorValue) {
     
@@ -433,7 +436,7 @@ const[varientId,setVeriantId]=useState(localStorage.getItem("variantid"))
         console.log(error);
       });
         });
-
+      }
 
   /*<----Functionality to set price as per the color---->*/
   const OnProductColor = (
