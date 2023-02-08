@@ -232,7 +232,7 @@ console.log("--"+cart)
               </button>}
              
             </>
-          ) :cart !== null  ? (
+          ) :cart !== null ||cart!==undefined ? (
             <button
               className="btn text-light btn-warning"
               onClick={() => navigate("/cart")}
