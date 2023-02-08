@@ -1519,6 +1519,7 @@ const Shop = (props) => {
                           name={product.product_title_name}
                           productMRF={product.sale_price}
                           productPrice={product.product_price}
+                          quantity={product.quantity}
                           productid={product.product_id}
                           rating={product.rating}
                           discount={product.discount}

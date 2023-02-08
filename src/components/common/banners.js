@@ -25,7 +25,7 @@ const Benners = () => {
   const [showbanner, setShowBanner] = useState([]);
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
-
+console.log("***___---"+JSON.stringify(productData))
   /* <!--End all state section--> */
 
   // var product = data.product;
@@ -200,7 +200,6 @@ const Benners = () => {
             })
             .then((response) => {
               let data = response.data;
-
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -258,7 +257,6 @@ const Benners = () => {
   /* <!--End this section--> */
 
   /* <!--Show banner--Api Call--> */
-
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
@@ -481,6 +479,7 @@ const Benners = () => {
                           id={product.id}
                           image={product.image}
                           name={product.product_title_name}
+                          quantity={product.quantity}
                           productPrice={product.product_price}
                           productMRF={product.mrp}
                           productid={product.product_id}

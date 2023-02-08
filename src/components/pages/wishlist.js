@@ -205,7 +205,7 @@ function Wishlist(all_images) {
                   <h6>Select a Location</h6>
                 </div>
 
-                <ul className="location-select custom-height">
+                {/* <ul className="location-select custom-height">
                   <li>
                     <Link to="#">
                       <h6>Alabama</h6>
@@ -275,7 +275,7 @@ function Wishlist(all_images) {
                       <span>Min: $130</span>
                     </Link>
                   </li>
-                </ul>
+                </ul> */}
               </div>
             </div>
           </div>
@@ -312,7 +312,7 @@ function Wishlist(all_images) {
                 <ul className="deal-offer-list">
                   <li className="list-1">
                     <div className="deal-offer-contain">
-                      <Link to="shop-left-sidebar.html" className="deal-image">
+                      <Link to="/shop-left-sidebar.html" className="deal-image">
                         <img
                           src="../assets/images/vegetable/product/10.png"
                           className="blur-up lazyload"
