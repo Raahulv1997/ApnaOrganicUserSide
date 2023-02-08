@@ -25,7 +25,6 @@ const Benners = () => {
   const [showbanner, setShowBanner] = useState([]);
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
-console.log("***___---"+JSON.stringify(productData))
   /* <!--End all state section--> */
 
   // var product = data.product;
@@ -181,7 +180,8 @@ console.log("***___---"+JSON.stringify(productData))
       token === "" ||
       token === null ||
       token === undefined ||
-      token === true
+      token === true ||
+      token === "true"
     ) {
       function getProductData() {
         try {

@@ -39,7 +39,6 @@ const ProductBox = ({
 
  /*<-----Increment Functionality----> */
  function incrementCount() {
-  console.log("-------qu---"+quantity+"[[[[" +count)
   if(quantity === count || quantity < count )
   {
     settotalqty(true);
@@ -60,7 +59,7 @@ const decrementCount = () => {
     settotalqty(false);
   }
 };
-console.log("--"+cart)
+console.log("-cartttttttttttt-"+cart)
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
@@ -161,8 +160,7 @@ console.log("--"+cart)
             ) : null;
           })}
         </ul>
-        <Link
-          to="/product_detail"
+        <div
           className="m-0 mb-2"
           onClick={() => clickProduct(productid)}
         >
@@ -170,7 +168,7 @@ console.log("--"+cart)
           <h5 className="name m-0">{category}</h5>
           <h5 className="name m-0">{brand}</h5>
           
-        </Link>
+        </div>
         {quantity<0?<p className="text-danger">Out Of Stock !</p>:""}
 
         <h5 className="price theme-color m-0 mb-2">
@@ -212,7 +210,7 @@ console.log("--"+cart)
           
           {window.location.pathname === "/wishlist" ? (
             ""
-          ) : cart === null || token === "null" || !token ? (
+          ) : cart === null || token === "null" || !token || token === "true" ? (
             <>
             {quantity<0? <button
                 className="buy-button buy-button-2 btn btn-cart"
@@ -232,7 +230,7 @@ console.log("--"+cart)
               </button>}
              
             </>
-          ) :cart !== null ||cart!==undefined ? (
+          ) :cart !== null ||cart !== undefined || cart!=="undefined" || token !== "null" || token !== "true"? (
             <button
               className="btn text-light btn-warning"
               onClick={() => navigate("/cart")}
