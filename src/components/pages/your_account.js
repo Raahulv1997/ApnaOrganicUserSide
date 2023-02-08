@@ -21,6 +21,8 @@ import moment from "moment";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
+ 
+
   localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
   const [msg, setMsg] = useState(true);
@@ -153,13 +155,17 @@ function Account() {
             setShow(false);
             setapicall(true);
             setValidated(false);
+           
+
           }
         })
         .catch((error) => {});
     }
   };
 
-  const OnchangeFistname = (e) => {
+  const OnchangeFistname = (e,first_name) => {
+    localStorage.setItem("first_name",udata.first_name);
+    console.log('FIRST____NAME---'+udata.first_name)
     setUdata({
       ...udata,
       [e.target.name]: e.target.value,

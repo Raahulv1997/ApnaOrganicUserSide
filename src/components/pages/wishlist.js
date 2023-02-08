@@ -143,6 +143,7 @@ function Wishlist(all_images) {
                       image={product.all_images}
                       name={wlist.product_title_name}
                       productPrice={wlist.product_price}
+                      quantity={wlist.quantity}
                       productMRF={wlist.sale_price}
                       productid={wlist.product_id}
                       saleprice={wlist.sale_price}

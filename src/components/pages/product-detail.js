@@ -18,11 +18,14 @@ import { useEffect } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import moment from "moment";
 
 const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var result6;
 
   const useridd = localStorage.getItem("userid");
+  const fname = localStorage.getItem("first_name");
+
   const token = localStorage.getItem("token");
   const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
@@ -59,6 +62,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   // const [rating, setRating] = useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = (productDetails.show_product_rating);
+  const currentdate = moment().format("YYYY-MM-DD");
+
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(1);
@@ -440,31 +445,23 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_rating`, {
         user_id: `${useridd}`,
-        user_name: "mayur",
+        user_name: fname,
         product_id: `${Id}`,
-        product_name: `${addreviewdata.product_name}`,
-        category_type: `${addreviewdata.category_type}`,
-        review_date: `${addreviewdata.review_date}`,
+        product_name: `${productDetails.product_title_name}`,
+        review_date: `${currentdate}`,
         review_rating: `${Rrating}`,
         comment: `${addreviewdata.comment}`,
       })
-      .then((response) => {});
-  };
-
-  /*<----Function to render the banner list---->*/
-  // useEffect(() => {
-  //   axios
-  //     .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
-  //       banner_id: "",
-  //       title: "",
-  //       banner_location: "",
-  //     })
-  //     .then((response) => {
-  //       let data = response.data;
-  //       setShowBanner(response.data);
       
-  //     });
-  // }, [apicall]);
+      .then((response) =>{
+        let data=response.data
+        setProductDetails(data);
+        console.log("oooooo-----"+data)
+        setapicall(true);
+
+      });
+     
+  };
 
   /*<-----Functionality to filter products data by rate----> */
   const result1 = ratingbox.filter(
@@ -854,7 +851,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                         <Link to="">
                           <i data-feather="heart"></i>
 
-                          {window.location.pathname === "/wishlist" ||
+                          {window.location.pathname === "/wishlist" ||window.location.pathname==="/shop"||
                           wishlist === undefined ||
                           wishlist === "" ||
                           wishlist === null ||
@@ -882,7 +879,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                     <div className="col-6 col-xl-3 ">
                       {qut<0?<button className="btn btn-dark" disabled>
                         <div>
-                          {cart === undefined ||
+                          {window.location.pathname==="/shop"|| cart === undefined ||
                           cart === "" ||
                           cart === null ||
                           cart === "null" ? (
@@ -1498,10 +1495,10 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                       </div>
 
                                       <div className="people-comment">
-                                        <Link to="/">{rdataa.user_name}</Link>
+                                        <Link to="/">{fname}</Link>
                                         <div className="date-time d-flex d-flex justify-content-between">
                                           <h6 className="text-content">
-                                            {rdataa.review_date}
+                                            {moment(currentdate).format("YYYY-MM-DD")}
                                           </h6>
 
                                           <div className="product-rating">

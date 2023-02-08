@@ -168,10 +168,11 @@ console.log("--"+cart)
         >
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
+
           <h5 className="name m-0">{brand}</h5>
           
         </Link>
-        {quantity<0?<p className="text-danger">Out Of Stock !</p>:""}
+        {window.location.pathname==="/wishlist"|| quantity<0?<p className="text-danger">Out Of Stock !</p>:""}
 
         <h5 className="price theme-color m-0 mb-2">
           {"₹" + saleprice.toFixed(2)}{" "}
