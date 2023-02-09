@@ -13,7 +13,6 @@ function Orders() {
   const navigate = useNavigate();
   let totalorder = 0;
   let orderid = localStorage.getItem("orderid");
-  console.log("hhhhhhhhhhh" + orderid);
   let userid = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
 
@@ -21,27 +20,12 @@ function Orders() {
   const [productorder, setproductOrder] = useState([]);
   const [amt, setAmt] = useState("");
   const [user, setUser] = useState([]);
-  const [changstatuss, setchangstatuss] = useState("");
   const [searchdataa, setsearchDataa] = useState({
     status: "",
     created_on: "",
   });
 
-  const OnSearchChangee = (e) => {
-    setsearchDataa({ ...searchdataa, [e.target.name]: e.target.value });
-  };
-  // const onStatusChangee = (e) => {
-  //   // e.prevantDefault();
-  //   setchangstatuss(e.target.value)
-  //   axios.put(`${process.env.REACT_APP_BASEURL}/order_status_change`, {
-  //   status_change:e.target.value,
-  //   id:`${orderid}`
-  //     }).then((response) => {
-  //     // setapicall(true)
-  //   }).catch(function (error) {
-  //     console.log(error);
-  //   });
-  // }
+
   useEffect(() => {
     axios
       .post(
@@ -60,17 +44,12 @@ function Orders() {
         setOrder(response.data);
         setproductOrder(response.data.product_types);
         UserData();
-        console.log(
-          "______AAAAAAAAAAAAAAAAAAa_____" +
-            JSON.stringify(response.data.product_types)
-        );
-        // setapicall(false)
+        
       })
       .catch(function (error) {
         console.log(error);
       });
   }, []);
-  console.log("oooooo" + JSON.stringify(order));
   const UserData = () => {
     axios
       .post(
@@ -87,15 +66,12 @@ function Orders() {
       .then((response) => {
         let data = response.data;
         setUser(data);
-        console.log("______uuuuserdataa_____" + JSON.stringify(response.data));
-        // setapicall(false)
       })
       .catch(function (error) {
         console.log(error);
       });
   };
 
-  // console.log("--------------"+JSON.stringify(user))
   var total = 0;
   var sub_total = 0;
   var total_tax = 0;
@@ -441,41 +417,40 @@ function Orders() {
                           />
                           <div className="product_name_detial ps-3">
                             <h6>{orderdata.product_title_name}</h6>
-                            <p>color:{orderdata.colors}</p>
-                            <p>size: {orderdata.size}</p>
+                            <p>color:  {orderdata.colors}</p>
+                            <p>size:   {orderdata.size}</p>
                           </div>
                         </div>
 
                         <div className="product_price">
                           {" "}
-                          MRP-{orderdata.mrp}₹ ({Number(orderdata.discount)}% )
-                          <br /> Discount- {Number(discont).toFixed(2)}₹
+                          MRP-  {orderdata.mrp}₹ ({Number(orderdata.discount)}% )
+                          <br /> Discount-  {Number(discont).toFixed(2)}₹
                           <br />
-                          Product Price- ₹
-                          {Number(orderdata.product_price).toFixed(2)}
+                          Product Price-   ₹{Number(orderdata.product_price).toFixed(2)}
                         </div>
 
                         <div className="product_quantity">
-                          Taxable Price- <br />
+                          Taxable Price-   <br />
                           {Number(orderdata.product_price).toFixed(2)}₹
-                          <br /> Tax -{tax.toFixed(2)}₹
+                          <br /> Tax-   {tax.toFixed(2)}₹
                         </div>
 
                         <div className="product_quantity">
-                          Sale Price-
+                          Sale Price-  
                           <br />
                           {Number(orderdata.sale_price).toFixed(2)}₹
                         </div>
 
                         <div className="product_quantity">
-                          QTY-{orderdata.quantity}
+                          QTY-   {orderdata.order_quantity}
                         </div>
                         <div className="total_amount">
                           {" "}
-                          Total Price- <br />
+                          Total Price-  <br />
                           {(
                             Number(orderdata.sale_price) *
-                            Number(orderdata.quantity)
+                            Number(orderdata.order_quantity)
                           ).toFixed(2)}
                           ₹
                         </div>
@@ -497,7 +472,7 @@ function Orders() {
                         <p>Speed post package</p>
                       </div>
                     </div>
-                    <div className="delivery_payment">$20.00</div>
+                    <div className="delivery_payment">00.00</div>
                   </div>
                 </div>
                 <div className="payment_summary">
@@ -592,7 +567,7 @@ function Orders() {
                               {userdata.first_name} {userdata.last_name}
                             </p>
                             <p>{userdata.gender}</p>
-                            <p>{userdata.date_of_birth}</p>
+                            <p>{moment(userdata.date_of_birth).format("YYYY-MM-DD")}</p>
                             <p className="text-break">{userdata.address}</p>
                             <p className="text-break">{userdata.address2}</p>
                             <p>Indore Madhya Pradesh</p>
@@ -607,7 +582,7 @@ function Orders() {
                               {userdata.first_name} {userdata.last_name}
                             </p>
                             <p>{userdata.gender}</p>
-                            <p>{userdata.date_of_birth}</p>
+                            <p>{moment(userdata.date_of_birth).format("YYYY-MM-DD")}</p>
                             <p className="text-break">{userdata.address}</p>
                             <p className="text-break">{userdata.address2}</p>
                             <p>Indore Madhya Pradesh</p>

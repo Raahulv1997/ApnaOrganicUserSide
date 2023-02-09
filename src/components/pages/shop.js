@@ -128,7 +128,7 @@ const Shop = (props) => {
           .put(
             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
             {
-              product_id: `${id}`,
+              id: `${id}`,
               user_id: "",
             },
             {
@@ -1519,6 +1519,7 @@ const Shop = (props) => {
                           name={product.product_title_name}
                           productMRF={product.sale_price}
                           productPrice={product.product_price}
+                          quantity={product.quantity}
                           productid={product.product_id}
                           rating={product.rating}
                           discount={product.discount}
@@ -1540,7 +1541,7 @@ const Shop = (props) => {
                 </div>
               )}
 
-              <div className="d-flex justify-content-center">
+              {/* <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"
                   nPages={page}
@@ -1548,7 +1549,7 @@ const Shop = (props) => {
                   setCurrentPage={setCurrentPage}
                   recordsPerPage={recordsPerPage}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

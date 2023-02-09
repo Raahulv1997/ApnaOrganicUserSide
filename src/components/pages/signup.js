@@ -140,6 +140,7 @@ const Singup = () => {
           } else {
             localStorage.setItem("userid", response.data.user_id.insertId);
             localStorage.setItem("token", response.data.token);
+            
             localStorage.setItem("upassword", passval);
             navigate("/your_account");
             return response;

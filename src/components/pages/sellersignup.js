@@ -530,7 +530,6 @@ const SellerSignUp = () => {
         });
     }
   };
-
   // END VENDOR
   return (
     <Fragment>
@@ -906,7 +905,7 @@ const SellerSignUp = () => {
                         <div className="my-3 inputsection_box">
                           <h5 className="m-0">Add Social Media Link</h5>
                           <div className=" mt-0 mb-3">
-                            <Table className="align-middle">
+                            {/* <Table className="align-middle">
                               <thead>
                                 <tr>
                                   <th>Social Media</th>
@@ -1038,7 +1037,7 @@ const SellerSignUp = () => {
                                     )
                                   : null}
                               </tbody>
-                            </Table>
+                            </Table> */}
                           </div>
                           {/* );
                 })} */}
