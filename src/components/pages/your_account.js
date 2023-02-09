@@ -21,7 +21,6 @@ import moment from "moment";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
- 
 
   localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
@@ -77,6 +76,7 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
+       
       })
       .catch((error) => {});
     // Onwishlistclick();
@@ -155,7 +155,8 @@ function Account() {
             setShow(false);
             setapicall(true);
             setValidated(false);
-           
+            localStorage.setItem("first_name",udata.first_name);
+        console.log('FIRST____NAME---'+udata.first_name)
 
           }
         })
@@ -164,8 +165,7 @@ function Account() {
   };
 
   const OnchangeFistname = (e,first_name) => {
-    localStorage.setItem("first_name",udata.first_name);
-    console.log('FIRST____NAME---'+udata.first_name)
+  
     setUdata({
       ...udata,
       [e.target.name]: e.target.value,

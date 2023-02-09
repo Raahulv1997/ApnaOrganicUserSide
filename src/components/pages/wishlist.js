@@ -156,6 +156,8 @@ function Wishlist(all_images) {
                       AddToCart={AddToCart}
                       wishlistocart={wishlistocart}
                       allimages={wlist.all_images}
+                      avgRatings={wlist.avgRatings}
+
                     />
                   </div>
                 );
