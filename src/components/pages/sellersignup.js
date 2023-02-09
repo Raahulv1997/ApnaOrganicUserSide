@@ -11,6 +11,7 @@ import { Badge, Button, InputGroup, Table } from "react-bootstrap";
 import { GiCancel } from "react-icons/gi";
 import Spinner from "react-bootstrap/Spinner";
 import Modal from "react-bootstrap/Modal";
+import storetype from "../pages/json/storetype";
 const SellerSignUp = () => {
   const [customValidation, setCustomValidation] = useState(false);
   const [SocialLink, setSocialLink] = useState(false);
@@ -141,7 +142,6 @@ const SellerSignUp = () => {
       axios
         .get(`${process.env.REACT_APP_BASEURL}/vendors?id=${vendorid}`)
         .then((response) => {
-          console.log("vendordata---" + JSON.stringify(response.data[0]));
           setaddvendordata(response.data[0]);
           setFile("");
           setFileName("");
@@ -230,7 +230,6 @@ const SellerSignUp = () => {
           setLoginerror(true);
         } else if (from === undefined) {
           localStorage.setItem("vendorid", response.data.id);
-          // console.log("----from-------"+from)
           navigate("/");
           //  setError(false);
         } else {
@@ -315,6 +314,7 @@ const SellerSignUp = () => {
 
   const handleFormChange = (e) => {
     setCustomValidation(false);
+
     setaddvendordata({
       ...addvendordata,
       [e.target.name]: e.target.value,
@@ -462,27 +462,23 @@ const SellerSignUp = () => {
   }, [customarray]);
 
   // end social media link
-
   const UpdateVendorClick = (e) => {
     // const form = e.currentTarget;
     e.preventDefault();
-
     // if (form.checkValidity() === false) {
 
     //     setValidated(true);
     // }
-    if (headerval === "") {
-      setSocialLink("HeaderBlank");
-    } else if (descval === "") {
-      setSocialLink("DesBlank");
-    } else if (addvendordata.owner_name === "") {
+    if (addvendordata.owner_name === "") {
       setCustomValidation("ownernameEmpty");
     } else if (addvendordata.shop_name === "") {
       setCustomValidation("shopnameEmpty");
     } else if (addvendordata.mobile === "") {
       setCustomValidation("MobileEmpty");
     }
-
+    // else if (addvendordata.mobile.length > 10) {
+    //   setCustomValidation("10number");
+    // }
     //  else if (addvendordata.email === "") {
     //   var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
     //   var rst = regex.test(addvendordata.email);
@@ -525,7 +521,6 @@ const SellerSignUp = () => {
         .put(`${process.env.REACT_APP_BASEURL}/vendor_update`, formData)
         .then((response) => {
           let data = response.data;
-          console.log("after update-----" + JSON.stringify(data));
           if (data.message === "Updated Vendor Profile") {
             setShow(true);
           }
@@ -620,7 +615,7 @@ const SellerSignUp = () => {
                             <Form.Control
                               type="number"
                               // min={1}
-
+                              max={10}
                               placeholder="Mobile"
                               name={"mobile"}
                               onChange={(e) => handleFormChange(e)}
@@ -630,6 +625,11 @@ const SellerSignUp = () => {
                             {customValidation === "MobileEmpty" ? (
                               <span className="text-danger">
                                 Please fill the Mobile{" "}
+                              </span>
+                            ) : customValidation === "10number" ? (
+                              <span className="text-danger">
+                                Mobile Number should not be greater then 10 and
+                                less than 10{" "}
                               </span>
                             ) : customValidation === false ? (
                               ""
@@ -797,6 +797,7 @@ const SellerSignUp = () => {
                               aria-label="Default select example"
                               onChange={(e) => handleFormChange(e)}
                               name="store_type"
+                              value={addvendordata.store_type}
                             >
                               <option
                                 value=""
@@ -806,26 +807,13 @@ const SellerSignUp = () => {
                               >
                                 Select
                               </option>
-                              <option
-                                value="shoese"
-                                selected={
-                                  addvendordata.store_type === "shoese"
-                                    ? true
-                                    : false
-                                }
-                              >
-                                Pending
-                              </option>
-                              <option
-                                value="Cloths"
-                                selected={
-                                  addvendordata.store_type === "Cloths"
-                                    ? true
-                                    : false
-                                }
-                              >
-                                Active
-                              </option>
+                              {(storetype.storetype || []).map((data, i) => {
+                                return (
+                                  <option key={i} value={data}>
+                                    {data}
+                                  </option>
+                                );
+                              })}
                             </Form.Select>
                           </Form.Group>
                         </div>
