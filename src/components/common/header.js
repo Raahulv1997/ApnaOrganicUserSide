@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Accordion from "react-bootstrap/Accordion";
-// import { CiBellOn } from "react-icons/ci";
+import { CiBellOn } from "react-icons/ci";
 import {
   AiOutlineHome,
   AiOutlineSearch,
@@ -216,7 +216,7 @@ const Header = (props) => {
   //         .post(`${process.env.REACT_APP_BASEURL}/notification`,
   //         {
   //           "actor_type":"user",
-  //            "actor_id":"88"
+  //            "actor_id":`${useridd}`
   //       })
   //         .then((response) => {
   //           let data = response.data;
@@ -390,7 +390,7 @@ const Header = (props) => {
                                 {notification.length}
                               </small>
                             )}
-                            {/* <CiBellOn className="icon_color"/> */}
+                            <CiBellOn className="icon_color"/>
                           </div>
                           {notification.map((mssg) => {
                             return (
