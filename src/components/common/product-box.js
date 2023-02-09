@@ -37,29 +37,23 @@ const ProductBox = ({
 
   /* <!--Start body of product box--> */
 
- /*<-----Increment Functionality----> */
- function incrementCount() {
-  if(quantity === count || quantity < count )
-  {
-    settotalqty(true);
+  /*<-----Increment Functionality----> */
+  function incrementCount() {
+    if (quantity === count || quantity < count) {
+      settotalqty(true);
+    } else {
+      count = count + 1;
+      setCount(count);
+      settotalqty(false);
+    }
   }
-  else
-  {
-    count = count + 1;
-    setCount(count);
-    settotalqty(false);
-
-  }
-  
-}
-/*<-----Decrement Functionality----> */
-const decrementCount = () => {
-  if (count > 1) {
-    setCount((count) => count - 1);
-    settotalqty(false);
-  }
-};
-console.log("-cartttttttttttt-"+cart)
+  /*<-----Decrement Functionality----> */
+  const decrementCount = () => {
+    if (count > 1) {
+      setCount((count) => count - 1);
+      settotalqty(false);
+    }
+  };
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
@@ -160,17 +154,17 @@ console.log("-cartttttttttttt-"+cart)
             ) : null;
           })}
         </ul>
-        <div
-          className="m-0 mb-2"
-          onClick={() => clickProduct(productid)}
-        >
+        <div className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
 
           <h5 className="name m-0">{brand}</h5>
-          
         </div>
-        {window.location.pathname==="/wishlist"|| quantity<0?<p className="text-danger">Out Of Stock !</p>:""}
+        {window.location.pathname === "/wishlist" || quantity < 0 ? (
+          <p className="text-danger">Out Of Stock !</p>
+        ) : (
+          ""
+        )}
 
         <h5 className="price theme-color m-0 mb-2">
           {"₹" + saleprice.toFixed(2)}{" "}
@@ -182,7 +176,7 @@ console.log("-cartttttttttttt-"+cart)
             <div className="counter">
               <div
                 className="qty-left-minus"
-                onClick={() =>decrementCount()}
+                onClick={() => decrementCount()}
                 data-type="minus"
                 data-field=""
               >
@@ -205,33 +199,42 @@ console.log("-cartttttttttttt-"+cart)
               >
                 <i className="fa-regular fa-plus"></i>
               </div>
-              
             </div>
           </div>
-          
+
           {window.location.pathname === "/wishlist" ? (
             ""
-          ) : cart === null || token === "null" || !token || token === "true" ? (
+          ) : cart === null ||
+            token === "null" ||
+            !token ||
+            token === "true" ? (
             <>
-            {quantity<0? <button
-                className="buy-button buy-button-2 btn btn-cart"
-                disabled
-                onClick={() =>
-                  AddToCart(id, saleprice, productMRF, wishlistid, count)
-                }
-              >
-                <i className="fa-regular fa-cart-shopping"></i>
-              </button>:<button
-                className="buy-button buy-button-2 btn btn-cart"
-                onClick={() =>
-                  AddToCart(id, saleprice, productMRF, wishlistid, count)
-                }
-              >
-                <i className="fa-regular fa-cart-shopping"></i>
-              </button>}
-             
+              {quantity < 0 ? (
+                <button
+                  className="buy-button buy-button-2 btn btn-cart"
+                  disabled
+                  onClick={() =>
+                    AddToCart(id, saleprice, productMRF, wishlistid, count)
+                  }
+                >
+                  <i className="fa-regular fa-cart-shopping"></i>
+                </button>
+              ) : (
+                <button
+                  className="buy-button buy-button-2 btn btn-cart"
+                  onClick={() =>
+                    AddToCart(id, saleprice, productMRF, wishlistid, count)
+                  }
+                >
+                  <i className="fa-regular fa-cart-shopping"></i>
+                </button>
+              )}
             </>
-          ) :cart !== null ||cart !== undefined || cart!=="undefined" || token !== "null" || token !== "true"? (
+          ) : cart !== null ||
+            cart !== undefined ||
+            cart !== "undefined" ||
+            token !== "null" ||
+            token !== "true" ? (
             <button
               className="btn text-light btn-warning"
               onClick={() => navigate("/cart")}
@@ -242,12 +245,11 @@ console.log("-cartttttttttttt-"+cart)
         </div>
       </div>
       {totalqty === true ? (
-                <p className="mt-1 ms-2 text-danger" type="invalid">
-                  Cannot add more then total qty
-                </p>
-              ) : null}
+        <p className="mt-1 ms-2 text-danger" type="invalid">
+          Cannot add more then total qty
+        </p>
+      ) : null}
     </div>
-    
   );
 };
 /* <!--End product box section--> */
