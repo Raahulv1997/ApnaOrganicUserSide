@@ -18,16 +18,15 @@ import { useEffect } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
+import moment from "moment";
 
-const ProductDetail = ({ logIn }) => {
-  /*<-------Global varialable------->*/
+const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var result6;
-  var result8;
 
-  /*<-----State Declaration----> */
   const useridd = localStorage.getItem("userid");
+  const fname = localStorage.getItem("first_name");
+  const[avgRating,setAvgRating]=useState([]);
   const token = localStorage.getItem("token");
-  // const proDuctID=localStorage.getItem("porid");
   const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
   const [getSizOnclor, setGetSizeOnColor] = useState([]);
@@ -48,47 +47,59 @@ const ProductDetail = ({ logIn }) => {
   // const[image,setImage]=useState('');
   // const[review,setReview]=useState([]);
   const [discount, setDiscount] = useState();
-  const [addreviewdata, setaddreviewdata] = useState([]);
+  const [addreviewdata, setaddreviewdata] = useState({
+    comment:""
+  });
   const [showImage, setShowImages] = useState([]);
   const [reviewData, setReviewData] = useState([]);
-  const [showbanner, setShowBanner] = useState([]);
-  const [isAdding, setIsAdding] = useState(true);
+  // const [showbanner, setShowBanner] = useState([]);
+  const [wishlist, setWishlist] = useState([]);
+  const [cart, setCart] = useState([]);
   const [Rrating, setRrating] = useState("");
   const [Searchreview, setSearchReview] = useState({
     product_name: "",
     category_type: "",
     status: "",
   });
-  const [rating, setRating] = useState([]);
+  // const [rating, setRating] = useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = Number(productDetails.rating);
+  let ratingg = (productDetails.avgRatings);
+  const currentdate = moment().format("YYYY-MM-DD");
+
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(1);
   const { state } = useLocation();
   const navigate = useNavigate();
-
+  const [total,settotal]=useState(false);
   /*<-----Increment Functionality----> */
   function incrementCount() {
-    count = count + 1;
-    setCount(count);
-  }
+    if(qut<=count)
+    {
+      settotal(true);
+    }
+    else
+    {
+      count = count + 1;
+      setCount(count);
+      settotal(false);
 
+    }
+    
+  }
   /*<-----Decrement Functionality----> */
   const decrementCount = () => {
-    if (count > 0) {
+    if (count > 1) {
       setCount((count) => count - 1);
+      settotal(false);
     }
   };
   // const func = () => {};
 
   var proid = localStorage.getItem("proid");
-  // console.log("---------------proidddd---" + proid);
   const [varientId, setVeriantId] = useState(localStorage.getItem("variantid"));
-  // var varientId = localStorage.getItem("variantid");
-  // console.log("---------------veriant ---" + varientId);
 
-  /*<-----Data retrieval functionality for product details----> */
+//  console.log("------------++++++"+JSON.stringify(productDetails))
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -125,22 +136,20 @@ const ProductDetail = ({ logIn }) => {
     getVeriantDetails(varientId, proid);
   }, [apicall, varientId]);
 
-  //  console.log("---------------proidddd---" + proid);
 
   /*<-----Functionality for veriant Data of product----> */
   const getVeriantDetails = (varientId, proid) => {
     try {
       axios
         .get(
-          `${process.env.REACT_APP_BASEURL}/products_pricing?id=${varientId}&product_id=${proid}`
+          `${process.env.REACT_APP_BASEURL}/products_pricing?id=${varientId}&product_id=${proid}&user_id=${useridd}`
         )
         .then((response) => {
           let data = response.data[0];
-          console.log("veriantData----" + JSON.stringify(data));
 
-          setProductprice(parseFloat(data.product_price.toFixed(2)));
-          setsaleprice(parseFloat(data.sale_price).toFixed(2));
-          setMrp(parseFloat(data.mrp).toFixed(2));
+          setProductprice(Number(data.product_price.toFixed(2)));
+          setsaleprice(Number(data.sale_price).toFixed(2));
+          setMrp(Number(data.mrp).toFixed(2));
           setColors(data.colors);
           setDiscount(data.discount);
           setUnitQwanity(data.unit_quantity);
@@ -149,6 +158,9 @@ const ProductDetail = ({ logIn }) => {
           setExp(data.expire_date);
           setQut(data.quantity);
           setId(data.id);
+          setWishlist(data.wishlist);
+          setCart(data.cart_);
+      
         });
     } catch (err) {}
   };
@@ -169,7 +181,6 @@ const ProductDetail = ({ logIn }) => {
           let result8 = data.product_verient.filter(
             (item) => item.colors === colorValue
           );
-          // console.log("jjjjj"+JSON.stringify(result8))
           setGetSizeOnColor(result8);
 
           // setProductprice(getSizOnclor.product_price);
@@ -214,57 +225,53 @@ const ProductDetail = ({ logIn }) => {
       )
       .then((response) => {
         let data = response.data;
-        console.log("dta-------" + JSON.stringify(data));
-        navigate("/cart");
+        // navigate("/cart")
         setapicall(true);
       });
   };
 
-  /*<----Functionality to add and remove the product to wishlist---->*/
 
   const AddToWishList = () => {
-    if (isAdding) {
-      axios
-        .post(
-          `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
-          {
-            user_id: "",
-            product_view_id: `${Id}`,
-            price: `${productDetails.product_verient[0].product_price}`,
-            discount: `${productDetails.product_verient[0].discount}`,
+    axios
+      .post(
+        `${process.env.REACT_APP_BASEURL}/add_product_wishlist`,
+        {
+          user_id: "",
+          product_view_id: `${Id}`,
+          price: `${productDetails.product_verient[0].product_price}`,
+          discount: `${productDetails.product_verient[0].discount}`,
+        },
+        {
+          headers: {
+            user_token: `${token}`,
           },
-          {
-            headers: {
-              user_token: `${token}`,
-            },
-          }
-        )
-        .then((response) => {
-          let data = response.data;
-          setProductDetails(data.results);
-          setapicall(true);
-        })
-        .catch(function (error) {});
-    } else {
-      axios
-        .put(
-          `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
-          {
-            // product_id: `${wishlistid}`,
-            id: `${Id}`,
+        }
+      )
+      .then((response) => {
+        let data = response.data;
+        setProductDetails(data.results);
+        setapicall(true);
+      })
+      .catch(function (error) {});
+  };
+  const RemoveToWishList = (id, wishlistt, wishlistid) => {
+    axios
+      .put(
+        `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
+        {
+          id: Id,
+        },
+        {
+          headers: {
+            user_token: `${token}`,
           },
-          {
-            headers: {
-              user_token: `${token}`,
-            },
-          }
-        )
+        }
+      )
+      .then((response) => {
+        let data = response.data;
 
-        .then((response) => {
-          let data = response.data;
-          setapicall(true);
-        });
-    }
+        setapicall(true);
+      });
   };
 
   const OnProductprice = (
@@ -278,40 +285,35 @@ const ProductDetail = ({ logIn }) => {
     id,
     productid
   ) => {
-    // localStorage.setItem("variantid", id);
-    // localStorage.setItem("proid", productid);
+   
 
-    // setProductprice(product_price);
-    // setsaleprice(Number(SalePrice).toFixed(2))
-    // setMrp(mrpp);
+    setProductprice(product_price);
+    setsaleprice(Number(SalePrice).toFixed(2));
+    setMrp(mrpp);
 
-    // setSize(sizee);
-    // setMfd(mfdd);
-    // setExp(expp);
-    // setQut(quantityy);
-    // setId(id);
+    setSize(sizee);
+    setMfd(mfdd);
+    setExp(expp);
+    setQut(quantityy);
+    setId(id);
 
-    // console.log("productID-----"+productid)
-    // console.log("veriant ID-----"+id)
     axios
       .get(
         `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
 
-        // console.log("productID-----" + productid);
-        // console.log("veriant ID-----" + id);
+        
         axios
           .get(
             `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
           )
           .then((response) => {
             let data = response.data;
-            // console.log("product veriant image--" + JSON.stringify(data));
             setapicall(false);
             setShowImages(data);
           })
@@ -334,12 +336,11 @@ const ProductDetail = ({ logIn }) => {
     id,
     productid
   ) => {
-    // localStorage.setItem("variantid", id);
-    // localStorage.setItem("proid", productid);
+ 
 
-    setProductprice(parseFloat(product_price).toFixed(2));
-    setsaleprice(parseFloat(SalePrice).toFixed(2));
-    setMrp(parseFloat(mrpp).toFixed(2));
+    setProductprice(product_price);
+    setsaleprice(Number(SalePrice).toFixed(2));
+    setMrp(mrpp);
     setUnitQwanity(unitQwanityy);
     setSize(sizee);
     setMfd(mfdd);
@@ -347,20 +348,16 @@ const ProductDetail = ({ logIn }) => {
     setQut(quantityy);
     setId(id);
 
-    console.log("productID-----" + productid);
-    console.log("veriant ID-----" + id);
     axios
       .get(
         `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
 
-        // console.log("productID-----" + productid);
-        // console.log("veriant ID-----" + id);
         axios
           .get(
             `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
@@ -389,14 +386,12 @@ const ProductDetail = ({ logIn }) => {
     veriantid,
     productid
   ) => {
-    console.log("product id in  color function-----" + productid);
-    console.log("veriant id in color function-----" + veriantid);
-    // localStorage.setItem("variantid", id);
-    // localStorage.setItem("proid", productid);
-    setsaleprice(parseFloat(Salepricee).toFixed(2));
+    
+
+    setsaleprice(Number(Salepricee).toFixed(2));
     setColors(color);
     setProductprice(product_price);
-    setMrp(parseFloat(mrpp).toFixed(2));
+    setMrp(mrpp);
     setMfd(mfdd);
     setExp(expp);
     setQut(quantityy);
@@ -421,7 +416,6 @@ const ProductDetail = ({ logIn }) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_list`, {
         product_name: "",
-        category_type: "",
         status: "",
       })
       .then((response) => {
@@ -444,46 +438,64 @@ const ProductDetail = ({ logIn }) => {
   /*<----Onchange function of Rate---->*/
   const onRatingChange = (e) => {
     setRrating(e.target.value);
-    console.log("onRatingChange" + JSON.stringify(e.target.value));
   };
+  console.log("onRatingChange" + JSON.stringify(Rrating));
 
   /*<----Function to add the review---->*/
   const AddReview = (e) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_rating`, {
         user_id: `${useridd}`,
-        user_name: "mayur",
-        product_id: `${Id}`,
-        product_name: `${addreviewdata.product_name}`,
-        category_type: `${addreviewdata.category_type}`,
-        review_date: `${addreviewdata.review_date}`,
+        user_name: fname,
+        product_id: `${proid}`,
+        product_name: `${productDetails.product_title_name}`,
+        review_date: `${currentdate}`,
         review_rating: `${Rrating}`,
         comment: `${addreviewdata.comment}`,
       })
-      .then((response) => {});
-  };
-
-  /*<----Function to render the banner list---->*/
-  useEffect(() => {
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
-        banner_id: "",
-        title: "",
-        banner_location: "",
-      })
-      .then((response) => {
-        let data = response.data;
-        setShowBanner(response.data);
-        // console.log("BANNERRRR------" + JSON.stringify(showbanner));
-        // setImgArray(JSON.parse(response.data[0].multiple_document_upload))
+      
+      .then((response) =>{
+        let data=response.data
+        setProductDetails(data);
+        // console.log("oooooo-----"+data)
+        setapicall(true);
       });
-  }, [apicall]);
+     
+  };
 
   /*<-----Functionality to filter products data by rate----> */
   const result1 = ratingbox.filter(
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
   );
+
+  /*<-----Functionality to show average rating----> */
+useEffect(()=>{
+  axios.post(`${process.env.REACT_APP_BASEURL}/ratings_review_get`,{
+
+    product_id:`${proid}` 
+})
+.then((response)=>{
+  let data=response.data
+  setAvgRating(data)
+
+
+});
+},[apicall])
+console.log("088888888888"+JSON.stringify(avgRating))
+console.log("088888888888"+JSON.stringify(avgRating[0]))
+if(avgRating)
+{(avgRating[0] || []).map((data)=>{
+  return(
+    console.log("-------"+JSON.stringify(data.review_rating))
+
+  )
+})}
+
+
+  /*<-----End secation----> */
+
+
 
   // const result3 = productDetails.product_verient.filter((thing, index, self) =>
   // index == self.findIndex((t) => (
@@ -523,6 +535,7 @@ const ProductDetail = ({ logIn }) => {
             <div className="col-12">
               <div className="breadscrumb-contain">
                 <h2>{productDetails.product_title_name}</h2>
+
                 <nav>
                   <ol className="breadcrumb mb-0">
                     <li className="breadcrumb-item">
@@ -576,21 +589,27 @@ const ProductDetail = ({ logIn }) => {
                 data-wow-delay="0.1s"
               >
                 <div className="right-box-contain">
-                  <h6 className="offer-top">{discount}%</h6>
+                  {discount==0||discount==undefined||discount=="null"||discount==null||discount==""?"":<h6 className="offer-top">{discount}%</h6>}
+                  
                   <h2 className="name">{productDetails.product_title_name}</h2>
                   {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                   <div className="price-rating">
                     <h3 className="theme-color price">
-                      {saleprice}
+                      {Number(saleprice)}
 
                       <del className="text-content">{mrp}</del>
-                      <span className="offer theme-color">{discount} %off</span>
+                      {discount==0||discount==null||discount=="null"||discount==undefined||discount==""?"":
+                       <span className="offer theme-color">
+                       {Number(discount)} %off
+                     </span>}
+                     
                       {/* <h3 className="text-dark">Taxs</h3>
                             <h5>Gst:{productDetails.gst}</h5>
                             <h5>Cgst:{productDetails.cgst}</h5>
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                     </h3>
                     <div className="product-rating custom-rate">
+                      
                       <ul className="rating p-0 m-0 mb-2">
                         {
                           // !ratingg? null :
@@ -680,6 +699,7 @@ const ProductDetail = ({ logIn }) => {
                           )}
                           {getSizOnclor.map((details) => {
                             return (
+                              // getSizOnclor.size==null||getSizOnclor.size==""||getSizOnclor.undefined?"":
                               <li key={details.id}>
                                 <Link
                                   to=""
@@ -767,7 +787,7 @@ const ProductDetail = ({ logIn }) => {
                                   colors == details.colors &&
                                   varientId == details.id
                                     ? "active"
-                                    : null
+                                    : null 
                                 }
                               >
                                 {details.colors}
@@ -778,6 +798,8 @@ const ProductDetail = ({ logIn }) => {
                       </ul>
                     </div>
                   ) : null}
+                  <h6>{qut<0?<h5 className="text-danger">Out of stock !</h5>:""}</h6>
+
                   {/* <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                     <div className="product-title">
                       <h4>Hurry up! Sales Ends In</h4>
@@ -817,7 +839,7 @@ const ProductDetail = ({ logIn }) => {
                       </li>
                     </ul>
                   </div> */}
-                  <div className="note-box product-packege">
+                  {qut<0?(""):<div className="note-box product-packege">
                     <div className="cart_qty qty-box product-qty">
                       <div className="input-group">
                         <button
@@ -836,56 +858,88 @@ const ProductDetail = ({ logIn }) => {
                           value={count}
                           // onChange={func}
                         />
+                        
                         <button
                           type="button"
                           className="qty-right-plus"
                           data-type="plus"
                           data-field=""
-                          onClick={incrementCount}
+                          
+                          onClick={()=>incrementCount()}
                         >
                           <i className="fa fa-plus" aria-hidden="true"></i>
                         </button>
+                       
                       </div>
                     </div>
-                  </div>
+                  </div>}
+                  
+                   {total === true ? (
+                <p className="mt-1 ms-2 text-danger" type="invalid">
+                  Cannot add more then total qty
+                </p>
+              ) : null}
                   <div className="row mt-4">
-                    <div className="col-6 col-xl-3">
+                    {qut<0?(""): <div className="col-6 col-xl-3">
+                      
                       <button className="btn btn-dark">
-                        <Link to="/wishlist">
-                          {/* <i data-feather="heart"></i> */}
-                          <span
-                            className="text-white"
-                            onClick={() => AddToWishList()}
-                          >
-                            {isAdding
-                              ? "Add to Wishlist"
-                              : "Remove from Wishlist"}
-                          </span>
+                        <Link to="">
+                          <i data-feather="heart"></i>
+                          
+                          {window.location.pathname === "/wishlist" ||window.location.pathname==="/shop"||
+                          wishlist === undefined ||
+                          wishlist === "" ||
+                          wishlist === null ||
+                          wishlist === "null" ? (
+                            
+                            <span
+                              className="text-white"
+                              onClick={() => AddToWishList()}
+                            >
+                              Add To Wishlist
+                            </span>
+                          ) : (
+                            <span
+                              className="text-white"
+                              onClick={() =>
+                                RemoveToWishList(id, wishlistt, wishlistid)
+                              }
+                            >
+                              Remove
+                            </span>
+                          )}
                         </Link>
                       </button>
-                      {/* <button className="btn btn-dark">
-                        <Link to="/wishlist">
-                          <span
-                            className="text-white"
-                            onClick={() => RemoveToWishList()}
-                          >
-                            Add To Wishlist
-                          </span>
-                        </Link>
-                      </button> */}
-                    </div>
+                    </div>}
+                   
 
                     <div className="col-6 col-xl-3 ">
-                      <button className="btn btn-dark ">
+                      {qut<0?"":
+                      <button className="btn btn-dark">
                         <div>
-                          <span
-                            className="text-white"
-                            onClick={() => AddToCart()}
-                          >
-                            Add To Cart
-                          </span>
+                          {cart === undefined ||
+                          cart === "" ||
+                          cart === null ||
+                          cart === "null" ? (
+                            <span
+                              className="text-white"
+                              onClick={() => AddToCart()}
+                            >
+                              Add To Cart
+                            </span>
+                          ) : (
+                            <span
+                              className="text-white"
+                              onClick={() => navigate("/cart")}
+
+                            >
+                              Buy
+                            </span>
+                           
+                          )}
                         </div>
-                      </button>
+                      </button>}
+                      
                     </div>
                   </div>
                   {/* {result.map((d)=>{
@@ -976,7 +1030,7 @@ const ProductDetail = ({ logIn }) => {
                             />
                           </div>
 
-                          <div className="banner-contain nav-desh">
+                          {/* <div className="banner-contain nav-desh">
                             {showbanner.map((img) => {
                               return (
                                 <>
@@ -1004,7 +1058,7 @@ const ProductDetail = ({ logIn }) => {
                                 </>
                               );
                             })}
-                          </div>
+                          </div> */}
 
                           {/* <div className="nav-desh">
                             <div className="desh-title mt-3">
@@ -1078,6 +1132,7 @@ const ProductDetail = ({ logIn }) => {
                       title="Review"
                     >
                       <div className="review-box">
+                        
                         <div className="row g-4">
                           <div className="col-xl-6">
                             <div className="review-title">
@@ -1116,9 +1171,9 @@ const ProductDetail = ({ logIn }) => {
                                   </li>
                                 </ul>
                               </div>
-                              <h6 className="ms-3">4.2 Out Of 5</h6>
+                              <h6 className="ms-3">4 Out Of 5</h6>
                             </div>
-
+                          
                             <div className="accordion-body">
                               <ul className="category-list custom-padding">
                                 <li>
@@ -1258,7 +1313,7 @@ const ProductDetail = ({ logIn }) => {
                             <div className="review-title">
                               <h4 className="fw-500">Add a review</h4>
                             </div>
-                            <div className="d-flex">
+                             <div className="d-flex">
                               <div className="product-rating">
                                 <div className="col-md-12">
                                   <Form.Select
@@ -1315,11 +1370,11 @@ const ProductDetail = ({ logIn }) => {
                                   })}
                                 </ul>
 
-                              </div> */}
+                              </div>  */}
                             </div>
                             <div className="row g-4">
                               <div className="col-md-6">
-                                <div className="form-floating theme-form-floating">
+                                {/* <div className="form-floating theme-form-floating">
                                   <input
                                     type="text"
                                     className="form-control mt-3"
@@ -1330,11 +1385,11 @@ const ProductDetail = ({ logIn }) => {
                                     placeholder="Name"
                                   />
                                   <label htmlFor="name">Your Name</label>
-                                </div>
+                                </div> */}
                               </div>
 
                               <div className="col-md-6">
-                                <div className="form-floating theme-form-floating">
+                                {/* <div className="form-floating theme-form-floating">
                                   <input
                                     type="text"
                                     className="form-control mt-3"
@@ -1345,10 +1400,10 @@ const ProductDetail = ({ logIn }) => {
                                     value={addreviewdata.product_name}
                                   />
                                   <label htmlFor="name">Product Name</label>
-                                </div>
+                                </div> */}
                               </div>
 
-                              <div className="col-md-6">
+                              {/* <div className="col-md-6">
                                 <Form.Select
                                   aria-label="Search by category"
                                   className="adminselectbox"
@@ -1363,11 +1418,11 @@ const ProductDetail = ({ logIn }) => {
                                   <option value="food">Fish & Meat</option>
                                   <option value="baby care">Baby Care</option>
                                 </Form.Select>
-                                {/* <div className="form-floating theme-form-floating"> */}
-                              </div>
+                                {/* <div className="form-floating theme-form-floating"> 
+                              </div> */}
 
-                              <div className="col-md-6">
-                                {/* <div className="form-floating theme-form-floating"> */}
+                              {/* <div className="col-md-6">
+                                {/* <div className="form-floating theme-form-floating"> 
                                 <Form.Select
                                   aria-label="Search by Status"
                                   className="adminselectbox"
@@ -1379,7 +1434,7 @@ const ProductDetail = ({ logIn }) => {
                                   <option value="pending"> Pending</option>
                                   <option value="approved">Approved</option>
                                   <option value="blocked">Blocked</option>
-                                </Form.Select>
+                                </Form.Select>*/}
                                 {/* <input
                                       type="url"
                                       className="form-control"
@@ -1387,9 +1442,9 @@ const ProductDetail = ({ logIn }) => {
                                       placeholder="Give your review a title"
                                     />
                                     <label htmlFor="review1">Review Title</label> */}
-                                {/* </div> */}
-                              </div>
-                              <div className="col-md-6">
+                                {/* </div> 
+                              </div> */}
+                              {/* <div className="col-md-6">
                                 <div className="form-floating theme-form-floating">
                                   <input
                                     type="date"
@@ -1402,7 +1457,7 @@ const ProductDetail = ({ logIn }) => {
                                   />
                                   <label htmlFor="date">Date</label>
                                 </div>
-                              </div>
+                              </div> */}
                               <div className="col-12">
                                 <div className="form-floating theme-form-floating your_comment">
                                   <textarea
@@ -1456,10 +1511,10 @@ const ProductDetail = ({ logIn }) => {
                                       </div>
 
                                       <div className="people-comment">
-                                        <Link to="/">{rdataa.user_name}</Link>
+                                        <Link to="/">{fname}</Link>
                                         <div className="date-time d-flex d-flex justify-content-between">
                                           <h6 className="text-content">
-                                            {rdataa.review_date}
+                                            {moment(currentdate).format("YYYY-MM-DD")}
                                           </h6>
 
                                           <div className="product-rating">
@@ -1504,13 +1559,13 @@ const ProductDetail = ({ logIn }) => {
                                             </ul>
                                           </div>
                                         </div>
-
-                                        <div className="reply">
+                                         {rdataa.comment==undefined||rdataa.comment==null||rdataa.comment==""?"":<div className="reply">
                                           <p className="w-100">
                                             {rdataa.comment}
-                                            <Link to="/">Reply</Link>
+                                            {/* <Link to="/">Reply</Link> */}
                                           </p>
-                                        </div>
+                                        </div>}
+                                        
                                       </div>
                                     </div>
                                   </li>

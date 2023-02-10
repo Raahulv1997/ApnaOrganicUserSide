@@ -60,7 +60,7 @@ const Forgot = () => {
           } else if (
             response.data.message === "Send otp in Gmail Succesfully"
           ) {
-            setemailerror("timer");
+            setemailerror("");
           }
           // navigate("/forgot");
           // localStorage.setItem("useridd" , response.data.user_id)

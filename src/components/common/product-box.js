@@ -10,6 +10,7 @@ const ProductBox = ({
   productid,
   discount,
   brand,
+  quantity,
   rating,
   category,
   saleprice,
@@ -22,6 +23,7 @@ const ProductBox = ({
   cart,
   is_featured,
   is_special_offer,
+  avgRatings,
 }) => {
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
@@ -31,11 +33,27 @@ const ProductBox = ({
   const func = (e) => {};
 
   let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = Number(rating);
+  let ratingg = Number(avgRatings);
 
+  /* <!--Start body of product box--> */
 
-/* <!--Start body of product box--> */
-  
+  /*<-----Increment Functionality----> */
+  function incrementCount() {
+    if (quantity === count || quantity < count) {
+      settotalqty(true);
+    } else {
+      count = count + 1;
+      setCount(count);
+      settotalqty(false);
+    }
+  }
+  /*<-----Decrement Functionality----> */
+  const decrementCount = () => {
+    if (count > 1) {
+      setCount((count) => count - 1);
+      settotalqty(false);
+    }
+  };
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
@@ -72,9 +90,7 @@ const ProductBox = ({
           is_special_offer == "" ||
           is_special_offer == null ||
           is_special_offer == "0" ? null : (
-            <span className="is_special_offer_ribbon mb-1">
-              {"S"}%
-            </span>
+            <span className="is_special_offer_ribbon mb-1">{"S"}</span>
           )}
         </div>
         <div className="label-flex">
@@ -104,7 +120,6 @@ const ProductBox = ({
           )}
         </div>
 
-
         <a onClick={() => clickProduct(productid, id)}>
           <img
             src={
@@ -118,54 +133,51 @@ const ProductBox = ({
         </a>
       </div>
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
-        <ul className="rating p-0 m-0 mb-2">
-          {
-            (ratingbox || []).map((rat, i) => {
-              return ratingg - rat >= 0 ? (
-                <li color="#ffb321" key={i}>
-                  <FaStar
-                    icon="star"
-                    className="feather fill"
-                    fill={"#ffb321"}
-                  />
-                </li>
-              ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
-                <li color="#ffb321">
-                  <FaStarHalfAlt
-                    icon="star"
-                    className="feather"
-                    fill={"#ffb321"}
-                  />
-                </li>
-              ) : ratingg - rat <= -1 ? (
-                <li color="#ffb321">
-                  <FaRegStar
-                    icon="star"
-                    className="feather "
-                    fill={"#ffb321"}
-                  />
-                </li>
-              ) : null;
-            })
-          }
-        </ul>
-        <Link to="/product_detail" className="m-0 mb-2" onClick={() => clickProduct(productid)}>
+        {ratingg==null||ratingg==undefined||ratingg==""?"": <ul className="rating p-0 m-0 mb-2">
+          {(ratingbox || []).map((rat, i) => {
+            return ratingg - rat >= 0 ?
+             (
+              <li color="#ffb321" key={i}>
+                <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
+              </li>
+            ) : ratingg - rat < 0 && ratingg - rat > -1 ? (
+              <li color="#ffb321">
+                <FaStarHalfAlt
+                  icon="star"
+                  className="feather"
+                  fill={"#ffb321"}
+                />
+              </li>
+            ) : ratingg - rat <= -1 ?
+             (
+              <li color="#ffb321">
+                <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
+              </li>
+            ) : null ;
+          })}
+        </ul>}
+       
+        <div className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
+
           <h5 className="name m-0">{brand}</h5>
-        </Link>
+        </div>
+        {window.location.pathname === "/wishlist" || quantity < 0 ? (
+          <p className="text-danger">Out Of Stock !</p>
+        ) : ("")}
+
         <h5 className="price theme-color m-0 mb-2">
           {"₹" + saleprice.toFixed(2)}{" "}
           <del className="text-muted small">{"₹" + productMRF.toFixed(2)}</del>
         </h5>
+
         <div className="price-qty d-flex justify-content-between m-0">
-          <div className="counter-number d-md-block d-none">
+          {quantity<0?(""): <div className="counter-number d-md-block d-none">
             <div className="counter">
               <div
                 className="qty-left-minus"
-                onClick={() =>
-                  count === 1 ? setCount(count) : setCount(count - 1)
-                }
+                onClick={() => decrementCount()}
                 data-type="minus"
                 data-field=""
               >
@@ -179,48 +191,56 @@ const ProductBox = ({
                 min={1}
                 onChange={func}
               />
-               
+
               <div
                 className="qty-right-plus"
-                onClick={() => setCount(count + 1)}
+                onClick={() => incrementCount()}
                 data-type="plus"
                 data-field=""
               >
                 <i className="fa-regular fa-plus"></i>
               </div>
-              {totalqty === true ? (
-              <p
-              className="mt-1 ms-2 text-danger"
-              type="invalid"
-              >
-              Cannot add more then total qty
-              </p>
-              ) : null}
             </div>
-          </div>
+          </div>}
+         
+
           {window.location.pathname === "/wishlist" ? (
             ""
-          ) : cart === null || token === "null" || !token ? (
+          ) : cart === null ||
+            token === "null" ||
+            !token ||
+            token === "true" ? (
             <>
-              <button
-                className="buy-button buy-button-2 btn btn-cart"
-                onClick={() =>
-                  AddToCart(id, saleprice, productMRF, wishlistid, count)
-                }
-              >
-                <i className="fa-regular fa-cart-shopping"></i>
-              </button>
+              {quantity < 0 ? ("") : (
+                <button
+                  className="buy-button buy-button-2 btn btn-cart"
+                  onClick={() =>
+                    AddToCart(id, saleprice, productMRF, wishlistid, count)
+                  }
+                >
+                  <i className="fa-regular fa-cart-shopping"></i>
+                </button>
+              )}
             </>
-          ) : (
+          ) : cart !== null ||
+            cart !== undefined ||
+            cart !== "undefined" ||
+            token !== "null" ||
+            token !== "true" ? (
             <button
               className="btn text-light btn-warning"
               onClick={() => navigate("/cart")}
             >
               {"Buy"}
             </button>
-          )}
+          ) : null}
         </div>
       </div>
+      {totalqty === true ? (
+        <p className="mt-1 ms-2 text-danger" type="invalid">
+          Cannot add more then total qty
+        </p>
+      ) : null}
     </div>
   );
 };

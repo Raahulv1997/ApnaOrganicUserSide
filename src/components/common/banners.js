@@ -3,7 +3,6 @@ import BannerBox1 from "../../Photos/2.jpg";
 import BannerBox2 from "../../Photos/1.jpg";
 import Banner1 from "../../Photos/14.jpg";
 import ProductBox from "./product-box";
-import data from "../pages/data";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import "../../CSS/style.css";
@@ -26,7 +25,6 @@ const Benners = () => {
   const [showbanner, setShowBanner] = useState([]);
   let [count, setCount] = useState(1);
   const navigate = useNavigate();
-
   /* <!--End all state section--> */
 
   // var product = data.product;
@@ -67,7 +65,6 @@ const Benners = () => {
     }
     getRating();
   }, []);
-  // console.log("showww-------------0000"+JSON.stringify(productData))
 
   /* <!--Function for map category and same category not show again--> */
 
@@ -111,8 +108,6 @@ const Benners = () => {
         )
         .then((response) => {
           let data = response.data;
-          console.log("ADDCART" + data);
-
           setCount(0);
           setData(data);
           setapicall(true);
@@ -185,12 +180,13 @@ const Benners = () => {
       token === "" ||
       token === null ||
       token === undefined ||
-      token === true
+      token === true ||
+      token === "true"
     ) {
       function getProductData() {
         try {
           axios
-            .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`, {
+            .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=10`, {
               product_search: {
                 search: `${productType}`,
                 price_from: "",
@@ -204,7 +200,6 @@ const Benners = () => {
             })
             .then((response) => {
               let data = response.data;
-
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -239,7 +234,6 @@ const Benners = () => {
               .then((response) => {
                 let data = response.data;
 
-                console.log("product data---" + JSON.stringify(data));
                 setProductData(response.data.results);
                 setapicall(false);
               });
@@ -263,7 +257,6 @@ const Benners = () => {
   /* <!--End this section--> */
 
   /* <!--Show banner--Api Call--> */
-
   useEffect(() => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/banner_list`, {
@@ -279,7 +272,7 @@ const Benners = () => {
   /* <!--End this section--> */
 
   /* <!--Start body of banner page--> */
-
+console.log("------SHOWWWWWW----"+JSON.stringify(productData))
   return (
     <Fragment>
       <Header addcart={AddToCart} />
@@ -486,12 +479,13 @@ const Benners = () => {
                           id={product.id}
                           image={product.image}
                           name={product.product_title_name}
+                          quantity={product.quantity}
                           productPrice={product.product_price}
                           productMRF={product.mrp}
                           productid={product.product_id}
                           discount={product.discount}
                           special_offer={product.special_offer}
-                          rating={product.rating}
+                          // rating={product.rating}
                           producttype={product.product_type}
                           saleprice={product.sale_price}
                           wishlistt={product.wishlist}
@@ -502,6 +496,7 @@ const Benners = () => {
                           cart={product.cart}
                           is_featured={product.is_featured}
                           is_special_offer={product.is_special_offer}
+                          avgRatings={product.avgRatings}
                         />
                       </div>
                     );

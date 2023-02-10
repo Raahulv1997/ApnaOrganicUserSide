@@ -50,10 +50,9 @@ const Checkout = (props) => {
     total_sgst: "",
     taxable_value: "",
     discount_coupon: "0",
-    vendor_id: "1",
+    vendor_id: "",
     order_product: [],
   });
-  console.log("==============" + JSON.stringify(cartdata));
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [SalePricee, setSalePricee] = useState(0);
   const [TotalTax, setTotalTax] = useState(0);
@@ -68,7 +67,6 @@ const Checkout = (props) => {
     setDeliveryMethod(e.target.value);
     setordervalidation(false);
   };
-  // console.log("ooo====-----" + DeliveyTab);
   const incrementCount = (id, order_quantity, qty) => {
     let inc = order_quantity + 1;
     if (order_quantity !== qty) {
@@ -363,6 +361,11 @@ const Checkout = (props) => {
             setordervalidation("");
 
             localStorage.setItem("orderid", response.data.order_id);
+            // localStorage.setItem("vendorid", response.data.vendor_id);
+
+            console.log("88888************"+response.data.vendor_id)
+          
+
             setProductAlert(false);
 
             navigate("/your_orders");
@@ -943,7 +946,7 @@ const Checkout = (props) => {
                                   </li>
                                   <li>
                                     <p className="text-content">
-                                      <span className="text-title">
+                                      <span className="text-title text-break">
                                         Address:{userdata.address}
                                       </span>
                                     </p>
@@ -994,7 +997,7 @@ const Checkout = (props) => {
                                   </li>
                                   <li>
                                     <p className="text-content">
-                                      <span className="text-title">
+                                      <span className="text-title text-break">
                                         Address:{userdata.address2}
                                       </span>
                                     </p>

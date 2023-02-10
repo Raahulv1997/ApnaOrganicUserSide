@@ -7,7 +7,6 @@ import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
-import moment from "moment";
 let categoryArray = [];
 
 const BlogList = () => {
@@ -27,9 +26,11 @@ const BlogList = () => {
   const onRecentClick = (e) => {
     setRecent(e.target.value);
   };
+
   const onProductTagClick = (e) => {
     setProductTag(e.target.value);
   };
+  
   useEffect(() => {
     onCategorySearch();
   }, [searchCategory, recent, productTag]);

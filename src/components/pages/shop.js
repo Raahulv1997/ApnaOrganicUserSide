@@ -128,7 +128,7 @@ const Shop = (props) => {
           .put(
             `${process.env.REACT_APP_BASEURL}/remove_product_from_wishlist`,
             {
-              product_id: `${id}`,
+              id: `${id}`,
               user_id: "",
             },
             {
@@ -186,7 +186,7 @@ const Shop = (props) => {
     } else {
       setsearchText(searchparams.get("search"));
     }
-  }, [searchText]);
+  }, [searchText, searchparams]);
 
   /*<-----Functionality to filter products by category----> */
   useEffect(() => {
@@ -296,7 +296,8 @@ const Shop = (props) => {
                   category: [searchCat],
                   brand: brandfilter,
                   discount: discountfilter,
-                  rating: ratingfilter,
+                  avgRatings: ratingfilter,
+                  is_delete: ["1"],
                 },
               }
             )
@@ -344,7 +345,7 @@ const Shop = (props) => {
 
                   brand: brandfilter,
                   discount: discountfilter,
-                  rating: ratingfilter,
+                  avgRatings: ratingfilter,
                   category: [searchCat],
                 },
               },
@@ -522,10 +523,15 @@ const Shop = (props) => {
     const value =
       e.target.type === "checkbox" ? e.target.checked : e.target.value;
     if (e.target.checked === true) {
-      setratingfilter((ratingfilter) => [...ratingfilter, e.target.value]);
+      setratingfilter((ratingfilter, index) => [
+        setcheckboxfilter(index, true),
+        ...ratingfilter,
+        e.target.value,
+      ]);
       showcategorydata.push(e.target.value);
     } else {
       setratingfilter(ratingfilter.filter((item) => item !== e.target.value));
+      setcheckboxfilter(false);
       const index = showcategorydata.indexOf(e.target.value);
       if (index > -1) {
         // only splice array when item is found
@@ -958,8 +964,9 @@ const Shop = (props) => {
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={"rating"}
+                                    name={"avgRatings"}
                                     value={"5"}
+                                    checked={checkboxfilter}
                                     onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
@@ -1007,8 +1014,9 @@ const Shop = (props) => {
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={"rating"}
+                                    name={"avgRatings"}
                                     value={"4"}
+                                    checked={checkboxfilter}
                                     onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
@@ -1056,8 +1064,9 @@ const Shop = (props) => {
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={"rating"}
+                                    name={"avgRatings"}
                                     value={"3"}
+                                    checked={checkboxfilter}
                                     onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
@@ -1105,8 +1114,9 @@ const Shop = (props) => {
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={"rating"}
+                                    name={"avgRatings"}
                                     value={"2"}
+                                    checked={checkboxfilter}
                                     onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
@@ -1154,8 +1164,9 @@ const Shop = (props) => {
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={"rating"}
+                                    name={"avgRatings"}
                                     value={"1"}
+                                    checked={checkboxfilter}
                                     onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
@@ -1202,8 +1213,9 @@ const Shop = (props) => {
                                   <input
                                     className="checkbox_animated"
                                     type="checkbox"
-                                    name={"rating"}
+                                    name={"avgRatings"}
                                     value={"0"}
+                                    checked={checkboxfilter}
                                     onChange={(e) => onRatingFilterAdd(e)}
                                   />
                                   <div className="form-check-label">
@@ -1518,8 +1530,9 @@ const Shop = (props) => {
                           name={product.product_title_name}
                           productMRF={product.sale_price}
                           productPrice={product.product_price}
+                          quantity={product.quantity}
                           productid={product.product_id}
-                          rating={product.rating}
+                          // avgRatings={product.avgRatings}
                           discount={product.discount}
                           brand={product.brand}
                           category={product.category}
@@ -1531,6 +1544,7 @@ const Shop = (props) => {
                           wishlistt={product.wishlist}
                           allimages={product.all_images}
                           cart={product.cart}
+                          avgRatings={product.avgRatings}
                         />
                       </div>
                     );
@@ -1538,7 +1552,7 @@ const Shop = (props) => {
                 </div>
               )}
 
-              <div className="d-flex justify-content-center">
+              {/* <div className="d-flex justify-content-center">
                 <Pagination
                   className="d-flex justify-content-center"
                   nPages={page}
@@ -1546,7 +1560,7 @@ const Shop = (props) => {
                   setCurrentPage={setCurrentPage}
                   recordsPerPage={recordsPerPage}
                 />
-              </div>
+              </div> */}
             </div>
           </div>
         </div>

@@ -21,8 +21,11 @@ import moment from "moment";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
+
   localStorage.getItem("token");
   const [apicall, setapicall] = useState(false);
+  const [msg, setMsg] = useState(true);
+
   const currentdate = moment().format("YYYY-MM-DD");
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
@@ -56,12 +59,9 @@ function Account() {
     address: "",
     address2: "",
   });
- 
-
 
   const token = localStorage.getItem("token");
   useEffect(() => {
-    
     axios
       .post(
         `${process.env.REACT_APP_BASEURL}/user_details`,
@@ -76,37 +76,37 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
-
+       
       })
       .catch((error) => {});
-    Onwishlistclick();
+    // Onwishlistclick();
     OnOrderclick();
   }, [Password, apicall]);
 
   // wishlist
-  const Onwishlistclick = () => {
-    axios
-      .post(
-        `${process.env.REACT_APP_BASEURL}/wishlist`,
-        {
-          user_id: "",
-        },
-        {
-          headers: {
-            user_token: token,
-          },
-        }
-      )
-      .then((response) => {
-        if (response.data[0].message !== "header error") {
-          setwishlistdata(response.data);
-        }
-        // navigate('/your_account')
-        // return response;
-      })
-      .catch((error) => {});
-    setclick(false);
-  };
+  // const Onwishlistclick = () => {
+  //   axios
+  //     .post(
+  //       `${process.env.REACT_APP_BASEURL}/wishlist`,
+  //       {
+  //         user_id: "",
+  //       },
+  //       {
+  //         headers: {
+  //           user_token: token,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       if (response.data[0].message !== "header error") {
+  //         setwishlistdata(response.data);
+  //       }
+  //       // navigate('/your_account')
+  //       // return response;
+  //     })
+  //     .catch((error) => {});
+  //   setclick(false);
+  // };
 
   // order history
   const OnOrderclick = () => {
@@ -155,19 +155,22 @@ function Account() {
             setShow(false);
             setapicall(true);
             setValidated(false);
+            localStorage.setItem("first_name",udata.first_name);
+        console.log('FIRST____NAME---'+udata.first_name)
+
           }
         })
         .catch((error) => {});
     }
   };
 
-  const OnchangeFistname = (e) => {
+  const OnchangeFistname = (e,first_name) => {
+  
     setUdata({
       ...udata,
       [e.target.name]: e.target.value,
     });
   };
-
 
   // change Password:
 
@@ -200,6 +203,9 @@ function Account() {
 
   // Function to change the password with the validation and api part :-
   const handlePassSubmit = (e) => {
+    console.log("Passwordddd----------"+newPassword)
+    console.log("Passwordddd-----LEnghthhhhhhhh-----"+newPassword.length)
+
     e.preventDefault();
     if (!oldPassword) {
       setOldPasswordError("Old password is required");
@@ -209,8 +215,9 @@ function Account() {
     if (!newPassword) {
       setNewPasswordError("New password is required");
     } else if (
-      newPassword < 8 ||
-      newPassword !== /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+      // newPassword.length < 8 
+      // ||
+      newPassword === /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
     ) {
       setNewPasswordError(
         "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
@@ -229,6 +236,7 @@ function Account() {
       oldPassword &&
       newPassword &&
       newPassword.length >= 8 &&
+
       confirmPassword &&
       confirmPassword === newPassword
     ) {
@@ -325,7 +333,6 @@ function Account() {
   // end add to cart
 
   const onProductClick = (id) => {
-
     localStorage.setItem("proid", id);
     navigate("/product-detail");
   };
@@ -411,7 +418,7 @@ function Account() {
                           </li>
                         </Nav.Link>
                       </Nav.Item>
-                      <Nav.Item>
+                      {/* <Nav.Item>
                         <Nav.Link eventKey="wishlist">
                           {" "}
                           <li className="nav-item" role="presentation">
@@ -424,7 +431,7 @@ function Account() {
                             </button>
                           </li>
                         </Nav.Link>
-                      </Nav.Item>
+                      </Nav.Item> */}
                       {/* <Nav.Item>
                         <Nav.Link eventKey="card">
                           {" "}
@@ -678,7 +685,7 @@ function Account() {
                                       <h6 className="text-content">
                                         Default Billing Address
                                       </h6>
-                                      <h6 className="text-content">
+                                      <h6 className="text-content text-break">
                                         {userdata.address}
                                       </h6>
                                       <Link
@@ -692,12 +699,12 @@ function Account() {
                                     </div>
                                   </div>
 
-                                  <div className="col-xxl-6">
+                                  <div className="col-xxl-6 ">
                                     <div className="dashboard-detail">
                                       <h6 className="text-content">
                                         Default Shipping Address
                                       </h6>
-                                      <h6 className="text-content">
+                                      <h6 className="text-content text-break">
                                         {userdata.address2}
                                       </h6>
                                       <Link
@@ -737,20 +744,10 @@ function Account() {
                               <div key={data.id} className="order-contain">
                                 <div className="order-box dashboard-bg-box">
                                   <div className="order-container">
-                                    <div className="order-icon">
-                                      <i data-feather="box"></i>
-                                    </div>
-
                                     <div className="order-detail">
                                       <h4>
                                         Status <span>{data.status}</span>
                                       </h4>
-                                      <div
-                                        dangerouslySetInnerHTML={{
-                                          __html: data.product_description,
-                                        }}
-                                        className="editor"
-                                      ></div>
                                     </div>
                                   </div>
 
@@ -763,9 +760,11 @@ function Account() {
                                     >
                                       <img
                                         src={
-                                          data.all_images
-                                            ? data.all_images
-                                            : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                          data.all_images === "" ||
+                                          data.all_images === "null" ||
+                                          data.all_images === null
+                                            ? "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                            : data.all_images
                                         }
                                         className="lazyload"
                                         alt=""
@@ -799,45 +798,6 @@ function Account() {
                                         <li>
                                           <div className="size-box">
                                             <h6 className="text-content">
-                                              Rating :{data.rating}
-                                            </h6>
-                                            <div className="product-rating ms-2">
-                                              <ul className="rating">
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i
-                                                    data-feather="star"
-                                                    className="fill"
-                                                  ></i>
-                                                </li>
-                                                <li>
-                                                  <i data-feather="star"></i>
-                                                </li>
-                                              </ul>
-                                            </div>
-                                          </div>
-                                        </li>
-
-                                        <li>
-                                          <div className="size-box">
-                                            <h6 className="text-content">
                                               Sold By :{" "}
                                             </h6>
                                             <h5>{data.store_name}</h5>
@@ -850,7 +810,7 @@ function Account() {
                                             </h6>
                                             <h5>
                                               {moment(data.order_date).format(
-                                                "YYYY-MM-DDThh:mm:00.000"
+                                                "YYYY-MM-DD"
                                               )}
                                             </h5>
                                           </div>
@@ -866,15 +826,11 @@ function Account() {
                                         <li>
                                           <div className="size-box">
                                             <h6 className="text-content">
-                                              Stock :{" "}
-                                            </h6>
-                                            <h5>{data.quantity}</h5>
-                                          </div>
-                                        </li>
-                                        <li>
-                                          <div className="size-box">
-                                            <h6 className="text-content">
-                                              Quantity :{" "}
+                                              {data.unit === "gms" ||
+                                              data.unit === "ml" ||
+                                              data.unit === "piece"
+                                                ? "Quantity"
+                                                : "Size"}
                                             </h6>
                                             {data.unit === "gms" ||
                                             data.unit === "ml" ||
@@ -900,7 +856,7 @@ function Account() {
                     {/* end order history */}
                     {/* wishlist history */}
 
-                    <Tab.Pane eventKey="wishlist">
+                    {/* <Tab.Pane eventKey="wishlist">
                       <div
                         className="tab-pane fade show"
                         id="pills-wishlist"
@@ -915,67 +871,75 @@ function Account() {
                             </span>
                           </div>
                           <div className="row g-sm-4 g-3">
-                            {(wishlistdata || []).map((wdata) => {
-                              return (
-                                <div
-                                  key={wdata.id}
-                                  className="col-xxl-3 col-lg-6 col-md-4 col-sm-6"
-                                >
-                                  <div className="product-box-3 theme-bg-white h-100">
-                                    <div className="product-header">
-                                      <div className="product-image">
-                                        <div
-                                          onClick={() =>
-                                            onProductClick(wdata.product_id)
-                                          }
-                                        >
-                                          <img
-                                            src={
-                                              wdata.all_images
-                                                ? wdata.all_images
-                                                : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                            {wishlistdata === "true" ? (
+                              <h2 className="text-dark text-center">
+                                Add Product In wishlist{" "}
+                              </h2>
+                            ) : (
+                              (wishlistdata || []).map((wdata) => {
+                                return (
+                                  <div
+                                    key={wdata.id}
+                                    className="col-xxl-3 col-lg-6 col-md-4 col-sm-6"
+                                  >
+                                    <div className="product-box-3 theme-bg-white h-100">
+                                      <div className="product-header">
+                                        <div className="product-image">
+                                          <div
+                                            onClick={() =>
+                                              onProductClick(wdata.product_id)
                                             }
-                                            className="img-fluid  lazyload"
-                                            alt=""
-                                          />
-                                        </div>
+                                          >
+                                            <img
+                                              src={
+                                                wdata.all_images === "" ||
+                                                wdata.all_images === "null" ||
+                                                wdata.all_images === null
+                                                  ? "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                                                  : wdata.all_images
+                                              }
+                                              className="img-fluid  lazyload"
+                                              alt=""
+                                            />
+                                          </div>
 
-                                        <div className="product-header-top">
-                                          <button className="btn wishlist-button close_button">
-                                            <i data-feather="x"></i>
-                                          </button>
+                                          <div className="product-header-top">
+                                            <button className="btn wishlist-button close_button">
+                                              <i data-feather="x"></i>
+                                            </button>
+                                          </div>
                                         </div>
                                       </div>
-                                    </div>
 
-                                    <div className="product-footer">
-                                      <div className="product-detail">
-                                        <span className="span-name">
-                                          {wdata.product_title_name}
-                                        </span>
-                                        <Link to="/order_detail">
-                                          <h5
-                                            className="name mb-0"
+                                      <div className="product-footer">
+                                        <div className="product-detail">
+                                          <span className="span-name">
+                                            {wdata.product_title_name}
+                                          </span>
+                                          <Link to="/order_detail">
+                                            <h5
+                                              className="name mb-0"
+                                              dangerouslySetInnerHTML={{
+                                                __html:
+                                                  wdata.product_description,
+                                              }}
+                                            />
+                                          </Link>
+                                          <p
+                                            className="text-content  mb-2"
                                             dangerouslySetInnerHTML={{
-                                              __html: wdata.product_description,
+                                              __html: wdata.other_introduction,
                                             }}
                                           />
-                                        </Link>
-                                        <p
-                                          className="text-content  mb-2"
-                                          dangerouslySetInnerHTML={{
-                                            __html: wdata.other_introduction,
-                                          }}
-                                        />
 
-                                        <h6 className="unit mt-1">250 ml</h6>
-                                        <h5 className="price">
-                                          <span className="theme-color">
-                                            {wdata.product_price}₹
-                                          </span>
-                                          <del>{wdata.mrp}₹</del>
-                                        </h5>
-                                        {/* <div className="add-to-cart-box mt-2">
+                                          <h6 className="unit mt-1">250 ml</h6>
+                                          <h5 className="price">
+                                            <span className="theme-color">
+                                              {wdata.product_price}₹
+                                            </span>
+                                            <del>{wdata.mrp}₹</del>
+                                          </h5>
+                                          {/* <div className="add-to-cart-box mt-2">
                                           <button
                                             className="btn btn-add-cart addcart-button"
                                             onClick={(e) =>
@@ -1025,17 +989,17 @@ function Account() {
                                               </button>
                                             </div>
                                           </div>
-                                        </div> */}
+                                        </div> 
                                       </div>
                                     </div>
                                   </div>
-                                </div>
-                              );
-                            })}
+                                );
+                              })
+                            )}
                           </div>
                         </div>
                       </div>
-                    </Tab.Pane>
+                    </Tab.Pane> */}
                     {/* end history */}
                     {/* card history */}
 
@@ -1529,7 +1493,7 @@ function Account() {
                             <div className="location-profile">
                               <ul>
                                 <li>
-                                  <div className="location-box">
+                                  <div className="location-box text-break">
                                     <GoLocation />
                                     <h6>{userdata.address}</h6>
                                   </div>
@@ -1571,7 +1535,10 @@ function Account() {
                                       <tr>
                                         <td>Birthday :</td>
                                         <td>
-                                        {moment(userdata.date_of_birth).format("YYYY-MM-DD")}</td>
+                                          {moment(
+                                            userdata.date_of_birth
+                                          ).format("YYYY-MM-DD")}
+                                        </td>
                                       </tr>
                                       <tr>
                                         <td>Phone Number :</td>
@@ -1862,7 +1829,7 @@ function Account() {
                 >
                   <Form.Label>Mobile</Form.Label>
                   <Form.Control
-                    type="number"
+                    type="tel"
                     placeholder="Mobile"
                     value={udata.phone_no}
                     name={"phone_no"}
@@ -1888,6 +1855,7 @@ function Account() {
                     value={udata.address}
                     name={"address"}
                     onChange={OnchangeFistname}
+                    maxLength="100"
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1907,6 +1875,7 @@ function Account() {
                     value={udata.address2}
                     name={"address2"}
                     onChange={OnchangeFistname}
+                    maxLength="100"
                   />
                 </Form.Group>
               </div>
