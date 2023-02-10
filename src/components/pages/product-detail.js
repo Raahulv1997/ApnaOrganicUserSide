@@ -99,7 +99,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var proid = localStorage.getItem("proid");
   const [varientId, setVeriantId] = useState(localStorage.getItem("variantid"));
 
- console.log("------------++++++"+JSON.stringify(productDetails))
+//  console.log("------------++++++"+JSON.stringify(productDetails))
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -303,7 +303,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
 
@@ -354,7 +354,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
 
@@ -457,7 +457,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       .then((response) =>{
         let data=response.data
         setProductDetails(data);
-        console.log("oooooo-----"+data)
+        // console.log("oooooo-----"+data)
         setapicall(true);
       });
      
@@ -483,6 +483,15 @@ useEffect(()=>{
 });
 },[apicall])
 console.log("088888888888"+JSON.stringify(avgRating))
+console.log("088888888888"+JSON.stringify(avgRating[0]))
+if(avgRating)
+{(avgRating[0] || []).map((data)=>{
+  return(
+    console.log("-------"+JSON.stringify(data.review_rating))
+
+  )
+})}
+
 
   /*<-----End secation----> */
 
@@ -1162,7 +1171,7 @@ console.log("088888888888"+JSON.stringify(avgRating))
                                   </li>
                                 </ul>
                               </div>
-                              <h6 className="ms-3"> Out Of 5</h6>
+                              <h6 className="ms-3">4 Out Of 5</h6>
                             </div>
                           
                             <div className="accordion-body">
