@@ -272,7 +272,7 @@ const Benners = () => {
   /* <!--End this section--> */
 
   /* <!--Start body of banner page--> */
-
+console.log("------SHOWWWWWW----"+JSON.stringify(productData))
   return (
     <Fragment>
       <Header addcart={AddToCart} />
@@ -485,7 +485,7 @@ const Benners = () => {
                           productid={product.product_id}
                           discount={product.discount}
                           special_offer={product.special_offer}
-                          rating={product.rating}
+                          // rating={product.rating}
                           producttype={product.product_type}
                           saleprice={product.sale_price}
                           wishlistt={product.wishlist}

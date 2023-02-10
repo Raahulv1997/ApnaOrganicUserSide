@@ -133,9 +133,10 @@ const ProductBox = ({
         </a>
       </div>
       <div className="product-detail px-3 py-2 d-flex flex-column overflow-hidden rounded">
-        <ul className="rating p-0 m-0 mb-2">
+        {ratingg==null||ratingg==undefined||ratingg==""?"": <ul className="rating p-0 m-0 mb-2">
           {(ratingbox || []).map((rat, i) => {
-            return ratingg - rat >= 0 ? (
+            return ratingg - rat >= 0 ?
+             (
               <li color="#ffb321" key={i}>
                 <FaStar icon="star" className="feather fill" fill={"#ffb321"} />
               </li>
@@ -147,13 +148,15 @@ const ProductBox = ({
                   fill={"#ffb321"}
                 />
               </li>
-            ) : ratingg - rat <= -1 ? (
+            ) : ratingg - rat <= -1 ?
+             (
               <li color="#ffb321">
                 <FaRegStar icon="star" className="feather " fill={"#ffb321"} />
               </li>
-            ) : null;
+            ) : null ;
           })}
-        </ul>
+        </ul>}
+       
         <div className="m-0 mb-2" onClick={() => clickProduct(productid)}>
           <h5 className="name m-0">{name}</h5>
           <h5 className="name m-0">{category}</h5>
@@ -162,9 +165,7 @@ const ProductBox = ({
         </div>
         {window.location.pathname === "/wishlist" || quantity < 0 ? (
           <p className="text-danger">Out Of Stock !</p>
-        ) : (
-          ""
-        )}
+        ) : ("")}
 
         <h5 className="price theme-color m-0 mb-2">
           {"₹" + saleprice.toFixed(2)}{" "}
@@ -172,7 +173,7 @@ const ProductBox = ({
         </h5>
 
         <div className="price-qty d-flex justify-content-between m-0">
-          <div className="counter-number d-md-block d-none">
+          {quantity<0?(""): <div className="counter-number d-md-block d-none">
             <div className="counter">
               <div
                 className="qty-left-minus"
@@ -200,7 +201,8 @@ const ProductBox = ({
                 <i className="fa-regular fa-plus"></i>
               </div>
             </div>
-          </div>
+          </div>}
+         
 
           {window.location.pathname === "/wishlist" ? (
             ""
@@ -209,17 +211,7 @@ const ProductBox = ({
             !token ||
             token === "true" ? (
             <>
-              {quantity < 0 ? (
-                <button
-                  className="buy-button buy-button-2 btn btn-cart"
-                  disabled
-                  onClick={() =>
-                    AddToCart(id, saleprice, productMRF, wishlistid, count)
-                  }
-                >
-                  <i className="fa-regular fa-cart-shopping"></i>
-                </button>
-              ) : (
+              {quantity < 0 ? ("") : (
                 <button
                   className="buy-button buy-button-2 btn btn-cart"
                   onClick={() =>

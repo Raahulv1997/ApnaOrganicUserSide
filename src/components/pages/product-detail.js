@@ -25,7 +25,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
   const useridd = localStorage.getItem("userid");
   const fname = localStorage.getItem("first_name");
-
+  const[avgRating,setAvgRating]=useState([]);
   const token = localStorage.getItem("token");
   const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
@@ -47,7 +47,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   // const[image,setImage]=useState('');
   // const[review,setReview]=useState([]);
   const [discount, setDiscount] = useState();
-  const [addreviewdata, setaddreviewdata] = useState([]);
+  const [addreviewdata, setaddreviewdata] = useState({
+    comment:""
+  });
   const [showImage, setShowImages] = useState([]);
   const [reviewData, setReviewData] = useState([]);
   // const [showbanner, setShowBanner] = useState([]);
@@ -61,7 +63,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   });
   // const [rating, setRating] = useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = (productDetails.show_product_rating);
+  let ratingg = (productDetails.avgRatings);
   const currentdate = moment().format("YYYY-MM-DD");
 
   // var product_details = data3.product_details;
@@ -97,7 +99,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var proid = localStorage.getItem("proid");
   const [varientId, setVeriantId] = useState(localStorage.getItem("variantid"));
 
- console.log("------------++++++"+JSON.stringify(productDetails))
+//  console.log("------------++++++"+JSON.stringify(productDetails))
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -301,7 +303,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
 
@@ -352,7 +354,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       )
       .then((response) => {
         let data = response.data;
-        console.log("product veriant image--" + JSON.stringify(data));
+        // console.log("product veriant image--" + JSON.stringify(data));
         setapicall(false);
         setShowImages(data);
 
@@ -414,7 +416,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/review_list`, {
         product_name: "",
-        category_type: "",
         status: "",
       })
       .then((response) => {
@@ -437,8 +438,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   /*<----Onchange function of Rate---->*/
   const onRatingChange = (e) => {
     setRrating(e.target.value);
-    console.log("onRatingChange" + JSON.stringify(e.target.value));
   };
+  console.log("onRatingChange" + JSON.stringify(Rrating));
 
   /*<----Function to add the review---->*/
   const AddReview = (e) => {
@@ -446,7 +447,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       .post(`${process.env.REACT_APP_BASEURL}/review_rating`, {
         user_id: `${useridd}`,
         user_name: fname,
-        product_id: `${Id}`,
+        product_id: `${proid}`,
         product_name: `${productDetails.product_title_name}`,
         review_date: `${currentdate}`,
         review_rating: `${Rrating}`,
@@ -456,9 +457,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       .then((response) =>{
         let data=response.data
         setProductDetails(data);
-        console.log("oooooo-----"+data)
+        // console.log("oooooo-----"+data)
         setapicall(true);
-
       });
      
   };
@@ -468,6 +468,34 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     (thing, index, self) =>
       index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
   );
+
+  /*<-----Functionality to show average rating----> */
+useEffect(()=>{
+  axios.post(`${process.env.REACT_APP_BASEURL}/ratings_review_get`,{
+
+    product_id:`${proid}` 
+})
+.then((response)=>{
+  let data=response.data
+  setAvgRating(data)
+
+
+});
+},[apicall])
+console.log("088888888888"+JSON.stringify(avgRating))
+console.log("088888888888"+JSON.stringify(avgRating[0]))
+if(avgRating)
+{(avgRating[0] || []).map((data)=>{
+  return(
+    console.log("-------"+JSON.stringify(data.review_rating))
+
+  )
+})}
+
+
+  /*<-----End secation----> */
+
+
 
   // const result3 = productDetails.product_verient.filter((thing, index, self) =>
   // index == self.findIndex((t) => (
@@ -561,7 +589,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                 data-wow-delay="0.1s"
               >
                 <div className="right-box-contain">
-                  <h6 className="offer-top">{discount}%</h6>
+                  {discount==0||discount==undefined||discount=="null"||discount==null||discount==""?"":<h6 className="offer-top">{discount}%</h6>}
+                  
                   <h2 className="name">{productDetails.product_title_name}</h2>
                   {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                   <div className="price-rating">
@@ -569,15 +598,18 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                       {Number(saleprice)}
 
                       <del className="text-content">{mrp}</del>
-                      <span className="offer theme-color">
-                        {Number(discount)} %off
-                      </span>
+                      {discount==0||discount==null||discount=="null"||discount==undefined||discount==""?"":
+                       <span className="offer theme-color">
+                       {Number(discount)} %off
+                     </span>}
+                     
                       {/* <h3 className="text-dark">Taxs</h3>
                             <h5>Gst:{productDetails.gst}</h5>
                             <h5>Cgst:{productDetails.cgst}</h5>
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                     </h3>
                     <div className="product-rating custom-rate">
+                      
                       <ul className="rating p-0 m-0 mb-2">
                         {
                           // !ratingg? null :
@@ -667,6 +699,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                           )}
                           {getSizOnclor.map((details) => {
                             return (
+                              // getSizOnclor.size==null||getSizOnclor.size==""||getSizOnclor.undefined?"":
                               <li key={details.id}>
                                 <Link
                                   to=""
@@ -754,7 +787,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                   colors == details.colors &&
                                   varientId == details.id
                                     ? "active"
-                                    : null
+                                    : null 
                                 }
                               >
                                 {details.colors}
@@ -806,7 +839,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                       </li>
                     </ul>
                   </div> */}
-                  <div className="note-box product-packege">
+                  {qut<0?(""):<div className="note-box product-packege">
                     <div className="cart_qty qty-box product-qty">
                       <div className="input-group">
                         <button
@@ -839,23 +872,26 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                        
                       </div>
                     </div>
-                  </div>
+                  </div>}
+                  
                    {total === true ? (
                 <p className="mt-1 ms-2 text-danger" type="invalid">
                   Cannot add more then total qty
                 </p>
               ) : null}
                   <div className="row mt-4">
-                    <div className="col-6 col-xl-3">
+                    {qut<0?(""): <div className="col-6 col-xl-3">
+                      
                       <button className="btn btn-dark">
                         <Link to="">
                           <i data-feather="heart"></i>
-
+                          
                           {window.location.pathname === "/wishlist" ||window.location.pathname==="/shop"||
                           wishlist === undefined ||
                           wishlist === "" ||
                           wishlist === null ||
                           wishlist === "null" ? (
+                            
                             <span
                               className="text-white"
                               onClick={() => AddToWishList()}
@@ -874,33 +910,12 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                           )}
                         </Link>
                       </button>
-                    </div>
+                    </div>}
+                   
 
                     <div className="col-6 col-xl-3 ">
-                      {qut<0?<button className="btn btn-dark" disabled>
-                        <div>
-                          {window.location.pathname==="/shop"|| cart === undefined ||
-                          cart === "" ||
-                          cart === null ||
-                          cart === "null" ? (
-                            <span
-                              className="text-white"
-                              onClick={() => AddToCart()}
-                            >
-                              Add To Cart
-                            </span>
-                          ) : (
-                            <span
-                              className="text-white"
-                              onClick={() => navigate("/cart")}
-
-                            >
-                              Buy
-                            </span>
-                           
-                          )}
-                        </div>
-                      </button>:<button className="btn btn-dark">
+                      {qut<0?"":
+                      <button className="btn btn-dark">
                         <div>
                           {cart === undefined ||
                           cart === "" ||
@@ -1117,6 +1132,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                       title="Review"
                     >
                       <div className="review-box">
+                        
                         <div className="row g-4">
                           <div className="col-xl-6">
                             <div className="review-title">
@@ -1155,9 +1171,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                   </li>
                                 </ul>
                               </div>
-                              <h6 className="ms-3">4.2 Out Of 5</h6>
+                              <h6 className="ms-3">4 Out Of 5</h6>
                             </div>
-
+                          
                             <div className="accordion-body">
                               <ul className="category-list custom-padding">
                                 <li>
@@ -1543,13 +1559,13 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                             </ul>
                                           </div>
                                         </div>
-
-                                        <div className="reply">
+                                         {rdataa.comment==undefined||rdataa.comment==null||rdataa.comment==""?"":<div className="reply">
                                           <p className="w-100">
                                             {rdataa.comment}
                                             {/* <Link to="/">Reply</Link> */}
                                           </p>
-                                        </div>
+                                        </div>}
+                                        
                                       </div>
                                     </div>
                                   </li>

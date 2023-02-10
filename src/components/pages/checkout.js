@@ -50,7 +50,7 @@ const Checkout = (props) => {
     total_sgst: "",
     taxable_value: "",
     discount_coupon: "0",
-    vendor_id: "1",
+    vendor_id: "",
     order_product: [],
   });
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
@@ -361,6 +361,11 @@ const Checkout = (props) => {
             setordervalidation("");
 
             localStorage.setItem("orderid", response.data.order_id);
+            // localStorage.setItem("vendorid", response.data.vendor_id);
+
+            console.log("88888************"+response.data.vendor_id)
+          
+
             setProductAlert(false);
 
             navigate("/your_orders");
