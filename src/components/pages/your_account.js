@@ -1759,7 +1759,7 @@ function Account() {
                     name={"first_name"}
                     onChange={OnchangeFistname}
                     required
-                    maxLength={10}
+                    maxLength={15}
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1780,7 +1780,7 @@ function Account() {
                     name={"last_name"}
                     onChange={OnchangeFistname}
                     required
-                    maxLength={10}
+                    maxLength={15}
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1839,6 +1839,8 @@ function Account() {
                     name={"phone_no"}
                     onChange={OnchangeFistname}
                     required
+                    maxLength={10}
+                    minLength={10}
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}

@@ -294,6 +294,13 @@ const Cart = () => {
       .catch((error) => {});
   };
   // end copy coupon
+
+  /*<----To go to the product details page---->*/
+  const clickProduct = (productid, id) => {
+    localStorage.setItem("proid", productid);
+    localStorage.setItem("variantid", id);
+    navigate("/product-detail");
+  };
   return (
     <Fragment>
       <Header deleteCart={deleteCart} />
@@ -312,24 +319,32 @@ const Cart = () => {
                   ) : (
                     <table className="table">
                       {cartdata.map((cdata) => {
+                        console.log(cdata);
                         return (
                           <tbody key={cdata.id}>
                             <tr className="product-box-contain">
                               <td className="product-detail">
                                 <div className="product border-0">
-                                  <Link to="/" className="product-image">
-                                    <img
-                                      src={cdata.all_images}
-                                      className="img-fluid lazyload"
-                                      alt=""
-                                    />
-                                  </Link>
+                                  {/* <Link
+                                    to="/product-detail"
+                                    className="product-image"
+                                  > */}
+                                  <img
+                                    onClick={() => clickProduct()}
+                                    src={cdata.all_images}
+                                    className="img-fluid lazyload"
+                                    alt=""
+                                  />
+                                  {/* </Link> */}
                                   <div className="product-detail">
                                     <ul>
-                                      <li className="name">
-                                        <Link to="/">
-                                          {cdata.product_title_name}
-                                        </Link>
+                                      <li
+                                        className="name"
+                                        onClick={() => clickProduct()}
+                                      >
+                                        {/* <Link to="/product-detail"> */}
+                                        {cdata.product_title_name}
+                                        {/* </Link> */}
                                       </li>
 
                                       <li className="text-content">
