@@ -29,11 +29,11 @@ const Benners = () => {
 
   // var product = data.product;
   useEffect(() => {
-    function getRating() {
+    function getproductType() {
       try {
         axios
           .post(
-            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
             {
               product_search: {
                 search: `${productType}`,
@@ -43,6 +43,11 @@ const Benners = () => {
                 product_title_name: "",
                 sale_price: "",
                 short_by_updated_on: "",
+              },
+            },
+            {
+              headers: {
+                user_token: token,
               },
             }
           )
@@ -63,7 +68,7 @@ const Benners = () => {
           });
       } catch (err) {}
     }
-    getRating();
+    getproductType();
   }, []);
 
   /* <!--Function for map category and same category not show again--> */

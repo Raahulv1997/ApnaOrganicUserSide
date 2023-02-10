@@ -1030,36 +1030,6 @@ if(avgRating)
                             />
                           </div>
 
-                          {/* <div className="banner-contain nav-desh">
-                            {showbanner.map((img) => {
-                              return (
-                                <>
-                                  {img.banner_location ===
-                                  "home_page_right_side(2)" ? (
-                                    <>
-                                      <img
-                                        src={img.image}
-                                        className="bg-img lazyload w-100"
-                                        alt="image"
-                                      />
-                                      <div className="banner-details p-center banner-b-space w-100 text-center">
-                                        <div>
-                                          <h4 className="ls-expanded theme-color mb-sm-3 mb-1">
-                                            {img.title}
-                                          </h4>
-                                          <h2>{img.description}</h2>
-                                          <p className="mx-auto mt-1">
-                                            Save up to 5% OFF
-                                          </p>
-                                        </div>
-                                      </div>
-                                    </>
-                                  ) : null}
-                                </>
-                              );
-                            })}
-                          </div> */}
-
                           {/* <div className="nav-desh">
                             <div className="desh-title mt-3">
                               <h5>From The Manufacturer:</h5>
@@ -1138,41 +1108,61 @@ if(avgRating)
                             <div className="review-title">
                               <h4 className="fw-500">Customer reviews</h4>
                             </div>
-
-                            <div className="d-flex">
-                              <div className="product-rating">
-                                <ul className="rating">
-                                  <li color="#ffb321">
-                                    <FaStar
-                                      icon="star"
-                                      className="feather fill"
-                                      fill={"#ffb321"}
-                                    />
-                                  </li>
-                                  <li color="#ffb321">
-                                    <FaStar
-                                      icon="star"
-                                      className="feather fill"
-                                      fill={"#ffb321"}
-                                    />
-                                  </li>
-                                  <li color="#ffb321">
-                                    <FaStar
-                                      icon="star"
-                                      className="feather fill"
-                                      fill={"#ffb321"}
-                                    />
-                                  </li>
-                                  <li>
-                                    <FaStar icon="star" className="feather " />
-                                  </li>
-                                  <li>
-                                    <FaStar icon="star" className="feather " />
-                                  </li>
-                                </ul>
-                              </div>
-                              <h6 className="ms-3">4 Out Of 5</h6>
+                            {(avgRating[0] || []).map((data)=>{
+  return(
+   <>
+         <div className="d-flex">
+                            <div className="product-rating">
+                                            <ul className="rating ">
+                                              {
+                                                // !ratingg? null :
+                                                (ratingbox || []).map(
+                                                  (rat, i) => {
+                                                    return ratingg - rat >=
+                                                      0 ? (
+                                                      <li
+                                                        color="#ffb321"
+                                                        key={i}
+                                                      >
+                                                        <FaStar
+                                                          icon="star"
+                                                          className="feather fill"
+                                                          fill={"#ffb321"}
+                                                        />
+                                                      </li>
+                                                    ) : ratingg - rat < 0 &&
+                                                      ratingg - rat > -1 ? (
+                                                      <li color="#ffb321">
+                                                        <FaStarHalfAlt
+                                                          icon="star"
+                                                          className="feather"
+                                                          fill={"#ffb321"}
+                                                        />
+                                                      </li>
+                                                    ) : ratingg - rat <= -1 ? (
+                                                      <li color="#ffb321">
+                                                        <FaRegStar
+                                                          icon="star"
+                                                          className="feather"
+                                                          fill={"#ffb321"}
+                                                        />
+                                                      </li>
+                                                    ) : null;
+                                                  }
+                                                )
+                                              }
+                                            </ul>
+                                          </div>
+                              <h6 className="ms-3">{avgRating.avgRating}Out Of 5</h6>
                             </div>
+   </>
+
+  )
+})}
+                               
+                             
+                                
+                           
                           
                             <div className="accordion-body">
                               <ul className="category-list custom-padding">
@@ -1493,9 +1483,9 @@ if(avgRating)
 
                         {reviewData.map((rdataa) => {
                           let ratingg = Number(rdataa.review_rating);
-
                           return (
                             <>
+                         {rdataa.status=="approve"?
                               <div className="review-people">
                                 <ul className="review-list">
                                   <li>
@@ -1571,6 +1561,7 @@ if(avgRating)
                                   </li>
                                 </ul>
                               </div>
+                              :null}
                             </>
                           );
                         })}
