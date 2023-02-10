@@ -13,7 +13,7 @@ import Spinner from "react-bootstrap/Spinner";
 import Modal from 'react-bootstrap/Modal';
 const SellerSignUp = () => {
   const[ customValidation,setCustomValidation]=useState(false)
-  const formRef = useRef();
+  const formRef = useRef(null);
   const [show, setShow] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [otp, setotp] = useState(0);
@@ -314,6 +314,7 @@ const SellerSignUp = () => {
   }, [Docnamearray]);
 
   const handleFormChange = (e) => {
+ 
     setCustomValidation(false)
     setaddvendordata({
       ...addvendordata,
@@ -461,7 +462,8 @@ const SellerSignUp = () => {
   }, [customarray]);
 
   // end social media link
-
+  var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
+  var rst = regex.test(addvendordata.email);
   const UpdateVendorClick = (e) => {
     // const form = e.currentTarget;
     e.preventDefault();
@@ -471,26 +473,30 @@ const SellerSignUp = () => {
     //     setValidated(true);
     // }
     if(addvendordata.owner_name===""){
+      
       setCustomValidation("ownernameEmpty")
     }else if(addvendordata.shop_name===""){
+  
       setCustomValidation("shopnameEmpty")
     }else if(addvendordata.mobile===""){
+    
       setCustomValidation("MobileEmpty")
     }
-    else if(addvendordata.email===""){
+    else if(addvendordata.email==="" ){
 
-      var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
-      var rst = regex.test(addvendordata.email);
-      if(rst !== true){
-        setCustomValidation("EmailEmpty")
-      }
-      setCustomValidation("EmailEmpty")
-
+           if(rst !== true){
+            setCustomValidation("EmailEmpty")
+           }
+      
+            
     }else if(addvendordata.shop_address===""){
+      
       setCustomValidation("ShopAddressEmpty")
     }else if(addvendordata.gstn===""){
+   
       setCustomValidation("GSTEmpty")
     }else if(addvendordata.geolocation===""){
+      
       setCustomValidation("GeolocationEmpty")
     }
     
@@ -571,7 +577,7 @@ const SellerSignUp = () => {
                               name={"owner_name"}
                               onChange={(e) => handleFormChange(e)  }
                               value={addvendordata.owner_name}
-                              // required
+                              //  required
                             />{customValidation==="ownernameEmpty"? <span className="text-danger">Please fill the Owner </span>:customValidation===false?"":null}
                        
                           </Form.Group>
@@ -638,7 +644,7 @@ const SellerSignUp = () => {
                             onChange={(e) => handleFormChange(e)}                           
                             value={addvendordata.email}
                             // required
-                            />{customValidation==="EmailEmpty"?<span className="text-danger">Please fill the Email </span>:customValidation===false?"":null}
+                            />{customValidation==="EmailEmpty"?<span className="text-danger">Please fill the  Valid Email</span>:customValidation===false?"":null}
                             {/* <Form.Control.Feedback
                               type="invalid"
                               className="h6"
