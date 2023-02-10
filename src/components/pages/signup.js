@@ -19,7 +19,6 @@ const Singup = () => {
   const [otperror, setOtperror] = useState(false);
   const [validated, setValidated] = useState(false);
 
-
   // const handlePasswordChange = (e) => {
   //   setPassword(e.target.value);
   //   setPasswordError("");
@@ -52,9 +51,8 @@ const Singup = () => {
   const navigate = useNavigate();
 
   const SignUpUser = (e) => {
-    
-  //  let regex = (/[A-Z],[a-z],[\d`~!@#$%\^&*()+=|;:'",.<>\/?\\\-],[8,]/)
-  //  console.log("REJEXXXXXXX---------"+regex)
+    //  let regex = (/[A-Z],[a-z],[\d`~!@#$%\^&*()+=|;:'",.<>\/?\\\-],[8,]/)
+    //  console.log("REJEXXXXXXX---------"+regex)
     e.preventDefault();
     setemailerror("");
     let email = e.target.email.value;
@@ -62,65 +60,48 @@ const Singup = () => {
     setemailerror("spinner");
     if (!passval) {
       setPasswordError("New password is required");
-    }
-    
-    else if (
-      passval < 8 &&passval !== /[A-Z]/&&passval!==/[a-z]/&&passval!==/[0-9]/&&passval!==/[d`~!@#$%\^&*()+=|;:'",.<>\/?\\\-]/)
-    {
+    } else if (
+      passval.length < 8 ||
+      !/\d/.test(passval) ||
+      !/[a-z]/.test(passval) ||
+      !/[A-Z]/.test(passval)
+    ) {
       setPasswordError(
         "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
       );
-    }
-    else {
-      setPasswordError("");
-    }
-      console.log("ssssss----"+e.target.email.value)
-    
-    if(passval.length>=8){
-      console.log("RESPONssssssss----"+e.target.email.value)
+      setemailerror("");
+    } else {
       axios
-      .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
-        email: e.target.email.value,
-      })
-      .then((response) => {
-        console.log('kk--------------'+response);
-        if (response.data.response === "Email Already Exist") {
-          setemailerror("Already");
-          setPasswordError("");
-          
-          e.target.password.value = "";
-        } else {
-          setotp("signup");
-          setemailerror("");
-          setPasswordError("");
-          
-        }
-        return response;
-      })
-      .catch((error) => {
-        console.log(error);
-        if (error.message === "Request failed with status code 513") {
-          setemailerror("Wrong");
-          setPasswordError("");
-          
-        }
-      });
+        .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
+          email: e.target.email.value,
+        })
+        .then((response) => {
+          if (response.data.response === "Email Already Exist") {
+            setemailerror("Already");
+            setPasswordError("");
+
+            e.target.password.value = "";
+          } else {
+            setotp("signup");
+            setemailerror("");
+            setPasswordError("");
+          }
+          return response;
+        })
+        .catch((error) => {
+          console.log(error);
+          if (error.message === "Request failed with status code 513") {
+            setemailerror("Wrong");
+            setPasswordError("");
+          }
+        });
       setPasswordError("");
     }
-    else
-    {
-      setPasswordError(
-        "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
-      );
-      console.log("--00098*********---"+PasswordError)
-    }
-   
   };
 
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
     setPasswordError("");
-
     if (otperror === "resend") {
       setpassval("");
     }
@@ -151,7 +132,7 @@ const Singup = () => {
           } else {
             localStorage.setItem("userid", response.data.user_id.insertId);
             localStorage.setItem("token", response.data.token);
-            
+
             localStorage.setItem("upassword", passval);
             navigate("/your_account");
             return response;
@@ -201,7 +182,7 @@ const Singup = () => {
                           placeholder="Email Address"
                           name="emailid"
                           required
-                          onChange={(e) => onPasswordChange(e)}
+                          // onChange={(e) => onPasswordChange(e)}
                         />{" "}
                         {emailerror === "Already" ? (
                           <p className="text-danger">
@@ -253,8 +234,10 @@ const Singup = () => {
                             onChange={(e) => onPasswordChange(e)}
                           />
                           {PasswordError && (
-                    <p className="error-message text-danger">{PasswordError}</p>
-                  )}
+                            <p className="error-message text-danger">
+                              {PasswordError}
+                            </p>
+                          )}
                           <label htmlFor="password">Password</label>
                         </div>
                       </div>
