@@ -993,30 +993,33 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                       <ul className="product-info-list product-info-list-2 ">
                         <li>
                           Type :{" "}
-                          <Link to="/">{productDetails.product_type}</Link>
+                          <span className="text-dark px-2">
+                            {productDetails.product_type}
+                          </span>
                         </li>
                         <li>
                           Taxs :{" "}
-                          <Link to="/">
+                          <span className="text-dark px-2">
                             Gst:{productDetails.gst} , Sgst:
                             {productDetails.sgst},Cgst:{productDetails.cgst}
-                          </Link>
+                          </span>
                         </li>
                         <li>
-                          Veriant ID : <Link to="/">{Id}</Link>
+                          Veriant ID :{" "}
+                          <span className="text-dark px-2">{Id}</span>
                         </li>
                         <li>
-                          MFG : <Link to="/">{mfd}</Link>
+                          MFG : <span className="text-dark px-2">{mfd}</span>
                         </li>
                         <li>
-                          EXP : <Link to="/">{exp}</Link>
+                          EXP : <span className="text-dark px-2">{exp}</span>
                         </li>
                         <li>
-                          Stock : <Link to="/">{qut}</Link>
+                          Stock : <span className="text-dark px-2">{qut}</span>
                         </li>
                         <li>
-                          Tags : <Link to="/">Cake,</Link>{" "}
-                          <Link to="/">Backery</Link>
+                          Tags : <span className="text-dark px-2">Cake,</span>{" "}
+                          <span className="text-dark px-2">Backery</span>
                         </li>
                       </ul>
                     </div>
