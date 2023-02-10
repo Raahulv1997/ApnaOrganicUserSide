@@ -298,6 +298,7 @@ const Shop = (props) => {
                   discount: discountfilter,
                   avgRatings: ratingfilter,
                   is_delete: ["1"],
+                  product_status:["approved"],
                 },
               }
             )
@@ -342,7 +343,8 @@ const Shop = (props) => {
                   product_type: [],
                   colors: [],
                   size: [],
-
+                  product_status:["approved"],
+                  is_delete: ["1"],
                   brand: brandfilter,
                   discount: discountfilter,
                   avgRatings: ratingfilter,

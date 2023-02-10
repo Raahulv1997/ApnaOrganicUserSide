@@ -5,6 +5,8 @@ import banner1 from "../../Photos/banner/14.jpg";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
+import SweetAlert from "sweetalert-react";
+import "sweetalert/dist/sweetalert.css";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
 import {
@@ -27,6 +29,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const fname = localStorage.getItem("first_name");
   const[avgRating,setAvgRating]=useState([]);
   const token = localStorage.getItem("token");
+  const [ReviewAlert, setReviewAlert] = useState(false);
+  console.log(ReviewAlert);
   const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
   const [getSizOnclor, setGetSizeOnColor] = useState([]);
@@ -56,14 +60,25 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
   const [Rrating, setRrating] = useState("");
+  // const [mainRrating, setmainRrating] = useState("");
+
   const [Searchreview, setSearchReview] = useState({
     product_name: "",
     category_type: "",
     status: "",
   });
+  let [reviewerror, setReviewError] = useState("");
   // const [rating, setRating] = useState([]);
+  let mainRrating;
+  if(avgRating[1] !== "" || avgRating[1] !== null){
+    {(avgRating[1]|| []).map((avg)=>{
+      return(
+        mainRrating = avg.avgRating
+       
+      )})}
+  }
   let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = (productDetails.avgRatings);
+  let ratingg =mainRrating;
   const currentdate = moment().format("YYYY-MM-DD");
 
   // var product_details = data3.product_details;
@@ -72,6 +87,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [total,settotal]=useState(false);
+  console.log("PRODUCTDETAILS---"+JSON.stringify(mainRrating))
   /*<-----Increment Functionality----> */
   function incrementCount() {
     if(qut<=count)
@@ -128,6 +144,16 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
               proid,
               varientId
             );
+            // console.log(
+            //   data.product_verient[0].colors,
+            //   data.product_verient[0].product_price,
+            //   data.product_verient[0].mrp,
+            //   data.product_verient[0].manufacturing_date,
+            //   data.product_verient[0].expire_date,
+            //   data.product_verient[0].quantity,
+            //   proid,
+            //   varientId
+            // );
           });
       } catch (err) {}
     }
@@ -149,6 +175,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
           setProductprice(Number(data.product_price.toFixed(2)));
           setsaleprice(Number(data.sale_price).toFixed(2));
+          // console.log(Number(data.sale_price.toFixed(2)));
           setMrp(Number(data.mrp).toFixed(2));
           setColors(data.colors);
           setDiscount(data.discount);
@@ -229,8 +256,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         setapicall(true);
       });
   };
-
-
+  /*<-----Functionality to Add to Wishlist----> */
   const AddToWishList = () => {
     axios
       .post(
@@ -254,6 +280,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       })
       .catch(function (error) {});
   };
+
+  /*<-----Functionality to Remove from Wishlist----> */
   const RemoveToWishList = (id, wishlistt, wishlistid) => {
     axios
       .put(
@@ -289,6 +317,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
     setProductprice(product_price);
     setsaleprice(Number(SalePrice).toFixed(2));
+    // console.log(Number(SalePrice).toFixed(2));
     setMrp(mrpp);
 
     setSize(sizee);
@@ -340,6 +369,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
     setProductprice(product_price);
     setsaleprice(Number(SalePrice).toFixed(2));
+    // console.log(Number(SalePrice).toFixed(2));
     setMrp(mrpp);
     setUnitQwanity(unitQwanityy);
     setSize(sizee);
@@ -389,6 +419,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     
 
     setsaleprice(Number(Salepricee).toFixed(2));
+    // console.log(Salepricee);
     setColors(color);
     setProductprice(product_price);
     setMrp(mrpp);
@@ -439,7 +470,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const onRatingChange = (e) => {
     setRrating(e.target.value);
   };
-  console.log("onRatingChange" + JSON.stringify(Rrating));
 
   /*<----Function to add the review---->*/
   const AddReview = (e) => {
@@ -453,14 +483,27 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         review_rating: `${Rrating}`,
         comment: `${addreviewdata.comment}`,
       })
-      
-      .then((response) =>{
-        let data=response.data
-        setProductDetails(data);
-        // console.log("oooooo-----"+data)
-        setapicall(true);
+
+      .then((response) => {
+        console.log(response.data.message);
+        let data = response.data;
+        if (data.message === "User already Reviewed") {
+          setReviewError("You alredy Reviewd the product");
+          setReviewAlert(false);
+        } else {
+          setReviewAlert(true);
+          setProductDetails(data);
+          setaddreviewdata({ ...addreviewdata, comment: "" });
+          setRrating(""); // console.log("oooooo-----"+data)
+          setapicall(true);
+        }
       });
      
+  };
+
+  /*<-----Functionality to close the sweetalert of the successfully added review----> */
+  const closeReviewAlert = (e) => {
+    setReviewAlert(false);
   };
 
   /*<-----Functionality to filter products data by rate----> */
@@ -596,7 +639,6 @@ if(avgRating)
                   <div className="price-rating">
                     <h3 className="theme-color price">
                       {Number(saleprice)}
-
                       <del className="text-content">{mrp}</del>
                       {discount==0||discount==null||discount=="null"||discount==undefined||discount==""?"":
                        <span className="offer theme-color">
@@ -611,7 +653,8 @@ if(avgRating)
                     <div className="product-rating custom-rate">
                       
                       <ul className="rating p-0 m-0 mb-2">
-                        {
+                       {
+                        
                           // !ratingg? null :
                           (ratingbox || []).map((rat, i) => {
                             return ratingg - rat >= 0 ? (
@@ -1115,6 +1158,7 @@ if(avgRating)
                             <div className="d-flex">
                             <div className="product-rating">
                                             <ul className="rating ">
+                                              
                                               {
                                                 // !ratingg? null :
                                                 (ratingbox || [0]).map(
@@ -1185,7 +1229,7 @@ if(avgRating)
                                               <div
                                                 className="progress-bar "
                                                 role="progressbar"
-                                                style={{ width:count.user_count }}
+                                                style={{ width:"50%" }}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
@@ -1211,7 +1255,7 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: count.user_count  }}
+                                                style={{ width: "40%" }}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
@@ -1238,7 +1282,7 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: count.user_count  }}
+                                                style={{ width: "30%"}}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
@@ -1265,7 +1309,8 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: count.user_count  }}
+                                                style={{ width:"20%"}}
+
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
@@ -1291,7 +1336,8 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: count.user_count }}
+                                                style={{ width:"10%"}}
+
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
@@ -1477,6 +1523,12 @@ if(avgRating)
                                     Write Your Comment
                                   </label>
                                 </div>
+                                <div className="mt-2">
+                                  {" "}
+                                  <small className="text-danger">
+                                    {reviewerror}
+                                  </small>
+                                </div>
                                 <NavLink
                                   to=""
                                   onClick={AddReview}
@@ -1588,6 +1640,11 @@ if(avgRating)
             </div>
           </div>
         </div>
+        <SweetAlert
+          show={ReviewAlert}
+          title={"Send Review Successfully"}
+          onConfirm={() => closeReviewAlert()}
+        />
       </section>
       {/* <!-- Product Left Sidebar End --> */}
 

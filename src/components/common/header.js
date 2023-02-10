@@ -136,7 +136,7 @@ const Header = (props) => {
           )
           .then((response) => {
             let data = response.data;
-
+            setPdata(data);
             let ProductTotal = 0;
             if (
               data.response === "cart_empty" ||
@@ -168,7 +168,8 @@ const Header = (props) => {
                     cdata.sgst) /
                     100;
               });
-              setPdata(data);
+
+            
 
               setMsg(true);
             }
@@ -235,6 +236,8 @@ const Header = (props) => {
   /* <!--End all api call section--> */
 
   /* <!--Start body of header section--> */
+  console.log("PDATAA"+pdata.length)
+
   return (
     <Fragment>
       {/* <!--Search bar section start--> */}
@@ -415,7 +418,9 @@ const Header = (props) => {
                             className="header-icon bag-icon"
                             onClick={() => navigate("/cart")}
                           >
-                            {pdata.length === 0 ||
+                            {
+                            
+                            pdata.length === 0 ||
                             pdata.length === "" ||
                             pdata === "cart_empty" ? null : (
                               <small className="badge-number">
@@ -454,6 +459,7 @@ const Header = (props) => {
                                           <h6>
                                             <span className="im=block">
                                               {data.quantity}x
+                                              
                                             </span>{" "}
                                             <span>
                                               ₹
