@@ -286,7 +286,7 @@ const Benners = (props) => {
   /* <!--End this section--> */
 
   /* <!--Start body of banner page--> */
-  console.log("------SHOWWWWWW----" + JSON.stringify(productData));
+
   return (
     <Fragment>
       <Header addcart={AddToCart} />
