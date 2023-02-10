@@ -5,6 +5,8 @@ import banner1 from "../../Photos/banner/14.jpg";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
+import SweetAlert from "sweetalert-react";
+import "sweetalert/dist/sweetalert.css";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
 import {
@@ -27,6 +29,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const fname = localStorage.getItem("first_name");
   const [avgRating, setAvgRating] = useState([]);
   const token = localStorage.getItem("token");
+  const [ReviewAlert, setReviewAlert] = useState(false);
+  console.log(ReviewAlert);
   const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
   const [getSizOnclor, setGetSizeOnColor] = useState([]);
@@ -61,6 +65,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     category_type: "",
     status: "",
   });
+  let [reviewerror, setReviewError] = useState("");
   // const [rating, setRating] = useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = productDetails.avgRatings;
@@ -123,6 +128,16 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
               proid,
               varientId
             );
+            // console.log(
+            //   data.product_verient[0].colors,
+            //   data.product_verient[0].product_price,
+            //   data.product_verient[0].mrp,
+            //   data.product_verient[0].manufacturing_date,
+            //   data.product_verient[0].expire_date,
+            //   data.product_verient[0].quantity,
+            //   proid,
+            //   varientId
+            // );
           });
       } catch (err) {}
     }
@@ -143,7 +158,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
           setProductprice(Number(data.product_price.toFixed(2)));
           setsaleprice(Number(data.sale_price).toFixed(2));
-          console.log(Number(data.sale_price.toFixed(2)));
+          // console.log(Number(data.sale_price.toFixed(2)));
           setMrp(Number(data.mrp).toFixed(2));
           setColors(data.colors);
           setDiscount(data.discount);
@@ -223,7 +238,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         setapicall(true);
       });
   };
-
+  /*<-----Functionality to Add to Wishlist----> */
   const AddToWishList = () => {
     axios
       .post(
@@ -247,6 +262,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       })
       .catch(function (error) {});
   };
+
+  /*<-----Functionality to Remove from Wishlist----> */
   const RemoveToWishList = (id, wishlistt, wishlistid) => {
     axios
       .put(
@@ -280,7 +297,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   ) => {
     setProductprice(product_price);
     setsaleprice(Number(SalePrice).toFixed(2));
-    console.log(Number(SalePrice).toFixed(2));
+    // console.log(Number(SalePrice).toFixed(2));
     setMrp(mrpp);
 
     setSize(sizee);
@@ -329,7 +346,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   ) => {
     setProductprice(product_price);
     setsaleprice(Number(SalePrice).toFixed(2));
-    console.log(Number(SalePrice).toFixed(2));
+    // console.log(Number(SalePrice).toFixed(2));
     setMrp(mrpp);
     setUnitQwanity(unitQwanityy);
     setSize(sizee);
@@ -377,7 +394,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     productid
   ) => {
     setsaleprice(Number(Salepricee).toFixed(2));
-    console.log(Number(Salepricee).toFixed(2));
+    // console.log(Salepricee);
     setColors(color);
     setProductprice(product_price);
     setMrp(mrpp);
@@ -444,11 +461,24 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       })
 
       .then((response) => {
+        console.log(response.data.message);
         let data = response.data;
-        setProductDetails(data);
-        // console.log("oooooo-----"+data)
-        setapicall(true);
+        if (data.message === "User already Reviewed") {
+          setReviewError("You alredy Reviewd the product");
+          setReviewAlert(false);
+        } else {
+          setReviewAlert(true);
+          setProductDetails(data);
+          setaddreviewdata({ ...addreviewdata, comment: "" });
+          setRrating(""); // console.log("oooooo-----"+data)
+          setapicall(true);
+        }
       });
+  };
+
+  /*<-----Functionality to close the sweetalert of the successfully added review----> */
+  const closeReviewAlert = (e) => {
+    setReviewAlert(false);
   };
 
   /*<-----Functionality to filter products data by rate----> */
@@ -585,9 +615,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                   {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                   <div className="price-rating">
                     <h3 className="theme-color price">
-                      00000
                       {Number(saleprice)}
-                      {JSON.stringify(Number(saleprice))}
                       <del className="text-content">{mrp}</del>
                       {discount == 0 ||
                       discount == null ||
@@ -1477,6 +1505,12 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                     Write Your Comment
                                   </label>
                                 </div>
+                                <div className="mt-2">
+                                  {" "}
+                                  <small className="text-danger">
+                                    {reviewerror}
+                                  </small>
+                                </div>
                                 <NavLink
                                   to=""
                                   onClick={AddReview}
@@ -1594,6 +1628,11 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
             </div>
           </div>
         </div>
+        <SweetAlert
+          show={ReviewAlert}
+          title={"Send Review Successfully"}
+          onConfirm={() => closeReviewAlert()}
+        />
       </section>
       {/* <!-- Product Left Sidebar End --> */}
 
