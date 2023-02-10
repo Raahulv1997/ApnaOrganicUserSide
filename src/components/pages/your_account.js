@@ -33,6 +33,7 @@ function Account() {
   const [show, setShow] = useState(false);
   const handleClose = () => {
     setShow(false);
+    setapicall(true);
   };
   const handleShow = () => {
     setValidated(false);
@@ -76,12 +77,12 @@ function Account() {
         let data = response.data[0];
         setuserdata(data);
         setUdata(data);
-       
+        setapicall(false);
       })
       .catch((error) => {});
     // Onwishlistclick();
     OnOrderclick();
-  }, [Password, apicall]);
+  }, [apicall, Password]);
 
   // wishlist
   // const Onwishlistclick = () => {
@@ -155,17 +156,15 @@ function Account() {
             setShow(false);
             setapicall(true);
             setValidated(false);
-            localStorage.setItem("first_name",udata.first_name);
-        console.log('FIRST____NAME---'+udata.first_name)
-
+            localStorage.setItem("first_name", udata.first_name);
+            console.log("FIRST____NAME---" + udata.first_name);
           }
         })
         .catch((error) => {});
     }
   };
 
-  const OnchangeFistname = (e,first_name) => {
-  
+  const OnchangeFistname = (e, first_name) => {
     setUdata({
       ...udata,
       [e.target.name]: e.target.value,
@@ -203,8 +202,8 @@ function Account() {
 
   // Function to change the password with the validation and api part :-
   const handlePassSubmit = (e) => {
-    console.log("Passwordddd----------"+newPassword)
-    console.log("Passwordddd-----LEnghthhhhhhhh-----"+newPassword.length)
+    // console.log("Passwordddd----------" + newPassword);
+    // console.log("Passwordddd-----LEnghthhhhhhhh-----" + newPassword.length);
 
     e.preventDefault();
     if (!oldPassword) {
@@ -215,9 +214,10 @@ function Account() {
     if (!newPassword) {
       setNewPasswordError("New password is required");
     } else if (
-      // newPassword.length < 8 
-      // ||
-      newPassword === /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{8,}$/
+      newPassword.length < 8 ||
+      !/\d/.test(newPassword) ||
+      !/[a-z]/.test(newPassword) ||
+      !/[A-Z]/.test(newPassword)
     ) {
       setNewPasswordError(
         "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
@@ -236,7 +236,6 @@ function Account() {
       oldPassword &&
       newPassword &&
       newPassword.length >= 8 &&
-
       confirmPassword &&
       confirmPassword === newPassword
     ) {
@@ -259,7 +258,9 @@ function Account() {
             ChangepassClose();
           }
         })
-        .catch((error) => {});
+        .catch((error) => {
+          console.log(error);
+        });
     }
   };
 
@@ -278,6 +279,7 @@ function Account() {
     setNewPasswordError("");
     setConfirmPasswordError("");
     setPassword(false);
+    setapicall(true);
   };
 
   // end change paassword
@@ -1757,6 +1759,7 @@ function Account() {
                     name={"first_name"}
                     onChange={OnchangeFistname}
                     required
+                    maxLength={15}
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1777,6 +1780,7 @@ function Account() {
                     name={"last_name"}
                     onChange={OnchangeFistname}
                     required
+                    maxLength={15}
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1835,6 +1839,8 @@ function Account() {
                     name={"phone_no"}
                     onChange={OnchangeFistname}
                     required
+                    maxLength={10}
+                    minLength={10}
                   />
                   <Form.Control.Feedback type="invalid">
                     {" "}
@@ -1931,6 +1937,7 @@ function Account() {
           </Modal.Body>
           <Modal.Footer>
             <button
+              type="button"
               className="button main_outline_button btn btn-animation "
               onClick={handleClose}
             >

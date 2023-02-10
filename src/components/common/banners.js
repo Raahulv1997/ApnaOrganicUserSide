@@ -29,11 +29,11 @@ const Benners = () => {
 
   // var product = data.product;
   useEffect(() => {
-    function getRating() {
+    function getproductType() {
       try {
         axios
           .post(
-            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400&user_id=${useridd}`,
+            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
             {
               product_search: {
                 search: `${productType}`,
@@ -43,6 +43,13 @@ const Benners = () => {
                 product_title_name_asc_desc: "asc",
                 sale_price: "",
                 short_by_updated_on: "",
+                is_delete: ["1"],
+                product_status:["approved"]
+              },
+            },
+            {
+              headers: {
+                user_token: token,
               },
             }
           )
@@ -63,7 +70,7 @@ const Benners = () => {
           });
       } catch (err) {}
     }
-    getRating();
+    getproductType();
   }, []);
 
   /* <!--Function for map category and same category not show again--> */
@@ -193,6 +200,7 @@ const Benners = () => {
                 price_to: "",
                 id: "",
                 is_delete: ["1"],
+                product_status:["approved"],
                 product_title_name_asc_desc: "",
                 sale_price: "",
                 short_by_updated_on: "",
@@ -220,6 +228,7 @@ const Benners = () => {
                     price_to: "",
                     id: "",
                     is_delete: ["1"],
+                    product_status:["approved"],
                     product_title_name_asc_desc: "",
                     sale_price: "",
                     short_by_updated_on: "",
@@ -471,6 +480,7 @@ const Benners = () => {
                 <div className="row w-100 ms-0">
                   {productData.map((product) => {
                     return (
+                      product.product_status=="approved"?
                       <div
                         key={product.id}
                         className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
@@ -499,7 +509,7 @@ const Benners = () => {
                           avgRatings={product.avgRatings}
                         />
                       </div>
-                    );
+                    :"")
                   })}
                 </div>
               </div>
