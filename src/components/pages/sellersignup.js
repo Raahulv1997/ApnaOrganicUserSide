@@ -91,10 +91,11 @@ const SellerSignUp = () => {
     setnewImageUrls([]);
     navigate("/");
   };
-
+// for close the reqest apporove model
   const handleClose1 = () => {
     setShow(false);
   };
+
 
   // click the sighup button
   const SignUpUser = (e) => {
@@ -170,6 +171,8 @@ const SellerSignUp = () => {
         });
     }
   };
+
+  // click the otp verification ------
   const VerifyOTP = (e) => {
     e.preventDefault();
     if (otp === "null" || otp === null || otp === undefined || otp === "") {
