@@ -483,11 +483,11 @@ useEffect(()=>{
 });
 },[apicall])
 console.log("088888888888"+JSON.stringify(avgRating))
-console.log("088888888888"+JSON.stringify(avgRating[0]))
+console.log("0888888----88888"+JSON.stringify(avgRating[0]))
 if(avgRating)
 {(avgRating[0] || []).map((data)=>{
   return(
-    console.log("-------"+JSON.stringify(data.review_rating))
+    console.log("---HHHHHHHHHHhh----"+JSON.stringify(data.user_count))
 
   )
 })}
@@ -497,9 +497,9 @@ if(avgRating)
 
 
 
-  // const result3 = productDetails.product_verient.filter((thing, index, self) =>
+  // const avg = avgRating.avgRating.filter((thing, index, self) =>
   // index == self.findIndex((t) => (
-  //   t.size == thing.size
+  //   t.avgRating == thing.avgRating
   // )))
 
   // console.log("result3-----"+result3)
@@ -1108,15 +1108,16 @@ if(avgRating)
                             <div className="review-title">
                               <h4 className="fw-500">Customer reviews</h4>
                             </div>
-                            {(avgRating[0] || []).map((data)=>{
-  return(
-   <>
-         <div className="d-flex">
+                            {(avgRating[0]|| []).map((rating)=>{
+                               let ratingg = Number(rating.review_rating);
+                            return(
+                              <>
+                            <div className="d-flex">
                             <div className="product-rating">
                                             <ul className="rating ">
                                               {
                                                 // !ratingg? null :
-                                                (ratingbox || []).map(
+                                                (ratingbox || [0]).map(
                                                   (rat, i) => {
                                                     return ratingg - rat >=
                                                       0 ? (
@@ -1153,19 +1154,26 @@ if(avgRating)
                                               }
                                             </ul>
                                           </div>
-                              <h6 className="ms-3">{avgRating.avgRating}Out Of 5</h6>
+                                          {(avgRating[1]|| []).map((avg)=>{
+                            return(
+                             
+                              <h6 className="ms-3">{avg.avgRating} Out Of 5</h6>
+                             
+                            )})}
+                              
                             </div>
    </>
 
   )
 })}
-                               
-                             
-                                
-                           
                           
                             <div className="accordion-body">
+                           
                               <ul className="category-list custom-padding">
+                              {(avgRating[0]|| []).map((count)=>{
+                              console.log("COUNTTTT__--------"+JSON.stringify(count.user_count))
+                            return(
+                             <>
                                 <li>
                                   <div className="form-check ps-0 m-0 category-list-box">
                                     <h5>5 Star</h5>
@@ -1177,12 +1185,12 @@ if(avgRating)
                                               <div
                                                 className="progress-bar "
                                                 role="progressbar"
-                                                style={{ width: "68%" }}
+                                                style={{ width:count.user_count }}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                               >
-                                                68%
+                                                {count.user_count}%
                                               </div>
                                             </div>
                                           </div>
@@ -1203,12 +1211,13 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: "67%" }}
+                                                style={{ width: count.user_count  }}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                               >
-                                                67%
+                                               {count.user_count}%
+
                                               </div>
                                             </div>
                                           </div>
@@ -1229,12 +1238,13 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: "42%" }}
+                                                style={{ width: count.user_count  }}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                               >
-                                                42%
+                                              {count.user_count}%
+
                                               </div>
                                             </div>
                                           </div>
@@ -1255,12 +1265,12 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: "30%" }}
+                                                style={{ width: count.user_count  }}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                               >
-                                                30%
+                                                {count.user_count}%
                                               </div>
                                             </div>
                                           </div>
@@ -1281,12 +1291,12 @@ if(avgRating)
                                               <div
                                                 className="progress-bar"
                                                 role="progressbar"
-                                                style={{ width: "24%" }}
+                                                style={{ width: count.user_count }}
                                                 aria-valuenow="100"
                                                 aria-valuemin="0"
                                                 aria-valuemax="100"
                                               >
-                                                24%
+                                                {count.user_count}%
                                               </div>
                                             </div>
                                           </div>
@@ -1295,7 +1305,12 @@ if(avgRating)
                                     </div>
                                   </div>
                                 </li>
+                                  </>
+                             
+                            )})}
                               </ul>
+                           
+                             
                             </div>
                           </div>
 

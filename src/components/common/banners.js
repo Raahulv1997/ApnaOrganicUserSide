@@ -40,7 +40,7 @@ const Benners = () => {
                 price_from: "",
                 price_to: "",
                 id: "",
-                product_title_name: "",
+                product_title_name_asc_desc: "asc",
                 sale_price: "",
                 short_by_updated_on: "",
               },
@@ -198,7 +198,7 @@ const Benners = () => {
                 price_to: "",
                 id: "",
                 is_delete: ["1"],
-                product_title_name: "",
+                product_title_name_asc_desc: "",
                 sale_price: "",
                 short_by_updated_on: "",
               },
@@ -225,7 +225,7 @@ const Benners = () => {
                     price_to: "",
                     id: "",
                     is_delete: ["1"],
-                    product_title_name: "",
+                    product_title_name_asc_desc: "",
                     sale_price: "",
                     short_by_updated_on: "",
                   },
@@ -277,7 +277,7 @@ const Benners = () => {
   /* <!--End this section--> */
 
   /* <!--Start body of banner page--> */
-console.log("------SHOWWWWWW----"+JSON.stringify(productData))
+  console.log("------SHOWWWWWW----" + JSON.stringify(productData));
   return (
     <Fragment>
       <Header addcart={AddToCart} />

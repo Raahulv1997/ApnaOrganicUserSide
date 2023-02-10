@@ -35,7 +35,7 @@ const Checkout = (props) => {
   const [totalqty, settotalqty] = useState(false);
   const [validation, setValidation] = useState(false);
   const [orderadd, setorderadd] = useState({
-    user_id: "",
+
     status: "placed",
     total_quantity: "",
     ref_no: "12345678",
@@ -53,6 +53,7 @@ const Checkout = (props) => {
     vendor_id: "",
     order_product: [],
   });
+ 
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [SalePricee, setSalePricee] = useState(0);
   const [TotalTax, setTotalTax] = useState(0);
@@ -347,6 +348,8 @@ const Checkout = (props) => {
       setordervalidation("deliverymethod");
     } else {
       setSpinner("spinner");
+      console.log("orderadd++++++++++++++++++++")
+      console.log(orderadd)
       axios
         .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd, {
           headers: {

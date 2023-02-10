@@ -52,6 +52,7 @@ const Singup = () => {
   const navigate = useNavigate();
 
   const SignUpUser = (e) => {
+    
   //  let regex = (/[A-Z],[a-z],[\d`~!@#$%\^&*()+=|;:'",.<>\/?\\\-],[8,]/)
   //  console.log("REJEXXXXXXX---------"+regex)
     e.preventDefault();
@@ -73,13 +74,16 @@ const Singup = () => {
     else {
       setPasswordError("");
     }
+      console.log("ssssss----"+e.target.email.value)
+    
     if(passval.length>=8){
+      console.log("RESPONssssssss----"+e.target.email.value)
       axios
       .post(`${process.env.REACT_APP_BASEURL}/sign_up`, {
         email: e.target.email.value,
       })
       .then((response) => {
-        console.log('kk');
+        console.log('kk--------------'+response);
         if (response.data.response === "Email Already Exist") {
           setemailerror("Already");
           setPasswordError("");
@@ -102,6 +106,13 @@ const Singup = () => {
         }
       });
       setPasswordError("");
+    }
+    else
+    {
+      setPasswordError(
+        "New password must be at least 8 characters, 1 lowercase letter, 1 uppercase letter and 1 digit"
+      );
+      console.log("--00098*********---"+PasswordError)
     }
    
   };
