@@ -587,7 +587,10 @@ const Shop = (props) => {
   // );
 
   // END BRANDz
+// useEffect(()=>{
 
+// setapicall(true);
+// },[apicall,props.deleteCart])
   return (
     <Fragment>
       <Header />

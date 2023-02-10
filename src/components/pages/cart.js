@@ -575,7 +575,7 @@ const Cart = () => {
                                     </div>
                                   </div>
                                 </div>
-                                {totalqty === true ? (
+                                {totalqty === true? (
                                   <p
                                     className="mt-1 ms-2 text-danger"
                                     type="invalid"

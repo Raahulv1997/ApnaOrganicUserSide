@@ -422,6 +422,7 @@ const Header = (props) => {
                             
                             pdata.length === 0 ||
                             pdata.length === "" ||
+                            pdata.length===undefined||
                             pdata === "cart_empty" ? null : (
                               <small className="badge-number">
                                 {pdata.length}

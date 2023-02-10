@@ -9,7 +9,7 @@ import "../../CSS/style.css";
 import axios from "axios";
 import Header from "./header";
 import { Link } from "react-router-dom";
-const Benners = () => {
+const Benners = (props) => {
   /* <!--Start all state section--> */
   const [productData, setProductData] = useState([]);
   const [productType, setProductType] = useState([]);
@@ -255,6 +255,11 @@ const Benners = () => {
     }
   }, [productType, apicall]);
   /* <!--End this section--> */
+  
+// useEffect(()=>{
+
+// setapicall(true);
+// },[apicall,props.deleteCart])
 
   /* <!--Function for set token and navigate from product details page--> */
 
