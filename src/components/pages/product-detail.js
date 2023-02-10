@@ -25,7 +25,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
   const useridd = localStorage.getItem("userid");
   const fname = localStorage.getItem("first_name");
-  const[avgRating,setAvgRating]=useState([]);
+  const [avgRating, setAvgRating] = useState([]);
   const token = localStorage.getItem("token");
   const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
@@ -48,7 +48,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   // const[review,setReview]=useState([]);
   const [discount, setDiscount] = useState();
   const [addreviewdata, setaddreviewdata] = useState({
-    comment:""
+    comment: "",
   });
   const [showImage, setShowImages] = useState([]);
   const [reviewData, setReviewData] = useState([]);
@@ -63,7 +63,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   });
   // const [rating, setRating] = useState([]);
   let ratingbox = [1, 2, 3, 4, 5];
-  let ratingg = (productDetails.avgRatings);
+  let ratingg = productDetails.avgRatings;
   const currentdate = moment().format("YYYY-MM-DD");
 
   // var product_details = data3.product_details;
@@ -71,21 +71,16 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   let [count, setCount] = useState(1);
   const { state } = useLocation();
   const navigate = useNavigate();
-  const [total,settotal]=useState(false);
+  const [total, settotal] = useState(false);
   /*<-----Increment Functionality----> */
   function incrementCount() {
-    if(qut<=count)
-    {
+    if (qut <= count) {
       settotal(true);
-    }
-    else
-    {
+    } else {
       count = count + 1;
       setCount(count);
       settotal(false);
-
     }
-    
   }
   /*<-----Decrement Functionality----> */
   const decrementCount = () => {
@@ -99,7 +94,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var proid = localStorage.getItem("proid");
   const [varientId, setVeriantId] = useState(localStorage.getItem("variantid"));
 
-//  console.log("------------++++++"+JSON.stringify(productDetails))
+  //  console.log("------------++++++"+JSON.stringify(productDetails))
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -136,7 +131,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     getVeriantDetails(varientId, proid);
   }, [apicall, varientId]);
 
-
   /*<-----Functionality for veriant Data of product----> */
   const getVeriantDetails = (varientId, proid) => {
     try {
@@ -149,6 +143,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
           setProductprice(Number(data.product_price.toFixed(2)));
           setsaleprice(Number(data.sale_price).toFixed(2));
+          console.log(Number(data.sale_price.toFixed(2)));
           setMrp(Number(data.mrp).toFixed(2));
           setColors(data.colors);
           setDiscount(data.discount);
@@ -160,7 +155,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
           setId(data.id);
           setWishlist(data.wishlist);
           setCart(data.cart_);
-      
         });
     } catch (err) {}
   };
@@ -230,7 +224,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       });
   };
 
-
   const AddToWishList = () => {
     axios
       .post(
@@ -285,10 +278,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     id,
     productid
   ) => {
-   
-
     setProductprice(product_price);
     setsaleprice(Number(SalePrice).toFixed(2));
+    console.log(Number(SalePrice).toFixed(2));
     setMrp(mrpp);
 
     setSize(sizee);
@@ -307,7 +299,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         setapicall(false);
         setShowImages(data);
 
-        
         axios
           .get(
             `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
@@ -336,10 +327,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     id,
     productid
   ) => {
- 
-
     setProductprice(product_price);
     setsaleprice(Number(SalePrice).toFixed(2));
+    console.log(Number(SalePrice).toFixed(2));
     setMrp(mrpp);
     setUnitQwanity(unitQwanityy);
     setSize(sizee);
@@ -386,9 +376,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     veriantid,
     productid
   ) => {
-    
-
     setsaleprice(Number(Salepricee).toFixed(2));
+    console.log(Number(Salepricee).toFixed(2));
     setColors(color);
     setProductprice(product_price);
     setMrp(mrpp);
@@ -439,7 +428,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const onRatingChange = (e) => {
     setRrating(e.target.value);
   };
-  console.log("onRatingChange" + JSON.stringify(Rrating));
+  // console.log("onRatingChange" + JSON.stringify(Rrating));
 
   /*<----Function to add the review---->*/
   const AddReview = (e) => {
@@ -453,14 +442,13 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         review_rating: `${Rrating}`,
         comment: `${addreviewdata.comment}`,
       })
-      
-      .then((response) =>{
-        let data=response.data
+
+      .then((response) => {
+        let data = response.data;
         setProductDetails(data);
         // console.log("oooooo-----"+data)
         setapicall(true);
       });
-     
   };
 
   /*<-----Functionality to filter products data by rate----> */
@@ -470,32 +458,26 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   );
 
   /*<-----Functionality to show average rating----> */
-useEffect(()=>{
-  axios.post(`${process.env.REACT_APP_BASEURL}/ratings_review_get`,{
-
-    product_id:`${proid}` 
-})
-.then((response)=>{
-  let data=response.data
-  setAvgRating(data)
-
-
-});
-},[apicall])
-console.log("088888888888"+JSON.stringify(avgRating))
-console.log("088888888888"+JSON.stringify(avgRating[0]))
-if(avgRating)
-{(avgRating[0] || []).map((data)=>{
-  return(
-    console.log("-------"+JSON.stringify(data.review_rating))
-
-  )
-})}
-
+  useEffect(() => {
+    axios
+      .post(`${process.env.REACT_APP_BASEURL}/ratings_review_get`, {
+        product_id: `${proid}`,
+      })
+      .then((response) => {
+        let data = response.data;
+        setAvgRating(data);
+      });
+  }, [apicall]);
+  // console.log("088888888888" + JSON.stringify(avgRating));
+  // console.log("088888888888" + JSON.stringify(avgRating[0]));
+  if (avgRating) {
+    (avgRating[0] || []).map((data) => {
+      return;
+      //  console.log("-------" + JSON.stringify(data.review_rating));
+    });
+  }
 
   /*<-----End secation----> */
-
-
 
   // const result3 = productDetails.product_verient.filter((thing, index, self) =>
   // index == self.findIndex((t) => (
@@ -589,27 +571,41 @@ if(avgRating)
                 data-wow-delay="0.1s"
               >
                 <div className="right-box-contain">
-                  {discount==0||discount==undefined||discount=="null"||discount==null||discount==""?"":<h6 className="offer-top">{discount}%</h6>}
-                  
+                  {discount == 0 ||
+                  discount == undefined ||
+                  discount == "null" ||
+                  discount == null ||
+                  discount == "" ? (
+                    ""
+                  ) : (
+                    <h6 className="offer-top">{discount}%</h6>
+                  )}
+
                   <h2 className="name">{productDetails.product_title_name}</h2>
                   {/* <h3 className="name">Brand:{productDetails.brand}</h3> */}
                   <div className="price-rating">
                     <h3 className="theme-color price">
+                      00000
                       {Number(saleprice)}
-
+                      {JSON.stringify(Number(saleprice))}
                       <del className="text-content">{mrp}</del>
-                      {discount==0||discount==null||discount=="null"||discount==undefined||discount==""?"":
-                       <span className="offer theme-color">
-                       {Number(discount)} %off
-                     </span>}
-                     
+                      {discount == 0 ||
+                      discount == null ||
+                      discount == "null" ||
+                      discount == undefined ||
+                      discount == "" ? (
+                        ""
+                      ) : (
+                        <span className="offer theme-color">
+                          {Number(discount)} %off
+                        </span>
+                      )}
                       {/* <h3 className="text-dark">Taxs</h3>
                             <h5>Gst:{productDetails.gst}</h5>
                             <h5>Cgst:{productDetails.cgst}</h5>
                             <h5>Sgst:{productDetails.sgst}</h5> */}
                     </h3>
                     <div className="product-rating custom-rate">
-                      
                       <ul className="rating p-0 m-0 mb-2">
                         {
                           // !ratingg? null :
@@ -693,10 +689,10 @@ if(avgRating)
                           {productDetails.product_verient[0].size ? (
                             <p className="mb-0 mt-2"> {"Size:"}</p>
                           ) : null}
-                          {console.log(
+                          {/* {console.log(
                             "product Data----------" +
                               JSON.stringify(getSizOnclor)
-                          )}
+                          )} */}
                           {getSizOnclor.map((details) => {
                             return (
                               // getSizOnclor.size==null||getSizOnclor.size==""||getSizOnclor.undefined?"":
@@ -787,7 +783,7 @@ if(avgRating)
                                   colors == details.colors &&
                                   varientId == details.id
                                     ? "active"
-                                    : null 
+                                    : null
                                 }
                               >
                                 {details.colors}
@@ -798,7 +794,13 @@ if(avgRating)
                       </ul>
                     </div>
                   ) : null}
-                  <h6>{qut<0?<h5 className="text-danger">Out of stock !</h5>:""}</h6>
+                  <h6>
+                    {qut < 0 ? (
+                      <h5 className="text-danger">Out of stock !</h5>
+                    ) : (
+                      ""
+                    )}
+                  </h6>
 
                   {/* <div className="time deal-timer product-deal-timer mx-md-0 mx-auto">
                     <div className="product-title">
@@ -839,107 +841,111 @@ if(avgRating)
                       </li>
                     </ul>
                   </div> */}
-                  {qut<0?(""):<div className="note-box product-packege">
-                    <div className="cart_qty qty-box product-qty">
-                      <div className="input-group">
-                        <button
-                          type="button"
-                          className="qty-left-minus"
-                          data-type="minus"
-                          data-field=""
-                          onClick={decrementCount}
-                        >
-                          <i className="fa fa-minus" aria-hidden="true"></i>
-                        </button>
-                        <input
-                          className="form-control input-number qty-input"
-                          type="text"
-                          name="quantity"
-                          value={count}
-                          // onChange={func}
-                        />
-                        
-                        <button
-                          type="button"
-                          className="qty-right-plus"
-                          data-type="plus"
-                          data-field=""
-                          
-                          onClick={()=>incrementCount()}
-                        >
-                          <i className="fa fa-plus" aria-hidden="true"></i>
-                        </button>
-                       
+                  {qut < 0 ? (
+                    ""
+                  ) : (
+                    <div className="note-box product-packege">
+                      <div className="cart_qty qty-box product-qty">
+                        <div className="input-group">
+                          <button
+                            type="button"
+                            className="qty-left-minus"
+                            data-type="minus"
+                            data-field=""
+                            onClick={decrementCount}
+                          >
+                            <i className="fa fa-minus" aria-hidden="true"></i>
+                          </button>
+                          <input
+                            className="form-control input-number qty-input"
+                            type="text"
+                            name="quantity"
+                            value={count}
+                            // onChange={func}
+                          />
+
+                          <button
+                            type="button"
+                            className="qty-right-plus"
+                            data-type="plus"
+                            data-field=""
+                            onClick={() => incrementCount()}
+                          >
+                            <i className="fa fa-plus" aria-hidden="true"></i>
+                          </button>
+                        </div>
                       </div>
                     </div>
-                  </div>}
-                  
-                   {total === true ? (
-                <p className="mt-1 ms-2 text-danger" type="invalid">
-                  Cannot add more then total qty
-                </p>
-              ) : null}
+                  )}
+
+                  {total === true ? (
+                    <p className="mt-1 ms-2 text-danger" type="invalid">
+                      Cannot add more then total qty
+                    </p>
+                  ) : null}
                   <div className="row mt-4">
-                    {qut<0?(""): <div className="col-6 col-xl-3">
-                      
-                      <button className="btn btn-dark">
-                        <Link to="">
-                          <i data-feather="heart"></i>
-                          
-                          {window.location.pathname === "/wishlist" ||window.location.pathname==="/shop"||
-                          wishlist === undefined ||
-                          wishlist === "" ||
-                          wishlist === null ||
-                          wishlist === "null" ? (
-                            
-                            <span
-                              className="text-white"
-                              onClick={() => AddToWishList()}
-                            >
-                              Add To Wishlist
-                            </span>
-                          ) : (
-                            <span
-                              className="text-white"
-                              onClick={() =>
-                                RemoveToWishList(id, wishlistt, wishlistid)
-                              }
-                            >
-                              Remove
-                            </span>
-                          )}
-                        </Link>
-                      </button>
-                    </div>}
-                   
+                    {qut < 0 ? (
+                      ""
+                    ) : (
+                      <div className="col-6 col-xl-3">
+                        <button className="btn btn-dark">
+                          <Link to="">
+                            <i data-feather="heart"></i>
+
+                            {window.location.pathname === "/wishlist" ||
+                            window.location.pathname === "/shop" ||
+                            wishlist === undefined ||
+                            wishlist === "" ||
+                            wishlist === null ||
+                            wishlist === "null" ? (
+                              <span
+                                className="text-white"
+                                onClick={() => AddToWishList()}
+                              >
+                                Add To Wishlist
+                              </span>
+                            ) : (
+                              <span
+                                className="text-white"
+                                onClick={() =>
+                                  RemoveToWishList(id, wishlistt, wishlistid)
+                                }
+                              >
+                                Remove
+                              </span>
+                            )}
+                          </Link>
+                        </button>
+                      </div>
+                    )}
 
                     <div className="col-6 col-xl-3 ">
-                      {qut<0?"":
-                      <button className="btn btn-dark">
-                        <div>
-                          {cart === undefined ||
-                          cart === "" ||
-                          cart === null ||
-                          cart === "null" ? (
-                            <span
-                              className="text-white"
-                              onClick={() => AddToCart()}
-                            >
-                              Add To Cart
-                            </span>
-                          ) : (
-                            <span
-                              className="text-white"
-                              onClick={() => navigate("/cart")}
-
-                            >
-                              Buy
-                            </span>
-                           
-                          )}
-                        </div>
-                      </button>}
-                      
+                      {qut < 0 ? (
+                        ""
+                      ) : (
+                        <button className="btn btn-dark">
+                          <div>
+                            {cart === undefined ||
+                            cart === "" ||
+                            cart === null ||
+                            cart === "null" ? (
+                              <span
+                                className="text-white"
+                                onClick={() => AddToCart()}
+                              >
+                                Add To Cart
+                              </span>
+                            ) : (
+                              <span
+                                className="text-white"
+                                onClick={() => navigate("/cart")}
+                              >
+                                Buy
+                              </span>
+                            )}
+                          </div>
+                        </button>
+                      )}
                     </div>
                   </div>
                   {/* {result.map((d)=>{
@@ -1132,7 +1138,6 @@ if(avgRating)
                       title="Review"
                     >
                       <div className="review-box">
-                        
                         <div className="row g-4">
                           <div className="col-xl-6">
                             <div className="review-title">
@@ -1173,7 +1178,7 @@ if(avgRating)
                               </div>
                               <h6 className="ms-3">4 Out Of 5</h6>
                             </div>
-                          
+
                             <div className="accordion-body">
                               <ul className="category-list custom-padding">
                                 <li>
@@ -1313,7 +1318,7 @@ if(avgRating)
                             <div className="review-title">
                               <h4 className="fw-500">Add a review</h4>
                             </div>
-                             <div className="d-flex">
+                            <div className="d-flex">
                               <div className="product-rating">
                                 <div className="col-md-12">
                                   <Form.Select
@@ -1435,14 +1440,14 @@ if(avgRating)
                                   <option value="approved">Approved</option>
                                   <option value="blocked">Blocked</option>
                                 </Form.Select>*/}
-                                {/* <input
+                              {/* <input
                                       type="url"
                                       className="form-control"
                                       id="review1"
                                       placeholder="Give your review a title"
                                     />
                                     <label htmlFor="review1">Review Title</label> */}
-                                {/* </div> 
+                              {/* </div> 
                               </div> */}
                               {/* <div className="col-md-6">
                                 <div className="form-floating theme-form-floating">
@@ -1514,7 +1519,9 @@ if(avgRating)
                                         <Link to="/">{fname}</Link>
                                         <div className="date-time d-flex d-flex justify-content-between">
                                           <h6 className="text-content">
-                                            {moment(currentdate).format("YYYY-MM-DD")}
+                                            {moment(currentdate).format(
+                                              "YYYY-MM-DD"
+                                            )}
                                           </h6>
 
                                           <div className="product-rating">
@@ -1559,13 +1566,18 @@ if(avgRating)
                                             </ul>
                                           </div>
                                         </div>
-                                         {rdataa.comment==undefined||rdataa.comment==null||rdataa.comment==""?"":<div className="reply">
-                                          <p className="w-100">
-                                            {rdataa.comment}
-                                            {/* <Link to="/">Reply</Link> */}
-                                          </p>
-                                        </div>}
-                                        
+                                        {rdataa.comment == undefined ||
+                                        rdataa.comment == null ||
+                                        rdataa.comment == "" ? (
+                                          ""
+                                        ) : (
+                                          <div className="reply">
+                                            <p className="w-100">
+                                              {rdataa.comment}
+                                              {/* <Link to="/">Reply</Link> */}
+                                            </p>
+                                          </div>
+                                        )}
                                       </div>
                                     </div>
                                   </li>
