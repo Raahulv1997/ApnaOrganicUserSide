@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Accordion from "react-bootstrap/Accordion";
-import { CiBellOn } from "react-icons/ci";
+// import { CiBellOn } from "react-icons/ci";
 import {
   AiOutlineHome,
   AiOutlineSearch,
@@ -378,7 +378,7 @@ const Header = (props) => {
                             <i className="fa-regular fa-magnifying-glass"></i>
                           </Link>
                         </li>
-                        <li className="onhover-dropdown">
+                        {/* <li className="onhover-dropdown">
                           <div
                             className="header-icon bag-icon"
                             onClick={() => navigate("/")}
@@ -390,7 +390,7 @@ const Header = (props) => {
                                 {notification.length}
                               </small>
                             )}
-                            <CiBellOn className="icon_color"/>
+                            <CiBellOn className="icon_color" />
                           </div>
                           {notification.map((mssg) => {
                             return (
@@ -399,7 +399,7 @@ const Header = (props) => {
                               </div>
                             );
                           })}
-                        </li>
+                        </li> */}
                         <li className="onhover-dropdown">
                           <Link
                             to="/wishlist"
