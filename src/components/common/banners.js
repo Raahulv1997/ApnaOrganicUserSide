@@ -27,7 +27,8 @@ const Benners = (props) => {
   const navigate = useNavigate();
   /* <!--End all state section--> */
 
-  // var product = data.product;
+  /* <!--Get product data with api--> */
+
   useEffect(() => {
     function getproductType() {
       try {
@@ -72,6 +73,8 @@ const Benners = (props) => {
     }
     getproductType();
   }, []);
+  /* <!--End this section--> */
+
 
   /* <!--Function for map category and same category not show again--> */
 

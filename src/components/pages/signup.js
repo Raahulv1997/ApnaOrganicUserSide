@@ -1,15 +1,16 @@
 import React, { Fragment } from "react";
 import Banner from "../../Photos/login.png";
 import Footer from "../common/footer";
-import Header from "../common/header";
 import axios from "axios";
 import Spinner from "react-bootstrap/Spinner";
 import Countdown from "react-countdown";
-// import Breadcumb from "../common/beadcumb";
 import "../../CSS/style.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 const Singup = () => {
+  /* <!--Start all state section--> */
+  const navigate = useNavigate();
+
   const [otp, setotp] = useState(0);
   const [email, setemail] = useState("");
   const [emailerror, setemailerror] = useState("");
@@ -18,19 +19,19 @@ const Singup = () => {
 
   const [otperror, setOtperror] = useState(false);
   const [validated, setValidated] = useState(false);
+  /* <!--End all state section--> */
 
-  // const handlePasswordChange = (e) => {
-  //   setPassword(e.target.value);
-  //   setPasswordError("");
-  // };
-  // countdown
+
+   /* <!--Countdown Section Start--> */
+
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
       setOtperror("resend");
-      // Render a complete state
-      // return <Completionist />;
+
     } else {
-      // Render a countdown
+
+       /* <!--Render Countdown--> */
+
       return (
         <h4 className="mt-2 ms-2 text-danger mx-3">
           {hours}:{minutes}:{seconds}
@@ -38,21 +39,23 @@ const Singup = () => {
       );
     }
   };
-  // end countdown
-  const handleSubmit = (event) => {
-    const form = event.currentTarget;
-    if (form.checkValidity() === false) {
-      event.preventDefault();
-      event.stopPropagation();
-    }
-    setValidated(true);
-  };
+   /* <!-- End Countdown Section Start--> */
 
-  const navigate = useNavigate();
+  // const handleSubmit = (event) => {
+  //   const form = event.currentTarget;
+  //   if (form.checkValidity() === false) {
+  //     event.preventDefault();
+  //     event.stopPropagation();
+  //   }
+  //   setValidated(true);
+  // };
+
+   /* <!--Countdown Section Start--> */
+
+
+  /* <!--Signup user with api and password validation--> */
 
   const SignUpUser = (e) => {
-    //  let regex = (/[A-Z],[a-z],[\d`~!@#$%\^&*()+=|;:'",.<>\/?\\\-],[8,]/)
-    //  console.log("REJEXXXXXXX---------"+regex)
     e.preventDefault();
     setemailerror("");
     let email = e.target.email.value;
@@ -98,7 +101,10 @@ const Singup = () => {
       setPasswordError("");
     }
   };
+  /* <!--End this section--> */
 
+
+  /* <!--function for password change--> */
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
     setPasswordError("");
@@ -107,15 +113,24 @@ const Singup = () => {
     }
     setemailerror("");
   };
+  /* <!--End this section--> */
+
+  /* <!--function for otp--> */
+
   const OnOTpChange = (e) => {
     setotp(e.target.value);
     setemailerror("");
     setOtperror("");
   };
+  /* <!--End this section--> */
+
+  /* <!--function for otp--> */
+
+
+  /* <!--VerifyOTP with api and localstorage set userId and token--> */
 
   const VerifyOTP = (e) => {
     e.preventDefault();
-    // if (e.target.otpinput.value == otp) {
     if (otp === "" || otp === "signup") {
       setOtperror("blank");
     } else {
@@ -141,6 +156,11 @@ const Singup = () => {
         .catch((error) => {});
     }
   };
+  /* <!--End this section--> */
+  /* <!--End this all api call section--> */
+
+
+  /* <!--Start signup and login user body section--> */
 
   return (
     <Fragment>
@@ -182,7 +202,6 @@ const Singup = () => {
                           placeholder="Email Address"
                           name="emailid"
                           required
-                          // onChange={(e) => onPasswordChange(e)}
                         />{" "}
                         {emailerror === "Already" ? (
                           <p className="text-danger">
@@ -362,9 +381,9 @@ const Singup = () => {
           </div>
         </div>
       </section>
-      {/* <!-- log in section end --> */}
       <Footer />
     </Fragment>
   );
 };
 export default Singup;
+      /* <!-- End body section--> */
