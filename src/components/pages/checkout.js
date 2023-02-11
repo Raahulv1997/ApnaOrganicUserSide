@@ -348,8 +348,7 @@ const Checkout = (props) => {
       setordervalidation("deliverymethod");
     } else {
       setSpinner("spinner");
-      console.log("orderadd++++++++++++++++++++")
-      console.log(orderadd)
+     
       axios
         .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd, {
           headers: {
@@ -366,7 +365,6 @@ const Checkout = (props) => {
             localStorage.setItem("orderid", response.data.order_id);
             // localStorage.setItem("vendorid", response.data.vendor_id);
 
-            console.log("88888************"+response.data.vendor_id)
           
 
             setProductAlert(false);

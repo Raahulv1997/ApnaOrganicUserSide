@@ -30,7 +30,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const[avgRating,setAvgRating]=useState([]);
   const token = localStorage.getItem("token");
   const [ReviewAlert, setReviewAlert] = useState(false);
-  console.log(ReviewAlert);
   const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
   const [getSizOnclor, setGetSizeOnColor] = useState([]);
@@ -87,7 +86,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const { state } = useLocation();
   const navigate = useNavigate();
   const [total,settotal]=useState(false);
-  console.log("PRODUCTDETAILS---"+JSON.stringify(mainRrating))
   /*<-----Increment Functionality----> */
   function incrementCount() {
     if(qut<=count)
@@ -115,7 +113,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var proid = localStorage.getItem("proid");
   const [varientId, setVeriantId] = useState(localStorage.getItem("variantid"));
 
-//  console.log("------------++++++"+JSON.stringify(productDetails))
   useEffect(() => {
     function getProductDetails() {
       try {
@@ -485,7 +482,6 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       })
 
       .then((response) => {
-        console.log(response.data.message);
         let data = response.data;
         if (data.message === "User already Reviewed") {
           setReviewError("You alredy Reviewd the product");
@@ -525,15 +521,7 @@ useEffect(()=>{
 
 });
 },[apicall])
-console.log("088888888888"+JSON.stringify(avgRating))
-console.log("0888888----88888"+JSON.stringify(avgRating[0]))
-if(avgRating)
-{(avgRating[0] || []).map((data)=>{
-  return(
-    console.log("---HHHHHHHHHHhh----"+JSON.stringify(data.user_count))
 
-  )
-})}
 
 
   /*<-----End secation----> */
@@ -1218,7 +1206,6 @@ if(avgRating)
                            
                               <ul className="category-list custom-padding">
                               {(avgRating[0]|| []).map((count)=>{
-                              console.log("COUNTTTT__--------"+JSON.stringify(count.user_count))
                             return(
                              <>
                                 <li>

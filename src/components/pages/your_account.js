@@ -157,7 +157,6 @@ function Account() {
             setapicall(true);
             setValidated(false);
             localStorage.setItem("first_name", udata.first_name);
-            console.log("FIRST____NAME---" + udata.first_name);
           }
         })
         .catch((error) => {});

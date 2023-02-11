@@ -386,7 +386,6 @@ function Orders() {
                       ? (orderdata.mrp = "0")
                       : Number(orderdata.mrp);
 
-                    //  console.log("-------"+orderdata.sgst)
                     let countAllText =
                       Number(orderdata.gst) +
                       Number(orderdata.cgst) +

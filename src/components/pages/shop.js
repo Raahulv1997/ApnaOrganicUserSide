@@ -346,8 +346,8 @@ const Shop = (props) => {
                   product_status:["approved"],
                   is_delete: ["1"],
                   brand: brandfilter,
-                  discount: [discountfilter],
-                  avgRatings: [ratingfilter],
+                  discount: discountfilter,
+                  avgRatings: ratingfilter,
                   category: [searchCat],
                 },
               },
@@ -573,7 +573,7 @@ const Shop = (props) => {
       .catch((err) => {
         console.log(err);
       });
-  }, []);
+  }, [apicall]);
 
   /*<----Functionality to get data filtered by rating---->*/
   const filtercategorydata = branchArr.filter(
@@ -587,10 +587,9 @@ const Shop = (props) => {
   // );
 
   // END BRANDz
-// useEffect(()=>{
-
-// setapicall(true);
-// },[apicall,props.deleteCart])
+useEffect(()=>{
+setapicall(true);
+},[apicall,props.deleteCart])
   return (
     <Fragment>
       <Header />

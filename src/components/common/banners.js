@@ -1,7 +1,4 @@
 import React, { Fragment, useState } from "react";
-import BannerBox1 from "../../Photos/2.jpg";
-import BannerBox2 from "../../Photos/1.jpg";
-import Banner1 from "../../Photos/14.jpg";
 import ProductBox from "./product-box";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
@@ -16,7 +13,6 @@ const Benners = (props) => {
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
 
-  let useridd = localStorage.getItem("userid");
   let token = localStorage.getItem("token");
 
   const [apicall, setapicall] = useState(false);
@@ -72,7 +68,7 @@ const Benners = (props) => {
       } catch (err) {}
     }
     getproductType();
-  }, []);
+  }, [apicall]);
   /* <!--End this section--> */
 
 
@@ -184,7 +180,6 @@ const Benners = (props) => {
 
   /* <!--Show product data--API Call--> */
   useEffect(() => {
-    let homeurl;
     if (
       token === "null" ||
       token === "" ||
@@ -256,13 +251,12 @@ const Benners = (props) => {
         alert("No token saved");
       }
     }
-  }, [productType, apicall]);
+  }, [apicall,productType]);
   /* <!--End this section--> */
   
-// useEffect(()=>{
-
-// setapicall(true);
-// },[apicall,props.deleteCart])
+useEffect(()=>{
+setapicall(true);
+},[apicall,props.deleteCart])
 
   /* <!--Function for set token and navigate from product details page--> */
 

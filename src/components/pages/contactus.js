@@ -51,7 +51,6 @@ const Contactus = () => {
       OnOrderclick();
     } else if (e.target.value === "other") {
       setOrderData(false);
-      console.log("other");
       setInput(true);
     } else if (e.target.value === "select") {
       setOrderData(false);
@@ -69,7 +68,6 @@ const Contactus = () => {
     } else if (e.target.value === "other") {
       setOrderData(false);
       setInput(true);
-      console.log("other");
     } else if (e.target.value === "select") {
       setOrderData(false);
     }
@@ -113,7 +111,6 @@ const Contactus = () => {
           },
         })
         .then((response) => {
-          console.log(JSON.stringify(response));
           setContactData({
             ...ContactData,
             subject: "",
@@ -135,7 +132,6 @@ const Contactus = () => {
       return false;
     }
   };
-  console.log(ContactData);
   return (
     <Fragment>
       <Header />

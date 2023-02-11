@@ -9,7 +9,7 @@ import { useState, useEffect } from "react";
 import Button from "react-bootstrap/Button";
 import ButtonGroup from "react-bootstrap/ButtonGroup";
 import Accordion from "react-bootstrap/Accordion";
-// import { CiBellOn } from "react-icons/ci";
+import { CiBellOn } from "react-icons/ci";
 import {
   AiOutlineHome,
   AiOutlineSearch,
@@ -210,33 +210,33 @@ const Header = (props) => {
   };
   /* <!--End this section--> */
 
-  // useEffect(() => {
-  //   function getNotification(){
-  //     try{
-  //       axios
-  //         .post(`${process.env.REACT_APP_BASEURL}/notification`,
-  //         {
-  //           "actor_type":"user",
-  //            "actor_id":`${useridd}`
-  //       })
-  //         .then((response) => {
-  //           let data = response.data;
+  useEffect(() => {
+    function getNotification(){
+      try{
+        axios
+          .post(`${process.env.REACT_APP_BASEURL}/notification`,
+          {
+            "actor_type":"user",
+             "actor_id":`${useridd}`
+        })
+          .then((response) => {
+            let data = response.data;
 
-  //           setNotification(data)
-  //           setapicall(false);
-  //         });
-  //     } catch (err) {}
-  //   }
-  //   getNotification();
+            setNotification(data)
+            setapicall(false);
+          });
+      } catch (err) {}
+    }
+    getNotification();
 
-  // }, [apicall]);
+  }, [apicall]);
   // console.log("iii-------------"+JSON.stringify(notification))
   /* <!--End all api call section--> */
 
   /* <!--End all api call section--> */
 
   /* <!--Start body of header section--> */
-  console.log("PDATAA"+pdata.length)
+  // console.log("PDATAA"+pdata.length)
 
   return (
     <Fragment>
@@ -381,13 +381,14 @@ const Header = (props) => {
                             <i className="fa-regular fa-magnifying-glass"></i>
                           </Link>
                         </li>
-                        {/* <li className="onhover-dropdown">
+                        <li className="onhover-dropdown">
                           <div
                             className="header-icon bag-icon"
                             onClick={() => navigate("/")}
                           >
                             {notification.length === 0 ||
                             notification.length === "" ||
+                            notification.length===undefined||
                             notification.length === "0" ? null : (
                               <small className="badge-number">
                                 {notification.length}
@@ -402,7 +403,7 @@ const Header = (props) => {
                               </div>
                             );
                           })}
-                        </li> */}
+                        </li>
                         <li className="onhover-dropdown">
                           <Link
                             to="/wishlist"
@@ -419,7 +420,7 @@ const Header = (props) => {
                             onClick={() => navigate("/cart")}
                           >
                             {
-                            
+                            window.location.pathname==="/shop"||
                             pdata.length === 0 ||
                             pdata.length === "" ||
                             pdata.length===undefined||

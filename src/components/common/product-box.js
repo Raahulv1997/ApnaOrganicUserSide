@@ -11,7 +11,6 @@ const ProductBox = ({
   discount,
   brand,
   quantity,
-  rating,
   category,
   saleprice,
   wishlistt,
@@ -187,7 +186,7 @@ const ProductBox = ({
         </h5>
 
         <div className="price-qty d-flex justify-content-between m-0">
-          {quantity < 0 ? (
+          {window.location.pathname === "/wishlist"||quantity < 0 ? (
             ""
           ) : (
             <div className="counter-number d-md-block d-none">

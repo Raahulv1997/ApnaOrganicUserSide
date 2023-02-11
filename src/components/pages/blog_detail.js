@@ -15,7 +15,6 @@ import { useEffect } from "react";
 const BlogDetail = () => {
   const [apicall, setapicall] = useState([]);
   const blodid = localStorage.getItem("idd");
-  console.log("blod___________--------------id" + JSON.stringify(blodid));
   const [blogDetails, setBlogDetails] = useState([]);
 
 /* <!--Get blog deatils--Api call--> */

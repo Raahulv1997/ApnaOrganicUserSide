@@ -26,7 +26,6 @@ const Login = ({ logIn }) => {
     setcredentailval({ ...credentailval, [e.target.name]: e.target.value });
   };
 
-  console.log("SHOW%%%%%%%###########-----"+JSON.stringify(credentailval))
   const FuctionCall = () => {
     const { from } = state || {};
 

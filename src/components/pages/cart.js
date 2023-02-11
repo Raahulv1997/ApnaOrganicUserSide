@@ -162,7 +162,6 @@ const Cart = () => {
         let data = response.data[0];
         CheckCoupon();
         setapicall(false);
-        console.log("+===========" + apicall);
       });
   };
 
@@ -319,7 +318,6 @@ const Cart = () => {
                   ) : (
                     <table className="table">
                       {cartdata.map((cdata) => {
-                        console.log(cdata);
                         return (
                           <tbody key={cdata.id}>
                             <tr className="product-box-contain">
