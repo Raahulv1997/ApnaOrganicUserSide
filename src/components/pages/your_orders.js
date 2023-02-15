@@ -388,8 +388,6 @@ function Orders() {
 
                     let countAllText =
                       Number(orderdata.gst) +
-                      Number(orderdata.cgst) +
-                      Number(orderdata.sgst) +
                       Number(orderdata.wholesale_sales_tax) +
                       Number(orderdata.manufacturers_sales_tax) +
                       Number(orderdata.retails_sales_tax) +
@@ -397,7 +395,7 @@ function Orders() {
                     let discont = (orderdata.mrp * orderdata.discount) / 100;
                     // let product_price= Number(orderdata.mrp)-discont;
                     let tax =
-                      (Number(orderdata.product_price) * countAllText) / 100;
+                      (Number(orderdata.sale_price) * countAllText) / 100;
                     //  let sale_price=(product_price+tax)
                     let total_price = orderdata.sale_price * orderdata.quantity;
                     total += Number(total_price);

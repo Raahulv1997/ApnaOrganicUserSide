@@ -486,8 +486,6 @@ const Cart = () => {
                                   Total Tax:
                                   {(
                                     Number(cdata.gst) +
-                                    Number(cdata.cgst) +
-                                    Number(cdata.sgst) +
                                     Number(cdata.wholesale_sales_tax) +
                                     Number(cdata.manufacturers_sales_tax) +
                                     Number(cdata.retails_sales_tax) +
@@ -498,24 +496,14 @@ const Cart = () => {
                                 <h4 className="table-title text-content">
                                   Tax: ₹
                                   {(
-                                    (Number(cdata.product_price) * cdata.gst) /
-                                      100 +
-                                    (Number(cdata.product_price) * cdata.cgst) /
-                                      100 +
-                                    (Number(cdata.product_price) * cdata.sgst) /
-                                      100 +
-                                    (Number(cdata.product_price) *
-                                      cdata.wholesale_sales_tax) /
-                                      100 +
-                                    (Number(cdata.product_price) *
-                                      cdata.manufacturers_sales_tax) /
-                                      100 +
-                                    (Number(cdata.product_price) *
-                                      cdata.retails_sales_tax) /
-                                      100 +
-                                    (Number(cdata.product_price) *
-                                      cdata.value_added_tax) /
-                                      100
+                                    (Number(cdata.sale_price) *(
+                                      Number(cdata.gst) +
+                                      Number(cdata.wholesale_sales_tax) +
+                                      Number(cdata.manufacturers_sales_tax) +
+                                      Number(cdata.retails_sales_tax) +
+                                      Number(cdata.value_added_tax)
+                                    )) /
+                                      100 
                                   ).toFixed(2)}
                                 </h4>
                               </td>

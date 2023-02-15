@@ -34,8 +34,10 @@ const Checkout = (props) => {
   const [spinner, setSpinner] = useState(false);
   const [totalqty, settotalqty] = useState(false);
   const [validation, setValidation] = useState(false);
+  const [ProductPriceTotal, setProductPriceTotal] = useState(0);
+  const [SalePricee, setSalePricee] = useState(0);
+  const [TotalTax, setTotalTax] = useState(0);
   const [orderadd, setorderadd] = useState({
-
     status: "placed",
     total_quantity: "",
     ref_no: "12345678",
@@ -54,9 +56,6 @@ const Checkout = (props) => {
     order_product: [],
   });
  
-  const [ProductPriceTotal, setProductPriceTotal] = useState(0);
-  const [SalePricee, setSalePricee] = useState(0);
-  const [TotalTax, setTotalTax] = useState(0);
   // discount and shipping
   let ShippingCharge = 0.0;
   let CouponDis = localStorage.getItem("coupon");
@@ -176,31 +175,29 @@ const Checkout = (props) => {
               }
 
               // gst
-              Totalgst += (Number(cdata.product_price) * cdata.gst) / 100;
+              Totalgst += (Number(cdata.sale_price) * cdata.gst) / 100;
               // end gst
 
               // cgst
-              Totalcgst += (Number(cdata.product_price) * cdata.cgst) / 100;
+              Totalcgst += (Number(cdata.sale_price) * cdata.cgst) / 100;
               // end cgst
 
               // sgst
-              Totalsgst += (Number(cdata.product_price) * cdata.sgst) / 100;
+              Totalsgst += (Number(cdata.sale_price) * cdata.sgst) / 100;
               // end sgst
               Totalmtax +=
-                (Number(cdata.product_price) * cdata.manufacturers_sales_tax) /
+                (Number(cdata.sale_price) * cdata.manufacturers_sales_tax) /
                 100;
               Totalvtax +=
-                (Number(cdata.product_price) * cdata.value_added_tax) / 100;
+                (Number(cdata.sale_price) * cdata.value_added_tax) / 100;
               Totalrtax +=
-                (Number(cdata.product_price) * cdata.retails_sales_tax) / 100;
+                (Number(cdata.sale_price) * cdata.retails_sales_tax) / 100;
               Totalwtax +=
-                (Number(cdata.product_price) * cdata.wholesale_sales_tax) / 100;
+                (Number(cdata.sale_price) * cdata.wholesale_sales_tax) / 100;
 
               // totaltax
               Totaltaxes +=
                 Totalgst +
-                Totalcgst +
-                Totalsgst +
                 Totalmtax +
                 Totalvtax +
                 Totalrtax +
@@ -706,8 +703,6 @@ const Checkout = (props) => {
                                           Total Tax:
                                           {(
                                             Number(cdata.gst) +
-                                            Number(cdata.cgst) +
-                                            Number(cdata.sgst) +
                                             Number(cdata.wholesale_sales_tax) +
                                             Number(
                                               cdata.manufacturers_sales_tax
@@ -720,27 +715,14 @@ const Checkout = (props) => {
                                         <h4 className="table-title text-content">
                                           Tax: ₹
                                           {(
-                                            (Number(cdata.product_price) *
-                                              cdata.gst) /
-                                              100 +
-                                            (Number(cdata.product_price) *
-                                              cdata.cgst) /
-                                              100 +
-                                            (Number(cdata.product_price) *
-                                              cdata.sgst) /
-                                              100 +
-                                            (Number(cdata.product_price) *
-                                              cdata.wholesale_sales_tax) /
-                                              100 +
-                                            (Number(cdata.product_price) *
-                                              cdata.manufacturers_sales_tax) /
-                                              100 +
-                                            (Number(cdata.product_price) *
-                                              cdata.retails_sales_tax) /
-                                              100 +
-                                            (Number(cdata.product_price) *
-                                              cdata.value_added_tax) /
-                                              100
+                                            (Number(cdata.sale_price) *(
+                                              Number(cdata.gst) +
+                                              Number(cdata.wholesale_sales_tax) +
+                                              Number(cdata.manufacturers_sales_tax) +
+                                              Number(cdata.retails_sales_tax) +
+                                              Number(cdata.value_added_tax)
+                                            )) /
+                                              100 
                                           ).toFixed(2)}
                                         </h4>
                                       </td>

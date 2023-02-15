@@ -381,7 +381,7 @@ const Header = (props) => {
                             <i className="fa-regular fa-magnifying-glass"></i>
                           </Link>
                         </li>
-                        <li className="onhover-dropdown">
+                        {/* <li className="onhover-dropdown">
                           <div
                             className="header-icon bag-icon"
                             onClick={() => navigate("/")}
@@ -403,7 +403,7 @@ const Header = (props) => {
                               </div>
                             );
                           })}
-                        </li>
+                        </li> */}
                         <li className="onhover-dropdown">
                           <Link
                             to="/wishlist"
