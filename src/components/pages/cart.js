@@ -28,6 +28,7 @@ const Cart = () => {
   const [msg, setMsg] = useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [totalqty, settotalqty] = useState(false);
+  const [originalproductprice,setOriginalProductPrice] = useState(0)
   /* <!--End all state section--> */
 
   var product1 = data1.product1;
@@ -131,10 +132,13 @@ const Cart = () => {
               setapicall(false);
             } else {
               let ProductTotal = 0;
+              let originalProductPrice =0
               data.map((cdata) => {
                 ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
+                originalProductPrice += cdata.product_price;
               });
               setProductPriceTotal(ProductTotal);
+              setOriginalProductPrice(originalProductPrice);
               setCartData(data);
               setapicall(true);
             }
@@ -417,7 +421,7 @@ const Cart = () => {
                                   </del>
                                   <b>
                                     {" "}
-                                    ₹{Number(cdata.product_price).toFixed(
+                                    ₹{Number(cdata.sale_price).toFixed(
                                       2
                                     )}{" "}
                                   </b>
@@ -437,52 +441,17 @@ const Cart = () => {
                                   Gst:{Number(cdata.gst).toFixed(2)}%
                                 </h6>
                                 <h6 className="">
-                                  Cgst:{Number(cdata.cgst).toFixed(2)}%
+                                  Other:{Number(
+                                      cdata.manufacturers_sales_tax
+                                    )+Number(
+                                      cdata.value_added_tax
+                                    )+Number(
+                                      cdata.retails_sales_tax
+                                    )+Number(
+                                      cdata.wholesale_sales_tax
+                                    )}%
                                 </h6>
                                 <h6 className="">
-                                  Sgst:{Number(cdata.sgst).toFixed(2)}%
-                                </h6>
-                              </td>
-                              <td className="price">
-                                <div className="">
-                                  <h6 className="">
-                                    Mtax:
-                                    {Number(
-                                      cdata.manufacturers_sales_tax
-                                    ).toFixed(2)}
-                                    %
-                                  </h6>
-                                  <h6 className="">
-                                    WTax:
-                                    {Number(cdata.wholesale_sales_tax).toFixed(
-                                      2
-                                    )}
-                                    %
-                                  </h6>
-
-                                  <h6 className="">
-                                    VTax:
-                                    {Number(cdata.value_added_tax).toFixed(2)}%
-                                  </h6>
-                                  <h6 className="">
-                                    RTax:
-                                    {Number(cdata.retails_sales_tax).toFixed(2)}
-                                    %
-                                  </h6>
-                                </div>
-                              </td>
-                              <td className="price">
-                                <h4 className="table-title text-content">
-                                  Taxable Value: ₹
-                                  {Number(cdata.product_price).toFixed(2)}
-                                </h4>
-                                {cdata.sgst === null
-                                  ? (cdata.sgst = "0")
-                                  : cdata.sgst === cdata.sgst}
-                                {cdata.cgst === null
-                                  ? (cdata.cgst = "0")
-                                  : cdata.cgst === cdata.cgst}
-                                <h4 className="table-title text-content">
                                   Total Tax:
                                   {(
                                     Number(cdata.gst) +
@@ -492,7 +461,15 @@ const Cart = () => {
                                     Number(cdata.value_added_tax)
                                   ).toFixed(2)}
                                   %
+                                </h6>
+                              </td>
+                             
+                              <td className="price">
+                                <h4 className="table-title text-content">
+                                  Price (Without Tax): ₹
+                                  {Number(cdata.product_price).toFixed(2)}
                                 </h4>
+                                
                                 <h4 className="table-title text-content">
                                   Tax: ₹
                                   {(
@@ -658,6 +635,17 @@ const Cart = () => {
                     ) : null}
                   </div>
                   <ul className="p-0">
+                  <li>
+                      <h4>Original Price</h4>
+
+                      <h4 className="price">₹{originalproductprice.toFixed(2)}</h4>
+                    </li>
+                    <li>
+                      <h4>Total Tax</h4>
+
+                      {/* <h4 className="price">₹{Totaltax.toFixed(2)}</h4> */}
+                    </li>
+
                     <li>
                       <h4>Subtotal(Tax Included)</h4>
 

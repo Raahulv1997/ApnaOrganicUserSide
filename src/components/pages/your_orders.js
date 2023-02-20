@@ -534,14 +534,13 @@ function Orders() {
                               {userdata.first_name} {userdata.last_name}
                             </div>
                           </div>
-                          <div className="customer_orders d-flex py-3">
+                          {/* <div className="customer_orders d-flex py-3">
                             <AiOutlineFileText className="order_icon p-1" />
 
                             <div className="customer_orders_no ps-4 my-auto">
-                              {/* {totalorder=Number(totalorder)+Number(orderdata.quantity)} */}
                               {order.total_quantity}
                             </div>
-                          </div>
+                          </div> */}
                         </div>
                         <div className="contact py-3">
                           <div className="contact_heading pb-3">

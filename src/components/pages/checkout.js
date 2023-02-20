@@ -177,13 +177,12 @@ const Checkout = (props) => {
               // gst
               Totalgst += (Number(cdata.sale_price) * cdata.gst) / 100;
               // end gst
-
               // cgst
-              Totalcgst += (Number(cdata.sale_price) * cdata.cgst) / 100;
+              Totalcgst += Totalgst/2;
               // end cgst
 
               // sgst
-              Totalsgst += (Number(cdata.sale_price) * cdata.sgst) / 100;
+              Totalsgst += Totalgst/2;
               // end sgst
               Totalmtax +=
                 (Number(cdata.sale_price) * cdata.manufacturers_sales_tax) /
@@ -203,9 +202,10 @@ const Checkout = (props) => {
                 Totalrtax +
                 Totalwtax;
               // end totaltax
+              console.log("gst",Totalgst, "taxesss ",Totaltaxes)
 
               // totaltaxable value
-              TotalTaxableValue += cdata.product_price;
+              TotalTaxableValue += cdata.sale_price;
               // end totaltaxable value
 
               // saleprice
@@ -222,7 +222,7 @@ const Checkout = (props) => {
               taxable_value: TotalTaxableValue,
               discount_coupon_value: CouponDis,
               discount_coupon: CouponId,
-              vendor_id: data.vendor_id,
+              vendor_id: data[0].vendor_id,
               payment_mode: DeliveryMethod,
               order_product: cartdata,
             });
@@ -625,7 +625,7 @@ const Checkout = (props) => {
                                           </del>
                                           <b>
                                             {" "}
-                                            ₹{cdata.product_price.toFixed(
+                                            ₹{cdata.sale_price.toFixed(
                                               2
                                             )}{" "}
                                           </b>
@@ -688,7 +688,7 @@ const Checkout = (props) => {
 
                                       <td className="price">
                                         <h4 className="table-title text-content">
-                                          Taxable Value: ₹
+                                          Price (without tax): ₹
                                           {Number(cdata.product_price).toFixed(
                                             2
                                           )}
@@ -1305,6 +1305,12 @@ const Checkout = (props) => {
                             </ul>
 
                             <ul className="summery-total bg-white">
+                            <li className="mx-3">
+                                <h4>Tax</h4>
+                                <h4 className="price text-danger">
+                                  ₹{TotalTax.toFixed(2)}
+                                </h4>
+                              </li>
                               <li className="mx-3">
                                 <h4>Subtotal(Tax included)</h4>
                                 <h4 className="price">
@@ -1317,12 +1323,7 @@ const Checkout = (props) => {
                                 <h4 className="price">₹{ShippingCharge}</h4>
                               </li>
 
-                              <li className="mx-3">
-                                <h4>Tax</h4>
-                                <h4 className="price text-danger">
-                                  ₹{TotalTax.toFixed(2)}
-                                </h4>
-                              </li>
+                             
 
                               <li className="mx-3">
                                 <h4>Coupon/Code</h4>
