@@ -93,6 +93,7 @@ const Login = ({ logIn }) => {
 
   return (
     <Fragment>
+      <Header />
       <Breadcumb pageName={"Login"} pageTitle={"Login"} pageHref={"/"} />
       {/* <!-- log in section start --> */}
       <section className="log-in-section background-image-2 section-b-space">

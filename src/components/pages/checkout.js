@@ -13,9 +13,11 @@ import moment from "moment";
 import SweetAlert from "sweetalert-react";
 import "sweetalert/dist/sweetalert.css";
 import Spinner from "react-bootstrap/Spinner";
-
+import Modal from "react-bootstrap/Modal";
+import Form from "react-bootstrap/Form";
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
+  const [originalproductprice, setOriginalProductPrice] = useState(0);
   // const[pAlert,setPalert]=useState(false);
   const navigate = useNavigate();
   var product1 = data1.product1;
@@ -55,7 +57,36 @@ const Checkout = (props) => {
     vendor_id: "",
     order_product: [],
   });
- 
+
+  // AHH ADDRESS MODAL FUNCTION AND API
+  // const [show, setShow] = useState(false);
+  // const handleClose = () => {
+  //   setShow(false);
+  //   setapicall(true);
+  // };
+  // const handleShow = () => {
+  //   axios
+  //     .post(
+  //       `${process.env.REACT_APP_BASEURL}/user_details`,
+  //       { user_id: "" },
+  //       {
+  //         headers: {
+  //           user_token: token,
+  //         },
+  //       }
+  //     )
+  //     .then((response) => {
+  //       let data = response.data[0];
+  //       setuserdata(data);
+  //       setUdata(data);
+  //       setapicall(false);
+  //     })
+  //     .catch((error) => {});
+  //   setValidated(false);
+  //   setShow(true);
+  // };
+
+  // ADD ADDRESS MODAL AND API END
   // discount and shipping
   let ShippingCharge = 0.0;
   let CouponDis = localStorage.getItem("coupon");
@@ -160,29 +191,29 @@ const Checkout = (props) => {
             let Totalrtax = 0;
             let TotalTaxableValue = 0;
             let Saleprice = 0;
+            let originalProductPrice = 0;
             data.map((cdata) => {
+              // original price without tax
+              originalProductPrice +=
+                cdata.product_price * cdata.order_quantity;
+
+              // end original price
               // totalprice
               ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
               // end totalprice
               if (cdata.gst === null) {
                 cdata.gst = "0";
               }
-              if (cdata.sgst === null) {
-                cdata.sgst = "0";
-              }
-              if (cdata.cgst === null) {
-                cdata.cgst = "0";
-              }
 
               // gst
               Totalgst += (Number(cdata.sale_price) * cdata.gst) / 100;
               // end gst
               // cgst
-              Totalcgst += Totalgst/2;
+              Totalcgst += Totalgst / 2;
               // end cgst
 
               // sgst
-              Totalsgst += Totalgst/2;
+              Totalsgst += Totalgst / 2;
               // end sgst
               Totalmtax +=
                 (Number(cdata.sale_price) * cdata.manufacturers_sales_tax) /
@@ -196,13 +227,8 @@ const Checkout = (props) => {
 
               // totaltax
               Totaltaxes +=
-                Totalgst +
-                Totalmtax +
-                Totalvtax +
-                Totalrtax +
-                Totalwtax;
+                Totalgst + Totalmtax + Totalvtax + Totalrtax + Totalwtax;
               // end totaltax
-              console.log("gst",Totalgst, "taxesss ",Totaltaxes)
 
               // totaltaxable value
               TotalTaxableValue += cdata.sale_price;
@@ -216,16 +242,17 @@ const Checkout = (props) => {
             setorderadd({
               ...orderadd,
               total_amount: ProductTotal - CouponDis + ShippingCharge,
-              total_gst: Totalgst,
+              total_gst: Totaltaxes,
               total_cgst: Totalcgst,
               total_sgst: Totalsgst,
-              taxable_value: TotalTaxableValue,
+              taxable_value: ProductTotal,
               discount_coupon_value: CouponDis,
               discount_coupon: CouponId,
               vendor_id: data[0].vendor_id,
               payment_mode: DeliveryMethod,
               order_product: cartdata,
             });
+            setOriginalProductPrice(originalProductPrice);
             setSalePricee(Saleprice);
             setProductPriceTotal(ProductTotal);
             setTotalTax(Totaltaxes);
@@ -345,7 +372,7 @@ const Checkout = (props) => {
       setordervalidation("deliverymethod");
     } else {
       setSpinner("spinner");
-     
+
       axios
         .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd, {
           headers: {
@@ -361,8 +388,6 @@ const Checkout = (props) => {
 
             localStorage.setItem("orderid", response.data.order_id);
             // localStorage.setItem("vendorid", response.data.vendor_id);
-
-          
 
             setProductAlert(false);
 
@@ -614,23 +639,33 @@ const Checkout = (props) => {
                                       </td>
                                       <td className="price">
                                         <h4 className="table-title text-content">
-                                          Price
-                                          <span className="theme-color mx-1">
-                                            ({cdata.discount}% off)
-                                          </span>
-                                        </h4>
-                                        <h5>
-                                          <del className="text-content text-danger mx-2">
-                                            ₹{Number(cdata.mrp).toFixed(2)}
-                                          </del>
+                                          Price ₹
                                           <b>
-                                            {" "}
-                                            ₹{cdata.sale_price.toFixed(
+                                            {Number(cdata.sale_price).toFixed(
                                               2
                                             )}{" "}
                                           </b>
+                                        </h4>
+                                        <h5>
+                                          <span
+                                            className={
+                                              cdata.discount === "0"
+                                                ? "text-content text-danger mx-2 mb-0"
+                                                : "text-content text-danger mx-2 mb-0 text-decoration-line-through"
+                                            }
+                                          >
+                                            ₹{Number(cdata.mrp).toFixed(2)}
+                                          </span>
+                                          <b>
+                                            <span className="theme-color mx-1">
+                                              {cdata.discount === "0"
+                                                ? null
+                                                : "(" +
+                                                  cdata.discount +
+                                                  "% off)"}
+                                            </span>{" "}
+                                          </b>
                                         </h5>
-                                        {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
                                         <h6 className="theme-color">
                                           You Save:₹(
                                           {(
@@ -646,44 +681,28 @@ const Checkout = (props) => {
                                           Gst:{Number(cdata.gst).toFixed(2)}%
                                         </h6>
                                         <h6 className="">
-                                          Cgst:{Number(cdata.cgst).toFixed(2)}%
+                                          Other:
+                                          {Number(
+                                            cdata.manufacturers_sales_tax
+                                          ) +
+                                            Number(cdata.value_added_tax) +
+                                            Number(cdata.retails_sales_tax) +
+                                            Number(cdata.wholesale_sales_tax)}
+                                          %
                                         </h6>
                                         <h6 className="">
-                                          Sgst:{Number(cdata.sgst).toFixed(2)}%
-                                        </h6>
-                                      </td>
-                                      <td className="price">
-                                        <div className="">
-                                          <h6 className="">
-                                            Mtax:
-                                            {Number(
+                                          Total Tax:
+                                          {(
+                                            Number(cdata.gst) +
+                                            Number(cdata.wholesale_sales_tax) +
+                                            Number(
                                               cdata.manufacturers_sales_tax
-                                            ).toFixed(2)}
-                                            %
-                                          </h6>
-                                          <h6 className="">
-                                            WTax:
-                                            {Number(
-                                              cdata.wholesale_sales_tax
-                                            ).toFixed(2)}
-                                            %
-                                          </h6>
-
-                                          <h6 className="">
-                                            VTax:
-                                            {Number(
-                                              cdata.value_added_tax
-                                            ).toFixed(2)}
-                                            %
-                                          </h6>
-                                          <h6 className="">
-                                            RTax:
-                                            {Number(
-                                              cdata.retails_sales_tax
-                                            ).toFixed(2)}
-                                            %
-                                          </h6>
-                                        </div>
+                                            ) +
+                                            Number(cdata.retails_sales_tax) +
+                                            Number(cdata.value_added_tax)
+                                          ).toFixed(2)}
+                                          %
+                                        </h6>
                                       </td>
 
                                       <td className="price">
@@ -699,39 +718,34 @@ const Checkout = (props) => {
                                         {cdata.cgst === null
                                           ? (cdata.cgst = "0")
                                           : cdata.cgst === cdata.cgst}
-                                        <h4 className="table-title text-content">
-                                          Total Tax:
-                                          {(
-                                            Number(cdata.gst) +
-                                            Number(cdata.wholesale_sales_tax) +
-                                            Number(
-                                              cdata.manufacturers_sales_tax
-                                            ) +
-                                            Number(cdata.retails_sales_tax) +
-                                            Number(cdata.value_added_tax)
-                                          ).toFixed(2)}
-                                          %
-                                        </h4>
+
                                         <h4 className="table-title text-content">
                                           Tax: ₹
                                           {(
-                                            (Number(cdata.sale_price) *(
-                                              Number(cdata.gst) +
-                                              Number(cdata.wholesale_sales_tax) +
-                                              Number(cdata.manufacturers_sales_tax) +
-                                              Number(cdata.retails_sales_tax) +
-                                              Number(cdata.value_added_tax)
-                                            )) /
-                                              100 
+                                            (Number(cdata.sale_price) *
+                                              (Number(cdata.gst) +
+                                                Number(
+                                                  cdata.wholesale_sales_tax
+                                                ) +
+                                                Number(
+                                                  cdata.manufacturers_sales_tax
+                                                ) +
+                                                Number(
+                                                  cdata.retails_sales_tax
+                                                ) +
+                                                Number(
+                                                  cdata.value_added_tax
+                                                ))) /
+                                            100
                                           ).toFixed(2)}
                                         </h4>
                                       </td>
-                                      <td className="price">
+                                      {/* <td className="price">
                                         <h4 className="table-title text-content">
                                           Sale Price: ₹
                                           {Number(cdata.sale_price).toFixed(2)}
                                         </h4>
-                                      </td>
+                                      </td> */}
 
                                       <td className="quantity">
                                         <h4 className="table-title text-content">
@@ -1287,25 +1301,33 @@ const Checkout = (props) => {
                             <ul className="summery-contain bg-white custom-height">
                               {(cartdata || []).map((data) => {
                                 return (
-                                  <li key={data.id} className="mx-3">
-                                    <h4>
-                                      {Number(data.sale_price).toFixed(2)}{" "}
-                                      <span>X {data.order_quantity}</span>
-                                    </h4>
-                                    <h4 className="price">
-                                      ₹
-                                      {(
-                                        data.order_quantity *
-                                        Number(data.sale_price)
-                                      ).toFixed(2)}
-                                    </h4>
-                                  </li>
+                                  <>
+                                    <li key={data.id} className="mx-3">
+                                      <h4>
+                                        {Number(data.sale_price).toFixed(2)}{" "}
+                                        <span>X {data.order_quantity}</span>
+                                      </h4>
+                                      <h4 className="price">
+                                        ₹
+                                        {(
+                                          data.order_quantity *
+                                          Number(data.sale_price)
+                                        ).toFixed(2)}
+                                      </h4>
+                                    </li>
+                                  </>
                                 );
                               })}
                             </ul>
 
                             <ul className="summery-total bg-white">
-                            <li className="mx-3">
+                              <li className="mx-3">
+                                <h4>Original Price</h4>{" "}
+                                <h4 className="price">
+                                  ₹{Number(originalproductprice).toFixed(2)}{" "}
+                                </h4>
+                              </li>
+                              <li className="mx-3">
                                 <h4>Tax</h4>
                                 <h4 className="price text-danger">
                                   ₹{TotalTax.toFixed(2)}
@@ -1322,8 +1344,6 @@ const Checkout = (props) => {
                                 <h4>Shipping</h4>
                                 <h4 className="price">₹{ShippingCharge}</h4>
                               </li>
-
-                             
 
                               <li className="mx-3">
                                 <h4>Coupon/Code</h4>
@@ -1869,7 +1889,203 @@ const Checkout = (props) => {
         text={"order not placed"}
         onConfirm={() => closeProductAlert()}
       />
+      {/* ADD ADDRESS MODAL */}
+      {/* <Modal size="lg" show={show} onHide={handleClose}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row p-md-3 m-0">
+              <div className="col-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    value={udata.first_name}
+                    name={"first_name"}
+                    onChange={OnchangeFistname}
+                    required
+                    maxLength={15}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your First Name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    value={udata.last_name}
+                    name={"last_name"}
+                    onChange={OnchangeFistname}
+                    required
+                    maxLength={15}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your Last Name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email Address"
+                    required
+                    value={udata.email}
+                    name={"email"}
+                    // onChange={OnchangeFistname}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please Enter valid Email
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+           
+              <div className="col-md-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Mobile</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Mobile"
+                    value={udata.phone_no}
+                    name={"phone_no"}
+                    onChange={OnchangeFistname}
+                    required
+                    maxLength={10}
+                    minLength={10}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your Phone Number
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
 
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address</Form.Label>
+                  <Form.Control
+                    type="location"
+                    placeholder="Add Address"
+                    value={udata.address}
+                    name={"address"}
+                    onChange={OnchangeFistname}
+                    maxLength="100"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Address
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address2</Form.Label>
+                  <Form.Control
+                    type="location"
+                    placeholder="Add Address2"
+                    value={udata.address2}
+                    name={"address2"}
+                    onChange={OnchangeFistname}
+                    maxLength="100"
+                  />
+                </Form.Group>
+              </div>
+
+              <div className="col-4">
+                <Form.Label className="inputlabelheading" column sm="12">
+                  Gender
+                </Form.Label>
+                <Form.Select
+                  aria-label="Product Type"
+                  className="adminselectbox"
+                  required
+                  value={udata.gender}
+                  name={"gender"}
+                  onChange={OnchangeFistname}
+                >
+                  <option value={""} onChange={func}>
+                    Gender
+                  </option>
+                  <option value="Male" onChange={func}>
+                    Male
+                  </option>
+                  <option value="Female" onChange={func}>
+                    Female
+                  </option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid" className="h6">
+                  Please select gender
+                </Form.Control.Feedback>
+              </div>
+              <div className="col-4">
+                <Form.Group className="mx-3" controlId="validationCustom11">
+                  <Form.Label className="inputlabelheading" column sm="12">
+                    Date of Birth
+                  </Form.Label>
+                  <Col sm="12">
+                    <Form.Control
+                      max={currentdate}
+                      name={"date_of_birth"}
+                      type={"date"}
+                      value={udata.date_of_birth}
+                      onChange={OnchangeFistname}
+                      required
+                      placeholder="Product Quantity"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please choose date of birth
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              type="button"
+              className="button main_outline_button btn btn-animation "
+              onClick={handleClose}
+            >
+              Cancel
+            </button>
+            <button
+              className="button main_button btn theme-bg-color ms-3 fire-button"
+              // onClick={handleSubmit}
+              type="submit"
+            >
+              Update
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal> */}
       <Footer />
     </Fragment>
   );

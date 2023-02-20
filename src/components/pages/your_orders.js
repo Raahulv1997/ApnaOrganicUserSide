@@ -25,7 +25,6 @@ function Orders() {
     created_on: "",
   });
 
-
   useEffect(() => {
     axios
       .post(
@@ -44,7 +43,6 @@ function Orders() {
         setOrder(response.data);
         setproductOrder(response.data.product_types);
         UserData();
-        
       })
       .catch(function (error) {
         console.log(error);
@@ -414,37 +412,35 @@ function Orders() {
                           />
                           <div className="product_name_detial ps-3">
                             <h6>{orderdata.product_title_name}</h6>
-                            <p>color:  {orderdata.colors}</p>
-                            <p>size:   {orderdata.size}</p>
+                            <p>color: {orderdata.colors}</p>
+                            <p>size: {orderdata.size}</p>
                           </div>
                         </div>
 
                         <div className="product_price">
                           {" "}
-                          MRP-  {orderdata.mrp}₹ ({Number(orderdata.discount)}% )
-                          <br /> Discount-  {Number(discont).toFixed(2)}₹
+                          MRP- {orderdata.mrp}₹ ({Number(orderdata.discount)}% )
+                          <br /> Discount- {Number(discont).toFixed(2)}₹
                           <br />
-                          Product Price-   ₹{Number(orderdata.product_price).toFixed(2)}
+                          <b>
+                            {" "}
+                            Product Price- ₹
+                            {Number(orderdata.sale_price).toFixed(2)}
+                          </b>
                         </div>
 
                         <div className="product_quantity">
-                          Taxable Price-   <br />
+                          Price without tax- <br />
                           {Number(orderdata.product_price).toFixed(2)}₹
-                          <br /> Tax-   {tax.toFixed(2)}₹
+                          <br /> Tax- {tax.toFixed(2)}₹
                         </div>
 
                         <div className="product_quantity">
-                          Sale Price-  
-                          <br />
-                          {Number(orderdata.sale_price).toFixed(2)}₹
-                        </div>
-
-                        <div className="product_quantity">
-                          QTY-   {orderdata.order_quantity}
+                          QTY- {orderdata.order_quantity}
                         </div>
                         <div className="total_amount">
                           {" "}
-                          Total Price-  <br />
+                          Total Price- <br />
                           {(
                             Number(orderdata.sale_price) *
                             Number(orderdata.order_quantity)
@@ -476,20 +472,38 @@ function Orders() {
                   <h5 className="pb-3">Payment Summary</h5>
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
                     <div className="Subtotal">
+                      <p> Price(Excluding Tax)</p>
+                    </div>
+                    <div className="">
+                      ₹
+                      {Number(order.taxable_value) -
+                        Number(order.total_gst).toFixed(2)}
+                    </div>
+                  </div>
+                  <div className="payment_summary_total d-flex justify-content-between align-items-center">
+                    <div className="Subtotal">
+                      <p>Total Tax</p>
+                    </div>
+                    <div className="">
+                      ₹{Number(order.total_gst).toFixed(2)}
+                    </div>
+                  </div>
+                  <div className="payment_summary_total d-flex justify-content-between align-items-center">
+                    <div className="Subtotal">
                       <p>
-                        Subtotal
-                        <span>
-                          ({order.total_quantity} items)(Include all Taxes)
-                        </span>
+                        SubTotal({order.total_quantity} items)(Include all
+                        Taxes)
                       </p>
                     </div>
-                    <div className="">{sub_total.toFixed(2)}₹</div>
+                    <div className="">
+                      ₹{Number(order.taxable_value).toFixed(2)}
+                    </div>
                   </div>
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
                     <div className="Subtotal">
                       <p>Delivery Charges</p>
                     </div>
-                    <div className="">{order.shipping_charges}₹</div>
+                    <div className="">₹{order.shipping_charges}</div>
                   </div>
 
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
@@ -497,15 +511,10 @@ function Orders() {
                       <p> Discont Coupon Ammount </p>
                     </div>
                     <div className="">
-                      {Number(order.discount_coupon_value)}₹
+                      ₹ {Number(order.discount_coupon_value)}
                     </div>
                   </div>
-                  <div className="payment_summary_total d-flex justify-content-between align-items-center">
-                    <div className="Subtotal">
-                      <p> Total Tax</p>
-                    </div>
-                    <div className="">{total_tax.toFixed(2)}₹</div>
-                  </div>
+
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
                     <div className="Subtotal">
                       <p>
@@ -515,7 +524,7 @@ function Orders() {
                       </p>
                     </div>
                     <div className="">
-                      <strong>{Number(order.total_amount).toFixed(2)}₹</strong>
+                      <strong>₹{Number(order.total_amount).toFixed(2)}</strong>
                     </div>
                   </div>
                 </div>
@@ -563,7 +572,11 @@ function Orders() {
                               {userdata.first_name} {userdata.last_name}
                             </p>
                             <p>{userdata.gender}</p>
-                            <p>{moment(userdata.date_of_birth).format("YYYY-MM-DD")}</p>
+                            <p>
+                              {moment(userdata.date_of_birth).format(
+                                "YYYY-MM-DD"
+                              )}
+                            </p>
                             <p className="text-break">{userdata.address}</p>
                             <p className="text-break">{userdata.address2}</p>
                             <p>Indore Madhya Pradesh</p>
@@ -578,7 +591,11 @@ function Orders() {
                               {userdata.first_name} {userdata.last_name}
                             </p>
                             <p>{userdata.gender}</p>
-                            <p>{moment(userdata.date_of_birth).format("YYYY-MM-DD")}</p>
+                            <p>
+                              {moment(userdata.date_of_birth).format(
+                                "YYYY-MM-DD"
+                              )}
+                            </p>
                             <p className="text-break">{userdata.address}</p>
                             <p className="text-break">{userdata.address2}</p>
                             <p>Indore Madhya Pradesh</p>
