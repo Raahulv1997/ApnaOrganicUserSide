@@ -28,7 +28,7 @@ const Cart = () => {
   const [msg, setMsg] = useState(true);
   const [ProductPriceTotal, setProductPriceTotal] = useState(0);
   const [totalqty, settotalqty] = useState(false);
-  const [originalproductprice,setOriginalProductPrice] = useState(0)
+  const [originalproductprice, setOriginalProductPrice] = useState(0);
   /* <!--End all state section--> */
 
   var product1 = data1.product1;
@@ -132,7 +132,7 @@ const Cart = () => {
               setapicall(false);
             } else {
               let ProductTotal = 0;
-              let originalProductPrice =0
+              let originalProductPrice = 0;
               data.map((cdata) => {
                 ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
                 originalProductPrice += cdata.product_price;
@@ -421,9 +421,7 @@ const Cart = () => {
                                   </del>
                                   <b>
                                     {" "}
-                                    ₹{Number(cdata.sale_price).toFixed(
-                                      2
-                                    )}{" "}
+                                    ₹{Number(cdata.sale_price).toFixed(2)}{" "}
                                   </b>
                                 </h5>
                                 {/* <h6 className="theme-color">{cdata.discount}% off</h6> */}
@@ -441,15 +439,12 @@ const Cart = () => {
                                   Gst:{Number(cdata.gst).toFixed(2)}%
                                 </h6>
                                 <h6 className="">
-                                  Other:{Number(
-                                      cdata.manufacturers_sales_tax
-                                    )+Number(
-                                      cdata.value_added_tax
-                                    )+Number(
-                                      cdata.retails_sales_tax
-                                    )+Number(
-                                      cdata.wholesale_sales_tax
-                                    )}%
+                                  Other:
+                                  {Number(cdata.manufacturers_sales_tax) +
+                                    Number(cdata.value_added_tax) +
+                                    Number(cdata.retails_sales_tax) +
+                                    Number(cdata.wholesale_sales_tax)}
+                                  %
                                 </h6>
                                 <h6 className="">
                                   Total Tax:
@@ -463,24 +458,23 @@ const Cart = () => {
                                   %
                                 </h6>
                               </td>
-                             
+
                               <td className="price">
                                 <h4 className="table-title text-content">
                                   Price (Without Tax): ₹
                                   {Number(cdata.product_price).toFixed(2)}
                                 </h4>
-                                
+
                                 <h4 className="table-title text-content">
                                   Tax: ₹
                                   {(
-                                    (Number(cdata.sale_price) *(
-                                      Number(cdata.gst) +
-                                      Number(cdata.wholesale_sales_tax) +
-                                      Number(cdata.manufacturers_sales_tax) +
-                                      Number(cdata.retails_sales_tax) +
-                                      Number(cdata.value_added_tax)
-                                    )) /
-                                      100 
+                                    (Number(cdata.sale_price) *
+                                      (Number(cdata.gst) +
+                                        Number(cdata.wholesale_sales_tax) +
+                                        Number(cdata.manufacturers_sales_tax) +
+                                        Number(cdata.retails_sales_tax) +
+                                        Number(cdata.value_added_tax))) /
+                                    100
                                   ).toFixed(2)}
                                 </h4>
                               </td>
@@ -538,7 +532,7 @@ const Cart = () => {
                                     </div>
                                   </div>
                                 </div>
-                                {totalqty === true? (
+                                {totalqty === true ? (
                                   <p
                                     className="mt-1 ms-2 text-danger"
                                     type="invalid"
@@ -592,7 +586,7 @@ const Cart = () => {
               </div>
             </div>
 
-            <div className="col-xxl-4">
+            <div className="col-xxl-3">
               <div className="summery-box p-sticky">
                 <div className="summery-header d-flex align-items-center justify-content-between">
                   <h3>Cart Total</h3>
@@ -635,10 +629,12 @@ const Cart = () => {
                     ) : null}
                   </div>
                   <ul className="p-0">
-                  <li>
+                    <li>
                       <h4>Original Price</h4>
 
-                      <h4 className="price">₹{originalproductprice.toFixed(2)}</h4>
+                      <h4 className="price">
+                        ₹{originalproductprice.toFixed(2)}
+                      </h4>
                     </li>
                     <li>
                       <h4>Total Tax</h4>

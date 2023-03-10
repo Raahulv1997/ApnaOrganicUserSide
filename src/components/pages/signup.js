@@ -200,12 +200,12 @@ const Singup = () => {
                           required
                         />{" "}
                         {emailerror === "Already" ? (
-                          <p className="text-danger">
+                          <p className="text-danger m-2">
                             User Already Exist. Please Login
                           </p>
                         ) : null}
                         {emailerror === "Wrong" ? (
-                          <p className="text-danger">Invalid Email</p>
+                          <p className="text-danger m-2">Invalid Email</p>
                         ) : null}
                         <input
                           type="number"

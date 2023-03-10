@@ -530,9 +530,12 @@ function Account() {
                           <div className="dashboard-home">
                             <div className="title">
                               <h2>My Dashboard</h2>
-                              <span className="title-leaf">
-                                <svg className="icon-width bg-gray"></svg>
-                              </span>
+                              <button
+                                className="btn btn-success"
+                                onClick={handleShow}
+                              >
+                                Edit
+                              </button>
                             </div>
 
                             <div className="dashboard-user-name">
@@ -621,14 +624,14 @@ function Account() {
                                 <div className="dashboard-contant-title">
                                   <h4>
                                     Contact Information{" "}
-                                    <Link
+                                    {/* <Link
                                       to="#"
                                       data-bs-toggle="modal"
                                       data-bs-target="#editProfile"
                                       onClick={handleShow}
                                     >
                                       Edit
-                                    </Link>
+                                    </Link> */}
                                   </h4>
                                 </div>
                                 <div className="dashboard-detail">
@@ -689,14 +692,14 @@ function Account() {
                                       <h6 className="text-content text-break">
                                         {userdata.address}
                                       </h6>
-                                      <Link
+                                      {/* <Link
                                         to="#"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
                                         onClick={handleShow}
                                       >
                                         Edit Address
-                                      </Link>
+                                      </Link> */}
                                     </div>
                                   </div>
 
@@ -708,14 +711,14 @@ function Account() {
                                       <h6 className="text-content text-break">
                                         {userdata.address2}
                                       </h6>
-                                      <Link
+                                      {/* <Link
                                         to="#"
                                         data-bs-toggle="modal"
                                         data-bs-target="#editProfile"
                                         onClick={handleShow}
                                       >
                                         Edit Address
-                                      </Link>
+                                      </Link> */}
                                     </div>
                                   </div>
                                 </div>
