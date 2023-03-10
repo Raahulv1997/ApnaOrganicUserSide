@@ -7,8 +7,8 @@ import "../../CSS/style.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Countdown from "react-countdown";
-
 import axios from "axios";
+
 const Forgot = () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState([]);
@@ -114,7 +114,8 @@ const Forgot = () => {
   };
   return (
     <Fragment>
-      <Breadcumb pageName={"Forgot Passwrod"} pageTitle={"Forgot Passwrod"} />
+      <h1>hello</h1>
+      {/* <Breadcumb pageName={"Forgot Passwrod"} pageTitle={"Forgot Passwrod"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space forgot-section">
         <div className="container-fluid-lg w-100">
@@ -197,7 +198,7 @@ const Forgot = () => {
                           onChange={(e) => OnOtpChange(e)}
                         />
                       </div>
-                      {emailerror === "blank otp" ? (
+                      {/* {emailerror === "blank otp" ? (
                         <p className="mt-1 ms-2 text-danger" type="invalid">
                           Please enter your otp !
                         </p>
@@ -205,7 +206,7 @@ const Forgot = () => {
                         <p className="mt-1 ms-2 text-danger" type="invalid">
                           Please Fill Correct Otp !
                         </p>
-                      ) : null}
+                      ) : null} */}
                       {/* <div className="col-12 mt-3">
                         <button
                           className="btn btn-animation w-100"

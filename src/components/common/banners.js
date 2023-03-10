@@ -12,7 +12,7 @@ const Benners = (props) => {
   const [productType, setProductType] = useState([]);
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
-
+  console.log(productData);
   let token = localStorage.getItem("token");
 
   const [apicall, setapicall] = useState(false);
@@ -41,7 +41,7 @@ const Benners = (props) => {
                 sale_price: "",
                 short_by_updated_on: "",
                 is_delete: ["1"],
-                product_status:["approved"]
+                product_status: ["approved"],
               },
             },
             {
@@ -70,7 +70,6 @@ const Benners = (props) => {
     getproductType();
   }, [apicall]);
   /* <!--End this section--> */
-
 
   /* <!--Function for map category and same category not show again--> */
 
@@ -198,7 +197,7 @@ const Benners = (props) => {
                 price_to: "",
                 id: "",
                 is_delete: ["1"],
-                product_status:["approved"],
+                product_status: ["approved"],
                 product_title_name_asc_desc: "",
                 sale_price: "",
                 short_by_updated_on: "",
@@ -226,7 +225,7 @@ const Benners = (props) => {
                     price_to: "",
                     id: "",
                     is_delete: ["1"],
-                    product_status:["approved"],
+                    product_status: ["approved"],
                     product_title_name_asc_desc: "",
                     sale_price: "",
                     short_by_updated_on: "",
@@ -251,12 +250,12 @@ const Benners = (props) => {
         alert("No token saved");
       }
     }
-  }, [apicall,productType]);
+  }, [apicall, productType]);
   /* <!--End this section--> */
-  
-useEffect(()=>{
-setapicall(true);
-},[apicall,props.deleteCart])
+
+  useEffect(() => {
+    setapicall(true);
+  }, [apicall, props.deleteCart]);
 
   /* <!--Function for set token and navigate from product details page--> */
 
@@ -481,8 +480,7 @@ setapicall(true);
               >
                 <div className="row w-100 ms-0">
                   {productData.map((product) => {
-                    return (
-                      product.product_status=="approved"?
+                    return product.product_status == "approved" ? (
                       <div
                         key={product.id}
                         className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
@@ -511,7 +509,9 @@ setapicall(true);
                           avgRatings={product.avgRatings}
                         />
                       </div>
-                    :"")
+                    ) : (
+                      ""
+                    );
                   })}
                 </div>
               </div>

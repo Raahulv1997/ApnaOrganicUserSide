@@ -7,6 +7,8 @@ import Countdown from "react-countdown";
 import "../../CSS/style.css";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import Header from "../common/header";
+
 const Singup = () => {
   /* <!--Start all state section--> */
   const navigate = useNavigate();
@@ -21,16 +23,13 @@ const Singup = () => {
   const [validated, setValidated] = useState(false);
   /* <!--End all state section--> */
 
-
-   /* <!--Countdown Section Start--> */
+  /* <!--Countdown Section Start--> */
 
   const renderer = ({ hours, minutes, seconds, completed }) => {
     if (completed) {
       setOtperror("resend");
-
     } else {
-
-       /* <!--Render Countdown--> */
+      /* <!--Render Countdown--> */
 
       return (
         <h4 className="mt-2 ms-2 text-danger mx-3">
@@ -39,7 +38,7 @@ const Singup = () => {
       );
     }
   };
-   /* <!-- End Countdown Section Start--> */
+  /* <!-- End Countdown Section Start--> */
 
   // const handleSubmit = (event) => {
   //   const form = event.currentTarget;
@@ -50,8 +49,7 @@ const Singup = () => {
   //   setValidated(true);
   // };
 
-   /* <!--Countdown Section Start--> */
-
+  /* <!--Countdown Section Start--> */
 
   /* <!--Signup user with api and password validation--> */
 
@@ -103,7 +101,6 @@ const Singup = () => {
   };
   /* <!--End this section--> */
 
-
   /* <!--function for password change--> */
   const onPasswordChange = (e) => {
     setpassval(e.target.value);
@@ -125,7 +122,6 @@ const Singup = () => {
   /* <!--End this section--> */
 
   /* <!--function for otp--> */
-
 
   /* <!--VerifyOTP with api and localstorage set userId and token--> */
 
@@ -159,11 +155,11 @@ const Singup = () => {
   /* <!--End this section--> */
   /* <!--End this all api call section--> */
 
-
   /* <!--Start signup and login user body section--> */
 
   return (
     <Fragment>
+      <Header />
       {/* <Breadcumb pageName={"Register"} pageTitle={"Register"} /> */}
       {/* <!-- log in section start --> */}
       <section className="log-in-section section-b-space">
@@ -386,4 +382,4 @@ const Singup = () => {
   );
 };
 export default Singup;
-      /* <!-- End body section--> */
+/* <!-- End body section--> */

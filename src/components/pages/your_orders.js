@@ -25,7 +25,6 @@ function Orders() {
     created_on: "",
   });
 
-
   useEffect(() => {
     axios
       .post(
@@ -44,7 +43,6 @@ function Orders() {
         setOrder(response.data);
         setproductOrder(response.data.product_types);
         UserData();
-        
       })
       .catch(function (error) {
         console.log(error);
@@ -344,7 +342,6 @@ function Orders() {
                     </div>
                     <div className="d-flex flex-column text-center">
                       <div className="order_info_heading">Order Status</div>
-
                       <div className="badge bg-success">{order.status}</div>
                     </div>
                     <div className="d-flex flex-column text-center">
@@ -353,17 +350,14 @@ function Orders() {
                         {moment(order.order_date).format("YYYY-MM-DD")}
                       </div>
                     </div>
-
                     <div className="d-flex flex-column text-center">
                       <div className="order_info_heading">Delivery Date</div>
                       <div className="date_time">{order.delivery_date}</div>
                     </div>
                   </div>
                 </div>
-
                 <div className="product_img_price">
                   <div className="product_image_price"></div>
-
                   {(productorder || []).map((orderdata) => {
                     orderdata.gst == "null" ||
                     orderdata.gst == "undefined" ||
@@ -385,7 +379,6 @@ function Orders() {
                     orderdata.mrp == ""
                       ? (orderdata.mrp = "0")
                       : Number(orderdata.mrp);
-
                     let countAllText =
                       Number(orderdata.gst) +
                       Number(orderdata.wholesale_sales_tax) +
@@ -414,37 +407,38 @@ function Orders() {
                           />
                           <div className="product_name_detial ps-3">
                             <h6>{orderdata.product_title_name}</h6>
-                            <p>color:  {orderdata.colors}</p>
-                            <p>size:   {orderdata.size}</p>
+                            <p>color: {orderdata.colors}</p>
+                            <p>size: {orderdata.size}</p>
                           </div>
                         </div>
 
                         <div className="product_price">
                           {" "}
-                          MRP-  {orderdata.mrp}₹ ({Number(orderdata.discount)}% )
-                          <br /> Discount-  {Number(discont).toFixed(2)}₹
+                          MRP- {orderdata.mrp}₹ ({Number(orderdata.discount)}% )
+                          <br /> Discount- {Number(discont).toFixed(2)}₹
                           <br />
-                          Product Price-   ₹{Number(orderdata.product_price).toFixed(2)}
+                          Product Price- ₹
+                          {Number(orderdata.product_price).toFixed(2)}
                         </div>
 
                         <div className="product_quantity">
-                          Taxable Price-   <br />
+                          Taxable Price- <br />
                           {Number(orderdata.product_price).toFixed(2)}₹
-                          <br /> Tax-   {tax.toFixed(2)}₹
+                          <br /> Tax- {tax.toFixed(2)}₹
                         </div>
 
                         <div className="product_quantity">
-                          Sale Price-  
+                          Sale Price-
                           <br />
                           {Number(orderdata.sale_price).toFixed(2)}₹
                         </div>
 
                         <div className="product_quantity">
-                          QTY-   {orderdata.order_quantity}
+                          QTY- {orderdata.order_quantity}
                         </div>
                         <div className="total_amount">
                           {" "}
-                          Total Price-  <br />
+                          Total Price- <br />
                           {(
                             Number(orderdata.sale_price) *
                             Number(orderdata.order_quantity)
@@ -494,7 +488,7 @@ function Orders() {
 
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
                     <div className="Subtotal">
-                      <p> Discont Coupon Ammount </p>
+                      <p> Discont Coupon Amount </p>
                     </div>
                     <div className="">
                       {Number(order.discount_coupon_value)}₹
@@ -563,7 +557,11 @@ function Orders() {
                               {userdata.first_name} {userdata.last_name}
                             </p>
                             <p>{userdata.gender}</p>
-                            <p>{moment(userdata.date_of_birth).format("YYYY-MM-DD")}</p>
+                            <p>
+                              {moment(userdata.date_of_birth).format(
+                                "YYYY-MM-DD"
+                              )}
+                            </p>
                             <p className="text-break">{userdata.address}</p>
                             <p className="text-break">{userdata.address2}</p>
                             <p>Indore Madhya Pradesh</p>
@@ -578,7 +576,11 @@ function Orders() {
                               {userdata.first_name} {userdata.last_name}
                             </p>
                             <p>{userdata.gender}</p>
-                            <p>{moment(userdata.date_of_birth).format("YYYY-MM-DD")}</p>
+                            <p>
+                              {moment(userdata.date_of_birth).format(
+                                "YYYY-MM-DD"
+                              )}
+                            </p>
                             <p className="text-break">{userdata.address}</p>
                             <p className="text-break">{userdata.address2}</p>
                             <p>Indore Madhya Pradesh</p>

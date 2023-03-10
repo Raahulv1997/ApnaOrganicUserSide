@@ -195,9 +195,10 @@ const Login = ({ logIn }) => {
                           Remember me
                         </label>
                       </div>
-                      <NavLink to="/forgot" className="forgot">
+                      <Link to={"/forgot"}>Forgot Password</Link>
+                      {/* <NavLink to="/forgot" className="forgot">
                         Forgot Password?
-                      </NavLink>
+                      </NavLink> */}
                     </div>
                   </div>
 
