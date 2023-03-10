@@ -18,14 +18,14 @@ import Col from "react-bootstrap/Col";
 import { useEffect } from "react";
 import axios from "axios";
 import moment from "moment";
+import Compliant from "../common/compliant";
 
 function Account() {
   const useridd = localStorage.getItem("userid");
-
   localStorage.getItem("token");
+
   const [apicall, setapicall] = useState(false);
   const [msg, setMsg] = useState(true);
-
   const currentdate = moment().format("YYYY-MM-DD");
   const userpass = localStorage.getItem("upassword");
   const navigate = useNavigate();
@@ -35,6 +35,7 @@ function Account() {
     setShow(false);
     setapicall(true);
   };
+
   const handleShow = () => {
     setValidated(false);
     setShow(true);
@@ -854,6 +855,9 @@ function Account() {
                               </div>
                             );
                           })}
+                        </div>
+                        <div className="contact-box-section mt-5 d-flex justify-content-center">
+                          <Compliant />
                         </div>
                       </div>
                     </Tab.Pane>
