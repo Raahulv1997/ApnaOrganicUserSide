@@ -37,6 +37,7 @@ const Cart = () => {
 
   const useridd = localStorage.getItem("userid");
   const token = localStorage.getItem("token");
+
   /* <!-- End this section--> */
 
   const currentdate = moment().format();
@@ -127,6 +128,7 @@ const Cart = () => {
           )
           .then((response) => {
             let data = response.data;
+
             if (response.data.response === "cart_empty") {
               setMsg(false);
               setapicall(false);
