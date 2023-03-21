@@ -108,75 +108,75 @@ const Header = (props) => {
 
   /* <!--Get cart data--Api call--> */
 
-  useEffect(() => {
-    if (
-      token === undefined ||
-      token === "true" ||
-      token === "null" ||
-      token === "" ||
-      token === null ||
-      token === true
-    ) {
-    } else {
-      getCartData();
-    }
-    function getCartData() {
-      try {
-        axios
-          .put(
-            `${process.env.REACT_APP_BASEURL}/cart`,
-            {
-              user_id: "",
-            },
-            {
-              headers: {
-                user_token: token,
-              },
-            }
-          )
-          .then((response) => {
-            let data = response.data;
-            setPdata(data);
-            let ProductTotal = 0;
-            if (
-              data.response === "cart_empty" ||
-              data.response === "header error" ||
-              data.error === "Please authenticate using a valid token"
-            ) {
-              setMsg(false);
-            } else {
-              data.map((cdata) => {
-                ProductTotal +=
-                  cdata.quantity * Number(cdata.product_price) -
-                  (cdata.product_price * cdata.discount) / 100 +
-                  (Number(
-                    cdata.product_price -
-                      (cdata.product_price * cdata.discount) / 100
-                  ) *
-                    cdata.gst) /
-                    100 +
-                  (Number(
-                    cdata.product_price -
-                      (cdata.product_price * cdata.discount) / 100
-                  ) *
-                    cdata.cgst) /
-                    100 +
-                  (Number(
-                    cdata.product_price -
-                      (cdata.product_price * cdata.discount) / 100
-                  ) *
-                    cdata.sgst) /
-                    100;
-              });
+  // useEffect(() => {
+  //   if (
+  //     token === undefined ||
+  //     token === "true" ||
+  //     token === "null" ||
+  //     token === "" ||
+  //     token === null ||
+  //     token === true
+  //   ) {
+  //   } else {
+  //     getCartData();
+  //   }
+  //   function getCartData() {
+  //     try {
+  //       axios
+  //         .put(
+  //           `${process.env.REACT_APP_BASEURL}/cart`,
+  //           {
+  //             user_id: "",
+  //           },
+  //           {
+  //             headers: {
+  //               user_token: token,
+  //             },
+  //           }
+  //         )
+  //         .then((response) => {
+  //           let data = response.data;
+  //           setPdata(data);
+  //           let ProductTotal = 0;
+  //           if (
+  //             data.response === "cart_empty" ||
+  //             data.response === "header error" ||
+  //             data.error === "Please authenticate using a valid token"
+  //           ) {
+  //             setMsg(false);
+  //           } else {
+  //             data.map((cdata) => {
+  //               ProductTotal +=
+  //                 cdata.quantity * Number(cdata.product_price) -
+  //                 (cdata.product_price * cdata.discount) / 100 +
+  //                 (Number(
+  //                   cdata.product_price -
+  //                     (cdata.product_price * cdata.discount) / 100
+  //                 ) *
+  //                   cdata.gst) /
+  //                   100 +
+  //                 (Number(
+  //                   cdata.product_price -
+  //                     (cdata.product_price * cdata.discount) / 100
+  //                 ) *
+  //                   cdata.cgst) /
+  //                   100 +
+  //                 (Number(
+  //                   cdata.product_price -
+  //                     (cdata.product_price * cdata.discount) / 100
+  //                 ) *
+  //                   cdata.sgst) /
+  //                   100;
+  //             });
 
             
 
-              setMsg(true);
-            }
-          });
-      } catch (err) {}
-    }
-  }, [apicall, cartup, props.addcart, props.deleteCart, props.getNotification]);
+  //             setMsg(true);
+  //           }
+  //         });
+  //     } catch (err) {}
+  //   }
+  // }, [apicall, cartup, props.addcart, props.deleteCart, props.getNotification]);
   /* <!--End this section--> */
 
   /* <!--Product delete from cart--Api call--> */

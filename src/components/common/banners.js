@@ -87,7 +87,7 @@ const Benners = (props) => {
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
       token === "null" ||
-      token === "" ||
+      token == "" ||
       token === null ||
       token === undefined ||
       token === true
