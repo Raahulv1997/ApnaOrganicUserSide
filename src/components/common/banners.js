@@ -12,7 +12,7 @@ const Benners = (props) => {
   const [productType, setProductType] = useState([]);
   const [catArray, setcatArray] = useState([]);
   const [unCatArr, setunCatArr] = useState([]);
-  console.log(productData);
+  // console.log(productData);
   let token = localStorage.getItem("token");
 
   const [apicall, setapicall] = useState(false);
@@ -87,7 +87,7 @@ const Benners = (props) => {
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
       token === "null" ||
-      token === "" ||
+      token == "" ||
       token === null ||
       token === undefined ||
       token === true
