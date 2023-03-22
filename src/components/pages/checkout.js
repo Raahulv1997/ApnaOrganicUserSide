@@ -15,6 +15,8 @@ import "sweetalert/dist/sweetalert.css";
 import Spinner from "react-bootstrap/Spinner";
 import Modal from "react-bootstrap/Modal";
 import Form from "react-bootstrap/Form";
+import Col from "react-bootstrap/Col";
+
 const Checkout = (props) => {
   const [ProductAlert, setProductAlert] = useState(false);
   const [originalproductprice, setOriginalProductPrice] = useState(0);
@@ -26,6 +28,10 @@ const Checkout = (props) => {
   const [currentTab, setCurrentTab] = useState(0);
   let currentdate = moment().format();
   const [apicall, setapicall] = useState(false);
+  const [show, setShow] = useState(false);
+  const [validated, setValidated] = useState(false);
+  const [udata, setUdata] = useState([]);
+
   const [navtab, setnavtab] = useState(false);
   const [cartdata, setCartData] = useState([]);
   const [quantity, setQuantity] = useState([]);
@@ -57,7 +63,47 @@ const Checkout = (props) => {
     vendor_id: "",
     order_product: [],
   });
-
+  const handleClose = () => {
+    setShow(false);
+    setapicall(true);
+  };
+  const handleShow = () => {
+    setValidated(false);
+    setShow(true);
+  };
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    let form = event.currentTarget;
+    // const name = event.target.value;
+    if (form.checkValidity() === false) {
+      event.preventDefault();
+      event.stopPropagation();
+      setValidated(true);
+    } else {
+      // eslint-disable-next-line no-undef
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/user_register`, udata, {
+          headers: {
+            user_token: token,
+          },
+        })
+        .then((response) => {
+          if (response.data.message === "updated user profile") {
+            setShow(false);
+            setapicall(true);
+            setValidated(false);
+            localStorage.setItem("first_name", udata.first_name);
+          }
+        })
+        .catch((error) => {});
+    }
+  };
+  const OnchangeFistname = (e, first_name) => {
+    setUdata({
+      ...udata,
+      [e.target.name]: e.target.value,
+    });
+  };
   // AHH ADDRESS MODAL FUNCTION AND API
   // const [show, setShow] = useState(false);
   // const handleClose = () => {
@@ -324,7 +370,8 @@ const Checkout = (props) => {
       .then((response) => {
         let data = response.data[0];
         setuserdata(data);
-
+        setapicall(true)
+        setUdata(data);
         //       setCurrentTab(data)
         // console.log("oooo----------"+JSON.stringify(data))
 
@@ -336,7 +383,7 @@ const Checkout = (props) => {
 
   // end delivery address
 
-  // console.log("777000005555555555555ssssssssssssss----------"+JSON.stringify(cartdata))
+  console.log("777000005555555555555ssssssssssssss----------"+show + "ordersss"+ordervalidation)
 
   // payment
   const returnButton = () => {
@@ -353,8 +400,12 @@ const Checkout = (props) => {
       userdata.address2 === undefined
     ) {
       setordervalidation(true);
+      setShow(true)
+
     } else {
-      // setordervalidation(false)
+      setordervalidation(false)
+      setShow(false)
+
       setCurrentTab((prev) => prev + 1);
       setapicall(true);
       setorderadd({
@@ -364,6 +415,8 @@ const Checkout = (props) => {
         invoice_date: currentdate,
         order_date: currentdate,
       });
+
+
     }
   };
   // end payment
@@ -944,7 +997,7 @@ const Checkout = (props) => {
                                   <li>
                                     <p className="text-content">
                                       <span className="text-title text-break">
-                                        Address:{userdata.address}
+                                        Address:{udata.address}
                                       </span>
                                     </p>
                                   </li>
@@ -995,7 +1048,7 @@ const Checkout = (props) => {
                                   <li>
                                     <p className="text-content">
                                       <span className="text-title text-break">
-                                        Address:{userdata.address2}
+                                        Address:{udata.address2}
                                       </span>
                                     </p>
                                   </li>
@@ -1019,6 +1072,204 @@ const Checkout = (props) => {
                           </div>
                         </div>
                       </div>
+
+                      <Modal size="lg" show={show} onHide={handleClose}>
+        <Form noValidate validated={validated} onSubmit={handleSubmit}>
+          <Modal.Header closeButton>
+            <Modal.Title>Edit Profile</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <div className="row p-md-3 m-0">
+              <div className="col-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>First Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    value={udata.first_name}
+                    name={"first_name"}
+                    onChange={OnchangeFistname}
+                    required
+                    maxLength={15}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your First Name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="validationCustom01"
+                >
+                  <Form.Label>Last Name</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="Name"
+                    value={udata.last_name}
+                    name={"last_name"}
+                    onChange={OnchangeFistname}
+                    required
+                    maxLength={15}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your Last Name
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-md-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Email Address</Form.Label>
+                  <Form.Control
+                    type="email"
+                    placeholder="Email Address"
+                    required
+                    value={udata.email}
+                    name={"email"}
+                    // onChange={OnchangeFistname}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    Please Enter valid Email
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+       
+              <div className="col-md-6">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Mobile</Form.Label>
+                  <Form.Control
+                    type="tel"
+                    placeholder="Mobile"
+                    value={udata.phone_no}
+                    name={"phone_no"}
+                    onChange={OnchangeFistname}
+                    required
+                    maxLength={10}
+                    minLength={10}
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Your Phone Number
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address</Form.Label>
+                  <Form.Control
+                    type="location"
+                    placeholder="Add Address"
+                    value={udata.address}
+                    name={"address"}
+                    onChange={OnchangeFistname}
+                    maxLength="100"
+                  />
+                  <Form.Control.Feedback type="invalid">
+                    {" "}
+                    Please Enter Address
+                  </Form.Control.Feedback>
+                </Form.Group>
+              </div>
+              <div className="col-12">
+                <Form.Group
+                  className="mb-3 aos_input"
+                  controlId="formBasicEmail"
+                >
+                  <Form.Label>Add Address2</Form.Label>
+                  <Form.Control
+                    type="location"
+                    placeholder="Add Address2"
+                    value={udata.address2}
+                    name={"address2"}
+                    onChange={OnchangeFistname}
+                    maxLength="100"
+                  />
+                </Form.Group>
+              </div>
+
+              <div className="col-4">
+                <Form.Label className="inputlabelheading" column sm="12">
+                  Gender
+                </Form.Label>
+                <Form.Select
+                  aria-label="Product Type"
+                  className="adminselectbox"
+                  required
+                  value={udata.gender}
+                  name={"gender"}
+                  onChange={OnchangeFistname}
+                >
+                  <option value={""} onChange={func}>
+                    Gender
+                  </option>
+                  <option value="Male" onChange={func}>
+                    Male
+                  </option>
+                  <option value="Female" onChange={func}>
+                    Female
+                  </option>
+                </Form.Select>
+                <Form.Control.Feedback type="invalid" className="h6">
+                  Please select gender
+                </Form.Control.Feedback>
+              </div>
+              <div className="col-4">
+                <Form.Group className="mx-3" controlId="validationCustom11">
+                  <Form.Label className="inputlabelheading" column sm="12">
+                    Date of Birth
+                  </Form.Label>
+                  <Col sm="12">
+                    <Form.Control
+                      max={currentdate}
+                      name={"date_of_birth"}
+                      type={"date"}
+                      value={udata.date_of_birth}
+                      onChange={OnchangeFistname}
+                      required
+                      placeholder="Product Quantity"
+                    />
+                    <Form.Control.Feedback type="invalid">
+                      Please choose date of birth
+                    </Form.Control.Feedback>
+                  </Col>
+                </Form.Group>
+              </div>
+            </div>
+          </Modal.Body>
+          <Modal.Footer>
+            <button
+              type="button"
+              className="button main_outline_button btn btn-animation "
+              onClick={handleClose}
+            >
+              Cancel
+            </button>
+            <button
+              className="button main_button btn theme-bg-color ms-3 fire-button"
+              // onClick={handleSubmit}
+              type="submit"
+            >
+              Update
+            </button>
+          </Modal.Footer>
+        </Form>
+      </Modal>
+                       
                       <div className="button-group">
                         <ul className="button-group-list">
                           <li>
@@ -1033,7 +1284,25 @@ const Checkout = (props) => {
                           </li>
 
                           <li>
-                            {ordervalidation === true ? (
+                            {udata.address==""&&udata.address2=="" ? <div className="text-center my-4 text-danger">
+                             <h3>
+                               {"Please Add Address To Place An Order"}
+                             </h3>
+                             <button
+                                className="btn btn-success"
+                                 onClick={handleShow}
+                               >
+                                 Your Account
+                              </button>
+                           </div> :<button
+                                className="btn btn-animation proceed-btn"
+                                disabled={currentTab === 3}
+                                
+                                onClick={() => getPaymentData()}
+                              >
+                                Continue Payment Option
+                              </button>}
+                            {/* {show === true ? (
                               <div className="text-center my-4 text-danger">
                                 <h3>
                                   {"Please Add Address To Place An Order"}
@@ -1049,11 +1318,12 @@ const Checkout = (props) => {
                               <button
                                 className="btn btn-animation proceed-btn"
                                 disabled={currentTab === 3}
+                                
                                 onClick={() => getPaymentData()}
                               >
                                 Continue Payment Option
                               </button>
-                            )}
+                            )} */}
                           </li>
                         </ul>
                       </div>

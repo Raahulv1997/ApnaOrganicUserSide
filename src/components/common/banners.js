@@ -25,50 +25,50 @@ const Benners = (props) => {
 
   /* <!--Get product data with api--> */
 
-  useEffect(() => {
-    function getproductType() {
-      try {
-        axios
-          .post(
-            `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
-            {
-              product_search: {
-                search: `${productType}`,
-                price_from: "",
-                price_to: "",
-                id: "",
-                product_title_name_asc_desc: "asc",
-                sale_price: "",
-                short_by_updated_on: "",
-                is_delete: ["1"],
-                product_status: ["approved"],
-              },
-            },
-            {
-              headers: {
-                user_token: token,
-              },
-            }
-          )
-          .then((response) => {
-            let data = response.data;
-            setProductData(response.data.results);
-            localStorage.setItem("reviewid", response.data.results.id);
+  // useEffect(() => {
+  //   function getproductType() {
+  //     try {
+  //       axios
+  //         .post(
+  //           `${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`,
+  //           {
+  //             product_search: {
+  //               search: `${productType}`,
+  //               price_from: "",
+  //               price_to: "",
+  //               id: "",
+  //               product_title_name_asc_desc: "asc",
+  //               sale_price: "",
+  //               short_by_updated_on: "",
+  //               is_delete: ["1"],
+  //               product_status: ["approved"],
+  //             },
+  //           },
+  //           {
+  //             headers: {
+  //               user_token: token,
+  //             },
+  //           }
+  //         )
+  //         .then((response) => {
+  //           let data = response.data;
+  //           setProductData(response.data.results);
+  //           localStorage.setItem("reviewid", response.data.results.id);
 
-            setapicall(false);
-            {
-              response.data.results.map((product) => {
-                return setcatArray((catArray) => [
-                  ...catArray,
-                  product.product_type,
-                ]);
-              });
-            }
-          });
-      } catch (err) {}
-    }
-    getproductType();
-  }, [apicall]);
+  //           setapicall(false);
+  //           {
+  //             response.data.results.map((product) => {
+  //               return setcatArray((catArray) => [
+  //                 ...catArray,
+  //                 product.product_type,
+  //               ]);
+  //             });
+  //           }
+  //         });
+  //     } catch (err) {}
+  //   }
+  //   getproductType();
+  // }, [apicall]);
   /* <!--End this section--> */
 
   /* <!--Function for map category and same category not show again--> */
@@ -175,7 +175,77 @@ const Benners = (props) => {
       }
     }
   };
+  
   /* <!--End this section--> */
+//   const ShowProduct= ()=>{
+// if(  token === "null" ||
+//      token === "" ||
+//      token === null ||
+//      token === undefined ||
+//     token === true ||
+//     token === "true")
+//     {
+//       function getPro(){
+//         try {
+//           axios .post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=10`,{
+//             product_search: {
+//                              search: `${productType}`,
+//                              price_from: "",
+//                              price_to: "",
+//                              id: "",
+//                              is_delete: ["1"],
+//                              product_status: ["approved"],
+//                              product_title_name_asc_desc: "",
+//                              sale_price: "",
+//                              short_by_updated_on: "",
+//                            },
+//           })
+//           .then ((response)=>{
+//             let data = response.data;
+//                          setProductData(response.data.results);
+//                          setapicall(false);
+//           })
+//         } catch (err) {}
+//       }
+//       getPro();
+//     }
+//     else{
+//       if(token)
+//       {
+//         function getPro() {
+//           try{
+//             axios.post(`${process.env.REACT_APP_BASEURL}/home?page=0&per_page=400`, {
+//                                product_search: {
+//                                  search: `${productType}`,
+//                                  price_from: "",
+//                                  price_to: "",
+//                                  id: "",
+//                                  is_delete: ["1"],
+//                                  product_status: ["approved"],
+//                                  product_title_name_asc_desc: "",
+//                                  sale_price: "",
+//                                  short_by_updated_on: "",
+//                                },
+//                              }, {
+//                                    headers: {
+//                                                  user_token: token,
+//                                                },
+//                })
+//                .then((response)=>{
+//                 let data = response.data;
+//                  setProductData(response.data.results);
+//                  setapicall(false);
+//                })
+//           }catch (err) {}
+//         }
+//         getPro();
+//       }
+//       else{
+//         alert("No token saved");
+//       }
+//     }
+//   }
+
 
   /* <!--Show product data--API Call--> */
   useEffect(() => {
@@ -208,6 +278,7 @@ const Benners = (props) => {
               setProductData(response.data.results);
               setapicall(false);
             });
+            
         } catch (err) {}
       }
       getProductData();
@@ -231,6 +302,7 @@ const Benners = (props) => {
                     short_by_updated_on: "",
                   },
                 },
+
                 {
                   headers: {
                     user_token: token,
@@ -243,6 +315,7 @@ const Benners = (props) => {
                 setProductData(response.data.results);
                 setapicall(false);
               });
+              
           } catch (err) {}
         }
         getProductData();
@@ -252,6 +325,7 @@ const Benners = (props) => {
     }
   }, [apicall, productType]);
   /* <!--End this section--> */
+  console.log("DATA------"+JSON.stringify(productData))
 
   useEffect(() => {
     setapicall(true);

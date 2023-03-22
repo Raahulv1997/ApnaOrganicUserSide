@@ -288,7 +288,6 @@ function Account() {
     setclick(true);
   };
   //add address
-  const [addNewAdderss, setaddNewAdderss] = useState(0);
   const [addAdderssvalidated, setaddAdderssValidated] = useState(false);
   const addAdderssSubmit = (event) => {
     event.preventDefault();
@@ -306,6 +305,19 @@ function Account() {
     setEmail(name);
   };
 
+ const alphanumeric=(inputtxt)=>
+  {
+   var letterNumber = /^[a-zA-Z]+$/;
+   if((inputtxt.value.match(letterNumber)))
+    {
+     return true;
+    }
+  else
+    { 
+     alert("message"); 
+     return false; 
+    }
+    }
   // add to cart
   const AddToCart = (id, discount, product_price, quantity, product_id) => {
     axios
@@ -1758,11 +1770,13 @@ function Account() {
                   controlId="validationCustom01"
                 >
                   <Form.Label>First Name</Form.Label>
+                  
                   <Form.Control
                     type="text"
                     placeholder="Name"
                     value={udata.first_name}
                     name={"first_name"}
+                    
                     onChange={OnchangeFistname}
                     required
                     maxLength={15}

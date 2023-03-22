@@ -519,7 +519,7 @@ const Shop = (props) => {
       }
     }
   };
-
+console.log("-------SHOPPPPPPPP"+JSON.stringify(brandfilter))
   /*<----Functionality to get data filtered by rating---->*/
   const onRatingFilterAdd = (e) => {
     const value =
@@ -1557,13 +1557,13 @@ setapicall(true);
               )}
 
               {/* <div className="d-flex justify-content-center">
-                <Pagination
-                  className="d-flex justify-content-center"
-                  nPages={page}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  recordsPerPage={recordsPerPage}
-                />
+                // <Pagination
+                //   className="d-flex justify-content-center"
+                //   nPages={page}
+                //   currentPage={currentPage}
+                //   setCurrentPage={setCurrentPage}
+                //   recordsPerPage={recordsPerPage}
+                // />
               </div> */}
             </div>
           </div>

@@ -2,24 +2,27 @@ import React, { Fragment } from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
 import Breadcumb from "../common/beadcumb";
+import { useNavigate } from "react-router-dom";
 
 import Accordion from "react-bootstrap/Accordion";
 import { Link } from "react-router-dom";
 import { useState, useEffect } from "react";
 import axios from "axios";
+
 let categoryArray = [];
 
 const BlogList = () => {
-  const clickBlog = (id) => {
-    localStorage.setItem("idd", id);
-  };
+const navigate = useNavigate();
+
   const [apicall, setapicall] = useState([]);
   const [blogData, setBlogData] = useState([]);
   const [catData, setcatData] = useState([]);
+  const [Bdata,setBdata]=useState([]);
   const [searchCategory, setSearchCategory] = useState("");
   const [recent, setRecent] = useState("");
   const [productTag, setProductTag] = useState("");
   const [id, setId] = useState("");
+  // console.log("ID----"+id)
   const onCategoryClick = (e) => {
     setSearchCategory({ ...searchCategory, [e.target.name]: e.target.value });
   };
@@ -33,11 +36,42 @@ const BlogList = () => {
   
   useEffect(() => {
     onCategorySearch();
-  }, [searchCategory, recent, productTag]);
+  }, [searchCategory, recent]);
   const onCategorySearch = () => {
     if (searchCategory.category ? categoryArray : "")
       categoryArray.push(searchCategory.category);
     if (categoryArray !== "") {
+      try{
+      axios
+      .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
+        id: "",
+        for_: "admin",
+        recent: "",
+        category: [],
+        product_tag: "",
+      })
+      .then((response) => {
+        let data = response.data;
+        if (data.message !== "No blogs Data") {
+          setBlogData(data);
+          setapicall(false);
+        }
+
+        setBlogData(response.data);
+        setcatData(response.data);
+        setBdata(response.data)
+
+        setId(data.id);
+        // console.log("blog"+JSON.stringify(blogData));
+
+        setapicall(false);
+      });
+    } catch (err) {}
+    
+    }
+  };
+  useEffect(() => {
+    
       try {
         axios
           .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
@@ -48,54 +82,40 @@ const BlogList = () => {
             product_tag: productTag,
           })
           .then((response) => {
-            let data = response.data[0];
-            setBlogData(response.data);
+            let data = response.data;
+            setBlogData(data);
+        setBdata(response.data)
+
           });
       } catch (err) {}
-    }
+  }, [apicall,searchCategory,productTag]);
+
+
+ 
+  
+  const clickBlog = (id) => {
+    localStorage.setItem("blogid", id);
+    console.log("BLOGGGG_____------IDDD"+id)
+    navigate('/blog_detail');
+   
   };
-  useEffect(() => {
-    axios
-      .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
-        id: "",
-        for_: "admin",
-        recent: "",
-        category: [],
-        product_tag: "",
-      })
-      .then((response) => {
-        let data = response.data[0];
-        if (data.message !== "empty") {
-          setBlogData(data);
-          setapicall(false);
-        }
-
-        setBlogData(response.data);
-        setcatData(response.data);
-
-        setId(data.id);
-        // console.log("blog"+JSON.stringify(blogData));
-
-        setapicall(false);
-      });
-  }, [apicall]);
-
+// console.log("----------------********"+JSON.stringify(blogData.title))
   return (
     <Fragment>
       <Header />
-      <Breadcumb pageName={"Blog List"} pageTitle={"Page Title"} />
+      {/* <Breadcumb pageName={"Blog List"} pageTitle={"Page Title"} /> */}
       {/* <!-- Blog Section Start --> */}
       <section className="blog-section section-b-space">
         <div className="container-fluid-lg">
           <div className="row g-4">
             <div className="col-xxl-9 col-xl-8 col-lg-7 order-lg-2">
               <div className="row g-4">
-                {blogData.map((showData)=>{
+                {Bdata.map((showData)=>{
                   return(<>
                    <div className="col-12">
                   <div className="blog-box blog-list wow fadeInUp">
                     <div className="blog-image">
-                      <img src={showData.image} className="lazyload " alt="image"name="image" />
+                      <img src={showData.image} className="w-100" alt="image"name="image" />
                     </div>
 
                           <div className="blog-contain blog-contain-2">
@@ -106,14 +126,14 @@ const BlogList = () => {
                               </span>
                               <span className="super">
                                 <i data-feather="user"></i>
-                                <span>Mark J. Speight</span>
+                                {/* <span>Mark J. Speight</span> */}
                               </span>
                             </div>
-                            <Link to="/blog_detail">
-                              <h3 onClick={(id) => clickBlog(showData.id)}>
+                            {/* <Link to=""> */}
+                              <h3 onClick={()=>clickBlog(showData.id)}>
                                 {showData.title}
                               </h3>
-                            </Link>
+                            {/* </Link> */}
                             <p>{showData.description}</p>
                             <Link to="/blog_detail">
                               <button
@@ -475,7 +495,7 @@ const BlogList = () => {
 
             <div className="col-xxl-3 col-xl-4 col-lg-5 order-lg-1">
               <div className="left-sidebar-box wow fadeInUp">
-                <div className="left-search-box">
+                {/* <div className="left-search-box">
                   <div className="search-box">
                     <input
                       type="search"
@@ -485,7 +505,7 @@ const BlogList = () => {
                       placeholder="Search...."
                     />
                   </div>
-                </div>
+                </div> */}
                 <div
                   className="accordion left-accordion-box"
                   id="accordionPanelsStayOpenExample"

@@ -261,8 +261,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         {
           user_id: "",
           product_view_id: `${Id}`,
-          price: `${productDetails.product_verient[0].product_price}`,
-          discount: `${productDetails.product_verient[0].discount}`,
+          // price: `${productDetails.product_verient[0].product_price}`,
+          // discount: `${productDetails.product_verient[0].discount}`,
         },
         {
           headers: {
@@ -272,10 +272,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       )
       .then((response) => {
         let data = response.data;
-        setProductDetails(data.results);
         setapicall(true);
       })
-      .catch(function (error) {});
   };
 
   /*<-----Functionality to Remove from Wishlist----> */
@@ -554,7 +552,7 @@ useEffect(()=>{
   //   return obj.id;
   // });
   // console.log(ids);
-
+console.log("================="+JSON.stringify(productDetails.product_title_name))
   return (
     <Fragment>
       <Header />

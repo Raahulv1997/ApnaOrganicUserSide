@@ -422,7 +422,7 @@ const Header = (props) => {
                             {
                             window.location.pathname==="/shop"||
                             pdata.length === 0 ||
-                            pdata.length === "" ||
+                            pdata.length == "" ||
                             pdata.length===undefined||
                             pdata === "cart_empty" ? null : (
                               <small className="badge-number">
