@@ -38,6 +38,7 @@ const navigate = useNavigate();
     onCategorySearch();
   }, [searchCategory, recent]);
   const onCategorySearch = () => {
+    
     if (searchCategory.category ? categoryArray : "")
       categoryArray.push(searchCategory.category);
     if (categoryArray !== "") {
@@ -88,7 +89,7 @@ const navigate = useNavigate();
 
           });
       } catch (err) {}
-  }, [apicall,searchCategory,productTag]);
+  }, [apicall,searchCategory,productTag,recent]);
 
 
  

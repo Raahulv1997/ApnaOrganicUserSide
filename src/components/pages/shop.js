@@ -396,7 +396,7 @@ const Shop = (props) => {
     recordsPerPage,
     currentPage,
   ]);
-
+console.log("scategoryyy-----"+JSON.stringify(categorydata))
   /*<--------functionality to get the data of category----------> */
   useEffect(() => {
     function getCategoryData() {
@@ -413,7 +413,7 @@ const Shop = (props) => {
     }
     getCategoryData();
   }, [apicall]);
-
+console.log("SHOW CATEGORYY0-----"+JSON.stringify(categorydata))
   /*<----Functionality to filter category data and get the data in an array---->*/
   const result = categorydata.filter(
     (thing, index, self) =>
@@ -519,7 +519,6 @@ const Shop = (props) => {
       }
     }
   };
-console.log("-------SHOPPPPPPPP"+JSON.stringify(brandfilter))
   /*<----Functionality to get data filtered by rating---->*/
   const onRatingFilterAdd = (e) => {
     const value =
