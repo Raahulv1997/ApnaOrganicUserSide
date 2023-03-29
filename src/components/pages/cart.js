@@ -14,6 +14,7 @@ import axios from "axios";
 import moment from "moment";
 const Cart = () => {
   /* <!--Start all state section--> */
+  const [increatecartID, setIncreamentCartID] = useState(false);
   const navigate = useNavigate();
   const [show, setShow] = useState("");
   const [apicall, setapicall] = useState(false);
@@ -62,13 +63,15 @@ const Cart = () => {
         )
         .then((response) => {
           let data = response.data;
-          settotalqty(false);
+          settotalqty(true);
 
           CheckCoupon();
           setapicall(false);
+          setIncreamentCartID(false);
         });
     } else {
       settotalqty(true);
+      setIncreamentCartID(id);
     }
   };
   const decrementCount = (id, order_quantity) => {
@@ -134,13 +137,12 @@ const Cart = () => {
               setapicall(false);
             } else {
               let ProductTotal = 0;
-              let originalProductPrice = 0;
+
               data.map((cdata) => {
                 ProductTotal += cdata.order_quantity * Number(cdata.sale_price);
-                originalProductPrice += cdata.product_price;
               });
               setProductPriceTotal(ProductTotal);
-              setOriginalProductPrice(originalProductPrice);
+
               setCartData(data);
               setapicall(true);
             }
@@ -306,6 +308,9 @@ const Cart = () => {
     localStorage.setItem("variantid", id);
     navigate("/product-detail");
   };
+  let total_tax_with_qty = 0;
+  let total_priceWithout_tax = 0;
+  let qty = 0;
   return (
     <Fragment>
       <Header deleteCart={deleteCart} />
@@ -324,6 +329,28 @@ const Cart = () => {
                   ) : (
                     <table className="table">
                       {cartdata.map((cdata) => {
+                        qty = cdata.order_quantity;
+
+                        let countAllText =
+                          Number(cdata.gst) +
+                          Number(cdata.wholesale_sales_tax) +
+                          Number(cdata.manufacturers_sales_tax) +
+                          Number(cdata.retails_sales_tax) +
+                          Number(cdata.value_added_tax);
+                        let tax =
+                          (Number(cdata.sale_price) * countAllText) / 100;
+
+                        let Total_taxMultiply_qty = tax * cdata.order_quantity;
+                        total_tax_with_qty += Number(Total_taxMultiply_qty);
+
+                        let price_without_tax =
+                          Number(cdata.product_price).toFixed(2) - tax;
+
+                        let pricewithout_tax_with_qty = price_without_tax * qty;
+
+                        total_priceWithout_tax += Number(
+                          pricewithout_tax_with_qty
+                        );
                         return (
                           <tbody key={cdata.id}>
                             <tr className="product-box-contain">
@@ -464,20 +491,11 @@ const Cart = () => {
                               <td className="price">
                                 <h4 className="table-title text-content">
                                   Price (Without Tax): ₹
-                                  {Number(cdata.product_price).toFixed(2)}
+                                  {price_without_tax.toFixed(2)}
                                 </h4>
 
                                 <h4 className="table-title text-content">
-                                  Tax: ₹
-                                  {(
-                                    (Number(cdata.sale_price) *
-                                      (Number(cdata.gst) +
-                                        Number(cdata.wholesale_sales_tax) +
-                                        Number(cdata.manufacturers_sales_tax) +
-                                        Number(cdata.retails_sales_tax) +
-                                        Number(cdata.value_added_tax))) /
-                                    100
-                                  ).toFixed(2)}
+                                  Tax: ₹{tax.toFixed(2)}
                                 </h4>
                               </td>
                               <td className="price">
@@ -534,7 +552,8 @@ const Cart = () => {
                                     </div>
                                   </div>
                                 </div>
-                                {totalqty === true ? (
+                                {totalqty === true &&
+                                increatecartID == cdata.cart_id ? (
                                   <p
                                     className="mt-1 ms-2 text-danger"
                                     type="invalid"
@@ -635,13 +654,15 @@ const Cart = () => {
                       <h4>Original Price</h4>
 
                       <h4 className="price">
-                        ₹{originalproductprice.toFixed(2)}
+                        ₹{total_priceWithout_tax.toFixed(2)}
                       </h4>
                     </li>
                     <li>
                       <h4>Total Tax</h4>
 
-                      {/* <h4 className="price">₹{Totaltax.toFixed(2)}</h4> */}
+                      <h4 className="price">
+                        ₹{total_tax_with_qty.toFixed(2)}
+                      </h4>
                     </li>
 
                     <li>

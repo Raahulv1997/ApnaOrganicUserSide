@@ -77,6 +77,9 @@ function Account() {
       .then((response) => {
         let data = response.data[0];
         setuserdata(data);
+        // console.log("dayta----" + JSON.stringify(data.first_name));
+        // console.log("usernamef---" + data.first_name);
+        localStorage.setItem("first_name", data.first_name);
         setUdata(data);
         setapicall(false);
       })
@@ -157,7 +160,6 @@ function Account() {
             setShow(false);
             setapicall(true);
             setValidated(false);
-            localStorage.setItem("first_name", udata.first_name);
           }
         })
         .catch((error) => {});

@@ -1,7 +1,7 @@
-import React, { Fragment, useState, useRef } from "react";
+import React, { Fragment, useState } from "react";
 import Footer from "../common/footer";
 import Header from "../common/header";
-
+import banner1 from "../../Photos/banner/14.jpg";
 import Tab from "react-bootstrap/Tab";
 import Tabs from "react-bootstrap/Tabs";
 import { FaStar } from "react-icons/fa";
@@ -9,7 +9,13 @@ import SweetAlert from "sweetalert-react";
 import "sweetalert/dist/sweetalert.css";
 import Carousel from "react-bootstrap/Carousel";
 import "../../CSS/style.css";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import {
+  json,
+  Link,
+  NavLink,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import { useEffect } from "react";
 import axios from "axios";
 import Form from "react-bootstrap/Form";
@@ -17,20 +23,20 @@ import { FaStarHalfAlt, FaRegStar } from "react-icons/fa";
 import moment from "moment";
 
 const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
-  const ref = useRef();
+  var result6;
 
   const useridd = localStorage.getItem("userid");
   const fname = localStorage.getItem("first_name");
   const [avgRating, setAvgRating] = useState([]);
   const token = localStorage.getItem("token");
   const [ReviewAlert, setReviewAlert] = useState(false);
-
+  const [sizeOn, setSizeOn] = useState(false);
   const [colorValue, setColorValue] = useState("");
   const [getSizOnclor, setGetSizeOnColor] = useState([]);
   const [mycolor, setMycolor] = useState();
-  const [apicall, setapicall] = useState(false);
+  const [apicall, setapicall] = useState([]);
   const [productDetails, setProductDetails] = useState([]);
-  // const [productprice, setProductprice] = useState();
+  const [productprice, setProductprice] = useState();
   const [saleprice, setsaleprice] = useState(0);
   const [mrp, setMrp] = useState();
   const [size, setSize] = useState();
@@ -40,7 +46,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const [exp, setExp] = useState("");
   const [qut, setQut] = useState("");
   const [Id, setId] = useState("");
-
+  const [image, setImage] = useState([]);
   // const[image,setImage]=useState('');
   // const[review,setReview]=useState([]);
   const [discount, setDiscount] = useState();
@@ -55,18 +61,20 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   const [Rrating, setRrating] = useState("");
   // const [mainRrating, setmainRrating] = useState("");
 
-  // const [Searchreview, setSearchReview] = useState({
-  //   product_name: "",
-  //   category_type: "",
-  //   status: "",
-  // });
+  const [Searchreview, setSearchReview] = useState({
+    product_name: "",
+    category_type: "",
+    status: "",
+  });
   let [reviewerror, setReviewError] = useState("");
   // const [rating, setRating] = useState([]);
   let mainRrating;
   if (avgRating[1] !== "" || avgRating[1] !== null) {
-    (avgRating[1] || []).map((avg) => {
-      return (mainRrating = avg.avgRating);
-    });
+    {
+      (avgRating[1] || []).map((avg) => {
+        return (mainRrating = avg.avgRating);
+      });
+    }
   }
   let ratingbox = [1, 2, 3, 4, 5];
   let ratingg = mainRrating;
@@ -75,7 +83,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   // var product_details = data3.product_details;
   // var tranding_product = data4.tranding_product;
   let [count, setCount] = useState(1);
-  // const { state } = useLocation();
+  const { state } = useLocation();
   const navigate = useNavigate();
   const [total, settotal] = useState(false);
   /*<-----Increment Functionality----> */
@@ -100,6 +108,53 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   var proid = localStorage.getItem("proid");
   const [varientId, setVeriantId] = useState(localStorage.getItem("variantid"));
 
+  useEffect(() => {
+    function getProductDetails() {
+      try {
+        axios
+          .get(`${process.env.REACT_APP_BASEURL}/product_details?id=${proid}`)
+          .then((response) => {
+            let data = response.data;
+
+            result6 = data.product_verient.filter(
+              (thing, index, self) =>
+                index === self.findIndex((t) => t.colors == thing.colors)
+            );
+            setMycolor(result6);
+
+            setProductDetails(data);
+            setId(data.product_verient.id);
+
+            setapicall(false);
+            OnProductColor(
+              data.product_verient[0].colors,
+              data.product_verient[0].product_price,
+              data.product_verient[0].mrp,
+              data.product_verient[0].manufacturing_date,
+              data.product_verient[0].expire_date,
+              data.product_verient[0].quantity,
+              proid,
+              varientId
+            );
+            // console.log(
+            //   data.product_verient[0].colors,
+            //   data.product_verient[0].product_price,
+            //   data.product_verient[0].mrp,
+            //   data.product_verient[0].manufacturing_date,
+            //   data.product_verient[0].expire_date,
+            //   data.product_verient[0].quantity,
+            //   proid,
+            //   varientId
+            // );
+          });
+      } catch (err) {}
+    }
+
+    getProductDetails();
+    getVeriantDetails(varientId, proid);
+    SelectProduct(colorValue);
+  }, [apicall, varientId]);
+
   /*<-----Functionality for veriant Data of product----> */
   const getVeriantDetails = (varientId, proid) => {
     try {
@@ -109,9 +164,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         )
         .then((response) => {
           let data = response.data[0];
-          // console.log("product veriant----" + JSON.stringify(data));
-          // setProductprice(Number(data.product_price.toFixed(2)));
-          setsaleprice(Number(data.sale_price.toFixed(2)));
+          console.log("product veriant----" + JSON.stringify(data));
+          setProductprice(Number(data.product_price.toFixed(2)));
+          setsaleprice(data.sale_price);
           // console.log(Number(data.sale_price.toFixed(2)));
           setMrp(Number(data.mrp).toFixed(2));
           setColors(data.colors);
@@ -128,90 +183,41 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
     } catch (err) {}
   };
 
-  const getVeriantImageFunction = () => {
-    axios
-      .get(
-        `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${proid}&product_verient_id=${varientId}`
-      )
-      .then((response) => {
-        let data = response.data;
-        // console.log("resp--" + JSON.stringify(data));
-        if (data.response == "error") {
-          setShowImages([]);
-        } else {
-          setShowImages(data);
-        }
-        setapicall(false);
-      })
-      .catch(function (error) {
-        console.log(error);
-      });
-  };
-  // const veriatCall = getVeriantDetails(varientId, proid);
-  // const imageVeriantCall = getVeriantImageFunction();
-  useEffect(() => {
-    function getProductDetails() {
-      try {
-        axios
-          .get(`${process.env.REACT_APP_BASEURL}/product_details?id=${proid}`)
-          .then((response) => {
-            let data = response.data;
-
-            ref.current = data.product_verient.filter(
-              (thing, index, self) =>
-                index === self.findIndex((t) => t.colors === thing.colors)
-            );
-
-            setMycolor(ref.current);
-
-            setProductDetails(data);
-
-            let result8 = data.product_verient.filter(
-              (item) => item.colors === colorValue
-            );
-
-            let sizeDependOnColor = result8.filter(
-              (thing, index, self) =>
-                index === self.findIndex((t) => t.size === thing.size)
-            );
-
-            setGetSizeOnColor(sizeDependOnColor);
-
-            if (data.product_verient[0].unit === "gms") {
-              let sizeDependOnColor = data.product_verient.filter(
-                (thing, index, self) =>
-                  index ===
-                  self.findIndex((t) => t.unit_quantity === thing.unit_quantity)
-              );
-
-              setGetSizeOnColor(sizeDependOnColor);
-            } else if (data.product_verient[0].unit === "ml") {
-              let sizeDependOnColor = data.product_verient.filter(
-                (thing, index, self) =>
-                  index ===
-                  self.findIndex((t) => t.unit_quantity === thing.unit_quantity)
-              );
-
-              setGetSizeOnColor(sizeDependOnColor);
-            } else {
-            }
-          });
-      } catch (err) {}
-    }
-
-    getProductDetails();
-
-    getVeriantDetails(varientId, proid);
-    getVeriantImageFunction();
-  }, [apicall, varientId, colorValue, proid]);
-
   /*<-----Data retrieval functionality for product details by size----> */
+  function SelectProduct(colorValue) {
+    try {
+      axios
+        .get(`${process.env.REACT_APP_BASEURL}/product_details?id=${proid}`)
+        .then((response) => {
+          let data = response.data;
+          // console.log(
+          //   "select product Funtion data----" +
+          //     JSON.stringify(data.product_verient)
+          // );
+          let result8 = data.product_verient.filter(
+            (item) => item.colors === colorValue
+          );
+          setGetSizeOnColor(result8);
+
+          // setProductprice(getSizOnclor.product_price);
+          // setsaleprice(getSizOnclor.sale_price)
+          // setMrp( getSizOnclor.mrp);
+          // setColors(getSizOnclor.colors);
+          // setDiscount(getSizOnclor.discount);
+          // setUnitQwanity(getSizOnclor.unit_quantity)
+          // setSize(getSizOnclor.size);
+          // setMfd(getSizOnclor.manufacturing_date);
+          // setExp(getSizOnclor.expire_date);
+          //  setQut(getSizOnclor.quantity)
+        });
+    } catch (err) {}
+  }
 
   /*<-----Functionality to filter products data by image----> */
   const result = showImage.filter(
     (thing, index, self) =>
-      index ===
-      self.findIndex((t) => t.product_image_path === thing.product_image_path)
+      index ==
+      self.findIndex((t) => t.product_image_path == thing.product_image_path)
   );
 
   /*<-----Functionality to Add to cart----> */
@@ -234,7 +240,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         }
       )
       .then((response) => {
-        // let data = response.data;
+        let data = response.data;
         // navigate("/cart")
         setapicall(true);
       });
@@ -257,8 +263,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         }
       )
       .then((response) => {
-        // let data = response.data;
-
+        let data = response.data;
+        setProductDetails(data.results);
         setapicall(true);
       })
       .catch(function (error) {});
@@ -279,10 +285,143 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         }
       )
       .then((response) => {
-        // let data = response.data;
+        let data = response.data;
 
         setapicall(true);
       });
+  };
+
+  const OnProductprice = (
+    SalePrice,
+    product_price,
+    mrpp,
+    sizee,
+    mfdd,
+    expp,
+    quantityy,
+    id,
+    productid
+  ) => {
+    setProductprice(product_price);
+    setsaleprice(SalePrice);
+    // console.log(Number(SalePrice).toFixed(2));
+    setMrp(mrpp);
+
+    setSize(sizee);
+    setMfd(mfdd);
+    setExp(expp);
+    setQut(quantityy);
+    setId(id);
+
+    axios
+      .get(
+        `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+      )
+      .then((response) => {
+        let data = response.data;
+        // console.log("product veriant image--" + JSON.stringify(data));
+        setapicall(false);
+        setShowImages(data);
+
+        axios
+          .get(
+            `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+          )
+          .then((response) => {
+            let data = response.data;
+            setapicall(false);
+            setShowImages(data);
+          })
+          .catch(function (error) {
+            console.log(error);
+          });
+      });
+  };
+
+  /*<----Functionality to set price as per the quntity---->*/
+  const OnUnitQwantiity = (
+    unitQwanityy,
+    SalePrice,
+    product_price,
+    mrpp,
+    sizee,
+    mfdd,
+    expp,
+    quantityy,
+    id,
+    productid
+  ) => {
+    setProductprice(product_price);
+    setsaleprice(SalePrice);
+    // console.log(Number(SalePrice).toFixed(2));
+    setMrp(mrpp);
+    setUnitQwanity(unitQwanityy);
+    setSize(sizee);
+    setMfd(mfdd);
+    setExp(expp);
+    setQut(quantityy);
+    setId(id);
+
+    axios
+      .get(
+        `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+      )
+      .then((response) => {
+        let data = response.data;
+        // console.log("product veriant image--" + JSON.stringify(data));
+        setapicall(false);
+        setShowImages(data);
+
+        // axios
+        //   .get(
+        //     `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${productid}&product_verient_id=${id}`
+        //   )
+        //   .then((response) => {
+        //     let data = response.data;
+        //     // console.log("product veriant image--" + JSON.stringify(data));
+        //     setapicall(false);
+        //     setShowImages(data);
+        //   })
+        //   .catch(function (error) {
+        //     console.log(error);
+        //   });
+      });
+  };
+
+  /*<----Functionality to set price as per the color---->*/
+  const OnProductColor = (
+    Salepricee,
+    color,
+    product_price,
+    mrpp,
+    mfdd,
+    expp,
+    quantityy,
+    veriantid,
+    productid
+  ) => {
+    setsaleprice(Salepricee);
+    // console.log(Salepricee);
+    setColors(color);
+    setProductprice(product_price);
+    setMrp(mrpp);
+    setMfd(mfdd);
+    setExp(expp);
+    setQut(quantityy);
+    setId(veriantid);
+    try {
+      axios
+        .get(
+          `${process.env.REACT_APP_BASEURL}/product_images_get_singal_veriant?product_id=${proid}&product_verient_id=${veriantid}`
+        )
+        .then((response) => {
+          let data = response.data;
+          // console.log("veriantDataImage----"+ JSON.stringify (data))
+          setapicall(false);
+          setShowImages(data);
+        });
+    } catch (err) {}
+    // setImage(product_image_namee);
   };
 
   /*<----Functionality to get the data of reviews---->*/
@@ -295,15 +434,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
       })
       .then((response) => {
         let data = response.data;
-        // console.log("CONSOLEE" + JSON.stringify(data.response));
-        if (data.response == "header error") {
-          console.log("hhhhhhh");
-          setReviewData([]);
-          setRrating([]);
-        } else {
-          setReviewData(response.data);
-          setRrating(data);
-        }
+        // console.log("review data--" + JSON.stringify(data));
+        setReviewData(response.data);
+        setRrating(data);
 
         // setSearchReview(response.data)
         setapicall(false);
@@ -358,8 +491,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   /*<-----Functionality to filter products data by rate----> */
   const result1 = ratingbox.filter(
     (thing, index, self) =>
-      index ===
-      self.findIndex((t, x) => t.review_rating === thing.review_rating)
+      index === self.findIndex((t, x) => t.review_rating == thing.review_rating)
   );
 
   /*<-----Functionality to show average rating----> */
@@ -372,7 +504,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         let data = response.data;
         setAvgRating(data);
       });
-  }, [apicall, proid]);
+  }, [apicall]);
 
   /*<-----End secation----> */
 
@@ -440,40 +572,29 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
             <div className="row g-6">
               <div className="col-xl-6 sm-2 col-lg-7">
                 <Carousel variant="dark">
-                  {result.length !== 0 ? (
-                    result.map((images) => {
-                      return (
-                        <Carousel.Item>
-                          {images.product_verient_id === varientId ||
-                          images.product_id === proid ? (
-                            <img
-                              className="d-block"
-                              src={
-                                images.product_image_path
-                                  ? images.product_image_path
-                                  : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
-                              }
-                              alt="First slide"
-                              name={images.product_image_name}
-                              style={{ height: "750px", width: "750px" }}
-                            />
-                          ) : null}
-                        </Carousel.Item>
-                      );
-                    })
-                  ) : (
-                    <Carousel.Item>
-                      <img
-                        className="d-block"
-                        src={
-                          "   https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
-                        }
-                        alt="First slide"
-                        name={"default"}
-                        style={{ height: "750px", width: "750px" }}
-                      />
-                    </Carousel.Item>
-                  )}
+                  {showImage.map((images) => {
+                    return (
+                      <Carousel.Item>
+                        {images.product_verient_id == varientId ||
+                        images.productid == proid ? (
+                          <img
+                            className="d-block"
+                            onerror={
+                              "this.onerror=null;this.src='https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg'"
+                            }
+                            src={
+                              images.product_image_path
+                                ? images.product_image_path
+                                : "https://t3.ftcdn.net/jpg/05/37/73/58/360_F_537735846_kufBp10E8L4iV7OLw1Kn3LpeNnOIWbvf.jpg"
+                            }
+                            alt="First slide"
+                            name={images.product_image_name}
+                            style={{ height: "750px", width: "750px" }}
+                          />
+                        ) : null}
+                      </Carousel.Item>
+                    );
+                  })}
                 </Carousel>
               </div>
 
@@ -482,10 +603,11 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                 data-wow-delay="0.1s"
               >
                 <div className="right-box-contain">
-                  {discount === undefined ||
-                  discount === "null" ||
-                  discount === null ||
-                  discount === "" ? (
+                  {discount == 0 ||
+                  discount == undefined ||
+                  discount == "null" ||
+                  discount == null ||
+                  discount == "" ? (
                     ""
                   ) : (
                     <h6 className="offer-top">{discount}%</h6>
@@ -496,12 +618,15 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                   <div className="price-rating">
                     <h3 className="theme-color price">
                       {saleprice}
-
-                      <del className="text-content">{mrp}</del>
-                      {discount === null ||
-                      discount === "null" ||
-                      discount === undefined ||
-                      discount === "" ? (
+                      {console.log("salePrice---" + saleprice)}
+                      <del className="text-content">
+                        {mrp} {console.log("MRP---" + mrp)}
+                      </del>
+                      {discount == 0 ||
+                      discount == null ||
+                      discount == "null" ||
+                      discount == undefined ||
+                      discount == "" ? (
                         ""
                       ) : (
                         <span className="offer theme-color">
@@ -551,6 +676,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                   </div>
                   <button className="btn" style={{ backgroundColor: colors }}>
                     {colors}
+                    {console.log("color---" + colors)}
                   </button>
                   <div className="procuct-contain">
                     <p
@@ -572,7 +698,24 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                             ? "Piece"
                             : productDetails.product_verient[0].unit === "ml"
                             ? "Volume "
-                            : null}
+                            : result
+                            ? ""
+                            : null ||
+                              productDetails.product_verient[0].colors === "red"
+                            ? "Colors"
+                            : productDetails.product_verient[0].colors ===
+                              "black"
+                            ? ""
+                            : productDetails.product_verient[0].colors ===
+                              "yellow"
+                            ? ""
+                            : productDetails.product_verient[0].colors ===
+                              "green"
+                            ? ""
+                            : productDetails.product_verient[0].colors ===
+                              "blue"
+                            ? "Colors"
+                            : null}{" "}
                         </h4>
                       </div>
 
@@ -581,41 +724,31 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                           {productDetails.product_verient[0].size ? (
                             <p className="mb-0 mt-2"> {"Size:"}</p>
                           ) : null}
-
-                          {getSizOnclor.length !== 0 ? (
-                            getSizOnclor.map((details) => {
-                              return (
-                                <li key={details.id}>
-                                  <Link
-                                    to=""
-                                    onClick={() => {
-                                      setVeriantId(details.id);
-                                    }}
-                                    className={
-                                      size === details.size ||
-                                      varientId === details.id
-                                        ? "active"
-                                        : null
-                                    }
-                                  >
-                                    {details.size}
-                                  </Link>
-                                </li>
-                              );
-                            })
-                          ) : (
-                            <li key={varientId}>
-                              <Link
-                                to=""
-                                onClick={() => {
-                                  setVeriantId(varientId);
-                                }}
-                                className={varientId ? "active" : null}
-                              >
-                                {size}
-                              </Link>
-                            </li>
-                          )}
+                          {/* {console.log(
+                            "product Data----------" +
+                              JSON.stringify(getSizOnclor)
+                          )} */}
+                          {getSizOnclor.map((details) => {
+                            return (
+                              // getSizOnclor.size==null||getSizOnclor.size==""||getSizOnclor.undefined?"":
+                              <li key={details.id}>
+                                <Link
+                                  to=""
+                                  onClick={() => {
+                                    setVeriantId(details.id);
+                                  }}
+                                  className={
+                                    size == details.size &&
+                                    varientId == details.id
+                                      ? "active"
+                                      : null
+                                  }
+                                >
+                                  {details.size}
+                                </Link>
+                              </li>
+                            );
+                          })}
                         </ul>
                       ) : null}
 
@@ -625,52 +758,40 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                             <p className="mb-0 mt-2"> {"Volume :"}</p>
                           ) : null}
 
-                          {getSizOnclor.map((details) => {
+                          {productDetails.product_verient.map((details) => {
                             return (
-                              // getSizOnclor.size==null||getSizOnclor.size==""||getSizOnclor.undefined?"":
                               <li key={details.id}>
                                 <Link
                                   to=""
                                   onClick={() => {
-                                    setVeriantId(details.id);
+                                    OnUnitQwantiity(
+                                      details.unit,
+                                      details.unit_quantity,
+                                      details.sale_price,
+                                      details.product_price,
+                                      details.mrp,
+                                      details.size,
+                                      details.manufacturing_date,
+                                      details.expire_date,
+                                      details.quantity,
+                                      details.id,
+                                      details.product_id
+                                    );
                                   }}
                                   className={
-                                    unitQwanity === details.unit_quantity
+                                    unitQwanity == details.unit_quantity &&
+                                    varientId == details.id
                                       ? "active"
                                       : null
                                   }
                                 >
-                                  {details.unit_quantity} ML
-                                </Link>
-                              </li>
-                            );
-                          })}
-                        </ul>
-                      ) : null}
-
-                      {productDetails.product_verient[0].unit === "gms" ? (
-                        <ul className="select-packege">
-                          {productDetails.product_verient[0].unit ? (
-                            <p className="mb-0 mt-2"> {"Weight :"}</p>
-                          ) : null}
-
-                          {getSizOnclor.map((details) => {
-                            return (
-                              // getSizOnclor.size==null||getSizOnclor.size==""||getSizOnclor.undefined?"":
-                              <li key={details.id}>
-                                <Link
-                                  to=""
-                                  onClick={() => {
-                                    setVeriantId(details.id);
-                                  }}
-                                  className={
-                                    unitQwanity === details.unit_quantity ||
-                                    varientId === details.id
-                                      ? "active"
-                                      : null
-                                  }
-                                >
-                                  {details.unit_quantity} GRM
+                                  {details.unit_quantity}{" "}
+                                  {details.unit === "ml"
+                                    ? "ML"
+                                    : details.unit === "grm"
+                                    ? "GRAM"
+                                    : null}
+                                  {/* {console.log(" size ---"+size+"      varientId"+ varientId + " veriant id from ApI" +details.id)} {console.log(" size from API  ---"+details.size ) } */}
                                 </Link>
                               </li>
                             );
@@ -679,33 +800,32 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                       ) : null}
 
                       <ul className="select-packege">
-                        {productDetails.product_verient[0].unit === "pcs" ? (
+                        {productDetails.product_verient[0].colors ? (
                           <p className="mb-0 mt-2">{"Color:"}</p>
                         ) : null}
-                        {productDetails.product_verient[0].unit === "pcs"
-                          ? mycolor.map((details) => {
-                              return (
-                                <li key={details.id}>
-                                  <Link
-                                    to=""
-                                    onClick={() => {
-                                      setVeriantId(details.id);
+                        {mycolor.map((details) => {
+                          return (
+                            <li>
+                              <Link
+                                to=""
+                                onClick={() => {
+                                  setVeriantId(details.id);
 
-                                      setColorValue(details.colors);
-                                    }}
-                                    className={
-                                      colors === details.colors ||
-                                      varientId === details.id
-                                        ? "active"
-                                        : null
-                                    }
-                                  >
-                                    {details.colors}
-                                  </Link>
-                                </li>
-                              );
-                            })
-                          : null}
+                                  setSizeOn(true);
+                                  setColorValue(details.colors);
+                                }}
+                                className={
+                                  colors == details.colors &&
+                                  varientId == details.id
+                                    ? "active"
+                                    : null
+                                }
+                              >
+                                {details.colors}
+                              </Link>
+                            </li>
+                          );
+                        })}
                       </ul>
                     </div>
                   ) : null}
@@ -878,33 +998,33 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
                     <div className="product-info">
                       <ul className="product-info-list product-info-list-2 ">
-                        <li key={1}>
+                        <li>
                           Type :{" "}
                           <span className="text-dark px-2">
                             {productDetails.product_type}
                           </span>
                         </li>
-                        <li key={2}>
+                        <li>
                           Taxs :{" "}
                           <span className="text-dark px-2">
                             Gst:{productDetails.gst} , Sgst:
                             {productDetails.sgst},Cgst:{productDetails.cgst}
                           </span>
                         </li>
-                        <li key={3}>
+                        <li>
                           Veriant ID :{" "}
                           <span className="text-dark px-2">{Id}</span>
                         </li>
-                        <li key={4}>
+                        <li>
                           MFG : <span className="text-dark px-2">{mfd}</span>
                         </li>
-                        <li key={5}>
+                        <li>
                           EXP : <span className="text-dark px-2">{exp}</span>
                         </li>
-                        <li key={6}>
+                        <li>
                           Stock : <span className="text-dark px-2">{qut}</span>
                         </li>
-                        <li key={7}>
+                        <li>
                           Tags : <span className="text-dark px-2">Cake,</span>{" "}
                           <span className="text-dark px-2">Backery</span>
                         </li>
@@ -988,36 +1108,32 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                     >
                       <div className="information-box">
                         <ul>
-                          <li key={1}>
+                          <li>
                             Store cream cakes in a refrigerator. Fondant cakes
                             should be stored in an air conditioned environment.
                           </li>
 
-                          <li key={2}>
+                          <li>
                             Slice and serve the cake at room temperature and
                             make sure it is not exposed to heat.
                           </li>
 
-                          <li key={3}>
-                            Use a serrated knife to cut a fondant cake.
-                          </li>
+                          <li>Use a serrated knife to cut a fondant cake.</li>
 
-                          <li key={7}>
+                          <li>
                             Sculptural elements and figurines may contain wire
                             supports or toothpicks or wooden skewers for
                             support.
                           </li>
 
-                          <li key={4}>
+                          <li>
                             Please check the placement of these items before
                             serving to small children.
                           </li>
 
-                          <li key={5}>
-                            The cake should be consumed within 24 hours.
-                          </li>
+                          <li>The cake should be consumed within 24 hours.</li>
 
-                          <li key={6}>Enjoy your cake!</li>
+                          <li>Enjoy your cake!</li>
                         </ul>
                       </div>
                       {/* </div> */}
@@ -1092,12 +1208,12 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                 {(avgRating[0] || []).map((count) => {
                                   return (
                                     <>
-                                      <li key={1}>
+                                      <li>
                                         <div className="form-check ps-0 m-0 category-list-box">
                                           <h5>5 Star</h5>
                                           <div className="form-check-label">
                                             <ul className="rating p-0 w-100">
-                                              <li key={1}>
+                                              <li>
                                                 <div className="rating-list ">
                                                   <div className="progress ">
                                                     <div
@@ -1118,12 +1234,12 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                         </div>
                                       </li>
 
-                                      <li key={2}>
+                                      <li>
                                         <div className="form-check ps-0 m-0 category-list-box">
                                           <h5>4 Star</h5>
                                           <div className="form-check-label">
                                             <ul className="rating p-0 w-100">
-                                              <li key={2}>
+                                              <li>
                                                 <div className="rating-list">
                                                   <div className="progress">
                                                     <div
@@ -1144,12 +1260,12 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                         </div>
                                       </li>
 
-                                      <li key={3}>
+                                      <li>
                                         <div className="form-check ps-0 m-0 category-list-box">
                                           <h5>3 Star</h5>
                                           <div className="form-check-label">
                                             <ul className="rating p-0 w-100">
-                                              <li key={3}>
+                                              <li>
                                                 <div className="rating-list">
                                                   <div className="progress">
                                                     <div
@@ -1170,12 +1286,12 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                         </div>
                                       </li>
 
-                                      <li key={4}>
+                                      <li>
                                         <div className="form-check ps-0 m-0 category-list-box">
                                           <h5>2 Star</h5>
                                           <div className="form-check-label">
                                             <ul className="rating p-0 w-100">
-                                              <li key={4}>
+                                              <li>
                                                 <div className="rating-list">
                                                   <div className="progress">
                                                     <div
@@ -1196,12 +1312,12 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                         </div>
                                       </li>
 
-                                      <li key={5}>
+                                      <li>
                                         <div className="form-check ps-0 m-0 category-list-box">
                                           <h5>1 Star</h5>
                                           <div className="form-check-label">
                                             <ul className="rating p-0 w-100">
-                                              <li key={5}>
+                                              <li>
                                                 <div className="rating-list">
                                                   <div className="progress">
                                                     <div
@@ -1381,7 +1497,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                 <div className="form-floating theme-form-floating your_comment">
                                   <textarea
                                     onChange={(e) => handleFormChange(e)}
-                                    defaultValue={addreviewdata.comment}
+                                    value={addreviewdata.comment}
                                     name={"comment"}
                                     className="form-control"
                                     placeholder="Leave a comment here"
@@ -1420,10 +1536,10 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                           let ratingg = Number(rdataa.review_rating);
                           return (
                             <>
-                              {rdataa.status === "approve" ? (
+                              {rdataa.status == "approve" ? (
                                 <div className="review-people">
                                   <ul className="review-list">
-                                    <li key={rdataa.id}>
+                                    <li>
                                       <div className="people-box">
                                         <div>
                                           <div className="people-image">
@@ -1487,9 +1603,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
                                               </ul>
                                             </div>
                                           </div>
-                                          {rdataa.comment === undefined ||
-                                          rdataa.comment === null ||
-                                          rdataa.comment === "" ? (
+                                          {rdataa.comment == undefined ||
+                                          rdataa.comment == null ||
+                                          rdataa.comment == "" ? (
                                             ""
                                           ) : (
                                             <div className="reply">

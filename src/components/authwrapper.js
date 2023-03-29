@@ -12,12 +12,13 @@ const AuthWrapper = () => {
     userLogged === true ||
     userLogged === "true" ? (
     <Navigate
+      key={1}
       to="/login"
       replace
       state={{ from: location }} // <-- pass location in route state
     />
   ) : (
-    <Outlet />
+    <Outlet key={3} />
   );
 };
 

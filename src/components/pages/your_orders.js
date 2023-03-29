@@ -73,6 +73,9 @@ function Orders() {
   var total = 0;
   var sub_total = 0;
   var total_tax = 0;
+  let qty = 0;
+  let total_tax_with_qty = 0;
+  let total_priceWithout_tax = 0;
   return (
     <React.Fragment>
       <Header />
@@ -379,6 +382,7 @@ function Orders() {
                     orderdata.mrp == ""
                       ? (orderdata.mrp = "0")
                       : Number(orderdata.mrp);
+
                     let countAllText =
                       Number(orderdata.gst) +
                       Number(orderdata.wholesale_sales_tax) +
@@ -390,7 +394,20 @@ function Orders() {
                     let tax =
                       (Number(orderdata.sale_price) * countAllText) / 100;
                     //  let sale_price=(product_price+tax)
-                    let total_price = orderdata.sale_price * orderdata.quantity;
+                    qty = orderdata.order_quantity;
+                    let total_price = orderdata.sale_price * qty;
+
+                    let Total_taxMultiply_qty = tax * qty;
+
+                    total_tax_with_qty += Number(Total_taxMultiply_qty);
+
+                    let price_without_tax =
+                      Number(orderdata.product_price).toFixed(2) - tax;
+
+                    let pricewithout_tax_with_qty = price_without_tax * qty;
+
+                    total_priceWithout_tax += Number(pricewithout_tax_with_qty);
+
                     total += Number(total_price);
                     sub_total += Number(orderdata.sale_price);
                     total_tax += Number(tax);
@@ -414,20 +431,25 @@ function Orders() {
 
                         <div className="product_price">
                           {" "}
-                          MRP- {orderdata.mrp}₹ ({Number(orderdata.discount)}% )
-                          <br /> Discount- {Number(discont).toFixed(2)}₹
+                          MRP- ₹{orderdata.mrp} ({Number(orderdata.discount)}% )
+                          <br /> Discount- ₹{Number(discont).toFixed(2)}
                           <br />
                           <b>
                             {" "}
                             Product Price- ₹
-                            {Number(orderdata.sale_price).toFixed(2)}
+                            {Number(orderdata.product_price).toFixed(2)}
                           </b>
                         </div>
 
                         <div className="product_quantity">
-                          Price without tax- <br />
-                          {Number(orderdata.product_price).toFixed(2)}₹
-                          <br /> Tax- {tax.toFixed(2)}₹
+                          Price without tax- <br />₹
+                          {price_without_tax.toFixed(2)}
+                          <br /> Tax- ₹{tax.toFixed(2)}
+                        </div>
+
+                        <div className="product_quantity">
+                          Sale price <br />₹{" "}
+                          {Number(orderdata.sale_price).toFixed(2)}
                         </div>
 
                         <div className="product_quantity">
@@ -435,12 +457,11 @@ function Orders() {
                         </div>
                         <div className="total_amount">
                           {" "}
-                          Total Price- <br />
+                          Total Price- <br />₹
                           {(
                             Number(orderdata.sale_price) *
                             Number(orderdata.order_quantity)
                           ).toFixed(2)}
-                          ₹
                         </div>
                       </div>
                     );
@@ -469,19 +490,13 @@ function Orders() {
                     <div className="Subtotal">
                       <p> Price(Excluding Tax)</p>
                     </div>
-                    <div className="">
-                      ₹
-                      {Number(order.taxable_value) -
-                        Number(order.total_gst).toFixed(2)}
-                    </div>
+                    <div className="">₹{total_priceWithout_tax.toFixed(2)}</div>
                   </div>
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
                     <div className="Subtotal">
-                      <p>Total Tax</p>
+                      <p>Total Tax (Tax x Qty) </p>
                     </div>
-                    <div className="">
-                      ₹{Number(order.total_gst).toFixed(2)}
-                    </div>
+                    <div className="">₹{total_tax_with_qty.toFixed(2)}</div>
                   </div>
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
                     <div className="Subtotal">
@@ -498,7 +513,9 @@ function Orders() {
                     <div className="Subtotal">
                       <p>Delivery Charges</p>
                     </div>
-                    <div className="">₹{order.shipping_charges}</div>
+                    <div className="">
+                      ₹{Number(order.shipping_charges).toFixed(2)}
+                    </div>
                   </div>
 
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
@@ -506,7 +523,7 @@ function Orders() {
                       <p> Discont Coupon Amount </p>
                     </div>
                     <div className="">
-                      ₹ {Number(order.discount_coupon_value)}
+                      ₹ {Number(order.discount_coupon_value).toFixed(2)}
                     </div>
                   </div>
 

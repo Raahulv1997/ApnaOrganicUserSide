@@ -181,21 +181,39 @@ const Checkout = (props) => {
             setValidation(false);
           } else {
             let ProductTotal = 0;
-            let Totaltaxes = 0;
-            let Totalgst = 0;
+
             let Totalcgst = 0;
             let Totalsgst = 0;
-            let Totalmtax = 0;
-            let Totalvtax = 0;
-            let Totalwtax = 0;
-            let Totalrtax = 0;
+
             let TotalTaxableValue = 0;
             let Saleprice = 0;
-            let originalProductPrice = 0;
+
             data.map((cdata) => {
+              let countAllText =
+                Number(cdata.gst) +
+                Number(cdata.wholesale_sales_tax) +
+                Number(cdata.manufacturers_sales_tax) +
+                Number(cdata.retails_sales_tax) +
+                Number(cdata.value_added_tax);
+
+              let tax = (Number(cdata.sale_price) * countAllText) / 100;
+
+              let qty = cdata.order_quantity;
+
+              let price_without_tax =
+                Number(cdata.product_price).toFixed(2) - tax;
+
+              let pricewithout_tax_with_qty = price_without_tax * qty;
+
+              total_priceWithout_tax += Number(pricewithout_tax_with_qty);
+
+              let Total_taxMultiply_qty = tax * qty;
+
+              total_tax_with_qty += Number(Total_taxMultiply_qty);
+
               // original price without tax
-              originalProductPrice +=
-                cdata.product_price * cdata.order_quantity;
+              // originalProductPrice +=
+              //   cdata.product_price * cdata.order_quantity;
 
               // end original price
               // totalprice
@@ -206,28 +224,20 @@ const Checkout = (props) => {
               }
 
               // gst
-              Totalgst += (Number(cdata.sale_price) * cdata.gst) / 100;
+              // Totalgst = total_tax_with_qty;
               // end gst
               // cgst
-              Totalcgst += Totalgst / 2;
-              // end cgst
+              // Totalcgst = total_tax_with_qty / 2;
+              // // end cgst
 
-              // sgst
-              Totalsgst += Totalgst / 2;
-              // end sgst
-              Totalmtax +=
-                (Number(cdata.sale_price) * cdata.manufacturers_sales_tax) /
-                100;
-              Totalvtax +=
-                (Number(cdata.sale_price) * cdata.value_added_tax) / 100;
-              Totalrtax +=
-                (Number(cdata.sale_price) * cdata.retails_sales_tax) / 100;
-              Totalwtax +=
-                (Number(cdata.sale_price) * cdata.wholesale_sales_tax) / 100;
-
+              // // sgst
+              // Totalsgst = total_tax_with_qty / 2;
+              // // end sgst
+              // console.log(
+              //   "total sgst=" + Totalsgst + " total cgst=" + Totalcgst
+              // );
               // totaltax
-              Totaltaxes +=
-                Totalgst + Totalmtax + Totalvtax + Totalrtax + Totalwtax;
+
               // end totaltax
 
               // totaltaxable value
@@ -239,23 +249,30 @@ const Checkout = (props) => {
               // end saleprice
             });
 
+            Totalcgst = total_tax_with_qty / 2;
+            // end cgst
+
+            // sgst
+            Totalsgst = total_tax_with_qty / 2;
+            // end sgst
+            // console.log("total sgst=" + Totalsgst + " total cgst=" + Totalcgst);
             setorderadd({
               ...orderadd,
               total_amount: ProductTotal - CouponDis + ShippingCharge,
-              total_gst: Totaltaxes,
+              total_gst: total_tax_with_qty,
               total_cgst: Totalcgst,
               total_sgst: Totalsgst,
-              taxable_value: ProductTotal,
+              taxable_value: total_priceWithout_tax,
               discount_coupon_value: CouponDis,
               discount_coupon: CouponId,
               vendor_id: data[0].vendor_id,
               payment_mode: DeliveryMethod,
               order_product: cartdata,
             });
-            setOriginalProductPrice(originalProductPrice);
+            setOriginalProductPrice(total_priceWithout_tax);
             setSalePricee(Saleprice);
             setProductPriceTotal(ProductTotal);
-            setTotalTax(Totaltaxes);
+            setTotalTax(total_tax_with_qty);
             setCartData(data);
             setapicall(false);
             setValidation(true);
@@ -372,7 +389,7 @@ const Checkout = (props) => {
       setordervalidation("deliverymethod");
     } else {
       setSpinner("spinner");
-
+      console.log("add to order--" + JSON.stringify(orderadd));
       axios
         .post(`${process.env.REACT_APP_BASEURL}/orders`, orderadd, {
           headers: {
@@ -416,6 +433,13 @@ const Checkout = (props) => {
   };
 
   // end sweetalert
+
+  var total = 0;
+  var sub_total = 0;
+  var total_tax = 0;
+  let qty = 0;
+  let total_tax_with_qty = 0;
+  let total_priceWithout_tax = 0;
   return (
     <Fragment>
       <Header />
@@ -550,6 +574,21 @@ const Checkout = (props) => {
                               </h4>
                             ) : cartdata ? (
                               cartdata.map((cdata) => {
+                                let countAllText =
+                                  Number(cdata.gst) +
+                                  Number(cdata.wholesale_sales_tax) +
+                                  Number(cdata.manufacturers_sales_tax) +
+                                  Number(cdata.retails_sales_tax) +
+                                  Number(cdata.value_added_tax);
+                                qty = cdata.order_quantity;
+
+                                let tax =
+                                  (Number(cdata.sale_price) * countAllText) /
+                                  100;
+
+                                let price_without_tax =
+                                  Number(cdata.product_price).toFixed(2) - tax;
+
                                 return (
                                   <tbody key={cdata.id}>
                                     <tr className="product-box-contain">
@@ -708,9 +747,7 @@ const Checkout = (props) => {
                                       <td className="price">
                                         <h4 className="table-title text-content">
                                           Price (without tax): ₹
-                                          {Number(cdata.product_price).toFixed(
-                                            2
-                                          )}
+                                          {price_without_tax.toFixed(2)}
                                         </h4>
                                         {cdata.sgst === null
                                           ? (cdata.sgst = "0")
