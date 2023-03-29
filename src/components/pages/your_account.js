@@ -13,7 +13,7 @@ import { MdOutlineDashboard, MdOutlinePrivacyTip } from "react-icons/md";
 import { BsHandbag } from "react-icons/bs";
 import { AiOutlineHeart, AiOutlineCreditCard } from "react-icons/ai";
 import { GoLocation, GoMail } from "react-icons/go";
-import { RiAccountCircleLine } from "react-icons/ri";
+import { RiAccountCircleLine, RiCoinsLine } from "react-icons/ri";
 import Col from "react-bootstrap/Col";
 import { useEffect } from "react";
 import axios from "axios";
@@ -42,6 +42,7 @@ function Account() {
   };
   const [Password, setPassword] = useState(false);
   const [validated, setValidated] = useState(false);
+  const[txt,setTxt]=useState('')
   const [addAdderss, setaddAdderss] = useState(false);
   const addAdderssClose = () => setaddAdderss(false);
   const addAdderssShow = () => setaddAdderss(true);
@@ -165,8 +166,29 @@ function Account() {
         .catch((error) => {});
     }
   };
-
-  const OnchangeFistname = (e, first_name) => {
+  const onNameChange = e => {
+    const { value } = e.target; 
+    const spcl = /^[A-Za-z]+$/;
+    if (value === "" || spcl.test(value)) {
+      setTxt(value);
+      setUdata({
+        ...udata,
+        [e.target.name]: e.target.value,
+      });
+    }
+  }
+  const onPhoneNumberChange = e => {
+    const { value } = e.target;
+    const spcl = /^[0-9]+$/;
+    if (value === "" || spcl.test(value)) {
+      setTxt(value);
+      setUdata({
+        ...udata,
+        [e.target.name]: e.target.value,
+      });
+    }
+  }
+  const onInputChange = (e, first_name) => {
     setUdata({
       ...udata,
       [e.target.name]: e.target.value,
@@ -290,7 +312,6 @@ function Account() {
     setclick(true);
   };
   //add address
-  const [addNewAdderss, setaddNewAdderss] = useState(0);
   const [addAdderssvalidated, setaddAdderssValidated] = useState(false);
   const addAdderssSubmit = (event) => {
     event.preventDefault();
@@ -308,6 +329,19 @@ function Account() {
     setEmail(name);
   };
 
+ const alphanumeric=(inputtxt)=>
+  {
+   var letterNumber = /^[a-zA-Z]+$/;
+   if((inputtxt.value.match(letterNumber)))
+    {
+     return true;
+    }
+  else
+    { 
+     alert("message"); 
+     return false; 
+    }
+    }
   // add to cart
   const AddToCart = (id, discount, product_price, quantity, product_id) => {
     axios
@@ -1760,12 +1794,14 @@ function Account() {
                   controlId="validationCustom01"
                 >
                   <Form.Label>First Name</Form.Label>
+                  
                   <Form.Control
                     type="text"
                     placeholder="Name"
                     value={udata.first_name}
                     name={"first_name"}
-                    onChange={OnchangeFistname}
+                    
+                    onChange={onNameChange}
                     required
                     maxLength={15}
                   />
@@ -1786,7 +1822,7 @@ function Account() {
                     placeholder="Name"
                     value={udata.last_name}
                     name={"last_name"}
-                    onChange={OnchangeFistname}
+                    onChange={onNameChange}
                     required
                     maxLength={15}
                   />
@@ -1845,7 +1881,7 @@ function Account() {
                     placeholder="Mobile"
                     value={udata.phone_no}
                     name={"phone_no"}
-                    onChange={OnchangeFistname}
+                    onChange={onPhoneNumberChange}
                     required
                     maxLength={10}
                     minLength={10}
@@ -1868,7 +1904,7 @@ function Account() {
                     placeholder="Add Address"
                     value={udata.address}
                     name={"address"}
-                    onChange={OnchangeFistname}
+                    onChange={onInputChange}
                     maxLength="100"
                   />
                   <Form.Control.Feedback type="invalid">
@@ -1888,7 +1924,7 @@ function Account() {
                     placeholder="Add Address2"
                     value={udata.address2}
                     name={"address2"}
-                    onChange={OnchangeFistname}
+                    onChange={onInputChange}
                     maxLength="100"
                   />
                 </Form.Group>
@@ -1904,7 +1940,7 @@ function Account() {
                   required
                   value={udata.gender}
                   name={"gender"}
-                  onChange={OnchangeFistname}
+                  onChange={onInputChange}
                 >
                   <option value={""} onChange={func}>
                     Gender
@@ -1931,7 +1967,7 @@ function Account() {
                       name={"date_of_birth"}
                       type={"date"}
                       value={udata.date_of_birth}
-                      onChange={OnchangeFistname}
+                      onChange={onInputChange}
                       required
                       placeholder="Product Quantity"
                     />

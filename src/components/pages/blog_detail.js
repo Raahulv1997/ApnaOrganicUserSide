@@ -14,32 +14,37 @@ import axios from "axios";
 import { useEffect } from "react";
 const BlogDetail = () => {
   const [apicall, setapicall] = useState([]);
-  const blodid = localStorage.getItem("idd");
-  const [blogDetails, setBlogDetails] = useState([]);
+  const [productTag, setProductTag] = useState("");
 
+  const blogid = localStorage.getItem("blogid");
+
+const [blogdata,setBlogData]=useState([]);
 /* <!--Get blog deatils--Api call--> */
+let categoryArray = [];
 
   useEffect(() => {
     function getBlogDetails() {
       try {
         axios
           .post(`${process.env.REACT_APP_BASEURL}/blogs`, {
-            id: `${blodid}`,
-            for_: "admin",
+            id: blogid,
+            for_: "user",
             recent: "",
-            category: [],
-            product_tag: "",
+            category: categoryArray,
+            product_tag: productTag,
           })
           .then((response) => {
             let data = response.data[0];
-            setBlogDetails(data);
-            setapicall(false);
+            setBlogData(data);
+            setapicall(false)
           });
       } catch (err) {}
+      
     }
 
     getBlogDetails();
   }, [apicall]);
+  console.log("BHLOGG-----"+JSON.stringify(blogdata))
 
 /* <!--End this section--> */
 
@@ -52,7 +57,7 @@ const BlogDetail = () => {
           <div className="row">
             <div className="col-12">
               <div className="breadscrumb-contain">
-                <h2>{blogDetails.title}</h2>
+                <h2>{blogdata.title}</h2>
                 <nav>
                   <ol className="breadcrumb mb-0">
                     <li className="breadcrumb-item">
@@ -62,7 +67,7 @@ const BlogDetail = () => {
                     </li>
 
                     <li className="breadcrumb-item active">
-                      {blogDetails.title}
+                      {blogdata.title}
                     </li>
                   </ol>
                 </nav>
@@ -79,17 +84,17 @@ const BlogDetail = () => {
             <div className="col-xxl-3 col-xl-4 col-lg-5">
               <div className="left-sidebar-box">
                 <div className="left-search-box">
-                  <div className="search-box">
+                  {/* <div className="search-box">
                     <input
                       type="search"
                       className="form-control"
                       id="exampleFormControlInput4"
                       placeholder="Search...."
                     />
-                  </div>
+                  </div> */}
                 </div>
                 {/* --Sidebar */}
-                <div
+                {/* <div
                   className="accordion left-accordion-box"
                   id="accordionPanelsStayOpenExample"
                 >
@@ -413,16 +418,16 @@ const BlogDetail = () => {
                       </Accordion.Body>
                     </Accordion.Item>
                   </Accordion>
-                </div>
+                </div> */}
                 {/* Sidebar end--- */}
               </div>
             </div>
 
             <div className="col-xxl-9 col-xl-8 col-lg-7 ratio_50">
-              <div className="blog-detail-image rounded-3 mb-4">
+              <div className="blog-detail-image rounded-3  mb-4">
                 <img
-                  src={blogDetails.image}
-                  className="bg-img w-100  lazyload"
+                  src={blogdata.image}
+                  className="bg-img w-100 lazyload"
                   alt=""
                 />
                 <div className="blog-image-contain">
@@ -431,7 +436,7 @@ const BlogDetail = () => {
                                 <li>life style</li>
                                 <li>organic</li>
                             </ul> */}
-                  <h2>{blogDetails.title}</h2>
+                  <h2>{blogdata.title}</h2>
                   <ul className="contain-comment-list">
                     <li>
                       {/* <div className="user-list">
@@ -443,7 +448,7 @@ const BlogDetail = () => {
                     <li>
                       <div className="user-list">
                         <i data-feather="calendar"></i>
-                        <span>{blogDetails.publish_date}</span>
+                        <span>{blogdata.publish_date}</span>
                       </div>
                     </li>
 
@@ -459,7 +464,7 @@ const BlogDetail = () => {
 
               <div className="blog-detail-contain">
                 <p>
-                  <span className="first">E</span> {blogDetails.description}
+                  <span className="first">E</span> {blogdata.description}
                 </p>
 
                 {/* <p>Let's unpack that later everyone thinks the soup tastes better after theyâ€™ve pissed in it
@@ -488,7 +493,7 @@ const BlogDetail = () => {
                             on-brand but completeley fresh we can't hear you.</p> */}
 
                 <div className="blog-details-quote">
-                  <h3>{blogDetails.title}</h3>
+                  <h3>{blogdata.title}</h3>
                   <h5>- Denny Dose</h5>
                 </div>
 

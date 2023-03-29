@@ -396,7 +396,7 @@ const Shop = (props) => {
     recordsPerPage,
     currentPage,
   ]);
-
+console.log("scategoryyy-----"+JSON.stringify(categorydata))
   /*<--------functionality to get the data of category----------> */
   useEffect(() => {
     function getCategoryData() {
@@ -413,7 +413,7 @@ const Shop = (props) => {
     }
     getCategoryData();
   }, [apicall]);
-
+console.log("SHOW CATEGORYY0-----"+JSON.stringify(categorydata))
   /*<----Functionality to filter category data and get the data in an array---->*/
   const result = categorydata.filter(
     (thing, index, self) =>
@@ -519,7 +519,6 @@ const Shop = (props) => {
       }
     }
   };
-
   /*<----Functionality to get data filtered by rating---->*/
   const onRatingFilterAdd = (e) => {
     const value =
@@ -1557,13 +1556,13 @@ setapicall(true);
               )}
 
               {/* <div className="d-flex justify-content-center">
-                <Pagination
-                  className="d-flex justify-content-center"
-                  nPages={page}
-                  currentPage={currentPage}
-                  setCurrentPage={setCurrentPage}
-                  recordsPerPage={recordsPerPage}
-                />
+                // <Pagination
+                //   className="d-flex justify-content-center"
+                //   nPages={page}
+                //   currentPage={currentPage}
+                //   setCurrentPage={setCurrentPage}
+                //   recordsPerPage={recordsPerPage}
+                // />
               </div> */}
             </div>
           </div>

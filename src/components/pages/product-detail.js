@@ -247,8 +247,8 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         {
           user_id: "",
           product_view_id: `${Id}`,
-          price: `${productDetails.product_verient[0].product_price}`,
-          discount: `${productDetails.product_verient[0].discount}`,
+          // price: `${productDetails.product_verient[0].product_price}`,
+          // discount: `${productDetails.product_verient[0].discount}`,
         },
         {
           headers: {
@@ -260,8 +260,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
         // let data = response.data;
 
         setapicall(true);
-      })
-      .catch(function (error) {});
+      });
   };
 
   /*<-----Functionality to Remove from Wishlist----> */
@@ -402,7 +401,9 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
   //   return obj.id;
   // });
   // console.log(ids);
-
+  console.log(
+    "=================" + JSON.stringify(productDetails.product_title_name)
+  );
   return (
     <Fragment>
       <Header />
