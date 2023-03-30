@@ -1,22 +1,22 @@
 import React, { Fragment } from "react";
-import Banner from "../../Photos/login.png";
+
 import Footer from "../common/footer";
-import Header from "../common/header";
+
 import axios from "axios";
 import Form from "react-bootstrap/Form";
 import "../../CSS/style.css";
-import { useState, useEffect, useRef } from "react";
-import { Link, NavLink, useNavigate, useLocation } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import { Badge, Button, InputGroup, Table } from "react-bootstrap";
 import { GiCancel } from "react-icons/gi";
 import Spinner from "react-bootstrap/Spinner";
 import Modal from "react-bootstrap/Modal";
 import storetype from "../pages/json/storetype";
 const SellerSignUp = () => {
-  const[AddtagError,setAddTagError]=useState("")
+  const [AddtagError, setAddTagError] = useState("");
   const [customValidation, setCustomValidation] = useState(false);
   const [SocialLink, setSocialLink] = useState(false);
-  const formRef = useRef();
+
   const [show, setShow] = useState(false);
   const [spinner, setSpinner] = useState(false);
   const [otp, setotp] = useState(0);
@@ -25,11 +25,11 @@ const SellerSignUp = () => {
   let [formshow, setformShow] = useState(true);
   let [hide, setHide] = useState(false);
   const [emailerror, setemailerror] = useState("");
-  const [Signup, setSignup] = useState(false);
+  const Signup = false;
   const [otperror, setOtperror] = useState(false);
   const [passval, setpassval] = useState("");
   const [newImageUrls, setnewImageUrls] = useState([]);
-  const [validated, setValidated] = useState(false);
+
   const [scall, setsCall] = useState(false);
   const [addvendordata, setaddvendordata] = useState({
     owner_name: "",
@@ -40,7 +40,7 @@ const SellerSignUp = () => {
     gstn: "",
     geolocation: "",
     store_type: "",
-    image: "",
+
     status: "",
     image: "",
     document_name: [],
@@ -56,7 +56,7 @@ const SellerSignUp = () => {
   const [descval, setdescval] = useState("");
   const [customarray, setcustomarray] = useState([]);
   const [AddCustom, setAddCustom] = useState([]);
-  const [customvalidated, setcustomValidated] = useState(false);
+
   const [file, setFile] = useState();
   const [fileName, setFileName] = useState("");
   const [apicall, setapicall] = useState(false);
@@ -68,7 +68,6 @@ const SellerSignUp = () => {
   const [error, setError] = useState(true);
   const [loginemailerror, setLoginemailerror] = useState(true);
   const [vendorstatus, setvendorstatus] = useState(false);
-  const { state } = useLocation();
 
   //for close the   vendor request model
   const handleClose = () => {
@@ -84,7 +83,7 @@ const SellerSignUp = () => {
       store_type: "",
       image: "",
       status: "",
-      image: "",
+
       document_name: [],
       availability: "",
       social_media_links: [],
@@ -92,33 +91,32 @@ const SellerSignUp = () => {
     setnewImageUrls([]);
     navigate("/");
   };
-// for close the reqest apporove model
+  // for close the reqest apporove model
   const handleClose1 = () => {
     setShow(false);
   };
-  const onEmailChange=(e)=>{
+  const onEmailChange = (e) => {
     setemailVal(e.target.value);
-    setemailerror("")
-  }
+    setemailerror("");
+  };
 
   // click the sighup button
   const SignUpUser = (e) => {
-    
     e.preventDefault();
-    
+
     // alert("SINGNNN"+email)
-     setSpinner("spinner");
+    setSpinner("spinner");
     axios
       .post(`${process.env.REACT_APP_BASEURL}/vendor_signup`, {
         email: emailVal,
       })
       .then((response) => {
-        console.log("signup---"+response)
-        console.log(response)
+        console.log("signup---" + response);
+        console.log(response);
         setSpinner(false);
         if (response.data.response === false) {
           setemailerror("Already Exist. Please Login");
-          emailVal = "";
+          setemailVal("");
         } else if (response.data.message === "invalid address") {
           setemailerror("invalid address");
           setSpinner(false);
@@ -193,15 +191,15 @@ const SellerSignUp = () => {
           otp: Number(otp),
           password: passval,
         })
-        .then((response) => {
+        .then((res) => {
           setSpinner(false);
           //     const insertId='';
           //  const   vendor_token='';
 
-          if (response.data.message === "otp not matched") {
+          if (res.data.message === "otp not matched") {
             setOtperror("invalid otp");
           } else {
-            var { response, vendor_token } = response.data;
+            var { response, vendor_token } = res.data;
             setHide(true);
             setformShow(false);
             setotp(1);
@@ -216,7 +214,7 @@ const SellerSignUp = () => {
               store_type: "",
               image: "",
               status: "",
-              image: "",
+
               document_name: [],
               availability: "",
               social_media_links: [],
@@ -235,15 +233,13 @@ const SellerSignUp = () => {
   // SIGNUP END
 
   //  LOGIN
-  const OnVendorLoginClick = () => {
-    setloginpage(true);
-  };
+
   const [credentailval, setcredentailval] = useState({
     email: "",
     password: "",
   });
   const onCredentialChange = (e) => {
-    setLoginemailerror(true)
+    setLoginemailerror(true);
     setError(true);
     setvendorstatus(false);
     setcredentailval({ ...credentailval, [e.target.name]: e.target.value });
@@ -251,9 +247,8 @@ const SellerSignUp = () => {
 
   //click the login button -----
   const onSubmitClick = (e) => {
- 
     e.preventDefault();
-    console.log("email value---"+credentailval.email)
+    // console.log("email value---" + credentailval.email);
     if (
       credentailval.email === "" ||
       credentailval.email === null ||
@@ -273,7 +268,7 @@ const SellerSignUp = () => {
           password: credentailval.password.trim(),
         })
         .then((response) => {
-           console.log("data-------------"+JSON.stringify(response.data))
+          // console.log("data-------------" + JSON.stringify(response.data));
           if (response.data.message === "email not matched") {
             setLoginemailerror("emailnotmatched");
             setError(true);
@@ -286,27 +281,21 @@ const SellerSignUp = () => {
             localStorage.setItem("vendorid", response.data.id);
             localStorage.setItem("vendor_token", response.data.vendor_token);
             // setError(true);
-          }
-          else if (response.data.status === "return") {
+          } else if (response.data.status === "return") {
             // setHide(true);
             setvendorstatus("return");
             localStorage.setItem("vendorid", response.data.id);
             localStorage.setItem("vendor_token", response.data.vendor_token);
             // setError(true);
-          } else if (
-            response.data.status === "pending" ||
-            response.data.message === undefined
-          ) {
+          } else if (response.data.status === "pending") {
             setvendorstatus("pending");
             localStorage.setItem("vendorid", response.data.id);
             localStorage.setItem("vendor_token", response.data.vendor_token);
             // setError(true);
-            credentailval.email =""
-            credentailval.password =""
-          } else if (
-            response.data.status === "approve" &&
-            response.data.message === undefined
-          ) {
+            credentailval.email = "";
+            credentailval.password = "";
+          } else if (response.data.status === "approved") {
+            setvendorstatus("approved");
             localStorage.setItem("vendorid", response.data.id);
             localStorage.setItem("vendor_token", response.data.vendor_token);
             navigate("/");
@@ -318,119 +307,97 @@ const SellerSignUp = () => {
   };
   // END LOGIN
 
-
-
   // FORGOT PASSWORD
-  const OnForgotPassword = () => {
-    setforgotpage(true);
-  };
 
   const handlefORGOTFormChange = (e) => {
-    setemailerror("")
+    setemailerror("");
     setforgotemail(e.target.value);
   };
   const onfORGOTPasswordChange = (e) => {
-    setemailerror("")
-    setOtperror(false)
+    setemailerror("");
+    setOtperror(false);
     setforgotpassval(e.target.value);
   };
   const OnOtpChange = (e) => {
-    setOtperror(false)
+    setOtperror(false);
     setforgototp(e.target.value);
   };
   const forgotPassword = () => {
-
-    var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
+    var regex = /^([a-zA-Z0-9_.+-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
     var rst = regex.test(forgotemail);
-    if(rst==false){
-         
-       setemailerror("ForgetEmailEmpty")
-    }
-    else{
-        setSpinner("spinner");
+    if (rst === false) {
+      setemailerror("ForgetEmailEmpty");
+    } else {
+      setSpinner("spinner");
       axios
-      .post(`http://192.168.29.108:5000/vendor_forgot_password`, {
-        email: `${forgotemail}`,
-      })
-      .then((response) => {
-        console.log("Email-----"+JSON.stringify(response))
-        console.log("Email---retrfgrf--"+JSON.stringify(response.data.message))
-          
-        if(response.data.message === "User Not Exist"){
-          setSpinner(false);
-          setemailerror("usernotFound")
-        } else if(response.data.message === "Send otp in Gmail Succesfully"){
-          setSpinner(false);
-          setemailerror("otpsend")
-          
-        } else{
+        .post(`http://192.168.29.108:5000/vendor_forgot_password`, {
+          email: `${forgotemail}`,
+        })
+        .then((response) => {
+          console.log("Email-----" + JSON.stringify(response));
+          console.log(
+            "Email---retrfgrf--" + JSON.stringify(response.data.message)
+          );
 
-        }
+          if (response.data.message === "User Not Exist") {
+            setSpinner(false);
+            setemailerror("usernotFound");
+          } else if (
+            response.data.message === "Send otp in Gmail Succesfully"
+          ) {
+            setSpinner(false);
+            setemailerror("otpsend");
+          } else {
+          }
 
-      
-        
-
-        // navigate('/login')
-        // return response;
-      });
+          // navigate('/login')
+          // return response;
+        });
     }
-    
- 
   };
 
-
   const VerifyfORGOTOTP = (e) => {
-
-
-   if(forgototp==0||forgototp==""){
-      setOtperror("OtpisEmpty")
-
+    if (forgototp === 0 || forgototp === "") {
+      setOtperror("OtpisEmpty");
     } else {
-      setOtperror("")
+      setOtperror("");
     }
-     if(forgotpassval==""){
-         
-      setemailerror("forgetPasswordEmpty")
-    }else {
-      setemailerror("")
+    if (forgotpassval === "") {
+      setemailerror("forgetPasswordEmpty");
+    } else {
+      setemailerror("");
     }
 
-  
-  if(forgototp!=="" && forgotpassval!==""){
+    if (forgototp !== "" && forgotpassval !== "") {
+      e.preventDefault();
+      setSpinner("spinner1");
 
-    e.preventDefault();
-    setSpinner("spinner1");
+      axios
+        .post(`${process.env.REACT_APP_BASEURL}/vendor_otp_verify`, {
+          email: forgotemail,
+          otp: Number(forgototp),
+          password: forgotpassval,
+        })
+        .then((response) => {
+          setSpinner(false);
+          console.log("verify --" + JSON.stringify(response));
 
- axios
-   .post(`${process.env.REACT_APP_BASEURL}/vendor_otp_verify`, {
-     email: forgotemail,
-     otp: Number(forgototp),
-     password: forgotpassval,
-   })
-   .then((response) => {
-     setSpinner(false);
-        console.log("verify --"+ JSON.stringify(response))
-       
-     if (response.data.message === "otp not matched") {
-       setOtperror("otpNotMatched");
-     } 
-       alert("jjj")
+          if (response.data.message === "otp not matched") {
+            setOtperror("otpNotMatched");
+          }
+          alert("jjj");
 
-      //  loginpage === true &&
-      //   forgotpage === false &&
-      //   formshow === true &&
-      //   hide === false 
-        setforgotpage(false)
-        setloginpage(true);
-        setformShow(true)
-        setHide(false)
-       
-     
-   })
-   .catch((error) => {});
-
-  }
-   
+          //  loginpage === true &&
+          //   forgotpage === false &&
+          //   formshow === true &&
+          //   hide === false
+          setforgotpage(false);
+          setloginpage(true);
+          setformShow(true);
+          setHide(false);
+        })
+        .catch((error) => {});
+    }
   };
 
   // END FORGOT PASSWORD
@@ -453,22 +420,19 @@ const SellerSignUp = () => {
     });
   };
 
-
   // onchange of add tag
   const onDocumentNamechange = (e) => {
-    setAddTagError("")
+    setAddTagError("");
     setaddtag(e.target.value);
   };
   const onDocuAddclick = (e) => {
-      if(addtag==""){
-        setAddTagError("addTagErorrr")
-      }
-      else{
-        setDocnameArray((Docnamearray) => [...Docnamearray, addtag]);
-        setaddtag("");
-        setAddTagError("")
-      }
-  
+    if (addtag === "") {
+      setAddTagError("addTagErorrr");
+    } else {
+      setDocnameArray((Docnamearray) => [...Docnamearray, addtag]);
+      setaddtag("");
+      setAddTagError("");
+    }
   };
   const DocuRemoveClick = (e) => {
     setDocnameArray(Docnamearray.filter((item) => item !== e));
@@ -497,7 +461,7 @@ const SellerSignUp = () => {
     for (let i = 0; i < e.target.files.length; i++) {
       encoded = await convertToBase64(e.target.files[i]);
       const [first, ...rest] = encoded.base64.split(",");
-      const [nameimg, ext] = encoded.name.split(".");
+      const [ext] = encoded.name.split(".");
       const vendorimg = rest.join("-");
       let imar = {
         vendor_id: `${vendorid}`,
@@ -602,7 +566,6 @@ const SellerSignUp = () => {
     setcustomarray(customarray.filter((item) => item !== e));
   };
 
-
   useEffect(() => {
     setaddvendordata({
       ...addvendordata,
@@ -611,8 +574,6 @@ const SellerSignUp = () => {
   }, [customarray]);
 
   // end social media link
-
-
 
   // click the vandor update button------
   const UpdateVendorClick = (e) => {
@@ -628,30 +589,27 @@ const SellerSignUp = () => {
       setCustomValidation("shopnameEmpty");
     } else if (addvendordata.mobile === "") {
       setCustomValidation("MobileEmpty");
-    }
-    else if ((addvendordata.mobile.length > 10)||(addvendordata.mobile.length<10)) {
+    } else if (
+      addvendordata.mobile.length > 10 ||
+      addvendordata.mobile.length < 10
+    ) {
       setCustomValidation("10number");
-    }
-     else if (addvendordata.email === "") {
+    } else if (addvendordata.email === "") {
       var regex = /^([a-zA-Z0-9_.+-])+\@(([a-zA-Z0-9-])+\.)+([a-zA-Z]{2,4})+$/;
       var rst = regex.test(addvendordata.email);
       if (rst !== true) {
         setCustomValidation("EmailEmpty");
       }
       setCustomValidation("EmailEmpty");
-    }
-    else if (addvendordata.shop_address === "") {
+    } else if (addvendordata.shop_address === "") {
       setCustomValidation("ShopAddressEmpty");
     } else if (addvendordata.gstn === "") {
       setCustomValidation("GSTEmpty");
     } else if (addvendordata.geolocation === "") {
       setCustomValidation("GeolocationEmpty");
-    } 
-    else if (Docnamearray.length==0) {
-      setAddTagError("addTagErorrr")
-    } 
-    else {
-
+    } else if (Docnamearray.length === 0) {
+      setAddTagError("addTagErorrr");
+    } else {
       // e.stopPropagation();
       let x = [addvendordata.document_name];
       // e.preventDefault();
@@ -684,7 +642,7 @@ const SellerSignUp = () => {
         .then((response) => {
           let data = response.data;
           if (data.message === "Updated Vendor Profile") {
-             setShow(true);
+            setShow(true);
           }
         })
         .catch(function (error) {
@@ -777,7 +735,6 @@ const SellerSignUp = () => {
                         </Form.Label>
                         <Form.Control
                           type="number"
-                        
                           placeholder="Mobile"
                           name={"mobile"}
                           onChange={(e) => handleFormChange(e)}
@@ -815,12 +772,12 @@ const SellerSignUp = () => {
                           // required
                         />
                         {customValidation === "EmailEmpty" ? (
-                              <span className="text-danger">
-                                Please fill the Email and valid email
-                              </span>
-                            ) : customValidation === false ? (
-                              ""
-                            ) : null}
+                          <span className="text-danger">
+                            Please fill the Email and valid email
+                          </span>
+                        ) : customValidation === false ? (
+                          ""
+                        ) : null}
                       </Form.Group>
                     </div>
                     <div className="col-md-6">
@@ -1006,7 +963,9 @@ const SellerSignUp = () => {
                         className="mb-3 aos_input"
                         // controlId="validationCustom10"
                       >
-                        <Form.Label>Document Name <span className="text-danger">* </span></Form.Label>
+                        <Form.Label>
+                          Document Name <span className="text-danger">* </span>
+                        </Form.Label>
                         <InputGroup className="" size="sm">
                           <Form.Control
                             onChange={(e) => onDocumentNamechange(e)}
@@ -1027,7 +986,6 @@ const SellerSignUp = () => {
                           >
                             +
                           </Button>
-                     
                         </InputGroup>
                         {AddtagError === "addTagErorrr" ? (
                           <span className="text-danger">
@@ -1120,23 +1078,23 @@ const SellerSignUp = () => {
                             </tr>
                             <tr>
                               <td>
-                                {SocialLink == "HeaderBlank" ? (
+                                {SocialLink === "HeaderBlank" ? (
                                   <span className="text-danger">
                                     {" "}
                                     Please Fill ..!!{" "}
                                   </span>
-                                ) : SocialLink == false ? (
+                                ) : SocialLink === false ? (
                                   ""
                                 ) : null}
                               </td>
                               <td>
                                 {" "}
-                                {SocialLink == "DesBlank" ? (
+                                {SocialLink === "DesBlank" ? (
                                   <span className="text-danger">
                                     {" "}
                                     Please Fill..!!{" "}
                                   </span>
-                                ) : SocialLink == false ? (
+                                ) : SocialLink === false ? (
                                   ""
                                 ) : null}
                               </td>
@@ -1218,7 +1176,11 @@ const SellerSignUp = () => {
                           name={"shop_logo"}
                         />
                         {addvendordata.shop_logo ? (
-                          <img src={addvendordata.shop_logo} width={"50px"} />
+                          <img
+                            src={addvendordata.shop_logo}
+                            width={"50px"}
+                            alt="newimg"
+                          />
                         ) : null}
                       </Form.Group>
                     </div>
@@ -1300,7 +1262,6 @@ const SellerSignUp = () => {
                         id="email"
                         placeholder="Your Email"
                         name="email"
-                        
                         onChange={(e) => onCredentialChange(e)}
                         value={credentailval.email}
                       />
@@ -1338,7 +1299,6 @@ const SellerSignUp = () => {
                         type="password"
                         className="form-control"
                         id="password"
-                        
                         name="password"
                         placeholder="Your Password"
                         onChange={(e) => onCredentialChange(e)}
@@ -1358,15 +1318,14 @@ const SellerSignUp = () => {
                     <p className="mt-1 ms-2 text-danger" type="invalid">
                       Please Fill Detail First To Login
                     </p>
-                  ) :  vendorstatus === "return"? (
+                  ) : vendorstatus === "return" ? (
                     <p className="mt-1 ms-2 text-danger" type="invalid">
                       Please Fill Details Currectly ...!!!
                     </p>
                   ) : vendorstatus === "pending" ? (
-                     
-                       <p className="mt-1 ms-2 text-danger" type="invalid">
-                       Your Request is pending Please wait for approval...!!!
-                     </p>
+                    <p className="mt-1 ms-2 text-danger" type="invalid">
+                      Your Request is pending Please wait for approval...!!!
+                    </p>
                   ) : null}
                   <div className="col-12">
                     <div className="forgot-box my-3">
@@ -1475,7 +1434,6 @@ const SellerSignUp = () => {
                       <form
                         className="row g-4"
                         onSubmit={otp === 0 ? forgotPassword : VerifyfORGOTOTP}
-
                       >
                         <div className="col-12">
                           <div className="form-floating theme-form-floating log-in-form">
@@ -1488,125 +1446,123 @@ const SellerSignUp = () => {
                               onChange={(e) => handlefORGOTFormChange(e)}
                               value={forgotemail}
                               name={"email"}
-                              disabled={emailerror=="otpsend"?true:false}
+                              disabled={emailerror === "otpsend" ? true : false}
                             />
                             <label htmlFor="email">Email Address</label>
                           </div>
-                    {      emailerror === "ForgetEmailEmpty" ? (
+                          {emailerror === "ForgetEmailEmpty" ? (
                             <p className="mt-1 ms-2 text-danger" type="invalid">
                               Please Enter Correct Email
-                            </p> 
-                          ) : emailerror === "usernotFound" ?(
+                            </p>
+                          ) : emailerror === "usernotFound" ? (
                             <p className="mt-1 ms-2 text-danger" type="invalid">
                               Email Address not Found
-                            </p> 
-                          ):null}
- 
-                          <div className="col-12 mt-3" style={{display:emailerror=="otpsend"?"none":"show"}}>
-                            {spinner==="spinner"?  (<button
-                              className="btn btn-animation w-100"
-                              type="button"
-                              onClick={forgotPassword}
-                            >  <Spinner animation="border" role="status">
-                            <span className="visually-hidden">
-                            
-                              Forgot  Password
-                            </span>
-                          </Spinner>
-                            </button>) :  (<button
-                              className="btn btn-animation w-100"
-                              type="button"
-                              onClick={forgotPassword}
-                            >
-                              Forgot Password
-                            </button> )}
-                          
+                            </p>
+                          ) : null}
+
+                          <div
+                            className="col-12 mt-3"
+                            style={{
+                              display:
+                                emailerror === "otpsend" ? "none" : "show",
+                            }}
+                          >
+                            {spinner === "spinner" ? (
+                              <button
+                                className="btn btn-animation w-100"
+                                type="button"
+                                onClick={forgotPassword}
+                              >
+                                {" "}
+                                <Spinner animation="border" role="status">
+                                  <span className="visually-hidden">
+                                    Forgot Password
+                                  </span>
+                                </Spinner>
+                              </button>
+                            ) : (
+                              <button
+                                className="btn btn-animation w-100"
+                                type="button"
+                                onClick={forgotPassword}
+                              >
+                                Forgot Password
+                              </button>
+                            )}
                           </div>
                         </div>
-                        
-                     
 
-                            
-<div className="log-in-title">
-  <h4>Enter one time otp</h4>
-  <h5 className="text-content">
-    A code has been sent to your email
-  </h5>
-</div>
-<div
-
-  className="inputs d-flex flex-row justify-content-center"
->
-  <input
-    className={"form-control"}
-    type="text"
-    id="otp"
-    name="otp"
-    required
-    placeholder="Enter Otp"
-    value={forgototp}
-    onChange={(e) => OnOtpChange(e)}
-  />
-</div>
-{otperror === "otpNotMatched" ? (
-  <p className="text-danger">Invalid Otp....!!!</p>
-) : otperror === "OtpisEmpty" ? (
-  <p className="mt-1 ms-2 text-danger" type="invalid">
-    Please Enter Otp First
-  </p>
-) : null}
-<div className="col-12">
-  <div className="form-floating theme-form-floating">
-    <div className="log-in-title">
-      <h4>Enter New Password</h4>
-    </div>
-    <input
-      required
-      type="password"
-      name="password"
-      className={"form-control"}
-      id="password"
-      placeholder="New Password"
-      value={forgotpassval}
-      onChange={(e) => onfORGOTPasswordChange(e)}
-    />
-  </div>
-</div>
-   { emailerror === "forgetPasswordEmpty" ?(
-         <p className="mt-1 ms-2 text-danger" type="invalid">
-                              Enter password First
-                            </p> 
-                          ):null}
-<div className="col-12 mt-3">
-  {spinner === "spinner1" ? (
-    <button
-      className="btn btn-animation w-100"
-      type="button"
-      onClick={VerifyfORGOTOTP}
-  
-    >
-      <Spinner animation="border" role="status">
-        <span className="visually-hidden">
-          {" "}
-          Change Password
-        </span>
-      </Spinner>
-    </button>
-  ) : (
-    <button
-      className="btn btn-animation w-100"
-      type="button"
-      onClick={VerifyfORGOTOTP}
-      
-    >
-      Change Password
-    </button>
-  )}
-</div>
-                       
-                         
-                      
-
+                        <div className="log-in-title">
+                          <h4>Enter one time otp</h4>
+                          <h5 className="text-content">
+                            A code has been sent to your email
+                          </h5>
+                        </div>
+                        <div className="inputs d-flex flex-row justify-content-center">
+                          <input
+                            className={"form-control"}
+                            type="text"
+                            id="otp"
+                            name="otp"
+                            required
+                            placeholder="Enter Otp"
+                            value={forgototp}
+                            onChange={(e) => OnOtpChange(e)}
+                          />
+                        </div>
+                        {otperror === "otpNotMatched" ? (
+                          <p className="text-danger">Invalid Otp....!!!</p>
+                        ) : otperror === "OtpisEmpty" ? (
+                          <p className="mt-1 ms-2 text-danger" type="invalid">
+                            Please Enter Otp First
+                          </p>
+                        ) : null}
+                        <div className="col-12">
+                          <div className="form-floating theme-form-floating">
+                            <div className="log-in-title">
+                              <h4>Enter New Password</h4>
+                            </div>
+                            <input
+                              required
+                              type="password"
+                              name="password"
+                              className={"form-control"}
+                              id="password"
+                              placeholder="New Password"
+                              value={forgotpassval}
+                              onChange={(e) => onfORGOTPasswordChange(e)}
+                            />
+                          </div>
+                        </div>
+                        {emailerror === "forgetPasswordEmpty" ? (
+                          <p className="mt-1 ms-2 text-danger" type="invalid">
+                            Enter password First
+                          </p>
+                        ) : null}
+                        <div className="col-12 mt-3">
+                          {spinner === "spinner1" ? (
+                            <button
+                              className="btn btn-animation w-100"
+                              type="button"
+                              onClick={VerifyfORGOTOTP}
+                            >
+                              <Spinner animation="border" role="status">
+                                <span className="visually-hidden">
+                                  {" "}
+                                  Change Password
+                                </span>
+                              </Spinner>
+                            </button>
+                          ) : (
+                            <button
+                              className="btn btn-animation w-100"
+                              type="button"
+                              onClick={VerifyfORGOTOTP}
+                            >
+                              Change Password
+                            </button>
+                          )}
+                        </div>
                       </form>
                     </div>
                   </div>
@@ -1640,7 +1596,9 @@ const SellerSignUp = () => {
                             placeholder="Email Address"
                             name="emailid"
                             required
-                            onChange={(e)=>{ onEmailChange(e)}}
+                            onChange={(e) => {
+                              onEmailChange(e);
+                            }}
                             disabled={
                               otp === 0 && Signup === true ? true : false
                             }

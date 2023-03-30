@@ -18,6 +18,7 @@ import {
 } from "react-icons/ai";
 import { BiCategory } from "react-icons/bi";
 import axios from "axios";
+import { List } from "react-feather";
 const Header = (props) => {
   /* <!--Start all state section--> */
   const useridd = localStorage.getItem("userid");
@@ -169,14 +170,12 @@ const Header = (props) => {
   //                   100;
   //             });
 
-            
-
   //             setMsg(true);
   //           }
   //         });
   //     } catch (err) {}
   //   }
-  // }, [apicall, cartup, props.addcart, props.deleteCart, props.getNotification]);
+  // }, [cartup, props.addcart, props.deleteCart, props.getNotification]);
   /* <!--End this section--> */
 
   /* <!--Product delete from cart--Api call--> */
@@ -211,24 +210,22 @@ const Header = (props) => {
   /* <!--End this section--> */
 
   useEffect(() => {
-    function getNotification(){
-      try{
+    function getNotification() {
+      try {
         axios
-          .post(`${process.env.REACT_APP_BASEURL}/notification`,
-          {
-            "actor_type":"user",
-             "actor_id":`${useridd}`
-        })
+          .post(`${process.env.REACT_APP_BASEURL}/notification`, {
+            actor_type: "user",
+            actor_id: `${useridd}`,
+          })
           .then((response) => {
             let data = response.data;
 
-            setNotification(data)
+            setNotification(data);
             setapicall(false);
           });
       } catch (err) {}
     }
     getNotification();
-
   }, [apicall]);
   // console.log("iii-------------"+JSON.stringify(notification))
   /* <!--End all api call section--> */
@@ -364,8 +361,8 @@ const Header = (props) => {
                   </div>
                   <div className="rightside-menu">
                     <div className="option-list">
-                      <ul className="m-0">
-                        <li>
+                      <ul className="m-0" id="ul_o">
+                        <li key={1}>
                           <Link
                             to="/"
                             className="header-icon user-icon search-icon"
@@ -373,7 +370,7 @@ const Header = (props) => {
                             <i className="fa-regular fa-cart-shopping icon_color"></i>
                           </Link>
                         </li>
-                        <li>
+                        <li key={2}>
                           <Link
                             to="/"
                             className="header-icon search-box search-icon"
@@ -399,7 +396,7 @@ const Header = (props) => {
                           {notification.map((mssg) => {
                             return (
                               <div className="onhover-div">
-                                <h6>{mssg.message}</h6>
+                                <h6>{mssg.message}</h6> 
                               </div>
                             );
                           })}
@@ -408,22 +405,22 @@ const Header = (props) => {
                           <Link
                             to="/wishlist"
                             className="header-icon swap-icon"
+                            key={3}
                           >
                             <i className="fa-regular fa-heart icon_color"></i>
                           </Link>
                         </li>
 
                         {/* cart view */}
-                        <li className="onhover-dropdown">
+                        <li className="onhover-dropdown" key={4}>
                           <div
                             className="header-icon bag-icon"
                             onClick={() => navigate("/cart")}
                           >
-                            {
-                            window.location.pathname==="/shop"||
+                            {window.location.pathname === "/shop" ||
                             pdata.length === 0 ||
                             pdata.length === "" ||
-                            pdata.length===undefined||
+                            pdata.length === undefined ||
                             pdata === "cart_empty" ? null : (
                               <small className="badge-number">
                                 {pdata.length}
@@ -461,7 +458,6 @@ const Header = (props) => {
                                           <h6>
                                             <span className="im=block">
                                               {data.quantity}x
-                                              
                                             </span>{" "}
                                             <span>
                                               ₹
@@ -780,7 +776,7 @@ const Header = (props) => {
                     </div>
                     <div className="offcanvas-body">
                       <ul className="navbar-nav">
-                        <li className="nav-item dropdown dropdown-mega">
+                        <li className="nav-item dropdown dropdown-mega" key={1}>
                           <Link
                             className="nav-link dropdown-toggle  ps-xl-2 ps-0"
                             to="/"
@@ -840,7 +836,7 @@ const Header = (props) => {
                           </div> */}
                         </li>
 
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown" key={2}>
                           <NavLink
                             to="/shop"
                             className="nav-link dropdown-toggle"
@@ -1037,7 +1033,7 @@ const Header = (props) => {
                           </div>
                         </li> */}
 
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown" key={3}>
                           <Link
                             to="/"
                             className="nav-link dropdown-toggle icon"
@@ -1046,7 +1042,7 @@ const Header = (props) => {
                             Blog
                           </Link>
                           <ul className="dropdown-menu ps-4">
-                            <li>
+                            <li key={1}>
                               <NavLink
                                 to="/blog_list"
                                 className="dropdown-item"
@@ -1066,7 +1062,7 @@ const Header = (props) => {
                           </ul>
                         </li>
 
-                        <li className="nav-item dropdown">
+                        <li className="nav-item dropdown" key={4}>
                           <Link
                             to="/"
                             className="nav-link dropdown-toggle icon "
@@ -1080,12 +1076,12 @@ const Header = (props) => {
                                 404
                               </Link>
                             </li> */}
-                            <li>
+                            <li key={1}>
                               <Link className="dropdown-item" to="/aboutus">
                                 About Us
                               </Link>
                             </li>
-                            <li>
+                            <li key={2}>
                               <Link
                                 className="dropdown-item"
                                 to={
@@ -1102,7 +1098,7 @@ const Header = (props) => {
                                 Cart
                               </Link>
                             </li>
-                            <li>
+                            <li key={3}>
                               <Link
                                 to={
                                   token === undefined ||
@@ -1129,7 +1125,7 @@ const Header = (props) => {
                                 Your Order
                               </Link>
                             </li> */}
-                            <li>
+                            <li key={4}>
                               <Link
                                 className="dropdown-item"
                                 to={
@@ -1184,12 +1180,12 @@ const Header = (props) => {
                                 Search
                               </Link>
                             </li> */}
-                            <li>
+                            <li key={5}>
                               <Link to="/" className="dropdown-item">
                                 User Dashboard
                               </Link>
                             </li>
-                            <li>
+                            <li key={6}>
                               <Link
                                 to={
                                   token === undefined ||
@@ -1209,7 +1205,7 @@ const Header = (props) => {
                           </ul>
                         </li>
 
-                        <li className="nav-item">
+                        <li className="nav-item" key={5}>
                           <Link className="nav-link nav-link-2" to="/contactus">
                             Contact
                           </Link>
@@ -1251,33 +1247,33 @@ const Header = (props) => {
 
       <div className="mobile-menu d-md-none d-block mobile-cart">
         <ul className="p-0">
-          <li className="mobile-category" onClick={open_Category}>
+          <li className="mobile-category" onClick={open_Category} key={1}>
             <Link to="">
               <BiCategory />
               <span>Category</span>
             </Link>
           </li>
-          <li className="active">
+          <li className="active" key={2}>
             <Link to="/">
               <AiOutlineHome className="" />
               <span>Home</span>
             </Link>
           </li>
-          <li>
+          <li key={3}>
             <Link to="" className="search-box">
               <AiOutlineSearch />
               <span>Search</span>
             </Link>
           </li>
 
-          <li>
+          <li key={4}>
             <Link to="/wishlist" className="notifi-wishlist">
               <AiOutlineHeart />
               <span>My Wish</span>
             </Link>
           </li>
 
-          <li>
+          <li key={5}>
             <Link to="/cart">
               <AiOutlineShoppingCart />
               <span>Cart</span>

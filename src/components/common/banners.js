@@ -14,7 +14,7 @@ const Benners = (props) => {
   const [unCatArr, setunCatArr] = useState([]);
   // console.log(productData);
   let token = localStorage.getItem("token");
-
+  let userID = localStorage.getItem("userid");
   const [apicall, setapicall] = useState(false);
   const [wlistData, setWlistData] = useState("add");
   const [data, setData] = useState([]);
@@ -51,35 +51,45 @@ const Benners = (props) => {
             }
           )
           .then((response) => {
-            let data = response.data;
+            setapicall(false);
+            // let data = response.data;
             setProductData(response.data.results);
             localStorage.setItem("reviewid", response.data.results.id);
 
+            // const result = data.results.filter(
+            //   (thing, index, self) =>
+            //     index ===
+            //     self.findIndex((t) => t.product_type === thing.product_type)
+            // );
+            // console.log("data  ", result);
+            // const result = [];
+            // setunCatArr(result);
+
+            response.data.results.map((product) => {
+              return setcatArray((catArray) => [
+                ...catArray,
+                product.product_type,
+              ]);
+            });
             setapicall(false);
-            {
-              response.data.results.map((product) => {
-                return setcatArray((catArray) => [
-                  ...catArray,
-                  product.product_type,
-                ]);
-              });
-            }
           });
       } catch (err) {}
     }
     getproductType();
-  }, [apicall]);
-  /* <!--End this section--> */
 
-  /* <!--Function for map category and same category not show again--> */
+    setapicall(false);
 
-  useEffect(() => {
     const result = catArray.filter(
       (thing, index, self) => index === self.findIndex((t) => t === thing)
     );
     setunCatArr(result);
-  }, [catArray]);
+  }, [productType, token]);
+  /* <!--End this section--> */
 
+  /* <!--Function for map category and same category not show again--> */
+  // useEffect(() => {
+
+  // }, [unCatArr, catArray]);
   /* <!--End this section--> */
 
   /* <!--Add to cart--API Call--> */
@@ -87,7 +97,7 @@ const Benners = (props) => {
   const AddToCart = (id, saleprice, productMRF, wishlistid, count) => {
     if (
       token === "null" ||
-      token == "" ||
+      token === "" ||
       token === null ||
       token === undefined ||
       token === true
@@ -147,7 +157,7 @@ const Benners = (props) => {
             }
           )
           .then((response) => {
-            let data = response.data[0];
+            // let data = response.data[0];
             setData(response.data);
             setWlistData("add");
             setapicall(true);
@@ -167,7 +177,7 @@ const Benners = (props) => {
             }
           )
           .then((response) => {
-            let data = response.data;
+            // let data = response.data;
             setData(response.data);
             setWlistData("remove");
             setapicall(true);
@@ -204,7 +214,7 @@ const Benners = (props) => {
               },
             })
             .then((response) => {
-              let data = response.data;
+              // let data = response.data;
               setProductData(response.data.results);
               setapicall(false);
             });
@@ -238,7 +248,7 @@ const Benners = (props) => {
                 }
               )
               .then((response) => {
-                let data = response.data;
+                // let data = response.data;
 
                 setProductData(response.data.results);
                 setapicall(false);
@@ -250,12 +260,12 @@ const Benners = (props) => {
         alert("No token saved");
       }
     }
-  }, [apicall, productType]);
+  }, [apicall, productType, token]);
   /* <!--End this section--> */
 
   useEffect(() => {
     setapicall(true);
-  }, [apicall, props.deleteCart]);
+  }, [props.deleteCart]);
 
   /* <!--Function for set token and navigate from product details page--> */
 
@@ -275,16 +285,17 @@ const Benners = (props) => {
         banner_location: "",
       })
       .then((response) => {
-        let data = response.data;
+        // let data = response.data;
         setShowBanner(response.data);
       });
-  }, [apicall]);
+  }, [userID]);
   /* <!--End this section--> */
 
   /* <!--Start body of banner page--> */
 
   return (
     <Fragment>
+      <div style={{ display: "none" }}>{(data, count, wlistData)}</div>
       <Header addcart={AddToCart} />
 
       {/*<!--Start banner section-->*/}
@@ -293,20 +304,24 @@ const Benners = (props) => {
         <div className="container-fluid-lg">
           <div className="row g-4">
             <div className="col-xxl-6 col-xl-8 col-md-6">
-              {showbanner.map((img) => {
+              {showbanner.map((img, mapid) => {
+                // console.log("mapid--" + JSON.stringify(mapid));
                 return (
                   <>
-                    <div className="home-contain ">
+                    <div className="home-contain " key={mapid}>
                       {img.banner_location === "home_page_left_side" ? (
                         <>
                           <img
                             src={img.image}
                             className="img-fluid bg-img lazyload "
-                            alt="image"
+                            alt="newimage"
                             name="image"
                           />
-                          <div className="home-detail w-50 p-center-left">
-                            <div>
+                          <div
+                            className="home-detail w-50 p-center-left"
+                            key={mapid}
+                          >
+                            <div key={mapid}>
                               <h3 className="ls-expanded theme-color">
                                 ORGANIC
                               </h3>
@@ -320,7 +335,10 @@ const Benners = (props) => {
                                 {img.description}
                               </p>
                               <Link to={img.banner_url}>
-                                <button className="btn mt-sm-4 btn-2 theme-bg-color text-white mend-auto btn-2-animation">
+                                <button
+                                  className="btn mt-sm-4 btn-2 theme-bg-color text-white mend-auto btn-2-animation"
+                                  key={mapid}
+                                >
                                   Shop Now
                                 </button>
                               </Link>
@@ -335,28 +353,34 @@ const Benners = (props) => {
             </div>
 
             <div className="col-xxl-3 col-xl-4 col-md-6 ratio_medium">
-              {showbanner.map((img) => {
+              {showbanner.map((img, mapid) => {
                 return (
                   <>
-                    <div className="home-contain">
+                    <div className="home-contain" key={mapid}>
                       {img.banner_location === "home_page_left_side(1)" ? (
                         <>
                           <img
                             src={img.image}
                             className="img-fluid bg-img lazyload"
-                            alt="image"
+                            alt="newimage"
                             name="image"
                             style={{ height: "739px" }}
                           />
 
-                          <div className="home-detail text-center p-top-center w-100 ">
-                            <div>
+                          <div
+                            className="home-detail text-center p-top-center w-100 "
+                            key={mapid}
+                          >
+                            <div key={mapid}>
                               <h2 className="fw-bold text-white">
                                 {img.title}
                               </h2>
                               <h3 className="text-white">{img.description}</h3>
                               <Link to={img.banner_url}>
-                                <button className="btn bg-white theme-color mt-3 home-button mx-auto btn-2">
+                                <button
+                                  className="btn bg-white theme-color mt-3 home-button mx-auto btn-2"
+                                  key={mapid}
+                                >
                                   Shop Now
                                 </button>
                               </Link>
@@ -373,23 +397,26 @@ const Benners = (props) => {
             <div className="col-xxl-3 ratio_65">
               <div className="row g-4">
                 <div className="col-xxl-12 col-sm-6">
-                  {showbanner.map((img) => {
+                  {showbanner.map((img, mapid) => {
                     return (
                       <>
-                        <div className="home-contain">
+                        <div className="home-contain" key={mapid}>
                           {img.banner_location === "home_page_right_side(1)" ? (
                             <>
                               <a href="shop-left-sidebar.html">
                                 <img
                                   src={img.image}
                                   className="img-fluid bg-img lazyload"
-                                  alt="image"
+                                  alt="newimage"
                                   name="image"
                                 />
                               </a>
 
-                              <div className="home-detail  p-center text-center">
-                                <div>
+                              <div
+                                className="home-detail  p-center text-center"
+                                key={mapid}
+                              >
+                                <div key={mapid}>
                                   <h3 className="text-center text-white">
                                     {img.title}
                                   </h3>
@@ -407,22 +434,25 @@ const Benners = (props) => {
                 </div>
 
                 <div className="col-xxl-12 col-sm-6">
-                  {showbanner.map((img) => {
+                  {showbanner.map((img, mapid) => {
                     return (
                       <>
-                        <div className="home-contain">
+                        <div className="home-contain" key={mapid}>
                           {img.banner_location === "home_page_right_side(2)" ? (
                             <>
                               <a href="shop-left-sidebar.html">
                                 <img
                                   src={img.image}
                                   className="img-fluid bg-img lazyload w-100 h-100"
-                                  alt="image"
+                                  alt="newimage"
                                   name="image"
                                 />
                               </a>
-                              <div className="home-detail  w-50 p-center-left home-p-sm">
-                                <div>
+                              <div
+                                className="home-detail  w-50 p-center-left home-p-sm"
+                                key={mapid}
+                              >
+                                <div key={mapid}>
                                   <h3 className="fw-bold text-white">
                                     {img.title}
                                   </h3>
@@ -479,8 +509,8 @@ const Benners = (props) => {
                 aria-labelledby="all-tab"
               >
                 <div className="row w-100 ms-0">
-                  {productData.map((product) => {
-                    return product.product_status == "approved" ? (
+                  {productData.map((product, mapid) => {
+                    return product.product_status === "approved" ? (
                       <div
                         key={product.id}
                         className="col-xxl-2 col-lg-3 col-md-4 col-6 wow fadeInUp"
@@ -547,7 +577,7 @@ const Benners = (props) => {
                           <img
                             src={img.image}
                             className="img-fluid bg-img w-100 h-50"
-                            alt="image"
+                            alt="newimage"
                             name="image"
                           />
                           <div className="banner-detail p-center text-dark text-center p-0">
@@ -585,8 +615,6 @@ const Benners = (props) => {
   );
 };
 
-{
-  /*<!--End bannner page section-->*/
-}
+/*<!--End bannner page section-->*/
 
 export default Benners;
