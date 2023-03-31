@@ -58,11 +58,13 @@ const Header = (props) => {
           .get(`${process.env.REACT_APP_BASEURL}/get_all_category`, {
             headers: {
               user_token: token,
+              is_delete: 0,
             },
           })
           .then((response) => {
             let data = response.data;
             setCategoryData(data);
+
             setapicall(false);
           });
       } catch (err) {}

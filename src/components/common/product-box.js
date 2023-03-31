@@ -53,6 +53,7 @@ const ProductBox = ({
       settotalqty(false);
     }
   };
+  console.log("-----"+is_featured)
   return (
     <div className="product-box-4 p-0 mt-3 product_box overflow-hidden">
       <div
@@ -77,7 +78,7 @@ const ProductBox = ({
           )}
         </div>
         <div className="ribbon_div mt-4">
-          {is_featured == 0 ||
+          {is_featured ==0 ||
           is_featured == "" ||
           is_featured == null ||
           is_featured == "0" ? null : (
