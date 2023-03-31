@@ -40,6 +40,8 @@ function Orders() {
       )
       .then((response) => {
         let data = response.data;
+        console.log("data--" + JSON.stringify(response.data.product_types));
+
         setOrder(response.data);
         setproductOrder(response.data.product_types);
         UserData();
@@ -408,8 +410,11 @@ function Orders() {
 
                     total_priceWithout_tax += Number(pricewithout_tax_with_qty);
 
-                    total += Number(total_price);
-                    sub_total += Number(orderdata.sale_price);
+                    total +=
+                      Number(total_price) +
+                      Number(order.shipping_charges) +
+                      Number(order.discount_coupon_value);
+                    sub_total += Number(total_price);
                     total_tax += Number(tax);
                     return (
                       <div className="d-flex justify-content-between mb-3 align-items-center">
