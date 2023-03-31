@@ -52,9 +52,10 @@ const Benners = (props) => {
           )
           .then((response) => {
             setapicall(false);
-            // let data = response.data;
+            let data = response.data;
+
             setProductData(response.data.results);
-            localStorage.setItem("reviewid", response.data.results.id);
+            // localStorage.setItem("reviewid", response.data.results.id);
 
             // const result = data.results.filter(
             //   (thing, index, self) =>
@@ -248,8 +249,8 @@ const Benners = (props) => {
                 }
               )
               .then((response) => {
-                // let data = response.data;
-
+                let data = response.data;
+                console.log("data--" + JSON.stringify(data));
                 setProductData(response.data.results);
                 setapicall(false);
               });

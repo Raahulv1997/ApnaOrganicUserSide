@@ -505,9 +505,7 @@ function Orders() {
                         Taxes)
                       </p>
                     </div>
-                    <div className="">
-                      ₹{Number(order.sub_total).toFixed(2)}
-                    </div>
+                    <div className="">₹{sub_total.toFixed(2)}</div>
                   </div>
                   <div className="payment_summary_total d-flex justify-content-between align-items-center">
                     <div className="Subtotal">

@@ -289,10 +289,18 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
 
   useEffect(() => {
     axios
-      .post(`${process.env.REACT_APP_BASEURL}/review_list`, {
-        product_name: "",
-        status: "",
-      })
+      .post(
+        `${process.env.REACT_APP_BASEURL}/review_list`,
+        {
+          product_name: "",
+          status: "",
+        },
+        {
+          headers: {
+            vandor_token: token,
+          },
+        }
+      )
       .then((response) => {
         let data = response.data;
         // console.log("CONSOLEE" + JSON.stringify(data.response));
@@ -301,6 +309,7 @@ const ProductDetail = ({ logIn, id, wishlistt, wishlistid }) => {
           setReviewData([]);
           setRrating([]);
         } else {
+          console.log("revie daata--" + JSON.stringify(data));
           setReviewData(response.data);
           setRrating(data);
         }

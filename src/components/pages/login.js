@@ -32,6 +32,7 @@ const Login = ({ logIn }) => {
     axios
       .post(`${process.env.REACT_APP_BASEURL}/user_login`, credentailval)
       .then((response) => {
+        console.log("responce--" + JSON.stringify(response.data));
         // if(credentailval.user_email==""){
 
         //   setEmailError(true)
